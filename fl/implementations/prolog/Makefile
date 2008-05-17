@@ -3,20 +3,13 @@ temp = temp.txt
 
 all: test
 
-test:
+test: 
 	@echo Testing implementation `pwd`
-	@make Main
-	@./Main ${factorial} ${temp}
+	@swipl -q -f Main.pro -t "main('${factorial}','${temp}')"
 	@diff ${factorial} ${temp}
 	@rm -f temp.txt
 	@echo Done.
 
-Main: *.hs Makefile
-	@ghc --make Main.hs 
-
 clean:
 	rm -rf *~
-	rm -rf Main
-	rm -rf *.o
-	rm -rf *.hi
 	rm -f temp.txt

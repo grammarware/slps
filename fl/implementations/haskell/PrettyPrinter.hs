@@ -27,7 +27,7 @@ instance Pp Expr
     prettyPrint (IfThenElse x y z) = concat ["if ",prettyPrint x," then ",prettyPrint y," else ",prettyPrint z]
     prettyPrint (Apply n es) = concat ["(",concat (n:map (\e -> " " ++ prettyPrint e) es),")"]
 
-instance Pp Op
+instance Pp Ops
   where
     prettyPrint Equal = "=="
     prettyPrint Plus = " + "

@@ -58,11 +58,11 @@ argument = do n <- name; return (Argument n)
 binary = inParens (
        do 
        	  e1 <- expr
-	  o <- op
+	  o <- ops
        	  e2 <- expr
        	  return (Binary o e1 e2))
 
-op =
+ops =
      (special "==" >> return Equal)
  +++ (special "+" >> return Plus)
  +++ (special "-" >> return Minus)
