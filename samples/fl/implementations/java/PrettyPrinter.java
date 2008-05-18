@@ -1,3 +1,5 @@
+import types.*;
+
 /**
  * A visitor for pretty printing
  */

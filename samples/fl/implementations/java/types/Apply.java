@@ -1,3 +1,5 @@
+package types;
+
 import java.util.LinkedList;
 
 /**

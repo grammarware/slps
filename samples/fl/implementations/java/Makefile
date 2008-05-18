@@ -1,21 +1,19 @@
 factorial = ../../repository/factorial.txt
 temp = temp.txt
-CLASSPATH = -classpath .:types:antlrworks/antlrworks-1.1.7.jar
 
 all: test
 
 test:
 	@echo Testing implementation `pwd`
 	@make Test.class
-	@java -ea ${CLASSPATH} Test ${factorial} ${temp}
+	java -ea Test ${factorial} ${temp}
 	@diff ${factorial} ${temp}
 	@rm -f temp.txt
 	@echo Done.
 
 Test.class: *.java types/*.java *.g
-	@java ${CLASSPATH} org.antlr.Tool TFPL.g
-	@cd types; javac Visitor.java
-	@javac ${CLASSPATH} Test.java TFPLLexer.java TFPLParser.java
+	java org.antlr.Tool TFPL.g
+	javac Test.java TFPLLexer.java TFPLParser.java
 
 clean:
 	rm -f *~

@@ -1,1 +1,3 @@
-enum Ops {Equal, Plus, Minus}
+package types;
+
+public enum Ops {Equal, Plus, Minus}

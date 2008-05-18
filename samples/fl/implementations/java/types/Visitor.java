@@ -1,3 +1,5 @@
+package types;
+
 /**
  * The abstract visitor for TFPL
  */

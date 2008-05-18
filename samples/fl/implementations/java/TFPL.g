@@ -2,6 +2,7 @@ grammar TFPL;
 options {backtrack=true;}
 
 @header {
+import types.*;
 import java.util.LinkedList;
 }
 
