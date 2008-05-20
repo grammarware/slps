@@ -1,3 +1,2 @@
-add n m = if (n==0) then m else ((add (n - 1) m) + 1)
-mult n m = if (n==0) then 0 else (add m (mult (n - 1) m))
+mult n m = if (n==0) then 0 else (m + (mult (n - 1) m))
 fac n = if (n==0) then 1 else (mult n (fac (n - 1)))
