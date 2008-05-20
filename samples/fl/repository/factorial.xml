@@ -1,0 +1,81 @@
+<Program xmlns="fl">
+  
+  <function>
+    <name>mult</name>
+    <arg>n</arg>
+    <arg>m</arg>
+    <rhs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="IfThenElse">
+      <ifExpr xsi:type="Binary">
+        <ops>Equal</ops>
+        <left xsi:type="Argument">
+          <name>n</name>
+        </left>
+        <right xsi:type="Literal">
+          <info>0</info>
+        </right>
+      </ifExpr>
+      <thenExpr xsi:type="Literal">
+        <info>0</info>
+      </thenExpr>
+      <elseExpr xsi:type="Binary">
+        <ops>Plus</ops>
+        <left xsi:type="Argument">
+          <name>m</name>
+        </left>
+        <right xsi:type="Apply">
+          <name>mult</name>
+          <arg xsi:type="Binary">
+            <ops>Minus</ops>
+            <left xsi:type="Argument">
+              <name>n</name>
+            </left>
+            <right xsi:type="Literal">
+              <info>1</info>
+            </right>
+          </arg>
+          <arg xsi:type="Argument">
+            <name>m</name>
+          </arg>
+        </right>
+      </elseExpr>
+    </rhs>
+  </function>
+  
+  <function>
+    <name>fac</name>
+    <arg>n</arg>
+    <rhs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="IfThenElse">
+      <ifExpr xsi:type="Binary">
+        <ops>Equal</ops>
+        <left xsi:type="Argument">
+          <name>n</name>
+        </left>
+        <right xsi:type="Literal">
+          <info>0</info>
+        </right>
+      </ifExpr>
+      <thenExpr xsi:type="Literal">
+        <info>1</info>
+      </thenExpr>
+      <elseExpr xsi:type="Apply">
+        <name>mult</name>
+        <arg xsi:type="Argument">
+          <name>n</name>
+        </arg>
+        <arg xsi:type="Apply">
+          <name>fac</name>
+          <arg xsi:type="Binary">
+            <ops>Minus</ops>
+            <left xsi:type="Argument">
+              <name>n</name>
+            </left>
+            <right xsi:type="Literal">
+              <info>1</info>
+            </right>
+          </arg>
+        </arg>
+      </elseExpr>
+    </rhs>
+  </function>
+  
+</Program>

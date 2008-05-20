@@ -1,0 +1,6 @@
+<Fragment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tns:Apply">
+  <name>fac</name>
+  <arg xsi:type="tns:Literal">
+    <info>5</info>
+  </arg>
+</Fragment>

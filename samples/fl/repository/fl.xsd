@@ -1,0 +1,95 @@
+﻿<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="fl"
+  xmlns="fl"
+  elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:documentation>
+      This is a schema for the abstract syntax of FL programs.
+    </xs:documentation>
+  </xs:annotation>
+  
+  <xs:element name="Program">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="function" type="Function" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Fragment" type="Expr"/>
+  
+  <xs:complexType name="Function">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="arg" type="xs:string" maxOccurs="unbounded"/>
+      <xs:element name="rhs" type="Expr"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="Expr" abstract="true"/>
+  
+  <xs:complexType name="Literal">
+    <xs:complexContent>
+      <xs:extension base="Expr">
+        <xs:sequence>
+          <xs:element name="info" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Argument">
+    <xs:complexContent>
+      <xs:extension base="Expr">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Binary">
+    <xs:complexContent>
+      <xs:extension base="Expr">
+        <xs:sequence>
+          <xs:element name="ops" type="Ops"/>
+          <xs:element name="left" type="Expr"/>
+          <xs:element name="right" type="Expr"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="Ops">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Equal"/>
+      <xs:enumeration value="Plus"/>
+      <xs:enumeration value="Minus"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="IfThenElse">
+    <xs:complexContent>
+      <xs:extension base="Expr">
+        <xs:sequence>
+          <xs:element name="ifExpr" type="Expr"/>
+          <xs:element name="thenExpr" type="Expr"/>
+          <xs:element name="elseExpr" type="Expr"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Apply">
+    <xs:complexContent>
+      <xs:extension base="Expr">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string"/>
+          <xs:element name="arg" type="Expr" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>
