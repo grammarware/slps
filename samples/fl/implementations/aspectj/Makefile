@@ -6,10 +6,9 @@ all:
 	@echo Done.
 
 foo:
-	ajc Demo.java Tracer.aj
-# PrettyPrinter.aj Evaluator.aj
+	ajc Test.java fl/*.java PrettyPrinter.aj Evaluator.aj
 
-fl: ${schema} Makefile
+fl: ${schema}
 	rm -rf fl
 	xjc ${schema}
 
