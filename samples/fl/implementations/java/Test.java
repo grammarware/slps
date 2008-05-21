@@ -8,9 +8,9 @@ public class Test {
 
 	// Parse file to program
         ANTLRFileStream input = new ANTLRFileStream(args[0]);
-        TFPLLexer lexer = new TFPLLexer(input);
+        FLLexer lexer = new FLLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        TFPLParser parser = new TFPLParser(tokens);
+        FLParser parser = new FLParser(tokens);
         Program program = parser.program();
 
 	// Pretty print program and save it in file

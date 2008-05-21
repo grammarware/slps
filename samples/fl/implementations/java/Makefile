@@ -12,8 +12,8 @@ test:
 	@echo Done.
 
 Test.class: *.java types/*.java *.g
-	java org.antlr.Tool TFPL.g
-	javac Test.java TFPLLexer.java TFPLParser.java
+	java org.antlr.Tool FL.g
+	javac Test.java FLLexer.java FLParser.java
 
 clean:
 	rm -f *~

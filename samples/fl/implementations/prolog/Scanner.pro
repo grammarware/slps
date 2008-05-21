@@ -16,7 +16,9 @@ munch(_,[]) --> [].
 munch1(P,[H|T]) --> satisfy(P,H), munch(P,T).
 
 
-% Scanning contiguous sequences of characters
+% Scanning characters and contiguous sequences thereof
+
+char(H,H,[H|T],T).
 
 string([],R,R).
 string([H|T1],[H|T2],R) :- !, string(T1,T2,R). % no lexical backtracking
@@ -26,7 +28,11 @@ string([H|T1],[H|T2],R) :- !, string(T1,T2,R). % no lexical backtracking
 
 spaces --> munch(isSpace,_).
 
-int(I) --> spaces, munch1(isDigit,S), { name(I,S) } .
+int(I) --> 
+    spaces,
+    option(0'+,char(0'-),Sign),
+    munch1(isDigit,Digits),
+    { name(I,[Sign|Digits]) } .
 
 name(N) --> spaces, munch1(isLower,S), { name(N,S) }.
 

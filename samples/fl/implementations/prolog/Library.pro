@@ -23,3 +23,6 @@ many(_,X,X).
 many1(P,[H|T],X,Z) :- apply(P,[H,X,Y]), many(P,T,Y,Z).
 many(P,L,X,Y) :- many1(P,L,X,Y).
 many(_,[],X,X).
+
+option(_,P,R,X,Y) :- apply(P,[R,X,Y]).
+option(D,_,D,X,X).

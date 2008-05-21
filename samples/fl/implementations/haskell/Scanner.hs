@@ -17,7 +17,15 @@ isWhitespace x = isSpace x || isEoln x
 
 spaces = munch isSpace
 
-int = spaces >> munch1 isDigit
+int = 
+  do
+	spaces
+	sign <- option ' ' (char '-')
+	digits <- munch1 isDigit
+	return (readInt (sign:digits))
+  where
+    readInt :: String -> Int
+    readInt = read
 
 name = spaces >> munch1 isLower
 

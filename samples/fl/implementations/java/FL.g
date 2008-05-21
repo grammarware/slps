@@ -1,4 +1,4 @@
-grammar TFPL;
+grammar FL;
 options {backtrack=true;}
 
 @header {
@@ -55,6 +55,6 @@ ops returns [Ops symbol] :
         ;
 
 ID  	:	('a'..'z')+ ;
-INT 	:	'0'..'9'+ ;
+INT 	:	'-'?'0'..'9'+ ;
 NEWLINE	:	'\r'? '\n' ;
 WS  	:	(' '|'\t')+ {skip();} ;

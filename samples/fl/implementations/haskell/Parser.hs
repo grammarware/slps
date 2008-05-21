@@ -43,9 +43,9 @@ expr = literal
       	 +++ apply
 
 
--- Literals (unsigned integer constants)
+-- Literals (integer constants)
 
-literal = do is <- int; return (Literal (read is))
+literal = do i <- int; return (Literal i)
 
 
 -- Reference to function arguments
