@@ -56,11 +56,13 @@
     <Content Include="..\..\repository\factorial.xml">
       <Link>factorial.xml</Link>
     </Content>
+    <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\repository\fl.xsd">
       <Link>fl.xsd</Link>
     </None>
+    <None Include="Makefile" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

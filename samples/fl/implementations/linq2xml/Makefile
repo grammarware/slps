@@ -8,8 +8,8 @@ test:
 	@echo Testing implementation `pwd`
 	make Program.exe
 	./Program.exe ${xfactorial} ${temp}
-	@diff ${factorial} ${temp}
-	@rm -f temp.txt
+	diff ${factorial} ${temp}
+	rm -f temp.txt
 	@echo Done.
 
 Program.exe: *.cs Makefile

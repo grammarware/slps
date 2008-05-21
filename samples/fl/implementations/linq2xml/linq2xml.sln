@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C# Express 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fl", "fl.csproj", "{69B31845-4402-41F8-86D9-CC5C62CD727C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "linq2xml", "linq2xml.csproj", "{69B31845-4402-41F8-86D9-CC5C62CD727C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
