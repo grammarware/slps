@@ -1,5 +1,4 @@
-factorial = ../../repository/factorial.txt
-temp = temp.txt
+include ../include.mk
 
 all: test
 

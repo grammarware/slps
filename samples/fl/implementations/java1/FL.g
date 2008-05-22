@@ -21,9 +21,9 @@ function returns [Function function] :
         ;
 
 expr returns [Expr expr] :
-        b=binary { $expr = $b.expr; }
-      | a=apply { $expr = $a.expr; }
- 	  | i=ifthenelse { $expr = $i.expr; }
+	  b=binary { $expr = $b.expr; }
+	| a=apply { $expr = $a.expr; }
+	| i=ifthenelse { $expr = $i.expr; }
       ;
 
 binary returns [Expr expr] :
@@ -44,18 +44,18 @@ ifthenelse returns [IfThenElse expr] :
         ;
 
 atom returns [Expr expr] :
-      ID { $expr = new Argument($ID.text); }
-    | INT { $expr = new Literal(Integer.parseInt($INT.text)); }
+	  ID { $expr = new Argument($ID.text); }
+	| INT { $expr = new Literal(Integer.parseInt($INT.text)); }
 	| '(' e=expr ')' { $expr = $e.expr; }
  	;
 
 ops returns [Ops symbol] :
-        '==' { $symbol = Ops.Equal; }
-        |'+' { $symbol = Ops.Plus; }
-        |'-' { $symbol = Ops.Minus; }
+	  '==' { $symbol = Ops.Equal; }
+	| '+' { $symbol = Ops.Plus; }
+	| '-' { $symbol = Ops.Minus; }
         ;
 
-ID  	:	('a'..'z')+ ;
-INT 	:	'-'?'0'..'9'+ ;
-NEWLINE	:	'\r'? '\n' ;
-WS  	:	(' '|'\t')+ {skip();} ;
+ID  	: ('a'..'z')+ ;
+INT 	: '-'?'0'..'9'+ ;
+NEWLINE	: '\r'? '\n' ;
+WS  	: (' '|'\t')+ {skip();} ;

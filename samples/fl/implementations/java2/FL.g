@@ -44,18 +44,18 @@ ifthenelse returns [Expr expr] :
         ;
 
 atom returns [Expr expr] :
-      ID { $expr = Factory.argument($ID.text); }
-    | INT { $expr = Factory.literal(Integer.parseInt($INT.text)); }
+	  ID { $expr = Factory.argument($ID.text); }
+	| INT { $expr = Factory.literal(Integer.parseInt($INT.text)); }
 	| '(' e=expr ')' { $expr = $e.expr; }
  	;
 
 ops returns [Ops symbol] :
-        '==' { $symbol = Factory.equal(); }
-        |'+' { $symbol = Factory.plus(); }
-        |'-' { $symbol = Factory.minus(); }
-        ;
+	  '==' { $symbol = Factory.equal(); }
+	| '+' { $symbol = Factory.plus(); }
+	| '-' { $symbol = Factory.minus(); }
+	;
 
-ID  	:	('a'..'z')+ ;
-INT 	:	'-'?'0'..'9'+ ;
-NEWLINE	:	'\r'? '\n' ;
-WS  	:	(' '|'\t')+ {skip();} ;
+ID  	: ('a'..'z')+ ;
+INT 	: '-'?'0'..'9'+ ;
+NEWLINE	: '\r'? '\n' ;
+WS  	: (' '|'\t')+ {skip();} ;
