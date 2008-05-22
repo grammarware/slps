@@ -16,7 +16,7 @@ May 21, 2008
 Installation
 ------------
 
-The implementation has been tested with Squeak 3.9 and 3.10. To get started download Squeak for your platform from <http://www.squeak.org>.
+The implementation has been tested with Pharo, Squeak 3.9 and 3.10. To get started download Squeak for your platform from <http://www.squeak.org>.
 
 The implementation depends on several libraries that have to be loaded into the development environment. Drag the file "Load-Dependencies.cs" into the running Squeak window and select "install into new change set" from the menu showing up. Do the same with the file "Factorial-Language.cs".
 
