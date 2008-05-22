@@ -1,0 +1,13 @@
+module FL
+	imports int String
+	abstract syntax
+		Program = program(Function*)
+		Function = function(name:String,args:Formal,rhs:Expr)
+		Formal = formal(String*)
+		Expr = literal(info:int)
+		     | argument(name:String)
+		     | binary(ops:Ops,left:Expr,right:Expr)
+		     | ifThenElse(cond:Expr,ifTrue:Expr,ifFalse:Expr)
+		     | apply(name:String,args:Actual)
+		Actual = actual(Expr*)
+		Ops = equal() | plus() | minus()

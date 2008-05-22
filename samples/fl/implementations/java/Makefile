@@ -11,9 +11,13 @@ test:
 	@rm -f temp.txt
 	@echo Done.
 
-Test.class: *.java types/*.java *.g
+Test.class: Test.java FLParser.java types/*.java
+	javac Test.java
+
+FLScanner.java: FLParser.java
+
+FLParser.java: FL.g
 	java org.antlr.Tool FL.g
-	javac Test.java FLLexer.java FLParser.java
 
 clean:
 	rm -f *~
