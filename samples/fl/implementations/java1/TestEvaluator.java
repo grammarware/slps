@@ -1,9 +1,8 @@
 import types.*;
 import org.antlr.runtime.*;
-import java.util.*;
 import java.io.*;
 
-public class Test {
+public class TestEvaluator {
     public static void main(String[] args) throws Exception {
 
 	// Parse file to program
@@ -13,17 +12,16 @@ public class Test {
         FLParser parser = new FLParser(tokens);
         Program program = parser.program();
 
-	// Pretty print program and save it in file
-	PrettyPrinter pp = new PrettyPrinter();
-	pp.visit(program);
-	FileOutputStream output = new FileOutputStream (args[1]);
-	new PrintStream(output).print(pp.getResult());
-	output.close();	
+	// Parse sample expression
+        input = new ANTLRFileStream(args[1]);
+        lexer = new FLLexer(input);
+        tokens = new CommonTokenStream(lexer);
+        parser = new FLParser(tokens);
+        Expr expr = parser.expr();
 
 	// Evaluate program
 	Evaluator eval = new Evaluator(program);
-	Apply apply = new Apply("fac", new LinkedList<Expr>());
-	apply.args.add(new Literal(5));
-	assert eval.evaluate(apply) == 120;
+	int expected = Integer.parseInt(args[2]);
+	assert expected == eval.evaluate(expr);
     }
 }

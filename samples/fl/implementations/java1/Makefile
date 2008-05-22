@@ -2,16 +2,19 @@ include ../include.mk
 
 all: test
 
-test:
+test: TestIO.class TestEvaluator.class
 	@echo Testing implementation `pwd`
-	@make Test.class
-	java -ea Test ${factorial} ${temp}
-	@diff ${factorial} ${temp}
-	@rm -f temp.txt
+	java -ea TestIO ${factorial} ${temp}
+	diff ${factorial} ${temp}
+	rm -f temp.txt
+	java -ea TestEvaluator ${factorial} ${apply} 120
 	@echo Done.
 
-Test.class: Test.java FLParser.java types/*.java
-	javac Test.java
+TestIO.class: TestIO.java FLParser.java types/*.java
+	javac TestIO.java
+
+TestEvaluator.class: TestEvaluator.java FLParser.java types/*.java
+	javac TestEvaluator.java
 
 FLScanner.java: FLParser.java
 
