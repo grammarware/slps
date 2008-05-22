@@ -10,10 +10,10 @@ test: \
 		TestOptimizer.class
 	@echo Testing implementation `pwd`
 	java -ea TestIO ${factorial} ${temp}
-	java -ea TestEvaluator ${factorial} ${apply} 120
-	java -ea TestOptimizer ${unoptimized} ${optimized}
 	diff ${factorial} ${temp}
 	rm -f temp.txt
+	java -ea TestEvaluator ${factorial} ${apply} 120
+	java -ea TestOptimizer ${unoptimized} ${optimized}
 	@echo Done.
 
 TestIO.class: PrettyPrinter.java ${parserfiles} TestIO.java Makefile

@@ -6,9 +6,9 @@ test: TestIO TestEvaluator TestOptimizer
 	@echo Testing implementation `pwd`
 	./TestIO ${factorial} ${temp}
 	diff ${factorial} ${temp}
+	rm -f temp.txt
 	./TestEvaluator ${factorial} ${apply} 120
 	./TestOptimizer ${unoptimized} ${optimized}
-	rm -f temp.txt
 	@echo Done.
 
 TestIO: *.hs Makefile

@@ -1,22 +1,17 @@
-repository = ../../repository
-factorial = ${repository}/factorial.txt
-xfactorial =  ${repository}/factorial.xml
-schema =  ${repository}/fl.xsd
-temp = temp.txt
-apply = ${repository}/fac5.xml
+include ../include.mk
 
 all: test
 
-test:
+test:  TestIO.class TestEvaluator.class
 	@echo Testing implementation `pwd`
-	make Test.class
-	java -ea Test ${xfactorial} ${temp} ${apply}
-	@diff ${factorial} ${temp}
-	@rm -f temp.txt
+	java -ea TestIO ${xfactorial} ${temp}
+	diff ${factorial} ${temp}
+	rm -f temp.txt
+	java -ea TestEvaluator ${xfactorial} ${xapply} 120
 	@echo Done.
 
-Test.class: *.java *.aj fl/*.java Makefile
-	ajc -source 1.5 Test.java fl/*.java PrettyPrinter.aj Evaluator.aj
+TestIO.class TestEvaluator.class: *.java *.aj fl/*.java Makefile
+	ajc -source 1.5 *.java fl/*.java *.aj
 
 fl: ${schema}
 	rm -rf fl
