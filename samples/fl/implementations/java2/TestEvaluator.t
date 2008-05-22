@@ -15,13 +15,15 @@ public class TestEvaluator {
         FLParser parser = new FLParser(tokens);
         Program program = parser.program();
 
+	// Parse sample expression
+        input = new ANTLRFileStream(args[1]);
+        lexer = new FLLexer(input);
+        tokens = new CommonTokenStream(lexer);
+        parser = new FLParser(tokens);
+        Expr expr = parser.expr();
+
 	// Evaluate program
-	input = new ANTLRFileStream(args[1]);
-	lexer = new FLLexer(input);
-	tokens = new CommonTokenStream(lexer);
-	parser = new FLParser(tokens);
-	Expr apply = parser.expr();
 	int expected = Integer.parseInt(args[2]);
-	assert expected == Evaluator.evaluate(program,apply);
+	assert expected == Evaluator.evaluate(program,expr);
     }
 }

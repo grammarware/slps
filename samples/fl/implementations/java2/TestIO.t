@@ -2,7 +2,7 @@ import fl.types.*;
 import org.antlr.runtime.*;
 import java.io.*;
 
-public class TestPrettyPrinter {
+public class TestIO {
 
     %include{ fl/FL.tom }
 	

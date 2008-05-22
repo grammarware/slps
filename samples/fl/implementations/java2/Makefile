@@ -5,19 +5,19 @@ types = fl/types/Program.java
 all: test
 
 test: \
-		TestPrettyPrinter.class \
+		TestIO.class \
 		TestEvaluator.class \
 		TestOptimizer.class
 	@echo Testing implementation `pwd`
-	java -ea TestPrettyPrinter ${factorial} ${temp}
+	java -ea TestIO ${factorial} ${temp}
 	java -ea TestEvaluator ${factorial} ${apply} 120
 	java -ea TestOptimizer ${unoptimized} ${optimized}
 	diff ${factorial} ${temp}
 	rm -f temp.txt
 	@echo Done.
 
-TestPrettyPrinter.class: PrettyPrinter.java ${parserfiles} TestPrettyPrinter.java Makefile
-	javac TestPrettyPrinter.java
+TestIO.class: PrettyPrinter.java ${parserfiles} TestIO.java Makefile
+	javac TestIO.java
 
 TestEvaluator.class: Evaluator.java ${parserfiles} TestEvaluator.java Makefile
 	javac TestEvaluator.java
