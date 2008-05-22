@@ -1,26 +1,14 @@
 module Parser where
 
 import Text.ParserCombinators.ReadP
+import Library
 import Types
 import Scanner
 
 
--- Parse from file
-
-parseFile f = do
-	s <- readFile f
-	let r = readP_to_S program s
-	if (length r == 1)
-	   then return (fst (head r))
-	   else fail "parse error"
-
-
 -- Programs as lists of function definitions
 
-program = do
-	fs <- many1 function
-	eof
-	return fs
+program = many1 function
 
 
 -- Function definitions
@@ -31,41 +19,32 @@ function = do
 	 special "="
 	 e <- expr
 	 many1 eoln
-	 return (Function (n,ns) e)
+	 return (Function n ns e)
 
 
--- All expression forms
+-- Top-level layer of expression forms
 
-expr = literal
-       	 +++ argument
-      	 +++ binary
-      	 +++ ifThenElse
-      	 +++ apply
+expr =  binary +++ apply +++ ifThenElse
 
 
--- Literals (integer constants)
+-- Layer of binary expressions
 
-literal = do i <- int; return (Literal i)
+binary = lassoc ops atom Binary
+  where
+    -- Operation symbols
+    ops =
+    	(special "==" >> return Equal)
+	+++ (special "+" >> return Plus)
+	+++ (special "-" >> return Minus)
 
 
--- Reference to function arguments
+-- Function applications
 
-argument = do n <- name; return (Argument n)
-
-
--- Binary expression form
-
-binary = inParens (
-       do 
-       	  e1 <- expr
-	  o <- ops
-       	  e2 <- expr
-       	  return (Binary o e1 e2))
-
-ops =
-     (special "==" >> return Equal)
- +++ (special "+" >> return Plus)
- +++ (special "-" >> return Minus)
+apply =
+      do
+            n <- name
+      	    es <- many atom
+	    return (Apply n es)
 
 
 -- Conditionals
@@ -80,19 +59,25 @@ ifThenElse = do
 	   return (IfThenElse e1 e2 e3)
 
 
--- Function applications
+-- Final layer of expression forms
 
-apply = inParens (
-      do
-            n <- name
-      	    es <- many expr
-	    return (Apply n es))
+atom = literal +++ argument +++ inParens
 
 
--- Some construct in parentheses
+-- Literals (integer constants)
 
-inParens p = do 
+literal = do i <- int; return (Literal i)
+
+
+-- Reference to function arguments
+
+argument = do n <- name; return (Argument n)
+
+
+-- Expression in parentheses
+
+inParens = do 
        special "("
-       r <- p
+       e <- expr
        special ")"
-       return r
+       return e

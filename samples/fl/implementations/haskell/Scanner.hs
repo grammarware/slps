@@ -1,21 +1,37 @@
 module Scanner where
 
 import Text.ParserCombinators.ReadP
-import Data.Char hiding (isSpace)
+import Data.Char
 import Control.Monad
+import Library
 
 
--- Predicates for character sets
+-- Withspace excluding eoln
 
-isSpace = (==) ' '
-isEoln = (==) '\n'
-isWhitespace x = isSpace x || isEoln x
--- Others are imported from Data.Char
+spaces = munch (==' ')
 
 
--- Token classes with withspace handling
+-- Keywords of FL
 
-spaces = munch isSpace
+isKeyword("if") = True
+isKeyword("then") = True
+isKeyword("else") = True
+isKeyword(_) = False
+
+keyword s = spaces >> string s >> follows isSpace
+
+
+-- Special characters
+
+special s = spaces >> string s
+
+
+-- Eoln token
+
+eoln = spaces >> satisfy (=='\n')
+
+
+-- Integers with optional negative sign
 
 int = 
   do
@@ -27,20 +43,12 @@ int =
     readInt :: String -> Int
     readInt = read
 
-name = spaces >> munch1 isLower
 
-special s = spaces >> string s
+-- Names that are not keywords
 
-eoln = spaces >> satisfy isEoln
-
-eof = spaces >> look >>= guard . ((==) "")
-
-keyword s = spaces >> string s >> (follows isWhitespace <++ eof)
-
-
--- Test look-ahead character
-
-follows p = 
+name =
   do
-	x <- look
-	guard (not (null x) && (p (head x)))
+	spaces
+	n <- munch1 isLower
+	guard (not (isKeyword n))
+	return n

@@ -21,6 +21,6 @@ evaluate fs e = evaluate empty e
 	     if x' /= 0 then evaluate m y else evaluate m z
     evaluate m (Apply n es) = do
     	     is <- mapM (evaluate m) es
-    	     (ns,e) <- head ([ Just (ns,e) | (Function (n',ns) e) <- fs, n == n' ] ++ [Nothing])
+    	     (ns,e) <- head ([ Just (ns,e) | (Function n' ns e) <- fs, n == n' ] ++ [Nothing])
 	     let m' = fromList (zip ns is)
 	     evaluate m' e

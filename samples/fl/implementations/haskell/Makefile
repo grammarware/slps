@@ -1,22 +1,30 @@
-factorial = ../../repository/factorial.txt
-temp = temp.txt
+include ../include.mk
 
 all: test
 
-test:
+test: TestIO TestEvaluator TestOptimizer
 	@echo Testing implementation `pwd`
-	@make Main
-	@./Main ${factorial} ${temp}
-	@diff ${factorial} ${temp}
-	@rm -f temp.txt
+	./TestIO ${factorial} ${temp}
+	diff ${factorial} ${temp}
+	./TestEvaluator ${factorial} ${apply} 120
+	./TestOptimizer ${unoptimized} ${optimized}
+	rm -f temp.txt
 	@echo Done.
 
-Main: *.hs Makefile
-	@ghc --make Main.hs 
+TestIO: *.hs Makefile
+	ghc --make TestIO.hs 
+
+TestEvaluator: *.hs Makefile
+	ghc --make TestEvaluator.hs 
+
+TestOptimizer: *.hs Makefile
+	ghc --make TestOptimizer.hs 
 
 clean:
 	rm -rf *~
-	rm -rf Main
+	rm -rf TestIO
+	rm -rf TestEvaluator
+	rm -rf TestOptimizer
 	rm -rf *.o
 	rm -rf *.hi
 	rm -f temp.txt

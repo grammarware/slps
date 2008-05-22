@@ -16,7 +16,7 @@ instance Pp x => Pp [x]
 
 instance Pp Function
   where
-    prettyPrint (Function (n,ns) e) =
+    prettyPrint (Function n ns e) =
     	 concat [n, concat (map (\n -> " " ++ n) ns)," = ",prettyPrint e]
 
 instance Pp Expr
