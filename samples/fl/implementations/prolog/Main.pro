@@ -5,7 +5,7 @@
 
 main(File1,File2)
  :-
-    parseFile(File1,Fs),
+    parseFile(File1,program,Fs),
     ppToFile(File2,Fs),
     evaluate(Fs,apply(fac,[literal(5)]),120),
     ToBeOptimized =

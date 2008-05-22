@@ -6,12 +6,12 @@
 
 % Parse from a file
 
-parseFile(File,Fs)
+parseFile(File,P,R)
  :-
     open(File,read,Stream,[]), 
     read_stream_to_codes(Stream, Contents),
     close(Stream),
-    program(Fs,Contents,_).
+    apply(P,[R,Contents,[]]).
 
 
 % Programs as lists of function definitions
