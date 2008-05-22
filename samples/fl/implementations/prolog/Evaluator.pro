@@ -30,7 +30,7 @@ evaluate(P,M,ifThenElse(X,Y,Z),I)
 
 evaluate(P,M1,apply(N,Es),I)
  :-
-    member(((N,Ns),E),P),
+    member((N,Ns,E),P),
     maplist(bindarg(P,M1),Ns,Es,M2),
     evaluate(P,M2,E,I).
 

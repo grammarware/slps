@@ -15,7 +15,7 @@ prettyPrint([H|T],S)
     prettyPrint(T,S2),
     format(string(S),"~s~n~s", [S1,S2,S]).
 
-prettyPrint(((N,Ns),E),S2)
+prettyPrint((N,Ns,E),S2)
  :-
     ppFormals("",Ns,Ss),
     prettyPrint(E,S1),

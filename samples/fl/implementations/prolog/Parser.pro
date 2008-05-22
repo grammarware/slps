@@ -4,24 +4,14 @@
 % :- set_prolog_flag(double_quotes,string.
 
 
-% Parse from a file
-
-parseFile(File,P,R)
- :-
-    open(File,read,Stream,[]), 
-    read_stream_to_codes(Stream, Contents),
-    close(Stream),
-    apply(P,[R,Contents,[]]).
-
-
 % Programs as lists of function definitions
 
-program(Fs) --> many1(function,Fs), eof.
+program(Fs) --> many1(function,Fs).
 
 
 % Function definitions
 
-function(((N,Ns),E)) -->
+function((N,Ns,E)) -->
        name(N),
        many(name,Ns),
        special("="),
@@ -29,18 +19,13 @@ function(((N,Ns),E)) -->
        many1(eoln).
 
 
-% All expression forms
+% Top-level layer of expression forms
 
-expr(literal(I)) --> int(I).
+expr(E) --> lassoc(ops,atom,binary,E).
 
-expr(argument(N)) --> name(N).
-
-expr(binary(O,E1,E2)) --> 
-       special("("),
-       expr(E1),
-       ops(O),
-       expr(E2),
-       special(")").
+expr(apply(N,Es)) -->
+       name(N),
+       many(atom,Es).
 
 expr(ifThenElse(E1,E2,E3)) -->
        keyword("if"),
@@ -50,11 +35,15 @@ expr(ifThenElse(E1,E2,E3)) -->
        keyword("else"),
        expr(E3).
 
-expr(apply(N,Es)) -->
-       special("("),
-       name(N),
-       many(expr,Es),
-       special(")").
+
+% Final layer of expression forms
+
+atom(literal(I)) --> int(I).
+atom(argument(N)) --> name(N).
+atom(E) --> special("("), expr(E), special(")").
+
+
+% Operation symbols
 
 ops(equal) --> special("==").
 ops(plus) --> special("+").

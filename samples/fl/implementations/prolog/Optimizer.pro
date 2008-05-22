@@ -1,4 +1,4 @@
-:- ['Library.pro'].
+:- ['TraversalLib.pro'].
 
 optimize(E1,E2)
  :-

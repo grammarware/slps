@@ -11,7 +11,7 @@ Pretty-printing maps terms to strings (using inefficient concatenation).
 
 Run "make" to test the implementation.
 
-Here is a recent literate reference on Prological Language Processing.
+Here is a literature reference on Prological Language Processing.
 This reference refers to seminal literature in the field.
 
 @inproceedings{LR01,
