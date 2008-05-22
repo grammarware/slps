@@ -6,6 +6,7 @@ A Prolog-based implementation of FL that covers:
 
 The implementation has been tested with SWI-Prolog 5.6.50.
 Parsing relies on a scannerless style of DCGs.
+A tiny ParserLib collects some convenience combinators and services.
 The transformation for optimization relies on a made-up traversal library.
 Pretty-printing maps terms to strings (using inefficient concatenation).
 

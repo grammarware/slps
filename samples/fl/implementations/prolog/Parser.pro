@@ -1,4 +1,4 @@
-:- ['Library.pro','Scanner.pro'].
+:- ['ParserLib.pro','Scanner.pro'].
 % :- set_prolog_flag(double_quotes,atom).
 :- set_prolog_flag(double_quotes,codes).
 % :- set_prolog_flag(double_quotes,string.

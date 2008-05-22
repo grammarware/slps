@@ -1,3 +1,5 @@
+:- ['ParserLib.pro'].
+
 % Withspace excluding eoln
 
 spaces --> munch(isMySpace,_).
@@ -11,17 +13,20 @@ isKeyword(if).
 isKeyword(then).
 isKeyword(else).
 
-keyword(S) --> spaces, string(S), ( follows(isWhitespace) ; eof ).
+keyword(S) --> spaces, string(S), ( follows(isSpace) ; eof ).
 
 
--- Special characters
+% Special characters
 
 special(S) --> spaces, string(S).
 
 
+% Eoln token
 
-% Token classes with withspace handling
+eoln --> spaces, satisfy(isEoln,_).
 
+
+% Integers with optional negative sign
 
 int(I) --> 
     spaces,
@@ -29,6 +34,10 @@ int(I) -->
     munch1(isDigit,Digits),
     { name(I,[Sign|Digits]) } .
 
-name(N) --> spaces, munch1(isLower,S), { name(N,S), \+ isKeyword(N) }.
 
-eoln --> spaces, satisfy(isEoln,_).
+% Names that are not keywords
+
+name(N) --> 
+    spaces,
+    munch1(isLower,S),
+    { name(N,S), \+ isKeyword(N) }.
