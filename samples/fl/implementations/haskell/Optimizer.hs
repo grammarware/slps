@@ -1,8 +1,7 @@
 module Optimizer where
 
-import Data.Generics
-import Library
 import Types
+import TraversalLib
 
 optimize :: Expr -> Expr
 optimize = innermost (mkMp step)

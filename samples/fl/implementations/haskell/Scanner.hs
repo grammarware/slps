@@ -1,9 +1,7 @@
 module Scanner where
 
-import Text.ParserCombinators.ReadP
-import Data.Char
 import Control.Monad
-import Library
+import ParserLib
 
 
 -- Withspace excluding eoln

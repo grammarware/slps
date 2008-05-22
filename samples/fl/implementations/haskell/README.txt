@@ -5,9 +5,9 @@ A Haskell-based implementation of FL that covers:
 - optimization
 
 The implementation has been tested with GHC 6.6.1.
-Parsing uses Text.ParserCombinators.ReadP.
-The transformation for optimization relies on Data.Generics.
+Parsing uses module Text.ParserCombinators.ReadP.
+The transformation for optimization relies on module Data.Generics.
+Both modules are softly wrapped to provide more convenience. 
 Pretty-printing maps terms to strings (using inefficient concatenation).
 
 Run "make" to test the implementation.
-

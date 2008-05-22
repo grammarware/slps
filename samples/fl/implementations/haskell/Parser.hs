@@ -1,9 +1,8 @@
 module Parser where
 
-import Text.ParserCombinators.ReadP
-import Library
 import Types
 import Scanner
+import ParserLib
 
 
 -- Programs as lists of function definitions

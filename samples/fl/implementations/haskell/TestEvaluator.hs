@@ -2,7 +2,7 @@ module Main where
 
 import System
 import Types
-import Library
+import ParserLib
 import Parser
 import Evaluator
 

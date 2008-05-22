@@ -1,8 +1,8 @@
 module Main where
 
 import System
-import Library
 import Types
+import ParserLib
 import Parser
 import Optimizer
 
