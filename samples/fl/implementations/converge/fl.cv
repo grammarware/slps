@@ -1,0 +1,192 @@
+#! /usr/bin/env converge
+
+// Copyright (c) 2008 Laurence Tratt <laurie@tratt.net>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+
+
+import Builtins, CEI, CPK::Earley::DSL, CPK::Traverser, CPK::Tree, Sys
+
+
+
+
+//
+// The grammar.
+//
+// Note that the larger the integer precedence value, the *lower* the actual precedence.
+//
+
+parse := $<<DSL::mk_parser("prog", ["THEN"], ["="])>>:
+    prog ::= fun ( "NEWLINE" fun )*
+    
+    fun ::= "ID" params "=" exp
+    params ::= ( "ID" )+
+    
+    exp ::= bin     %precedence 1
+          | apply   %precedence 2
+          | cond    %precedence 1
+          | "ID"    %precedence 1
+          | "INT"   %precedence 1
+          | "(" exp ")"
+
+    bin ::= exp "==" exp
+           | exp "+" exp
+           | exp "-" exp
+
+    apply ::= "ID" ( exp )+
+
+    cond ::= "IF" exp "THEN" exp "ELSE" exp
+
+
+
+
+//
+// Define a translation from the parse tree to a Converge ITree (i.e. Converge AST).
+//
+// The basic structure of this is simple: each FL function is translated to a Converge function of
+// the same name.
+//
+
+class FL_Trans(Traverser::Strict_Traverser):
+
+    func gen(self, node):
+    
+        // prog ::= fun ( "NEWLINE" fun )*
+
+        funs := []
+        i := 0
+        while i < node.len():
+            funs.append(self._t_fun(node[i]))
+            i += 2
+
+        return funs
+
+
+
+    func _t_fun(self, node):
+    
+        // fun ::= "ID" params "=" exp
+    
+        name := CEI::ivar(node[0].value, node[0].src_infos)
+
+        params := []
+        for param := node[1].iter():
+            params.append(CEI::iparam(CEI::ivar(param.value, param.src_infos), null, param.src_infos))
+
+        exp := self._t_exp(node[3])
+        
+        return [<node.src_infos>|
+            func $c{name}($c{params}):
+                return $c{exp}
+        |]
+    
+    
+    
+    func _t_exp(self, node):
+        
+        ndif Tree::Non_Term.instantiated(node[0]):
+            // exp ::= bin | apply | cond
+            return self._preorder(node[0])
+        elif node[0].type == "(":
+            // exp ::= "(" exp ")"
+            return self._t_exp(node[1])
+        elif node[0].type == "ID":
+            // exp ::= "ID"
+            return CEI::ivar(node[0].value, node[0].src_infos)
+        elif node[0].type == "INT":
+            // exp ::= "INT"
+            return CEI::iint(Builtins::Int.new(node[0].value), node[0].src_infos)
+
+
+
+    func _t_bin(self, node):
+
+        // bin ::= exp "==" exp
+        //        | exp "+" exp
+        //        | exp "-" exp
+
+        lhs := self._t_exp(node[0])
+        rhs := self._t_exp(node[2])
+        op_node := node[1]
+        ndif op_node.type == "==":
+            return [<op_node.src_infos>| $c{lhs} == $c{rhs} |]
+        elif op_node.type == "+":
+            return [<op_node.src_infos>| $c{lhs} + $c{rhs} |]
+        elif op_node.type == "-":
+            return [<op_node.src_infos>| $c{lhs} - $c{rhs} |]
+
+
+
+    func _t_apply(self, node):
+
+        // apply ::= "ID" ( exp )+
+        
+        args := []
+        for args.append(self._t_exp(node.iter(1)))
+        
+        fun := CEI::ivar(node[0].value, node[0].src_infos)
+
+        return [<node.src_infos>| $c{fun}.apply($c{CEI::ilist(args)}) |]
+
+
+
+    func _t_cond(self, node):
+
+        // cond ::= "IF" exp "THEN" exp "ELSE" exp
+
+        // Because the branches of a factorial language's if statements return values, and Converge's
+        // if statement doesn't, we model it as an (anonymous) function which returns values.
+
+        return [<node.src_infos>|
+            func () {
+                if $c{self._preorder(node[1])}:
+                    return $c{self._preorder(node[3])}
+                else:
+                    return $c{self._preorder(node[5])}
+            }()
+        |]
+
+
+
+
+func fl(dsl_block, src_infos):
+
+    pt := parse(dsl_block, src_infos) // Create parse tree
+    it := FL_Trans.new().gen(pt) // Create ITree
+    
+    for Sys::println(CEI::pp_itree(it.iter()), "\n")
+
+    return it
+
+
+
+
+$c<<fl>>:
+    mult n m = if (n==0) then 0 else (m + (mult (n - 1) m))
+    fac n = if (n==0) then 1 else (mult n (fac (n - 1)))
+
+    fib n = if (n==0) then 0 else if (n == 1) then 1 else (fib (n - 1) + fib (n - 2))
+
+
+
+
+func main():
+    Sys::println("fac(5) = ", fac(5))
+    Sys::println("fac(10) = ", fac(10))
+    Sys::println("fib(10) = ", fib(10))
