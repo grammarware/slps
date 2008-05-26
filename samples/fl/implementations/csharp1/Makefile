@@ -7,7 +7,7 @@ test: TestIO.exe TestEvaluator.exe
 	./TestIO.exe ${xfactorial} ${temp}
 	diff ${factorial} ${temp}
 	rm -f temp.txt
-	./TestIO.exe ${xfactorial} ${xapply} 120
+	./TestEvaluator.exe ${xfactorial} ${xapply} 120
 	@echo Done.
 
 TestIO.exe: *.cs Makefile
