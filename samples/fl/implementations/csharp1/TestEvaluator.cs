@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace fl
 {
-    class MainClass
+    class TestEvaluator
     {
         static void Main(string[] args)
         {
@@ -19,8 +19,8 @@ namespace fl
             var expr = (Expr)serializer2.Deserialize(reader2);
 
             // Evaluate program
-	    var expected = System.Int32.Parse(args[2]);
-            Trace.Assert(expected == program.evaluate(expr));
+	        var expected = System.Int32.Parse(args[2]);
+                Trace.Assert(expected == program.evaluate(expr));
         }
     }
 }
