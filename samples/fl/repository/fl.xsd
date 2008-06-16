@@ -1,95 +1,95 @@
-﻿<xs:schema
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+﻿<xsd:schema
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
   targetNamespace="fl"
   xmlns="fl"
   elementFormDefault="qualified">
-  <xs:annotation>
-    <xs:documentation>
+  <xsd:annotation>
+    <xsd:documentation>
       This is a schema for the abstract syntax of FL programs.
-    </xs:documentation>
-  </xs:annotation>
+    </xsd:documentation>
+  </xsd:annotation>
   
-  <xs:element name="Program">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="function" type="Function" maxOccurs="unbounded"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xsd:element name="Program">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="function" type="Function" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
 
-  <xs:element name="Fragment" type="Expr"/>
+  <xsd:element name="Fragment" type="Expr"/>
   
-  <xs:complexType name="Function">
-    <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element name="arg" type="xs:string" maxOccurs="unbounded"/>
-      <xs:element name="rhs" type="Expr"/>
-    </xs:sequence>
-  </xs:complexType>
+  <xsd:complexType name="Function">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="arg" type="xsd:string" maxOccurs="unbounded"/>
+      <xsd:element name="rhs" type="Expr"/>
+    </xsd:sequence>
+  </xsd:complexType>
   
-  <xs:complexType name="Expr" abstract="true"/>
+  <xsd:complexType name="Expr" abstract="true"/>
   
-  <xs:complexType name="Literal">
-    <xs:complexContent>
-      <xs:extension base="Expr">
-        <xs:sequence>
-          <xs:element name="info" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
+  <xsd:complexType name="Literal">
+    <xsd:complexContent>
+      <xsd:extension base="Expr">
+        <xsd:sequence>
+          <xsd:element name="info" type="xsd:int"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
 
-  <xs:complexType name="Argument">
-    <xs:complexContent>
-      <xs:extension base="Expr">
-        <xs:sequence>
-          <xs:element name="name" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
+  <xsd:complexType name="Argument">
+    <xsd:complexContent>
+      <xsd:extension base="Expr">
+        <xsd:sequence>
+          <xsd:element name="name" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
 
-  <xs:complexType name="Binary">
-    <xs:complexContent>
-      <xs:extension base="Expr">
-        <xs:sequence>
-          <xs:element name="ops" type="Ops"/>
-          <xs:element name="left" type="Expr"/>
-          <xs:element name="right" type="Expr"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
+  <xsd:complexType name="Binary">
+    <xsd:complexContent>
+      <xsd:extension base="Expr">
+        <xsd:sequence>
+          <xsd:element name="ops" type="Ops"/>
+          <xsd:element name="left" type="Expr"/>
+          <xsd:element name="right" type="Expr"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
 
-  <xs:simpleType name="Ops">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="Equal"/>
-      <xs:enumeration value="Plus"/>
-      <xs:enumeration value="Minus"/>
-    </xs:restriction>
-  </xs:simpleType>
+  <xsd:simpleType name="Ops">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="Equal"/>
+      <xsd:enumeration value="Plus"/>
+      <xsd:enumeration value="Minus"/>
+    </xsd:restriction>
+  </xsd:simpleType>
 
-  <xs:complexType name="IfThenElse">
-    <xs:complexContent>
-      <xs:extension base="Expr">
-        <xs:sequence>
-          <xs:element name="ifExpr" type="Expr"/>
-          <xs:element name="thenExpr" type="Expr"/>
-          <xs:element name="elseExpr" type="Expr"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
+  <xsd:complexType name="IfThenElse">
+    <xsd:complexContent>
+      <xsd:extension base="Expr">
+        <xsd:sequence>
+          <xsd:element name="ifExpr" type="Expr"/>
+          <xsd:element name="thenExpr" type="Expr"/>
+          <xsd:element name="elseExpr" type="Expr"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
 
-  <xs:complexType name="Apply">
-    <xs:complexContent>
-      <xs:extension base="Expr">
-        <xs:sequence>
-          <xs:element name="name" type="xs:string"/>
-          <xs:element name="arg" type="Expr" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
+  <xsd:complexType name="Apply">
+    <xsd:complexContent>
+      <xsd:extension base="Expr">
+        <xsd:sequence>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="arg" type="Expr" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
 
-</xs:schema>
+</xsd:schema>
