@@ -14,7 +14,7 @@ TestIO.class TestEvaluator.class: *.java *.aj fl/*.java Makefile
 	ajc -source 1.5 *.java fl/*.java *.aj
 
 fl: ${schema}
-	rm -rf fl
+	rm -f fl/*.class fl/*.java
 	xjc ${schema}
 
 clean:
