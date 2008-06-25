@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ASCII"?>
+<hub.metrik.lang.fl:Program xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hub.metrik.lang.fl="http://hub.metrik.lang.fl/1.0" xsi:schemaLocation="http://hub.metrik.lang.fl/1.0 fl.ecore">
+  <function name="mult">
+    <argument name="n"/>
+    <argument name="m"/>
+    <definition xsi:type="hub.metrik.lang.fl:IfThenElseExp">
+      <if xsi:type="hub.metrik.lang.fl:EqualExp">
+        <left xsi:type="hub.metrik.lang.fl:ArgumentExp" argument="//@function.0/@argument.0"/>
+        <right xsi:type="hub.metrik.lang.fl:LiteralExp"/>
+      </if>
+      <then xsi:type="hub.metrik.lang.fl:LiteralExp"/>
+      <else xsi:type="hub.metrik.lang.fl:PlusExp">
+        <left xsi:type="hub.metrik.lang.fl:ArgumentExp" argument="//@function.0/@argument.1"/>
+        <right xsi:type="hub.metrik.lang.fl:ApplyExp" function="//@function.0">
+          <argument xsi:type="hub.metrik.lang.fl:MinusExp">
+            <left xsi:type="hub.metrik.lang.fl:ArgumentExp" argument="//@function.0/@argument.0"/>
+            <right xsi:type="hub.metrik.lang.fl:LiteralExp" value="1"/>
+          </argument>
+          <argument xsi:type="hub.metrik.lang.fl:ArgumentExp" argument="//@function.0/@argument.1"/>
+        </right>
+      </else>
+    </definition>
+  </function>
+  <function name="fac">
+    <argument name="n"/>
+    <definition xsi:type="hub.metrik.lang.fl:IfThenElseExp">
+      <if xsi:type="hub.metrik.lang.fl:EqualExp">
+        <left xsi:type="hub.metrik.lang.fl:ArgumentExp" argument="//@function.1/@argument.0"/>
+        <right xsi:type="hub.metrik.lang.fl:LiteralExp"/>
+      </if>
+      <then xsi:type="hub.metrik.lang.fl:LiteralExp" value="1"/>
+      <else xsi:type="hub.metrik.lang.fl:ApplyExp" function="//@function.0">
+        <argument xsi:type="hub.metrik.lang.fl:ArgumentExp" argument="//@function.1/@argument.0"/>
+        <argument xsi:type="hub.metrik.lang.fl:ApplyExp" function="//@function.1">
+          <argument xsi:type="hub.metrik.lang.fl:MinusExp">
+            <left xsi:type="hub.metrik.lang.fl:ArgumentExp" argument="//@function.1/@argument.0"/>
+            <right xsi:type="hub.metrik.lang.fl:LiteralExp" value="1"/>
+          </argument>
+        </argument>
+      </else>
+    </definition>
+  </function>
+</hub.metrik.lang.fl:Program>

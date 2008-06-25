@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<hub.metrik.lang.fl:IfThenElseExp xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hub.metrik.lang.fl="http://hub.metrik.lang.fl/1.0" xsi:schemaLocation="http://hub.metrik.lang.fl/1.0 fl.ecore">
+  <if xsi:type="hub.metrik.lang.fl:EqualExp">
+    <left xsi:type="hub.metrik.lang.fl:LiteralExp"/>
+    <right xsi:type="hub.metrik.lang.fl:LiteralExp" value="1"/>
+  </if>
+  <then xsi:type="hub.metrik.lang.fl:LiteralExp" value="42"/>
+  <else xsi:type="hub.metrik.lang.fl:PlusExp">
+    <left xsi:type="hub.metrik.lang.fl:LiteralExp" value="43"/>
+    <right xsi:type="hub.metrik.lang.fl:LiteralExp" value="45"/>
+  </else>
+</hub.metrik.lang.fl:IfThenElseExp>
