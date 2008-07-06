@@ -13,7 +13,6 @@ extern FILE *yyin;
 int main(int argc, char **argv)
 {
 	CEvaluator* eval = new CEvaluator();
-	//CPrettyPrinter *printer= new CPrettyPrinter(std::cout);
 	CExpr* e;
 	yyparse(eval,e);
 	COptimizer *opt=new COptimizer();
@@ -27,7 +26,6 @@ int main(int argc, char **argv)
 	}
 	delete eval;
 	delete opt;
-	//delete printer;
 	cout << endl<<endl;
 	return 0;
 }
