@@ -1,14 +1,3 @@
-//
-// C++ Interface: CPrettyPrinter
-//
-// Description:
-//
-//
-// Author: Andreas Mützel <amuetzel@uni-koblenz.de>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
 #ifndef CPRETTYPRINTER_H
 #define CPRETTYPRINTER_H
 

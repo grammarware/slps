@@ -32,13 +32,11 @@ int main(int argc, char **argv)
 	yyparse(&fs,e);
 	
 	fstream stream(argv[2], ios_base::out);
-	CPrettyPrinter * printer = new CPrettyPrinter(stream);
 	for(int i=0; i< fs.getNumFunctions(); i++)
 	{
-		stream << *fs.getFunction(i);//->accept(printer);
+		stream << *fs.getFunction(i);
 	}
-	
-  //yyparse();
+  
 	return 0;
 }
 

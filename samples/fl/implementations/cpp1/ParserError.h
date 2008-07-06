@@ -16,6 +16,7 @@
 #include <string>
 using namespace std;
 /**
+	@brief This class represents all Errors that may occur during parsing.
 	@author Andreas Mützel <amuetzel@uni-koblenz.de>
 */
 class ParserError : public exception

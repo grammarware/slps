@@ -1,14 +1,3 @@
-//
-// C++ Interface: ParserError
-//
-// Description:
-//
-//
-// Author: Andreas Mützel <amuetzel@uni-koblenz.de>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
 #ifndef EVALUATIONERROR_H
 #define EVALUATIONERROR_H
 
@@ -16,6 +5,7 @@
 #include <string>
 using namespace std;
 /**
+	@brief This class represents all Errors that may occur during evaluation.
 	@author Andreas Mützel <amuetzel@uni-koblenz.de>
 */
 class EvaluationError : public exception

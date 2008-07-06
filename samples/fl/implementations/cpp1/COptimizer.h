@@ -1,14 +1,3 @@
-//
-// C++ Interface: COptimizer
-//
-// Description:
-//
-//
-// Author: Andreas Mützel <amuetzel@uni-koblenz.de>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
 #ifndef COPTIMIZER_H
 #define COPTIMIZER_H
 
