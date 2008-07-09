@@ -13,7 +13,7 @@ program(Fs) --> many1(function,Fs).
 
 function((N,Ns,E)) -->
        name(N),
-       many(name,Ns),
+       many1(name,Ns),
        special("="),
        expr(E),
        many1(eoln).
@@ -25,7 +25,7 @@ expr(E) --> lassoc(ops,atom,binary,E).
 
 expr(apply(N,Es)) -->
        name(N),
-       many(atom,Es).
+       many1(atom,Es).
 
 expr(ifThenElse(E1,E2,E3)) -->
        keyword("if"),
