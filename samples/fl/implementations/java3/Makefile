@@ -13,7 +13,7 @@ test:  TestIO.class TestEvaluator.class
 TestIO.class TestEvaluator.class: *.java *.aj fl/*.java Makefile
 	ajc -source 1.5 *.java fl/*.java *.aj
 
-fl: ${schema}
+generate:
 	rm -f fl/*.class fl/*.java
 	xjc ${schema}
 
