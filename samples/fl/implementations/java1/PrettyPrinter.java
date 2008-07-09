@@ -58,10 +58,10 @@ public class PrettyPrinter extends Visitor {
 	}
 	public void visit(IfThenElse x) {
 		result += "if ";
-		x.exprIf.accept(this);
+		x.ifExpr.accept(this);
 		result += " then ";
-		x.exprThen.accept(this);
+		x.thenExpr.accept(this);
 		result += " else ";
-		x.exprElse.accept(this);
+		x.elseExpr.accept(this);
 	}
 }

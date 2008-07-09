@@ -44,9 +44,9 @@ public class Evaluator extends Visitor {
 	    }
 	}
 	public void visit(IfThenElse x) {
-	    result = evaluate(x.exprIf) != 0 ?
-		  evaluate(x.exprThen)
-		: evaluate(x.exprElse);
+	    result = evaluate(x.ifExpr) != 0 ?
+		  evaluate(x.thenExpr)
+		: evaluate(x.elseExpr);
 	}
 	public void visit(Apply x) {
 	    Function f = null;

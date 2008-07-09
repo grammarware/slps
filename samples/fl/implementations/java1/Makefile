@@ -19,6 +19,9 @@ TestEvaluator.class: TestEvaluator.java FLParser.java types/*.java
 FLScanner.java: FLParser.java
 
 FLParser.java: FL.g
+	make generate
+
+generate:
 	java org.antlr.Tool FL.g
 
 clean:

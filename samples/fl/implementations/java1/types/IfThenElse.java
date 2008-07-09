@@ -4,11 +4,11 @@ package types;
  * IfThenElse expression form
  */
 public class IfThenElse extends Expr {
-	public Expr exprIf, exprThen, exprElse;
-	public IfThenElse(Expr exprIf, Expr exprThen, Expr exprElse) {
-		this.exprIf = exprIf;
-		this.exprThen = exprThen;
-		this.exprElse = exprElse;
+	public Expr ifExpr, thenExpr, elseExpr;
+	public IfThenElse(Expr ifExpr, Expr thenExpr, Expr elseExpr) {
+		this.ifExpr = ifExpr;
+		this.thenExpr = thenExpr;
+		this.elseExpr = elseExpr;
 	}
 	public void accept(Visitor v) {
 		v.visit(this);
