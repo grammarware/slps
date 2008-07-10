@@ -3,7 +3,7 @@ module Optimizer where
 import Types
 import TraversalLib
 
-optimize :: Expr -> Expr
+optimize :: Data x => x -> x
 optimize = innermost (mkMp step)
   where
     step (Binary Plus x (Literal 0)) = Just x

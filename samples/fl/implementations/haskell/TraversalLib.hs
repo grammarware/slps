@@ -12,6 +12,9 @@ import Prelude hiding (repeat)
 
 -- Traversal schemes defined on top of Data.Generics
 
+bottomup :: Data x => (forall y. Data y => y -> y) -> x -> x
+bottomup f = f .  gmapT (bottomup f) 
+
 innermost :: GenericM Maybe -> GenericT
 innermost f = repeat (oncebu f)
 
