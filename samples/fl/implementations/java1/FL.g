@@ -16,7 +16,7 @@ function returns [Function function] :
         n=ID
         ( a=ID { args.add($a.text); } )+
         '='
-        e=expr NEWLINE
+        e=expr NEWLINE+
         { $function = new Function($n.text,args,$e.expr); }
         ;
 
