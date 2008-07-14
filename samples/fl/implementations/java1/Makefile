@@ -1,14 +1,19 @@
 include ../include.mk
 
-all: test
+all: build jar test
 
-test: TestIO.class TestEvaluator.class
+jar: build
+	jar cf javafl.jar *.class types/*.class
+
+test: build
 	@echo Testing implementation `pwd`
-	java -ea TestIO ${factorial} ${temp}
+	java -cp $$CLASSPATH:havafl.jar -ea TestIO ${factorial} ${temp}
 	diff ${factorial} ${temp}
 	rm -f temp.txt
 	java -ea TestEvaluator ${factorial} ${apply} 120
 	@echo Done.
+
+build: TestIO.class TestEvaluator.class
 
 TestIO.class: TestIO.java FLParser.java types/*.java
 	javac TestIO.java
@@ -28,6 +33,7 @@ clean:
 	rm -f *~
 	rm -f types/*~
 	rm -f *.class
+	rm -f *.jar
 	rm -f types/*.class
 	rm -f *.tokens
 	rm -f *Lexer.java
