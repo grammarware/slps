@@ -49,4 +49,4 @@ test:	all
 	@echo done
 
 clean:
-	rm *.o *~ TestIO TestEvaluator TestOptimizer FL.tab.c FL.tab.h lex.yy.c FL.output
+	rm -f *.o *~ TestIO TestEvaluator TestOptimizer FL.tab.c FL.tab.h lex.yy.c FL.output

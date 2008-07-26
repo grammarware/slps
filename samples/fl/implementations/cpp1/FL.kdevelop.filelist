@@ -31,8 +31,6 @@ CPrettyPrinter.h
 CVisitor.h
 EvaluationError.cpp
 EvaluationError.h
-FL.tab.c
-FL.tab.h
 Makefile
 ParserError.cpp
 ParserError.h
@@ -40,5 +38,3 @@ TestEvaluator.cpp
 TestIO.cpp
 TestOptimizer.cpp
 language.h
-lex.yy.c
-main.cc
