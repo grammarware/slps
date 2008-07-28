@@ -1,0 +1,516 @@
+<xsd:schema
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf"
+  xmlns:ldl="http://planet-sl.org/ldl"
+  xmlns:ldxl="http://planet-sl.org/ldxl"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  targetNamespace="http://planet-sl.org/xbgf">
+  
+  <xsd:annotation>
+    <xsd:documentation>
+      BGF transformations
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:import namespace="http://planet-sl.org/bgf" schemaLocation="bgf.xsd"/>
+  <xsd:import namespace="http://planet-sl.org/ldl" schemaLocation="ldl.xsd"/>
+
+  <xsd:group name="transformation">
+     <xsd:annotation>
+      <xsd:documentation>
+        Here is an alphabetical list of <xhtml:strong>all</xhtml:strong> the Xbgf <xhtml:a href="http://homepages.cwi.nl/~ralf/pt-scp/intro.html">transformations</xhtml:a>.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element ref="xbgf:add"/>
+      <xsd:element ref="xbgf:define"/>
+      <xsd:element ref="xbgf:downcase"/>
+      <xsd:element ref="xbgf:eliminate"/>
+      <xsd:element ref="xbgf:extract"/>
+      <xsd:element ref="xbgf:fold"/>
+      <xsd:element ref="xbgf:horizontal"/>
+      <xsd:element ref="xbgf:id"/>
+      <xsd:element ref="xbgf:inline"/>
+      <xsd:element ref="xbgf:introduce"/>
+      <xsd:element ref="xbgf:label"/>
+      <xsd:element ref="xbgf:massage"/>
+      <xsd:element ref="xbgf:prune"/>
+      <xsd:element ref="xbgf:permute"/>
+      <xsd:element ref="xbgf:project"/>
+      <xsd:element ref="xbgf:relax"/>
+      <xsd:element ref="xbgf:relabel"/>
+      <xsd:element ref="xbgf:remove"/>
+      <xsd:element ref="xbgf:rename"/>
+      <xsd:element ref="xbgf:reroot"/>
+      <xsd:element ref="xbgf:restrict"/>
+      <xsd:element ref="xbgf:sequence"/>
+      <xsd:element ref="xbgf:skip"/>
+      <xsd:element ref="xbgf:strip"/>
+      <xsd:element ref="xbgf:unchain"/>
+      <xsd:element ref="xbgf:undefine"/>
+      <xsd:element ref="xbgf:unfold"/>
+      <xsd:element ref="xbgf:unite"/>
+      <xsd:element ref="xbgf:vertical"/>
+    </xsd:choice>
+  </xsd:group>
+  
+  <xsd:element name="add">
+    <xsd:annotation>
+      <xsd:documentation>
+        Add a production for a nonterminal to an existing definition.
+        That is, the nonterminal is meant to be extended.
+        <ldxl:tail>
+        Use the <ldxl:reference>define</ldxl:reference> transformation if you want to resolve an undefined nonterminal.
+        
+        Use the <ldxl:reference>introduce</ldxl:reference> transformation if you want to define a fresh nonterminal.
+        <ldl:sample language="http://planet-sl.org/xbgf">
+          sorry, the sample is fake!
+        </ldl:sample>
+        </ldxl:tail>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="define">
+    <xsd:annotation>
+      <xsd:documentation>
+        Define a nonterminal in the sense of resolving uses without definition.
+        The nonterminal indeed must be undefined for the transformation to succeed.
+        Also, the nonterminal must be used in a using position.
+        Use the add transformation if you want to extend an existing definition.
+        Use the introduce transformation if you want to define a fresh nonterminal.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="downcase">
+    <xsd:annotation>
+      <xsd:documentation>
+        Transform all symbols (labels, nonterminals, selectors, terminals) to use lower case only.
+        One can think of other schemes of neutralizing differences between names (symbols).
+        For instance, one may want to appeal to Caml case.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType/>
+  </xsd:element>
+
+  <xsd:element name="eliminate" type="bgf:nonterminal">
+    <xsd:annotation>
+      <xsd:documentation>
+        Remove the definition of a nonterminal that is not used by the grammar elsewhere.
+        Use the remove transformation if you want to remove a single production.
+        Use the undefine transformation if you want to remove the definition despite remaining uses.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:element name="extract">
+    <xsd:annotation>
+      <xsd:documentation>
+        Extract a new definition d from an existing production p.
+        The operand of the transformation is a production p' that is the modified p.
+        The operand p' is used as follows:
+        1. The label (if any) and the nonterminal of p' are used to look up p.
+        2. p and p' are compared to find one difference in the phrase-based tree structure.
+        3. The difference must involve a nonterminal n on the side of p'.
+        4. We refer to the deviating subphrase in p as x.
+        5. p is now replaced by p' and the definition n -> x is added to the grammar.
+        The nonterminal n must be fresh in the input grammar for the transformation to succeed.
+      </xsd:documentation>      
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="fold">
+    <xsd:annotation>
+      <xsd:documentation>
+        This is an important variation on the extract transformation.
+        The definition is that the extracted definition is not added to the grammar.
+        Instead it is checked that there is an identical, existing definition.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="horizontal" type="bgf:nonterminal">
+    <xsd:annotation>
+      <xsd:documentation>
+        Turn a definition based on multiple productions into a choice-based one.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:element name="id">
+    <xsd:annotation>
+      <xsd:documentation>
+        This is the identity transformation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType/>
+  </xsd:element>
+
+  <xsd:element name="inline" type="bgf:nonterminal">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:element name="introduce">
+    <xsd:annotation>
+      <xsd:documentation>
+        Introduce a nonterminal by means of a definition.
+        The nonterminal must be fresh in the original grammar for this transformation to succeed.
+        Use the define transformation if you want to resolve an undefined nonterminal with uses.
+        Use the add transformation if you want to extend an existng definition by another production.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="label">
+    <xsd:annotation>
+      <xsd:documentation>
+        Add a label to a production.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="massage">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="permute">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="project">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>  
+  
+  <xsd:element name="prune" type="bgf:nonterminal">
+    <xsd:annotation>
+      <xsd:documentation>
+        Pruning a nonterminal n means that any RHS occurrence of the nonterminal disappears.
+        The nonterminal n must be undefined for the prune transformation to succeed.
+        Formally, the production n -> epsilon is assumed, which is then inlined.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:element name="relabel">
+    <xsd:annotation>
+      <xsd:documentation>
+        Add a different label to a production.
+        The new label must be fresh for the transformation to succeed.
+        Also, the production must not be unlabeled.
+        Use the label transformation to add a label to an unlabeled production.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="relax">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="remove">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="rename">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element name="label">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="from" type="bgf:label"/>
+              <xsd:element name="to" type="bgf:label"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="nonterminal">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="from" type="bgf:nonterminal"/>
+              <xsd:element name="to" type="bgf:nonterminal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="selector">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="in" type="bgf:label" minOccurs="0"/>
+              <xsd:element name="from" type="bgf:selector"/>
+              <xsd:element name="to" type="bgf:selector"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="terminal">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="from" type="bgf:terminal"/>
+              <xsd:element name="to" type="bgf:terminal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="reroot">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="root" type="bgf:nonterminal" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="restrict">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="sequence">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:group ref="xbgf:transformation" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="skip">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="strip">
+    <xsd:annotation>
+      <xsd:documentation>
+        Various details of productions can be stripped with this transformation.
+        In detail, one can strip labels, terminals, and selectors.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element name="label" type="bgf:label">
+          <xsd:annotation>
+            <xsd:documentation>
+              Stripping a label means that a production that uses the label becomes unlabeled.
+              For a label to be amenable to the transformation, it must be used exactly once.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="allLabels">
+          <xsd:annotation>
+            <xsd:documentation>
+              Stripping all labels means that all productions become unlabeled.
+              This transformation universally succeeds unless the grammar is free of labels already.
+            </xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType/>
+        </xsd:element>
+        <xsd:element name="selector" type="bgf:selector">
+          <xsd:annotation>
+            <xsd:documentation>
+              Stripping a selector s means that any RHS occurrence of the selector disappears.
+              That is, given a phrase x that consists of y to which s is applied, x is replaced by y.
+              For s to be amenable to the transformation, it must be used at least once.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="allSelectors">
+          <xsd:annotation>
+            <xsd:documentation>
+              Stripping all selectors.
+              This transformation universally succeeds unless the grammar is free of selectors already.
+            </xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType/>
+        </xsd:element>
+        <xsd:element name="terminal" type="bgf:terminal">
+          <xsd:annotation>
+            <xsd:documentation>
+              Stripping a terminal t means that any RHS occurrence of the terminal disappears.
+              Formally, this can be explained by replacing the terminal by epsilon.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="allTerminals">
+          <xsd:annotation>
+            <xsd:documentation>
+              Stripping all terminals.
+              This transformation universally succeeds unless the grammar is free of terminals already.
+            </xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType/>
+        </xsd:element>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="unchain" type="bgf:nonterminal">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:element name="undefine" type="bgf:nonterminal">
+    <xsd:annotation>
+      <xsd:documentation>
+        Undefine a nonterminal, i.e., remove all productions.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:element name="unfold">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="unite">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="add" type="bgf:nonterminal"/>
+        <xsd:element name="to" type="bgf:nonterminal"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="vertical">
+    <xsd:annotation>
+      <xsd:documentation>
+        Turn a choice-based definition into one based on multiple productions.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element name="nonterminal" type="bgf:nonterminal"/>
+        <xsd:element name="label" type="bgf:label"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>
