@@ -3,7 +3,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:ldf="http://planet-sl.org/ldf"
-  xmlns:ldxl="http://planet-sl.org/ldxl"
+  xmlns:ldx="http://planet-sl.org/ldx"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   targetNamespace="http://planet-sl.org/xbgf">
   
@@ -15,7 +15,7 @@
 
   <xsd:import namespace="http://planet-sl.org/bgf" schemaLocation="bgf.xsd"/>
   <xsd:import namespace="http://planet-sl.org/ldf" schemaLocation="ldf.xsd"/>
-
+ 
   <xsd:group name="transformation">
      <xsd:annotation>
       <xsd:documentation>
@@ -60,14 +60,14 @@
       <xsd:documentation>
         Add a production for a nonterminal to an existing definition.
         That is, the nonterminal is meant to be extended.
-        <ldxl:tail>
-        Use the <ldxl:reference>define</ldxl:reference> transformation if you want to resolve an undefined nonterminal.
+        <ldx:tail>
+        Use the <ldx:reference>define</ldx:reference> transformation if you want to resolve an undefined nonterminal.
         
-        Use the <ldxl:reference>introduce</ldxl:reference> transformation if you want to define a fresh nonterminal.
-        <ldf:sample language="http://planet-sl.org/xbgf">
+        Use the <ldx:reference>introduce</ldx:reference> transformation if you want to define a fresh nonterminal.
+        <ldx:sample language="http://planet-sl.org/xbgf">
           sorry, the sample is fake!
-        </ldf:sample>
-        </ldxl:tail>
+        </ldx:sample>
+        </ldx:tail>
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>

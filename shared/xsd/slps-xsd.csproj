@@ -42,6 +42,7 @@
     <None Include="bgf.xsd" />
     <None Include="btf.xsd" />
     <None Include="ldf.xsd" />
+    <None Include="ldx.xsd" />
     <None Include="xbgf.xsd" />
   </ItemGroup>
 </Project>

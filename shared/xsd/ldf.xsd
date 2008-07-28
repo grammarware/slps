@@ -2,7 +2,6 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
      xmlns:ldf="http://planet-sl.org/ldf"
      xmlns:bgf="http://planet-sl.org/bgf"
-     xmlns:ldxl="http://planet-sl.org/ldxl"
      xmlns:xhtml="http://www.w3.org/1999/xhtml/datatypes/"
      targetNamespace="http://planet-sl.org/ldf">
 
@@ -10,7 +9,7 @@
 
   <xsd:annotation>
     <xsd:documentation>
-      The Language Document Format.
+      Language Document Format.
       This is basically a metamodel for language documents or documentations.
 
       Sample program tags:
@@ -160,25 +159,5 @@
     </xsd:sequence>
     <xsd:anyAttribute namespace="##other" processContents="lax"/>
   </xsd:complexType>
-
-  <xsd:element name="reference" type="xsd:string">
-    <xsd:annotation>
-      <xsd:documentation>
-        A reference to a nonterminal
-        Generally, (reference)alpha(/reference) should mean something like
-        (a href="#alpha")alpha(/a)
-      </xsd:documentation>
-    </xsd:annotation>
-  </xsd:element>
-
-  <xsd:element name="tail" type="ldf:mixedType">
-    <xsd:annotation>
-      <xsd:documentation>
-        A documentation part that comes after the grammar in the resulting document,
-        yet precedes the grammar in the language document due to some idiosyncrasy.
-        This definition reuses the one from LDL, but this is not critical.
-      </xsd:documentation>
-    </xsd:annotation>
-  </xsd:element>
 
 </xsd:schema>
