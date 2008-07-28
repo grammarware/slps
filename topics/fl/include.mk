@@ -1,9 +1,9 @@
-repository = ../../repository
-factorial = ${repository}/factorial.txt
-xfactorial =  ${repository}/factorial.xml
+shared = ../shared
+factorial = ${shared}/factorial.txt
+xfactorial =  ${shared}/factorial.xml
 temp = temp.txt
-schema =  ${repository}/fl.xsd
-apply = ${repository}/fac5.txt
-xapply = ${repository}/fac5.xml
-unoptimized = ${repository}/sample88a.txt
-optimized = ${repository}/sample88b.txt
+schema =  ${shared}/fl.xsd
+apply = ${shared}/fac5.txt
+xapply = ${shared}/fac5.xml
+unoptimized = ${shared}/sample88a.txt
+optimized = ${shared}/sample88b.txt
