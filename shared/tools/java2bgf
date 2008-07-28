@@ -1,0 +1,25 @@
+#! /bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ..
+LOCAL2=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 3 ]; then
+    echo "Usage: java2bgf <basedir> <package-name> <bgf-ouput>"
+    exit 1
+elif [ ! -d $1 ]; then
+    echo "Oops: directory $1 not found."
+    exit 1
+else
+    # Get an absolute path to the extraction basedir
+    cd $1
+    LOCAL3=${PWD}
+    cd ${LOCAL2}/../topics/extraction/java2bgf/slps/java2bgf
+    javac *.java    
+    cd ${LOCAL1}
+    rm -f $3
+    java -cp ${CLASSPATH}:${LOCAL2}/../extraction/java2bgf:${LOCAL3} slps.java2bgf.Tool $*
+fi
