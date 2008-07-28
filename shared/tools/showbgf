@@ -7,13 +7,12 @@ cd ..
 LOCAL2=${PWD}
 cd ${LOCAL1}
 
-if [ $# -ne 2 ]; then
-    echo "Usage: dcg2bgf <prolog-input> <bgf-output>"
+if [ $# -ne 1 ]; then
+    echo "Usage: showbgf <bgf-input>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    rm -f $2
-    swipl -q -f ${LOCAL2}/prolog/dc\g2bgf.pro -- $1 $2
+    swipl -q -f ${LOCAL2}/prolog/showbgf.pro -- $1
 fi

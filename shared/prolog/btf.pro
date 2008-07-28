@@ -9,14 +9,14 @@
 
 :- multifile sxmlns/2.
 
-sxmlns(ltr,'http://planet-sl.org/ltr').
+sxmlns(btf,'http://planet-sl.org/btf').
 
 
 %
 % Parse a root
 %
 
-rootToLtr(SG,E,n(P,T))
+rootToBtf(SG,E,n(P,T))
  :-
     require(
       (
@@ -33,7 +33,7 @@ rootToLtr(SG,E,n(P,T))
       ),
       'No root determined,',
       []),
-    eToLtr(SG,QN,X,E,T),
+    eToBtf(SG,QN,X,E,T),
     !.
 
 
@@ -41,7 +41,7 @@ rootToLtr(SG,E,n(P,T))
 % Parse an entire element
 %
 
-eToLtr(SG,N1,X1,E,T3)
+eToBtf(SG,N1,X1,E,T3)
  :-
     (
       attribute(xsi:type,E,V) -> 
@@ -79,7 +79,7 @@ eToLtr(SG,N1,X1,E,T3)
     ),
     E = element(_,_,Ns1),
     require(
-      xToLtr(SG,Y,Ns1,Ns2,T1),
+      xToBtf(SG,Y,Ns1,Ns2,T1),
       'Cannot parse element ~q according to ~q.',
       [N1,Y]),
     require(
@@ -92,11 +92,11 @@ eToLtr(SG,N1,X1,E,T3)
 % Parse nodes according to an expression
 %
 
-xToLtr(_,true,Ns,Ns,true)
+xToBtf(_,true,Ns,Ns,true)
  :-
     !.
 
-xToLtr(SG,n(N),Ns1,Ns2,n(P,T))
+xToBtf(SG,n(N),Ns1,Ns2,n(P,T))
  :-
     findGlobal(SG,N,element,_),
     !,
@@ -108,10 +108,10 @@ xToLtr(SG,n(N),Ns1,Ns2,n(P,T))
     G = g(_,Ps),
     splitN(Ps,N,[P],_,_),
     P = p(_,_,X),
-    eToLtr(SG,N,X,E,T),
+    eToBtf(SG,N,X,E,T),
     !.
 
-xToLtr(SG,n(N),Ns1,Ns2,n(P,T))
+xToBtf(SG,n(N),Ns1,Ns2,n(P,T))
  :-
     findGlobal(SG,N,group,_),
     !,
@@ -119,10 +119,10 @@ xToLtr(SG,n(N),Ns1,Ns2,n(P,T))
     G = g(_,Ps),
     splitN(Ps,N,[P],_,_),
     P = p(_,_,X),
-    xToLtr(SG,X,Ns1,Ns2,T),
+    xToBtf(SG,X,Ns1,Ns2,T),
     !.
 
-xToLtr(SG,n(N),Ns1,Ns2,n(P,T))
+xToBtf(SG,n(N),Ns1,Ns2,n(P,T))
  :-
     findGlobal(SG,N,complexType,_),
     !,
@@ -130,10 +130,10 @@ xToLtr(SG,n(N),Ns1,Ns2,n(P,T))
     G = g(_,Ps),
     splitN(Ps,N,[P],_,_),
     P = p(_,_,X),
-    xToLtr(SG,X,Ns1,Ns2,T),
+    xToBtf(SG,X,Ns1,Ns2,T),
     !.
 
-xToLtr(SG,n(N),Ns,[],T)
+xToBtf(SG,n(N),Ns,[],T)
  :-
     findGlobal(SG,N,simpleType,_),
     !,
@@ -143,7 +143,7 @@ xToLtr(SG,n(N),Ns,[],T)
     splitN(Ps,N,[_],_,_),
     !.
 
-xToLtr(SG,n(QN),Ns1,Ns2,T)
+xToBtf(SG,n(QN),Ns1,Ns2,T)
  :-
     qname(QN,Pfx,N),
     SG = (S,_,SGs),
@@ -162,12 +162,12 @@ xToLtr(SG,n(QN),Ns1,Ns2,T)
             SG1 = (S1,_),
             attribute(targetNamespace,S1,Ns),
             !,
-            xToLtr(SG1,n(N),Ns1,Ns2,T)
+            xToBtf(SG1,n(N),Ns1,Ns2,T)
           )
     ),
     !.
 
-xToLtr(SG,s(Sel,X),Ns1,Ns2,s(Sel,T))
+xToBtf(SG,s(Sel,X),Ns1,Ns2,s(Sel,T))
  :-
     !,
     nextElement(Ns1,E,Ns2),
@@ -186,38 +186,38 @@ xToLtr(SG,s(Sel,X),Ns1,Ns2,s(Sel,T))
           N = Tns:Sel
         ) 
     )),
-    eToLtr(SG,Sel,X,E,T),
+    eToBtf(SG,Sel,X,E,T),
     !.
 
-xToLtr(SG,','(Xs),Es1,Es2,','(Ts))
+xToBtf(SG,','(Xs),Es1,Es2,','(Ts))
  :-
     !,
-    accum(xToLtr(SG),Xs,Es1,Es2,Ts),
+    accum(xToBtf(SG),Xs,Es1,Es2,Ts),
     !.
 
-xToLtr(SG,';'(Xs),Es1,Es2,';'(X,T))
+xToBtf(SG,';'(Xs),Es1,Es2,';'(X,T))
  :-
     !,
     member(X,Xs),
-    xToLtr(SG,X,Es1,Es2,T),
+    xToBtf(SG,X,Es1,Es2,T),
     !.
 
-xToLtr(SG,'*'(X),Es1,Es2,'*'(Ts))
+xToBtf(SG,'*'(X),Es1,Es2,'*'(Ts))
  :-
     !,
-    manyToLtr(SG,X,Es1,Es2,Ts),
+    manyToBtf(SG,X,Es1,Es2,Ts),
     !.
 
-xToLtr(SG,'+'(X),Es1,Es2,'+'(Ts))
+xToBtf(SG,'+'(X),Es1,Es2,'+'(Ts))
  :-
     !,
-    many1ToLtr(SG,X,Es1,Es2,Ts),
+    many1ToBtf(SG,X,Es1,Es2,Ts),
     !.
 
-xToLtr(SG,'?'(X),Es1,Es2,'?'(Ts))
+xToBtf(SG,'?'(X),Es1,Es2,'?'(Ts))
  :-
     !,
-    optionalToLtr(SG,X,Es1,Es2,Ts),
+    optionalToBtf(SG,X,Es1,Es2,Ts),
     !.
 
 
@@ -239,30 +239,30 @@ findGlobal(SG,N,C,Gl)
 % Parse according to occurrence constraints
 %
 
-many1ToLtr(SG,X,Es1,Es3,[T|Ts])
+many1ToBtf(SG,X,Es1,Es3,[T|Ts])
  :-
-    xToLtr(SG,X,Es1,Es2,T),
+    xToBtf(SG,X,Es1,Es2,T),
     !,
-    manyToLtr(SG,X,Es2,Es3,Ts),
+    manyToBtf(SG,X,Es2,Es3,Ts),
     !.
 
-manyToLtr(SG,X,Es1,Es3,[T|Ts])
+manyToBtf(SG,X,Es1,Es3,[T|Ts])
  :-
-    xToLtr(SG,X,Es1,Es2,T),
+    xToBtf(SG,X,Es1,Es2,T),
     !,
-    manyToLtr(SG,X,Es2,Es3,Ts),
+    manyToBtf(SG,X,Es2,Es3,Ts),
     !.
 
-manyToLtr(_,_,Es,Es,[])
+manyToBtf(_,_,Es,Es,[])
  :-
     !.
 
-optionalToLtr(SG,X,Es1,Es2,[T])
+optionalToBtf(SG,X,Es1,Es2,[T])
  :-
-    xToLtr(SG,X,Es1,Es2,T),
+    xToBtf(SG,X,Es1,Es2,T),
     !.
 
-optionalToLtr(_,_,Es,Es,[])
+optionalToBtf(_,_,Es,Es,[])
  :-
     !.
 

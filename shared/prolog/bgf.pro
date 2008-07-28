@@ -1,13 +1,10 @@
-:- ensure_loaded('ll.pro').
-
-
 %
 % Static namespace declarations
 %
 
 :- multifile sxmlns/2.
 
-sxmlns(lgf,'http://planet-sl.org/lgf').
+sxmlns(bgf,'http://planet-sl.org/bgf').
 
 
 % Return all root nonterminals of a grammar

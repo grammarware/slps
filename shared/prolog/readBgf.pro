@@ -1,12 +1,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Comstruct Prolog-based LGF representation from XML representation %
+% Comstruct Prolog-based BGF representation from XML representation %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 xmlToG(G,g(Rs2,Ps2))
  :-
-    self(name(lgf:grammar),G), 
+    self(name(bgf:grammar),G), 
     children(name(root),G,Rs1),
-    children(name(lgf:production),G,Ps1),
+    children(name(bgf:production),G,Ps1),
     maplist(xmlToR,Rs1,Rs2),
     maplist(xmlToP,Ps1,Ps2),
     !.
@@ -19,7 +19,7 @@ xmlToR(R,N)
 
 xmlToP(P,p(As,V,X))
  :-
-    self(name(lgf:production),P),
+    self(name(bgf:production),P),
     !,
     ( child(name(label),P,LA) ->
           ( 
@@ -30,13 +30,13 @@ xmlToP(P,p(As,V,X))
     ),
     child(name(nonterminal),P,N),
     content(N,V),
-    child(name(lgf:expression),P,X1),
+    child(name(bgf:expression),P,X1),
     xmlToExpression(X1,X),
     !.
 
 xmlToExpression(X1,X3) 
  :-
-    self(name(lgf:expression),X1),
+    self(name(bgf:expression),X1),
     !,
     child(element,X1,X2),
     xmlToX(X2,X3),
@@ -77,7 +77,7 @@ xmlToX(X1,s(S2,X3))
     !,
     child(name(selector),X1,S1),
     content(S1,S2),
-    child(name(lgf:expression),X1,X2),
+    child(name(bgf:expression),X1,X2),
     xmlToExpression(X2,X3),
     !.
 

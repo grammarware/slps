@@ -1,5 +1,4 @@
-:- ensure_loaded('ll.pro').
-
+:- ensure_loaded('slps.pro').
 
 :- 
    current_prolog_flag(argv,Argv),

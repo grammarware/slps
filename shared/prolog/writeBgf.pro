@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Map Prolog-based LGF representation to XML representation %
+% Map Prolog-based BGF representation to XML representation %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 gToXml(g(Rs1,Ps1),G)
@@ -7,7 +7,7 @@ gToXml(g(Rs1,Ps1),G)
     maplist(rToXml,Rs1,Rs2),
     maplist(pToXml,Ps1,Ps2),
     append(Rs2,Ps2,Kids),
-    e(lgf:grammar,[],Kids,G).
+    e(bgf:grammar,[],Kids,G).
 
 rToXml(N,R)
  :-
@@ -27,7 +27,7 @@ pToXml(p(As1,V,X1),P)
     xToXml(X1,X2),
     xToExpression(X2,X3),
     append(As2,[N,X3],Cs),
-    e(lgf:production,[],Cs,P).
+    e(bgf:production,[],Cs,P).
 
 xToXml(true,X) 
  :-
@@ -88,4 +88,4 @@ xToXml('+'(M),X)
 
 xToExpression(X1,X2)
  :-
-    e(lgf:expression,[],[X1],X2).
+    e(bgf:expression,[],[X1],X2).

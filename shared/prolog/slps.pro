@@ -3,10 +3,10 @@
 
 :- ensure_loaded('prelude.pro').
 :- ensure_loaded('xmlLib.pro').
-:- ensure_loaded('lgf.pro').
-:- ensure_loaded('ltr.pro').
-:- ensure_loaded('readLgf.pro').
-:- ensure_loaded('writeLgf.pro').
-:- ensure_loaded('readLtr.pro').
-:- ensure_loaded('writeLtr.pro').
+:- ensure_loaded('bgf.pro').
+:- ensure_loaded('btf.pro').
+:- ensure_loaded('readBgf.pro').
+:- ensure_loaded('writeBgf.pro').
+:- ensure_loaded('readBtf.pro').
+:- ensure_loaded('writeBtf.pro').
 :- ensure_loaded('xsd.pro').

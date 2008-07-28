@@ -7,7 +7,7 @@
 
 :- multifile sxmlns/2.
 
-sxmlns(xlgf,'http://planet-sl.org/xlgf').
+sxmlns(xbgf,'http://planet-sl.org/xbgf').
 
 
 % Define a nonterminal
@@ -761,19 +761,19 @@ vertical_rule(As,_,N,X,p(As,N,X)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:define),T),
+    self(name(xbgf:define),T),
     !,
-    children(name(lgf:production),T,Ps1),
+    children(name(bgf:production),T,Ps1),
     maplist(xmlToP,Ps1,Ps2),
     format(' * define ~q~n',[Ps2]),
     defineN(Ps2,G1,G2),
     !.
 
-xlgf(T,G1,G4)
+xbgf(T,G1,G4)
  :-
-    self(name(xlgf:downcase),T),
+    self(name(xbgf:downcase),T),
     !,
 
     % Downcase nonterminals
@@ -805,104 +805,104 @@ xlgf(T,G1,G4)
 
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:extract),T),
+    self(name(xbgf:extract),T),
     !,
-    child(name(lgf:production),T,P1),
+    child(name(bgf:production),T,P1),
     xmlToP(P1,P2),
     format(' * extract ~q~n',[P2]),
     extract(P2,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:fold),T),
+    self(name(xbgf:fold),T),
     !,
-    child(name(lgf:production),T,P1),
+    child(name(bgf:production),T,P1),
     xmlToP(P1,P2),
     format(' * fold ~q~n',[P2]),
     fold(P2,G1,G2),
     !.
 
-xlgf(T,G,G)
+xbgf(T,G,G)
  :-
-    self(name(xlgf:id),T),
+    self(name(xbgf:id),T),
     !,
     format(' * id~n',[]),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:inline),T),
+    self(name(xbgf:inline),T),
     !,
     content(T,N),
     format(' * inline nonterminal ~q~n',[N]),
     inline(N,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:introduce),T),
+    self(name(xbgf:introduce),T),
     !,
-    children(name(lgf:production),T,Ps1),
+    children(name(bgf:production),T,Ps1),
     maplist(xmlToP,Ps1,Ps2),
     format(' * introduce ~q~n',[Ps2]),
     introduceN(Ps2,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:label),T),
+    self(name(xbgf:label),T),
     !,
-    child(name(lgf:production),T,P1),
+    child(name(bgf:production),T,P1),
     xmlToP(P1,P2),
     format(' * label ~q~n',[P2]),
     labelP(P2,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:massage),T),
+    self(name(xbgf:massage),T),
     !,
-    child(name(lgf:production),T,P1),
+    child(name(bgf:production),T,P1),
     xmlToP(P1,P2),
     format(' * massage ~q~n',[P2]),
     massageP(P2,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:permute),T),
+    self(name(xbgf:permute),T),
     !,
-    child(name(lgf:production),T,P1),
+    child(name(bgf:production),T,P1),
     xmlToP(P1,P2),
     format(' * permute ~q~n',[P2]),
     permuteP(P2,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:prune),T),
+    self(name(xbgf:prune),T),
     !,
     content(T,N),
     format(' * prune nonterminal ~q~n',[N]),
     prune(N,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:remove),T),
+    self(name(xbgf:remove),T),
     !,
-    child(name(lgf:production),T,P1),
+    child(name(bgf:production),T,P1),
     xmlToP(P1,P2),
     format(' * remove ~q~n',[P2]),
     removeP(P2,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:rename),T),
+    self(name(xbgf:rename),T),
     !,
     (
       child(name(label),T,X),
@@ -936,9 +936,9 @@ xlgf(T,G1,G2)
     F3,
     !.
 
-xlgf(T,G,g(Rs2,Ps))
+xbgf(T,G,g(Rs2,Ps))
  :-
-    self(name(xlgf:reroot),T),
+    self(name(xbgf:reroot),T),
     !,
     G = g(_,Ps),
     children(name(root),T,Rs1),
@@ -952,27 +952,27 @@ xlgf(T,G,g(Rs2,Ps))
        [Ns2]),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:restrict),T),
+    self(name(xbgf:restrict),T),
     !,
-    child(name(lgf:production),T,P1),
+    child(name(bgf:production),T,P1),
     xmlToP(P1,P2),
     format(' * restrict ~q~n',[P2]),
     restrictP(P2,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:sequence),T),
+    self(name(xbgf:sequence),T),
     !,
     children(element,T,Ts),
-    accum(xlgf,Ts,G1,G2),
+    accum(xbgf,Ts,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:strip),T),
+    self(name(xbgf:strip),T),
     child(name(label),T,T1),
     !,
     content(T1,L),
@@ -980,18 +980,18 @@ xlgf(T,G1,G2)
     stripL(L,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:strip),T),
+    self(name(xbgf:strip),T),
     child(name(allLabels),T,_),
     !,
     format(' * strip all labels~n',[]),
     stripLs(G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:strip),T),
+    self(name(xbgf:strip),T),
     child(name(selector),T,T1),
     !,
     content(T1,S),
@@ -999,18 +999,18 @@ xlgf(T,G1,G2)
     stripS(S,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:strip),T),
+    self(name(xbgf:strip),T),
     child(name(allSelectors),T,_),
     !,
     format(' * strip all selectors~n',[]),
     stripSs(G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:strip),T),
+    self(name(xbgf:strip),T),
     child(name(terminal),T,T1),
     !,
     content(T1,T2),
@@ -1018,46 +1018,46 @@ xlgf(T,G1,G2)
     stripT(T,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:strip),T),
+    self(name(xbgf:strip),T),
     child(name(allTerminals),T,_),
     !,
     format(' * strip all terminals~n',[]),
     stripTs(G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:unchain),T),
+    self(name(xbgf:unchain),T),
     !,
     content(T,N),
     format(' * unchain ~q~n',[N]),
     unchainN(N,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:undefine),T),
+    self(name(xbgf:undefine),T),
     !,
     content(T,N),
     format(' * undefine ~q~n',[N]),
     undefine(N,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:unfold),T),
+    self(name(xbgf:unfold),T),
     !,
-    child(name(lgf:production),T,P1),
+    child(name(bgf:production),T,P1),
     xmlToP(P1,P2),
     format(' * unfold ~q~n',[P2]),
     unfold(P2,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:unite),T),
+    self(name(xbgf:unite),T),
     !,
     child(name(add),T,Add),
     child(name(to),T,To),
@@ -1067,9 +1067,9 @@ xlgf(T,G1,G2)
     uniteN(N1,N2,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:vertical),T),
+    self(name(xbgf:vertical),T),
     child(name(label),T,T1),
     !,
     content(T1,L),
@@ -1077,9 +1077,9 @@ xlgf(T,G1,G2)
     verticalL(L,G1,G2),
     !.
 
-xlgf(T,G1,G2)
+xbgf(T,G1,G2)
  :-
-    self(name(xlgf:vertical),T),
+    self(name(xbgf:vertical),T),
     child(name(nonterminal),T,T1),
     !,
     content(T1,N),
@@ -1091,16 +1091,16 @@ xlgf(T,G1,G2)
 main 
  :- 
     current_prolog_flag(argv,Argv),
-    append(_,['--',LgfIn,XlgfIn,LgfOut],Argv),
-    ( exists_file(LgfOut) -> delete_file(LgfOut); true ),
-    load_structure(LgfIn, [G1], [dialect(xmlns)]),
+    append(_,['--',BgfIn,XbgfIn,BgfOut],Argv),
+    ( exists_file(BgfOut) -> delete_file(BgfOut); true ),
+    load_structure(BgfIn, [G1], [dialect(xmlns)]),
     xmlToG(G1,G2),
-    format(' * normalize~n',[LgfIn]),
+    format(' * normalize~n',[BgfIn]),
     normalizeG(G2,G3),
-    load_structure(XlgfIn, [T], [dialect(xmlns)]),
-    xlgf(T,G3,G4),
+    load_structure(XbgfIn, [T], [dialect(xmlns)]),
+    xbgf(T,G3,G4),
     gToXml(G4,G5),
-    open(LgfOut, write, OStream),
+    open(BgfOut, write, OStream),
     xml_write(OStream,G5,[]),
     close(OStream),
     halt.
