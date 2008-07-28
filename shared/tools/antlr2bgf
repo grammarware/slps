@@ -1,0 +1,27 @@
+#! /bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ..
+LOCAL2=${PWD}
+cd ${LOCAL1}
+cd `dirname $1`
+LOCAL3=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 2 ]; then
+    echo "Usage: antlr2bgf <ANTLR-input> <BGF-ouput>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    # Build extractor if needed
+    cd ${LOCAL2}/../topics/extraction/antlr2bgf
+    make
+    cd ${LOCAL1}
+    rm -f $2
+    python ${LOCAL2}/../topics/extraction/antlr2bgf/antlrstrip.py ${LOCAL3}/`basename $1` $1.stripped
+    java -cp ${CLASSPATH}:${LOCAL2}/../extraction/antlr2bgf slps.antlr2bgf.Tool $1.stripped $2
+fi

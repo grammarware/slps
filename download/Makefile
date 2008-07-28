@@ -1,4 +1,9 @@
-install: install-fop install-msv install-et install-pp
+all:
+
+install: install-antlr install-fop install-msv install-et install-pp
+
+install-antlr:
+	curl -k http://www.antlr.org/download/antlrworks-1.1.7.jar > antlrworks-1.1.7.jar
 
 install-et:
 	curl -k http://effbot.org/media/downloads/elementtree-1.2.7-20070827-preview.zip > elementtree.zip
@@ -39,6 +44,7 @@ clean-temps:
 clean:
 	rm -f *~
 	make clean-temps
+	rm -f antlrworks-1.1.7.jar
 	rm -rf fop
 	rm -rf msv
 
