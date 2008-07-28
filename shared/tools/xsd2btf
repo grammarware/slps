@@ -1,0 +1,22 @@
+#! /bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ..
+LOCAL2=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 3 ]; then
+    echo "Usage: xsd2btf <xsd-input> <xml-input> <btf-output>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+    exit 1
+else
+    rm -f $3
+    swipl -q -f ${LOCAL2}/prolog/xsd2btf.pro -- $1 $2 $3
+fi

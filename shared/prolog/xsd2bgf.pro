@@ -1,13 +1,12 @@
-:- ensure_loaded('ll.pro').
-
+:- ensure_loaded('slps.pro').
 
 main 
  :-
     current_prolog_flag(argv,Argv),
-    append(_,['--',XsdFile,LgfFile],Argv),
+    append(_,['--',XsdFile,BgfFile],Argv),
     loadXsd(XsdFile,(_,G,_)),
     gToXml(G,Xml),
-    saveXml(LgfFile,Xml),
+    saveXml(BgfFile,Xml),
     halt.
 
 :- run.

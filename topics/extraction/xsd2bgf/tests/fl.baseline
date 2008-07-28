@@ -1,0 +1,13 @@
+Loading XML file 'tests/fl.bgf'.
+g( ['Program', 'Fragment'], [
+  p([], 'Program', +s(function, n('Function'))),
+  p([], 'Fragment', n('Expr')),
+  p([], 'Function', ','([s(name, n('xsd:string')), +s(arg, n('xsd:string')), s(rhs, n('Expr'))])),
+  p([], 'Expr', ;([n('Literal'), n('Argument'), n('Binary'), n('IfThenElse'), n('Apply')])),
+  p([], 'Literal', s(info, n('xsd:int'))),
+  p([], 'Argument', s(name, n('xsd:string'))),
+  p([], 'Binary', ','([s(ops, n('Ops')), s(left, n('Expr')), s(right, n('Expr'))])),
+  p([], 'Ops', ;([s('Equal', true), s('Plus', true), s('Minus', true)])),
+  p([], 'IfThenElse', ','([s(ifExpr, n('Expr')), s(thenExpr, n('Expr')), s(elseExpr, n('Expr'))])),
+  p([], 'Apply', ','([s(name, n('xsd:string')), +s(arg, n('Expr'))]))
+])
