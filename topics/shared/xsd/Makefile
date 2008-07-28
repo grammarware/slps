@@ -1,4 +1,4 @@
-all:
+build:
 
 clean:
 	rm -rf bin
