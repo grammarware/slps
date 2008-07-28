@@ -1,0 +1,23 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 2 ]; then
+    echo "This tool transforms Language Document Format to Portable Document Format"
+    echo "Usage: ldf2pdf <input-language-document> <output-pdf>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    rm -f $2
+    sh ${SLPS}/shared/tools/ldf2html $1 html.tmp
+    xsltproc ${SLPS}/shared/xsl/xhtml2fo.xslt html.tmp > fo.tmp
+    ${SLPS}/download/fop/fop -q fo.tmp $2
+    rm -f html.tmp fo.tmp
+fi
+

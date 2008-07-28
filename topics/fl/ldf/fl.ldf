@@ -1,0 +1,134 @@
+<ldf:document
+  xmlns:ldf="http://planet-sl.org/ldf"
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <title>The Factorial Language</title>
+  <author>The Software Languages Team in Koblenz</author>
+  <abstract>
+    The Factorial Language (FL) is a trivial functional language;
+    it's a toy language made up as an illustrative language for language processing.
+    It's carefully designed to be trivial
+    but still involved enough to trigger a lot of issues in language processing
+    (including issues of parsing, semantics, type checking, transformation).
+    This document provides a documentation of the FL language.
+  </abstract>
+  <content>
+    <section>
+      <title>A quick start</title>
+      <content>
+        <text>
+          Here is sample that hopefully explains the name of the language.
+          That is, FL is capable of expressing the factorial function.
+          We need a helper function for multiplication because FL provides addition but not multiplication.
+        </text>
+        <sample language="http://planet-sl.org/fl/" id="main_library">
+          mult n m = if (n==0) then 0 else (m + (mult (n - 1) m))
+          fac n = if (n==0) then 1 else (mult n (fac (n - 1)))
+        </sample>
+        <text>
+          Functions are called by placing their arguments after their names:
+        </text>
+        <runnable language="http://planet-sl.org/fl/">
+          <context>main_library</context>
+          <main>mult</main>
+          <argument>5</argument>
+          <argument>7</argument>
+          <yields>35</yields>
+        </runnable>
+        <runnable language="http://planet-sl.org/fl/">
+          <context>main_library</context>
+          <main>fac</main>
+          <argument>5</argument>
+          <yields>120</yields>
+        </runnable>
+      </content>
+    </section>
+    <section>
+      <title>FL programs</title>
+      <content>
+        <text>
+          As illustrated above, FL programs are lists of function definitions.
+          Each function definition has 1 or more integer-typed arguments.
+          The following grammar fragment shows this formally.
+        </text>
+        <grammar language="http://planet-sl.org/fl/">
+          <bgf:production>
+            <nonterminal>program</nonterminal>
+            <bgf:expression>
+              <plus>
+                <bgf:expression>
+                  <nonterminal>function</nonterminal>
+                </bgf:expression>
+              </plus>
+            </bgf:expression>
+          </bgf:production>
+        </grammar>
+        <text>
+          Function definitions are separated by one or more eoln markers.
+          More details are explained in the next section.
+        </text>
+      </content>
+    </section>
+    <section>
+      <title>FL functions</title>
+      <content>
+        <text>
+          Function defintions are separated by newlines.
+        </text>
+        <grammar language="http://planet-sl.org/fl/">
+          <bgf:production>
+            <nonterminal>function</nonterminal>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <nonterminal>name</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <plus>
+                    <bgf:expression>
+                      <nonterminal>name</nonterminal>
+                    </bgf:expression>
+                  </plus>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>=</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>=</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>expr</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <plus>
+                    <bgf:expression>
+                      <nonterminal>eoln</nonterminal>
+                    </bgf:expression>
+                  </plus>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </bgf:production>
+        </grammar>
+        <text>
+          Each function definition consists of
+          a name of the function,
+          its arguments (again, names),
+          and a right-hand side expression.
+        </text>
+        
+      </content>
+    </section>
+    <section>
+      <title>FL expression forms</title>
+      <content>
+        <text>
+          An expression is understood intuitively by everyone:
+        </text>
+        <sample language="http://planet-sl.org/fl/" sort="expr">
+          (1 + 2) - 3
+        </sample>
+      </content>
+    </section>
+  </content>
+</ldf:document>

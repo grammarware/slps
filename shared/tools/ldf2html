@@ -1,0 +1,19 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 2 ]; then
+    echo "This tool transforms Language Document Format to HyperText Markup Language"
+    echo "Usage: ldf2html <input-language-document> <output-hypertext>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    rm -f $2
+    xsltproc ${SLPS}/shared/xsl/ldf2xhtml.xslt $1 |  python ${SLPS}/topics/extraction/ldf2pdf/closemeta.py > $2
+fi
