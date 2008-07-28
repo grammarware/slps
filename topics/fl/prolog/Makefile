@@ -1,6 +1,6 @@
 include ../include.mk
 
-all: test
+build:
 
 test: 
 	@echo Testing implementation `pwd`
