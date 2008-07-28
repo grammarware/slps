@@ -1,11 +1,11 @@
 include ../include.mk
 
-all: build jar test
+build: classes jar
 
-jar: build
+jar: classes
 	jar cf javafl.jar *.class types/*.class
 
-test: build
+test: classes
 	@echo Testing implementation `pwd`
 	java -cp $$CLASSPATH:havafl.jar -ea TestIO ${factorial} ${temp}
 	diff ${factorial} ${temp}
@@ -13,7 +13,7 @@ test: build
 	java -ea TestEvaluator ${factorial} ${apply} 120
 	@echo Done.
 
-build: TestIO.class TestEvaluator.class
+classes: TestIO.class TestEvaluator.class
 
 TestIO.class: TestIO.java FLParser.java types/*.java
 	javac TestIO.java
