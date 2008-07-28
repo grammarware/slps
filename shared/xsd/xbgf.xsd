@@ -2,7 +2,7 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
-  xmlns:ldl="http://planet-sl.org/ldl"
+  xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:ldxl="http://planet-sl.org/ldxl"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   targetNamespace="http://planet-sl.org/xbgf">
@@ -14,7 +14,7 @@
   </xsd:annotation>
 
   <xsd:import namespace="http://planet-sl.org/bgf" schemaLocation="bgf.xsd"/>
-  <xsd:import namespace="http://planet-sl.org/ldl" schemaLocation="ldl.xsd"/>
+  <xsd:import namespace="http://planet-sl.org/ldf" schemaLocation="ldf.xsd"/>
 
   <xsd:group name="transformation">
      <xsd:annotation>
@@ -64,9 +64,9 @@
         Use the <ldxl:reference>define</ldxl:reference> transformation if you want to resolve an undefined nonterminal.
         
         Use the <ldxl:reference>introduce</ldxl:reference> transformation if you want to define a fresh nonterminal.
-        <ldl:sample language="http://planet-sl.org/xbgf">
+        <ldf:sample language="http://planet-sl.org/xbgf">
           sorry, the sample is fake!
-        </ldl:sample>
+        </ldf:sample>
         </ldxl:tail>
       </xsd:documentation>
     </xsd:annotation>

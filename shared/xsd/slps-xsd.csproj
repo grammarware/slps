@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{11B9E6F0-2AB1-4AFA-954A-AB98B7B71390}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -41,6 +41,7 @@
   <ItemGroup>
     <None Include="bgf.xsd" />
     <None Include="btf.xsd" />
+    <None Include="ldf.xsd" />
     <None Include="xbgf.xsd" />
   </ItemGroup>
 </Project>
