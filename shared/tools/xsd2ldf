@@ -1,0 +1,25 @@
+#! /bin/sh
+
+# Get our hands on the languedoc basedir
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 2 ]; then
+    echo "This tool transforms XML Schema Definition to Language Document Format"
+    echo "Usage: xsd2ldf <input-schema> <output-language-document>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    rm -f $2
+    sh ${SLPS}/shared/tools/xsd2bgf $1 bgf.tmp
+    python ${SLPS}/topics/extraction/xsd2ldf/ldfgen.py $1 bgf.tmp $2
+    xsltproc ${SLPS}/shared/xsl/ldl2ldl_tail.xslt $2 >ldf.tmp
+    xsltproc ${SLPS}/shared/xsl/ldl2ldl_lift.xslt ldf.tmp >$2
+    rm -f lgf.tmp
+fi
+
