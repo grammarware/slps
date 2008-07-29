@@ -42,6 +42,7 @@
     <Content Include="ldf2bgf.xslt" />
     <Content Include="ldf2ldf_lift.xslt" />
     <Content Include="ldf2ldf_tail.xslt" />
+    <Content Include="ldf2samples.xslt" />
     <Content Include="ldf2xhtml.xslt" />
   </ItemGroup>
 </Project>
