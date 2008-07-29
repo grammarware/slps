@@ -2,7 +2,7 @@ include ../include.mk
 parserfiles = Factory.java FLParser.java FLLexer.java
 types = fl/types/Program.java
 
-all: test
+build:
 
 test: \
 		TestIO.class \
