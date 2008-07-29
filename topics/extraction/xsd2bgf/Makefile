@@ -1,4 +1,4 @@
-fl = ../../fl/shared/fl.xsd
+fl = ../../fl/xsd/fl.xsd
 bgf = ../../../shared/xsd/bgf.xsd
 xbgf = ../../../shared/xsd/xbgf.xsd
 

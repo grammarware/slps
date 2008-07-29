@@ -22,5 +22,5 @@ else
     javac *.java    
     cd ${LOCAL1}
     rm -f $3
-    java -cp ${CLASSPATH}:${LOCAL2}/../extraction/java2bgf:${LOCAL3} slps.java2bgf.Tool $*
+    java -cp ${CLASSPATH}:${LOCAL2}/../topics/extraction/java2bgf:${LOCAL3} slps.java2bgf.Tool $*
 fi

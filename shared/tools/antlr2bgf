@@ -23,5 +23,5 @@ else
     cd ${LOCAL1}
     rm -f $2
     python ${LOCAL2}/../topics/extraction/antlr2bgf/antlrstrip.py ${LOCAL3}/`basename $1` $1.stripped
-    java -cp ${CLASSPATH}:${LOCAL2}/../extraction/antlr2bgf slps.antlr2bgf.Tool $1.stripped $2
+    java -cp ${CLASSPATH}:${LOCAL2}/../topics/extraction/antlr2bgf slps.antlr2bgf.Tool $1.stripped $2
 fi
