@@ -201,7 +201,7 @@
         <xsl:value-of select="./nonterminal"/>
       </strong>
       ::=
-      <xsl:apply-templates select="./expression"/>
+      <xsl:apply-templates select="./bgf:expression"/>
       <br/>
      </code>
   </xsl:template>
@@ -221,7 +221,11 @@
   <xsl:template match="terminal">
     "<xsl:value-of select="."/>"
   </xsl:template>
-
+  
+  <xsl:template match="epsilon">
+    <em xmlns="http://www.w3.org/1999/xhtml">empty</em>
+  </xsl:template>
+  
   <xsl:template match="nonterminal">
     <a xmlns="http://www.w3.org/1999/xhtml">
       <xsl:attribute name = "href">#<xsl:value-of select="."/>
@@ -236,9 +240,9 @@
   
   <xsl:template match="choice">
     <xsl:call-template name="car">
-      <xsl:with-param name="expr" select="./expression[1]"/>
+      <xsl:with-param name="expr" select="./bgf:expression[1]"/>
     </xsl:call-template>
-    <xsl:for-each select="./expression[position()>1]">
+    <xsl:for-each select="./bgf:expression[position()>1]">
       <xsl:call-template name="cdr">
         <xsl:with-param name="expr" select="."/>
       </xsl:call-template>

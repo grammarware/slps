@@ -12,7 +12,7 @@ htmlns= 'http://www.w3.org/1999/xhtml'
 ET._namespace_map[ldfns] = 'ldf'
 ET._namespace_map[bgfns] = 'bgf'
 ET._namespace_map[xbgfns]='xbgf'
-ET._namespace_map[ldxns]='ldx'
+ET._namespace_map[ldxns] = 'ldx'
 ET._namespace_map[xsdns] = 'xsd'
 ET._namespace_map[htmlns]='html'
 
