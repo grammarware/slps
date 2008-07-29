@@ -348,13 +348,14 @@ def runtestset():
 
 if __name__ == "__main__":
  if len(sys.argv) == 3:
+  print 'Language Covergence Infrastructure v1.1'
   readconfig(sys.argv[1])
   makegraph(sys.argv[2])
   runforall('extract', 'Extraction')
   if actions.has_key('validate'):
    runforall('validate','Validation')
   buildtargets()
-  print 'Grammar synchronisation ended successfully.'
+  print 'Grammar convergence ended successfully.'
   if actions.has_key('test'):
    unpacksamples()
    runtestset()

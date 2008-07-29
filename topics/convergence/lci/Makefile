@@ -1,8 +1,5 @@
 all:
-	python lci.py lci-fl.cfg architecture.pdf
+	cd ../../fl/lci ; make test
 
 clean:
-	rm -f architecture.*
-	rm -f sample*
-	rm -f tests/*
 
