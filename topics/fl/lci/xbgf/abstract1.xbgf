@@ -1,0 +1,22 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:vertical>
+    <nonterminal>expr</nonterminal>
+  </xbgf:vertical>
+  <xbgf:unchain>literal</xbgf:unchain>
+  <xbgf:unchain>argument</xbgf:unchain>
+  <xbgf:unchain>binary</xbgf:unchain>
+  <xbgf:unchain>ifthenelse</xbgf:unchain>
+  <xbgf:unchain>apply</xbgf:unchain>
+  <xbgf:rename>
+    <nonterminal>
+      <from>string</from>
+      <to>name</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:vertical>
+    <nonterminal>ops</nonterminal>
+  </xbgf:vertical>
+  <xbgf:strip>
+    <allSelectors/>
+  </xbgf:strip>
+</xbgf:sequence>
