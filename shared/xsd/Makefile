@@ -1,8 +1,12 @@
+validator = ../../download/msv/msv.jar
+
 build:
 
+test:
+	ls -1 *.xsd | xargs -n1 java -jar ${validator}
+
 clean:
-	rm -rf bin
-	rm -rf obj
-	rm -rf *.user
-	rm -rf *.suo
+	rm -rf bin obj
+	rm -f *.user
+	rm -f *.suo
 

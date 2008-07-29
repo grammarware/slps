@@ -11,7 +11,7 @@
   </xsl:template>
 
   <xsl:template match="grammar">
-    <xsl:copy-of select="@*|node()"/>
+    <xsl:copy-of select="node()"/>
   </xsl:template>
 
   <xsl:template match="text"/>

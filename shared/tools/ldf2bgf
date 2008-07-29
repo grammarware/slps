@@ -1,20 +1,24 @@
-#! /bin/sh
+#!/bin/sh
 
-# Get our hands on the languedoc basedir
 LOCAL=${PWD}
 cd `dirname $0`
 cd ../..
 SLPS=${PWD}
 cd ${LOCAL}
 
-if [ $# -ne 2 ]; then
-    echo "This tool transforms Language Document Format to BNF-like Grammar Format"
-    echo "Usage: ldf2bgf <input-language-document> <output-grammar>"
-    exit 1
-elif [ ! -r $1 ]; then
+if [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
-else
+elif [ $# -eq 2 ]
+then
     rm -f $2
     xsltproc ${SLPS}/shared/xsl/ldf2bgf.xslt $1 > $2
+elif [ $# -eq 1 ]
+then
+    xsltproc ${SLPS}/shared/xsl/ldf2bgf.xslt $1 > ${LOCAL}/`basename $1 .ldf`.bgf
+else
+    echo "This tool transforms Language Document Format to BNF-like Grammar Format"
+    echo "Usage: ldf2bgf <input-language-document> [<output-grammar>]"
+    exit 2
 fi
+
