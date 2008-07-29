@@ -8,7 +8,7 @@ LOCALROOT=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 2 ]; then
-    echo "Usage: xsd2bgf <xsd-input> <lgf-output>"
+    echo "Usage: xsd2bgf <XSD-input> <LGF-output>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."

@@ -1,0 +1,10 @@
+Loading XML file 'tests/bgf.bgf'.
+g( [grammar, production, expression], [
+  p([], grammar, ','([?(s(name, n('xsd:anyURI'))), *(s(root, n(nonterminal))), *(n(production))])),
+  p([], production, ','([?(s(label, n(label))), s(nonterminal, n(nonterminal)), n(expression)])),
+  p([], expression, ;([s(epsilon, true), s(empty, true), s(any, true), s(terminal, n(terminal)), s(nonterminal, n(nonterminal)), s(selectable, ','([s(selector, n(selector)), n(expression)])), s(sequence, *(n(expression))), s(choice, *(n(expression))), s(optional, n(expression)), s(plus, n(expression)), s(star, n(expression))])),
+  p([], label, n('xsd:string')),
+  p([], nonterminal, n('xsd:string')),
+  p([], selector, n('xsd:string')),
+  p([], terminal, n('xsd:string'))
+])

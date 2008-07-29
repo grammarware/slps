@@ -277,6 +277,11 @@ xFromModel(S,M,X)
     xFromComposite(S,all,',',M,X),
     !.
 
+xFromModel(_,M,a)
+ :-
+    self(name(xsd:any),M),
+    !.
+
 xFromModel(S,M,X3)
  :-
     self(name(xsd:element),M),
