@@ -3,6 +3,9 @@ schemata = ../../../shared/xsd
 
 build:
 
+xml:
+	java -jar ${validator} -warning ${schemata}/lcf.xsd fl.xml
+
 test:
 	python ../../convergence/lci/lci.py fl-lci.cfg architecture
 
