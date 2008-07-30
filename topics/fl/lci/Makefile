@@ -4,7 +4,7 @@ schemata = ../../../shared/xsd
 build:
 
 test:
-	python ../../convergence/lci/lci.py fl-lci.cfg architecture.pdf
+	python ../../convergence/lci/lci.py fl-lci.cfg architecture
 
 check:
 	ls xbgf/*.xbgf | xargs java -jar ${validator} ${schemata}/xbgf.xsd
@@ -18,5 +18,5 @@ clean:
 	rm -f *.user
 	rm -f *.suo
 	rm -f sample*
-	rm -f architecture.*
+	rm -f architecture*
 

@@ -1,19 +1,6 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:downcase/>
-  <xbgf:rename>
-    <nonterminal>
-      <from>newline</from>
-      <to>eoln</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:rename>
-    <nonterminal>
-      <from>id</from>
-      <to>name</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:vertical>
     <nonterminal>expr</nonterminal>
   </xbgf:vertical>

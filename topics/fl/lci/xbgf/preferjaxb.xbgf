@@ -1,6 +1,4 @@
 <xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:downcase/>
-  <xbgf:undefine>visitor</xbgf:undefine>
   <xbgf:rename>
     <selector>
       <from>args</from>
@@ -13,7 +11,4 @@
       <to>function</to>
     </selector>
   </xbgf:rename>
-  <xbgf:reroot>
-    <root>program</root>
-  </xbgf:reroot>
 </xbgf:sequence>
