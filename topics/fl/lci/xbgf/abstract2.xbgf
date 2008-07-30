@@ -1,15 +1,14 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:downcase/>
+  <xbgf:strip>
+    <allTerminals/>
+  </xbgf:strip>
   <xbgf:unite>
     <add>atom</add>
     <to>expr</to>
   </xbgf:unite>
   <xbgf:prune>eoln</xbgf:prune>
-  <xbgf:strip>
-    <allTerminals/>
-  </xbgf:strip>
   <xbgf:massage>
     <bgf:production>
       <label>binary</label>

@@ -803,6 +803,11 @@ xbgf(T,G1,G4)
     zip(Ss2,Ss3,Ss4),
     accum(renameS,Ss4,G3,G4),
 
+    require(
+      ( \+ G1 == G4 ),
+      'Vacous transformation detected.',
+      []), 
+
     !.
 
 xbgf(T,G1,G2)
