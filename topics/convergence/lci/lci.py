@@ -36,13 +36,14 @@ def readconfig (cfg):
   if nowin == 2:
    # actions
    if inside:
-    cx2+=1
     if name.find(',')<0:
      actions[name]=line.replace('%action%',name)
+     cx2+=1
     else:
      # comma-separated list of actions share the same definition
      for name in map(string.strip,name.split(',')):
       actions[name]=line.replace('%action%',name)
+      cx2+=1
    else:
     name = line
    inside = not inside
@@ -150,6 +151,10 @@ def addarc(fromnode,tonode,labelnode):
  if [fromnode,tonode,labelnode] not in graph:
   graph.append([fromnode,tonode,labelnode])
 
+def drawsimplechain(src,tgt):
+ chain = src.split()
+ addarc(chain[-1],tgt,str(len(chain)-1))
+
 def drawchain(src,tgt):
  chain = src.split()
  if len(chain)==1:
@@ -163,8 +168,9 @@ def drawchain(src,tgt):
    name += "'"
   addarc(name,tgt,'')
 
-def makegraph(dotfile):
- dot = open(dotfile.split('.')[0]+'.dot','w')
+def makegraph(df):
+ # first we generate a complete picture
+ dot = open(df+'_large.dot','w')
  dot.write('digraph generated{ {rank=same;')
  for x in sources.keys():
   dot.write(quote(x)+';')
@@ -182,13 +188,39 @@ def makegraph(dotfile):
   dot.write(';\n')
  dot.write('}')
  dot.close()
- ret = os.system('dot -Tpdf '+dot.name+' -o '+dotfile)
+ ret = os.system('dot -Tpdf '+dot.name+' -o '+df+'_large.pdf')
+ g = graph[:]
+ for arc in g:
+  graph.remove(arc)
+ # then we make a simplified one
+ dot = open(df+'_small.dot','w')
+ dot.write('digraph generated{ {rank=same;')
+ for x in sources.keys():
+  dot.write(quote(x)+';')
+ dot.write('}')
+ dot.write('node [shape=octagon]\n')
+ for x in targets.keys():
+  for src in targets[x][0]:
+   drawsimplechain(src,x)
+  dot.write(quote(x)+';')
+ dot.write('node [shape=ellipse]\n')
+ for arc in graph:
+  dot.write(quote(arc[0])+'->'+quote(arc[1]))
+  if arc[2]:
+   dot.write(' [label="'+arc[2]+'"]')
+  dot.write(';\n')
+ dot.write('}')
+ dot.close()
+ ret = os.system('dot -Tpdf '+dot.name+' -o '+df+'_small.pdf')
+
 
 def runforall(cmd,prc):
  for lgf in sources.keys():
-  ret = os.system(expandnametypeargs(actions[cmd],lgf,sources[lgf][0],expand(sources[lgf][1]))+shutup)
+  run = expandnametypeargs(actions[cmd],lgf,sources[lgf][0],expand(sources[lgf][1]))
+  ret = os.system(run+shutup)
   if ret!=0:
    print prc,'failed on',lgf
+   print 'Command was:',run
    sys.exit(3)
  print prc,'successful.'
 
@@ -212,9 +244,11 @@ def preparelgf(name):
    if a not in actions.keys():
     print 'Action',a,'needed for',curname,'not found.'
     sys.exit(5)
-   ret = os.system(expand(actions[a].replace('%name%',curname))+shutup)
+   run = expand(actions[a].replace('%name%',curname))
+   ret = os.system(run+shutup)
    if ret!=0:
     print a,'failed on',curname
+    print 'Command was:',run
     sys.exit(4)
    curname += '.'+a
  if actions.has_key('validate'):
@@ -346,10 +380,24 @@ def runtestset():
      if results[r]!=0:
       print r,'could not parse it'
 
+def checkconsistency():
+ # some simple assertions
+ try:
+  # all targets depend on existing targets or sources
+  for t in targets.keys():
+   for i in targets[t][0]:
+    name = i.split()[-1]
+    if not (targets.has_key(name) or sources.has_key(name)):
+     print 'Target',t,'needs',name,'which is not defined'
+     raise Exception
+ except:
+  sys.exit(7)
+
 if __name__ == "__main__":
  if len(sys.argv) == 3:
-  print 'Language Covergence Infrastructure v1.1'
+  print 'Language Covergence Infrastructure v1.2'
   readconfig(sys.argv[1])
+  checkconsistency()
   makegraph(sys.argv[2])
   runforall('extract', 'Extraction')
   if actions.has_key('validate'):
