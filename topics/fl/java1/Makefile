@@ -1,27 +1,25 @@
 include ../include.mk
 
-build: classes jar
+jar = javafl.jar
+cp = -cp $$CLASSPATH:${jar}
 
-jar: classes
-	jar cf javafl.jar *.class types/*.class
+build: ${jar}
 
-test: classes
+${jar}: FLParser.java FLLexer.java *.java types/*.java
+	cd types; javac *.java
+	javac *.java
+	jar cf ${jar} *.class types/*.class
+	rm *.class
+
+test: ${jar}
 	@echo Testing implementation `pwd`
-	java -cp $$CLASSPATH:havafl.jar -ea TestIO ${factorial} ${temp}
+	java ${cp} -ea TestIO ${factorial} ${temp}
 	diff ${factorial} ${temp}
 	rm -f temp.txt
-	java -ea TestEvaluator ${factorial} ${apply} 120
+	java ${cp} -ea TestEvaluator ${factorial} ${apply} 120
 	@echo Done.
 
-classes: TestIO.class TestEvaluator.class
-
-TestIO.class: TestIO.java FLParser.java types/*.java
-	javac TestIO.java
-
-TestEvaluator.class: TestEvaluator.java FLParser.java types/*.java
-	javac TestEvaluator.java
-
-FLScanner.java: FLParser.java
+FLLexer.java: FLParser.java
 
 FLParser.java: FL.g
 	make generate
