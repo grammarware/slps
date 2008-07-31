@@ -110,8 +110,8 @@
       <xsd:element maxOccurs="unbounded" name="branch">
         <xsd:complexType>
           <xsd:sequence>
+            <xsd:element name="take" type="xsd:string" />
             <xsd:element name="perform" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="on" type="xsd:string" />
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
