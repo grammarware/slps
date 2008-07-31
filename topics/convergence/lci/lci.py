@@ -14,6 +14,81 @@ implementations = {}
 testset = []
 graph = []
 
+def readxmlconfig (cfg):
+ config = ElementTree.parse(cfg)
+ cx1=cx2=cx3=cx4=cx5=0
+ # shortcuts
+ for outline in config.findall('//shortcut'):
+  cx1+=1
+  shortcuts[outline.findtext('name')]=expandxml(outline.findall('definition')[0],{})
+ # actions
+ for outline in config.findall('//action'):
+  for name in outline.findall('name'):
+   cmds = []
+   for cmd in outline.findall('definition/command'):
+    cmds.append(expandxml(cmd,{'action':name.text}))
+    if cmd.attrib.has_key('out'):
+     cmds[-1]+=' 1> '+cmd.attrib['out']
+    if cmd.attrib.has_key('err'):
+     cmds[-1]+=' 2> '+cmd.attrib['err']
+   actions[name.text]=cmds
+   cx2+=1
+ # sources
+ for outline in config.findall('//source'):
+  args = []
+  for arg in outline.findall('arguments/argument'):
+   args.append(expandxml(arg,{}))
+  sources[outline.findtext('name')]=[outline.findtext('type'),' '.join(args)]
+  cx3+=1
+  pcmds = []
+  ecmds = []
+  for cmd in outline.findall('parser/command'):
+   pcmds.append(expandxml(cmd,{}))
+   if cmd.attrib.has_key('out'):
+    pcmds[-1]+=' 1> '+cmd.attrib['out']
+   if cmd.attrib.has_key('err'):
+    pcmds[-1]+=' 2> '+cmd.attrib['err']
+  for cmd in outline.findall('evaluator/command'):
+   ecmds.append(expandxml(cmd,{}))
+   if cmd.attrib.has_key('out'):
+    ecmds[-1]+=' 1> '+cmd.attrib['out']
+   if cmd.attrib.has_key('err'):
+    ecmds[-1]+=' 2> '+cmd.attrib['err']
+  if pcmds and ecmds:
+   implementations[outline.findtext('name')]=[pcmds,ecmds]
+   cx5+=1
+ # targets
+ for outline in config.findall('//target'):
+  name = outline.findtext('name')
+  targets[name]= [[],'']
+  cx4+=1
+  for br in outline.findall('branch'):
+   branch = [br.findtext('take')]
+   for p in br.findall('perform'):
+    branch.append(p.text)
+   targets[name][0].append(branch)
+ print 'Read',cx1,'shortcuts,',cx2,'actions,',cx3,'sources','('+`cx5`,'implemented)',cx4,'targets.'
+
+def expandone(tag,text,rep):
+ if text:
+  wte = text
+ else:
+  wte = tag.replace('expand-','')
+ if shortcuts.has_key(wte):
+  return shortcuts[wte]
+ elif rep.has_key(wte):
+  return rep[wte]
+ else:
+  # postpone expanding
+  return '%'+wte+'%'
+
+def expandxml (mixed,rep):
+ s = mixed.text
+ for tag in mixed.getchildren():
+  s += expandone(tag.tag,tag.text,rep)
+  s += tag.tail
+ return s.strip()
+
 def readconfig (cfg):
  inside = False
  name = first = ''
@@ -37,12 +112,12 @@ def readconfig (cfg):
    # actions
    if inside:
     if name.find(',')<0:
-     actions[name]=line.replace('%action%',name)
+     actions[name]=[line.replace('%action%',name)]
      cx2+=1
     else:
      # comma-separated list of actions share the same definition
      for name in map(string.strip,name.split(',')):
-      actions[name]=line.replace('%action%',name)
+      actions[name]=[line.replace('%action%',name)]
       cx2+=1
    else:
     name = line
@@ -68,12 +143,14 @@ def readconfig (cfg):
     targets[name] = [[],'']
     cx4+=1
    else:
-    targets[name][0].append(line)
+    branch = line.split()
+    branch.reverse()
+    targets[name][0].append(branch)
   if nowin == 5:
    # implementations
    if inside:
     if first!='':
-     implementations[name]=[first,line]
+     implementations[name]=[[first],[line]]
      first = ''
      cx5+=1
     else:
@@ -86,62 +163,20 @@ def readconfig (cfg):
  print 'Read',cx1,'shortcuts,',cx2,'actions,',cx3,'sources','('+`cx5`,'implemented)',cx4,'targets.'
  # expand shortcuts
  for sc in shortcuts.keys():
-  shortcuts[sc]=expand(shortcuts[sc])
+  shortcuts[sc]=expanduni(shortcuts[sc],{})
 
-def expand(where):
+def expanduni(where,rep):
  cut = where.split('%')
  for i in range(0,len(cut)):
   if i%2:
-   try:
+   if shortcuts.has_key(cut[i]):
     cut[i]=shortcuts[cut[i]]
-   except:
-    print 'Shortcut definition error, referencing undefined "'+cut[i]+'":'
+   elif rep.has_key(cut[i]):
+    cut[i]=rep[cut[i]]
+   else:
+    print 'Misused expand, referencing undefined "'+cut[i]+'":'
     print '?????',where
-    sys.exit(2)
- return ''.join(cut)
-
-def expandnametypeargs(where,n,t,a):
- cut = where.split('%')
- for i in range(0,len(cut)):
-  if i%2:
-   if shortcuts.has_key(cut[i]):
-    # regular shortcut
-    cut[i]=shortcuts[cut[i]]
-   else:
-    # name, type or args
-    if cut[i]=='name':
-     cut[i]=n
-    elif cut[i]=='type':
-     cut[i]=t
-    elif cut[i]=='args':
-     cut[i]=a
-    else:
-     print 'Shortcut definition error, referencing undefined "'+cut[i]+'"!'
-     print '?????',where
-     sys.exit(2)
- return ''.join(cut)
-
-def expandsamplecontextyields(where,s,c,y):
- cut = where.split('%')
- for i in range(0,len(cut)):
-  if i%2:
-   if shortcuts.has_key(cut[i]):
-    # regular shortcut
-    cut[i]=shortcuts[cut[i]]
-   else:
-    # sample, parsed, context or yields
-    if cut[i]=='sample':
-     cut[i]=s
-    elif cut[i]=='parsed':
-     cut[i]=s+'.parsed'
-    elif cut[i]=='context':
-     cut[i]=c
-    elif cut[i]=='yields':
-     cut[i]=y
-    else:
-     print 'Shortcut definition error, referencing undefined "'+cut[i]+'"!'
-     print '?????',where
-     sys.exit(2)
+    sys.exit(11)
  return ''.join(cut)
 
 def quote(a):
@@ -151,18 +186,12 @@ def addarc(fromnode,tonode,labelnode):
  if [fromnode,tonode,labelnode] not in graph:
   graph.append([fromnode,tonode,labelnode])
 
-def drawsimplechain(src,tgt):
- chain = src.split()
- addarc(chain[-1],tgt,str(len(chain)-1))
-
-def drawchain(src,tgt):
- chain = src.split()
+def drawchain(chain,tgt):
  if len(chain)==1:
-  addarc(src,tgt,'')
+  addarc(chain[0],tgt,'')
  else:
-  name = chain[-1]
-  lines = ''
-  for i in range(len(chain)-2,-1,-1):
+  name = chain[0]
+  for i in range(1,len(chain)):
    # going back
    addarc(name,name+"'",chain[i])
    name += "'"
@@ -188,7 +217,7 @@ def makegraph(df):
   dot.write(';\n')
  dot.write('}')
  dot.close()
- ret = os.system('dot -Tpdf '+dot.name+' -o '+df+'_large.pdf')
+ os.system('dot -Tpdf '+dot.name+' -o '+df+'_large.pdf')
  g = graph[:]
  for arc in g:
   graph.remove(arc)
@@ -201,7 +230,7 @@ def makegraph(df):
  dot.write('node [shape=octagon]\n')
  for x in targets.keys():
   for src in targets[x][0]:
-   drawsimplechain(src,x)
+   addarc(src[0],x,'')
   dot.write(quote(x)+';')
  dot.write('node [shape=ellipse]\n')
  for arc in graph:
@@ -211,26 +240,24 @@ def makegraph(df):
   dot.write(';\n')
  dot.write('}')
  dot.close()
- ret = os.system('dot -Tpdf '+dot.name+' -o '+df+'_small.pdf')
-
+ os.system('dot -Tpdf '+dot.name+' -o '+df+'_small.pdf')
 
 def runforall(cmd,prc):
  for lgf in sources.keys():
-  run = expandnametypeargs(actions[cmd],lgf,sources[lgf][0],expand(sources[lgf][1]))
-  ret = os.system(run+shutup)
-  if ret!=0:
-   print prc,'failed on',lgf
-   print 'Command was:',run
-   sys.exit(3)
+  for line in actions[cmd]:
+   run = expanduni(line,{'source':lgf,'type':sources[lgf][0],'arguments':expanduni(sources[lgf][1],{})})
+   ret = os.system(run+shutup)
+   if ret!=0:
+    print prc,'failed on',lgf
+    print 'Command was:',run
+    sys.exit(3)
  print prc,'successful.'
 
-def preparelgf(name):
+def preparelgf(cut):
  # executes preparational actions (abstract, unerase, etc) before comparison
- cut = name.split()
  if len(cut)==1:
-  return name
+  return cut[0]
  else:
-  cut.reverse()
   if cut[0] in sources.keys():
    # starting point is a source
    curname = cut[0]
@@ -244,15 +271,19 @@ def preparelgf(name):
    if a not in actions.keys():
     print 'Action',a,'needed for',curname,'not found.'
     sys.exit(5)
-   run = expand(actions[a].replace('%name%',curname))
-   ret = os.system(run+shutup)
-   if ret!=0:
-    print a,'failed on',curname
-    print 'Command was:',run
-    sys.exit(4)
+   for linetorun in actions[a]:
+    run = expanduni(linetorun,{'source':curname})
+    ret = os.system(run+shutup)
+    if ret!=0:
+     print a,'failed on',curname
+     print 'Command was:',run
+     sys.exit(4)
    curname += '.'+a
+ a=cut[:]
+ a.reverse()
+ name = ' '.join(a)
  if actions.has_key('validate'):
-  ret = os.system(expand(actions['validate'].replace('%name%',curname))+shutup)
+  ret = os.system(expanduni(actions['validate'][0],{'source':curname})+shutup)
   print 'Successfully performed',name,'- the result is',
   if ret!=0:
    print 'NOT',
@@ -268,8 +299,7 @@ def buildtargets():
   for t in unordered:
    flag = True
    for i in targets[t][0]:
-    name = i.split()[-1]
-    if (name not in ordered) and (name not in sources.keys()):
+    if (i[0] not in ordered) and (i[0] not in sources.keys()):
      flag = False
    if flag:
     ordered.append(t)
@@ -287,7 +317,7 @@ def buildtargets():
 
 def diffall(t,car,cdr):
  if len(cdr)==1:
-  ret = os.system(expand(actions['diff'].replace('%1%',car).replace('%2%',cdr[0]))+shutup)
+  ret = os.system(expanduni(actions['diff'][0],{'first':car,'second':cdr[0]})+shutup)
   if ret!=0:
    print 'Error occured building target',t,'-',car,'differs from',cdr[0]
    sys.exit(3)
@@ -297,10 +327,11 @@ def diffall(t,car,cdr):
   diffall(t,cdr[0],cdr[1:])
 
 def unpacksamples():
- ret = os.system(expand(actions['test']))
- if ret!=0:
-  print 'Test set extraction failed'
-  sys.exit(6)
+ for line in actions['test']:
+  ret = os.system(expanduni(line,{}))
+  if ret!=0:
+   print 'Test set extraction failed'
+   sys.exit(6)
  library={}
  cx = 0
  tree = ElementTree.parse('samples.xml')
@@ -355,7 +386,9 @@ def runtestset():
    # evaluate if context is given
    results = {}
    for program in implementations.keys():
-    results[program]=os.system(expandsamplecontextyields(implementations[program][1],testcase[0],testcase[1],testcase[2]))
+    results[program]=0
+    for cmd in implementations[program][1]:
+     results[program]+=os.system(expanduni(cmd,{'sample':testcase[0],'context':testcase[1],'yields':testcase[2]}))
    print 'Test case',testcase[0],
    if results.values()==[0]*len(implementations):
     # all zeros
@@ -369,7 +402,9 @@ def runtestset():
    # parse otherwise
    results = {}
    for program in implementations.keys():
-    results[program]=os.system(expandsamplecontextyields(implementations[program][0],testcase[0],'',''))
+    results[program]=0
+    for cmd in implementations[program][0]:
+     results[program]+=os.system(expanduni(cmd,{'sample':testcase[0],'parsed':testcase[0]+'.parsed'}))
    print 'Test case',testcase[0],
    if results.values()==[0]*len(implementations):
     # all zeros
@@ -386,19 +421,21 @@ def checkconsistency():
   # all targets depend on existing targets or sources
   for t in targets.keys():
    for i in targets[t][0]:
-    name = i.split()[-1]
-    if not (targets.has_key(name) or sources.has_key(name)):
-     print 'Target',t,'needs',name,'which is not defined'
+    if not (targets.has_key(i[0]) or sources.has_key(i[0])):
+     print 'Target',t,'needs',i[0],'which is not defined'
      raise Exception
  except:
   sys.exit(7)
 
 if __name__ == "__main__":
- if len(sys.argv) == 3:
-  print 'Language Covergence Infrastructure v1.2'
-  readconfig(sys.argv[1])
+ print 'Language Covergence Infrastructure v1.3'
+ if len(sys.argv) == 4:
+  if sys.argv[1]=='xml':
+   readxmlconfig(sys.argv[2])
+  else:
+   readconfig(sys.argv[2])
   checkconsistency()
-  makegraph(sys.argv[2])
+  makegraph(sys.argv[3])
   runforall('extract', 'Extraction')
   if actions.has_key('validate'):
    runforall('validate','Validation')
@@ -412,6 +449,7 @@ if __name__ == "__main__":
    print 'No testing performed.'
  else:
   print 'Usage:'
-  print ' ',sys.argv[0],'<configuration file>','<output pdf>'
+  print ' ',sys.argv[0],'<configuration type>','<configuration file>','<output pdf>'
+  print 'Configuration type can be "xml" (for LCF) or something else (for text config).'
   sys.exit(1)
 
