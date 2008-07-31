@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9DF685A6-6572-47F9-8DE3-1E827BFDB62F}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -45,6 +45,9 @@
     <None Include="..\..\..\shared\xsd\btf.xsd">
       <Link>btf.xsd</Link>
     </None>
+    <None Include="..\..\..\shared\xsd\lcf.xsd">
+      <Link>lcf.xsd</Link>
+    </None>
     <None Include="..\..\..\shared\xsd\ldf.xsd">
       <Link>ldf.xsd</Link>
     </None>
@@ -54,13 +57,21 @@
     <None Include="..\..\..\shared\xsd\xbgf.xsd">
       <Link>xbgf.xsd</Link>
     </None>
+    <None Include="fl.lcf" />
     <None Include="xbgf\abstract1.xbgf" />
-    <None Include="xbgf\abstract2.xbgf" />
-    <None Include="xbgf\antlr.xbgf" />
+    <None Include="xbgf\c2a.xbgf" />
     <None Include="xbgf\dcg.xbgf" />
-    <None Include="xbgf\java1.xbgf" />
-    <None Include="xbgf\java3.xbgf" />
+    <None Include="xbgf\downcase.xbgf" />
+    <None Include="xbgf\h2v.xbgf" />
+    <None Include="xbgf\jaxbdrop.xbgf" />
+    <None Include="xbgf\layering.xbgf" />
+    <None Include="xbgf\omdrop.xbgf" />
+    <None Include="xbgf\preferdcg.xbgf" />
+    <None Include="xbgf\preferjava.xbgf" />
+    <None Include="xbgf\preferjaxb.xbgf" />
+    <None Include="xbgf\reroot.xbgf" />
+    <None Include="xbgf\stripterminals.xbgf" />
     <None Include="xbgf\unerase.xbgf" />
-    <None Include="xbgf\xsd.xbgf" />
+    <None Include="xbgf\xsdmassage.xbgf" />
   </ItemGroup>
 </Project>

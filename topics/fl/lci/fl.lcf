@@ -41,7 +41,7 @@
   <shortcut>
     <name>rundcgdir</name>
     <definition>
-      <expand>fl</expand>prolog
+      <expand>fl</expand>/prolog
     </definition>
   </shortcut>
   <comment>
@@ -183,56 +183,58 @@
   <target>
     <name>java</name>
     <branch>
-      <perform>reroot</perform>
-      <perform>preferjaxb</perform>
-      <perform>omdrop</perform>
+      <take>om</take>
       <perform>downcase</perform>
-      <on>om</on>
+      <perform>omdrop</perform>
+      <perform>preferjaxb</perform>
+      <perform>reroot</perform>
     </branch>
     <branch>
-      <perform>reroot</perform>
-      <perform>jaxbdrop</perform>
+      <take>jaxb</take>
       <perform>downcase</perform>
-      <on>jaxb</on>
+      <perform>jaxbdrop</perform>
+      <perform>reroot</perform>
     </branch>
   </target>
   <target>
     <name>xsdjava</name>
     <branch>
+      <take>java</take>
       <perform>unerase</perform>
-      <on>java</on>
     </branch>
     <branch>
-      <perform>xsdmassage</perform>
-      <perform>preferjava</perform>
+      <take>xsd</take>
       <perform>downcase</perform>
-      <on>xsd</on>
+      <perform>preferjava</perform>
+      <perform>xsdmassage</perform>
     </branch>
   </target>
   <target>
     <name>concrete</name>
     <branch>
-      <perform>reroot</perform>
+      <take>dcg</take>
       <perform>downcase</perform>
-      <on>dcg</on>
+      <perform>reroot</perform>
     </branch>
     <branch>
-      <perform>reroot</perform>
-      <perform>h2v</perform>
-      <perform>preferdcg</perform>
+      <take>antlr</take>
       <perform>downcase</perform>
-      <on>antlr</on>
+      <perform>preferdcg</perform>
+      <perform>h2v</perform>
+      <perform>reroot</perform>
     </branch>
-</target>
+  </target>
   <target>
     <name>abstract</name>
     <branch>
-      <perform>c2a layering stripterminals</perform>
-      <on>concrete</on>
+      <take>concrete</take>
+      <perform>stripterminals</perform>
+      <perform>layering</perform>
+      <perform>c2a</perform>
     </branch>
     <branch>
+      <take>xsdjava</take>
       <perform>abstract1</perform>
-      <on>xsdjava</on>
     </branch>
   </target>
 </lcf:configuration>
