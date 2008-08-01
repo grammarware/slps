@@ -1,4 +1,6 @@
 metaenv = `which sdf2table | xargs dirname`/../share
+sdfl = ${metaenv}/sdf-library/library/basic
+asfl = ${metaenv}/asf-library/library/basic
 
 all:
 	make build
@@ -11,8 +13,9 @@ test:
 build:
 	echo definition > FL.def
 	cat *.sdf syntax/*.sdf optimise/*.sdf >> FL.def
-	cat ${metaenv}/sdf-library/library/basic/*.sdf >> FL.def
-	cat ${metaenv}/asf-library/library/basic/*.sdf >> FL.def
+	cat ${sdfl}/Whitespace.sdf ${sdfl}/Comments.sdf >> FL.def
+	cat ${sdfl}/NatCon.sdf ${sdfl}/IntCon.sdf ${sdfl}/BoolCon.sdf >> FL.def
+	cat ${asfl}/Integers.sdf ${asfl}/Booleans.sdf >>FL.def
 	sdf2table -m FL FL.def
 
 clean:
