@@ -1,14 +1,15 @@
 module syntax/FL
 
 imports syntax/Numbers
+imports basic/Whitespace
 
 exports
 	sorts 
-		PROGRAM FUNCTION EXPR OPS NAME
+		PROGRAM FUNCTION EXPR OPS NAME NEWLINE
 
 	context-free syntax
 		FUNCTION+					-> PROGRAM
-		NAME NAME+ "=" EXPR NEWLINE+			-> FUNCTION
+		NAME NAME+ "=" EXPR NEWLINE			-> FUNCTION
 		EXPR OPS EXPR 					-> EXPR {left}	%% binary
 		NAME EXPR+					-> EXPR		%% apply
 		"if" EXPR "then" EXPR "else" EXPR			-> EXPR		%% ifthenelse
@@ -20,6 +21,7 @@ exports
 		"-"		-> OPS
 		"+"		-> OPS
 		"=="		-> OPS
+		";"		-> NEWLINE %% preprocessed
 
 	lexical syntax
 		[a-z]+			-> NAME
@@ -31,8 +33,3 @@ exports
 hiddens
 	context-free start-symbols 
 		PROGRAM
-	sorts
-		NEWLINE
-	lexical syntax
-		[\ \t]			-> LAYOUT
-		[\n]			-> NEWLINE

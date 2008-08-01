@@ -7,6 +7,5 @@ exports
 	context-free start-symbols 
 		PROGRAM
 	sorts
-		PROGRAM NEWLINE
-
+		PROGRAM
 

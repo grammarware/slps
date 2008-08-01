@@ -1,0 +1,8 @@
+fun x = if (0 == 1) then 42 else (43 + 45)
+fdu y = 0 + 1 + 0 + 5 + 0 - 0
+fte z = if z then (2 + 3) else (2+3)
+fqu a = if (a==0) then (0+5) else (7 - 0)
+fse b = (b + 2) == (b + 2)
+mult n m = if (n==0) then 0 else (m + (mult (n - 1) m))
+fac n = if (n==0) then 1 else (mult n (fac (n - 1)))
+

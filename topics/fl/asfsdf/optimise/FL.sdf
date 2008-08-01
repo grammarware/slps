@@ -1,10 +1,10 @@
 module optimise/FL
 
 imports syntax/FL
-
+	
 hiddens
-	imports basic/Whitespace
 	context-free start-symbols PROGRAM
+
 	variables
 		"N"[0-9]*	-> FL-INT
 		"E"[0-9]*	-> EXPR
