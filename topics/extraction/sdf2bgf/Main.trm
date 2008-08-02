@@ -1,0 +1,40 @@
+main (
+module syntax/FL
+
+imports syntax/Numbers
+
+exports
+	sorts 
+		PROGRAM FUNCTION EXPR OPS NAME
+
+	context-free syntax
+		FUNCTION+					-> PROGRAM
+		NAME NAME+ "=" EXPR NEWLINE+			-> FUNCTION
+		EXPR OPS EXPR 					-> EXPR {left}	%% binary
+		NAME EXPR+					-> EXPR		%% apply
+		"if" EXPR "then" EXPR "else" EXPR			-> EXPR		%% ifthenelse
+		"(" EXPR ")"					-> EXPR {bracket}
+		NAME						-> EXPR
+		FL-INT						-> EXPR
+
+	context-free syntax
+		"-"		-> OPS
+		"+"		-> OPS
+		"=="		-> OPS
+
+	lexical syntax
+		[a-z]+			-> NAME
+		"if" | "then" | "else"	-> NAME {reject}
+
+	lexical restrictions
+		NAME -/- [a-z]
+
+hiddens
+	context-free start-symbols 
+		PROGRAM
+	sorts
+		NEWLINE
+	lexical syntax
+		[\ \t]			-> LAYOUT
+		[\n]			-> NEWLINE
+)

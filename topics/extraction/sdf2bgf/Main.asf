@@ -1,0 +1,101 @@
+equations
+
+[map-sdf-to-bgf]  
+&C*1 := trafoProds (accuProds (&M1,))
+==========================
+main ( &M1 ) 
+=
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  &C*1
+</bgf:grammar>
+
+[exclude-lexical-productions] 
+accuProds ( lexical syntax &Ps1, &P*1 ) = &P*1
+
+[include-all-other-productions] 
+accuProds ( &P*1, &P*2 ) = &P*2 &P*1
+
+[transform-empty-list-of-productions]
+trafoProds ( ) = 
+
+[transform-non-empty-list-of-productions]
+trafoProds ( &P1 &P*1 ) = trafoProd ( &P1) trafoProds ( &P*1 )
+
+[transform-a-production]
+&C1 := sort2chardata(&N1),
+&E2 := trafoSymbols(&Ss1)
+=====================
+trafoProd ( &Ss1 -> &N1 &As1 ) =
+<bgf:production>
+  <nonterminal>&C1</nonterminal>
+  &E2
+</bgf:production>
+
+[1]
+trafoSymbols() = 
+<bgf:expesssion>
+  <epsilon/>
+</bgf:expression>
+
+[2]
+trafoSymbols(&S1) = trafoSymbol(&S1)
+
+[3]
+&S1 &S2 &S*3 := &Ss1,
+&C*1 := mapTrafoSymbol(&Ss1)
+=====================
+trafoSymbols(&Ss1) = 
+<bgf:expesssion>
+  <sequence>
+     &C*1
+  </sequence>
+</bgf:expression>
+
+[4]
+mapTrafoSymbol() = 
+
+[5]
+&E1 := trafoSymbol(&S1),
+&C*2 := mapTrafoSymbol(&S*2)
+==========================
+mapTrafoSymbol(&S1 &S*2) = &E1 &C*2
+
+[nonterminal]
+&C1 := sort2chardata(&N1)
+==================
+trafoSymbol(&N1) =
+  <bgf:expression>
+    <nonterminal>&C1</nonterminal>
+  </bgf:expression>
+
+[terminal]
+&C1 := strcon2chardata(&Z1)
+==================
+trafoSymbol(&Z1) =
+  <bgf:expression>
+    <terminal>&C1</terminal>
+  </bgf:expression>
+
+[plus]
+&E1 := trafoSymbol(&S1)
+================
+trafoSymbol(&S1+) =
+  <bgf:expression>
+    <plus>&E1</plus>
+  </bgf:expression>
+
+[star]
+&E1 := trafoSymbol(&S1)
+================
+trafoSymbol(&S1*) =
+  <bgf:expression>
+    <star>&E1</star>
+  </bgf:expression>
+
+[optional]
+&E1 := trafoSymbol(&S1)
+================
+trafoSymbol(&S1?) =
+  <bgf:expression>
+    <optional>&E1</optional>
+  </bgf:expression>

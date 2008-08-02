@@ -1,0 +1,47 @@
+module Main
+
+  imports 
+	languages/sdf2/syntax/Sdf2
+	languages/xml/syntax/XML
+	Tokens
+
+  exports
+
+    sorts Document Module Production
+
+    context-free syntax
+	main(Module) -> Document
+
+    context-free start-symbols
+	Document
+
+  hiddens
+
+    context-free syntax
+	accuProds(Module,Production*) -> Production* {traversal(accu,top-down,break)}
+	accuProds(Grammar,Production*) -> Production* {traversal(accu,top-down,break)}
+	accuProds(Production*,Production*) -> Production* {traversal(accu,top-down,break)}
+	trafoProds(Production*) -> Content*
+	trafoProd(Production) -> Element
+	trafoSymbol(Symbol) -> Element
+	trafoSymbols(Symbols) -> Element
+	mapTrafoSymbol(Symbols) -> Content*
+
+    variables
+	"&A" [0-9]+ -> Attribute
+	"&A*" [0-9]+ -> Attribute*
+	"&As" [0-9]+ -> Attributes
+	"&C" [0-9]+ -> Content
+	"&C*" [0-9]+ -> Content*
+	"&E" [0-9]+ -> Element
+	%% "&E*" [0-9]+ -> Element* %% Useless because of lack of covariance
+	"&G" [0-9]+ -> Grammar
+	"&M" [0-9]+ -> Module
+	"&N" [0-9]+ -> Sort
+	"&P" [0-9]+ -> Production
+	"&P*" [0-9]+ -> Production*
+	"&Ps" [0-9]+ -> Productions
+	"&S" [0-9]+ -> Symbol
+	"&S*" [0-9]+ -> Symbol*
+	"&Ss" [0-9]+ -> Symbols
+	"&Z" [0-9]+ -> StrCon

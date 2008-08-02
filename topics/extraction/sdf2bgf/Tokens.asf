@@ -1,0 +1,23 @@
+equations
+
+[sort-of-length-1]
+sort2chardata(sort(&Head1)) = chardata(&Head1)
+
+[sort-of-length-2]
+sort2chardata(sort(&Head1 &Last1)) = chardata(&Head1 &Last1)
+
+[sort-of-length-greater-than-2]
+chardata(&Char1 &Chars1) := sort2chardata(sort(&Head1 &Middles1 &Last1))
+===============================================================
+sort2chardata(sort(&Head1 &Middle1 &Middles1 &Last1)) = chardata(&Char1 &Middle1 &Chars1)
+
+[strcon-of-length-1]
+strchar(&Chr1) := &StrChar1
+========================================
+strcon2chardata(strcon(\" &StrChar1 \")) = chardata(&Chr1)
+
+[strcon-of-length-greater-than-1]
+strchar(&Chr1) := &StrChar1,
+chardata(&Char1 &Chars1) := strcon2chardata(strcon(\" &StrChar+2 \"))
+===========================================================
+strcon2chardata(strcon(\" &StrChar1 &StrChar+2 \")) = chardata(&Chr1 &Char1 &Chars1)
