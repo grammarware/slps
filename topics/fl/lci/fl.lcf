@@ -110,15 +110,6 @@
     </definition>
   </action>
   <source>
-    <name>xsd</name>
-    <type>xsd</type>
-    <arguments>
-      <argument>
-        <expand>fl</expand>/xsd/fl.xsd
-      </argument>
-    </arguments>
-  </source>
-  <source>
     <name>antlr</name>
     <type>antlr</type>
     <arguments>
@@ -138,30 +129,6 @@
     </evaluator>
   </source>
   <source>
-    <name>om</name>
-    <type>java</type>
-    <arguments>
-      <argument>
-        <expand>fl</expand>/java1
-      </argument>
-      <argument>
-        types
-      </argument>
-    </arguments>
-  </source>
-  <source>
-    <name>jaxb</name>
-    <type>java</type>
-    <arguments>
-      <argument>
-        <expand>fl</expand>/java3
-      </argument>
-      <argument>
-        fl
-      </argument>
-    </arguments>
-  </source>
-  <source>
     <name>dcg</name>
     <type>dcg</type>
     <arguments>
@@ -179,6 +146,39 @@
         swipl -q -f <expand>rundcgdir</expand>/TestEvaluator.pro -t "main('<expand-context/>','<expand-sample/>',<expand-yields/>)"
       </command>
     </evaluator>
+  </source>
+  <source>
+    <name>om</name>
+    <type>java</type>
+    <arguments>
+      <argument>
+        <expand>fl</expand>/java1
+      </argument>
+      <argument>
+        types
+      </argument>
+    </arguments>
+  </source>
+  <source>
+    <name>xsd</name>
+    <type>xsd</type>
+    <arguments>
+      <argument>
+        <expand>fl</expand>/xsd/fl.xsd
+      </argument>
+    </arguments>
+  </source>
+  <source>
+    <name>jaxb</name>
+    <type>java</type>
+    <arguments>
+      <argument>
+        <expand>fl</expand>/java3
+      </argument>
+      <argument>
+        fl
+      </argument>
+    </arguments>
   </source>
   <target>
     <name>java</name>
