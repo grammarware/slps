@@ -5,5 +5,4 @@
     <add>atom</add>
     <to>expr</to>
   </xbgf:unite>
-  <xbgf:prune>eoln</xbgf:prune>
 </xbgf:sequence>

@@ -66,19 +66,19 @@
   <action>
     <name>unerase</name>
     <name>abstract1</name>
-    <name>c2a</name>
+    <name>concrete2abstract</name>
     <name>downcase</name>
-    <name>h2v</name>
-    <name>preferdcg</name>
+    <name>horizontal2vertical</name>
+    <name>preferDcg</name>
     <name>reroot</name>
-    <name>jaxbdrop</name>
+    <name>trimJaxb</name>
     <name>downcase</name>
-    <name>omdrop</name>
-    <name>preferjaxb</name>
-    <name>stripterminals</name>
+    <name>trimOm</name>
+    <name>preferJaxb</name>
+    <name>stripTerminals</name>
     <name>layering</name>
-    <name>preferjava</name>
-    <name>xsdmassage</name>
+    <name>preferJava</name>
+    <name>massageXsd</name>
     <definition>
       <command>
         <expand>tools</expand>/xbgf bgf/<expand-source/>.bgf xbgf/<expand-action/>.xbgf bgf/<expand-source/>.<expand-action/>.bgf
@@ -185,14 +185,14 @@
     <branch>
       <take>om</take>
       <perform>downcase</perform>
-      <perform>omdrop</perform>
-      <perform>preferjaxb</perform>
+      <perform>trimOm</perform>
+      <perform>preferJaxb</perform>
       <perform>reroot</perform>
     </branch>
     <branch>
       <take>jaxb</take>
       <perform>downcase</perform>
-      <perform>jaxbdrop</perform>
+      <perform>trimJaxb</perform>
       <perform>reroot</perform>
     </branch>
   </target>
@@ -205,8 +205,8 @@
     <branch>
       <take>xsd</take>
       <perform>downcase</perform>
-      <perform>preferjava</perform>
-      <perform>xsdmassage</perform>
+      <perform>preferJava</perform>
+      <perform>massageXsd</perform>
     </branch>
   </target>
   <target>
@@ -219,8 +219,8 @@
     <branch>
       <take>antlr</take>
       <perform>downcase</perform>
-      <perform>preferdcg</perform>
-      <perform>h2v</perform>
+      <perform>preferDcg</perform>
+      <perform>horizontal2vertical</perform>
       <perform>reroot</perform>
     </branch>
   </target>
@@ -228,9 +228,9 @@
     <name>abstract</name>
     <branch>
       <take>concrete</take>
-      <perform>stripterminals</perform>
+      <perform>stripTerminals</perform>
       <perform>layering</perform>
-      <perform>c2a</perform>
+      <perform>concrete2abstract</perform>
     </branch>
     <branch>
       <take>xsdjava</take>

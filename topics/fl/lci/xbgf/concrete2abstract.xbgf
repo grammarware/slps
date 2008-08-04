@@ -1,6 +1,7 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:prune>eoln</xbgf:prune>
   <xbgf:massage>
     <bgf:production>
       <label>binary</label>
