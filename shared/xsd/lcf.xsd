@@ -90,10 +90,8 @@
   <xsd:complexType name="commandtype" mixed="true">
     <xsd:complexContent>
       <xsd:extension base="lcf:mixedwithexpands">
-        <xsd:sequence>
-           <xsd:element name="err" type="xsd:string" minOccurs="0" />
-           <xsd:element name="out" type="xsd:string" minOccurs="0" />
-        </xsd:sequence>
+        <xsd:attribute name="err" type="xsd:string" use="optional" />
+        <xsd:attribute name="out" type="xsd:string" use="optional" />
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
