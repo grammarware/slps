@@ -1,8 +1,8 @@
 <xsd:schema
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:bgf="http://planet-sl.org/bgf"
-  xmlns:ltr="http://planet-sl.org/ltr"
-  targetNamespace="http://planet-sl.org/ltr">
+  xmlns:btf="http://planet-sl.org/btf"
+  targetNamespace="http://planet-sl.org/btf">
 
   <xsd:annotation>
     <xsd:documentation>
@@ -34,7 +34,7 @@
           <xsd:complexType>
             <xsd:sequence>
               <xsd:element ref="bgf:production"/>
-              <xsd:element ref="ltr:tree"/>
+              <xsd:element ref="btf:tree"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
@@ -43,7 +43,7 @@
           <xsd:complexType>
             <xsd:sequence>
               <xsd:element name="selector" type="bgf:selector"/>
-              <xsd:element ref="ltr:tree"/>
+              <xsd:element ref="btf:tree"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
@@ -51,7 +51,7 @@
         <xsd:element name="sequence">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element ref="ltr:tree" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="btf:tree" minOccurs="0" maxOccurs="unbounded"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
@@ -60,7 +60,7 @@
           <xsd:complexType>
             <xsd:sequence>
               <xsd:element ref="bgf:expression"/>
-              <xsd:element ref="ltr:tree"/>
+              <xsd:element ref="btf:tree"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
@@ -68,7 +68,7 @@
         <xsd:element name="optional">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element ref="ltr:tree" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="btf:tree" minOccurs="0" maxOccurs="1"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
@@ -76,7 +76,7 @@
         <xsd:element name="plus">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element ref="ltr:tree" minOccurs="1" maxOccurs="unbounded"/>
+              <xsd:element ref="btf:tree" minOccurs="1" maxOccurs="unbounded"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
@@ -84,7 +84,7 @@
         <xsd:element name="star">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element ref="ltr:tree" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="btf:tree" minOccurs="0" maxOccurs="unbounded"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
