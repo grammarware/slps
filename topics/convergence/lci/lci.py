@@ -13,6 +13,14 @@ targets = {}
 implementations = {}
 testset = []
 graph = []
+log = None
+
+def logwrite(s):
+ log.write(s+'\n')
+
+def sysexit(n):
+ log.close()
+ sys.exit(n)
 
 def readxmlconfig (cfg):
  config = ElementTree.parse(cfg)
@@ -176,7 +184,7 @@ def expanduni(where,rep):
    else:
     print 'Misused expand, referencing undefined "'+cut[i]+'":'
     print '?????',where
-    sys.exit(11)
+    sysexit(11)
  return ''.join(cut)
 
 def quote(a):
@@ -217,7 +225,9 @@ def makegraph(df):
   dot.write(';\n')
  dot.write('}')
  dot.close()
- os.system('dot -Tpdf '+dot.name+' -o '+df+'_large.pdf')
+ run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
+ logwrite(run)
+ os.system(run)
  g = graph[:]
  for arc in g:
   graph.remove(arc)
@@ -240,17 +250,20 @@ def makegraph(df):
   dot.write(';\n')
  dot.write('}')
  dot.close()
- os.system('dot -Tpdf '+dot.name+' -o '+df+'_small.pdf')
+ run = 'dot -Tpdf '+dot.name+' -o '+df+'_small.pdf'
+ logwrite(run)
+ os.system(run)
 
 def runforall(cmd,prc):
  for lgf in sources.keys():
   for line in actions[cmd]:
    run = expanduni(line,{'source':lgf,'type':sources[lgf][0],'arguments':expanduni(sources[lgf][1],{})})
+   logwrite(run)
    ret = os.system(run+shutup)
    if ret!=0:
     print prc,'failed on',lgf
     print 'Command was:',run
-    sys.exit(3)
+    sysexit(3)
  print prc,'successful.'
 
 def preparelgf(cut):
@@ -270,20 +283,23 @@ def preparelgf(cut):
   for a in cut[1:]:
    if a not in actions.keys():
     print 'Action',a,'needed for',curname,'not found.'
-    sys.exit(5)
+    sysexit(5)
    for linetorun in actions[a]:
     run = expanduni(linetorun,{'source':curname})
+    logwrite(run)
     ret = os.system(run+shutup)
     if ret!=0:
      print a,'failed on',curname
      print 'Command was:',run
-     sys.exit(4)
+     sysexit(4)
    curname += '.'+a
  a=cut[:]
  a.reverse()
  name = ' '.join(a)
  if actions.has_key('validate'):
-  ret = os.system(expanduni(actions['validate'][0],{'source':curname})+shutup)
+  a = expanduni(actions['validate'][0],{'source':curname})
+  logwrite(a)
+  ret = os.system(a+shutup)
   print 'Successfully performed',name,'- the result is',
   if ret!=0:
    print 'NOT',
@@ -317,10 +333,12 @@ def buildtargets():
 
 def diffall(t,car,cdr):
  if len(cdr)==1:
-  ret = os.system(expanduni(actions['diff'][0],{'first':car,'second':cdr[0]})+shutup)
+  run = expanduni(actions['diff'][0],{'first':car,'second':cdr[0]})
+  logwrite(run)
+  ret = os.system(run+shutup)
   if ret!=0:
    print 'Error occured building target',t,'-',car,'differs from',cdr[0]
-   sys.exit(3)
+   sysexit(3)
  else:
   for head in cdr:
    diffall(t,car,[head])
@@ -328,10 +346,12 @@ def diffall(t,car,cdr):
 
 def unpacksamples():
  for line in actions['test']:
-  ret = os.system(expanduni(line,{}))
+  run = expanduni(line,{})
+  logwrite(run)
+  ret = os.system(run)
   if ret!=0:
    print 'Test set extraction failed'
-   sys.exit(6)
+   sysexit(6)
  library={}
  cx = 0
  tree = ElementTree.parse('samples.xml')
@@ -388,7 +408,9 @@ def runtestset():
    for program in implementations.keys():
     results[program]=0
     for cmd in implementations[program][1]:
-     results[program]+=os.system(expanduni(cmd,{'sample':testcase[0],'context':testcase[1],'yields':testcase[2]}))
+     run = expanduni(cmd,{'sample':testcase[0],'context':testcase[1],'yields':testcase[2]})
+     logwrite(run)
+     results[program]+=os.system(run)
    print 'Test case',testcase[0],
    if results.values()==[0]*len(implementations):
     # all zeros
@@ -404,7 +426,9 @@ def runtestset():
    for program in implementations.keys():
     results[program]=0
     for cmd in implementations[program][0]:
-     results[program]+=os.system(expanduni(cmd,{'sample':testcase[0],'parsed':testcase[0]+'.parsed'}))
+     run = expanduni(cmd,{'sample':testcase[0],'parsed':testcase[0]+'.parsed'})
+     logwrite(run)
+     results[program]+=os.system(run)
    print 'Test case',testcase[0],
    if results.values()==[0]*len(implementations):
     # all zeros
@@ -425,11 +449,12 @@ def checkconsistency():
      print 'Target',t,'needs',i[0],'which is not defined'
      raise Exception
  except:
-  sys.exit(7)
+  sysexit(7)
 
 if __name__ == "__main__":
  print 'Language Covergence Infrastructure v1.3'
  if len(sys.argv) == 4:
+  log = open(sys.argv[2].split('.')[0]+'.log','w')
   if sys.argv[1]=='xml':
    readxmlconfig(sys.argv[2])
   else:
@@ -447,9 +472,10 @@ if __name__ == "__main__":
    print 'Testing ended successfully.'
   else:
    print 'No testing performed.'
+  log.close()
  else:
   print 'Usage:'
   print ' ',sys.argv[0],'<configuration type>','<configuration file>','<output pdf>'
   print 'Configuration type can be "xml" (for LCF) or something else (for text config).'
-  sys.exit(1)
+  sysexit(1)
 
