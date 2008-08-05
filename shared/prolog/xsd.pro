@@ -221,7 +221,14 @@ xFromCType(S,T1,X)
  :-
     (
       child(name(xsd:complexContent),T1,T2) ->
-          child(name(xsd:extension),T2,T3)
+          ( require(
+              child(name(xsd:extension),T2,T3),
+              'Complex-type restriction unsupported.',
+              [T2]) % ,
+%            attribute(base,T3,B1),    
+%            normalizeQName(S,B1,B2),
+%            require(
+          )
         ; T3 = T1
     ),
     ( child( (name(xsd:sequence);

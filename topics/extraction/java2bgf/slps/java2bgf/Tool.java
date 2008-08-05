@@ -52,6 +52,9 @@ public class Tool {
 				}
 			}
 		}
+		
+		if (classes.isEmpty())
+			throw new RuntimeException("No classes found!");
 
 		// Generate one nonterminal per class
 		for (Class<?> clss : classes) {

@@ -8,7 +8,7 @@ LOCAL2=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 3 ]; then
-    echo "Usage: xsd2btf <xsd-input> <xml-input> <btf-output>"
+    echo "Usage: xsd2btf <XSD-input> <XML-input> <BTF-output>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."

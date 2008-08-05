@@ -1,4 +1,4 @@
-source = ../../fl/java1/fl.g
+source = ../../fl/java1/FL.g
 target = tests/fl
 pkg = slps/antlr2bgf
 
