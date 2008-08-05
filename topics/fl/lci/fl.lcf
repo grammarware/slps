@@ -15,24 +15,6 @@
     </definition>
   </shortcut>
   <shortcut>
-    <name>validator</name>
-    <definition>
-      <expand>slps</expand>/download/msv/msv.jar
-    </definition>
-  </shortcut>
-  <shortcut>
-    <name>bgfschema</name>
-    <definition>
-      <expand>slps</expand>/shared/xsd/bgf.xsd
-    </definition>
-  </shortcut>
-  <shortcut>
-    <name>baseldf</name>
-    <definition>
-      <expand>fl</expand>/ldf/fl.ldf
-    </definition>
-  </shortcut>
-  <shortcut>
     <name>runjava1jar</name>
     <definition>
       <expand>fl</expand>/java1/javafl.jar
@@ -44,25 +26,29 @@
       <expand>fl</expand>/prolog
     </definition>
   </shortcut>
+
   <comment>
-    # extract, diff and test must be present, the rest is optional and completely volatile
-    # if validate is present, extracted bgfs and all bgfs produced by transformations will be validated with it
-    # besides shortcuts, one can use these variables:
-    #	%action%	- everywhere			macro for the name of the action
-    #	%source%	- everywhere			macro for the name of the source
-    #	%type%		- in extract			macro for the type of the source
-    #	%args%		- in extract			macro for the extraction arguments
-    #	%1%		- in diff				macro for the first filename in a pair
-    #	%2%		- in diff				macro for the second filename in a pair
+    if validator is present, extracted bgfs and all bgfs produced by transformations will be validated with it
   </comment>
-  <action>
-    <name>extract</name>
-    <definition>
-      <command>
-        <expand>tools</expand>/<expand-type/>2bgf <expand-arguments/> bgf/<expand-source/>.bgf
-      </command>
-    </definition>
-  </action>
+  <tool>
+    <name>validator</name>
+    <command>
+      java -jar <expand>slps</expand>/download/msv/msv.jar <expand>slps</expand>/shared/xsd/bgf.xsd
+    </command>
+  </tool>
+  <tool>
+    <name>diff</name>
+    <command>
+      <expand>tools</expand>/bdt
+    </command>
+  </tool>
+  <tool>
+    <name>testset</name>
+    <command out="samples.xml">
+      xsltproc <expand>slps</expand>/shared/xsl/ldf2samples.xslt <expand>fl</expand>/ldf/fl.ldf
+  </command>
+  </tool>
+  
   <action>
     <name>unerase</name>
     <name>abstract1</name>
@@ -81,116 +67,129 @@
     <name>massageXsd</name>
     <definition>
       <command>
-        <expand>tools</expand>/xbgf bgf/<expand-source/>.bgf xbgf/<expand-action/>.xbgf bgf/<expand-source/>.<expand-action/>.bgf
+        <expand>tools</expand>/xbgf <expand-input/>.bgf xbgf/<expand-action/>.xbgf <expand-input/>.<expand-action/>.bgf
       </command>
     </definition>
   </action>
-  <action>
-    <name>validate</name>
-    <definition>
-      <command>
-        java -jar <expand>validator</expand> <expand>bgfschema</expand> bgf/<expand-source/>.bgf
-      </command>
-    </definition>
-  </action>
-  <action>
-    <name>diff</name>
-    <definition>
-      <command>
-        <expand>tools</expand>/bdt bgf/<expand-first/>.bgf bgf/<expand-second/>.bgf
-      </command>
-    </definition>
-  </action>
-  <action>
-    <name>test</name>
-    <definition>
-      <command out="samples.xml">
-        xsltproc <expand>slps</expand>/shared/xsl/ldf2samples.xslt <expand>baseldf</expand>
-      </command>
-    </definition>
-  </action>
+  
   <source>
     <name>antlr</name>
-    <type>antlr</type>
-    <arguments>
-      <argument>
-        <expand>fl</expand>/java1/FL.g
-      </argument>
-    </arguments>
+    <extractor>
+      <name>
+        <expand>tools</expand>/antlr2bgf
+      </name>
+      <arguments>
+        <argument>
+          <expand>fl</expand>/java1/FL.g
+        </argument>
+        <argument>
+          antlr.bgf
+        </argument>
+      </arguments>
+    </extractor>
     <parser>
       <command err="/dev/null">
-        java -cp ${CLASSPATH}:<expand>runjava1jar</expand> -ea TestIO <expand-sample/> <expand-parsed/>
+        java -cp ${CLASSPATH}:<expand>runjava1jar</expand> -ea TestIO <expand-input/> <expand-output/>
       </command>
     </parser>
     <evaluator>
       <command err="/dev/null">
-        java -cp ${CLASSPATH}:<expand>runjava1jar</expand> -ea TestEvaluator <expand-context/> <expand-sample/> <expand-yields/>
+        java -cp ${CLASSPATH}:<expand>runjava1jar</expand> -ea TestEvaluator <expand-context/> <expand-input/> <expand-yields/>
       </command>
     </evaluator>
   </source>
   <source>
     <name>dcg</name>
-    <type>dcg</type>
-    <arguments>
-      <argument>
-        <expand>fl</expand>/prolog/Parser.pro
-      </argument>
-    </arguments>
+    <extractor>
+      <name>
+        <expand>tools</expand>/dcg2bgf
+      </name>
+      <arguments>
+        <argument>
+          <expand>fl</expand>/prolog/Parser.pro
+        </argument>
+        <argument>
+          dcg.bgf
+        </argument>
+      </arguments>
+    </extractor>
     <parser>
       <command>
-        swipl -q -f <expand>rundcgdir</expand>/TestIO.pro -t "main('<expand-sample/>','<expand-parsed/>')"
+        swipl -q -f <expand>rundcgdir</expand>/TestIO.pro -t "main('<expand-input/>','<expand-output/>')"
       </command>
     </parser>
     <evaluator>
       <command>
-        swipl -q -f <expand>rundcgdir</expand>/TestEvaluator.pro -t "main('<expand-context/>','<expand-sample/>',<expand-yields/>)"
+        swipl -q -f <expand>rundcgdir</expand>/TestEvaluator.pro -t "main('<expand-context/>','<expand-input/>',<expand-yields/>)"
       </command>
     </evaluator>
   </source>
   <source>
     <name>om</name>
-    <type>java</type>
-    <arguments>
-      <argument>
-        <expand>fl</expand>/java1
-      </argument>
-      <argument>
-        types
-      </argument>
-    </arguments>
+    <extractor>
+      <name>
+        <expand>tools</expand>/java2bgf
+      </name>
+      <arguments>
+        <argument>
+          <expand>fl</expand>/java1
+        </argument>
+        <argument>
+          types
+        </argument>
+        <argument>
+          om.bgf
+        </argument>
+      </arguments>
+    </extractor>
   </source>
   <source>
     <name>xsd</name>
-    <type>xsd</type>
-    <arguments>
-      <argument>
-        <expand>fl</expand>/xsd/fl.xsd
-      </argument>
-    </arguments>
+    <extractor>
+      <name>
+        <expand>tools</expand>/xsd2bgf
+      </name>
+      <arguments>
+        <argument>
+          <expand>fl</expand>/xsd/fl.xsd
+        </argument>
+        <argument>
+          xsd.bgf
+        </argument>
+      </arguments>
+    </extractor>
   </source>
   <source>
     <name>jaxb</name>
-    <type>java</type>
-    <arguments>
-      <argument>
-        <expand>fl</expand>/java3
-      </argument>
-      <argument>
-        fl
-      </argument>
-    </arguments>
+    <extractor>
+      <name>
+        <expand>tools</expand>/java2bgf
+      </name>
+      <arguments>
+        <argument>
+          <expand>fl</expand>/java3
+        </argument>
+        <argument>
+          fl
+        </argument>
+        <argument>
+          jaxb.bgf
+        </argument>
+      </arguments>
+    </extractor>
   </source>
+
   <target>
     <name>java</name>
     <branch>
-      <take>om</take>
+      <input>om</input>
       <perform>downcase</perform>
       <perform>trimOm</perform>
       <perform>preferJaxb</perform>
       <perform>reroot</perform>
     </branch>
     <branch>
-      <take>jaxb</take>
+      <input>jaxb</input>
       <perform>downcase</perform>
       <perform>trimJaxb</perform>
       <perform>reroot</perform>
@@ -199,11 +198,11 @@
   <target>
     <name>xsdjava</name>
     <branch>
-      <take>java</take>
+      <input>java</input>
       <perform>unerase</perform>
     </branch>
     <branch>
-      <take>xsd</take>
+      <input>xsd</input>
       <perform>downcase</perform>
       <perform>preferJava</perform>
       <perform>massageXsd</perform>
@@ -212,12 +211,12 @@
   <target>
     <name>concrete</name>
     <branch>
-      <take>dcg</take>
+      <input>dcg</input>
       <perform>downcase</perform>
       <perform>reroot</perform>
     </branch>
     <branch>
-      <take>antlr</take>
+      <input>antlr</input>
       <perform>downcase</perform>
       <perform>preferDcg</perform>
       <perform>horizontal2vertical</perform>
@@ -227,13 +226,13 @@
   <target>
     <name>abstract</name>
     <branch>
-      <take>concrete</take>
+      <input>concrete</input>
       <perform>stripTerminals</perform>
       <perform>layering</perform>
       <perform>concrete2abstract</perform>
     </branch>
     <branch>
-      <take>xsdjava</take>
+      <input>xsdjava</input>
       <perform>abstract1</perform>
     </branch>
   </target>
