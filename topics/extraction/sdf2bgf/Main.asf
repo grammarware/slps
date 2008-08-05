@@ -33,7 +33,7 @@ trafoProd ( &Ss1 -> &N1 &As1 ) =
 
 [1]
 trafoSymbols() = 
-<bgf:expesssion>
+<bgf:expression>
   <epsilon/>
 </bgf:expression>
 
@@ -45,7 +45,7 @@ trafoSymbols(&S1) = trafoSymbol(&S1)
 &C*1 := mapTrafoSymbol(&Ss1)
 =====================
 trafoSymbols(&Ss1) = 
-<bgf:expesssion>
+<bgf:expression>
   <sequence>
      &C*1
   </sequence>
