@@ -6,11 +6,13 @@ build:
 test:
 
 check:
-	@echo Attempting validation ...
-	ls -1 *.xsd | xargs -n1 java -jar ${validator}
-	@echo Attempting translation to BGF ...
-	ls -1 *.xsd | xargs -n1 ${viewer} > /dev/null
-	@echo All Ok
+	@for file in *.xsd ; \
+	do \
+		echo Validating $$file ... ; \
+		java -jar ${validator} $$file ; \
+		echo Translating $$file to BGF ... ; \
+		${viewer} $$file > /dev/null ;\
+	done
 
 clean:
 	rm -rf bin obj
