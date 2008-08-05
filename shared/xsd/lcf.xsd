@@ -47,8 +47,8 @@
       <xsd:element name="name" type="xsd:string" />
       <xsd:element name="definition">
         <xsd:complexType mixed="true">
-           <group ref="lcf:mixedwithexpands"/>
-        <xsd:complexType>
+           <xsd:group ref="lcf:mixedwithexpands"/>
+        </xsd:complexType>
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
@@ -92,10 +92,9 @@
   </xsd:group>
 
   <xsd:complexType name="commandtype" mixed="true">
-      <group ref="lcf:mixedwithexpands"/>
-      <xsd:attribute name="err" type="xsd:string" use="optional" />
-      <xsd:attribute name="out" type="xsd:string" use="optional" />
-    </xsd:complexContent>
+    <xsd:group ref="lcf:mixedwithexpands"/>
+    <xsd:attribute name="err" type="xsd:string" use="optional" />
+    <xsd:attribute name="out" type="xsd:string" use="optional" />
   </xsd:complexType>
 
   <xsd:complexType name="sourcetype">
@@ -107,8 +106,8 @@
           <xsd:sequence>
             <xsd:element maxOccurs="unbounded" name="argument">
                <xsd:complexType mixed="true">
-                  <group ref="lcf:mixedwithexpands"/>
-               <xsd:complexType>
+                  <xsd:group ref="lcf:mixedwithexpands"/>
+               </xsd:complexType>
             </xsd:element>
           </xsd:sequence>
         </xsd:complexType>
