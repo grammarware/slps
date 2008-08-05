@@ -19,10 +19,10 @@
       <xsd:sequence>
         <xsd:choice minOccurs="0" maxOccurs="unbounded">
           <xsd:element name="shortcut" type="lcf:shortcuttype" />
-          <xsd:element name="comment" type="ldf:mixedType" />
           <xsd:element name="action" type="lcf:actiontype" />
           <xsd:element name="source" type="lcf:sourcetype" />
           <xsd:element name="target" type="lcf:targettype" />
+          <xsd:element name="comment" type="ldf:mixedType" />
         </xsd:choice>
       </xsd:sequence>
     </xsd:complexType>
