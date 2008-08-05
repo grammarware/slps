@@ -4,6 +4,7 @@ viewer = ../tools/showxsd
 build:
 
 test:
+	make check
 
 check:
 	@for file in *.xsd ; \

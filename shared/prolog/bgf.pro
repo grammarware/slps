@@ -187,11 +187,17 @@ normalizeG_algebraically(Z1,Z2)
     ytransform(normalize_algebraically_rules,Z1,Z2),
     !.
 
+normalize_algebraically_rules(','([]),true).
 normalize_algebraically_rules(','([X]),X).
+normalize_algebraically_rules(';'([]),fail).
 normalize_algebraically_rules(';'([X]),X).
 normalize_algebraically_rules('+'(true),true).
 normalize_algebraically_rules('*'(true),true).
 normalize_algebraically_rules('?'(true),true).
+normalize_algebraically_rules(','(Xs1),','(Xs5))
+ :-
+    append(Xs2,[','(Xs3)|Xs4],Xs1),
+    concat([Xs2,Xs3,Xs4],Xs5).
 normalize_algebraically_rules(','(Xs1),','(Xs2))
  :-
     append(Xs1a,[true|Xs1b],Xs1),

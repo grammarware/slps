@@ -140,14 +140,14 @@ psFromGlobal(S,Z1,Ps)
       !,
       require(
         fail,
-        'XSD attributes unsupported.',
+        'Global attribute declarations unsupported.',
         [])
     ;
       self(name(xsd:attributeGroup),Z1),
       !,
       require(
         fail,
-        'XSD attribute groups unsupported.',
+        'Attribute groups unsupported.',
         [])
     ;
       Ps = []
@@ -221,7 +221,7 @@ pFromGroup(S,GR,p([],N,X))
 % Derive an expression from a complex type-based content model
 %
 
-xFromCType(S,T1,X)
+xFromCType(S,T1,X3)
  :-
     (
       child(name(xsd:complexContent),T1,T2) ->
@@ -247,10 +247,98 @@ xFromCType(S,T1,X)
               name(xsd:all);
               name(xsd:group)), T3, T4),
       !,
-      xFromModel(S,T4,X)
+      xFromModel(S,T4,X1)
     ; 
-      X = true 
-    ).
+      X1 = true 
+    ),
+    attribute(mixed,T1,false,Mixed),
+    (
+      Mixed == false ->
+          X2 = X1
+        ; require(
+            mixType(S,X1,X2),
+            'Form of mixed content ~q unsupported.',
+            [X1])
+    ),
+    addAttributes(S,T3,X2,X3),
+    !.
+
+
+%
+% Add attributes if any to a content model
+%
+
+addAttributes(S,T3,X1,X2)
+ :-
+    children(name(xsd:attribute),T3,As),
+    maplist(xFromAttribute(S),As,Xs),
+    normalizeG_algebraically(','([X1,','(Xs)]),X2),
+    !.
+
+xFromAttribute(S,A,X2)
+ :-
+    attribute(name,A,N),
+    attribute(type,A,T1),
+    normalizeQName(S,T1,T2),
+    X1 = s(N,n(T2)),
+    attribute(use,A,required,U),
+    ( U == required ->
+          X2 = X1
+        ; X2 = '?'(X1)
+    ),
+    !.
+
+
+%
+% Enhance an expression to reflect mixed content
+%
+
+mixType(S,X1,X2)
+ :-
+    xsdQName(S,string,XsdString),
+    mixType(S,XsdString,X1,X2),
+    !.
+
+mixType(_,XsdString,'*'(a),'*'(';'([a,n(XsdString)]))).
+mixType(S,XsdString,'*'(n(N)),'*'(';'([n(N),n(XsdString)])))
+ :-
+    lookupGlobal(S,xsd:group,N,G),
+    child( (name(xsd:sequence);
+            name(xsd:choice);
+            name(xsd:all)),G,C),
+    flatChoice(C),
+    !.
+
+
+%
+% Test a composite to be a flat choice
+% That is:
+%  - It is a choice.
+%  - There are no non-default occurs constraints.
+%  - All components are required element declarations.
+%
+
+flatChoice(C)
+ :-
+    self(name(xsd:choice),C),
+    defaultOccurrence(C),  
+    children(element,C,Kids),
+    maplist(flatChoiceComponent,Kids),
+    !.
+
+flatChoiceComponent(C)
+ :-
+    self(name(xsd:element),C),
+    defaultOccurrence(C),  
+    !.
+
+defaultOccurrence(X)
+ :-
+    attribute(minOccurs,X,'1',Min),
+    attribute(maxOccurs,X,'1',Max),
+    Min == '1',
+    Max == '1',
+    !.
 
 
 %
@@ -434,6 +522,18 @@ normalizeQName(S,N1,N2)
           )
         ; N2 = N1
     ),
+    !.
+
+
+%
+% Qualify a name to belong into the XSD namespace
+%
+
+xsdQName(S,N,QName)
+ :-
+    sxmlns(xsd,Ns),
+    dxmlns(S,Pfx,Ns),
+    concat_atom([Pfx,':',N],QName),
     !.
 
 

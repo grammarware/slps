@@ -19,7 +19,7 @@
       <xsd:sequence>
         <xsd:choice minOccurs="0" maxOccurs="unbounded">
           <xsd:element name="shortcut" type="lcf:shortcuttype" />
-          <xsd:element name="comment" type="ldf:mixedType" minOccurs="0"/>
+          <xsd:element name="comment" type="ldf:mixedType" />
           <xsd:element name="action" type="lcf:actiontype" />
           <xsd:element name="source" type="lcf:sourcetype" />
           <xsd:element name="target" type="lcf:targettype" />
@@ -47,15 +47,14 @@
       <xsd:element name="name" type="xsd:string" />
       <xsd:element name="definition">
         <xsd:complexType mixed="true">
-           <xsd:group ref="lcf:mixedwithexpands"/>
+           <xsd:group ref="lcf:mixedwithexpands" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:complexType>
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
 
   <xsd:group name="mixedwithexpands">
-    <xsd:sequence>
-      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+      <xsd:choice>
         <xsd:element name="expand" type="xsd:string" />
         <xsd:element name="expand-type">
            <xsd:complexType/>
@@ -88,11 +87,10 @@
            <xsd:complexType/>
         </xsd:element>
       </xsd:choice>
-    </xsd:sequence>
   </xsd:group>
 
   <xsd:complexType name="commandtype" mixed="true">
-    <xsd:group ref="lcf:mixedwithexpands"/>
+    <xsd:group ref="lcf:mixedwithexpands" minOccurs="0" maxOccurs="unbounded"/>
     <xsd:attribute name="err" type="xsd:string" use="optional" />
     <xsd:attribute name="out" type="xsd:string" use="optional" />
   </xsd:complexType>
@@ -106,7 +104,7 @@
           <xsd:sequence>
             <xsd:element maxOccurs="unbounded" name="argument">
                <xsd:complexType mixed="true">
-                  <xsd:group ref="lcf:mixedwithexpands"/>
+                  <xsd:group ref="lcf:mixedwithexpands" minOccurs="0" maxOccurs="unbounded"/>
                </xsd:complexType>
             </xsd:element>
           </xsd:sequence>
