@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ $# -ne 1 ]; then
+    echo "Usage: showxsd <xml-schema>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    swipl -q -f `dirname $0`/../prolog/showxsd.pro -- $1
+fi
