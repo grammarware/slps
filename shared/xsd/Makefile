@@ -6,8 +6,11 @@ build:
 test:
 
 check:
+	@echo Attempting validation...
 	ls -1 *.xsd | xargs -n1 java -jar ${validator}
-	ls -1 *.xsd | xargs -n1 ${viewer}
+	@echo Attempting presentation...
+	ls -1 *.xsd | xargs -n1 ${viewer} > /dev/null
+	@echo All Ok
 
 clean:
 	rm -rf bin obj
