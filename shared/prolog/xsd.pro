@@ -185,19 +185,23 @@ pFromElement(S,E,p([],N,X))
 % Derive a production from a complex-type definition
 %
 
-pFromCType(S,T1,p([],N,X))
+pFromCType(S,T1,p([],N,X2))
  :-
     attribute(name,T1,N),
     attribute(abstract,T1,false,A),
+    xFromCType(S,T1,X1),
     (
       A == true,
-      children(element,T1,[]),
+      require(
+        X1 == true,
+        'Non-empty abstract complex type ~q unsupported.',
+        [N]),
       children(call(typeWithBase(N)),S,Ts),
       maplist(nFromType,Ts,Ns),
-      X = ';'(Ns)
+      X2 = ';'(Ns)
     ;
       A == false,
-      xFromCType(S,T1,X)
+      X2 = X1
     ),
     !.
 
@@ -224,10 +228,17 @@ xFromCType(S,T1,X)
           ( require(
               child(name(xsd:extension),T2,T3),
               'Complex-type restriction unsupported.',
-              [T2]) % ,
-%            attribute(base,T3,B1),    
-%            normalizeQName(S,B1,B2),
-%            require(
+              []),
+            attribute(base,T3,B1),    
+            normalizeQName(S,B1,B2),
+            require(
+              lookupGlobal(S,xsd:complexType,B2,B3),
+              'Cannot locate base type ~q.',
+              [B2]),
+            require(
+              attribute(abstract,B3,true),
+              'Concrete base type ~q unsupported.',
+              [B2])
           )
         ; T3 = T1
     ),
@@ -423,4 +434,16 @@ normalizeQName(S,N1,N2)
           )
         ; N2 = N1
     ),
+    !.
+
+
+%
+% Look up a global of a given kind by name
+%
+
+lookupGlobal(S,K,N,G)
+ :-
+    children(name(K),S,Gs),
+    member(G,Gs),
+    attribute(name,G,N),
     !.
