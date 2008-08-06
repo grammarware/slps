@@ -21,14 +21,14 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:massage>
-  <xbgf:remove>
+  <xbgf:skip>
     <bgf:production>
       <nonterminal>expr</nonterminal>
       <bgf:expression>
         <nonterminal>expr</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:remove>
+  </xbgf:skip>
   <xbgf:permute>
     <bgf:production>
       <label>binary</label>

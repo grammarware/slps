@@ -303,12 +303,18 @@ mixType(_,XsdString,'*'(a),'*'(';'([a,n(XsdString)]))).
 mixType(S,XsdString,'*'(n(N)),'*'(';'([n(N),n(XsdString)])))
  :-
     lookupGlobal(S,xsd:group,N,G),
+    !,
     child( (name(xsd:sequence);
             name(xsd:choice);
             name(xsd:all)),G,C),
     flatChoice(C),
     !.
-
+mixType(_,XsdString,'*'(n(N)),'*'(';'([n(N),n(XsdString)])))
+ :-
+    !.
+mixType(_,XsdString,'*'(s(S,n(N))),'*'(';'([s(S,n(N)),n(XsdString)])))
+ :-
+    !.
 
 %
 % Test a composite to be a flat choice

@@ -463,6 +463,34 @@ removeP(P0,G1,G3)
     !.   
 
 
+% Skip a production
+
+skipBgf(P1,g(Rs,Ps1),g(Rs,Ps2))
+ :- 
+    require(
+      P1 = p(_,N,n(N)),
+      'Production ~q is not skippable.',
+      [P1]),
+    require(
+      append(Ps1a,[P1|Ps1b],Ps1),
+      'Production ~q not found.',
+      [P1]),
+    append(Ps1a,Ps1b,Ps2).
+
+skipBtf(P1,T1,T2)
+ :-
+    transform(
+      skipBtf_rule(P1),
+      T1,
+      T2).
+
+skipBtf_rule(
+  P1,
+  n(P1,T1),
+  T1).
+
+
+
 % Rename a nonterminal
 
 renameN((N1,N2),G1,G2)
@@ -973,6 +1001,18 @@ xbgf(T,G1,G2)
     !,
     children(element,T,Ts),
     accum(xbgf,Ts,G1,G2),
+    !.
+
+xbgf(T,G1,G3)
+ :-
+    self(name(xbgf:skip),T),
+    !,
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2),
+    format(' * skip ~q~n',[P2]),
+    normalizeG(P2,P3),
+    once(skipBgf(P3,G1,G2)),
+    normalizeG(G2,G3),
     !.
 
 xbgf(T,G1,G2)

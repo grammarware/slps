@@ -152,10 +152,10 @@ splitL(Ps1,L,P1,Ps2a,Ps2b)
 
 % Normalization
 
-normalizeG(G1,G3)
+normalizeG(Z1,Z3)
  :-
-    normalizeG_grouping(G1,G2),
-    normalizeG_algebraically(G2,G3),
+    normalizeG_grouping(Z1,Z2),
+    normalizeG_algebraically(Z2,Z3),
     !.
 
 
@@ -163,7 +163,12 @@ normalizeG(G1,G3)
 
 normalizeG_grouping(g(Rs,Ps1),g(Rs,Ps2))
  :-
+    !,
     normalizePs_grouping(Ps1,Ps2).
+
+% Succeed if not applied to an entire grammar
+normalizeG_grouping(Z,Z).
+
 
 normalizePs_grouping([],[]).
 normalizePs_grouping([P|Ps1],Ps5)
