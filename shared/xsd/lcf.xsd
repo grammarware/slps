@@ -19,15 +19,19 @@
   <xsd:element name="configuration">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:choice minOccurs="0" maxOccurs="unbounded">
-          <xsd:element name="shortcut" type="lcf:shortcutType" />
-          <xsd:element name="tool" type="lcf:toolType" />
-          <xsd:element name="source" type="lcf:sourceType" />
-          <xsd:element name="target" type="lcf:targetType" />
-        </xsd:choice>
+	<xsd:group ref="lcf:definition" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
+
+  <xsd:group name="definition">
+    <xsd:choice >
+      <xsd:element name="shortcut" type="lcf:shortcutType" />
+      <xsd:element name="tool" type="lcf:toolType" />
+      <xsd:element name="source" type="lcf:sourceType" />
+      <xsd:element name="target" type="lcf:targetType" />
+    </xsd:choice>
+  </xsd:group>
 
   <xsd:complexType name="shortcutType">
     <xsd:annotation>
@@ -39,7 +43,7 @@
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string" />
-      <xsd:element name="definition">
+      <xsd:element name="expansion">
         <xsd:complexType mixed="true">
           <xsd:annotation>
             <xsd:documentation>
@@ -54,7 +58,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="commandtype" mixed="true">
+  <xsd:complexType name="commandType" mixed="true">
     <xsd:annotation>
       <xsd:documentation>
         A command in LCF is something that is possible to run with a given shell.
@@ -100,14 +104,14 @@
       <xsd:element name="parsing" minOccurs="0">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element name="command" type="lcf:commandtype"/>
+            <xsd:element name="command" type="lcf:commandType"/>
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
       <xsd:element name="evaluation" minOccurs="0">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element name="command" type="lcf:commandtype"/>
+            <xsd:element name="command" type="lcf:commandType"/>
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
@@ -166,12 +170,12 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="name" type="lcf:tools"/>
-      <xsd:element name="command" type="lcf:commandtype"/>
+      <xsd:element name="name" type="lcf:tool"/>
+      <xsd:element name="command" type="lcf:commandType"/>
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:simpleType name="tools">
+  <xsd:simpleType name="tool">
     <xsd:restriction base="xsd:token">
       <xsd:enumeration value="validation"/>
       <xsd:enumeration value="comparison"/>

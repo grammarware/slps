@@ -869,7 +869,8 @@ xbgf(T,G1,G2)
  :-
     self(name(xbgf:inline),T),
     !,
-    content(T,N),
+    child(name(nonterminal),T,T1),
+    content(T1,N),
     format(' * inline nonterminal ~q~n',[N]),
     inline(N,G1,G2),
     !.
