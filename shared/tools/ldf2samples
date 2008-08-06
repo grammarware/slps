@@ -1,0 +1,24 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ $# -eq 2 ]
+then
+    rm -f $2
+    xsltproc ${SLPS}/shared/xsl/ldf2samples.xslt $1 > $2
+elif [ $# -eq 1 ]
+then
+    xsltproc ${SLPS}/shared/xsl/ldf2samples.xslt $1 > samples.xml
+else
+    echo "This tool extracts samples from LDF documents"
+    echo "Usage: $0 <input-language-document> [<output-samples-file>]"
+    exit 2
+fi
+

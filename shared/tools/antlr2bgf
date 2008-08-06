@@ -11,7 +11,7 @@ LOCAL3=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 2 ]; then
-    echo "Usage: antlr2bgf <ANTLR-input> <BGF-ouput>"
+    echo "Usage: antlr2bgf <ANTLR-input> <BGF-output>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
