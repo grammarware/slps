@@ -35,7 +35,7 @@
         A shortcut in LCF is just a simple macro.
         If binds a longer definition to a concise name.
         For example, a path with long directory names that is used multiple times in the LCF document is a good shortcut.
-          </xsd:documentation>
+      </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string" />
@@ -87,16 +87,10 @@
                 </xsd:sequence>
               </xsd:complexType>
             </xsd:element>
-            <xsd:element name="arguments">
-              <xsd:complexType>
+            <xsd:element maxOccurs="unbounded" name="argument">
+              <xsd:complexType mixed="true">
                 <xsd:sequence>
-                  <xsd:element maxOccurs="unbounded" name="argument">
-                    <xsd:complexType mixed="true">
-                      <xsd:sequence>
-                        <xsd:element name="expand" type="xsd:string"  minOccurs="0" maxOccurs="unbounded"/>
-                      </xsd:sequence>
-                    </xsd:complexType>
-                  </xsd:element>
+                  <xsd:element name="expand" type="xsd:string"  minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
               </xsd:complexType>
             </xsd:element>
@@ -146,7 +140,7 @@
                   A performed action must reside in an external XBGF file
                   that contains a sequence of atomic grammar transformations
                   grouped by one theme.
-                  
+
                   Performing a chain of actions is a way to get from sources
                   and intermediate targets to one final target.
                 </xsd:documentation>

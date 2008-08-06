@@ -35,7 +35,7 @@ def readxmlconfig (cfg):
  # sources
  for outline in config.findall('//source'):
   args = [expandxml(outline.findall('extraction/name')[0],{})]
-  for arg in outline.findall('extraction/arguments/argument'):
+  for arg in outline.findall('extraction/argument'):
    args.append(expandxml(arg,{}))
   sources[outline.findtext('name')]=args
   pcmd = ecmd = ''

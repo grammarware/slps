@@ -15,7 +15,7 @@
     </definition>
   </shortcut>
 
-   <tool>
+  <tool>
     <name>validation</name>
     <command>
       java -jar <expand>slps</expand>/download/msv/msv.jar <expand>slps</expand>/shared/xsd/bgf.xsd
@@ -31,7 +31,7 @@
     <name>testset</name>
     <command>
       <expand>tools</expand>/ldf2samples <expand>fl</expand>/ldf/fl.ldf
-  </command>
+    </command>
   </tool>
   <tool>
     <name>transformation</name>
@@ -39,21 +39,19 @@
       <expand>tools</expand>/xbgf
     </command>
   </tool>
-     
+
   <source>
     <name>antlr</name>
     <extraction>
       <name>
         <expand>tools</expand>/antlr2bgf
       </name>
-      <arguments>
-        <argument>
-          <expand>fl</expand>/java1/FL.g
-        </argument>
-        <argument>
-          antlr.bgf
-        </argument>
-      </arguments>
+      <argument>
+        <expand>fl</expand>/java1/FL.g
+      </argument>
+      <argument>
+        antlr.bgf
+      </argument>
     </extraction>
     <parsing>
       <command>
@@ -72,14 +70,12 @@
       <name>
         <expand>tools</expand>/dcg2bgf
       </name>
-      <arguments>
-        <argument>
-          <expand>fl</expand>/prolog/Parser.pro
-        </argument>
-        <argument>
-          dcg.bgf
-        </argument>
-      </arguments>
+      <argument>
+        <expand>fl</expand>/prolog/Parser.pro
+      </argument>
+      <argument>
+        dcg.bgf
+      </argument>
     </extraction>
     <parsing>
       <command>
@@ -98,17 +94,15 @@
       <name>
         <expand>tools</expand>/java2bgf
       </name>
-      <arguments>
-        <argument>
-          <expand>fl</expand>/java1
-        </argument>
-        <argument>
-          types
-        </argument>
-        <argument>
-          om.bgf
-        </argument>
-      </arguments>
+      <argument>
+        <expand>fl</expand>/java1
+      </argument>
+      <argument>
+        types
+      </argument>
+      <argument>
+        om.bgf
+      </argument>
     </extraction>
   </source>
   <source>
@@ -117,14 +111,12 @@
       <name>
         <expand>tools</expand>/xsd2bgf
       </name>
-      <arguments>
-        <argument>
-          <expand>fl</expand>/xsd/fl.xsd
-        </argument>
-        <argument>
-          xsd.bgf
-        </argument>
-      </arguments>
+      <argument>
+        <expand>fl</expand>/xsd/fl.xsd
+      </argument>
+      <argument>
+        xsd.bgf
+      </argument>
     </extraction>
   </source>
   <source>
@@ -133,17 +125,15 @@
       <name>
         <expand>tools</expand>/java2bgf
       </name>
-      <arguments>
-        <argument>
-          <expand>fl</expand>/java3
-        </argument>
-        <argument>
-          fl
-        </argument>
-        <argument>
-          jaxb.bgf
-        </argument>
-      </arguments>
+      <argument>
+        <expand>fl</expand>/java3
+      </argument>
+      <argument>
+        fl
+      </argument>
+      <argument>
+        jaxb.bgf
+      </argument>
     </extraction>
   </source>
 
