@@ -2,17 +2,17 @@
 <lcf:configuration xmlns:lcf="http://planet-sl.org/lcf">
   <shortcut>
     <name>slps</name>
-    <definition>../../..</definition>
+    <expansion>../../..</expansion>
   </shortcut>
   <shortcut>
     <name>fl</name>
-    <definition>..</definition>
+    <expansion>..</expansion>
   </shortcut>
   <shortcut>
     <name>tools</name>
-    <definition>
+    <expansion>
       <expand>slps</expand>/shared/tools
-    </definition>
+    </expansion>
   </shortcut>
 
   <tool>

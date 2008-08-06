@@ -27,7 +27,7 @@ def readxmlconfig (cfg):
  config = ElementTree.parse(cfg)
  # shortcuts
  for outline in config.findall('//shortcut'):
-  shortcuts[outline.findtext('name')]=expandxml(outline.findall('definition')[0],{})
+  shortcuts[outline.findtext('name')]=expandxml(outline.findall('expansion')[0],{})
  # actions
  for outline in config.findall('//target/branch/perform'):
   if outline.text not in actions:
