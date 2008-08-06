@@ -279,12 +279,16 @@ simpleXsd(string).
 % Parse according to a simple type
 %
 
-simpleType(N,Ns,a(Ns))
+simpleType(N,Ns,t(V))
  :-
     require(
       \+ nextElement(Ns,_,_),
       'Simple type ~q expected; elements found.',
-      [N]).
+      [N]),
+    require(
+      ( [V] = Ns ),
+      'Simple type expected; list found.',
+      []).
 
 
 %

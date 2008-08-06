@@ -31,16 +31,16 @@ trafoProd ( &Ss1 -> &N1 &As1 ) =
   &E2
 </bgf:production>
 
-[1]
+[transform-empty-definition-of-nonterminal]
 trafoSymbols() = 
 <bgf:expression>
   <epsilon/>
 </bgf:expression>
 
-[2]
+[transform-definition-that-is-not-a-sequence]
 trafoSymbols(&S1) = trafoSymbol(&S1)
 
-[3]
+[transform-a-definition-that-is-a-nontrivial-sequence]
 &S1 &S2 &S*3 := &Ss1,
 &C*1 := mapTrafoSymbol(&Ss1)
 =====================

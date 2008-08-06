@@ -8,6 +8,12 @@ tToXml(true,X2)
     e(epsilon,[],[],X1),
     toBtfTree(X1,X2).
 
+tToXml(t(V),X2)
+ :-
+    !,
+    e(terminal,[],[V],X1),
+    toBtfTree(X1,X2).
+
 tToXml(n(P,T),X4)
  :-
     !,

@@ -21,8 +21,8 @@
         </xsd:element>
         
         <xsd:element name="any">
-          <xsd:complexType mixed="true">
-            <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
               <xsd:any processContents="skip"/>
             </xsd:sequence>
           </xsd:complexType>
