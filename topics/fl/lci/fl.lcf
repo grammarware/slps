@@ -14,67 +14,35 @@
       <expand>slps</expand>/shared/tools
     </definition>
   </shortcut>
-  <shortcut>
-    <name>runjava1jar</name>
-    <definition>
-      <expand>fl</expand>/java1/javafl.jar
-    </definition>
-  </shortcut>
-  <shortcut>
-    <name>rundcgdir</name>
-    <definition>
-      <expand>fl</expand>/prolog
-    </definition>
-  </shortcut>
 
-  <comment>
-    if validator is present, extracted bgfs and all bgfs produced by transformations will be validated with it
-  </comment>
-  <tool>
-    <name>validator</name>
+   <tool>
+    <name>validation</name>
     <command>
       java -jar <expand>slps</expand>/download/msv/msv.jar <expand>slps</expand>/shared/xsd/bgf.xsd
     </command>
   </tool>
   <tool>
-    <name>diff</name>
+    <name>comparison</name>
     <command>
       <expand>tools</expand>/bdt
     </command>
   </tool>
   <tool>
     <name>testset</name>
-    <command out="samples.xml">
-      xsltproc <expand>slps</expand>/shared/xsl/ldf2samples.xslt <expand>fl</expand>/ldf/fl.ldf
+    <command>
+      <expand>tools</expand>/ldf2samples <expand>fl</expand>/ldf/fl.ldf
   </command>
   </tool>
-  
-  <action>
-    <name>unerase</name>
-    <name>abstract1</name>
-    <name>concrete2abstract</name>
-    <name>downcase</name>
-    <name>horizontal2vertical</name>
-    <name>preferDcg</name>
-    <name>reroot</name>
-    <name>trimJaxb</name>
-    <name>downcase</name>
-    <name>trimOm</name>
-    <name>preferJaxb</name>
-    <name>stripTerminals</name>
-    <name>layering</name>
-    <name>preferJava</name>
-    <name>massageXsd</name>
-    <definition>
-      <command>
-        <expand>tools</expand>/xbgf <expand-input/>.bgf xbgf/<expand-action/>.xbgf <expand-input/>.<expand-action/>.bgf
-      </command>
-    </definition>
-  </action>
-  
+  <tool>
+    <name>transformation</name>
+    <command>
+      <expand>tools</expand>/xbgf
+    </command>
+  </tool>
+     
   <source>
     <name>antlr</name>
-    <extractor>
+    <extraction>
       <name>
         <expand>tools</expand>/antlr2bgf
       </name>
@@ -86,21 +54,21 @@
           antlr.bgf
         </argument>
       </arguments>
-    </extractor>
-    <parser>
-      <command err="/dev/null">
-        java -cp ${CLASSPATH}:<expand>runjava1jar</expand> -ea TestIO <expand-input/> <expand-output/>
+    </extraction>
+    <parsing>
+      <command>
+        <expand>tools</expand>/runantlrparser
       </command>
-    </parser>
-    <evaluator>
-      <command err="/dev/null">
-        java -cp ${CLASSPATH}:<expand>runjava1jar</expand> -ea TestEvaluator <expand-context/> <expand-input/> <expand-yields/>
+    </parsing>
+    <evaluation>
+      <command>
+        <expand>tools</expand>/runantlrevaluator
       </command>
-    </evaluator>
+    </evaluation>
   </source>
   <source>
     <name>dcg</name>
-    <extractor>
+    <extraction>
       <name>
         <expand>tools</expand>/dcg2bgf
       </name>
@@ -112,21 +80,21 @@
           dcg.bgf
         </argument>
       </arguments>
-    </extractor>
-    <parser>
+    </extraction>
+    <parsing>
       <command>
-        swipl -q -f <expand>rundcgdir</expand>/TestIO.pro -t "main('<expand-input/>','<expand-output/>')"
+        <expand>tools</expand>/runprologparser
       </command>
-    </parser>
-    <evaluator>
+    </parsing>
+    <evaluation>
       <command>
-        swipl -q -f <expand>rundcgdir</expand>/TestEvaluator.pro -t "main('<expand-context/>','<expand-input/>',<expand-yields/>)"
+        <expand>tools</expand>/runprologevaluator
       </command>
-    </evaluator>
+    </evaluation>
   </source>
   <source>
     <name>om</name>
-    <extractor>
+    <extraction>
       <name>
         <expand>tools</expand>/java2bgf
       </name>
@@ -141,11 +109,11 @@
           om.bgf
         </argument>
       </arguments>
-    </extractor>
+    </extraction>
   </source>
   <source>
     <name>xsd</name>
-    <extractor>
+    <extraction>
       <name>
         <expand>tools</expand>/xsd2bgf
       </name>
@@ -157,11 +125,11 @@
           xsd.bgf
         </argument>
       </arguments>
-    </extractor>
+    </extraction>
   </source>
   <source>
     <name>jaxb</name>
-    <extractor>
+    <extraction>
       <name>
         <expand>tools</expand>/java2bgf
       </name>
@@ -176,7 +144,7 @@
           jaxb.bgf
         </argument>
       </arguments>
-    </extractor>
+    </extraction>
   </source>
 
   <target>

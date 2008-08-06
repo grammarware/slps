@@ -7,7 +7,7 @@ from elementtree import ElementTree
 shutup = ' 1> /dev/null 2> /dev/null'
 sections = {'SHORTCUTS':1,'ACTIONS':2,'SOURCES':3,'TARGETS':4,'IMPLEMENTATIONS':5}
 shortcuts = {}
-actions = {}
+actions = []
 sources = {}
 targets = {}
 implementations = {}
@@ -25,52 +25,30 @@ def sysexit(n):
 
 def readxmlconfig (cfg):
  config = ElementTree.parse(cfg)
- cx1=cx2=cx3=cx4=cx5=cx6=0
  # shortcuts
  for outline in config.findall('//shortcut'):
-  cx1+=1
   shortcuts[outline.findtext('name')]=expandxml(outline.findall('definition')[0],{})
  # actions
- for outline in config.findall('//action'):
-  for name in outline.findall('name'):
-   cmds = []
-   for cmd in outline.findall('definition/command'):
-    cmds.append(expandxml(cmd,{'action':name.text}))
-    if cmd.attrib.has_key('out'):
-     cmds[-1]+=' 1> '+cmd.attrib['out']
-    if cmd.attrib.has_key('err'):
-     cmds[-1]+=' 2> '+cmd.attrib['err']
-   actions[name.text]=cmds
-   cx2+=1
+ for outline in config.findall('//target/branch/perform'):
+  if outline.text not in actions:
+   actions.append(outline.text)
  # sources
  for outline in config.findall('//source'):
-  args = [expandxml(outline.findall('extractor/name')[0],{})]
-  for arg in outline.findall('extractor/arguments/argument'):
+  args = [expandxml(outline.findall('extraction/name')[0],{})]
+  for arg in outline.findall('extraction/arguments/argument'):
    args.append(expandxml(arg,{}))
   sources[outline.findtext('name')]=args
-  cx3+=1
-  pcmds = []
-  ecmds = []
-  for cmd in outline.findall('parser/command'):
-   pcmds.append(expandxml(cmd,{}))
-   if cmd.attrib.has_key('out'):
-    pcmds[-1]+=' 1> '+cmd.attrib['out']
-   if cmd.attrib.has_key('err'):
-    pcmds[-1]+=' 2> '+cmd.attrib['err']
-  for cmd in outline.findall('evaluator/command'):
-   ecmds.append(expandxml(cmd,{}))
-   if cmd.attrib.has_key('out'):
-    ecmds[-1]+=' 1> '+cmd.attrib['out']
-   if cmd.attrib.has_key('err'):
-    ecmds[-1]+=' 2> '+cmd.attrib['err']
-  if pcmds and ecmds:
-   implementations[outline.findtext('name')]=[pcmds,ecmds]
-   cx5+=1
+  pcmd = ecmd = ''
+  if outline.findall('parsing/command'):
+   pcmd = expandxml(outline.findall('parsing/command')[0],{})
+  if outline.findall('evaluation/command'):
+   ecmd = expandxml(outline.findall('evaluation/command')[0],{})
+  if pcmd and ecmd:
+   implementations[outline.findtext('name')]=[pcmd,ecmd]
  # targets
  for outline in config.findall('//target'):
   name = outline.findtext('name')
   targets[name]= [[],'']
-  cx4+=1
   for br in outline.findall('branch'):
    branch = [br.findtext('input')]
    for p in br.findall('perform'):
@@ -78,7 +56,6 @@ def readxmlconfig (cfg):
    targets[name][0].append(branch)
  # tools
  for outline in config.findall('//tool'):
-  cx6+=1
   cmd = outline.findall('command')[0]
   line = expandxml(cmd,{})
   if cmd.attrib.has_key('out'):
@@ -87,7 +64,8 @@ def readxmlconfig (cfg):
    line += ' 2> '+cmd.attrib['err']
   tools[outline.findtext('name')]=line
 
- print 'Read',cx1,'shortcuts,',cx6,'tools,',cx2,'actions,',cx3,'sources','('+`cx5`,'implemented),',cx4,'targets.'
+ print 'Read',len(shortcuts),'shortcuts,',len(tools),'tools,',len(actions),'actions,',
+ print len(sources),'sources','('+`len(implementations)`,'implemented),',len(targets),'targets.'
 
 def expandone(tag,text,rep):
  if text:
@@ -202,25 +180,13 @@ def extractall():
 
 def validateall():
  for bgf in sources.keys():
-  run = tools['validator']+' '+bgf+'.bgf'
+  run = tools['validation']+' '+bgf+'.bgf'
   logwrite(run)
   if os.system(run+shutup):
    print 'Validation failed on',bgf
    print 'Command was:',run
    sysexit(3)
  print 'Validation successful.'
-
-def runforall(cmd,prc):
- for bgf in sources.keys():
-  for line in actions[cmd]:
-   run = expanduni(line,{'input':bgf,'type':sources[bgf][0],'arguments':expanduni(sources[bgf][1],{})})
-   logwrite(run)
-   ret = os.system(run+shutup)
-   if ret!=0:
-    print prc,'failed on',bgf
-    print 'Command was:',run
-    sysexit(3)
- print prc,'successful.'
 
 def preparebgf(cut):
  # executes preparational actions (abstract, unerase, etc) before comparison
@@ -237,23 +203,18 @@ def preparebgf(cut):
   # files x.bgf, x.corrupt.bgf, x.corrupt.confuse.bgf and x.corrupt.confuse.destroy.bgf
   # the very last one will be diffed
   for a in cut[1:]:
-   if a not in actions.keys():
-    print 'Action',a,'needed for',curname,'not found.'
-    sysexit(5)
-   for linetorun in actions[a]:
-    run = expanduni(linetorun,{'input':curname})
-    logwrite(run)
-    ret = os.system(run+shutup)
-    if ret!=0:
-     print a,'failed on',curname
-     print 'Command was:',run
-     sysexit(4)
+   run = tools['transformation']+' '+curname+'.bgf xbgf/'+a+'.xbgf '+curname+'.'+a+'.bgf'
+   logwrite(run)
+   if os.system(run+shutup):
+    print a,'failed on',curname
+    print 'Command was:',run
+    sysexit(4)
    curname += '.'+a
  a=cut[:]
  a.reverse()
  name = ' '.join(a)
- if tools.has_key('validator'):
-  a = tools['validator']+' '+curname+'.bgf'
+ if tools.has_key('validation'):
+  a = tools['validation']+' '+curname+'.bgf'
   logwrite(a)
   print 'Successfully performed',name,'- the result is',
   if os.system(a+shutup):
@@ -288,7 +249,7 @@ def buildtargets():
 
 def diffall(t,car,cdr):
  if len(cdr)==1:
-  run = tools['diff']+' '+car+'.bgf '+cdr[0]+'.bgf'
+  run = tools['comparison']+' '+car+'.bgf '+cdr[0]+'.bgf'
   logwrite(run)
   ret = os.system(run+shutup)
   if ret!=0:
@@ -359,11 +320,9 @@ def runtestset():
    # evaluate if context is given
    results = {}
    for program in implementations.keys():
-    results[program]=0
-    for cmd in implementations[program][1]:
-     run = expanduni(cmd,{'input':testcase[0],'context':testcase[1],'yields':testcase[2]})
-     logwrite(run)
-     results[program]+=os.system(run)
+    run = expanduni(implementations[program][1]+' '+testcase[1]+' '+testcase[0]+' '+testcase[2],{})
+    logwrite(run)
+    results[program]=os.system(run+shutup)
    print 'Test case',testcase[0],
    if results.values()==[0]*len(implementations):
     # all zeros
@@ -377,11 +336,9 @@ def runtestset():
    # parse otherwise
    results = {}
    for program in implementations.keys():
-    results[program]=0
-    for cmd in implementations[program][0]:
-     run = expanduni(cmd,{'input':testcase[0],'output':testcase[0]+'.parsed'})
-     logwrite(run)
-     results[program]+=os.system(run)
+    run = expanduni(implementations[program][0]+' '+testcase[0]+' '+testcase[0]+'.parsed',{})
+    logwrite(run)
+    results[program]=os.system(run+shutup)
    print 'Test case',testcase[0],
    if results.values()==[0]*len(implementations):
     # all zeros
@@ -394,25 +351,29 @@ def runtestset():
 
 def checkconsistency():
  # some simple assertions
+ # all targets depend on existing targets or sources
+ for t in targets.keys():
+  for i in targets[t][0]:
+   if not (targets.has_key(i[0]) or sources.has_key(i[0])):
+    print 'Target',t,'needs',i[0],'which is not defined'
+    sysexit(7)
+ # all actions can be found
  try:
-  # all targets depend on existing targets or sources
-  for t in targets.keys():
-   for i in targets[t][0]:
-    if not (targets.has_key(i[0]) or sources.has_key(i[0])):
-     print 'Target',t,'needs',i[0],'which is not defined'
-     raise Exception
- except:
-  sysexit(7)
+  for a in actions:
+   open('xbgf/'+a+'.xbgf','r').close()
+ except IOError, e:
+  print 'Undefined action used: need',e.filename
+  sysexit(8)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.5'
+ print 'Language Covergence Infrastructure v1.6'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])
   checkconsistency()
   makegraph(sys.argv[2])
   extractall()
-  if tools.has_key('validator'):
+  if tools.has_key('validation'):
    validateall()
   buildtargets()
   print 'Grammar convergence ended successfully.'
