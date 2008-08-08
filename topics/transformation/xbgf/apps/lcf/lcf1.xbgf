@@ -28,15 +28,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <xbgf:strip>
-    <selector>command</selector>
-  </xbgf:strip>  
-  <xbgf:rename>
-    <nonterminal>
-      <from>commandType</from>
-      <to>command</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:rename>
     <nonterminal>
       <from>xsd:string</from>

@@ -137,17 +137,17 @@
         <choice>
           <bgf:expression>
             <selectable>
-              <selector>verticalN</selector>
+              <selector>verticalL</selector>
               <bgf:expression>
-                <nonterminal>n</nonterminal>
+                <nonterminal>l</nonterminal>
               </bgf:expression>
             </selectable>
           </bgf:expression>
           <bgf:expression>
             <selectable>
-              <selector>verticalL</selector>
+              <selector>verticalN</selector>
               <bgf:expression>
-                <nonterminal>l</nonterminal>
+                <nonterminal>n</nonterminal>
               </bgf:expression>
             </selectable>
           </bgf:expression>

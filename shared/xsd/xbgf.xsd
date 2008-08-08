@@ -35,9 +35,9 @@
       <xsd:element ref="xbgf:introduce"/>
       <xsd:element ref="xbgf:label"/>
       <xsd:element ref="xbgf:massage"/>
-      <xsd:element ref="xbgf:prune"/>
       <xsd:element ref="xbgf:permute"/>
       <xsd:element ref="xbgf:project"/>
+      <xsd:element ref="xbgf:prune"/>
       <xsd:element ref="xbgf:relax"/>
       <xsd:element ref="xbgf:relabel"/>
       <xsd:element ref="xbgf:remove"/>
@@ -507,8 +507,8 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:choice>
-        <xsd:element name="nonterminal" type="bgf:nonterminal"/>
         <xsd:element name="label" type="bgf:label"/>
+        <xsd:element name="nonterminal" type="bgf:nonterminal"/>
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>

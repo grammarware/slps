@@ -71,9 +71,9 @@ find_terminal(t(T),[T]).
 
 % Return all labels
 
-allLs(G,Ls1)
+allLs(Z,Ls1)
  :-
-    collect(find_label,G,Ls1),
+    collect(find_label,Z,Ls1),
     !.
 
 find_label(l(L),[L]).
