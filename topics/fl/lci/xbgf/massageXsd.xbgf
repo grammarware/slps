@@ -27,7 +27,7 @@
             <selectable>
               <selector>name</selector>
               <bgf:expression>
-                <nonterminal>string</nonterminal>
+                <nonterminal>xsd:string</nonterminal>
               </bgf:expression>
             </selectable>
           </bgf:expression>
@@ -37,7 +37,7 @@
               <bgf:expression>
                 <plus>
                   <bgf:expression>
-                    <nonterminal>string</nonterminal>
+                    <nonterminal>xsd:string</nonterminal>
                   </bgf:expression>
                 </plus>
               </bgf:expression>
@@ -64,7 +64,7 @@
             <selectable>
               <selector>name</selector>
               <bgf:expression>
-                <nonterminal>string</nonterminal>
+                <nonterminal>xsd:string</nonterminal>
               </bgf:expression>
             </selectable>
           </bgf:expression>

@@ -137,10 +137,9 @@ fold(P0,G1,G3)
 
 % Commmon core of fold and unfold
 
-fu(X1,X2,G,P0,G1,G3)
+fu(X1,X2,G,P1,G1,G3)
  :-
     G1 = g(Rs,Ps1),
-    normalizeG_algebraically(P0,P1),
     P1 = p(As1,N1,X1),
     findP(Ps1,As1,N1,P2,Ps3,Ps4),
     P2 = p(As1,N1,X2),
@@ -152,11 +151,10 @@ fu(X1,X2,G,P0,G1,G3)
       apply(G,[N2,X3]),
       'Phrases ~q and ~q do not match.',
       [X1,X2]),
-    normalizeG_algebraically(X3,X4),
     require(
-      splitN(Ps1,N2,[p([],N2,X4)],_,_),
+      splitN(Ps1,N2,[p([],N2,X3)],_,_),
       'Nonterminal ~q must be defined as ~q.',
-      [N2,X4]),
+      [N2,X3]),
     append(Ps3,[p(As1,N1,X1)|Ps4],Ps5),
     G2 = g(Rs,Ps5),
     normalizeG(G2,G3),
@@ -720,9 +718,6 @@ stripSs(g(Rs,Ps1),g(Rs,Ps2))
 stripS_rule(s(_,X),X).
 
 stripS_rule(S,s(S,X),X).
-
-
-% Strip terminals
 
 stripTs(G1,G2)
  :-

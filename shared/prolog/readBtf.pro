@@ -14,6 +14,12 @@ xmlToT(X1,true)
     self(name(epsilon),X1),
     !.
 
+xmlToT(X1,t(V))
+ :-
+    self(name(terminal),X1),
+    content(X1,V),
+    !.
+
 xmlToT(X1,n(P2,T2))
  :-
     self(name(nonterminal),X1),

@@ -162,8 +162,8 @@
     <branch>
       <input>xsd</input>
       <perform>downcase</perform>
-      <perform>preferJava</perform>
       <perform>massageXsd</perform>
+      <perform>preferJava</perform>
     </branch>
   </target>
   <target>
