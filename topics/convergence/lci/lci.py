@@ -18,6 +18,7 @@ tools = {}
 
 def logwrite(s):
  log.write(s+'\n')
+ log.flush()
 
 def sysexit(n):
  log.close()
@@ -122,16 +123,16 @@ def drawchain(chain,tgt):
 def makegraph(df):
  # first we generate a complete picture
  dot = open(df+'_large.dot','w')
- dot.write('digraph generated{ {rank=same;')
+ dot.write('digraph generated{ {rank=same; node [shape=ellipse];')
  for x in sources.keys():
   dot.write(quote(x)+';')
- dot.write('}')
- dot.write('node [shape=octagon]\n')
+ dot.write('}\n')
+ dot.write('node [shape=octagon];\n')
  for x in targets.keys():
   for src in targets[x][0]:
    drawchain(src,x)
   dot.write(quote(x)+';')
- dot.write('node [shape=ellipse]\n')
+ dot.write('node [shape=box];\n')
  for arc in graph:
   dot.write(quote(arc[0])+'->'+quote(arc[1]))
   if arc[2]:
@@ -156,7 +157,6 @@ def makegraph(df):
   for src in targets[x][0]:
    addarc(src[0],x,'')
   dot.write(quote(x)+';')
- dot.write('node [shape=ellipse]\n')
  for arc in graph:
   dot.write(quote(arc[0])+'->'+quote(arc[1]))
   if arc[2]:
