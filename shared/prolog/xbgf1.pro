@@ -27,6 +27,82 @@ transformG(T,G1,G3)
 
 
 %
+% p([l(caseAllDown)], f, true)
+% p([l(caseAllUp)], f, true)
+% p([l(caseFirstDown)], f, true)
+% p([l(caseFirstUp)], f, true)
+%
+% Normalize case for all sorts of symbols
+%
+
+caseAllDown(G1,G2) :- case(all,down,G1,G2).
+caseAllUp(G1,G2) :- case(all,up,G1,G2).
+caseFirstDown(G1,G2) :- case(first,down,G1,G2).
+caseFirstUp(G1,G2) :- case(first,up,G1,G2).
+
+case(Q,UD,G1,G4) 
+ :-
+    % Downcase nonterminals
+
+    allNs(G1,Ns1),
+    filter(xbgf1:testCase(Q,UD),Ns1,Ns2),
+    format(' * case(~q,~q) nonterminals ~q~n',[Q,UD,Ns2]),
+    maplist(xbgf1:doCase(Q,UD),Ns2,Ns3),
+    zip(Ns2,Ns3,Ns4),
+    accum(xbgf1:renameN,Ns4,G1,G2),
+
+    % Downcase labels
+
+    allLs(G2,Ls1),
+    filter(xbgf1:testCase(Q,UD),Ls1,Ls2),
+    format(' * case(~q,~q) labels ~q~n',[Q,UD,Ls2]),
+    maplist(xbgf1:doCase(Q,UD),Ls2,Ls3),
+    zip(Ls2,Ls3,Ls4),
+    accum(xbgf1:renameL,Ls4,G2,G3),
+
+    % Downcase selectors
+
+    allSs(G2,Ss1),
+    filter(xbgf1:testCase(Q,UD),Ss1,Ss2),
+    format(' * case(~q,~q) selectors ~q~n',[Q,UD,Ss2]),
+    maplist(xbgf1:doCase(Q,UD),Ss2,Ss3),
+    zip(Ss2,Ss3,Ss4),
+    accum(xbgf1:renameS,Ss4,G3,G4).
+
+
+% Test a name to be worth down/up-casing
+
+doCase(all,down,X1,X2)
+ :- 
+    downcase_atom(X1,X2).
+
+doCase(all,up,X1,X2)
+ :- 
+    upcase_atom(X1,X2).
+
+doCase(first,down,X1,X7) 
+ :-
+    name(X1,[X2|X3]),
+    name(X4,[X2]),
+    downcase_atom(X4,X5),
+    name(X5,[X6]),
+    name(X7,[X6|X3]).
+
+doCase(first,up,X1,X7) 
+ :-
+    name(X1,[X2|X3]),
+    name(X4,[X2]),
+    upcase_atom(X4,X5),
+    name(X5,[X6]),
+    name(X7,[X6|X3]).
+
+testCase(Q,UD,X) 
+ :-
+    doCase(Q,UD,X,Y),
+    \+ X == Y.
+
+
+%
 % p([l(define)], f, +n(p))
 %
 % Define a nonterminal
@@ -40,7 +116,7 @@ define(Ps1,G1,G2)
       member(N,Uses),
       'Nonterminal ~q must not be fresh.',
       [N]),
-    newN(Ps1,N,G1,G2),
+    new(Ps1,N,G1,G2),
     !.
 
 ps2n(Ps1,N)
@@ -52,42 +128,6 @@ ps2n(Ps1,N)
       'Multiple defined nonterminals found.',
       []),
     !.
-
-
-%
-% p([l(downcase)], f, true)
-%
-% Establish lowercase for all sorts of symbols
-%
-
-downcase(G1,G4) 
- :-
-    % Downcase nonterminals
-
-    allNs(G1,Ns1),
-    filter(downcasy,Ns1,Ns2),
-    format(' * downcase nonterminals ~q~n',[Ns2]),
-    maplist(downcase_atom,Ns2,Ns3),
-    zip(Ns2,Ns3,Ns4),
-    accum(xbgf1:renameN,Ns4,G1,G2),
-
-    % Downcase labels
-
-    allLs(G2,Ls1),
-    filter(downcasy,Ls1,Ls2),
-    format(' * downcase labels ~q~n',[Ls2]),
-    maplist(downcase_atom,Ls2,Ls3),
-    zip(Ls2,Ls3,Ls4),
-    accum(xbgf1:renameL,Ls4,G2,G3),
-
-    % Downcase selectors
-
-    allSs(G2,Ss1),
-    filter(downcasy,Ss1,Ss2),
-    format(' * downcase selectors ~q~n',[Ss2]),
-    maplist(downcase_atom,Ss2,Ss3),
-    zip(Ss2,Ss3,Ss4),
-    accum(xbgf1:renameS,Ss4,G3,G4).
 
 
 %
@@ -312,67 +352,76 @@ label(P0,g(Rs,Ps1),g(Rs,Ps2))
     append(As1,As2,As3),
     append(Ps1a,[p(As3,N,X)|Ps1b],Ps2).
 
+
 %
-% p([l(massage)], f, n(p))
+% p([l(lassoc)], f, n(p))
 %
-% Obviously correct rewrites
+% Interpret separator list left-associatively
 %
 
-massage(P1,g(Rs,Ps1),g(Rs,Ps2))
+lassoc(P1,g(Rs,Ps1),g(Rs,Ps2))
  :-
-    P1 = p(As1,N1,X1),
-    findP(Ps1,As1,N1,P2,Ps2a,Ps2b),
-    P2 = p(As1,N1,X2),
+    P1 = p(As,N,X1),
+    findP(Ps1,As,N,P2,Ps2a,Ps2b),
+    P2 = p(As,N,X2),
     require(
-      xbgf1:massageX(N1,X1,X2),
-      'Halting problem remains unsovled.',
-      []),
+      xbgf1:lassoc_rule(N,X1,X2),
+      'p(~q,~q,...) must define a separator list.',
+      [As,N]),
     append(Ps2a,[P1|Ps2b],Ps2).
 
-
-% Special rule for binary expressions
-
-massageX(
+lassoc_rule(
   N,
   ','([n(N),X,n(N)]), 
-  ','([n(N),'*'(','([X,n(N)]))]))
- :- !.
+  ','([n(N),'*'(','([X,n(N)]))])).
 
-% Special strategy for selector renaming/dropping/adding
 
-massageX(_,X1,X2)
+%
+% p([l(modulo)], f, n(p))
+%
+% Equality modulo selectors
+%
+
+modulo(P1,g(Rs,Ps1),g(Rs,Ps2))
  :-
-    massageX_selectors(X1,X2).
+    P1 = p(As,N,X1),
+    findP(Ps1,As,N,P2,Ps2a,Ps2b),
+    P2 = p(As,N,X2),
+    require(
+      xbgf1:modulo_strategy(X1,X2),
+      'Cannot rewrite p(~q,~q,...) modulo selectors.',
+      [As,N]),
+    append(Ps2a,[P1|Ps2b],Ps2).
 
-massageX_selectors(X,X).
+modulo_strategy(X,X).
 
-massageX_selectors(s(_,X1),X2)
+modulo_strategy(s(_,X1),X2)
  :- 
-    massageX_selectors(X1,X2).
+    modulo_strategy(X1,X2).
 
-massageX_selectors(X1,s(_,X2))
+modulo_strategy(X1,s(_,X2))
  :-
-    massageX_selectors(X1,X2).
+    modulo_strategy(X1,X2).
 
-massageX_selectors(','(X1s),','(X2s))
+modulo_strategy(','(X1s),','(X2s))
  :- 
-    maplist(xbgf1:massageX_selectors,X1s,X2s).
+    maplist(xbgf1:modulo_strategy,X1s,X2s).
 
-massageX_selectors(';'(X1s),';'(X2s))
- :-
-    maplist(xbgf1:massageX_selectors,X1s,X2s).
+modulo_strategy(';'(X1s),';'(X2s))
+ :- 
+    maplist(xbgf1:modulo_strategy,X1s,X2s).
 
-massageX_selectors('*'(X1),'*'(X2))
+modulo_strategy('*'(X1),'*'(X2))
  :-
-    massageX_selectors(X1,X2).
+    modulo_strategy(X1,X2).
 
-massageX_selectors('+'(X1),'+'(X2))
+modulo_strategy('+'(X1),'+'(X2))
  :-
-    massageX_selectors(X1,X2).
+    modulo_strategy(X1,X2).
 
-massageX_selectors('?'(X1),'?'(X2))
+modulo_strategy('?'(X1),'?'(X2))
  :-
-    massageX_selectors(X1,X2).
+    modulo_strategy(X1,X2).
 
 
 %
@@ -496,10 +545,7 @@ renameL(L1,L2,G1,G2)
        [L2]),
     transform(xbgf1:renameL_rule(L1,L2),G1,G2).
 
-renameL_rule(L1,L2,p(As1,N,X),p(As2,N,X))
- :-
-    append(As1a,[l(L1)|As1b],As1),
-    append(As1a,[l(L2)|As1b],As2).
+renameL_rule(L1,L2,p([l(L1)],N,X),p([l(L2)],N,X)).
 
 renameN((N1,N2),G1,G2)
  :-
@@ -743,34 +789,32 @@ stripT_rule(T,t(T),true).
 % Unchain a nonterminal -- a restricted unfold
 %
 
-unchain(N1,g(Rs,Ps1),G2)
+unchain(N1,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    splitN(Ps1,N1,Ps2,Ps2a,Ps2b),
-    append(Ps2a,Ps2b,Ps3),
-    require(
-       (\+ Ps2 == [] ),
-       'Nonterminal ~q must be defined.',
-       [N1]),
     require(
        (\+ member(N1,Rs) ),
        'Nonterminal ~q must not be root.',
        [N1]),
+    splitN1(Ps1,N1,p(_,_,X),Ps1a,Ps1b),
+    append(Ps1a,Ps1b,Ps2),
     require(
-       Ps2 = [p(_,_,X)],
-       'Nonterminal ~q must be defined horizontally.',
-       [N1]),
-    require(
-       append(Ps3a,[p(As1,N2,n(N1))|Ps3b],Ps3),
+       append(Ps2a,[p(As1,N2,n(N1))|Ps2b],Ps2),
        'Nonterminal ~q must be used within a chain production.',
        [N1]),
     (
-      member(l(_),As1) ->
+      As1 = [l(_)] ->
           As2 = As1
-        ; As2 = [l(N1)] 
+        ; (
+            allLs(Ps2,Ls),
+            require(
+              ( \+ member(N1,Ls) ),
+              '~q must not be a label in use.',
+              [N1]),
+            As2 = [l(N1)] 
+          )
     ),
-    append(Ps3a,[p(As2,N2,X)|Ps3b],Ps4),
-    G2 = g(Rs,Ps4),
-    allNs(G2,Ns),
+    append(Ps2a,[p(As2,N2,X)|Ps2b],Ps3),
+    allNs(Ps3,Ns),
     require(
       (\+ member(N1,Ns) ),
       'Nonterminal ~q must appear occur exactly once.',
@@ -829,43 +873,50 @@ unite(N1,N2,G1,G2)
 % Turn choices into definitions of multiple productions
 %
 
-verticalL(L,g(Rs,Ps1),g(Rs,Ps3))
+verticalL(L,g(Rs,Ps1),g(Rs,Ps2))
  :-
-    require(
-      (
-        append(Ps1a,[P|Ps1b],Ps1),
-        P = p(As,N,X),
-        member(l(L),As)
-      ),
-      'Label ~q not found.',
-      [L]),
-    allLs(Ps1,Ls),
-    require(
-      countocc(L,Ls,1),
-      'Label ~q must be used exactly once.',
-      [L]),
-    require(
-       X = ';'(Xs),
-       'Production ~q must be defined by a choice.',
-       [P]),
-    maplist(xbgf1:vertical_rule(Ls,[],N),Xs,Ps2),
-    concat([Ps1a,Ps2,Ps1b],Ps3).
+    splitL(Ps1,L,p(_,N,X),Ps1a,Ps1b),
+    vertical(N,X,Ps1a,Ps1b,Ps2).
 
-verticalN(N,g(Rs,Ps1),g(Rs,Ps4))
+verticalN(N,g(Rs,Ps1),g(Rs,Ps2))
  :-
-    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
-    require(
-       Ps2 = [p(As,N,';'(Xs1))],
-       'Nonterminal ~q must be defined by a choice.',
-       [N]),
-    allLs(Ps1,Ls),
-    maplist(xbgf1:vertical_rule(Ls,As,N),Xs1,Ps3),
-    concat([Ps2a,Ps3,Ps2b],Ps4).
+    splitN1(Ps1,N,p(_,_,X),Ps1a,Ps1b),
+    vertical(N,X,Ps1a,Ps1b,Ps2).
 
-vertical_rule(Ls,As,N,s(L,X),p([l(L)],N,X))
+vertical(N,X1,Ps1a,Ps1b,Ps4)
  :-
-    \+ member(L,Ls),
-    \+ member(l(_),As),
-    !.
+    findall(X2,vertical_strategy(X1,X2),Xs),
+    require(
+      Xs = [_,_|_],
+      'Verticalization must involve choice.',
+      []),
+    maplist(vertical_rules(N),Xs,Ps2),
+    append(Ps1a,Ps1b,Ps3),
+    allLs(Ps2,Ls1),
+    allLs(Ps3,Ls2),
+    intersection(Ls1,Ls2,Ls3),
+    require(
+      Ls3 == [],
+      'Verticalization with ambigious labels ~q.',
+      [Ls3]),
+    concat([Ps1a,Ps2,Ps1b],Ps4).
 
-vertical_rule(As,_,N,X,p(As,N,X)).
+vertical_rules(N,s(S,X),p([l(S)],N,X)).
+vertical_rules(N,X,p([],N,X)) :- \+ X = s(_,_).
+
+vertical_strategy(X,X)
+ :-
+    X =.. [F|_],
+    member(F,[true,fail,a,t,n]).
+
+vertical_strategy(','(Xs1),','(Xs2))
+ :-
+    maplist(xbgf1:vertical_strategy,Xs1,Xs2).
+
+vertical_strategy(';'(Xs),X)
+ :-
+    member(X,Xs).
+
+vertical_strategy(s(S,X1),s(S,X2))
+ :-
+    vertical_strategy(X1,X2).

@@ -1,8 +1,11 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:prune>eoln</xbgf:prune>
-  <xbgf:massage>
+  <xbgf:unite>
+    <add>atom</add>
+    <to>expr</to>
+  </xbgf:unite>
+  <xbgf:lassoc>
     <bgf:production>
       <label>binary</label>
       <nonterminal>expr</nonterminal>
@@ -20,7 +23,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:massage>
+  </xbgf:lassoc>
   <xbgf:skip>
     <bgf:production>
       <nonterminal>expr</nonterminal>

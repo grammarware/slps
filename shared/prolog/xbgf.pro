@@ -10,7 +10,7 @@ main
     ( exists_file(BgfOut) -> delete_file(BgfOut); true ),
     load_structure(BgfIn, [G1], [dialect(xmlns)]),
     xmlToG(G1,G2),
-    format(' * normalize~n',[BgfIn]),
+    format(' * normalize~n',[BgfIn]), 
     load_structure(XbgfIn, [T1], [dialect(xmlns)]),
     xml2xbgf(T1,T2),
     transformG(T2,G2,G3),

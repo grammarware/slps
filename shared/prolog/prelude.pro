@@ -93,6 +93,16 @@ accum(G,[H1|T1],A1,A3,[H2|T2])
     !.
 
 
+% Visit data by term traversal
+
+visit(G,X)
+ :-
+    ( apply(G,[X]); true ),
+    X =.. [_|Xs],
+    maplist(visit(G),Xs),
+    !.
+
+
 % Collect data by term traversal
 
 collect(G,X,L2)
@@ -114,6 +124,19 @@ transform(G,X,Z)
     Z =.. [F|Zs],
     !.
 
+transformExcept(G1,G2,X,Z)
+ :-
+    ( apply(G1,[X,Y]) -> true; Y = X ),
+    ( apply(G2,[Y]) -> 
+          Z = Y
+        ; (
+            Y =.. [F|Ys],
+            maplist(transformExcept(G1),Ys,Zs),
+            Z =.. [F|Zs]
+          )
+    ),
+    !.
+
 
 % Repeat until no more changes
 
@@ -128,14 +151,6 @@ ytransform(G,X,Z)
 
 zip([],[],[]).
 zip([H1|T1],[H2|T2],[(H1,H2)|L]) :- zip(T1,T2,L).
-
-
-% Test a name to be worth downcasing
-
-downcasy(X) 
- :-
-    downcase_atom(X,Y),
-    \+ X == Y.
 
 
 % Unification tests

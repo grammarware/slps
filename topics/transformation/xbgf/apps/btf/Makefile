@@ -1,12 +1,15 @@
 shared = ../../../../../shared
 tools = ${shared}/tools
 xsd = ${shared}/xsd
+final = btf3.bgf
 
-build: btf1.bgf
+build: ${final}
 
-btf1.bgf: *.xbgf
+${final}: *.xbgf
 	${tools}/xsd2bgf ${xsd}/btf.xsd btf0.bgf
-	${tools}/xbgf btf0.bgf btf1.xbgf btf1.bgf
+	${tools}/xbgf btf0.bgf rename.xbgf btf1.bgf
+	${tools}/xbgf btf1.bgf normalize.xbgf btf2.bgf
+	${tools}/xbgf btf2.bgf strip.xbgf btf3.bgf
 
 rebuild:
 	make clean
@@ -15,7 +18,7 @@ rebuild:
 test: build
 
 show: build
-	${tools}/showbgf btf1.bgf
+	${tools}/showbgf ${final}
 
 clean:
 	rm -f *~

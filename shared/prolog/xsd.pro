@@ -164,9 +164,7 @@ pFromElement(S,E,p([],N,X))
     attribute(name,E,N),
     ( 
       attribute(type,E,T1),
-      normalizeQName(S,T1,T2),
-      !,
-      X = n(T2)
+      xFromTypeRef(S,T1,X)
     ;
       child(name(xsd:complexType),E,T),
       !,
@@ -174,7 +172,7 @@ pFromElement(S,E,p([],N,X))
     ;
       child(name(xsd:simpleType),E,T),
       !,
-      xFromSType(T,X)
+      xFromSType(S,T,X)
     ;
       X = true
     ),
@@ -275,16 +273,16 @@ addAttributes(S,T3,X1,X2)
     normalizeG_algebraically(','([X1,','(Xs)]),X2),
     !.
 
-xFromAttribute(S,A,X2)
+xFromAttribute(S,A,X3)
  :-
     attribute(name,A,N),
     attribute(type,A,T1),
-    normalizeQName(S,T1,T2),
-    X1 = s(N,n(T2)),
+    xFromTypeRef(S,T1,X1),
+    X2 = s(N,X1),
     attribute(use,A,required,U),
     ( U == required ->
-          X2 = X1
-        ; X2 = '?'(X1)
+          X3 = X2
+        ; X3 = '?'(X2)
     ),
     !.
 
@@ -293,14 +291,8 @@ xFromAttribute(S,A,X2)
 % Enhance an expression to reflect mixed content
 %
 
-mixType(S,X1,X2)
- :-
-    xsdQName(S,string,XsdString),
-    mixType(S,XsdString,X1,X2),
-    !.
-
-mixType(_,XsdString,'*'(a),'*'(';'([a,n(XsdString)]))).
-mixType(S,XsdString,'*'(n(N)),'*'(';'([n(N),n(XsdString)])))
+mixType(_,'*'(a),'*'(';'([a,v(string)]))).
+mixType(S,'*'(n(N)),'*'(';'([n(N),v(string)])))
  :-
     lookupGlobal(S,xsd:group,N,G),
     !,
@@ -309,10 +301,13 @@ mixType(S,XsdString,'*'(n(N)),'*'(';'([n(N),n(XsdString)])))
             name(xsd:all)),G,C),
     flatChoice(C),
     !.
-mixType(_,XsdString,'*'(n(N)),'*'(';'([n(N),n(XsdString)])))
+mixType(_,'*'(n(N)),'*'(';'([n(N),v(string)])))
  :-
     !.
-mixType(_,XsdString,'*'(s(S,n(N))),'*'(';'([s(S,n(N)),n(XsdString)])))
+mixType(_,'*'(s(S,n(N))),'*'(';'([s(S,n(N)),v(string)])))
+ :-
+    !.
+mixType(_,'*'(s(S,v(T))),'*'(';'([s(S,v(T)),v(string)])))
  :-
     !.
 
@@ -406,8 +401,7 @@ xFromModel(S,M,X3)
       (
         attribute(type,M,T1),
         !,
-        normalizeQName(S,T1,T2),
-        X1 = n(T2)
+        xFromTypeRef(S,T1,X1)
       ;
         child(name(xsd:complexType),M,T),
         !,
@@ -415,15 +409,14 @@ xFromModel(S,M,X3)
       ;
         child(name(xsd:simpleType),M,T),
         !,
-        xFromSType(T,X1)
+        xFromSType(S,T,X1)
       ;
         X1 = a
       ),
       X2 = s(N,X1)
     ;
       attribute(ref,M,N1),
-      normalizeQName(S,N1,N2),
-      X2 = n(N2)
+      xFromTypeRef(S,N1,X2)
     ),
     xFromOccurs(M,X2,X3),
     !.
@@ -480,17 +473,17 @@ xFromOccurs(M,X1,X2)
 % Derive a production from a simple-type definition
 %
 
-pFromSType(_,T,p([],N,X))
+pFromSType(S,T,p([],N,X))
  :-
     attribute(name,T,N),
-    xFromSType(T,X).
+    xFromSType(S,T,X).
 
 
 %
 % Derive an expression from a complex type-based content model
 %
 
-xFromSType(T,X)
+xFromSType(S,T,X)
  :-
     child(name(xsd:restriction),T,R),       
     children(name(xsd:enumeration),R,Es),
@@ -503,12 +496,38 @@ xFromSType(T,X)
         ;
           (
             attribute(base,R,N),
-            X = n(N)
+            xFromTypeRef(S,N,X)
           )
     ),
     !.
 
 xFromEnumeration(V,s(V,true)).
+
+
+%
+% Map type reference to expression
+%
+
+xFromTypeRef(S,QN,v(N2))
+ :-
+    qname(QN,Pfx,N1),
+    dxmlns(S,Pfx,Ns),
+    sxmlns(xsd,Ns),
+    require(
+      member(N1,[anyURI,'IDREF',int,string,token]),
+      'Cannot handle XSD type ~q.',
+      [N1]
+      ),
+    mapXsdSimpleType(N1,N2),
+    !.
+
+xFromTypeRef(S,N1,n(N2))
+ :-
+    normalizeQName(S,N1,N2),
+    !.
+
+mapXsdSimpleType(X,X) :- member(X,[int]),!.
+mapXsdSimpleType(_,string).
 
 
 %

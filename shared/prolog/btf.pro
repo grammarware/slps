@@ -52,7 +52,7 @@ eToBtf(SG,N1,X1,E,T3)
               [N1,V,X1]),
             SG = (_,G,_),
             G = g(_,Ps),
-            splitN(Ps,N2,[P],_,_),
+            splitN1(Ps,N2,P,_,_),
             P = p(_,_,X2),
             (
               X2 = ';'(Xs) ->
@@ -77,13 +77,13 @@ eToBtf(SG,N1,X1,E,T3)
             T3 = T1
           )
     ),
-    E = element(_,_,Ns1),
+    E = element(_,_,NL1),
     require(
-      xToBtf(SG,Y,Ns1,Ns2,T1),
+      xToBtf(SG,Y,NL1,NL2,T1),
       'Cannot parse element ~q according to ~q.',
       [N1,Y]),
     require(
-      \+ nextElement(Ns2,_,_),
+      \+ nextElement(NL2,_,_),
       'Element ~q parsed incompletely as ~q according to ~q.',
       [N1,T1,Y]).
 
@@ -92,17 +92,17 @@ eToBtf(SG,N1,X1,E,T3)
 % Parse nodes according to an expression
 %
 
-xToBtf(_,true,Ns,Ns,true)
+xToBtf(_,true,NL,NL,true)
  :-
     !.
 
-xToBtf(SG,n(N),Ns1,Ns2,n(P,T))
+xToBtf(SG,n(N),NL1,NL2,n(P,T))
  :-
     findGlobal(SG,N,element,_),
     !,
     SG = (S,G,_),
     attribute(targetNamespace,S,Tns),
-    nextElement(Ns1,E,Ns2),
+    nextElement(NL1,E,NL2),
     E = element(QN,_,_),
     QN = Tns:N,
     G = g(_,Ps),
@@ -111,7 +111,7 @@ xToBtf(SG,n(N),Ns1,Ns2,n(P,T))
     eToBtf(SG,N,X,E,T),
     !.
 
-xToBtf(SG,n(N),Ns1,Ns2,n(P,T))
+xToBtf(SG,n(N),NL1,NL2,n(P,T))
  :-
     findGlobal(SG,N,group,_),
     !,
@@ -119,58 +119,71 @@ xToBtf(SG,n(N),Ns1,Ns2,n(P,T))
     G = g(_,Ps),
     splitN(Ps,N,[P],_,_),
     P = p(_,_,X),
-    xToBtf(SG,X,Ns1,Ns2,T),
+    xToBtf(SG,X,NL1,NL2,T),
     !.
 
-xToBtf(SG,n(N),Ns1,Ns2,n(P,T))
+xToBtf(SG,n(N),NL1,NL2,n(P,T))
  :-
     findGlobal(SG,N,complexType,_),
     !,
     SG = (_,G,_),
     G = g(_,Ps),
-    splitN(Ps,N,[P],_,_),
+    splitN1(Ps,N,P,_,_),
     P = p(_,_,X),
-    xToBtf(SG,X,Ns1,Ns2,T),
+    xToBtf(SG,X,NL1,NL2,T),
     !.
 
-xToBtf(SG,n(N),Ns,[],T)
+xToBtf(SG,n(N1),NL,[],T)
  :-
-    findGlobal(SG,N,simpleType,_),
+    findGlobal(SG,N1,simpleType,_),
     !,
-    simpleType(N,Ns,T),
     SG = (_,G,_),
     G = g(_,Ps),
-    splitN(Ps,N,[_],_,_),
-    !.
-
-xToBtf(SG,n(QN),Ns1,Ns2,T)
- :-
-    qname(QN,Pfx,N),
-    SG = (S,_,SGs),
-    dxmlns(S,Pfx,Ns),
+    splitN1(Ps,N1,P,_,_),
+    P = p(_,_,X1),
     ( 
-      sxmlns(xsd,Ns) ->
-          ( require(
-              simpleXsd(N),
-              'Cannot handle symbol ~q.',
-              [QN]),
-            simpleType(QN,Ns1,T),
-            Ns2 = []
-          )
-        ; (
-            member(SG1,SGs),
-            SG1 = (S1,_),
-            attribute(targetNamespace,S1,Ns),
-            !,
-            xToBtf(SG1,n(N),Ns1,Ns2,T)
-          )
+      % Enumeration type
+      ( X1 = ';'(Xs); X1 = s(_,_), Xs = [X1] ),
+      NL = [V],
+      X2 = s(V,true),
+      member(X2,Xs),
+      T = n(P,';'(X2,X2))
+    ;
+      % Predefined simple type
+      X1 = n(QN),
+      simpleXsdType(SG,QN,NL,T)
     ),
     !.
 
-xToBtf(SG,s(Sel,X),Ns1,Ns2,s(Sel,T))
+xToBtf(_,v(string),NL,[],v(string(V)))
+ :-
+     testSimpleType(string,NL,V).
+
+xToBtf(_,v(int),NL,[],v(int(V3)))
+ :-
+     testSimpleType(int,NL,V1),
+     atom_chars(V1,V2), 
+     number_chars(V3,V2).
+
+xToBtf(SG,n(QN),NL,[],T)
+ :-
+    simpleXsdType(SG,QN,NL,T).
+
+xToBtf(SG,n(QN),NL1,NL2,T)
+ :-
+    qname(QN,Pfx,N),   
+    SG = (S,_,SGs),
+    dxmlns(S,Pfx,Ns),
+    member(SG1,SGs),
+    SG1 = (S1,_),
+    attribute(targetNamespace,S1,Ns),
+    xToBtf(SG1,n(N),NL1,NL2,T),
+    !.
+
+xToBtf(SG,s(Sel,X),NL1,NL2,s(Sel,T))
  :-
     !,
-    nextElement(Ns1,E,Ns2),
+    nextElement(NL1,E,NL2),
     E = element(N,_,_),
     SG = (S,_,_),
     attribute(elementFormDefault,S,unqualified,EFD),
@@ -268,101 +281,108 @@ optionalToBtf(_,_,Es,Es,[])
 
 
 %
-% "Supported" simple XSD types
+% Parse according to a simple XSD type
 %
 
-simpleXsd(int).
-simpleXsd(string).
+simpleXsdType(SG,QN,NL,t(V))
+ :-
+    qname(QN,Pfx,N),
+    SG = (S,_,_),
+    dxmlns(S,Pfx,Ns),
+    sxmlns(xsd,Ns),
+    require(
+      simpleXsdType(N),
+      'Cannot handle simple XSD type ~q.',
+      [QN]),
+    testSimpleType(N,NL,V).
 
-
-%
-% Parse according to a simple type
-%
-
-simpleType(N,Ns,t(V))
+testSimpleType(N,NL,V)
  :-
     require(
-      \+ nextElement(Ns,_,_),
+      \+ nextElement(NL,_,_),
       'Simple type ~q expected; elements found.',
       [N]),
     require(
-      ( [V] = Ns ),
+      ( [V] = NL ),
       'Simple type expected; list found.',
       []).
 
+simpleXsdType(int).
+simpleXsdType(string).
+
 
 %
-% Pretty printer
+% Implode BTF trees
 %
 
-ppT(T1) 
- :-
-    condenseT(T1,T2),
-    writeq(T2), nl.
+implodeT(v(string(V)),V).
 
-% indent(0) :- !.
-% indent(N1) :- N1 > 0, write(' '), N2 is N1 - 1, indent(N2).
+implodeT(v(int(V)),V).
 
+implodeT(t(V),V).
 
-condenseT(true,true)
+implodeT(n(p([l(L)],_,_),true),L)
  :-
     !.
 
-condenseT(n(P1,T1),P2)
+implodeT(n(p([l(L)],_,_),','(Ts1)),T)
  :-
-    P1 = p(As,_,_),
-    member(l(L),As),
     !,
-    condenseT(T1,T2),
-    P2 =.. [L,T2],
-    !. 
+    maplist(implodeT,Ts1,Ts2),
+    T =.. [L|Ts2].
 
-condenseT(n(P1,T1),P2)
+implodeT(n(p([l(L)],_,_),T1),T3)
  :-
-    P1 = p(_,N,_),
     !,
-    condenseT(T1,T2),
-    P2 =.. [N,T2],
-    !. 
+    implodeT(T1,T2),
+    T3 =.. [L,T2].
 
-condenseT(X,X)
+implodeT(n(p([],_,_),T1),T2)
  :-
-    X = a(_),
+    !,
+    implodeT(T1,T2).
+
+implodeT(s(S,true),S)
+ :-
     !.
 
-condenseT(s(S,T1),T3)
+implodeT(s(S,','(Ts1)),T)
  :-
     !,
-    condenseT(T1,T2),
-    T3 =.. [S,T2],
-    !.
+    maplist(implodeT,Ts1,Ts2),
+    T =.. [S|Ts2].
 
-condenseT('*'(Ts1),Ts2)
+implodeT(s(S,T1),T3)
  :-
     !,
-    maplist(condenseT,Ts1,Ts2),
-    !.
+    implodeT(T1,T2),
+    T3 =.. [S,T2].
 
-condenseT('+'(Ts1),Ts2)
+implodeT(';'(_,T1),T2)
  :-
     !,
-    maplist(condenseT,Ts1,Ts2),
-    !.
+    implodeT(T1,T2).
 
-condenseT('?'(Ts1),Ts2)
+implodeT(','(Ts1),T)
  :-
     !,
-    maplist(condenseT,Ts1,Ts2),
-    !.
+    maplist(implodeT,Ts1,Ts2),
+    list2tuple(Ts2,T).
 
-condenseT(','(Ts1),Ts2)
+implodeT('?'(Ts1),Ts2)
  :-
     !,
-    maplist(condenseT,Ts1,Ts2),
-    !.
+    maplist(implodeT,Ts1,Ts2).
 
-condenseT(';'(_,T1),T2)
+implodeT('*'(Ts1),Ts2)
  :-
     !,
-    condenseT(T1,T2),
-    !.
+    maplist(implodeT,Ts1,Ts2).
+
+implodeT('+'(Ts1),Ts2)
+ :-
+    !,
+    maplist(implodeT,Ts1,Ts2).
+
+list2tuple([T],T).
+list2tuple([T1|Ts],(T1,T2)) :- list2tuple(Ts,T2).

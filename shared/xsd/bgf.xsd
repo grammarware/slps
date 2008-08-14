@@ -13,7 +13,6 @@
   <xsd:element name="grammar">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="name" type="xsd:anyURI" minOccurs="0"/>
         <xsd:element name="root" type="bgf:nonterminal" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="bgf:production" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
@@ -53,6 +52,7 @@
           </xsd:annotation>
           <xsd:complexType/>
         </xsd:element>
+        <xsd:element name="value" type="bgf:value"/>
         <xsd:element name="any">
           <xsd:annotation>
             <xsd:documentation>
@@ -109,6 +109,13 @@
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>
+
+  <xsd:simpleType name="value">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="int"/>
+      <xsd:enumeration value="string"/>
+    </xsd:restriction>
+  </xsd:simpleType>
   
   <xsd:simpleType name="label">
     <xsd:restriction base="xsd:string"/>

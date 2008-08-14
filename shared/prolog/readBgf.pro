@@ -71,6 +71,12 @@ xmlToX(X,a)
     self(name(any),X),
     !.
 
+xmlToX(X,v(V)) 
+ :-
+    self(name(value),X),
+    !,
+    content(X,V).
+
 xmlToX(X1,s(S2,X3)) 
  :-
     self(name(selectable),X1),

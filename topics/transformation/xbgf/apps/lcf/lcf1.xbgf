@@ -4,18 +4,10 @@
   <xbgf:vertical>
     <nonterminal>definition</nonterminal>
   </xbgf:vertical>
-  <xbgf:inline>
-    <nonterminal>shortcutType</nonterminal>
-  </xbgf:inline>
-  <xbgf:inline>
-    <nonterminal>toolType</nonterminal>
-  </xbgf:inline>
-  <xbgf:inline>
-    <nonterminal>sourceType</nonterminal>
-  </xbgf:inline>
-  <xbgf:inline>
-    <nonterminal>targetType</nonterminal>
-  </xbgf:inline>
+  <xbgf:inline>shortcutType</xbgf:inline>
+  <xbgf:inline>toolType</xbgf:inline>
+  <xbgf:inline>sourceType</xbgf:inline>
+  <xbgf:inline>targetType</xbgf:inline>
   <xbgf:vertical>
     <nonterminal>tool</nonterminal>
   </xbgf:vertical>
@@ -28,10 +20,4 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <xbgf:rename>
-    <nonterminal>
-      <from>xsd:string</from>
-      <to>string</to>
-    </nonterminal>
-  </xbgf:rename>
 </xbgf:sequence>

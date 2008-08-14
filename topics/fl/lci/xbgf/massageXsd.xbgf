@@ -1,7 +1,7 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:massage>
+  <xbgf:modulo>
     <bgf:production>
       <nonterminal>program</nonterminal>
       <bgf:expression>
@@ -17,8 +17,8 @@
         </selectable>
       </bgf:expression>
     </bgf:production>
-  </xbgf:massage>
-  <xbgf:massage>
+  </xbgf:modulo>
+  <xbgf:modulo>
     <bgf:production>
       <nonterminal>function</nonterminal>
       <bgf:expression>
@@ -27,7 +27,7 @@
             <selectable>
               <selector>name</selector>
               <bgf:expression>
-                <nonterminal>xsd:string</nonterminal>
+                <value>string</value>
               </bgf:expression>
             </selectable>
           </bgf:expression>
@@ -37,7 +37,7 @@
               <bgf:expression>
                 <plus>
                   <bgf:expression>
-                    <nonterminal>xsd:string</nonterminal>
+                    <value>string</value>
                   </bgf:expression>
                 </plus>
               </bgf:expression>
@@ -54,8 +54,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:massage>
-  <xbgf:massage>
+  </xbgf:modulo>
+  <xbgf:modulo>
     <bgf:production>
       <nonterminal>apply</nonterminal>
       <bgf:expression>
@@ -64,7 +64,7 @@
             <selectable>
               <selector>name</selector>
               <bgf:expression>
-                <nonterminal>xsd:string</nonterminal>
+                <value>string</value>
               </bgf:expression>
             </selectable>
           </bgf:expression>
@@ -83,5 +83,5 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:massage>
+  </xbgf:modulo>
 </xbgf:sequence>

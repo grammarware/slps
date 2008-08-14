@@ -57,6 +57,13 @@ allNs(G,Ns5)
     union(Ns4,Ns3,Ns5),
     !.
 
+allNs(Z,Ns3)
+ :-
+    \+ Z = g(_,_), 
+    definedNs(Z,Ns1),
+    usedNs(Z,Ns2),
+    union(Ns1,Ns2,Ns3),
+    !.
 
 % Return all terminals
 
@@ -111,18 +118,28 @@ findP(Ps1,As,N,P,Ps3a,Ps4a)
 
 % Split productions into those for N and their pre- and postfix
 
-splitN(Ps1,N,Ps2,Ps3,Ps4)
+splitN(Ps1,N,Ps,Ps2,Ps3)
  :-
     require(
       member(p(_,N,_),Ps1),
       'Nonterminal ~q must be defined.',
       [N]),
-    append(Ps3,PsRest,Ps1),
-    \+ member(p(_,N,_),Ps3),
+    append(Ps2,PsRest,Ps1),
+    \+ member(p(_,N,_),Ps2),
     PsRest = [p(_,N,_)|_],
     !,
-    filter(unifiable(p(_,N,_)),PsRest,Ps2),
-    filter(nonunifiable(p(_,N,_)),PsRest,Ps4).
+    filter(unifiable(p(_,N,_)),PsRest,Ps),
+    filter(nonunifiable(p(_,N,_)),PsRest,Ps3).
+
+splitN1(Ps1,N,P,Ps2,Ps3)
+ :-
+    splitN(Ps1,N,Ps,Ps2,Ps3),
+    require(
+      Ps = [P],
+      'Nonterminal ~q must be defined by a single production.',
+      [N]
+    ),
+    !.
 
 
 % Split productions into the one for L and its pre- and postfix

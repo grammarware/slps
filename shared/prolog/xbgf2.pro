@@ -1,4 +1,5 @@
 :- module(xbgf2,[transformT/3]).
+:- use_module('xbgf1.pro').
 
 
 transformT(T,T1,T2)
@@ -17,23 +18,37 @@ transformT(T,T1,T2)
 
 
 %
+% p([l(caseAllDown)], f, true)
+% p([l(caseAllUp)], f, true)
+% p([l(caseFirstDown)], f, true)
+% p([l(caseFirstUp)], f, true)
+%
+% Normalize case for all sorts of symbols
+%
+
+caseAllDown(G1,G2) :- case(all,down,G1,G2).
+caseAllUp(G1,G2) :- case(all,up,G1,G2).
+caseFirstDown(G1,G2) :- case(first,down,G1,G2).
+caseFirstUp(G1,G2) :- case(first,up,G1,G2).
+
+case(Q,UD,T1,T2) 
+ :-
+    transform(xbgf2:case_rule(Q,UD),T1,T2).
+
+case_rule(Q,UD,g(Rs1,Ps),g(Rs2,Ps)) :- maplist(xbgf1:doCase(Q,UD),Rs1,Rs2).
+case_rule(Q,UD,p(As,N1,X),p(As,N2,X)) :- xbgf1:doCase(Q,UD,N1,N2).
+case_rule(Q,UD,n(N1),n(N2)) :- xbgf1:doCase(Q,UD,N1,N2).
+case_rule(Q,UD,l(L1),l(L2)) :- xbgf1:doCase(Q,UD,L1,L2).
+case_rule(Q,UD,s(S1,X),s(S2,X)) :- xbgf1:doCase(Q,UD,S1,S2).
+
+
+%
 % p([l(define)], f, +n(p))
 %
 % Define a nonterminal
 %
 
 define(_,T1,T1)
- :-
-    !.
-
-
-%
-% p([l(downcase)], f, true)
-%
-% Establish lowercase for all sorts of symbols
-%
-
-downcase(T1,T1) 
  :-
     !.
 
@@ -115,15 +130,75 @@ label(_,T1,T1)
  :-
     !.
 
+
 %
-% p([l(massage)], f, n(p))
+% p([l(lassoc)], f, n(p))
 %
-% Obviously correct rewrites
+% Interpret separator list left-associatively
 %
 
-massage(_,T1,T1)
+lassoc(P1,T1,T2)
  :-
-    !.
+    transform(xbgf2:lassoc_rule(P1,T1,T2)).
+
+lassoc_rule(P1,n(P2,','([T1,'*'(Ts)])),T2)
+ :-
+    P1 = p(As,N,X1),
+    P2 = p(As,N,X2),
+    xbgf1:lassoc_rule(N,X1,X2),
+    lassoc_strategy(P2,Ts,T1,T2).
+
+lassoc_strategy(_,[],T,T).
+lassoc_strategy(P,[','([Ta,Tb])|Ts],T1,T2)
+ :-
+    lassoc_strategy(P,Ts,n(P,','([T1,Ta,Tb])),T2).
+
+
+%
+% p([l(modulo)], f, n(p))
+%
+% Equality modulo selectors
+%
+
+modulo(P1,T1,T2)
+ :-
+    transform(xbgf2:modulo_rule(P1),T1,T2).
+
+modulo_rule(P1,n(P2,T1),n(P1,T2))
+ :-
+    P1 = p(As,N,X),
+    P2 = p(As,N,_),
+    modulo_strategy(X,T1,T2).
+
+modulo_strategy(t(T),t(T),t(T)).
+
+modulo_strategy(n(N),n(P,T),n(P,T))
+ :-
+    P = p(_,N,_).
+
+modulo_strategy(s(S,X),T1,s(S,T2))
+ :-
+    modulo_strategy(X,T1,T2).
+
+modulo_strategy(X,s(_,T1),T2)
+ :-
+    modulo_strategy(X,T1,T2).
+
+modulo_strategy(','(Xs),','(Ts1),','(Ts2))
+ :- 
+    maplist(xbgf2:modulo_strategy,Xs,Ts1,Ts2).
+
+modulo_strategy('*'(X),'*'(Ts1),'*'(Ts2))
+ :-
+    maplist(xbgf2:modulo_strategy(X),Ts1,Ts2).
+
+modulo_strategy('+'(X),'+'(Ts1),'+'(Ts2))
+ :-
+    maplist(xbgf2:modulo_strategy(X),Ts1,Ts2).
+
+modulo_strategy('?'(X),'?'(Ts1),'?'(Ts2))
+ :-
+    maplist(xbgf2:modulo_strategy(X),Ts1,Ts2).
 
 
 %
@@ -184,29 +259,37 @@ renameL((L1,L2),T1,T2)
  :-
     renameL(L1,L2,T1,T2).
 
-renameL(_,_,T1,T1)
+renameL(L1,L2,T1,T2)
  :-
-    !.
+    transform(xbgf1:renameL_rule(L1,L2),T1,T2).
 
 renameN((N1,N2),T1,T2)
  :-
     renameN(N1,N2,T1,T2).
 
-renameN(_,_,T1,T1)
+renameN(N1,N2,T1,T2)
  :-
-    !.
+    transform(xbgf1:renameN_rules(N1,N2),T1,T2).
 
 renameS((S1,S2),T1,T2)
  :-
     renameS([],S1,S2,T1,T2).
 
-renameS([],_,_,T1,T1)
+renameS([],S1,S2,T1,T2)
  :-
-    !.
+    transform(xbgf1:renameS_rule(S1,S2),T1,T2).
 
-renameS([_],_,_,T1,T1)
+renameS([L],S1,S2,T1,T2)
  :-
-    !.
+    transform(xbgf2:renameS_rule(L,S1,S2),T1,T2).
+
+renameS_rule(L,S1,S2,n(P1,T1),n(P2,T2))
+ :-
+    P1 = p([L],_,_),
+    transform(xbgf1:renameS_rule(S1,S2),P1,P2),
+    transformExcept(xbgf1:renameS_rule(S1,S2),renameS_scope,T1,T2).
+
+renameS_scope(T) :- \+ T = n(_,_).
 
 
 %
@@ -272,9 +355,9 @@ stripS(_,T1,T1)
  :-
     !.
 
-stripSs(T1,T1)
+stripSs(T1,T2)
  :-
-    !.
+    transform(xbgf2:stripS_rule,T1,T2).
 
 stripTs(T1,T1)
  :-
@@ -284,6 +367,8 @@ stripT(_,T1,T1)
  :-
     !.
 
+stripS_rule(s(_,X),X).
+
 
 %
 % p([l(unchain)], f, n(n))
@@ -291,9 +376,19 @@ stripT(_,T1,T1)
 % Unchain a nonterminal -- a restricted unfold
 %
 
-unchain(_,T1,T1)
+unchain(N,T1,T2)
  :-
-    !.
+    transform(xbgf2:unchain_rule(N),T1,T2).
+
+unchain_rule(
+    N1,
+    n(p(As1,N2,n(N1)),n(p(_,N1,X),T)),
+    n(p(As2,N2,X),T))
+ :-
+    unchain_label(As1,N1,As2).
+
+unchain_label([],N,[l(N)]).
+unchain_label([l(L)],_,[l(L)]).
 
 
 %
@@ -302,9 +397,17 @@ unchain(_,T1,T1)
 % Undefine a nonterminal, i.e., remove all productions
 %
 
-undefine(_,T1,T1)
+undefine(N,T,T)
  :-
-    !.
+    visit(xbgf2:undefine_rule(N),T).
+
+undefine_rule(N1,n(P,_))
+ :-
+    P = p(_,N2,_),
+    require(
+      ( \+ N1 == N2 ),
+      'Undefined nonterminal used.',
+      [N1]).
 
 
 %
@@ -336,10 +439,38 @@ unite(_,_,T1,T1)
 % Turn choices into definitions of multiple productions
 %
 
-verticalL(_,T1,T1)
+verticalL(L,T1,T2)
  :-
-    !.
+    transform(xbgf2:verticalL_rules(L),T1,T2).
 
-verticalN(_,T1,T1)
+verticalL_rules(
+  L,
+  n(p([l(L)],N,';'(_)),';'(s(S,X),s(S,T))),
+  n(p([l(S)],N,X),T)
+).
+  
+verticalL_rules(
+  L,
+  n(p([l(L)],N,';'(_)),';'(X,T)),
+  n(p([],N,X),T)
+)
  :-
-    !.
+    \+ X = s(_,_). 
+
+verticalN(N,T1,T2)
+ :-
+    transform(xbgf2:verticalN_rules(N),T1,T2).
+
+verticalN_rules(
+  N,
+  n(p(_,N,';'(_)),';'(s(S,X),s(S,T))),
+  n(p([l(S)],N,X),T)
+)
+ :-
+    \+ X = s(_,_).
+  
+verticalN_rules(
+  N,
+  n(p(_,N,';'(_)),';'(X,T)),
+  n(p([],N,X),T)
+).

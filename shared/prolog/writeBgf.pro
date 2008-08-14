@@ -49,6 +49,10 @@ xToXml(a,X)
  :-
     e(any,[],[],X).
 
+xToXml(v(T),X) 
+ :-
+    e(value,[],[T],X).
+
 xToXml(s(S,M),X) 
  :-
     xToXml(M,X1),

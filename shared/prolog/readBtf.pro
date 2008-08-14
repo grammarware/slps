@@ -29,6 +29,24 @@ xmlToT(X1,n(P2,T2))
     xmlToBtf(T1,T2),
     !.
 
+xmlToT(X1,v(string(V)))
+ :-
+    self(name(value),X1),
+    child(name(string),X1,X2),
+    !,
+    content(X2,V),
+    !.
+
+xmlToT(X1,v(int(V3)))
+ :-
+    self(name(value),X1),
+    child(name(int),X1,X2),
+    !,
+    content(X2,V1),
+    name(V1,V2), 
+    number_chars(V3,V2),
+    !.
+
 xmlToT(X1,a(Ns))
  :-
     self(name(any),X1),

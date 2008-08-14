@@ -133,12 +133,23 @@ public class Tool {
 						coll.appendChild(inner);
 						inner.appendChild(doc.createElement("any"));						
 					}
+					else if (f.getType() == int.class)
+					{
+						Element v = doc.createElement("value");
+						expr.appendChild(v);
+						v.appendChild(doc.createTextNode("int"));
+					}
+					else if (f.getType() == String.class)
+					{
+						Element v = doc.createElement("value");
+						expr.appendChild(v);
+						v.appendChild(doc.createTextNode("string"));
+					}
 					else
 					{
 						Element nt = doc.createElement("nonterminal");
 						expr.appendChild(nt);
 						nt.appendChild(doc.createTextNode(f.getType().getSimpleName()));
-						expr.appendChild(nt);
 					}
 				}
 			}

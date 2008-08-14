@@ -1,0 +1,14 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:strip>
+    <selector>label</selector>
+  </xbgf:strip>
+  <xbgf:strip>
+    <selector>nonterminal</selector>
+  </xbgf:strip>
+  <xbgf:strip>
+    <selector>root</selector>
+  </xbgf:strip>
+  <xbgf:strip>
+      <selector>selector</selector>
+  </xbgf:strip>
+</xbgf:sequence>

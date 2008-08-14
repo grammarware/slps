@@ -44,39 +44,15 @@
     </nonterminal>
   </xbgf:rename>
   <xbgf:rename>
-    <label>
-      <from>epsilon</from>
-      <to>true</to>
-    </label>
-  </xbgf:rename>
-  <xbgf:rename>
-    <label>
-      <from>empty</from>
-      <to>fail</to>
-    </label>
+    <nonterminal>
+      <from>value</from>
+      <to>v</to>
+    </nonterminal>
   </xbgf:rename>
   <xbgf:rename>
     <label>
       <from>any</from>
       <to>a</to>
-    </label>
-  </xbgf:rename>
-  <xbgf:rename>
-    <label>
-      <from>terminal</from>
-      <to>t</to>
-    </label>
-  </xbgf:rename>
-  <xbgf:rename>
-    <label>
-      <from>nonterminal</from>
-      <to>n</to>
-    </label>
-  </xbgf:rename>
-  <xbgf:rename>
-    <label>
-      <from>selectable</from>
-      <to>s</to>
     </label>
   </xbgf:rename>
   <xbgf:rename>
@@ -87,8 +63,20 @@
   </xbgf:rename>
   <xbgf:rename>
     <label>
-      <from>sequence</from>
-      <to>,</to>
+      <from>empty</from>
+      <to>fail</to>
+    </label>
+  </xbgf:rename>
+  <xbgf:rename>
+    <label>
+      <from>epsilon</from>
+      <to>true</to>
+    </label>
+  </xbgf:rename>
+  <xbgf:rename>
+    <label>
+      <from>nonterminal</from>
+      <to>n</to>
     </label>
   </xbgf:rename>
   <xbgf:rename>
@@ -105,18 +93,32 @@
   </xbgf:rename>
   <xbgf:rename>
     <label>
+      <from>selectable</from>
+      <to>s</to>
+    </label>
+  </xbgf:rename>
+  <xbgf:rename>
+    <label>
+      <from>sequence</from>
+      <to>,</to>
+    </label>
+  </xbgf:rename>
+  <xbgf:rename>
+    <label>
       <from>star</from>
       <to>*</to>
     </label>
   </xbgf:rename>
-  <xbgf:strip>
-      <selector>selector</selector>
-  </xbgf:strip>
-  <xbgf:strip>
-      <selector>name</selector>
-  </xbgf:strip>
-  <xbgf:strip>
-    <selector>root</selector>
-  </xbgf:strip>
-  <xbgf:prune>uri</xbgf:prune>
+  <xbgf:rename>
+    <label>
+      <from>terminal</from>
+      <to>t</to>
+    </label>
+  </xbgf:rename>
+  <xbgf:rename>
+    <label>
+      <from>value</from>
+      <to>v</to>
+    </label>
+  </xbgf:rename>
 </xbgf:sequence>

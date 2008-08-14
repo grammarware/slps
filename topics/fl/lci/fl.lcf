@@ -71,7 +71,7 @@
         <expand>tools</expand>/dcg2bgf
       </name>
       <argument>
-        <expand>fl</expand>/prolog/Parser.pro
+        <expand>fl</expand>/prolog1/Parser.pro
       </argument>
       <argument>
         dcg.bgf
@@ -140,58 +140,56 @@
   <target>
     <name>java</name>
     <branch>
-      <input>om</input>
-      <perform>downcase</perform>
-      <perform>trimOm</perform>
-      <perform>preferJaxb</perform>
-      <perform>reroot</perform>
-    </branch>
-    <branch>
       <input>jaxb</input>
-      <perform>downcase</perform>
       <perform>trimJaxb</perform>
-      <perform>reroot</perform>
-    </branch>
-  </target>
-  <target>
-    <name>xsdjava</name>
-    <branch>
-      <input>java</input>
-      <perform>unerase</perform>
-    </branch>
-    <branch>
-      <input>xsd</input>
-      <perform>downcase</perform>
-      <perform>massageXsd</perform>
-      <perform>preferJava</perform>
-    </branch>
-  </target>
-  <target>
-    <name>concrete</name>
-    <branch>
-      <input>dcg</input>
       <perform>downcase</perform>
       <perform>reroot</perform>
     </branch>
     <branch>
-      <input>antlr</input>
+      <input>om</input>
+      <perform>trimOm</perform>
       <perform>downcase</perform>
-      <perform>preferDcg</perform>
-      <perform>horizontal2vertical</perform>
+      <perform>preferJaxb</perform>
       <perform>reroot</perform>
     </branch>
   </target>
   <target>
     <name>abstract</name>
     <branch>
-      <input>concrete</input>
-      <perform>stripTerminals</perform>
-      <perform>layering</perform>
-      <perform>concrete2abstract</perform>
+      <input>java</input>
+      <perform>unerase</perform>
     </branch>
     <branch>
-      <input>xsdjava</input>
-      <perform>abstract1</perform>
+      <input>xsd</input>
+      <perform>trimXsd</perform>
+      <perform>downcase</perform>
+      <perform>massageXsd</perform>
+    </branch>
+  </target>
+  <target>
+    <name>concrete</name>
+    <branch>
+      <input>dcg</input>
+      <perform>defineLex</perform>
+      <perform>reroot</perform>
+    </branch>
+    <branch>
+      <input>antlr</input>
+      <perform>preferDcg</perform>
+      <perform>defineLex</perform>
+      <perform>reroot</perform>
+    </branch>
+  </target>
+  <target>
+    <name>limit</name>
+    <branch>
+      <input>concrete</input>
+      <perform>stripTerminals</perform>
+      <perform>removeLayers</perform>
+    </branch>
+    <branch>
+      <input>abstract</input>
+      <perform>mkSignature</perform>
     </branch>
   </target>
 </lcf:configuration>

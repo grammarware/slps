@@ -47,6 +47,15 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
+
+        <xsd:element name="value">
+          <xsd:complexType>
+            <xsd:choice>
+              <xsd:element name="int" type="xsd:int"/>
+              <xsd:element name="string" type="xsd:string"/>
+            </xsd:choice>
+          </xsd:complexType>
+        </xsd:element>
         
         <xsd:element name="sequence">
           <xsd:complexType>

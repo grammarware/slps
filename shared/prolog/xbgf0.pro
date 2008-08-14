@@ -18,10 +18,25 @@ xml2xbgf(T,define(Ps2))
     children(name(bgf:production),T,Ps1),
     maplist(xmlToP,Ps1,Ps2).
 
-xml2xbgf(T,downcase)
+xml2xbgf(T,Case)
  :-
-    self(name(xbgf:downcase),T),
-    !.
+    self(name(xbgf:case),T),
+    !,
+    ( 
+      child(name(first),T,_),
+      Q = 'First'
+    ;
+      child(name(all),T,_),
+      Q = 'All'
+    ),
+    ( 
+      child(name(up),T,_),
+      UpDown = 'Up'
+    ;
+      child(name(down),T,_),
+      UpDown = 'Down'
+    ),
+    concat_atom([case,Q,UpDown],Case).
 
 xml2xbgf(T,extract(P2))
  :-
@@ -46,8 +61,7 @@ xml2xbgf(T,inline(N))
  :-
     self(name(xbgf:inline),T),
     !,
-    child(name(nonterminal),T,T1),
-    content(T1,N).
+    content(T,N).
 
 xml2xbgf(T,introduce(Ps2))
  :-
@@ -63,9 +77,16 @@ xml2xbgf(T,label(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
-xml2xbgf(T,massage(P2))
+xml2xbgf(T,lassoc(P2))
  :-
-    self(name(xbgf:massage),T),
+    self(name(xbgf:lassoc),T),
+    !,
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
+xml2xbgf(T,modulo(P2))
+ :-
+    self(name(xbgf:modulo),T),
     !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).

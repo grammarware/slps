@@ -1,4 +1,7 @@
 <xbgf:sequence
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:downcase/>
+  <xbgf:case>
+    <first/>
+    <down/>
+  </xbgf:case>
 </xbgf:sequence>

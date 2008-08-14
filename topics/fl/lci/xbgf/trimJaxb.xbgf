@@ -1,4 +1,22 @@
 <xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:undefine>objectfactory</xbgf:undefine>
+  <xbgf:undefine>ObjectFactory</xbgf:undefine>
   <xbgf:undefine>package-info</xbgf:undefine>
+  <xbgf:rename>
+    <selector>
+      <from>EQUAL</from>
+      <to>equal</to>
+    </selector>
+  </xbgf:rename>
+  <xbgf:rename>
+    <selector>
+      <from>PLUS</from>
+      <to>plus</to>
+    </selector>
+  </xbgf:rename>
+  <xbgf:rename>
+    <selector>
+      <from>MINUS</from>
+      <to>minus</to>
+    </selector>
+  </xbgf:rename>
 </xbgf:sequence>

@@ -24,8 +24,8 @@
     </xsd:annotation>
     <xsd:choice>
       <xsd:element ref="xbgf:add"/>
+      <xsd:element ref="xbgf:case"/>
       <xsd:element ref="xbgf:define"/>
-      <xsd:element ref="xbgf:downcase"/>
       <xsd:element ref="xbgf:eliminate"/>
       <xsd:element ref="xbgf:extract"/>
       <xsd:element ref="xbgf:fold"/>
@@ -34,7 +34,8 @@
       <xsd:element ref="xbgf:inline"/>
       <xsd:element ref="xbgf:introduce"/>
       <xsd:element ref="xbgf:label"/>
-      <xsd:element ref="xbgf:massage"/>
+      <xsd:element ref="xbgf:lassoc"/>
+      <xsd:element ref="xbgf:modulo"/>
       <xsd:element ref="xbgf:permute"/>
       <xsd:element ref="xbgf:project"/>
       <xsd:element ref="xbgf:prune"/>
@@ -77,6 +78,36 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="case">
+    <xsd:annotation>
+      <xsd:documentation>
+        Transform all symbols (labels, nonterminals, selectors, terminals) to use lower case only.
+        One can think of other schemes of neutralizing differences between names (symbols).
+        For instance, one may want to appeal to Caml case.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:choice>
+          <xsd:element name="first">
+            <xsd:complexType/>
+          </xsd:element>
+          <xsd:element name="all">
+            <xsd:complexType/>
+          </xsd:element>
+        </xsd:choice>
+        <xsd:choice>
+          <xsd:element name="up">
+            <xsd:complexType/>
+          </xsd:element>
+          <xsd:element name="down">
+            <xsd:complexType/>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="define">
     <xsd:annotation>
       <xsd:documentation>
@@ -92,17 +123,6 @@
         <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
       </xsd:choice>
     </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="downcase">
-    <xsd:annotation>
-      <xsd:documentation>
-        Transform all symbols (labels, nonterminals, selectors, terminals) to use lower case only.
-        One can think of other schemes of neutralizing differences between names (symbols).
-        For instance, one may want to appeal to Caml case.
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType/>
   </xsd:element>
 
   <xsd:element name="eliminate" type="bgf:nonterminal">
@@ -205,7 +225,20 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="massage">
+  <xsd:element name="lassoc">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="modulo">
     <xsd:annotation>
       <xsd:documentation>
         T.B.D.

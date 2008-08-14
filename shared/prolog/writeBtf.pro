@@ -22,6 +22,22 @@ tToXml(n(P,T),X4)
     e(nonterminal,[],[X1,X2],X3),
     toBtfTree(X3,X4).
 
+tToXml(v(string(V)),X3)
+ :-
+    !,
+    e(string,[],[V],X1),
+    e(value,[],[X1],X2),
+    toBtfTree(X2,X3).
+
+tToXml(v(int(V1)),X3)
+ :-
+    !,
+    number_chars(V1,V2),
+    atom_chars(V3,V2),
+    e(int,[],[V3],X1),
+    e(value,[],[X1],X2),
+    toBtfTree(X2,X3).
+
 tToXml(a(Ns),X2)
  :-
     !,
