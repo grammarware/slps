@@ -16,4 +16,4 @@ elif [ ! -r $1 ]; then
     exit 1
 fi
 
-swipl -q -f ${SLPS}/topics/fl/prolog/TestIO.pro -t "main('$1','$2')"
+swipl -q -f ${SLPS}/topics/fl/prolog1/TestIO.pro -t "main('$1','$2')"
