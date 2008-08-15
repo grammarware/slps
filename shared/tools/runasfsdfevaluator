@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd topics/fl/asfsdf
+SDF=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 3 ]; then
+    echo "This script wraps up the ASF+SDF evaluator"
+    echo "Usage: $0 <context> <input> <yields>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+cat $1 > tempfile1
+echo -n "evaluator x = " >> tempfile1
+cat $2 >> tempfile1
+cat tempfile1 | python ${SDF}/pre.py | sglr -p ${SDF}/FL.tbl | asfe -e ${SDF}/FL.eqs | unparsePT | python ${SDF}/post.py | grep "evaluator x" | awk '{print $4}' > tempfile2
+echo $3 > tempfile1
+diff tempfile1 tempfile2
+rm -f tempfile1 tempfile2
+

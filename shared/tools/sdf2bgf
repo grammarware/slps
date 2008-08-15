@@ -1,0 +1,22 @@
+#! /bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../../topics/extraction/sdf2bgf
+XTR=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 2 ]; then
+    echo "Usage: sdf2bgf <SDF-input> <BGF-output>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    # Build extractor if needed
+    cd ${XTR}
+    make build
+    cd ${LOCAL1}
+    (echo "main("; cat $1; echo ")" ) | sglr -p ${XTR}/Main.tbl | asfe -e ${XTR}/Main.eqs | unparsePT > $2
+fi

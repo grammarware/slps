@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd topics/fl/asfsdf
+SDF=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 2 ]; then
+    echo "This script wraps up the ASF+SDF parser"
+    echo "Usage: $0 <input> <output>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+cat $1 | python ${SDF}/pre.py | sglr -p ${SDF}/FL.tbl | asfe -e ${SDF}/FL.eqs | unparsePT | python ${SDF}/post.py > $2
+
