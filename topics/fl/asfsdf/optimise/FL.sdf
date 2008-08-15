@@ -3,14 +3,9 @@ module optimise/FL
 imports syntax/FL
 	
 hiddens
-	context-free start-symbols PROGRAM
+	context-free start-symbols Program
 
 	variables
-		"N"[0-9]*	-> FL-INT
-		"E"[0-9]*	-> EXPR
-		"Id"[0-9]*	-> NAME
-		"Names"		-> NAME+
-		"Fun*"		-> FUNCTION*
-		"Fun"		-> FUNCTION
-		"Program"	-> PROGRAM
+		"N"[0-9]*	-> Int
+		"E"[0-9]*	-> Expr
 		

@@ -5,19 +5,19 @@ imports basic/Whitespace
 
 exports
   sorts 
-	FL-INT
+	Int
 
 context-free syntax
-	"-"? NatCon	-> FL-INT
-	"add-int" "(" FL-INT "," FL-INT ")" -> FL-INT
+	"-"? NatCon	-> Int
+	"add-int" "(" Int "," Int ")" -> Int
 
 hiddens
-	context-free start-symbols FL-INT
+	context-free start-symbols Int
 
 	context-free syntax
-		"toInt" "(" Integer ")" -> FL-INT
+		"toInt" "(" Integer ")" -> Int
 
 	variables
 		"N" [0-9]* -> NatCon
-		"I" [0-9]* -> FL-INT
+		"I" [0-9]* -> Int
 		"H" [0-9]* -> Integer

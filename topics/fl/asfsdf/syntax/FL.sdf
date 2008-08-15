@@ -5,31 +5,31 @@ imports basic/Whitespace
 
 exports
 	sorts 
-		PROGRAM FUNCTION EXPR OPS NAME NEWLINE
+		Program Function Expr Ops Name Newline
 
 	context-free syntax
-		FUNCTION+					-> PROGRAM
-		NAME NAME+ "=" EXPR NEWLINE			-> FUNCTION
-		EXPR OPS EXPR 					-> EXPR {left}	%% binary
-		NAME EXPR+					-> EXPR		%% apply
-		"if" EXPR "then" EXPR "else" EXPR			-> EXPR		%% ifthenelse
-		"(" EXPR ")"					-> EXPR {bracket}
-		NAME						-> EXPR
-		FL-INT						-> EXPR
+		Function+					-> Program
+		Name Name+ "=" Expr Newline+			-> Function
+		Expr Ops Expr 					-> Expr {left}	%% binary
+		Name Expr+					-> Expr		%% apply
+		"if" Expr "then" Expr "else" Expr		-> Expr		%% ifthenelse
+		"(" Expr ")"					-> Expr {bracket}
+		Name						-> Expr
+		Int						-> Expr
 
 	context-free syntax
-		"-"		-> OPS
-		"+"		-> OPS
-		"=="		-> OPS
-		";"		-> NEWLINE %% preprocessed
+		"-"		-> Ops
+		"+"		-> Ops
+		"=="		-> Ops
+		";"		-> Newline			%% preprocessed
 
 	lexical syntax
-		[a-z]+			-> NAME
-		"if" | "then" | "else"	-> NAME {reject}
+		[a-z]+			-> Name
+		"if" | "then" | "else"	-> Name {reject}
 
 	lexical restrictions
-		NAME -/- [a-z]
+		Name -/- [a-z]
 
 hiddens
 	context-free start-symbols 
-		PROGRAM
+		Program

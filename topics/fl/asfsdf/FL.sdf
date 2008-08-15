@@ -5,7 +5,7 @@ imports optimise/FL
 
 exports
 	context-free start-symbols 
-		PROGRAM
+		Program
 	sorts
-		PROGRAM
+		Program
 
