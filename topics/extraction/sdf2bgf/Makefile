@@ -1,10 +1,11 @@
-validator = ../../../download/msv/msv.jar
 metaenv = `which asfe | xargs dirname`/..
 sdfl = ${metaenv}/share/sdf-library/library
 asfl = ${metaenv}/share/asf-library/library
 schemata = ../../../shared/xsd
 
-all: Main.tbl Main.eqs test
+all: build test
+
+build: Main.tbl Main.eqs
 
 Main.eqs:
 	eqs-dump -m Main -o 1.eqs
@@ -37,14 +38,14 @@ tblcat:
 	sdf2table -m Main Main.def
 
 test:
-	@echo "main(" > FL.sdf
-	@cat ../../fl/asfsdf/syntax/FL.sdf >> FL.sdf
-	@echo ")" >>FL.sdf
-	cat FL.sdf | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > fl.bgf
-	java -jar ${validator} -warning ${schemata}/bgf.xsd fl.bgf
+	@echo "main(" > FL.trm
+	@cat ../../fl/asfsdf/syntax/FL.sdf >> FL.trm
+	@echo ")" >>FL.trm
+	cat FL.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > fl.bgf
+	xmllint --noout --schema ${schemata}/bgf.xsd fl.bgf
  
 clean:
 	rm -f reduct.out
 	rm -f Main.def Main.tbl *.eqs
-	rm -f FL.sdf fl.bgf
+	rm -f FL.trm fl.bgf
 
