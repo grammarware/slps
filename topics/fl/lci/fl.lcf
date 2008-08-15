@@ -18,7 +18,7 @@
   <tool>
     <name>validation</name>
     <command>
-      java -jar <expand>slps</expand>/download/msv/msv.jar <expand>slps</expand>/shared/xsd/bgf.xsd
+      xmllint --noout --schema <expand>slps</expand>/shared/xsd/bgf.xsd
     </command>
   </tool>
   <tool>
@@ -85,6 +85,30 @@
     <evaluation>
       <command>
         <expand>tools</expand>/runprologevaluator
+      </command>
+    </evaluation>
+  </source>
+  <source>
+    <name>sdf</name>
+    <extraction>
+      <name>
+        <expand>tools</expand>/sdf2bgf
+      </name>
+      <argument>
+        <expand>fl</expand>/asfsdf/syntax/FL.sdf
+      </argument>
+      <argument>
+        sdf.bgf
+      </argument>
+    </extraction>
+    <parsing>
+      <command>
+        <expand>tools</expand>/runasfsdfparser
+      </command>
+    </parsing>
+    <evaluation>
+      <command>
+        <expand>tools</expand>/runasfsdfevaluator
       </command>
     </evaluation>
   </source>

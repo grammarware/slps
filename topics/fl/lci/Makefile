@@ -1,4 +1,3 @@
-validator = ../../../download/msv/msv.jar
 schemata = ../../../shared/xsd
 
 build:
@@ -10,9 +9,9 @@ test:
 	@mv sample* testset
 
 check:
-	java -jar ${validator} -warning ${schemata}/lcf.xsd fl.lcf
-	ls xbgf/*.xbgf | xargs java -jar ${validator} ${schemata}/xbgf.xsd
-	ls bgf/*.bgf | xargs java -jar ${validator} ${schemata}/bgf.xsd
+	xmllint --noout --schema ${schemata}/lcf.xsd fl.lcf
+	ls xbgf/*.xbgf | xargs xmllint --noout --schema ${schemata}/xbgf.xsd
+	ls bgf/*.bgf | xargs xmllint --noout --schema ${schemata}/bgf.xsd
 
 clean:
 	rm -f *~
