@@ -37,6 +37,25 @@ trafoSymbols() =
   <epsilon/>
 </bgf:expression>
 
+[transform-a-labelled-production]
+&C1 := sort2chardata(&N1),
+&E2 := trafoSymbols(&Ss1),
+&C0 := guessLabel(&Acs1)
+=====================
+trafoProd ( &Ss1 -> &N1 {&Acs1} ) =
+<bgf:production>
+  &C0
+  <nonterminal>&C1</nonterminal>
+  &E2
+</bgf:production>
+
+[transform-empty-definition-of-nonterminal]
+trafoSymbols() = 
+<bgf:expression>
+  <epsilon/>
+</bgf:expression>
+
+
 [transform-definition-that-is-not-a-sequence]
 trafoSymbols(&S1) = trafoSymbol(&S1)
 
@@ -99,3 +118,18 @@ trafoSymbol(&S1?) =
   <bgf:expression>
     <optional>&E1</optional>
   </bgf:expression>
+
+[cons-to-label-only-cons]
+guessLabel(cons(&I1)) = <label>idcon2chardata(&I1)</label>
+
+[cons-to-label-cons-etc]
+guessLabel(cons(&I1),&Acs2) = <label>idcon2chardata(&I1)</label>
+
+[cons-to-label-empty]
+guessLabel() = 
+
+[default-cons-to-label-no-cons]
+guessLabel(&A1) = 
+
+[default-cons-to-label-head-is-not-cons]
+guessLabel(&A1,&Acs2) = guessLabel(&Acs2)

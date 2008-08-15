@@ -4,18 +4,18 @@ imports
 	languages/sdf2/syntax/Sorts
 	languages/xml/syntax/XML
 	basic/StrCon
+	basic/IdentifierCon
 
 exports
-
-    sorts CharData
-
-    context-free syntax
-	sort2chardata(Sort) -> CharData
-	strcon2chardata(StrCon) -> CharData
+	sorts
+		CharData
+	context-free syntax
+		sort2chardata(Sort)	-> CharData
+		strcon2chardata(StrCon)	-> CharData
+		idcon2chardata(IdCon)	-> CharData
 
 hiddens
-
-    lexical syntax
+	lexical syntax
     	%% Let's remind ourselves of the relevant lexical syntax.
                   %%
                   %%   1. languages/sdf2/syntax/Sorts
@@ -35,13 +35,14 @@ hiddens
                   %%     ~[\0-\31\n\t\"\\] -> StrChar {cons("normal")}
                   %%     [\"] chars:StrChar* [\"] -> StrCon  {cons("default")}
 
-    lexical variables
-	"&Head" [0-9]* -> [A-Z]		%% Part of Sort
-	"&Middle" [0-9]* -> [A-Za-z0-9\-]	%% Part of Sort
-	"&Middles" [0-9]* -> [A-Za-z0-9\-]*	%% Part of Sort
-	"&Last" [0-9]* -> [A-Za-z0-9]		%% Part of Sort
-                  "&Char" [0-9]* -> ~[\<\&]		%% Part of CharData
-                  "&Chars" [0-9]* -> ~[\<\&]*		%% Part of CharData
-	"&StrChar" [0-9]* -> StrChar		%% Part of StrCon
-	"&StrChar+" [0-9]* -> StrChar+	%% Part of StrCon
-	"&Chr" [0-9]* -> ~[\0-\31\n\t\"\\\<\&]
+	lexical variables
+		"&Head" [0-9]* -> [A-Z]		%% Part of Sort
+		"&IdHead" [0-9]* -> [A-Za-z]	%% Part of IdCon
+		"&Middle" [0-9]* -> [A-Za-z0-9\-]	%% Part of Sort
+		"&Middles" [0-9]* -> [A-Za-z0-9\-]*	%% Part of Sort
+		"&Last" [0-9]* -> [A-Za-z0-9]		%% Part of Sort
+		"&Char" [0-9]* -> ~[\<\&]		%% Part of CharData
+		"&Chars" [0-9]* -> ~[\<\&]*		%% Part of CharData
+		"&StrChar" [0-9]* -> StrChar		%% Part of StrCon
+		"&StrChar+" [0-9]* -> StrChar+	%% Part of StrCon
+		"&Chr" [0-9]* -> ~[\0-\31\n\t\"\\\<\&]

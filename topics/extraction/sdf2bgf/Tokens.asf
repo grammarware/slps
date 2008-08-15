@@ -21,3 +21,14 @@ strchar(&Chr1) := &StrChar1,
 chardata(&Char1 &Chars1) := strcon2chardata(strcon(\" &StrChar+2 \"))
 ===========================================================
 strcon2chardata(strcon(\" &StrChar1 &StrChar+2 \")) = chardata(&Chr1 &Char1 &Chars1)
+
+[idcon-of-length-1]
+idcon2chardata(idcon(&IdHead1)) = chardata(&IdHead1)
+
+[idcon-of-length-2]
+idcon2chardata(idcon(&IdHead1 &Middle1)) = chardata(&IdHead1 &Middle1)
+
+[idcon-of-length-greater-than-2]
+chardata(&Char1 &Chars1) := idcon2chardata(idcon(&IdHead1 &Middles1))
+===============================================================
+idcon2chardata(idcon(&IdHead1 &Middle1 &Middles1)) = chardata(&Char1 &Middle1 &Chars1)
