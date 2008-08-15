@@ -1,20 +1,21 @@
 #!/usr/bin/python
 import os
 import sys
-import string
 from elementtree import ElementTree
 
 shutup = ' 1> /dev/null 2> /dev/null'
-sections = {'SHORTCUTS':1,'ACTIONS':2,'SOURCES':3,'TARGETS':4,'IMPLEMENTATIONS':5}
 shortcuts = {}
 actions = []
 sources = {}
 targets = {}
 implementations = {}
 testset = []
-graph = []
+graph_big = []
+graph_small = []
 log = None
 tools = {}
+failednode = []
+failedarc  = []
 
 def logwrite(s):
  log.write(s+'\n')
@@ -105,62 +106,88 @@ def expanduni(where,rep):
 def quote(a):
  return '"'+a+'"'
 
-def addarc(fromnode,tonode,labelnode):
- if [fromnode,tonode,labelnode] not in graph:
-  graph.append([fromnode,tonode,labelnode])
+def addarc(fromnode,tonode,q,labelnode):
+ if [fromnode,tonode,q,labelnode] not in graph_big:
+  graph_big.append([fromnode,tonode,q,labelnode])
 
-def drawchain(chain,tgt):
- if len(chain)==1:
-  addarc(chain[0],tgt,'')
- else:
-  name = chain[0]
-  for i in range(1,len(chain)):
-   # going back
-   addarc(name,name+"'",chain[i])
-   name += "'"
-  addarc(name,tgt,'')
-
-def makegraph(df):
+def makegraph():
  # first we generate a complete picture
+ for x in targets.keys():
+  for src in targets[x][0]:
+   if len(src)==1:
+    addarc(src[0],x,'','')
+   else:
+    name  = src[0]
+    qname = src[0]
+    for i in range(1,len(src)-1):
+     addarc(name,name+"'",qname,src[i])
+     qname += '.'+src[i]
+     name += "'"
+    addarc(name,x,qname,src[-1])
+ # make a simplified one
+ for x in targets.keys():
+  for src in targets[x][0]:
+   graph_small.append([src[0],x])
+
+def dumpgraph(df):
  dot = open(df+'_large.dot','w')
  dot.write('digraph generated{ {rank=same; node [shape=ellipse];')
  for x in sources.keys():
-  dot.write(quote(x)+';')
+  dot.write(quote(x))
+  if x in failednode:
+   dot.write(' [color=red]')
+  dot.write(';')
  dot.write('}\n')
  dot.write('node [shape=octagon];\n')
  for x in targets.keys():
-  for src in targets[x][0]:
-   drawchain(src,x)
-  dot.write(quote(x)+';')
+  dot.write(quote(x))
+  if x in failednode:
+   dot.write(' [color=red]')
+  dot.write(';')
  dot.write('node [shape=box];\n')
- for arc in graph:
+ nodezz=[]
+ for arc in graph_big:
   dot.write(quote(arc[0])+'->'+quote(arc[1]))
-  if arc[2]:
-   dot.write(' [label="'+arc[2]+'"]')
+  if arc[0] not in nodezz:
+   nodezz.append(arc[0])
+  if arc[1] not in nodezz:
+   nodezz.append(arc[1])
+  par = ''
+  if arc[3]:
+   par += 'label="'+arc[3]+'" '
+  if [arc[2],arc[3]] in failedarc:
+   par += 'color=red '
+  if par:
+   dot.write(' ['+par+']')
   dot.write(';\n')
+ for node in nodezz:
+  if node not in sources.keys():
+   if node not in targets.keys():
+    if node in failednode:
+     dot.write(quote(node)+' [color=red];')
  dot.write('}')
  dot.close()
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
  logwrite(run)
  os.system(run)
- g = graph[:]
- for arc in g:
-  graph.remove(arc)
- # then we make a simplified one
  dot = open(df+'_small.dot','w')
  dot.write('digraph generated{ {rank=same;')
  for x in sources.keys():
-  dot.write(quote(x)+';')
+  dot.write(quote(x))
+  if x in failednode:
+   dot.write(' [color=red]')
+  dot.write(';')
  dot.write('}')
  dot.write('node [shape=octagon]\n')
  for x in targets.keys():
-  for src in targets[x][0]:
-   addarc(src[0],x,'')
-  dot.write(quote(x)+';')
- for arc in graph:
+  dot.write(quote(x))
+  if x in failednode:
+   dot.write(' [color=red]')
+  dot.write(';')
+ for arc in graph_small:
   dot.write(quote(arc[0])+'->'+quote(arc[1]))
-  if arc[2]:
-   dot.write(' [label="'+arc[2]+'"]')
+  if arc[0] in failednode and arc[1] in failednode:
+   dot.write(' [color=red]')
   dot.write(';\n')
  dot.write('}')
  dot.close()
@@ -174,19 +201,21 @@ def extractall():
   logwrite(run)
   if os.system(run+shutup):
    print 'Extraction failed on',bgf
-   print 'Command was:',run
-   sysexit(3)
- print 'Extraction successful.'
+   failednode.append(bgf)
+   #sysexit(3)
+ print 'Extraction finished.'
 
 def validateall():
  for bgf in sources.keys():
+  if bgf in failednode:
+   continue
   run = tools['validation']+' '+bgf+'.bgf'
   logwrite(run)
   if os.system(run+shutup):
    print 'Validation failed on',bgf
-   print 'Command was:',run
-   sysexit(3)
- print 'Validation successful.'
+   failednode.append(bgf)
+   #sysexit(3)
+ print 'Validation finished.'
 
 def preparebgf(cut):
  # executes preparational actions (abstract, unerase, etc) before comparison
@@ -199,16 +228,17 @@ def preparebgf(cut):
   else:
    # starting point is another target
    curname = targets[cut[0]][1]
-  # action names will be appended, so 'destroy confuse corrupt x' will yield
-  # files x.bgf, x.corrupt.bgf, x.corrupt.confuse.bgf and x.corrupt.confuse.destroy.bgf
+  # action names will be appended:
+  # x.bgf -> x.corrupt.bgf -> x.corrupt.confuse.bgf -> x.corrupt.confuse.destroy.bgf -> ...
   # the very last one will be diffed
   for a in cut[1:]:
    run = tools['transformation']+' '+curname+'.bgf xbgf/'+a+'.xbgf '+curname+'.'+a+'.bgf'
    logwrite(run)
    if os.system(run+shutup):
     print a,'failed on',curname
-    print 'Command was:',run
-    sysexit(4)
+    failedarc.append([curname,a])
+    failednode.append(cut[0]+"'"*(curname.count('.')+1))
+    #sysexit(4)
    curname += '.'+a
  a=cut[:]
  a.reverse()
@@ -216,12 +246,12 @@ def preparebgf(cut):
  if tools.has_key('validation'):
   a = tools['validation']+' '+curname+'.bgf'
   logwrite(a)
-  print 'Successfully performed',name,'- the result is',
+  print 'Performed',name,'- the result is',
   if os.system(a+shutup):
    print 'NOT',
   print 'valid'
  else:
-  print 'Successfully performed',name
+  print 'Performed',name
  return curname
 
 def buildtargets():
@@ -245,7 +275,24 @@ def buildtargets():
    # need to diff
    diffall(t,fileinputs[0],fileinputs[1:])
   # save resulting name
-  targets[t][1] = fileinputs[0]
+  cx = 0
+  while cx<len(fileinputs):
+   if not isbad(fileinputs[cx]):
+    break
+   cx+=1
+  if cx<len(fileinputs):
+   print 'Target',t,'reached as',fileinputs[cx]
+   targets[t][1] = fileinputs[cx]
+  else:
+   # Tough luck: all branches failed
+   targets[t][1] = t
+
+def isbad(x):
+# checks if the file x failed building
+ for failed in failedarc:
+  if x == '.'.join(failed):
+   return True
+ return False
 
 def diffall(t,car,cdr):
  if len(cdr)==1:
@@ -254,18 +301,20 @@ def diffall(t,car,cdr):
   ret = os.system(run+shutup)
   if ret!=0:
    print 'Error occured building target',t,'-',car,'differs from',cdr[0]
-   sysexit(3)
+   failednode.append(t)
+   #sysexit(3)
  else:
   for head in cdr:
    diffall(t,car,[head])
   diffall(t,cdr[0],cdr[1:])
 
 def unpacksamples():
- run = expanduni(tools['testset'],{})
+ run = expanduni(tools['testset'],{})+' samples.xml'
  logwrite(run)
- if os.system(run):
-  print 'Test set extraction failed'
-  sysexit(6)
+ if os.system(run+shutup):
+  print 'Test set extraction failed, no cases tested'
+  #sysexit(6)
+  return
  library={}
  cx = 0
  tree = ElementTree.parse('samples.xml')
@@ -363,26 +412,29 @@ def checkconsistency():
    open('xbgf/'+a+'.xbgf','r').close()
  except IOError, e:
   print 'Undefined action used: need',e.filename
-  sysexit(8)
+  #sysexit(8)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.6'
+ print 'Language Covergence Infrastructure v1.7'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])
   checkconsistency()
-  makegraph(sys.argv[2])
+  makegraph()
   extractall()
   if tools.has_key('validation'):
    validateall()
   buildtargets()
-  print 'Grammar convergence ended successfully.'
+  print 'Grammar convergence finished.'
   if tools.has_key('testset'):
    unpacksamples()
    runtestset()
-   print 'Testing ended successfully.'
+   print 'Testing finished.'
   else:
    print 'No testing performed.'
+  dumpgraph(sys.argv[2])
+  #print failednode
+  #print failedarc
   log.close()
  else:
   print 'Usage:'
