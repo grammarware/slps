@@ -1,25 +1,25 @@
 equations
 
-[a] toInt ( N1 ) = N1
+[a] toInt(&N1) = &N1
 
-[b] toInt ( -N1 ) = -N1
+[b] toInt ( -&N1 ) = -&N1
 
-[1] H1 := N1 + N2,
-   I1 := toInt ( H1 )
+[1] &H1 := &N1 + &N2,
+    &I1 := toInt ( &H1 )
    =======================
-   add-int ( N1, N2 ) = I1
+   add-int ( &N1, &N2 ) = &I1
 
-[2] H1 := N2 - N1,
-   I1 := toInt ( H1 )
+[2] &H1 := &N2 - &N1,
+    &I1 := toInt ( &H1 )
    =======================
-   add-int ( -N1, N2 ) = I1
+   add-int ( -&N1, &N2 ) = &I1
 
-[3] H1 := N1 - N2,
-   I1 := toInt ( H1 )
+[3] &H1 := &N1 - &N2,
+    &I1 := toInt ( &H1 )
    =======================
-   add-int ( N1, -N2 ) = I1
+   add-int ( &N1, -&N2 ) = &I1
 
-[4] H1 := - (N1 + N2),
-   I1 := toInt ( H1 )
+[4] &H1 := - (&N1 + &N2),
+    &I1 := toInt ( &H1 )
    =======================
-   add-int ( -N1, -N2 ) = I1
+   add-int ( -&N1, -&N2 ) = &I1

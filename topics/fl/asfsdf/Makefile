@@ -21,9 +21,16 @@ FL.tbl: FL.sdf syntax/FL.sdf optimise/FL.sdf
 	fi
 
 test:
+	@echo Parsing factorial:
+	@echo --------------------------------------------------------
 	@cat ${testcase}
 	@echo --------------------------------------------------------
-	@cat ${testcase} | python pre.py | sglr -p FL.tbl | asfe -e FL.eqs | restorebrackets -p FL.tbl | unparsePT | python post.py
+	@cat ${testcase} | python pre.py | sglr -p FL.tbl -A | unparsePT | python post.py
+	@echo Optimising example:
+	@echo --------------------------------------------------------
+	@cat suboptimal.fl
+	@echo --------------------------------------------------------
+	@cat suboptimal.fl | python pre.py | sglr -p FL.tbl -A | asfe -e FL.eqs | restorebrackets -p FL.tbl | unparsePT | python post.py
 
 catbuild:
 	echo definition > FL.def

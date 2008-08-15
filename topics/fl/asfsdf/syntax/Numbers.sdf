@@ -8,16 +8,16 @@ exports
 	Int
 
 context-free syntax
-	"-"? NatCon	-> Int
-	"add-int" "(" Int "," Int ")" -> Int
+	add-int(Int,Int) -> Int
+	"-"? NatCon 	-> Int
 
 hiddens
 	context-free start-symbols Int
 
 	context-free syntax
-		"toInt" "(" Integer ")" -> Int
+		toInt(Integer) -> Int
 
 	variables
-		"N" [0-9]* -> NatCon
-		"I" [0-9]* -> Int
-		"H" [0-9]* -> Integer
+		"&N" [0-9]* -> NatCon
+		"&I" [0-9]* -> Int
+		"&H" [0-9]* -> Integer

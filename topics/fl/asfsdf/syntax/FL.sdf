@@ -8,20 +8,20 @@ exports
 		Program Function Expr Ops Name Newline
 
 	context-free syntax
-		Function+					-> Program
-		Name Name+ "=" Expr Newline+			-> Function
-		Expr Ops Expr 					-> Expr {left}	%% binary
-		Name Expr+					-> Expr		%% apply
-		"if" Expr "then" Expr "else" Expr		-> Expr		%% ifthenelse
-		"(" Expr ")"					-> Expr {bracket}
-		Name						-> Expr
-		Int						-> Expr
+		Function+			-> Program
+		Name Name+ "=" Expr Newline+	-> Function
+		Expr Ops Expr 			-> Expr {left,prefer,cons(binary)}
+		Name Expr+			-> Expr {avoid,cons(apply)}
+		"if" Expr "then" Expr "else" Expr	-> Expr {cons(ifThenElse)}
+		"(" Expr ")"			-> Expr {bracket}
+		Name				-> Expr
+		Int				-> Expr
 
 	context-free syntax
-		"-"		-> Ops
-		"+"		-> Ops
-		"=="		-> Ops
-		";"		-> Newline			%% preprocessed
+		"-"		-> Ops {cons(minus)}
+		"+"		-> Ops {cons(plus)}
+		"=="		-> Ops {cons(equal)}
+		";"		-> Newline {cons(preprocessed)}
 
 	lexical syntax
 		[a-z]+			-> Name

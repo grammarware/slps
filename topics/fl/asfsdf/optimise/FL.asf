@@ -31,4 +31,4 @@ equations
 	===============================
 	if (E1 == N2) then E3 else E4 = if E1 then E4 else E3
 
-	[realplus] N1 + N2 = add-int (N1,N2)
+	[realplus] N1 + N2 = add-int(N1,N2)
