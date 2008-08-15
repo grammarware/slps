@@ -47,6 +47,7 @@ packbuild:
 	sdf2table -m FL FL.def
 
 clean:
+	rm -f *.eqs
 	rm -f reduct.out
 	rm -f FL.def FL.tbl FL.eqs
 	rm -rf basic/*
