@@ -18,5 +18,5 @@ elif [ ! -r $1 ]; then
     exit 1
 fi
 
-cat $1 | python ${SDF}/pre.py | sglr -p ${SDF}/FL.tbl | asfe -e ${SDF}/FL.eqs | unparsePT | python ${SDF}/post.py > $2
+cat $1 | python ${SDF}/pre.py | sglr -p ${SDF}/FL.tbl -A | unparsePT | python ${SDF}/post.py > $2
 
