@@ -388,6 +388,11 @@ def runtestset():
     run = expanduni(implementations[program][0]+' '+testcase[0]+' '+testcase[0]+'.parsed',{})
     logwrite(run)
     results[program]=os.system(run+shutup)
+    if not results[program]:
+     # parsed successfully, let's check the result
+     run = 'diff '+testcase[0]+' '+testcase[0]+'.parsed'
+     logwrite(run)
+     results[program]=os.system(run+shutup)
    print 'Test case',testcase[0],
    if results.values()==[0]*len(implementations):
     # all zeros
@@ -396,7 +401,7 @@ def runtestset():
     print 'failed'
     for r in results.keys():
      if results[r]!=0:
-      print r,'could not parse it'
+      print r,'did not parse it correctly'
 
 def checkconsistency():
  # some simple assertions
@@ -415,7 +420,7 @@ def checkconsistency():
   #sysexit(8)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.7'
+ print 'Language Covergence Infrastructure v1.71'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])
