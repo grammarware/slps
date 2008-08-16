@@ -8,8 +8,7 @@ all: FL.tbl FL.eqs test
 FL.eqs: optimise/FL.asf syntax/Numbers.asf
 	eqs-dump -m syntax/Numbers -o 1.eqs
 	eqs-dump -m optimise/FL -o 2.eqs
-	@cd ${asfl} ; eqs-dump -m basic/Integers -o 3.eqs
-	@mv ${asfl}/3.eqs .
+	@LDIR=${PWD} ; cd ${asfl} ; eqs-dump -m basic/Integers -o $$LDIR/3.eqs
 	concat-asf -o FL.eqs 1.eqs 2.eqs 3.eqs
 	rm -f 1.eqs 2.eqs 3.eqs
 
@@ -51,7 +50,7 @@ packbuild:
 	sdf2table -m FL FL.def
 
 clean:
-	rm -f *.eqs
+	rm -f ?.eqs
 	rm -f reduct.out
 	rm -f FL.def FL.tbl FL.eqs
 	rm -rf basic/*
