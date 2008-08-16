@@ -16,6 +16,21 @@ log = None
 tools = {}
 failednode = []
 failedarc  = []
+failedaction = []
+
+def postfix2prefix(post):
+ #  input: 'x.c.b.a'
+ # output: 'a b c x'
+ pre = post.split('.')
+ pre.reverse()
+ return ' '.join(pre)
+
+def prefix2postfix(pre):
+ #  input: 'a b c x'
+ # output: 'x.c.b.a'
+ post = pre.split()
+ post.reverse()
+ return '.'.join(post)
 
 def logwrite(s):
  log.write(s+'\n')
@@ -197,7 +212,7 @@ def dumpgraph(df):
 
 def extractall():
  for bgf in sources.keys():
-  run = ' '.join(sources[bgf])
+  run = ' '.join(sources[bgf])+' bgf/'+bgf+'.bgf'
   logwrite(run)
   if os.system(run+shutup):
    print 'Extraction failed on',bgf
@@ -209,7 +224,7 @@ def validateall():
  for bgf in sources.keys():
   if bgf in failednode:
    continue
-  run = tools['validation']+' '+bgf+'.bgf'
+  run = tools['validation']+' bgf/'+bgf+'.bgf'
   logwrite(run)
   if os.system(run+shutup):
    print 'Validation failed on',bgf
@@ -232,19 +247,20 @@ def preparebgf(cut):
   # x.bgf -> x.corrupt.bgf -> x.corrupt.confuse.bgf -> x.corrupt.confuse.destroy.bgf -> ...
   # the very last one will be diffed
   for a in cut[1:]:
-   run = tools['transformation']+' '+curname+'.bgf xbgf/'+a+'.xbgf '+curname+'.'+a+'.bgf'
+   run = tools['transformation']+' bgf/'+curname+'.bgf xbgf/'+a+'.xbgf bgf/'+curname+'.'+a+'.bgf'
    logwrite(run)
    if os.system(run+shutup):
     print a,'failed on',curname
     failedarc.append([curname,a])
     failednode.append(cut[0]+"'"*(curname.count('.')+1))
+    failedaction.append(postfix2prefix(curname+'.'+a))
     #sysexit(4)
    curname += '.'+a
- a=cut[:]
- a.reverse()
- name = ' '.join(a)
- if tools.has_key('validation'):
-  a = tools['validation']+' '+curname+'.bgf'
+ name = postfix2prefix('.'.join(cut))
+ if name in failedaction:
+  print 'Failed',name
+ elif tools.has_key('validation'):
+  a = tools['validation']+' bgf/'+curname+'.bgf'
   logwrite(a)
   print 'Performed',name,'- the result is',
   if os.system(a+shutup):
@@ -296,7 +312,7 @@ def isbad(x):
 
 def diffall(t,car,cdr):
  if len(cdr)==1:
-  run = tools['comparison']+' '+car+'.bgf '+cdr[0]+'.bgf'
+  run = tools['comparison']+' bgf/'+car+'.bgf bgf/'+cdr[0]+'.bgf'
   logwrite(run)
   ret = os.system(run+shutup)
   if ret!=0:
@@ -309,7 +325,7 @@ def diffall(t,car,cdr):
   diffall(t,cdr[0],cdr[1:])
 
 def unpacksamples():
- run = expanduni(tools['testset'],{})+' samples.xml'
+ run = expanduni(tools['testset'],{})+' testset/samples.xml'
  logwrite(run)
  if os.system(run+shutup):
   print 'Test set extraction failed, no cases tested'
@@ -317,10 +333,10 @@ def unpacksamples():
   return
  library={}
  cx = 0
- tree = ElementTree.parse('samples.xml')
+ tree = ElementTree.parse('testset/samples.xml')
  for outline in tree.findall("//sample"):
   cx+=1
-  torun = open ('sample'+`cx`,"w")
+  torun = open ('testset/sample'+`cx`,"w")
   for line in outline.text.split('\n'):
    if line.strip()!='':
     torun.write(line.strip()+'\n')
@@ -331,14 +347,14 @@ def unpacksamples():
    sort=outline.attrib['sort']
   else:
    sort=None
-  testset.append(['sample'+`cx`,None,None,sort])
+  testset.append(['testset/sample'+`cx`,None,None,sort])
  # All executions
  for outline in tree.findall("//runnable"):
   cx+=1
   # sample,context,yields,sort
   yields=None
   context=None
-  torun = open ('sample'+`cx`,'w')
+  torun = open ('testset/sample'+`cx`,'w')
   line = outline.findtext('main')
   for arg in outline.findall("argument"):
    line += ' ' + arg.text
@@ -348,7 +364,7 @@ def unpacksamples():
    yields=outline.findtext('yields')
   if outline.findtext('context'):
    if library.has_key(outline.findtext('context')):
-    context='sample'+`cx`+'.context'
+    context='testset/sample'+`cx`+'.context'
     con = open (context,'w')
     for line in library[outline.findtext('context')].split('\n'):
      if line.strip()!='':
@@ -357,7 +373,7 @@ def unpacksamples():
    else:
     print "No context found for sample",cx,'('+outline.findtext('context')+'), test case not used'
     continue
-  testset.append(['sample'+`cx`,context,yields,''])
+  testset.append(['testset/sample'+`cx`,context,yields,''])
  print cx,'samples in the test set.'
 
 def runtestset():
@@ -372,7 +388,7 @@ def runtestset():
     run = expanduni(implementations[program][1]+' '+testcase[1]+' '+testcase[0]+' '+testcase[2],{})
     logwrite(run)
     results[program]=os.system(run+shutup)
-   print 'Test case',testcase[0],
+   print 'Test case',testcase[0].replace('testset/sample',''),
    if results.values()==[0]*len(implementations):
     # all zeros
     print 'passed'
@@ -393,7 +409,7 @@ def runtestset():
      run = 'diff '+testcase[0]+' '+testcase[0]+'.parsed'
      logwrite(run)
      results[program]=os.system(run+shutup)
-   print 'Test case',testcase[0],
+   print 'Test case',testcase[0].replace('testset/sample',''),
    if results.values()==[0]*len(implementations):
     # all zeros
     print 'passed'
@@ -420,7 +436,7 @@ def checkconsistency():
   #sysexit(8)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.71'
+ print 'Language Covergence Infrastructure v1.8'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])
@@ -440,6 +456,8 @@ if __name__ == "__main__":
   dumpgraph(sys.argv[2])
   #print failednode
   #print failedarc
+  if failednode or failedarc:
+   sysexit(100)
   log.close()
  else:
   print 'Usage:'

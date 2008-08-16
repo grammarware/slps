@@ -55,9 +55,6 @@
       <argument>
         <expand>fl</expand>/java1/FL.g
       </argument>
-      <argument>
-        antlr.bgf
-      </argument>
     </extraction>
     <parsing>
       <command>
@@ -80,9 +77,6 @@
       <argument>
         <expand>fl</expand>/prolog1/Parser.pro
       </argument>
-      <argument>
-        dcg.bgf
-      </argument>
     </extraction>
     <parsing>
       <command>
@@ -104,9 +98,6 @@
       </name>
       <argument>
         <expand>fl</expand>/asfsdf/syntax/FL.sdf
-      </argument>
-      <argument>
-        sdf.bgf
       </argument>
     </extraction>
     <parsing>
@@ -133,9 +124,6 @@
       <argument>
         types
       </argument>
-      <argument>
-        om.bgf
-      </argument>
     </extraction>
   </source>
 
@@ -147,9 +135,6 @@
       </name>
       <argument>
         <expand>fl</expand>/xsd/fl.xsd
-      </argument>
-      <argument>
-        xsd.bgf
       </argument>
     </extraction>
   </source>
@@ -165,9 +150,6 @@
       </argument>
       <argument>
         fl
-      </argument>
-      <argument>
-        jaxb.bgf
       </argument>
     </extraction>
   </source>

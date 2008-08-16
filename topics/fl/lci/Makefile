@@ -5,8 +5,6 @@ build:
 test:
 	python ../../convergence/lci/lci.py fl.lcf architecture
 	@rm -f architecture*.dot
-	@mv *.bgf bgf
-	@mv sample* testset
 
 check:
 	xmllint --noout --schema ${schemata}/lcf.xsd fl.lcf
@@ -15,7 +13,7 @@ check:
 
 clean:
 	rm -f *~
-	rm -f sample* testset/* *.bgf bgf/*.bgf
+	rm -f testset/* bgf/*
 	rm -rf bin obj
 	rm -f *.user *.suo
 	rm -f architecture*
