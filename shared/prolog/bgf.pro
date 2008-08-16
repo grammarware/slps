@@ -232,7 +232,7 @@ normalize_algebraically_rules(';'(Xs1),';'(Xs2))
 
 % Pretty print grammar
 
-ppG(g(Rs,Ps))
+ppBgf(g(Rs,Ps))
  :-
     format('g( ~q, [~n',[Rs]),
     ppPs(Ps),
