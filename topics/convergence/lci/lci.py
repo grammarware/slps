@@ -146,20 +146,20 @@ def makegraph():
 
 def dumpgraph(df):
  dot = open(df+'_large.dot','w')
- dot.write('digraph generated{ {rank=same; node [shape=ellipse];')
+ dot.write('digraph generated{ {rank=same; node [shape=ellipse, style=bold];')
  for x in sources.keys():
   dot.write(quote(x))
   if x in failednode:
    dot.write(' [color=red]')
   dot.write(';')
  dot.write('}\n')
- dot.write('node [shape=octagon];\n')
+ dot.write('node [shape=octagon, style=bold];\n')
  for x in targets.keys():
   dot.write(quote(x))
   if x in failednode:
    dot.write(' [color=red]')
   dot.write(';')
- dot.write('node [shape=box];\n')
+ dot.write('node [shape=box, style=solid];\n')
  nodezz=[]
  for arc in graph_big:
   dot.write(quote(arc[0])+'->'+quote(arc[1]))
