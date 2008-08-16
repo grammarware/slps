@@ -14,18 +14,18 @@ exports
 		Name Expr+			-> Expr {avoid,cons(apply)}
 		"if" Expr "then" Expr "else" Expr	-> Expr {cons(ifThenElse)}
 		"(" Expr ")"			-> Expr {bracket}
-		Name				-> Expr
-		Int				-> Expr
+		Name				-> Expr {cons(argument)}
+		Int				-> Expr {cons(literal)}
 
 	context-free syntax
 		"-"		-> Ops {cons(minus)}
 		"+"		-> Ops {cons(plus)}
 		"=="		-> Ops {cons(equal)}
-		";"		-> Newline {cons(preprocessed)}
 
 	lexical syntax
 		[a-z]+			-> Name
 		"if" | "then" | "else"	-> Name {reject}
+		";"			-> Newline
 
 	lexical restrictions
 		Name -/- [a-z]

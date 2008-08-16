@@ -4,7 +4,7 @@
   <xbgf:rename>
     <nonterminal>
       <from>NEWLINE</from>
-      <to>eoln</to>
+      <to>newline</to>
     </nonterminal>
   </xbgf:rename>
   <xbgf:rename>
@@ -17,12 +17,6 @@
     <nonterminal>
       <from>INT</from>
       <to>int</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:rename>
-    <nonterminal>
-      <from>ifthenelse</from>
-      <to>ifThenElse</to>
     </nonterminal>
   </xbgf:rename>
   <xbgf:vertical>

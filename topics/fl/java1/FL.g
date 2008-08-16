@@ -23,7 +23,7 @@ function returns [Function function] :
 expr returns [Expr expr] :
 	  b=binary { $expr = $b.expr; }
 	| a=apply { $expr = $a.expr; }
-	| i=ifthenelse { $expr = $i.expr; }
+	| i=ifThenElse { $expr = $i.expr; }
       ;
 
 binary returns [Expr expr] :
@@ -38,7 +38,7 @@ apply returns [Apply expr] :
         { $expr = new Apply($i.text,args); } 
         ;
 
-ifthenelse returns [IfThenElse expr] :
+ifThenElse returns [IfThenElse expr] :
         'if' c=expr 'then' e1=expr 'else' e2=expr
         { $expr = new IfThenElse($c.expr,$e1.expr,$e2.expr); }
         ;

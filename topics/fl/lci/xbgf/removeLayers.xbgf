@@ -24,31 +24,4 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:lassoc>
-  <xbgf:skip>
-    <bgf:production>
-      <nonterminal>expr</nonterminal>
-      <bgf:expression>
-        <nonterminal>expr</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:skip>
-  <xbgf:permute>
-    <bgf:production>
-      <label>binary</label>
-      <nonterminal>expr</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ops</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>expr</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>expr</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:permute>
 </xbgf:sequence>

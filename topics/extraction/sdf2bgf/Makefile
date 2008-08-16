@@ -2,6 +2,7 @@ metaenv = `which asfe | xargs dirname`/..
 sdfl = ${metaenv}/share/sdf-library/library
 asfl = ${metaenv}/share/asf-library/library
 schemata = ../../../shared/xsd
+flsdf = ../../fl/asfsdf/syntax/FL.sdf
 
 all: build test
 
@@ -38,8 +39,9 @@ tblcat:
 	sdf2table -m Main Main.def
 
 test:
+	@echo Building FL.trm from ${flsdf} ...
 	@echo "main(" > FL.trm
-	@cat ../../fl/asfsdf/syntax/FL.sdf >> FL.trm
+	@cat ${flsdf} >> FL.trm
 	@echo ")" >>FL.trm
 	cat FL.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > fl.bgf
 	xmllint --noout --schema ${schemata}/bgf.xsd fl.bgf

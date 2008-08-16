@@ -20,12 +20,16 @@ FL.tbl: FL.sdf syntax/FL.sdf optimise/FL.sdf
 		make catbuild ; \
 	fi
 
-test:
+test: test-parser
+
+test-parser: FL.tbl
 	@echo Parsing factorial:
 	@echo --------------------------------------------------------
 	@cat ${testcase}
 	@echo --------------------------------------------------------
 	@cat ${testcase} | python pre.py | sglr -p FL.tbl -A | unparsePT | python post.py
+
+test-optimizer:
 	@echo Optimising example:
 	@echo --------------------------------------------------------
 	@cat suboptimal.fl

@@ -16,7 +16,7 @@ function((N,Ns,E)) -->
        many1(name,Ns),
        special("="),
        expr(E),
-       many1(eoln).
+       many1(newline).
 
 
 % Top-level layer of expression forms

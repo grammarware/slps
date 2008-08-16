@@ -21,9 +21,9 @@ keyword(S) --> spaces, string(S), ( follows(isSpace) ; eof ).
 special(S) --> spaces, string(S).
 
 
-% Eoln token
+% Newline token
 
-eoln --> spaces, satisfy(isEoln,_).
+newline --> spaces, satisfy(isEoln,_).
 
 
 % Integers with optional negative sign

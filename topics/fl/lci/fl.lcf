@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <lcf:configuration xmlns:lcf="http://planet-sl.org/lcf">
+
   <shortcut>
     <name>slps</name>
     <expansion>../../..</expansion>
   </shortcut>
+
   <shortcut>
     <name>fl</name>
     <expansion>..</expansion>
   </shortcut>
+
   <shortcut>
     <name>tools</name>
     <expansion>
@@ -21,18 +24,21 @@
       xmllint --noout --schema <expand>slps</expand>/shared/xsd/bgf.xsd
     </command>
   </tool>
+
   <tool>
     <name>comparison</name>
     <command>
       <expand>tools</expand>/bdt
     </command>
   </tool>
+
   <tool>
     <name>testset</name>
     <command>
       <expand>tools</expand>/ldf2samples <expand>fl</expand>/ldf/fl.ldf
     </command>
   </tool>
+
   <tool>
     <name>transformation</name>
     <command>
@@ -64,6 +70,7 @@
       </command>
     </evaluation>
   </source>
+
   <source>
     <name>dcg</name>
     <extraction>
@@ -88,6 +95,7 @@
       </command>
     </evaluation>
   </source>
+
   <source>
     <name>sdf</name>
     <extraction>
@@ -112,6 +120,7 @@
       </command>
     </evaluation>
   </source>
+
   <source>
     <name>om</name>
     <extraction>
@@ -129,6 +138,7 @@
       </argument>
     </extraction>
   </source>
+
   <source>
     <name>xsd</name>
     <extraction>
@@ -143,6 +153,7 @@
       </argument>
     </extraction>
   </source>
+
   <source>
     <name>jaxb</name>
     <extraction>
@@ -167,20 +178,20 @@
       <input>jaxb</input>
       <perform>trimJaxb</perform>
       <perform>downcase</perform>
-      <perform>reroot</perform>
     </branch>
     <branch>
       <input>om</input>
       <perform>trimOm</perform>
       <perform>downcase</perform>
       <perform>preferJaxb</perform>
-      <perform>reroot</perform>
     </branch>
   </target>
+
   <target>
     <name>abstract</name>
     <branch>
       <input>java</input>
+      <perform>reroot</perform>
       <perform>unerase</perform>
     </branch>
     <branch>
@@ -190,30 +201,43 @@
       <perform>massageXsd</perform>
     </branch>
   </target>
+
   <target>
-    <name>concrete</name>
+    <name>topdown</name>
     <branch>
       <input>dcg</input>
-      <perform>defineLex</perform>
-      <perform>reroot</perform>
     </branch>
     <branch>
       <input>antlr</input>
       <perform>preferDcg</perform>
-      <perform>defineLex</perform>
-      <perform>reroot</perform>
     </branch>
   </target>
+
+  <target>
+    <name>concrete</name>
+    <branch>
+      <input>topdown</input>
+      <perform>removeLayers</perform>
+    </branch>
+    <branch>
+      <input>sdf</input>
+      <perform>downcase</perform>
+    </branch>
+  </target>
+
   <target>
     <name>limit</name>
     <branch>
       <input>concrete</input>
+      <perform>defineLex</perform>
       <perform>stripTerminals</perform>
-      <perform>removeLayers</perform>
+      <perform>permuteArgs</perform>
+      <perform>reroot</perform>
     </branch>
     <branch>
       <input>abstract</input>
       <perform>mkSignature</perform>
     </branch>
   </target>
+
 </lcf:configuration>

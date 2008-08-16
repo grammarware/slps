@@ -1,8 +1,16 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:prune>eoln</xbgf:prune>
+  <xbgf:prune>newline</xbgf:prune>
   <xbgf:strip>
     <allTerminals/>
   </xbgf:strip>
+  <xbgf:skip>
+    <bgf:production>
+      <nonterminal>expr</nonterminal>
+      <bgf:expression>
+        <nonterminal>expr</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:skip>
 </xbgf:sequence>
