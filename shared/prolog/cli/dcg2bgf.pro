@@ -1,4 +1,4 @@
-:- ensure_loaded('slps.pro').
+:- ensure_loaded('../slps.pro').
 
 
 gFromDcg(Cs,g([],Ps))

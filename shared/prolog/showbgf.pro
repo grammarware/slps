@@ -5,5 +5,5 @@
    append(_,['--',LgfFile],Argv),
    loadXml(LgfFile,Xml),
    xmlToG(Xml,G),
-   ppG(G),
+   ppBgf(G),
    halt.

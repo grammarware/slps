@@ -5,6 +5,7 @@
 :- ensure_loaded('xmlLib.pro').
 :- ensure_loaded('bgf.pro').
 :- ensure_loaded('btf.pro').
+:- ensure_loaded('implodeBtf.pro').
 :- ensure_loaded('readBgf.pro').
 :- ensure_loaded('writeBgf.pro').
 :- ensure_loaded('readBtf.pro').

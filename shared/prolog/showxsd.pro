@@ -10,7 +10,7 @@ main
     S =.. [element|_],
     gFromSchema(S,G1),
     normalizeG(G1,G2),
-    ppG(G2),
+    ppBgf(G2),
     halt.
 
 :- run.
