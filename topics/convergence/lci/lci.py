@@ -246,15 +246,21 @@ def preparebgf(cut):
   # action names will be appended:
   # x.bgf -> x.corrupt.bgf -> x.corrupt.confuse.bgf -> x.corrupt.confuse.destroy.bgf -> ...
   # the very last one will be diffed
+  ontheroll = True
   for a in cut[1:]:
-   run = tools['transformation']+' bgf/'+curname+'.bgf xbgf/'+a+'.xbgf bgf/'+curname+'.'+a+'.bgf'
-   logwrite(run)
-   if os.system(run+shutup):
-    print a,'failed on',curname
+   if ontheroll:
+    run = tools['transformation']+' bgf/'+curname+'.bgf xbgf/'+a+'.xbgf bgf/'+curname+'.'+a+'.bgf'
+    logwrite(run)
+    if os.system(run+shutup):
+     print a,'failed on',curname
+     failedarc.append([curname,a])
+     failednode.append(cut[0]+"'"*(curname.count('.')+1))
+     failedaction.append(postfix2prefix(curname+'.'+a))
+     ontheroll = False
+   else:
     failedarc.append([curname,a])
     failednode.append(cut[0]+"'"*(curname.count('.')+1))
     failedaction.append(postfix2prefix(curname+'.'+a))
-    #sysexit(4)
    curname += '.'+a
  name = postfix2prefix('.'.join(cut))
  if name in failedaction:
