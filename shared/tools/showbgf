@@ -14,5 +14,5 @@ elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    swipl -q -f ${LOCAL2}/prolog/showbgf.pro -- $1
+    swipl -q -f ${LOCAL2}/prolog/cli/showbgf.pro -- $1
 fi

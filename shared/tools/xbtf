@@ -18,5 +18,5 @@ elif [ ! -r $2 ]; then
     exit 1
 else
     rm -f $3
-    swipl -q -t "halt(1)" -f ${LOCAL2}/prolog/xbtf.pro -- $1 $2 $3
+    swipl -q -t "halt(1)" -f ${LOCAL2}/prolog/cli/xbtf.pro -- $1 $2 $3
 fi

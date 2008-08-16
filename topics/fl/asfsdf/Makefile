@@ -19,7 +19,7 @@ FL.tbl: FL.sdf syntax/FL.sdf optimise/FL.sdf
 		make catbuild ; \
 	fi
 
-test: test-parser
+test: test-parser test-optimizer
 
 test-parser: FL.tbl
 	@echo Parsing factorial:

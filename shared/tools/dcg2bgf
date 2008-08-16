@@ -15,5 +15,5 @@ elif [ ! -r $1 ]; then
     exit 1
 else
     rm -f $2
-    swipl -q -f ${LOCAL2}/prolog/dcg2bgf.pro -- $1 $2
+    swipl -q -f ${LOCAL2}/prolog/cli/dcg2bgf.pro -- $1 $2
 fi

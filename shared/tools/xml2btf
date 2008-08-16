@@ -8,7 +8,7 @@ LOCAL2=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 3 ]; then
-    echo "Usage: xsd2btf <XSD-input> <XML-input> <BTF-output>"
+    echo "Usage: xml2btf <XSD-input> <XML-input> <BTF-output>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
@@ -18,5 +18,5 @@ elif [ ! -r $2 ]; then
     exit 1
 else
     rm -f $3
-    swipl -q -f ${LOCAL2}/prolog/xsd2btf.pro -- $1 $2 $3
+    swipl -q -f ${LOCAL2}/prolog/cli/xml2btf.pro -- $1 $2 $3
 fi

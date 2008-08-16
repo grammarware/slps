@@ -1,7 +1,4 @@
-:- ensure_loaded('slps.pro').
-:- ensure_loaded('xbgf0.pro').
-:- use_module('xbgf2.pro').
-
+:- ensure_loaded('../slps.pro').
 
 main 
  :- 

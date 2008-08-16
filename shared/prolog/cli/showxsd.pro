@@ -1,6 +1,5 @@
 :- ensure_loaded('../slps.pro').
 
-
 main 
  :- 
     current_prolog_flag(argv,Argv),
