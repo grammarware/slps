@@ -244,3 +244,26 @@ ppP(P,C) :- format('  ~q~w~n',[P,C]).
 ppPs([]).
 ppPs([P]) :- ppP(P,'').
 ppPs([P1,P2|Ps]) :- ppP(P1,','), ppPs([P2|Ps]).
+
+
+% Test prefix property of grammar
+
+prefixG(g(_,Ps))
+ :-
+     % Labels must be used unambiguously.
+     maplist(arg(1),Ps,Lss),
+     concat(Lss,Ls),
+     list_to_set(Ls,Ls),
+
+     % Horizontal choices are not permitted.
+     rectest(not(=(';'(_))),Ps),
+
+     % Selector groups are not permitted.
+     rectest(not(=(s(_,_))),Ps),
+
+     % Nonterminals with multiple productions must be labelled. 
+     \+ ( member(P1,Ps),
+          member(P2,Ps),
+          P1  = p([],N,_),
+          P2  = p(_,N,_),
+          \+ P1 == P2 ).

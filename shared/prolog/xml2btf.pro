@@ -15,25 +15,35 @@ sxmlns(btf,'http://planet-sl.org/btf').
 % Parse a root
 %
 
-rootToBtf(SG,E,r(G,n(P,T)))
+rootToBtf(SG,E,r(G2,n(P,T2)))
  :-
     require(
       (
-        SG = (S,G,_),
-        G = g(_,Ps),
+        SG = (S,G1,_),
+        completeXsd(SG,G2),
+        G1 = g(_,Ps),
         attribute(targetNamespace,S,Tns),
         E = element(QN,_,_),
         QN = Tns:N,
         children(name(xsd:element),S,EDs),
         member(ED,EDs),
         attribute(name,ED,N),
-        splitN(Ps,N,[P],_,_),
+        splitN1(Ps,N,P,_,_),
         P = p(_,_,X)
       ),
       'No root determined,',
       []),
-    eToBtf(SG,QN,X,E,T),
+    eToBtf(SG,QN,X,E,T1),
+    transform(delpfx_rules,T1,T2),
     !.
+
+delpfx_rules(p(As,N1,X),p(As,N2,X))
+ :-
+    delpfx(N1,N2).
+
+delpfx_rules(n(N1),n(N2))
+ :-
+    delpfx(N1,N2).
 
 
 %
@@ -165,10 +175,6 @@ xToBtf(_,v(int),NL,[],v(int(V3)))
      atom_chars(V1,V2), 
      number_chars(V3,V2).
 
-xToBtf(SG,n(QN),NL,[],T)
- :-
-    simpleXsdType(SG,QN,NL,T).
-
 xToBtf(SG,n(QN),NL1,NL2,T)
  :-
     qname(QN,Pfx,N),   
@@ -280,22 +286,6 @@ optionalToBtf(_,_,Es,Es,[])
     !.
 
 
-%
-% Parse according to a simple XSD type
-%
-
-simpleXsdType(SG,QN,NL,t(V))
- :-
-    qname(QN,Pfx,N),
-    SG = (S,_,_),
-    dxmlns(S,Pfx,Ns),
-    sxmlns(xsd,Ns),
-    require(
-      simpleXsdType(N),
-      'Cannot handle simple XSD type ~q.',
-      [QN]),
-    testSimpleType(N,NL,V).
-
 testSimpleType(N,NL,V)
  :-
     require(
@@ -306,7 +296,3 @@ testSimpleType(N,NL,V)
       ( [V] = NL ),
       'Simple type expected; list found.',
       []).
-
-simpleXsdType(int).
-simpleXsdType(string).
-

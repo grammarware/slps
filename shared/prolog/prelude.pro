@@ -103,6 +103,25 @@ visit(G,X)
     !.
 
 
+% Test data by term traversal
+
+rectest(G,X)
+ :-
+    apply(G,[X]),
+    X =.. [_|Xs],
+    maplist(rectest(G),Xs),
+    !.
+
+
+% Negation by failure
+
+not(G,X) :- apply(G,[X]), !, fail.
+not(_,_).
+
+not(G,X,Y) :- apply(G,[X,Y]), !, fail.
+not(_,_,_).
+
+
 % Collect data by term traversal
 
 collect(G,X,L2)

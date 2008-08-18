@@ -178,3 +178,5 @@ uqname(X)
 delpfx(Pfx,QN,UQN) :- qname(QN,Pfx,UQN), !.
 delpfx(_,N,N).
 
+delpfx(QN,UQN) :- qname(QN,_,UQN), !.
+delpfx(N,N).

@@ -2,7 +2,13 @@
 % Implode BTF trees
 %
 
-implodeRoot(r(_,T),V) :- implodeTree(T,V).
+implodeRoot(r(G,T),V)
+ :-
+    require(
+      prefixG(G),
+      'Underlying grammar violates prefix condition.',
+      []),
+    implodeTree(T,V).
 
 implodeTree(v(string(V)),V).
 
