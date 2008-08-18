@@ -22,12 +22,12 @@ append.xbgf:
 # fl.xsd
 ${finalxsd}: append.xbgf
 	${tools}/xsd2bgf ${fl}/xsd/fl.xsd xsd0.bgf
-	${tools}/xbgf xsd0.bgf append.xbgf xsd1.bgf
+	${tools}/xbgf append.xbgf xsd0.bgf xsd1.bgf
 
 # factorial.xml
 ${finalxml}: append.xbgf
 	${tools}/xml2btf ${fl}/xsd/fl.xsd ${fl}/xsd/factorial.xml xml0.btf
-	${tools}/xbtf xml0.btf append.xbgf xml1.btf
+	${tools}/xbtf append.xbgf xml0.btf xml1.btf
 
 rebuild:
 	make clean

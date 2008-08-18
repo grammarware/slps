@@ -8,7 +8,7 @@ LOCAL2=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 3 ]; then
-    echo "Usage: xbgf <BGF-input> <XBGF-input> <BGF-output>"
+    echo "Usage: xbgf <XBGF-input> <BGF-input> <BGF-output>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."

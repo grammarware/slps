@@ -3,14 +3,12 @@
 main 
  :-
     current_prolog_flag(argv,Argv),
-    append(_,['--',XsdInput,XmlInput,BtfOutput],Argv),
-    loadXsd(XsdInput,SG),
-    loadXml(XmlInput,Xml1),
-    rootToBtf(SG,Xml1,T),
-    tToXml(T,Xml2),
-    open(BtfOutput, write, BtfStream),
-    xml_write(BtfStream,Xml2,[]),
-    close(BtfStream),
+    append(_,['--',XsdFile,XmlFile,BtfFile],Argv),
+    loadXsd(XsdFile,SG),
+    loadXml(XmlFile,XmlIn),
+    rootToBtf(SG,XmlIn,Root),
+    tToXml(Root,XmlOut),
+    saveXml(BtfFile,XmlOut),
     halt.
 
 :- run.

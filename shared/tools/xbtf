@@ -8,7 +8,7 @@ LOCAL2=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 3 ]; then
-    echo "Usage: xbtf <BTF-input> <XBGF-input> <BTF-output>"
+    echo "Usage: xbtf <XBGF-input> <BTF-input> <BTF-output>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."

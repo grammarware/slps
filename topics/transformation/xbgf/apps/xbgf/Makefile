@@ -17,7 +17,7 @@ append.xbgf:
 
 ${final}: append.xbgf
 	${tools}/xsd2bgf ${xsd}/xbgf.xsd xbgf0.bgf
-	${tools}/xbgf xbgf0.bgf append.xbgf xbgf1.bgf
+	${tools}/xbgf append.xbgf xbgf0.bgf xbgf1.bgf
 
 rebuild:
 	make clean

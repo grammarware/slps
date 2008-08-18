@@ -249,7 +249,7 @@ def preparebgf(cut):
   ontheroll = True
   for a in cut[1:]:
    if ontheroll:
-    run = tools['transformation']+' bgf/'+curname+'.bgf xbgf/'+a+'.xbgf bgf/'+curname+'.'+a+'.bgf'
+    run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+a+'.bgf'
     logwrite(run)
     if os.system(run+shutup):
      print a,'failed on',curname

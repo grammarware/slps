@@ -1,6 +1,10 @@
-:- module(xbgf2,[transformT/3]).
+:- module(xbgf2,[transformR/3,transformT/3]).
 :- use_module('xbgf1.pro').
 
+transformR(Xbgf,r(G1,T1),r(G2,T2))
+ :-
+    xbgf1:transformG(Xbgf,G1,G2),
+    xbgf2:transformT(Xbgf,T1,T2).
 
 transformT(T,T1,T2)
  :-
