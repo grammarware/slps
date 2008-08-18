@@ -2,7 +2,7 @@
 % Implode BTF trees
 %
 
-implodeRoot(r(G,T),(G,V)) :- implodeTree(T,V).
+implodeRoot(r(_,T),V) :- implodeTree(T,V).
 
 implodeTree(v(string(V)),V).
 

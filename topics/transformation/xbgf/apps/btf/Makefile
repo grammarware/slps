@@ -1,19 +1,23 @@
 shared = ../../../../../shared
 tools = ${shared}/tools
 xsd = ${shared}/xsd
-final = btf6.bgf
-bgf = ../bgf
+final = btf1.bgf
 
 build: ${final}
 
-${final}: *.xbgf
+append.xbgf:
+	cd ../bgf; make append.xbgf
+	appendxbgf append.xbgf \
+		../bgf/normalize.xbgf \
+		../bgf/rename.xbgf \
+		rename.xbgf \
+		reroot.xbgf \
+		normalize.xbgf \
+		strip.xbgf
+
+${final}: append.xbgf
 	${tools}/xsd2bgf ${xsd}/btf.xsd btf0.bgf
-	${tools}/xbgf btf0.bgf ${bgf}/normalize.xbgf btf1.bgf
-	${tools}/xbgf btf1.bgf ${bgf}/rename.xbgf btf2.bgf
-	${tools}/xbgf btf2.bgf rename.xbgf btf3.bgf
-	${tools}/xbgf btf3.bgf normalize.xbgf btf4.bgf
-	${tools}/xbgf btf4.bgf strip.xbgf btf5.bgf
-	${tools}/xbgf btf5.bgf reroot.xbgf btf6.bgf
+	${tools}/xbgf btf0.bgf append.xbgf btf1.bgf
 
 rebuild:
 	make clean
@@ -27,3 +31,4 @@ show: build
 clean:
 	rm -f *~
 	rm -f *.bgf
+	rm -f append.xbgf

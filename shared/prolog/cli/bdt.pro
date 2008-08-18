@@ -132,7 +132,7 @@ load_bgf(Uri,G3)
     normalizeG(G2,G3),
     !.
 
-:- 
+main :- 
    current_prolog_flag(argv,Argv),
    append(_,['--'|L1],Argv),
    maplist(load_bgf,L1,Gs),
@@ -141,3 +141,6 @@ load_bgf(Uri,G3)
    maplist(diffG(RC),L4),
    ( RC = 0; true ),
    halt(RC).
+
+:- run.
+
