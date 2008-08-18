@@ -22,7 +22,7 @@ ${finalxsd}:
 
 # factorial.xml
 ${finalxml}:
-	${tools}/xsd2btf ${fl}/xsd/fl.xsd ${fl}/xsd/factorial.xml xml0.btf
+	${tools}/xml2btf ${fl}/xsd/fl.xsd ${fl}/xsd/factorial.xml xml0.btf
 	${tools}/xbtf xml0.btf ${xbgf}/trimXsd.xbgf xml1.btf
 	${tools}/xbtf xml1.btf ${xbgf}/downcase.xbgf xml2.btf
 	${tools}/xbtf xml2.btf ${xbgf}/massageXsd.xbgf xml3.btf

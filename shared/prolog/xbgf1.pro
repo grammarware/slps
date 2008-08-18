@@ -131,6 +131,31 @@ ps2n(Ps1,N)
 
 
 %
+% p([l(designate)], f, n(p))
+%
+% Label a production
+%
+
+designate(P0,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    normalizeG_algebraically(P0,P1),
+    P1 = p(As1,N,X),
+    require(
+       ( member(l(_),As1) ),
+       'Production ~q must be labeled.',
+       [P1]),
+    require(
+      ( P2 = p(As2,N,X),
+        append(Ps1a,[P2|Ps1b],Ps1),
+        \+ member(l(_),As2) 
+      ),
+      'Production ~q (w/o label) not found.',
+      [P1]),
+    append(As1,As2,As3),
+    append(Ps1a,[p(As3,N,X)|Ps1b],Ps2).
+
+
+%
 % p([l(eliminate)], f, n(n))
 %
 % Eliminate a defined, otherwise unused nonterminal
@@ -326,31 +351,6 @@ new(Ps1,N,G1,G2)
     G1 = g(Rs,Ps2),
     append(Ps2,Ps1,Ps3),
     G2 = g(Rs,Ps3).
-
-
-%
-% p([l(label)], f, n(p))
-%
-% Label a production
-%
-
-label(P0,g(Rs,Ps1),g(Rs,Ps2))
- :-
-    normalizeG_algebraically(P0,P1),
-    P1 = p(As1,N,X),
-    require(
-       ( member(l(_),As1) ),
-       'Production ~q must be labeled.',
-       [P1]),
-    require(
-      ( P2 = p(As2,N,X),
-        append(Ps1a,[P2|Ps1b],Ps1),
-        \+ member(l(_),As2) 
-      ),
-      'Production ~q (w/o label) not found.',
-      [P1]),
-    append(As1,As2,As3),
-    append(Ps1a,[p(As3,N,X)|Ps1b],Ps2).
 
 
 %

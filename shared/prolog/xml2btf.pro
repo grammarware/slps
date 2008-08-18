@@ -1,7 +1,6 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% The Languedoc Tree Representation %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Map XML to Prolog-based representation of BGF %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %
 % Static namespace declarations 
@@ -16,7 +15,7 @@ sxmlns(btf,'http://planet-sl.org/btf').
 % Parse a root
 %
 
-rootToBtf(SG,E,n(P,T))
+rootToBtf(SG,E,r(G,n(P,T)))
  :-
     require(
       (
@@ -106,7 +105,7 @@ xToBtf(SG,n(N),NL1,NL2,n(P,T))
     E = element(QN,_,_),
     QN = Tns:N,
     G = g(_,Ps),
-    splitN(Ps,N,[P],_,_),
+    splitN1(Ps,N,P,_,_),
     P = p(_,_,X),
     eToBtf(SG,N,X,E,T),
     !.
@@ -133,7 +132,7 @@ xToBtf(SG,n(N),NL1,NL2,n(P,T))
     xToBtf(SG,X,NL1,NL2,T),
     !.
 
-xToBtf(SG,n(N1),NL,[],T)
+xToBtf(SG,n(N1),NL1,NL2,T)
  :-
     findGlobal(SG,N1,simpleType,_),
     !,
@@ -144,14 +143,15 @@ xToBtf(SG,n(N1),NL,[],T)
     ( 
       % Enumeration type
       ( X1 = ';'(Xs); X1 = s(_,_), Xs = [X1] ),
-      NL = [V],
+      NL1 = [V],
+      NL2 = [],
       X2 = s(V,true),
       member(X2,Xs),
       T = n(P,';'(X2,X2))
     ;
-      % Predefined simple type
-      X1 = n(QN),
-      simpleXsdType(SG,QN,NL,T)
+      % Value type int
+      X1 = v(_),
+      xToBtf(SG,X1,NL1,NL2,T)
     ),
     !.
 

@@ -1,5 +1,5 @@
 <xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:strip>
-    <allSelectors/>
-  </xbgf:strip>
+  <xbgf:reroot>
+    <root>root</root>
+  </xbgf:reroot>
 </xbgf:sequence>

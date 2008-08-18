@@ -2,6 +2,13 @@
 % Map Prolog-based BTF representation to XML representation %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+tToXml(r(G,T),X)
+ :-
+    !,
+    gToXml(G,X1),
+    tToXml(T,X2),
+    e(btf:root,[],[X1,X2],X).
+
 tToXml(true,X2)
  :-
     !,

@@ -8,8 +8,8 @@ build: ${final}
 ${final}: *.xbgf
 	${tools}/xsd2bgf ${xsd}/bgf.xsd bgf0.bgf
 	${tools}/xbgf bgf0.bgf normalize.xbgf bgf1.bgf
-	${tools}/xbgf bgf1.bgf strip.xbgf bgf2.bgf
-	${tools}/xbgf bgf2.bgf rename.xbgf bgf3.bgf
+	${tools}/xbgf bgf1.bgf rename.xbgf bgf2.bgf
+	${tools}/xbgf bgf2.bgf strip.xbgf bgf3.bgf
 
 rebuild:
 	make clean
@@ -23,3 +23,4 @@ show: build
 clean:
 	rm -f *~
 	rm -f *.bgf
+	rm -f *.btf

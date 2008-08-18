@@ -54,6 +54,17 @@ define(_,T1,T1)
 
 
 %
+% p([l(designate)], f, n(p))
+%
+% Label a production
+%
+
+designate(_,T1,T1)
+ :-
+    !.
+
+
+%
 % p([l(eliminate)], f, n(n))
 %
 % Eliminate a defined, otherwise unused nonterminal
@@ -116,17 +127,6 @@ inline(_,T1,T1)
 %
 
 introduce(_,T1,T1)
- :-
-    !.
-
-
-%
-% p([l(label)], f, n(p))
-%
-% Label a production
-%
-
-label(_,T1,T1)
  :-
     !.
 

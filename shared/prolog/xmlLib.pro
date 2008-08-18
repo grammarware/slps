@@ -163,6 +163,18 @@ qname(QName,Pfx,N)
     name(N,Str2),
     !.
 
+qname2pfx(QName,Pfx)
+ :-
+    qname(QName,Pfx,_).
+
+qname(X) 
+ :-
+    qname(X,_,_).
+
 uqname(X) 
  :-
-    \+ qname(X,_,_).
+    \+ qname(X).
+
+delpfx(Pfx,QN,UQN) :- qname(QN,Pfx,UQN), !.
+delpfx(_,N,N).
+

@@ -7,6 +7,7 @@
   <xbgf:unchain>add</xbgf:unchain>
   <xbgf:unchain>case</xbgf:unchain>
   <xbgf:unchain>define</xbgf:unchain>
+  <xbgf:unchain>designate</xbgf:unchain>
   <xbgf:unchain>eliminate</xbgf:unchain>
   <xbgf:unchain>extract</xbgf:unchain>
   <xbgf:unchain>fold</xbgf:unchain>
@@ -14,7 +15,6 @@
   <xbgf:unchain>id</xbgf:unchain>
   <xbgf:unchain>inline</xbgf:unchain>
   <xbgf:unchain>introduce</xbgf:unchain>
-  <xbgf:unchain>label</xbgf:unchain>
   <xbgf:unchain>lassoc</xbgf:unchain>
   <xbgf:unchain>modulo</xbgf:unchain>
   <xbgf:unchain>permute</xbgf:unchain>
@@ -37,7 +37,7 @@
   <xbgf:vertical>
     <label>case</label>
   </xbgf:vertical>
-  <xbgf:label>
+  <xbgf:designate>
     <bgf:production>
       <label>caseFirstUp</label>
       <nonterminal>f</nonterminal>
@@ -62,8 +62,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:label>
-  <xbgf:label>
+  </xbgf:designate>
+  <xbgf:designate>
     <bgf:production>
       <label>caseFirstDown</label>
       <nonterminal>f</nonterminal>
@@ -88,8 +88,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:label>
-  <xbgf:label>
+  </xbgf:designate>
+  <xbgf:designate>
     <bgf:production>
       <label>caseAllUp</label>
       <nonterminal>f</nonterminal>
@@ -114,8 +114,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:label>
-  <xbgf:label>
+  </xbgf:designate>
+  <xbgf:designate>
     <bgf:production>
       <label>caseAllDown</label>
       <nonterminal>f</nonterminal>
@@ -140,7 +140,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:label>
+  </xbgf:designate>
   <xbgf:rename>
     <selector>
       <in>rename</in>

@@ -11,13 +11,6 @@ sxmlns(xbgf,'http://planet-sl.org/xbgf').
 % Convert XML to predicates
 %
 
-xml2xbgf(T,define(Ps2))
- :-
-    self(name(xbgf:define),T),
-    !,
-    children(name(bgf:production),T,Ps1),
-    maplist(xmlToP,Ps1,Ps2).
-
 xml2xbgf(T,Case)
  :-
     self(name(xbgf:case),T),
@@ -37,6 +30,20 @@ xml2xbgf(T,Case)
       UpDown = 'Down'
     ),
     concat_atom([case,Q,UpDown],Case).
+
+xml2xbgf(T,define(Ps2))
+ :-
+    self(name(xbgf:define),T),
+    !,
+    children(name(bgf:production),T,Ps1),
+    maplist(xmlToP,Ps1,Ps2).
+
+xml2xbgf(T,designate(P2))
+ :-
+    self(name(xbgf:designate),T),
+    !,
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
 
 xml2xbgf(T,extract(P2))
  :-
@@ -69,13 +76,6 @@ xml2xbgf(T,introduce(Ps2))
     !,
     children(name(bgf:production),T,Ps1),
     maplist(xmlToP,Ps1,Ps2).
-
-xml2xbgf(T,label(P2))
- :-
-    self(name(xbgf:label),T),
-    !,
-    child(name(bgf:production),T,P1),
-    xmlToP(P1,P2).
 
 xml2xbgf(T,lassoc(P2))
  :-

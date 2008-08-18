@@ -572,3 +572,51 @@ lookupGlobal(S,K,N,G)
     member(G,Gs),
     attribute(name,G,N),
     !.
+
+
+%
+% Compute transitive closure of schema
+%
+
+completeXsd((S1,G1,SGs),G2)
+ :-
+    usedNs(G1,Uses1),
+    filter(qname,Uses1,Uses2),   
+    maplist(qname2pfx,Uses2,Pfxs1),
+    list_to_set(Pfxs1,Pfxs2),
+    maplist(dxmlns(S1),Pfxs2,Nss1),
+    zip(Pfxs2,Nss1,Imports),
+    accum(uqImportXsd(SGs),Imports,G1,G2).
+
+uqImportXsd(SGs1,(Pfx,Ns),G1,G4)
+ :-
+    member(SG1,SGs1),
+    SG1 = (S1,_,_),
+    attribute(targetNamespace,S1,Ns),
+    transform(delpfx_rules(Pfx),G1,G2),
+    definedNs(G2,Defined1),
+    completeXsd(SG1,G3),
+    definedNs(G3,Defined2),
+    intersection(Defined1,Defined2,Defined3),
+    require(
+      ( Defined3 == [] ),
+      'XSD import with clashing unqualified names ~q.',
+      [Defined3]),
+    G2 = g(Rs1,Ps1),
+    G3 = g(Rs2,Ps2),
+    union(Rs1,Rs2,Rs3),
+    append(Ps1,Ps2,Ps3),
+    G4 = g(Rs3,Ps3),
+    !.
+
+delpfx_rules(Pfx,g(Rs1,Ps),g(Rs2,Ps))
+ :-
+    maplist(delpfx(Pfx),Rs1,Rs2).
+
+delpfx_rules(Pfx,p(As,N1,X),p(As,N2,X))
+ :-
+    delpfx(Pfx,N1,N2).
+
+delpfx_rules(Pfx,n(N1),n(N2))
+ :-
+    delpfx(Pfx,N1,N2).

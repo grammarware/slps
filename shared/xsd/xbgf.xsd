@@ -26,6 +26,7 @@
       <xsd:element ref="xbgf:add"/>
       <xsd:element ref="xbgf:case"/>
       <xsd:element ref="xbgf:define"/>
+      <xsd:element ref="xbgf:designate"/>
       <xsd:element ref="xbgf:eliminate"/>
       <xsd:element ref="xbgf:extract"/>
       <xsd:element ref="xbgf:fold"/>
@@ -33,7 +34,6 @@
       <xsd:element ref="xbgf:id"/>
       <xsd:element ref="xbgf:inline"/>
       <xsd:element ref="xbgf:introduce"/>
-      <xsd:element ref="xbgf:label"/>
       <xsd:element ref="xbgf:lassoc"/>
       <xsd:element ref="xbgf:modulo"/>
       <xsd:element ref="xbgf:permute"/>
@@ -125,6 +125,19 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="designate">
+    <xsd:annotation>
+      <xsd:documentation>
+        Add a label to a production.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="eliminate" type="bgf:nonterminal">
     <xsd:annotation>
       <xsd:documentation>
@@ -212,19 +225,6 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="label">
-    <xsd:annotation>
-      <xsd:documentation>
-        Add a label to a production.
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:choice>
-        <xsd:element ref="bgf:production"/>
-      </xsd:choice>
-    </xsd:complexType>
-  </xsd:element>
-
   <xsd:element name="lassoc">
     <xsd:annotation>
       <xsd:documentation>
@@ -293,7 +293,7 @@
         Add a different label to a production.
         The new label must be fresh for the transformation to succeed.
         Also, the production must not be unlabeled.
-        Use the label transformation to add a label to an unlabeled production.
+        Use the designate transformation to add a label to an unlabeled production.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>

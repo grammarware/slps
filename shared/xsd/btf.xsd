@@ -12,6 +12,15 @@
   
   <xsd:import namespace="http://planet-sl.org/bgf" schemaLocation="bgf.xsd"/>
 
+  <xsd:element name="root">
+    <xsd:complexType>
+      <xsd:sequence>
+	<xsd:element ref="bgf:grammar"/>
+	<xsd:element ref="btf:tree"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="tree">
     <xsd:complexType>
       <xsd:choice>

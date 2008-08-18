@@ -4,8 +4,9 @@ main
  :-
     current_prolog_flag(argv,Argv),
     append(_,['--',XsdFile,BgfFile],Argv),
-    loadXsd(XsdFile,(_,G,_)),
-    gToXml(G,Xml),
+    loadXsd(XsdFile,G1),
+    completeXsd(G1,G2),
+    gToXml(G2,Xml),
     saveXml(BgfFile,Xml),
     halt.
 

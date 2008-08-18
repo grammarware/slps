@@ -2,7 +2,16 @@
 % Map XML-based BTF representation to Prolog representation %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-xmlToBtf(X1,T)
+xmlToRoot(X1,r(G2,T2))
+ :-
+    self(name(btf:root),X1),
+    child(name(bgf:grammar),X1,G1),
+    child(name(btf:tree),X1,T1),
+    xmlToG(G1,G2),
+    xmlToTree(T1,T2),
+    !.
+
+xmlToTree(X1,T)
  :-
     self(name(btf:tree),X1),
     child(element,X1,X2),
@@ -26,7 +35,7 @@ xmlToT(X1,n(P2,T2))
     child(name(bgf:production),X1,P1),
     child(name(btf:tree),X1,T1),
     xmlToP(P1,P2),
-    xmlToBtf(T1,T2),
+    xmlToTree(T1,T2),
     !.
 
 xmlToT(X1,v(string(V)))
@@ -59,35 +68,35 @@ xmlToT(X1,s(S,T))
     child(name(selector),X1,X2),
     child(name(btf:tree),X1,X3),
     content(X2,S),
-    xmlToBtf(X3,T),
+    xmlToTree(X3,T),
     !.
 
 xmlToT(X1,'*'(Ts))
  :-
     self(name(star),X1),
     children(name(btf:tree),X1,Xs),
-    maplist(xmlToBtf,Xs,Ts),
+    maplist(xmlToTree,Xs,Ts),
     !.
 
 xmlToT(X1,'+'(Ts))
  :-
     self(name(plus),X1),
     children(name(btf:tree),X1,Xs),
-    maplist(xmlToBtf,Xs,Ts),
+    maplist(xmlToTree,Xs,Ts),
     !.
 
 xmlToT(X1,'?'(Ts))
  :-
     self(name(optional),X1),
     children(name(btf:tree),X1,Xs),
-    maplist(xmlToBtf,Xs,Ts),
+    maplist(xmlToTree,Xs,Ts),
     !.
 
 xmlToT(X1,','(Ts))
  :-
     self(name(sequence),X1),
     children(name(btf:tree),X1,Xs),
-    maplist(xmlToBtf,Xs,Ts),
+    maplist(xmlToTree,Xs,Ts),
     !.
 
 xmlToT(X1,';'(X,T))
@@ -96,7 +105,7 @@ xmlToT(X1,';'(X,T))
     child(name(bgf:expression),X1,X2),
     child(name(btf:tree),X1,X3),
     xmlToExpression(X2,X),
-    xmlToBtf(X3,T),
+    xmlToTree(X3,T),
     !.
 
 xmlToT(Q,_)

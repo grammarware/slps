@@ -8,7 +8,6 @@
 :- ensure_loaded('readBgf.pro').
 :- ensure_loaded('writeBgf.pro').
 
-:- ensure_loaded('btf.pro').
 :- ensure_loaded('readBtf.pro').
 :- ensure_loaded('writeBtf.pro').
 :- ensure_loaded('implodeBtf.pro').
@@ -18,3 +17,4 @@
 :- ensure_loaded('readXbgf.pro').
 
 :- ensure_loaded('xsd2bgf.pro').
+:- ensure_loaded('xml2btf.pro').

@@ -7,37 +7,4 @@
       <to>f</to>
     </nonterminal>
   </xbgf:rename>
-  <xbgf:rename>
-    <nonterminal>
-      <from>bgf:production</from>
-      <to>p</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:rename>
-    <nonterminal>
-      <from>bgf:label</from>
-      <to>l</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:rename>
-    <nonterminal>
-      <from>bgf:nonterminal</from>
-      <to>n</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:rename>
-    <nonterminal>
-      <from>bgf:selector</from>
-      <to>s</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:rename>
-    <nonterminal>
-      <from>bgf:terminal</from>
-      <to>t</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:reroot>
-    <root>f</root>
-  </xbgf:reroot>
 </xbgf:sequence>
