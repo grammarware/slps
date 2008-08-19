@@ -31,7 +31,7 @@ tblcat:
 	@cat ${sdfl}/basic/StrCon.sdf >> Main.def
 	@cat ${sdfl}/basic/IdentifierCon.sdf >> Main.def
 	@cat ${sdfl}/basic/Comments.sdf >> Main.def
-	@cat Main.sdf Tokens.sdf AsFixTokens AsFixToBGF>> Main.def
+	@cat Main.sdf Tokens.sdf AsFixTokens.sdf AsFixToBGF.sdf >> Main.def
 	sdf2table -m Main Main.def
 
 test:

@@ -45,6 +45,10 @@ trafoProd(prod([lit(&Z1)],cf(sort(&Z0)),&As1))
 	</bgf:expression>
 </bgf:production>
 
+[excessive-opt]
+trafoProd(prod([cf(&S1)],cf(opt(&S1)),&As1))
+=
+
 [map-cf]
 symbols2expr([cf(&S1)])
 =
@@ -56,7 +60,16 @@ symbols2expr([iter(&S1)])
 <bgf:expression>
 	<plus>
 		symbols2expr([&S1])
-          </plus>
+         </plus>
+</bgf:expression>
+
+[map-star]
+symbols2expr([iter-star(&S1)])
+=
+<bgf:expression>
+	<star>
+		symbols2expr([&S1])
+	</star>
 </bgf:expression>
 
 [map-optional]
