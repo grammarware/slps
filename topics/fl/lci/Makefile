@@ -1,4 +1,4 @@
-schemata = ../../../shared/xsd
+validator = ../../../shared/tools/checkxml
 
 build:
 
@@ -7,9 +7,9 @@ test:
 	@rm -f architecture*.dot
 
 check:
-	xmllint --noout --schema ${schemata}/lcf.xsd fl.lcf
-	ls xbgf/*.xbgf | xargs xmllint --noout --schema ${schemata}/xbgf.xsd
-	ls bgf/*.bgf | xargs xmllint --noout --schema ${schemata}/bgf.xsd
+	${validator} lcf fl.lcf
+	ls -1 xbgf/*.xbgf | xargs -1 ${validator} xbgf
+	ls -1  bgf/*.bgf  | xargs -1 ${validator} bgf
 
 clean:
 	rm -f *~
