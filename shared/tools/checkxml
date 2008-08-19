@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 2 ]; then
+    echo "Usage: checkxml <format> <xml-input>"
+    exit 1
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+    exit 1
+elif [ ! -r ${SLPS}/shared/xsd/$1.xsd ]; then
+    echo "Oops: schema for $1 not found or not readable."
+    exit 1
+elif [ "$1" == "ldf" ]; then
+    java -jar ${SLPS}/download/msv/msv.jar ${SLPS}/shared/xsd/$1.xsd $2
+else
+    xmllint --noout --schema ${SLPS}/shared/xsd/$1.xsd $2
+fi
