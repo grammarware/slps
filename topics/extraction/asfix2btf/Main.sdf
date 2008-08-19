@@ -4,6 +4,7 @@ module Main
 	languages/asfix/syntax/Parsetree
 	languages/xml/syntax/XML
 	basic/NatCon
+	AsFixToBGF
 	AsFixTokens
 	Tokens
 
@@ -20,11 +21,6 @@ module Main
   hiddens
 
     context-free syntax
-	accuTrees(ParseTree,Tree*) -> Tree* {traversal(accu,top-down,break)}
-	accuTrees(Args,Tree*) -> Tree* {traversal(accu,top-down,break)}
-	accuTrees(Tree*,Tree*) -> Tree* {traversal(accu,top-down,break)}
-	trafoTrees(Tree*) -> Content*
-	trafoTree(Tree) -> Element
 	"mapTrees" "(" {Tree ","}* ")" -> Content*
 	"mapTree" "(" Tree ")" -> Element
 %%	"mapTree2Tree" "(" Tree ")" -> Element
@@ -62,3 +58,4 @@ module Main
 	"&Ps" [0-9]+ -> Productions
 	"&I" [0-9]+ -> NatCon
 	"&Ics" [0-9]+ -> {NatCon ","}+
+	"&B" [0-9]+ -> Args

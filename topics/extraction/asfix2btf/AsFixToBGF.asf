@@ -1,0 +1,133 @@
+equations
+
+[map-asfix-to-bgf]
+asfix2bgf(&T1)
+=
+<bgf:grammar>
+	trafoProds(accuProds(&T1,))
+</bgf:grammar>
+
+        [traversal] accuProds(appl(&P1,[&Tcs1]),&P*2) = accuProds(&Tcs1,&P*2 &P1)
+[default-traversal] accuProds(&T1,&Tcs1,&P*2) = accuProds(&T1,accuProds(&Tcs1,&P*2))
+
+[recursion]       trafoProds(&P1 &P*2) = trafoProd(&P1)trafoProds(&P*2)
+[recursion-final] trafoProds() = 
+
+[prod-to-null] trafoProd(prod([],&S0,&As1)) =
+[prod-to-null] trafoProd(list(&S1)) =
+[prod-to-null] trafoProd(prod([&Scs1],lex(&S1),&As1)) = 
+[prod-to-null] trafoProd(prod([&Scs1],lit(&Z1),&As1)) = 
+
+[kill-layout-before] trafoProd(prod([cf(opt(layout)),&Scs1],&S0,&As1)) = trafoProd(prod([&Scs1],&S0,&As1))
+[kill-layout-before] trafoProd(prod([cf(layout),&Scs1],&S0,&As1)) = trafoProd(prod([&Scs1],&S0,&As1))
+[kill-layout-before] trafoProd(prod([lex(&S1),&Scs1],&S0,&As1)) = trafoProd(prod([&Scs1],&S0,&As1))
+[kill-layout-before] trafoProd(prod([cf(layout),&Scs1],&S0,&As1)) = trafoProd(prod([&Scs1],&S0,&As1))
+
+[prod-start] trafoProd(prod([cf(sort(&Z1)),&Scs1],sort("<START>"),&As1)) = <root>strcon2chardata(&Z1)</root>
+
+[a]
+trafoProd(prod(&Ss1,cf(sort(&Z0)),&As1))
+=
+<bgf:production>
+	derivelabel(&As1)
+	<nonterminal>strcon2chardata(&Z0)</nonterminal>
+	symbols2expr(&Ss1)
+</bgf:production>
+
+[lit-prod-labelled]
+trafoProd(prod([lit(&Z1)],cf(sort(&Z0)),&As1))
+=
+<bgf:production>
+	derivelabel(&As1)
+	<nonterminal>strcon2chardata(&Z0)</nonterminal>
+	<bgf:expression>
+		<terminal>strcon2chardata(&Z1)</terminal>
+	</bgf:expression>
+</bgf:production>
+
+[map-cf]
+symbols2expr([cf(&S1)])
+=
+symbols2expr([&S1])
+
+[map-plus]
+symbols2expr([iter(&S1)])
+=
+<bgf:expression>
+	<plus>
+		symbols2expr([&S1])
+          </plus>
+</bgf:expression>
+
+[map-optional]
+symbols2expr([opt(&S1)])
+=
+<bgf:expression>
+	<optional>symbols2expr([&S1])</optional>
+</bgf:expression>
+
+[map-literal-to-terminal]
+symbols2expr([lit(&Z1)])
+=
+<bgf:expression>
+	<terminal>strcon2chardata(&Z1)</terminal>
+</bgf:expression>
+
+[map-sort-to-nonterminal]
+symbols2expr([sort(&Z1)])
+=
+<bgf:expression>
+	<nonterminal>strcon2chardata(&Z1)</nonterminal>
+</bgf:expression>
+
+[map-layout-to-nothing]
+symbols2expr([cf(opt(layout)),&Scs2])
+=
+symbols2expr([&Scs2])
+
+[default-map-one]
+symbols2expr([&S1])
+=
+<bgf:expression>
+	<unknown>
+		?
+	</unknown>
+</bgf:expression>
+
+[default-map]
+symbols2expr([&S1,&Scs2])
+=
+<bgf:expression>
+	<sequence>
+		flattenexprs([&S1,&Scs2])
+	</sequence>
+</bgf:expression>
+
+[map-flattened-no-layout]
+flattenexprs([cf(opt(layout)),&Scs2])
+=
+flattenexprs([&Scs2])
+
+[default-map-flattened]
+flattenexprs([&S1,&Scs2])
+=
+symbols2expr([&S1])flattenexprs([&Scs2])
+
+[map-flattened-final]
+flattenexprs([])
+=
+
+[labeling-no-label]
+derivelabel(no-attrs) = 
+
+[labeling-only-label]
+derivelabel(attrs([term(cons(&L1))])) = <label>idcon2chardata(&L1)</label>
+
+[labeling-first-label]
+derivelabel(attrs([term(cons(&L1)),&A*2])) = <label>idcon2chardata(&L1)</label>
+
+[default-labeling-not-first-label]
+derivelabel(attrs([&A1,&A*2])) = derivelabel(attrs([&A*2]))
+
+[default-labeling-last-label]
+derivelabel(attrs([&A1])) = 

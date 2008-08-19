@@ -1,19 +1,13 @@
-validator = ../../../download/msv/msv.jar
 metaenv = `which asfe | xargs dirname`/..
 sdfl = ${metaenv}/share/sdf-library/library
 asfl = ${metaenv}/share/asf-library/library
-schemata = ../../../shared/xsd
 
 all: build test
 
 build: Main.tbl Main.eqs
 
 Main.eqs: *.sdf *.asf
-	eqs-dump -m Main -o 1.eqs
-	eqs-dump -m Tokens -o 2.eqs
-	eqs-dump -m AsFixTokens -o 3.eqs
-	concat-asf -o Main.eqs 1.eqs 2.eqs 3.eqs
-	rm -f ?.eqs
+	eqs-dump -m Main -o Main.eqs
 
 Main.tbl: *.sdf
 	cp ../sdf2bgf/Tokens.* .
@@ -37,7 +31,7 @@ tblcat:
 	@cat ${sdfl}/basic/StrCon.sdf >> Main.def
 	@cat ${sdfl}/basic/IdentifierCon.sdf >> Main.def
 	@cat ${sdfl}/basic/Comments.sdf >> Main.def
-	@cat Main.sdf Tokens.sdf >> Main.def
+	@cat Main.sdf Tokens.sdf AsFixTokens AsFixToBGF>> Main.def
 	sdf2table -m Main Main.def
 
 test:
@@ -47,10 +41,10 @@ test:
 	@echo "main(" > fac.trm
 	@cat ../../fl/shared/factorial.txt | python ../../fl/asfsdf/pre.py | sglr -p ../../fl/asfsdf/FL.tbl -t >> fac.trm
 	@echo ")" >> fac.trm
-	cat asfix.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT | python post.py > small.btf
-	cat fac.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT | python post.py > myfactorial.btf
+	cat asfix.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > small.btf
+	cat fac.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > myfactorial.btf
 	cp ../xml2btf/tests/factorial.btf .
-	java -jar ${validator} -warning ${schemata}/btf.xsd *.btf
+	ls -1 *.btf | xargs -n1 checkxml btf
  
 clean:
 	rm -f reduct.out

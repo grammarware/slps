@@ -1,9 +1,12 @@
 equations
 
-[map-asfix-to-btf]  
+[map-asfix-to-btf]
 main(parsetree(&T1,&I1))
 =
-mapTree(&T1)
+<btf:root xmlns:btf="http://planet-sl.org/btf" xmlns:bgf="http://planet-sl.org/bgf">
+	asfix2bgf(&T1)
+	mapTree(&T1)
+</btf:root>
 
 [kill-layout-before]
 mapTree(appl(prod([cf(opt(layout)),&Scs1],&S0,&As1),[&T1,&Tcs1]))

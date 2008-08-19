@@ -1,7 +1,5 @@
 module AsFixTokens
 
-%% mapTree(appl(prod([lex(iter(char-class([range(97,122)])))],lex(sort("NAME")),no-attrs),[appl(list(lex(iter(char-class([range(97,122)])))),[102,117,110])]))
-%% [97,122] -> a,z
 %% [102,117,110] -> fun
 
 imports 
@@ -13,38 +11,23 @@ imports
 exports
 
 	sorts
-		CharNumList CharValList StrCon CharData
-	context-free start-symbols
-		CharNumList CharValList
+		Args CharData
 	context-free syntax
-	"[" {NatCon ","}+ "]" -> CharNumList
-	"[" {StrChar ","}+ "]" -> CharValList
-	"symbols2chardata" "(" CharNumList ")" -> CharValList
-	"mapsymbol" "(" NatCon ")" -> StrChar
-	array2chardata(CharValList) -> StrCon
-	array2chars(CharValList) -> CharData
-	list2chardata(CharNumList) -> CharData
-	tree2chardata(Args) -> CharData
+		tree2chardata(Args) -> CharData
 
 hiddens
-%%	imports
-		%%basic/Whitespace
+	context-free syntax
+		mapsymbol(NatCon) -> StrChar
 	variables
-		"&N" [0-9]+ -> NatCon		%% char number
-		"&N*" [0-9]+ -> {NatCon ","}+	%% char number
-		"&C" [0-9]+ -> StrChar
-		"&C*" [0-9]+ -> {StrChar ","}+
-		"&T" [0-9]+ -> Tree
+		"&N" [0-9]+ -> NatCon
 		"&T*" [0-9]+ -> {Tree ","}+
 	lexical variables
-		"&StrChr" [0-9]+ -> StrChar
-		"&StrChr+" [0-9]+ -> StrChar+
 		"&Chr" [0-9]* -> ~[\0-\31\n\t\"\\\<\&]
 		"&Char" [0-9]* -> ~[\<\&]
 		"&Char*" [0-9]* -> ~[\<\&]*
 
-		%% "&S" [0-9]+ -> Symbol
-
 %% Python code to generate the boring part of the ASF:
 %% for x in range(97,123):
-%%  print '['+chr(x)+']','mapsymbol('+`x`+')','=',chr(x)
+%%  print '[alpha-'+chr(x)+']','mapsymbol('+`x`+')','=',chr(x)
+%% for x in range(48,58):
+%%  print '[digit-'+chr(x)+']','mapsymbol('+`x`+')','=',chr(x)
