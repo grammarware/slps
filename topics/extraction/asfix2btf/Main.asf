@@ -79,7 +79,7 @@ mapTree(appl(prod([lit(&Z1), &Scs2],&S0,&As1),[&T1, &Tcs2]))
 			symbol2content(&S0)
 			<bgf:expression>
 				<sequence>
-					<bgf:expression><terminal>strcon2chardata(&Z1)</terminal></bgf:expression>
+					<bgf:expression><value>string</value></bgf:expression>
 					mapExprs([&Scs2])
 				</sequence>
 			</bgf:expression>
@@ -184,7 +184,7 @@ mapTree(appl(prod([lit(&Z1)],cf(sort(&Z0)),&As1),[&T1]))
 		<bgf:production>
 			<nonterminal>strcon2chardata(&Z0)</nonterminal>
 			<bgf:expression>
-				<terminal>strcon2chardata(&Z1)</terminal>
+				<value>string</value>
 			</bgf:expression>
 		</bgf:production>
 		<btf:tree>
@@ -218,9 +218,7 @@ mapTree(appl(prod([lex(sort(&Z0))],cf(sort(&Z0)),&As1),[&T1]))
 		<bgf:production>
 			<nonterminal>strcon2chardata(&Z0)</nonterminal>
 			<bgf:expression>
-				<terminal>
-					mapTree(&T1)
-				</terminal>
+				<value>string</value>
 			</bgf:expression>
 		</bgf:production>
 		<btf:tree>
