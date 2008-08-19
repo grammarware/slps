@@ -1,4 +1,4 @@
-source = ../../fl/prolog/Parser.pro
+source = ../../fl/prolog1/Parser.pro
 target = tests/fl
 
 build:

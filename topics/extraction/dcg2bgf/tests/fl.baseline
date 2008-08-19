@@ -1,7 +1,7 @@
 Loading XML file 'tests/fl.bgf'.
 g( [], [
   p([], program, +n(function)),
-  p([], function, ','([n(name), +n(name), t(=), n(expr), +n(eoln)])),
+  p([], function, ','([n(name), +n(name), t(=), n(expr), +n(newline)])),
   p([l(binary)], expr, ','([n(atom), *(','([n(ops), n(atom)]))])),
   p([l(apply)], expr, ','([n(name), +n(atom)])),
   p([l(ifThenElse)], expr, ','([t(if), n(expr), t(then), n(expr), t(else), n(expr)])),

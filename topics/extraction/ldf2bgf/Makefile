@@ -6,6 +6,8 @@ all:
 	make clean
 	make test
 
+build:
+
 test:
 	find ../../.. -name "*.ldf" | xargs -n1 ${ldf2bgf}
 	ls -1 *.bgf | xargs java -jar ${validator} ${bgfxsd}

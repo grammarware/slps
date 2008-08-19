@@ -4,7 +4,9 @@ sdfl = ${metaenv}/share/sdf-library/library
 asfl = ${metaenv}/share/asf-library/library
 schemata = ../../../shared/xsd
 
-all: Main.tbl Main.eqs
+all: build test
+
+build: Main.tbl Main.eqs
 
 Main.eqs: *.sdf *.asf
 	eqs-dump -m Main -o 1.eqs

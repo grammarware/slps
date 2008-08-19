@@ -6,6 +6,8 @@ outputhtm = tests/xbgf.html
 templfd = tests/ldf.temp
 validator = ../../../download/msv/msv.jar
 
+build:
+
 all: extract
 	sh ../../../shared/tools/ldf2html ${outputldf} ${outputhtm}
 	sh ../../../shared/tools/ldf2pdf ${outputldf} ${outputpdf} 2> /dev/null
