@@ -4,13 +4,13 @@
     xmlns:ldf="http://planet-sl.org/ldf"
     xmlns:ldx="http://planet-sl.org/ldx"
     xmlns:xhtml="http://www.w3.org/1999/xhtml">
- 
-  <xsl:output
+
+  <!--xsl:output
       method="html"
       encoding="UTF-8"
       doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
       doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
-    />
+    /-->
   
   <xsl:strip-space elements="sample"/>
   <xsl:preserve-space elements="runnable"/>
