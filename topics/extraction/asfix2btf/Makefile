@@ -2,8 +2,6 @@ metaenv = `which asfe | xargs dirname`/..
 sdfl = ${metaenv}/share/sdf-library/library
 asfl = ${metaenv}/share/asf-library/library
 
-all: build test
-
 build: Main.tbl Main.eqs
 
 Main.eqs: *.sdf *.asf
@@ -24,6 +22,7 @@ tblpack:
 tblcat:
 	@echo "definition" > Main.def
 	@cat ${sdfl}/languages/aterm/syntax/*.sdf >> Main.def
+	@cat ${sdfl}/languages/asfix/syntax/*.sdf >> Main.def
 	@cat ${sdfl}/languages/sdf2/syntax/*.sdf >> Main.def
 	@cat ${sdfl}/languages/xml/syntax/XML.sdf >> Main.def
 	@cat ${sdfl}/basic/Whitespace.sdf >> Main.def
