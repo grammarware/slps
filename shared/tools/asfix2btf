@@ -7,19 +7,19 @@ cd ../..
 SLPS=${PWD}
 cd ${LOCAL1}
 
-if [ $# -ne 2 ]; then
-    echo "Usage: asfix2btf <AsFix-input> <BTF-output>"
+if [ $# -ne 3 ]; then
+    echo "Usage: asfix2btf <ignored> <AsFix-input> <BTF-output>"
     exit 1
-elif [ ! -r $1 ]; then
-    echo "Oops: $1 not found or not readable."
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
     exit 1
 else
     # Build extractor if needed
     cd ${SLPS}/topics/extraction/asfix2btf
     make build
     cd ${LOCAL1}
-    cat $1 | python ${SLPS}/topics/fl/asfsdf/pre.py | sglr -p ${SLPS}/topics/fl/asfsdf/FL.tbl -t > tmp.trm
-    (echo "main("; cat tmp.trm; echo ")" ) | sglr -p ${SLPS}/topics/extraction/asfix2btf//Main.tbl | asfe -e ${SLPS}/topics/extraction/asfix2btf//Main.eqs | unparsePT > $2
+    cat $2 | python ${SLPS}/topics/fl/asfsdf/pre.py | sglr -p ${SLPS}/topics/fl/asfsdf/FL.tbl -t > tmp.trm
+    (echo "main("; cat tmp.trm; echo ")" ) | sglr -p ${SLPS}/topics/extraction/asfix2btf//Main.tbl | asfe -e ${SLPS}/topics/extraction/asfix2btf//Main.eqs | unparsePT > $3
     rm -f tmp.trm
 fi
 
