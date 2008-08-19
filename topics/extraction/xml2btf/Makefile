@@ -5,7 +5,7 @@ bgf = ../../../shared/xsd/bgf.xsd
 xbgf = ../../../shared/xsd/xbgf.xsd
 btf = ../../../shared/xsd/btf.xsd
 apps = ../../transformation/xbgf/apps
-validator = ../../../download/msv/msv.jar
+validator = ../../../shared/tools/checkxml
 xml2btf = ../../../shared/tools/xml2btf
 
 build:
@@ -17,7 +17,7 @@ test:
 	make check
 
 check:
-	ls tests/*.btf | xargs java -jar ${validator} ${btf}
+	ls -1 tests/*.btf | xargs -n1 ${validator} btf
 
 clean:
 	make clean-tests

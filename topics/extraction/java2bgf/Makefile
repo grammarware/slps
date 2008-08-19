@@ -8,6 +8,7 @@ build:
 test:
 	make clean-tests
 	../../../shared/tools/java2bgf ${basedir} ${package} ${target}.bgf
+	../../../shared/tools/checkxml bgf ${target}.bgf
 	../../../shared/tools/showbgf ${target}.bgf > ${target}.out
 	diff ${target}.out ${target}.baseline
 

@@ -6,6 +6,7 @@ build:
 test:
 	make clean-tests
 	../../../shared/tools/dcg2bgf ${source} ${target}.bgf
+	../../../shared/tools/checkxml bgf ${target}.bgf
 	../../../shared/tools/showbgf ${target}.bgf > ${target}.out
 	diff ${target}.out ${target}.baseline
 

@@ -1,7 +1,6 @@
 metaenv = `which asfe | xargs dirname`/..
 sdfl = ${metaenv}/share/sdf-library/library
 asfl = ${metaenv}/share/asf-library/library
-schemata = ../../../shared/xsd
 flsdf = ../../fl/asfsdf/syntax/FL.sdf
 
 all: build test
@@ -44,7 +43,7 @@ test:
 	@cat ${flsdf} >> FL.trm
 	@echo ")" >>FL.trm
 	cat FL.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > fl.bgf
-	xmllint --noout --schema ${schemata}/bgf.xsd fl.bgf
+	../../../shared/tools/checkxml bgf fl.bgf
  
 clean:
 	rm -f reduct.out

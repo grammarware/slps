@@ -1,7 +1,3 @@
-ldf2bgf = ../../../shared/tools/ldf2bgf
-validator = ../../../download/msv/msv.jar
-bgfxsd = ../../../shared/xsd/bgf.xsd
-
 all:
 	make clean
 	make test
@@ -9,8 +5,8 @@ all:
 build:
 
 test:
-	find ../../.. -name "*.ldf" | xargs -n1 ${ldf2bgf}
-	ls -1 *.bgf | xargs java -jar ${validator} ${bgfxsd}
+	find ../../.. -name "*.ldf" | xargs -n1 ../../../shared/tools/ldf2bgf
+	ls -1 *.bgf | xargs -n1 ../../../shared/tools/checkxml bgf
 
 clean:
 	rm -f *.bgf

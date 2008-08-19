@@ -1,22 +1,28 @@
 fl = ../../fl/xsd/fl.xsd
 bgf = ../../../shared/xsd/bgf.xsd
 xbgf = ../../../shared/xsd/xbgf.xsd
+xsd2bgf = ../../../shared/tools/xsd2bgf
+showbgf = ../../../shared/tools/showbgf
+validate = ../../../shared/tools/checkxml
 
 build:
 
 test:
 	make clean-tests
 # Test fl sample
-	../../../shared/tools/xsd2bgf ${fl} tests/fl.bgf
-	../../../shared/tools/showbgf tests/fl.bgf > tests/fl.out
+	${xsd2bgf} ${fl} tests/fl.bgf
+	${validate} bgf tests/fl.bgf
+	${showbgf} tests/fl.bgf > tests/fl.out
 	diff tests/fl.out tests/fl.baseline
 # Test bgf
-	../../../shared/tools/xsd2bgf ${bgf} tests/bgf.bgf
-	../../../shared/tools/showbgf tests/bgf.bgf > tests/bgf.out
+	${xsd2bgf} ${bgf} tests/bgf.bgf
+	${validate} bgf tests/bgf.bgf
+	${showbgf} tests/bgf.bgf > tests/bgf.out
 	diff tests/bgf.out tests/bgf.baseline
 # Test xbgf
-	../../../shared/tools/xsd2bgf ${xbgf} tests/xbgf.bgf
-	../../../shared/tools/showbgf tests/xbgf.bgf > tests/xbgf.out
+	${xsd2bgf} ${xbgf} tests/xbgf.bgf
+	${validate} bgf tests/xbgf.bgf
+	${showbgf} tests/xbgf.bgf > tests/xbgf.out
 	diff tests/xbgf.out tests/xbgf.baseline
 
 clean:

@@ -1,28 +1,22 @@
 input     = ../../../shared/xsd/xbgf.xsd
-extracted = tests/xbgf.bgf
-outputldf = tests/xbgf.ldf
-outputpdf = tests/xbgf.pdf
-outputhtm = tests/xbgf.html
-templfd = tests/ldf.temp
-validator = ../../../download/msv/msv.jar
+output    = tests/xbgf
 
 build:
 
 all: extract
-	sh ../../../shared/tools/ldf2html ${outputldf} ${outputhtm}
-	sh ../../../shared/tools/ldf2pdf ${outputldf} ${outputpdf} 2> /dev/null
+	../../../shared/tools/ldf2html ${output}.ldf ${output}.html
+	../../../shared/tools/ldf2pdf ${output}.ldf ${output}.pdf 2> /dev/null
 
 extract:
-	sh ../../../shared/tools/xsd2bgf ${input} ${extracted}
-	python ldfgen.py ${input} ${extracted} ${outputldf}
-	xsltproc ../../../shared/xsl/ldf2ldf_tail.xslt ${outputldf} > ${templfd}
-	xsltproc ../../../shared/xsl/ldf2ldf_lift.xslt ${templfd} > ${outputldf}
-	@rm -f ${templfd}
+	../../../shared/tools/xsd2bgf ${input} ${output}.bgf
+	python ldfgen.py ${input} ${output}.bgf ${output}.1.ldf
+	xsltproc ../../../shared/xsl/ldf2ldf_tail.xslt ${output}.1.ldf > ${output}.2.ldf
+	xsltproc ../../../shared/xsl/ldf2ldf_lift.xslt ${output}.2.ldf > ${output}.ldf
     
 test: extract
-	sh ../../../shared/tools/showbgf ${extracted}
-	java -jar ${validator} ../../../shared/xsd/bgf.xsd ${extracted}
-	java -jar ${validator} ../../../shared/xsd/ldf.xsd ${outputldf}
+	../../../shared/tools/showbgf ${output}.bgf > ${output}.out
+	../../../shared/tools/checkxml bgf ${output}.bgf
+	../../../shared/tools/checkxml ldf ${output}.ldf
 
 clean:
 	rm -f tests/*
