@@ -1,0 +1,252 @@
+equations
+
+[map-asfix-to-btf]  
+main(parsetree(&T1,&I1))
+=
+mapTree(&T1)
+
+[kill-layout-before]
+mapTree(appl(prod([cf(opt(layout)),&Scs1],&S0,&As1),[&T1,&Tcs1]))
+=
+mapTree(appl(prod([&Scs1],&S0,&As1),[&Tcs1]))
+
+[kill-layout-after]
+mapTree(appl(prod([&Scs1,cf(opt(layout))],&S0,&As1),[&Tcs1,&T1]))
+=
+mapTree(appl(prod([&Scs1],&S0,&As1),[&Tcs1]))
+
+[map-start-symbol]  
+mapTree(appl(prod([&S1],sort("<START>"),&As1),[&T1]))
+=
+mapTree(&T1)
+%%<btf:tree xmlns:btf="http://planet-sl.org/btf" xmlns:bgf="http://planet-sl.org/bgf">
+
+[default-map-one-prod]
+mapTree(appl(prod([cf(&S1)],&S0,&As1),[&T1]))
+=
+<btf:tree>
+	<nonterminal>
+		<bgf:production>
+			symbol2content(&S0)
+			mapExpr(&S1)
+		</bgf:production>
+		mapTree(&T1)
+	</nonterminal>
+</btf:tree>
+
+[default-map-one-list]
+mapTree(appl(list(cf(iter(sort(&Z1)))),[&Tcs1]))
+=
+<btf:tree>
+	<plus>
+		mapTrees2Trees([&Tcs1])
+	</plus>
+</btf:tree>
+
+[default-map-more-cf]
+mapTree(appl(prod([cf(&S1), &Scs2],&S0,&As1),[&T1, &Tcs2]))
+=
+<btf:tree>
+	<nonterminal>
+		<bgf:production>
+			symbol2content(&S0)
+			<bgf:expression>
+				<sequence>
+					mapExpr(&S1)
+					mapExprs([&Scs2])
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+		<btf:tree>
+			<sequence>
+				mapTree(&T1)
+				mapTrees2Trees([&Tcs2])
+			</sequence>
+		</btf:tree>
+	</nonterminal>
+</btf:tree>
+
+%% attributes contains cons(bla), need to recover !
+[default-map-more-lit]
+mapTree(appl(prod([lit(&Z1), &Scs2],&S0,&As1),[&T1, &Tcs2]))
+=
+<btf:tree>
+	<nonterminal>
+		<bgf:production>
+			symbol2content(&S0)
+			<bgf:expression>
+				<sequence>
+					<bgf:expression><terminal>strcon2chardata(&Z1)</terminal></bgf:expression>
+					mapExprs([&Scs2])
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+		<btf:tree>
+			<sequence>
+				<btf:tree><terminal>strcon2chardata(&Z1)</terminal></btf:tree>
+				mapTrees2Trees([&Tcs2])
+			</sequence>
+		</btf:tree>
+	</nonterminal>
+</btf:tree>
+
+%%[map-plus-iteration]
+%%mapTree(appl(list(cf(iter(sort("Function")))),[&Tcs1]))
+%%=
+%%<btf:tree>
+%%</btf:tree>
+
+
+[map-plus-in-production]
+mapExpr(iter(&S1))
+=
+<bgf:expression>
+	<plus>
+		<bgf:expression>
+			symbol2content(&S1)
+		</bgf:expression>
+	</plus>
+</bgf:expression>
+
+[map-nonterm-in-production]
+mapExpr(sort(&Z1))
+=
+<bgf:expression>
+	<nonterminal>strcon2chardata(&Z1)</nonterminal>
+</bgf:expression>
+
+[dont-care-if-context-free]
+mapExpr(cf(&S1)) = mapExpr(&S1)
+
+[dont-care-if-lexical]
+mapExpr(lex(&S1)) = mapExpr(&S1)
+
+[s2c1]
+symbol2content(cf(&S1)) = symbol2content(&S1)
+
+[s2c2]
+&C1 := strcon2chardata(&Z1)
+===================================
+symbol2content(sort(&Z1)) = <nonterminal>&C1</nonterminal>
+
+%%[map-plus-in-tree]
+%%mapTree(appl(list(cf(iter(&S1))),[&T1]))
+%%=
+%%<btf:tree>
+%%	<plus>
+%%		mapTree(&T1)
+%%	</plus>
+%%</btf:tree>
+
+[recursive-expr-1]
+mapExprs([&S1]) = mapExpr(&S1)
+
+[recursive-expr-2]
+mapExprs([cf(opt(layout)),&Scs2]) = mapExprs([&Scs2])
+
+[default-recursive-expr-2]
+mapExprs([&S1,&Scs2]) = mapExpr(&S1)mapExprs([&Scs2])
+
+[map-literal-to-terminal]
+mapExpr(lit(&Z1))
+=
+<bgf:expression>
+	<terminal>strcon2chardata(&Z1)</terminal>
+</bgf:expression>
+
+[map-optional-to-expr]
+mapExpr(opt(&S1))
+=
+<bgf:expression>
+	<optional>
+		mapExpr(&S1)
+	</optional>
+</bgf:expression>
+
+
+[map-literal-to-tree]
+mapTree(appl(prod(&Ss1,lit(&Z1),&As1),[&Tcs1]))
+=
+<btf:tree>
+	<terminal>
+		strcon2chardata(&Z1)
+	</terminal>
+</btf:tree>
+
+[map-literal-production-to-tree]
+mapTree(appl(prod([lit(&Z1)],cf(sort(&Z0)),&As1),[&T1]))
+=
+<btf:tree>
+	<nonterminal>
+		<bgf:production>
+			<nonterminal>strcon2chardata(&Z0)</nonterminal>
+			<bgf:expression>
+				<terminal>strcon2chardata(&Z1)</terminal>
+			</bgf:expression>
+		</bgf:production>
+		<btf:tree>
+			<terminal>strcon2chardata(&Z1)</terminal>
+		</btf:tree>
+	</nonterminal>
+</btf:tree>
+
+[map-optional-to-tree]
+mapTree(appl(prod([&Scs1],cf(opt(&S1)),&As1),[&Tcs1]))
+=
+<btf:tree>
+	<optional>
+		mapTree(appl(prod([&Scs1],&S1,&As1),[&Tcs1]))
+	</optional>
+</btf:tree>
+
+[map-empty-optional-to-tree]
+mapTree(appl(prod([],cf(opt(&S1)),&As1),[]))
+=
+<btf:tree>
+	<optional>
+	</optional>
+</btf:tree>
+
+[map-literal-nonterminals-to-tree]
+mapTree(appl(prod([lex(sort(&Z0))],cf(sort(&Z0)),&As1),[&T1]))
+=
+<btf:tree>
+	<nonterminal>
+		<bgf:production>
+			<nonterminal>strcon2chardata(&Z0)</nonterminal>
+			<bgf:expression>
+				<terminal>
+					mapTree(&T1)
+				</terminal>
+			</bgf:expression>
+		</bgf:production>
+		<btf:tree>
+			<terminal>mapTree(&T1)</terminal>
+		</btf:tree>
+	</nonterminal>
+</btf:tree>
+
+[recursive-tree-empty]
+mapTrees2Trees([]) = 
+
+[recursive-tree-1]
+mapTrees2Trees([&T1]) = mapTree(&T1)
+
+[recursive-tree-no-layout]
+mapTrees2Trees([appl(prod([&Scs1],cf(opt(layout)),&As1),[&Tcs1]),&Tcs2]) = mapTrees2Trees([&Tcs2])
+
+[default-recursive-tree-2]
+mapTrees2Trees([&T1,&Tcs2]) = mapTree(&T1)mapTrees2Trees([&Tcs2])
+
+[wip]
+mapTree(appl(prod(&Ss1,lex(&S1),&As1),[appl(list(lex(&S2)),[&Tcs1])]))
+=
+tree2chardata([&Tcs1])
+
+[terrible]
+mapExprs([]) = 
+
+[map-lex-literal]
+mapTree(appl(prod([lit(&Z1)],lex(&S1),&As1),[&Tcs1]))
+=
+strcon2chardata(&Z1)

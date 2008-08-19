@@ -1,0 +1,91 @@
+equations
+
+[final-1]
+strchar(&Chr1) := mapsymbol(&N1)
+========================================
+tree2chardata([&N1]) = chardata(&Chr1)
+
+[one]
+strchar(&Chr1) := mapsymbol(&N1),
+chardata(&Char1 &Char*1) := tree2chardata([&T*2])
+==============================================
+tree2chardata([&N1,&T*2]) = chardata ( &Chr1 &Char1 &Char*1 )
+
+
+
+
+[zero]
+strchar(&Chr1) := mapsymbol(&N1)
+========================================
+list2chardata([&N1]) = chardata(&Chr1)
+
+[one]
+strchar(&Chr1) := mapsymbol(&N1),
+chardata(&Char1 &Char*1) := list2chardata([&N*2])
+==============================================
+list2chardata([&N1,&N*2]) = chardata ( &Chr1 &Char1 &Char*1 )
+
+[one]
+symbols2chardata([&N1]) = [mapsymbol(&N1)]
+
+[one]
+&C1 := mapsymbol(&N1),
+[&C*2] := symbols2chardata([&N*2])
+===============================================
+symbols2chardata([&N1,&N*2]) = [&C1,&C*2]
+
+[strcon-of-length-1]
+array2chardata([&StrChr1]) = strcon(\" &StrChr1 \")
+
+[strcon-of-length-1]
+strcon(\" &StrChr+1 \" ):= array2chardata([&C*2])
+====================================================
+array2chardata([&StrChr1,&C*2]) = strcon(\" &StrChr1 &StrChr+1 \")
+
+[strcon-of-length-1]
+strchar(&Chr1) := &StrChr1
+========================================
+array2chars([&StrChr1]) = chardata(&Chr1)
+
+[strcon-of-length-1]
+strchar(&Chr1) := &StrChr1,
+chardata(&Char1 &Char*1) := array2chars([&C*2])
+====================================================
+array2chars([&StrChr1,&C*2]) = chardata ( &Chr1 &Char1 &Char*1 )
+
+[alpha-a] mapsymbol(97) = a
+[alpha-b] mapsymbol(98) = b
+[alpha-c] mapsymbol(99) = c
+[alpha-d] mapsymbol(100) = d
+[alpha-e] mapsymbol(101) = e
+[alpha-f] mapsymbol(102) = f
+[alpha-g] mapsymbol(103) = g
+[alpha-h] mapsymbol(104) = h
+[alpha-i] mapsymbol(105) = i
+[alpha-j] mapsymbol(106) = j
+[alpha-k] mapsymbol(107) = k
+[alpha-l] mapsymbol(108) = l
+[alpha-m] mapsymbol(109) = m
+[alpha-n] mapsymbol(110) = n
+[alpha-o] mapsymbol(111) = o
+[alpha-p] mapsymbol(112) = p
+[alpha-q] mapsymbol(113) = q
+[alpha-r] mapsymbol(114) = r
+[alpha-s] mapsymbol(115) = s
+[alpha-t] mapsymbol(116) = t
+[alpha-u] mapsymbol(117) = u
+[alpha-v] mapsymbol(118) = v
+[alpha-w] mapsymbol(119) = w
+[alpha-x] mapsymbol(120) = x
+[alpha-y] mapsymbol(121) = y
+[alpha-z] mapsymbol(122) = z
+[digit-0] mapsymbol(48) = 0
+[digit-1] mapsymbol(49) = 1
+[digit-2] mapsymbol(50) = 2
+[digit-3] mapsymbol(51) = 3
+[digit-4] mapsymbol(52) = 4
+[digit-5] mapsymbol(53) = 5
+[digit-6] mapsymbol(54) = 6
+[digit-7] mapsymbol(55) = 7
+[digit-8] mapsymbol(56) = 8
+[digit-9] mapsymbol(57) = 9
