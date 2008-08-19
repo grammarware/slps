@@ -2,8 +2,8 @@ root = ../../..
 shared = ${root}/shared
 fl = ..
 tools = ${shared}/tools
-xsd = ${shared}/xsd
 xbgf = ${fl}/lci/xbgf
+sdf = ${fl}/asfsdf/syntax/FL.sdf
 
 build: limit.bgf limit.btf
 
@@ -12,17 +12,18 @@ test:
 
 append.xbgf:
 	appendxbgf append.xbgf \
-		${xbgf}/trimXsd.xbgf \
 		${xbgf}/downcase.xbgf \
-		${xbgf}/massageXsd.xbgf \
-		${xbgf}/mkSignature.xbgf
+		${xbgf}/defineLex.xbgf \
+		${xbgf}/stripTerminals.xbgf \
+		${xbgf}/permuteArgs.xbgf \
+		${xbgf}/reroot.xbgf
 
 limit.bgf: append.xbgf
-	${tools}/xsd2bgf ${fl}/xsd/fl.xsd source.bgf
+	${tools}/sdf2bgf ${sdf} source.bgf
 	${tools}/xbgf append.xbgf source.bgf limit.bgf
 
 limit.btf: append.xbgf
-	${tools}/xml2btf ${fl}/xsd/fl.xsd ${fl}/xsd/factorial.xml source.btf
+	${tools}/asfix2btf ${sdf} ${fl}/shared/factorial.txt source.btf
 	${tools}/xbtf append.xbgf source.btf limit.btf
 
 rebuild:

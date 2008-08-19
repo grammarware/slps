@@ -8,11 +8,11 @@ LOCAL2=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 1 ]; then
-    echo "Usage: showbtf <BTF-input>"
+    echo "Usage: showpnf <BTF-input>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    swipl -q -f ${LOCAL2}/prolog/cli/showbtf.pro -- $1
+    swipl -q -f ${LOCAL2}/prolog/cli/showpnf.pro -- $1
 fi
