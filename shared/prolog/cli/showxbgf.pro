@@ -1,6 +1,6 @@
 :- ensure_loaded('../slps.pro').
 
-:- 
+main :- 
    current_prolog_flag(argv,Argv),
    append(_,['--',XbgfXsdFile,XbgfXbgfFile,XbgfFile],Argv),
    loadXsd(XbgfXsdFile,SG),
@@ -10,5 +10,7 @@
    xml2xbgf(XbgfXbgfXml,Xbgf),
    transformR(Xbgf,RootIn,RootOut),
    implodeRoot(RootOut,Imploded),
-   writeq(Imploded),nl,
+   ppList('  ', Imploded),nl,
    halt.
+
+:- run.

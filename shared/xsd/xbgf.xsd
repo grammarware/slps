@@ -19,7 +19,7 @@
   <xsd:group name="transformation">
      <xsd:annotation>
       <xsd:documentation>
-        Here is an alphabetical list of <xhtml:strong>all</xhtml:strong> the XBGF <xhtml:a href="http://homepages.cwi.nl/~ralf/pt-scp/intro.html">transformations</xhtml:a>.
+        Here is an alphabetical list of <xhtml:strong>all</xhtml:strong> the XBGF transformations.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>

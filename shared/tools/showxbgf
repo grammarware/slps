@@ -15,5 +15,5 @@ elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    swipl -q -f ${LOCAL2}/shared/prolog/cli/showxbgf.pro -- ${LOCAL2}/shared/xsd/xbgf.xsd ${LOCAL2}/topics/transformation/xbgf/apps/xbgf/append.xbgf $1
+    swipl -q -t "halt(1)" -f ${LOCAL2}/shared/prolog/cli/showxbgf.pro -- ${LOCAL2}/shared/xsd/xbgf.xsd ${LOCAL2}/topics/transformation/xbgf/apps/xbgf/append.xbgf $1
 fi

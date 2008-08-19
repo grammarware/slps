@@ -142,7 +142,7 @@ xToBtf(SG,n(N),NL1,NL2,n(P,T))
     xToBtf(SG,X,NL1,NL2,T),
     !.
 
-xToBtf(SG,n(N1),NL1,NL2,T)
+xToBtf(SG,n(N1),NL1,NL2,T2)
  :-
     findGlobal(SG,N1,simpleType,_),
     !,
@@ -157,11 +157,12 @@ xToBtf(SG,n(N1),NL1,NL2,T)
       NL2 = [],
       X2 = s(V,true),
       member(X2,Xs),
-      T = n(P,';'(X2,X2))
+      T2 = n(P,';'(X2,X2))
     ;
       % Value type int
       X1 = v(_),
-      xToBtf(SG,X1,NL1,NL2,T)
+      xToBtf(SG,X1,NL1,NL2,T1),
+      T2 = n(P,T1)
     ),
     !.
 

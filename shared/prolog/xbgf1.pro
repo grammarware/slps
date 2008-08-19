@@ -136,21 +136,23 @@ ps2n(Ps1,N)
 % Label a production
 %
 
-designate(P0,g(Rs,Ps1),g(Rs,Ps2))
+designate(P1,g(Rs,Ps1),g(Rs,Ps2))
  :-
-    normalizeG_algebraically(P0,P1),
     P1 = p(As1,N,X),
     require(
-       ( member(l(_),As1) ),
+       ( As1 = [l(_)] ),
        'Production ~q must be labeled.',
        [P1]),
     require(
       ( P2 = p(As2,N,X),
-        append(Ps1a,[P2|Ps1b],Ps1),
-        \+ member(l(_),As2) 
+        append(Ps1a,[P2|Ps1b],Ps1) 
       ),
       'Production ~q (w/o label) not found.',
       [P1]),
+    require(
+      As2 = [],
+      'Production must be unlabeled',
+      [P2]),
     append(As1,As2,As3),
     append(Ps1a,[p(As3,N,X)|Ps1b],Ps2).
 
@@ -382,16 +384,16 @@ lassoc_rule(
 % Equality modulo selectors
 %
 
-modulo(P1,g(Rs,Ps1),g(Rs,Ps2))
+modulo(P2,g(Rs,Ps1),g(Rs,Ps2))
  :-
-    P1 = p(As,N,X1),
-    findP(Ps1,As,N,P2,Ps2a,Ps2b),
     P2 = p(As,N,X2),
+    findP(Ps1,As,N,P1,Ps2a,Ps2b),
+    P1 = p(As,N,X1),
     require(
       xbgf1:modulo_strategy(X1,X2),
       'Cannot rewrite p(~q,~q,...) modulo selectors.',
       [As,N]),
-    append(Ps2a,[P1|Ps2b],Ps2).
+    append(Ps2a,[P2|Ps2b],Ps2).
 
 modulo_strategy(X,X).
 
@@ -909,13 +911,26 @@ vertical_strategy(X,X)
     X =.. [F|_],
     member(F,[true,fail,a,t,n]).
 
+vertical_strategy('*'(X1),'*'(X2))
+ :-
+    vertical_strategy(X1,X2).
+
+vertical_strategy('+'(X1),'+'(X2))
+ :-
+    vertical_strategy(X1,X2).
+
+vertical_strategy('?'(X1),'?'(X2))
+ :-
+    vertical_strategy(X1,X2).
+
 vertical_strategy(','(Xs1),','(Xs2))
  :-
     maplist(xbgf1:vertical_strategy,Xs1,Xs2).
 
-vertical_strategy(';'(Xs),X)
+vertical_strategy(';'(Xs),X2)
  :-
-    member(X,Xs).
+    member(X1,Xs),
+    vertical_strategy(X1,X2).
 
 vertical_strategy(s(S,X1),s(S,X2))
  :-

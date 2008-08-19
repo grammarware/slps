@@ -143,16 +143,17 @@ transform(G,X,Z)
     Z =.. [F|Zs],
     !.
 
-transformExcept(G1,G2,X,Z)
+transformWhile(G1,G2,X,Z)
  :-
     ( apply(G1,[X,Y]) -> true; Y = X ),
     ( apply(G2,[Y]) -> 
-          Z = Y
-        ; (
+          (
             Y =.. [F|Ys],
-            maplist(transformExcept(G1),Ys,Zs),
+            maplist(transformWhile(G1,G2),Ys,Zs),
             Z =.. [F|Zs]
           )
+        ;
+          Z = Y
     ),
     !.
 
@@ -177,3 +178,26 @@ zip([H1|T1],[H2|T2],[(H1,H2)|L]) :- zip(T1,T2,L).
 unifiable(X,Y) :- unifiable(X,Y,_).
 
 nonunifiable(X,Y) :- \+ unifiable(X,Y).
+
+
+% Pretty print list
+
+ppList(I,List)
+ :-
+    format('[~n',[]),
+    ppElements(I,List),
+    format(']',[]),
+    !.
+
+ppElement(I,E,C) :- format('~w~q~w~n',[I,E,C]).
+
+ppElements(_,[]).
+
+ppElements(I,[E])
+ :-
+    ppElement(I,E,'').
+
+ppElements(I,[E1,E2|Es])
+ :-
+    ppElement(I,E1,','),
+    ppElements(I,[E2|Es]).

@@ -1,5 +1,5 @@
 <xbgf:sequence
-  xmlns:lgf="http://planet-sl.org/lgf"
+  xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   <xbgf:vertical>
     <nonterminal>expression</nonterminal>

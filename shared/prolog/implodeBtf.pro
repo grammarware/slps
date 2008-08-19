@@ -14,6 +14,8 @@ implodeTree(v(string(V)),V).
 
 implodeTree(v(int(V)),V).
 
+implodeTree(true,true).
+
 implodeTree(t(V),V).
 
 implodeTree(n(p([l(L)],_,_),true),L)

@@ -9,7 +9,8 @@ append.xbgf:
 	appendxbgf append.xbgf \
 		normalize.xbgf \
 		rename.xbgf \
-		strip.xbgf
+		strip.xbgf \
+		designate.xbgf
 
 ${final}: append.xbgf
 	${tools}/xsd2bgf ${xsd}/bgf.xsd bgf0.bgf

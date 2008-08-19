@@ -6,12 +6,27 @@ transformR(Xbgf,r(G1,T1),r(G2,T2))
     xbgf1:transformG(Xbgf,G1,G2),
     xbgf2:transformT(Xbgf,T1,T2).
 
-transformT(T,T1,T2)
+transformT(T,T1,T3)
  :-
     T =.. [F|_],
     format('Applying ~q transformation.~n',[F]),
     apply(T,[T1,T2]),
+    ytransform(xbgf2:normalizeT_rules,T2,T3),    
     !.
+
+normalizeT_rules(','([]),true).
+normalizeT_rules(','([T]),T).
+normalizeT_rules('+'(true),true).
+normalizeT_rules('*'(true),true).
+normalizeT_rules('?'(true),true).
+normalizeT_rules(','(Ts1),','(Ts5))
+ :-
+    append(Ts2,[','(Ts3)|Ts4],Ts1),
+    concat([Ts2,Ts3,Ts4],Ts5).
+normalizeT_rules(','(Ts1),','(Ts2))
+ :-
+    append(Ts1a,[true|Ts1b],Ts1),
+    append(Ts1a,Ts1b,Ts2).
 
 
 %
@@ -63,9 +78,14 @@ define(_,T1,T1)
 % Label a production
 %
 
-designate(_,T1,T1)
+designate(P1,T1,T2)
  :-
-    !.
+    transform(xbgf2:designate_rule(P1),T1,T2).
+
+designate_rule(P1,n(P2,T),n(P1,T))
+ :-
+    P1 = p([l(_)],N,X),
+    P2 = p([],N,X).
 
 
 %
@@ -143,7 +163,7 @@ introduce(_,T1,T1)
 
 lassoc(P1,T1,T2)
  :-
-    transform(xbgf2:lassoc_rule(P1,T1,T2)).
+    transform(xbgf2:lassoc_rule(P1),T1,T2).
 
 lassoc_rule(P1,n(P2,','([T1,'*'(Ts)])),T2)
  :-
@@ -168,41 +188,52 @@ modulo(P1,T1,T2)
  :-
     transform(xbgf2:modulo_rule(P1),T1,T2).
 
-modulo_rule(P1,n(P2,T1),n(P1,T2))
+modulo_rule(P2,n(P1,T1),n(P2,T2))
  :-
-    P1 = p(As,N,X),
-    P2 = p(As,N,_),
-    modulo_strategy(X,T1,T2).
+    P1 = p(As,N,X1),
+    P2 = p(As,N,X2),
+    modulo_strategy(X1,X2,T1,T2).
 
-modulo_strategy(t(T),t(T),t(T)).
+modulo_strategy(true,true,true,true).
 
-modulo_strategy(n(N),n(P,T),n(P,T))
+modulo_strategy(t(T),t(T),t(T),t(T)).
+
+modulo_strategy(n(N),n(N),n(P,T),n(P,T))
  :-
     P = p(_,N,_).
 
-modulo_strategy(s(S,X),T1,s(S,T2))
+modulo_strategy(X1,s(S,X2),T1,s(S,T2))
  :-
-    modulo_strategy(X,T1,T2).
+    modulo_strategy(X1,X2,T1,T2).
 
-modulo_strategy(X,s(_,T1),T2)
+modulo_strategy(s(S,X1),X2,s(S,T1),T2)
  :-
-    modulo_strategy(X,T1,T2).
+    modulo_strategy(X1,X2,T1,T2).
 
-modulo_strategy(','(Xs),','(Ts1),','(Ts2))
+modulo_strategy(','(Xs1),','(Xs2),','(Ts1),','(Ts2))
  :- 
-    maplist(xbgf2:modulo_strategy,Xs,Ts1,Ts2).
+    maplist(xbgf2:modulo_strategy,Xs1,Xs2,Ts1,Ts2).
 
-modulo_strategy('*'(X),'*'(Ts1),'*'(Ts2))
+modulo_strategy(';'(Xs1),';'(Xs2),';'(X1,T1),';'(X2,T2))
  :-
-    maplist(xbgf2:modulo_strategy(X),Ts1,Ts2).
+    maplist(xbgf1:modulo_strategy,Xs1,Xs2),
+    append(Xs1a,[X1|_],Xs1),
+    append(Xs2a,[X2|_],Xs2),
+    length(Xs1a,Len),
+    length(Xs2a,Len),
+    modulo_strategy(X1,X2,T1,T2).
 
-modulo_strategy('+'(X),'+'(Ts1),'+'(Ts2))
+modulo_strategy('*'(X1),'*'(X2),'*'(Ts1),'*'(Ts2))
  :-
-    maplist(xbgf2:modulo_strategy(X),Ts1,Ts2).
+    maplist(xbgf2:modulo_strategy(X1,X2),Ts1,Ts2).
 
-modulo_strategy('?'(X),'?'(Ts1),'?'(Ts2))
+modulo_strategy('+'(X1),'+'(X2),'+'(Ts1),'+'(Ts2))
  :-
-    maplist(xbgf2:modulo_strategy(X),Ts1,Ts2).
+    maplist(xbgf2:modulo_strategy(X1,X2),Ts1,Ts2).
+
+modulo_strategy('?'(X1),'?'(X2),'?'(Ts1),'?'(Ts2))
+ :-
+    maplist(xbgf2:modulo_strategy(X1,X2),Ts1,Ts2).
 
 
 %
@@ -289,9 +320,13 @@ renameS([L],S1,S2,T1,T2)
 
 renameS_rule(L,S1,S2,n(P1,T1),n(P2,T2))
  :-
-    P1 = p([L],_,_),
+    P1 = p([l(L)],_,_),
     transform(xbgf1:renameS_rule(S1,S2),P1,P2),
-    transformExcept(xbgf1:renameS_rule(S1,S2),renameS_scope,T1,T2).
+    transformWhile(
+      xbgf1:renameS_rule(S1,S2),
+      xbgf2:renameS_scope,
+      T1, 
+      T2).
 
 renameS_scope(T) :- \+ T = n(_,_).
 
@@ -445,36 +480,87 @@ unite(_,_,T1,T1)
 
 verticalL(L,T1,T2)
  :-
-    transform(xbgf2:verticalL_rules(L),T1,T2).
+    transform(xbgf2:verticalL_rule(L),T1,T2).
 
-verticalL_rules(
+verticalL_rule(
   L,
-  n(p([l(L)],N,';'(_)),';'(s(S,X),s(S,T))),
-  n(p([l(S)],N,X),T)
-).
-  
-verticalL_rules(
-  L,
-  n(p([l(L)],N,';'(_)),';'(X,T)),
-  n(p([],N,X),T)
+  n(p([l(L)],N,X),T1),
+  n(P,T2)
 )
  :-
-    \+ X = s(_,_). 
+    vertical(N,X,P,T1,T2).
 
 verticalN(N,T1,T2)
  :-
-    transform(xbgf2:verticalN_rules(N),T1,T2).
+    transform(xbgf2:verticalN_rule(N),T1,T2).
 
-verticalN_rules(
+verticalN_rule(
   N,
-  n(p(_,N,';'(_)),';'(s(S,X),s(S,T))),
-  n(p([l(S)],N,X),T)
+  n(p(_,N,X),T1),
+  n(P,T2)
 )
  :-
-    \+ X = s(_,_).
+    vertical(N,X,P,T1,T2).
   
-verticalN_rules(
-  N,
-  n(p(_,N,';'(_)),';'(X,T)),
-  n(p([],N,X),T)
-).
+vertical(N,X1,P,T1,T3)
+ :-
+    findall(X2,xbgf1:vertical_strategy(X1,X2),Xs),
+    member(X3,Xs),
+    vertical_strategy(X3,T1,T2),
+    vertical_rules(N,X3,P,T2,T3).
+
+vertical_rules(N,s(S,X),p([l(S)],N,X),s(S,T),T).
+vertical_rules(N,X,p([],N,X),T,T) :- \+ X = s(_,_).
+
+
+vertical_strategy(true,true,true)
+ :-
+    !.
+
+vertical_strategy(a,a(Ns),a(Ns))
+ :-
+    !.
+
+vertical_strategy(t(V),t(V),t(V))
+ :-
+    !.
+
+vertical_strategy(v(string),v(string(V)),v(string(V)))
+ :-
+    !.
+
+vertical_strategy(v(int),v(int(V)),v(string(V)))
+ :-
+    !.
+
+vertical_strategy(n(N),n(P,T),n(P,T))
+ :-
+    P = p(_,N,_),
+    !.
+
+vertical_strategy('*'(X1),'*'(Ts1),'*'(Ts2))
+ :-
+    maplist(xbgf2:vertical_strategy(X1),Ts1,Ts2),
+    !.
+
+vertical_strategy('+'(X1),'+'(Ts1),'+'(Ts2))
+ :-
+    maplist(xbgf2:vertical_strategy(X1),Ts1,Ts2),
+    !.
+
+vertical_strategy('?'(X1),'?'(Ts1),'?'(Ts2))
+ :-
+    maplist(xbgf2:vertical_strategy(X1),Ts1,Ts2),
+    !.
+
+vertical_strategy(','(Xs),','(Ts1),','(Ts2))
+ :-
+    maplist(xbgf2:vertical_strategy,Xs,Ts1,Ts2).
+
+vertical_strategy(X,';'(_,T1),T2)
+ :-
+    vertical_strategy(X,T1,T2).
+
+vertical_strategy(s(S,X),s(S,T1),s(S,T2))
+ :-
+    vertical_strategy(X,T1,T2).

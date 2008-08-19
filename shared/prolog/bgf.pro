@@ -234,16 +234,10 @@ normalize_algebraically_rules(';'(Xs1),';'(Xs2))
 
 ppBgf(g(Rs,Ps))
  :-
-    format('g( ~q, [~n',[Rs]),
-    ppPs(Ps),
-    format('])~n',[]),
+    format('g( ~q, ',[Rs]),
+    ppList('  ',Ps),
+    format(')~n',[]),
     !.
-
-ppP(P,C) :- format('  ~q~w~n',[P,C]).
-
-ppPs([]).
-ppPs([P]) :- ppP(P,'').
-ppPs([P1,P2|Ps]) :- ppP(P1,','), ppPs([P2|Ps]).
 
 
 % Test prefix property of grammar
@@ -257,9 +251,6 @@ prefixG(g(_,Ps))
 
      % Horizontal choices are not permitted.
      rectest(not(=(';'(_))),Ps),
-
-     % Selector groups are not permitted.
-     rectest(not(=(s(_,_))),Ps),
 
      % Nonterminals with multiple productions must be labelled. 
      \+ ( member(P1,Ps),
