@@ -14,6 +14,7 @@ graph_big = []
 graph_small = []
 log = None
 tools = {}
+almostfailed = []
 failednode = []
 failedarc  = []
 failedaction = []
@@ -151,6 +152,8 @@ def dumpgraph(df):
   dot.write(quote(x))
   if x in failednode:
    dot.write(' [color=red]')
+  elif x in almostfailed:
+   dot.write(' [color=blue]')
   dot.write(';')
  dot.write('}\n')
  dot.write('node [shape=octagon, style=bold];\n')
@@ -180,6 +183,8 @@ def dumpgraph(df):
    if node not in targets.keys():
     if node in failednode:
      dot.write(quote(node)+' [color=red];')
+    elif node in almostfailed:
+     dot.write(quote(node)+' [color=blue];')
  dot.write('}')
  dot.close()
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
@@ -191,6 +196,8 @@ def dumpgraph(df):
   dot.write(quote(x))
   if x in failednode:
    dot.write(' [color=red]')
+  elif x in almostfailed:
+   dot.write(' [color=blue]')
   dot.write(';')
  dot.write('}')
  dot.write('node [shape=octagon]\n')
@@ -198,6 +205,8 @@ def dumpgraph(df):
   dot.write(quote(x))
   if x in failednode:
    dot.write(' [color=red]')
+  elif x in almostfailed:
+   dot.write(' [color=blue]')
   dot.write(';')
  for arc in graph_small:
   dot.write(quote(arc[0])+'->'+quote(arc[1]))
@@ -210,14 +219,28 @@ def dumpgraph(df):
  logwrite(run)
  os.system(run)
 
+def copyfile(x,y):
+ xh=open(x,'r')
+ yh=open(y,'w')
+ yh.writelines(xh.readlines())
+ xh.close()
+ yh.close()
+
 def extractall():
  for bgf in sources.keys():
   run = ' '.join(sources[bgf])+' bgf/'+bgf+'.bgf'
   logwrite(run)
   if os.system(run+shutup):
    print 'Extraction failed on',bgf
-   failednode.append(bgf)
+   if os.access('snapshot/'+bgf+'.bgf',os.R_OK):
+    print 'Rolled back to the saved version, proceeding...'
+    copyfile('snapshot/'+bgf+'.bgf','bgf/'+bgf+'.bgf')
+    almostfailed.append(bgf)
+   else:
+    failednode.append(bgf)
    #sysexit(3)
+  else:
+   copyfile('bgf/'+bgf+'.bgf','snapshot/'+bgf+'.bgf')
  print 'Extraction finished.'
 
 def validateall():
@@ -442,7 +465,7 @@ def checkconsistency():
   #sysexit(8)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.8'
+ print 'Language Covergence Infrastructure v1.9'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])
@@ -462,6 +485,7 @@ if __name__ == "__main__":
   dumpgraph(sys.argv[2])
   #print failednode
   #print failedarc
+  #print almostfailed
   if failednode or failedarc:
    sysexit(100)
   log.close()
