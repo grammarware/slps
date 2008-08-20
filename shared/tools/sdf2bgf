@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/bash
 
 # Get our hands on basedir
 LOCAL1=${PWD}
@@ -7,16 +7,29 @@ cd ../../topics/extraction/sdf2bgf
 XTR=${PWD}
 cd ${LOCAL1}
 
-if [ $# -ne 2 ]; then
-    echo "Usage: sdf2bgf <SDF-input> <BGF-output>"
-    exit 1
-elif [ ! -r $1 ]; then
-    echo "Oops: $1 not found or not readable."
+if [ $# -le 1 ]; then
+    echo "This extractor gives a BGF for a list of SDF modules"
+    echo "Usage: sdf2bgf <SDF-module> [<SDF-module> ...] <BGF-output>"
     exit 1
 else
     # Build extractor if needed
     cd ${XTR}
     make build
     cd ${LOCAL1}
-    (echo "main("; cat $1; echo ")" ) | sglr -p ${XTR}/Main.tbl | asfe -e ${XTR}/Main.eqs | unparsePT > $2
+    echo "main(definition" > _.def
+    CX=1
+    for i in $* ; do
+        if [ $# -gt $CX ]; then
+            if [ ! -r $i ]; then
+                echo "Oops: $i not found or not readable."
+                exit 1
+            fi
+            cat $i >> _.def
+            CX=`expr $CX + 1`
+        else
+            echo ")" >> _.def
+            cat _.def | sglr -p ${XTR}/Main.tbl | asfe -e ${XTR}/Main.eqs | unparsePT > $i
+        fi
+    done
+    rm -f _.def
 fi

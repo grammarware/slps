@@ -14,9 +14,9 @@ elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    sh ${SLPS}/shared/tools/ldf2html $1 html.tmp
-    xsltproc ${SLPS}/shared/xsl/xhtml2fo.xslt html.tmp > fo.tmp
-    ${SLPS}/download/fop/fop -q fo.tmp $2
-    rm -f html.tmp fo.tmp
+    sh ${SLPS}/shared/tools/ldf2html $1 $1.html
+    xsltproc ${SLPS}/shared/xsl/xhtml2fo.xslt $1.html > $1.fo
+    ${SLPS}/download/fop/fop -q $1.fo $2
+    rm -f $1.html $1.fo
 fi
 

@@ -18,8 +18,9 @@ else
     cd ${SLPS}/topics/extraction/asfix2btf
     make build
     cd ${LOCAL1}
-    cat $2 | python ${SLPS}/topics/fl/asfsdf/pre.py | sglr -p ${SLPS}/topics/fl/asfsdf/FL.tbl -t > tmp.trm
-    (echo "main("; cat tmp.trm; echo ")" ) | sglr -p ${SLPS}/topics/extraction/asfix2btf//Main.tbl | asfe -e ${SLPS}/topics/extraction/asfix2btf//Main.eqs | unparsePT > $3
-    rm -f tmp.trm
+    cat $2 | python ${SLPS}/topics/fl/asfsdf/pre.py | sglr -p ${SLPS}/topics/fl/asfsdf/FL.tbl -t > $3.trm
+    (echo "main("; cat $3.trm; echo ")" ) | sglr -p ${SLPS}/topics/extraction/asfix2btf//Main.tbl | asfe -e ${SLPS}/topics/extraction/asfix2btf//Main.eqs | unparsePT > $3.tmp
+    xsltproc ${SLPS}/shared/xsl/btf2btf.xslt $3.tmp >$3
+    rm -f $3.tmp $3.trm
 fi
 
