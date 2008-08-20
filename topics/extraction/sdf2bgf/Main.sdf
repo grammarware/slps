@@ -10,6 +10,7 @@ module Main
     sorts Document Module Production
 
     context-free syntax
+	main(SDF) -> Document
 	main(Module) -> Document
 
     context-free start-symbols
@@ -18,15 +19,14 @@ module Main
   hiddens
 
     context-free syntax
-	accuProds(Module,Production*) -> Production* {traversal(accu,top-down,break)}
+	accuProds(Module*,Production*) -> Production* {traversal(accu,top-down,break)}
 	accuProds(Grammar,Production*) -> Production* {traversal(accu,top-down,break)}
 	accuProds(Production*,Production*) -> Production* {traversal(accu,top-down,break)}
 	trafoProds(Production*) -> Content*
-	trafoProd(Production) -> Element
 	trafoSymbol(Symbol) -> Element
 	trafoSymbols(Symbols) -> Element
 	mapTrafoSymbol(Symbols) -> Content*
-	guessLabel({Attribute ","}*) -> Content?
+	guessLabel(Attributes) -> Content*
 
     variables
 	"&A"  [0-9]+ -> Attribute
@@ -39,6 +39,7 @@ module Main
 %%	"&E*" [0-9]+ -> Element* %% Useless because of lack of covariance
 	"&G"  [0-9]+ -> Grammar
 	"&M"  [0-9]+ -> Module
+	"&M*" [0-9]+ -> Module*
 	"&N"  [0-9]+ -> Sort
 	"&P"  [0-9]+ -> Production
 	"&P*" [0-9]+ -> Production*

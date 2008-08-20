@@ -1,6 +1,15 @@
 equations
 
-[map-sdf-to-bgf]  
+[map-sdf-definition-to-bgf]  
+&C*1 := trafoProds (accuProds (&M*1,))
+==========================
+main (definition &M*1) 
+=
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  &C*1
+</bgf:grammar>
+
+[map-sdf-module-to-bgf]  
 &C*1 := trafoProds (accuProds (&M1,))
 ==========================
 main ( &M1 ) 
@@ -12,42 +21,39 @@ main ( &M1 )
 [exclude-lexical-productions] 
 accuProds ( lexical syntax &Ps1, &P*1 ) = &P*1
 
+[exclude-productions-for-variables] 
+accuProds ( variables &Ps1, &P*1 ) = &P*1
+
 [include-all-other-productions] 
 accuProds ( &P*1, &P*2 ) = &P*2 &P*1
 
 [transform-empty-list-of-productions]
 trafoProds ( ) = 
 
-[transform-non-empty-list-of-productions]
-trafoProds ( &P1 &P*1 ) = trafoProd ( &P1) trafoProds ( &P*1 )
-
-[transform-a-production]
+[transform-first-production-in-a-list]
 &C1 := sort2chardata(&N1),
-&E2 := trafoSymbols(&Ss1)
+&E2 := trafoSymbols(&Ss1),
+&C*0 := guessLabel(&As1)
 =====================
-trafoProd ( &Ss1 -> &N1 &As1 ) =
+trafoProds (&Ss1 -> &N1 &As1 &P*1 )
+=
 <bgf:production>
+  &C*0
   <nonterminal>&C1</nonterminal>
   &E2
 </bgf:production>
+trafoProds ( &P*1 )
+
+[default-transform-skip-unknown-production]
+trafoProds (&P1 &P*2 )
+=
+trafoProds ( &P*2 )
 
 [transform-empty-definition-of-nonterminal]
 trafoSymbols() = 
 <bgf:expression>
   <epsilon/>
 </bgf:expression>
-
-[transform-a-labelled-production]
-&C1 := sort2chardata(&N1),
-&E2 := trafoSymbols(&Ss1),
-&C0 := guessLabel(&Acs1)
-=====================
-trafoProd ( &Ss1 -> &N1 {&Acs1} ) =
-<bgf:production>
-  &C0
-  <nonterminal>&C1</nonterminal>
-  &E2
-</bgf:production>
 
 [transform-empty-definition-of-nonterminal]
 trafoSymbols() = 
@@ -120,16 +126,16 @@ trafoSymbol(&S1?) =
   </bgf:expression>
 
 [cons-to-label-only-cons]
-guessLabel(cons(&I1)) = <label>idcon2chardata(&I1)</label>
+guessLabel({cons(&I1)}) = <label>idcon2chardata(&I1)</label>
 
 [cons-to-label-cons-etc]
-guessLabel(cons(&I1),&Acs2) = <label>idcon2chardata(&I1)</label>
+guessLabel({cons(&I1),&Acs2}) = <label>idcon2chardata(&I1)</label>
 
 [cons-to-label-empty]
 guessLabel() = 
 
 [default-cons-to-label-no-cons]
-guessLabel(&A1) = 
+guessLabel({&A1}) = 
 
 [default-cons-to-label-head-is-not-cons]
-guessLabel(&A1,&Acs2) = guessLabel(&Acs2)
+guessLabel({&A1,&Acs2}) = guessLabel({&Acs2})
