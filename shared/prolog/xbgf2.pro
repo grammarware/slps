@@ -67,9 +67,7 @@ case_rule(Q,UD,s(S1,X),s(S2,X)) :- xbgf1:doCase(Q,UD,S1,S2).
 % Define a nonterminal
 %
 
-define(_,T1,T1)
- :-
-    !.
+define(_,T1,T1).
 
 
 %
@@ -94,6 +92,8 @@ designate_rule(P1,n(P2,T),n(P1,T))
 % Eliminate a defined, otherwise unused nonterminal
 %
 
+eliminate(_,T,T).
+
 
 %
 % p([l(extract)], f, n(p))
@@ -101,9 +101,7 @@ designate_rule(P1,n(P2,T),n(P1,T))
 % Extract a nonterminal definition
 %
 
-extract(_,T1,T1)
- :-
-    !.
+extract(_,T1,T1).
 
 
 %
@@ -112,9 +110,7 @@ extract(_,T1,T1)
 % Fold an expression to its defining nonterminal
 %
 
-fold(_,T1,T1)
- :-
-    !.
+fold(_,T1,T1).
 
 
 %
@@ -139,9 +135,7 @@ id(T1,T1).
 % Inline a nonterminal definition (and eliminate it)
 %
 
-inline(_,T1,T1)
- :- 
-    !.
+inline(_,T1,T1).
     
 
 %
@@ -150,9 +144,7 @@ inline(_,T1,T1)
 % Add a definition for a fresh nonterminal
 %
 
-introduce(_,T1,T1)
- :-
-    !.
+introduce(_,T1,T1).
 
 
 %
@@ -242,9 +234,7 @@ modulo_strategy('?'(X1),'?'(X2),'?'(Ts1),'?'(Ts2))
 % Permute the body of a production
 %
 
-permute(_,T1,T1)
- :- 
-    !.
+permute(_,T1,T1).
 
 
 %
@@ -260,9 +250,7 @@ permute(_,T1,T1)
 % (Assume epsilon as missing definition)
 %
 
-prune(_,T1,T1)
- :-
-    !.
+prune(_,T1,T1).
     
 
 % p([l(relax)], f, n(p))
@@ -276,9 +264,7 @@ prune(_,T1,T1)
 % Remove a production
 %
 
-remove(_,T1,T1)
- :- 
-    !.   
+remove(_,T1,T1).   
 
 
 %
@@ -337,9 +323,7 @@ renameS_scope(T) :- \+ T = n(_,_).
 % Assign new roots to the grammar
 %
 
-reroot(_,T1,T1)
- :-
-    !.
+reroot(_,T1,T1).
 
 
 %
@@ -348,9 +332,7 @@ reroot(_,T1,T1)
 % Restrict the grammar by expression replacement
 %
 
-restrict(_,T1,T1)
- :-
-    !.
+restrict(_,T1,T1).
 
 
 % p([l(sequence)], f, *(n(f)))
@@ -366,9 +348,7 @@ sequence(Ts,T1,T2)
 % Skip a production
 %
 
-skip(_,T1,T1)
- :- 
-    !.
+skip(_,T1,T1).
 
 
 %
@@ -382,29 +362,19 @@ skip(_,T1,T1)
 % Strip labels, selectors, and terminals
 %
 
-stripL(_,T1,T1)
- :-
-    !.
+stripL(_,T1,T1).
 
-stripLs(T1,T1)
- :-
-    !.
+stripLs(T1,T1).
 
-stripS(_,T1,T1)
- :-
-    !.
+stripS(_,T1,T1).
 
 stripSs(T1,T2)
  :-
     transform(xbgf2:stripS_rule,T1,T2).
 
-stripTs(T1,T1)
- :-
-    !.
+stripTs(T1,T1).
 
-stripT(_,T1,T1) 
- :-
-    !.
+stripT(_,T1,T1).
 
 stripS_rule(s(_,X),X).
 
@@ -455,9 +425,7 @@ undefine_rule(N1,n(P,_))
 % Unfold a nonterminal in a production
 %
 
-unfold(_,T1,T1)
- :-
-    !.
+unfold(_,T1,T1).
 
 
 %
@@ -466,9 +434,7 @@ unfold(_,T1,T1)
 % Confusing renaming, also called "unification"
 %
 
-unite(_,_,T1,T1)
- :-
-    !.
+unite(_,_,T1,T1).
 
 
 %

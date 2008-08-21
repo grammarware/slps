@@ -180,6 +180,37 @@ unifiable(X,Y) :- unifiable(X,Y,_).
 nonunifiable(X,Y) :- \+ unifiable(X,Y).
 
 
+% Diff two terms; succeed with first difference; fail otherwise
+
+diff(T,T,_)
+ :-
+    !,
+    fail.
+
+diff(T1,T2,P1)
+ :-
+    T1 =.. [F|L1],
+    T2 =.. [F|L2],
+    length(L1,Len),
+    length(L2,Len),
+    !,
+    difflist(L1,L2,(F/Len:1),P1).
+
+diff(_,_,[]).
+
+difflist([H1|_],[H2|_],E,[E|P1])
+ :-
+    diff(H1,H2,P1),
+    !.
+
+difflist([_|T1],[_|T2],E1,P1)
+ :-
+    E1 = (F/Len:Pos1),
+    Pos2 is Pos1 + 1,
+    E2 = (F/Len:Pos2),
+    difflist(T1,T2,E2,P1).
+
+
 % Pretty print list
 
 ppList(I,List)
