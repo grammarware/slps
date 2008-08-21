@@ -430,14 +430,9 @@ def runtestset():
    # parse otherwise
    results = {}
    for program in implementations.keys():
-    run = expanduni(implementations[program][0]+' '+testcase[0]+' '+testcase[0]+'.parsed',{})
+    run = expanduni(implementations[program][0]+' '+testcase[0],{})
     logwrite(run)
     results[program]=os.system(run+shutup)
-    if not results[program]:
-     # parsed successfully, let's check the result
-     run = 'diff '+testcase[0]+' '+testcase[0]+'.parsed'
-     logwrite(run)
-     results[program]=os.system(run+shutup)
    print 'Test case',testcase[0].replace('testset/sample',''),
    if results.values()==[0]*len(implementations):
     # all zeros
