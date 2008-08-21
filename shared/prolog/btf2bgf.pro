@@ -23,6 +23,10 @@ checkbtf(n(N),n(p(_,N,X),T))
     !,
     checkbtf(X,T).
 
+checkbtf(t(V),t(V))
+ :-
+    !.
+
 checkbtf(v(string),v(string(_)))
  :-
     !.
@@ -65,9 +69,11 @@ checkbtf('?'(X),'?'(Ts))
     !,
     maplist(checkbtf(X),Ts).
 
-checkbtf(_,T)
+checkbtf(X,T)
  :-
-    T =.. [F|L],
-    length(L,N),
-    format('BTF checker: cannot handle ~w/~w.~n',[F,N]),
+    X =.. [F1|L1],
+    T =.. [F2|L2],
+    length(L1,N1),
+    length(L2,N2),
+    format('BTF check failed: grammar level: ~q/~q; tree level: ~q/~q.~n',[F1,N1,F2,N2]),
     fail.
