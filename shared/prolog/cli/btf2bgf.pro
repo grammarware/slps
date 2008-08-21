@@ -22,7 +22,7 @@ main :-
        nl,
        error(RC)
    )),
-   ( checkbtf(T) -> true; (
+   ( checkbtf(Ps1,T) -> true; (
        write('Error: structural integrity of tree violated.'),
        nl,
        error(RC)
