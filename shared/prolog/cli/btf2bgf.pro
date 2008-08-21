@@ -1,6 +1,11 @@
 :- ensure_loaded('../slps.pro').
 
 
+% Keep track of difference
+
+error(1).
+
+
 main :-
    current_prolog_flag(argv,Argv),
    append(_,['--',BtfFileIn,BgfFileOut],Argv),
@@ -12,10 +17,17 @@ main :-
    saveXml(BgfFileOut,BgfXml),
    G1 = g(_,Ps1),
    G2 = g(_,Ps2),
-   require(
-     subset(Ps2,Ps1),
-     'Used grammar must be subset of declared grammar.',
-     []),
-   halt.
+   ( subset(Ps2,Ps1) -> true; (
+       write('Error: used grammar is not contained in declared grammar.'),
+       nl,
+       error(RC)
+   )),
+   ( checkbtf(T) -> true; (
+       write('Error: structural integrity of tree violated.'),
+       nl,
+       error(RC)
+   )),
+   ( RC = 0; true ),
+   halt(RC).
 
 :- run.
