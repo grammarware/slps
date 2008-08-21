@@ -1,6 +1,6 @@
 <xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:undefine>ObjectFactory</xbgf:undefine>
-  <xbgf:undefine>package-info</xbgf:undefine>
+  <xbgf:eliminate>ObjectFactory</xbgf:eliminate>
+  <xbgf:eliminate>package-info</xbgf:eliminate>
   <xbgf:rename>
     <selector>
       <from>EQUAL</from>

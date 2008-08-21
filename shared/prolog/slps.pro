@@ -11,6 +11,7 @@
 :- ensure_loaded('readBtf.pro').
 :- ensure_loaded('writeBtf.pro').
 :- ensure_loaded('implodeBtf.pro').
+:- ensure_loaded('btf2bgf.pro').
 
 :- use_module('xbgf1.pro').
 :- use_module('xbgf2.pro').

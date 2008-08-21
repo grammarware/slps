@@ -163,6 +163,21 @@ designate(P1,g(Rs,Ps1),g(Rs,Ps2))
 % Eliminate a defined, otherwise unused nonterminal
 %
 
+eliminate(N,g(Rs1,Ps1),g(Rs2,Ps2))
+ :-
+    definedNs(Ps1,Defined),
+    require(
+       member(N,Defined),
+       'Nonterminal ~q must be defined.',
+       [N]),
+    filter(nonunifiable(N),Rs1,Rs2),
+    filter(nonunifiable(p(_,N,_)),Ps1,Ps2),
+    usedNs(Ps2,Used),
+    require(
+       ( \+ member(N,Used) ),
+       'Nonterminal ~q must not be used.',
+       [N]).
+
 
 %
 % p([l(extract)], f, n(p))
@@ -829,16 +844,20 @@ unchain(N1,g(Rs,Ps1),g(Rs,Ps3))
 % Undefine a nonterminal, i.e., remove all productions
 %
 
-undefine(N,G1,g(Rs2,Ps2))
+undefine(N,g(Rs1,Ps1),g(Rs2,Ps2))
  :-
-    definedNs(G1,Ns),
+    definedNs(Ps1,Defined),
     require(
-       member(N,Ns),
-       'Nonterminal ~q not defined.',
+       member(N,Defined),
+       'Nonterminal ~q must be defined.',
        [N]),
-    G1 = g(Rs1,Ps1),
     filter(nonunifiable(N),Rs1,Rs2),
-    filter(nonunifiable(p(_,N,_)),Ps1,Ps2).
+    filter(nonunifiable(p(_,N,_)),Ps1,Ps2),
+    usedNs(Ps2,Used),
+    require(
+       member(N,Used),
+       'Nonterminal ~q must be used.',
+       [N]).
 
 
 %

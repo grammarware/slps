@@ -45,6 +45,12 @@ xml2xbgf(T,designate(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
+xml2xbgf(T,eliminate(N))
+ :-
+    self(name(xbgf:eliminate),T),
+    !,
+    content(T,N).
+
 xml2xbgf(T,extract(P2))
  :-
     self(name(xbgf:extract),T),

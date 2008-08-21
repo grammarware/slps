@@ -8,12 +8,12 @@ LOCAL2=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 2 ]; then
-    echo "Usage: dcg2bgf <Prolog-input> <BGF-output>"
+    echo "Usage: btf2bgf <BTF-input> <BGF-output>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
     rm -f $2
-    swipl -q -f ${LOCAL2}/prolog/cli/dcg2bgf.pro -- $1 $2
+    swipl -q -f ${LOCAL2}/prolog/cli/btf2bgf.pro -- $1 $2
 fi
