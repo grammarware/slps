@@ -6,7 +6,7 @@ implodeRoot(r(G,T),V)
  :-
     require(
       prefixG(G),
-      'Underlying grammar violates prefix condition.',
+      'Grammar must meet Prefix Normal Form.',
       []),
     implodeTree(T,V).
 

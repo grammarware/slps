@@ -8,7 +8,7 @@ LOCAL2=${PWD}
 cd ${LOCAL1}
 
 if [ $# -lt 2 ]; then
-    echo "Usage: bdt <BGF-input1> <BGF-input2> ..."
+    echo "Usage: gdt <BGF-input1> <BGF-input2> ..."
     exit 1
 else
     for i in $*; do
@@ -17,5 +17,5 @@ else
 	    exit 1
 	fi
     done
-    swipl -q -t "halt(1)" -f ${LOCAL2}/prolog/cli/bdt.pro -- $*
+    swipl -q -t "halt(1)" -f ${LOCAL2}/prolog/cli/gdt.pro -- $*
 fi

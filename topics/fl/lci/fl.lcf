@@ -28,7 +28,7 @@
   <tool>
     <name>comparison</name>
     <command>
-      <expand>tools</expand>/bdt
+      <expand>tools</expand>/gdt
     </command>
   </tool>
 
