@@ -7,13 +7,14 @@ cd ../..
 SLPS=${PWD}
 cd ${LOCAL1}
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 1 ]; then
     echo "This script wraps up the ANTLR (java1) parser"
-    echo "Usage: $0 <input> <output>"
+    echo "Usage: $0 <input>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 fi
 
-java -cp ${CLASSPATH}:${SLPS}/topics/fl/java1/javafl.jar -ea TestIO $1 $2
+java -cp ${CLASSPATH}:${SLPS}/topics/fl/java1/javafl.jar -ea TestIO $1 $1.parsed
+rm -f $1.parsed

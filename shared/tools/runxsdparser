@@ -5,10 +5,12 @@ LOCAL1=${PWD}
 cd `dirname $0`
 cd ../..
 SLPS=${PWD}
+cd topics/fl/asfsdf
+SDF=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 1 ]; then
-    echo "This script wraps up the Prolog (dcg) parser"
+    echo "This script wraps up the XML parser"
     echo "Usage: $0 <input>"
     exit 1
 elif [ ! -r $1 ]; then
@@ -16,5 +18,4 @@ elif [ ! -r $1 ]; then
     exit 1
 fi
 
-swipl -q -f ${SLPS}/topics/fl/prolog1/TestIO.pro -t "main('$1','$1.parsed')"
-rm -f $1.parsed
+xmllint --noout --schema ${SLPS}/topics/fl/xsd/fl.xsd $1 1> /dev/null 2> /dev/null
