@@ -1,6 +1,6 @@
-module optimise/FL
+module Optimiser
 
-imports syntax/FL
+imports Syntax
 	
 hiddens
 	context-free start-symbols Program

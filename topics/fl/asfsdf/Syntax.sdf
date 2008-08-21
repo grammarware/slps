@@ -1,6 +1,6 @@
-module syntax/FL
+module Syntax
 
-imports syntax/Numbers
+imports Numbers
 imports basic/Whitespace
 
 exports

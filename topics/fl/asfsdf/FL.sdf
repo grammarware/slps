@@ -1,7 +1,7 @@
 module FL
 
-imports syntax/FL
-imports optimise/FL
+imports Syntax
+imports Optimiser
 
 exports
 	context-free start-symbols 
