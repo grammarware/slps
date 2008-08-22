@@ -21,7 +21,7 @@
   <tool>
     <name>validation</name>
     <command>
-      xmllint --noout --schema <expand>slps</expand>/shared/xsd/bgf.xsd
+      <expand>tools</expand>/checkxml bgf
     </command>
   </tool>
 
@@ -97,7 +97,7 @@
         <expand>tools</expand>/sdf2bgf
       </name>
       <argument>
-        <expand>fl</expand>/asfsdf/syntax/FL.sdf
+        <expand>fl</expand>/asfsdf/*.sdf
       </argument>
     </extraction>
     <parsing>
@@ -152,6 +152,23 @@
         fl
       </argument>
     </extraction>
+  </source>
+
+  <source>
+    <name>ldf</name>
+    <extraction>
+      <name>
+        <expand>tools</expand>/ldf2bgf
+      </name>
+      <argument>
+        <expand>fl</expand>/ldf/fl.ldf
+      </argument>
+    </extraction>
+    <parsing>
+      <command>
+        <expand>tools</expand>/checkxml ldf
+      </command>
+    </parsing>
   </source>
 
   <target>
