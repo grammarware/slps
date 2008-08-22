@@ -4,20 +4,10 @@ imports basic/Integers
 imports basic/Whitespace
 
 exports
-  sorts 
-	Int
-
-context-free syntax
-	add-int(Int,Int) -> Int
-	"-"? NatCon 	-> Int
+	sorts 
+		Int
+	lexical syntax
+		"-"? NatCon 	-> Int
 
 hiddens
 	context-free start-symbols Int
-
-	context-free syntax
-		toInt(Integer) -> Int
-
-	variables
-		"&N" [0-9]* -> NatCon
-		"&I" [0-9]* -> Int
-		"&H" [0-9]* -> Integer

@@ -1,0 +1,26 @@
+equations
+
+[a] toInt(natcon(&LN1))  = int(natcon(&LN1))
+
+[a] toInt(-natcon(&LN1))  = int(-natcon(&LN1))
+
+[1] &H1 := natcon(&LN1) + natcon(&LN2),
+    &I1 := toInt(&H1)
+   =======================
+   add-int(int(natcon(&LN1)),int(natcon(&LN2))) = &I1
+
+[2] &H1 := natcon(&LN2) - natcon(&LN1),
+    &I1 := toInt(&H1)
+   =======================
+   add-int(int(-natcon(&LN1)),int(natcon(&LN2))) = &I1
+
+[3] &H1 := natcon(&LN1) - natcon(&LN2),
+    &I1 := toInt(&H1)
+   =======================
+   add-int(int(natcon(&LN1)),int(-natcon(&LN2))) = &I1
+
+[4] &H1 := - (natcon(&LN1) + natcon(&LN2)),
+    &I1 := toInt(&H1)
+   =======================
+   add-int(int(-natcon(&LN1)),int(-natcon(&LN2))) = &I1
+

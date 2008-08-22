@@ -5,13 +5,13 @@ testcase = ../shared/factorial.txt
 
 all: FL.tbl FL.eqs test
 
-FL.eqs: Optimiser.asf Numbers.asf
-	eqs-dump -m Numbers -o Numbers.eqs
+FL.eqs: Optimiser.asf Calculator.asf
 	eqs-dump -m Optimiser -o Optimiser.eqs
+	eqs-dump -m Calculator -o Calculator.eqs
 	@LDIR=${PWD} ; cd ${asfl} ; eqs-dump -m basic/Integers -o $$LDIR/Integers.eqs
-	concat-asf -o FL.eqs Numbers.eqs Optimiser.eqs Integers.eqs
+	concat-asf -o FL.eqs Optimiser.eqs Integers.eqs Calculator.eqs
 
-FL.tbl: FL.sdf Syntax.sdf Optimiser.sdf
+FL.tbl: FL.sdf Syntax.sdf Numbers.sdf Optimiser.sdf Calculator.sdf
 	@if [ -r /usr/local/bin/pack-sdf ]; then \
 		make packbuild ; \
 	else \
@@ -48,8 +48,7 @@ packbuild:
 	sdf2table -m FL FL.def
 
 clean:
-	rm -f ?.eqs
 	rm -f reduct.out
-	rm -f FL.def FL.tbl FL.eqs
+	rm -f FL.def FL.tbl *.eqs
 	rm -rf basic/*
 
