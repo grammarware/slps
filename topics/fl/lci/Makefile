@@ -13,7 +13,7 @@ check:
 
 clean:
 	rm -f *~
-	rm -f testset/* bgf/*
+	rm -f codesamples/* bgf/*
 	rm -rf bin obj
 	rm -f *.user *.suo
 	rm -f architecture*

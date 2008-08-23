@@ -32,12 +32,12 @@
     </command>
   </tool>
 
-  <tool>
-    <name>testset</name>
+  <testset>
+    <name>codesamples</name>
     <command>
-      <expand>tools</expand>/ldf2samples <expand>fl</expand>/ldf/fl.ldf
+      <expand>tools</expand>/ldf2set <expand>fl</expand>/ldf/fl.ldf
     </command>
-  </tool>
+  </testset>
 
   <tool>
     <name>transformation</name>
@@ -49,126 +49,80 @@
   <source>
     <name>antlr</name>
     <extraction>
-      <name>
-        <expand>tools</expand>/antlr2bgf
-      </name>
-      <argument>
-        <expand>fl</expand>/java1/FL.g
-      </argument>
+      <expand>tools</expand>/antlr2bgf <expand>fl</expand>/java1/FL.g
     </extraction>
     <parsing>
-      <command>
-        <expand>tools</expand>/runantlrparser
-      </command>
+      <expand>tools</expand>/runantlrparser
     </parsing>
     <evaluation>
-      <command>
-        <expand>tools</expand>/runantlrevaluator
-      </command>
+      <expand>tools</expand>/runantlrevaluator
     </evaluation>
+    <testing>
+      <set>codesamples</set>
+    </testing>
   </source>
 
   <source>
     <name>dcg</name>
     <extraction>
-      <name>
-        <expand>tools</expand>/dcg2bgf
-      </name>
-      <argument>
-        <expand>fl</expand>/prolog1/Parser.pro
-      </argument>
+      <expand>tools</expand>/dcg2bgf <expand>fl</expand>/prolog1/Parser.pro
     </extraction>
     <parsing>
-      <command>
-        <expand>tools</expand>/runprologparser
-      </command>
+      <expand>tools</expand>/runprologparser
     </parsing>
     <evaluation>
-      <command>
-        <expand>tools</expand>/runprologevaluator
-      </command>
+      <expand>tools</expand>/runprologevaluator
     </evaluation>
+    <testing>
+      <set>codesamples</set>
+    </testing>
   </source>
 
   <source>
     <name>sdf</name>
     <extraction>
-      <name>
-        <expand>tools</expand>/sdf2bgf
-      </name>
-      <argument>
-        <expand>fl</expand>/asfsdf/*.sdf
-      </argument>
+      <expand>tools</expand>/sdf2bgf <expand>fl</expand>/asfsdf/*.sdf
     </extraction>
     <parsing>
-      <command>
-        <expand>tools</expand>/runasfsdfparser
-      </command>
+      <expand>tools</expand>/runasfsdfparser
     </parsing>
     <evaluation>
-      <command>
-        <expand>tools</expand>/runasfsdfevaluator
-      </command>
+      <expand>tools</expand>/runasfsdfevaluator
     </evaluation>
+    <testing>
+      <set>codesamples</set>
+    </testing>
   </source>
 
   <source>
     <name>om</name>
     <extraction>
-      <name>
-        <expand>tools</expand>/java2bgf
-      </name>
-      <argument>
-        <expand>fl</expand>/java1
-      </argument>
-      <argument>
-        types
-      </argument>
+      <expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
     </extraction>
   </source>
 
   <source>
     <name>xsd</name>
     <extraction>
-      <name>
-        <expand>tools</expand>/xsd2bgf
-      </name>
-      <argument>
-        <expand>fl</expand>/xsd/fl.xsd
-      </argument>
+      <expand>tools</expand>/xsd2bgf <expand>fl</expand>/xsd/fl.xsd
     </extraction>
+    <parsing>
+      <expand>tools</expand>/runxsdparser
+    </parsing>
   </source>
 
   <source>
     <name>jaxb</name>
     <extraction>
-      <name>
-        <expand>tools</expand>/java2bgf
-      </name>
-      <argument>
-        <expand>fl</expand>/java3
-      </argument>
-      <argument>
-        fl
-      </argument>
+      <expand>tools</expand>/java2bgf <expand>fl</expand>/java3 fl
     </extraction>
   </source>
 
   <source>
     <name>ldf</name>
     <extraction>
-      <name>
-        <expand>tools</expand>/ldf2bgf
-      </name>
-      <argument>
-        <expand>fl</expand>/ldf/fl.ldf
-      </argument>
+      <expand>tools</expand>/ldf2bgf <expand>fl</expand>/ldf/fl.ldf
     </extraction>
-    <parsing>
-      <command>
-        <expand>tools</expand>/checkxml ldf
-      </command>
-    </parsing>
   </source>
 
   <target>

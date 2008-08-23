@@ -42,13 +42,13 @@ def unpacksamples(where,dir):
    con = open (dir+'/sample'+`cx`+'.val','w')
    con.write(outline.findtext('yields'))
    con.close()
-  cx+=1
   torun = open (dir+'/sample'+`cx`+'.run','w')
   line = outline.findtext('main')
   for arg in outline.findall("argument"):
    line += ' ' + arg.text
   torun.write(line+'\n')
   torun.close()
+  cx+=1
  print cx,'samples in the test set.'
 
 if __name__ == "__main__":
@@ -57,5 +57,5 @@ if __name__ == "__main__":
   unpacksamples(sys.argv[1],sys.argv[2])
  else:
   print 'Usage:'
-  print ' ',sys.argv[0],'<configuration file>','<output pdf>'
+  print ' ',sys.argv[0],'<ldf>','<dir>'
   sys.exit(1)

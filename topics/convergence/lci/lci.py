@@ -1,14 +1,18 @@
 #!/usr/bin/python
 import os
 import sys
+import glob
 from elementtree import ElementTree
 
 shutup = ' 1> /dev/null 2> /dev/null'
 shortcuts = {}
 actions = []
-sources = {}
+testsets = {}
+tester = {}
+extractor = {}
 targets = {}
-implementations = {}
+parser = {}
+evaluator = {}
 testset = []
 graph_big = []
 graph_small = []
@@ -50,19 +54,21 @@ def readxmlconfig (cfg):
  for outline in config.findall('//target/branch/perform'):
   if outline.text not in actions:
    actions.append(outline.text)
+ # testset
+ for outline in config.findall('//testset'):
+  testsets[outline.findtext('name')]=expandxml(outline.findall('command')[0],{})
  # sources
  for outline in config.findall('//source'):
-  args = [expandxml(outline.findall('extraction/name')[0],{})]
-  for arg in outline.findall('extraction/argument'):
-   args.append(expandxml(arg,{}))
-  sources[outline.findtext('name')]=args
+  extractor[outline.findtext('name')]=expandxml(outline.findall('extraction')[0],{})
   pcmd = ecmd = ''
-  if outline.findall('parsing/command'):
-   pcmd = expandxml(outline.findall('parsing/command')[0],{})
-  if outline.findall('evaluation/command'):
-   ecmd = expandxml(outline.findall('evaluation/command')[0],{})
-  if pcmd and ecmd:
-   implementations[outline.findtext('name')]=[pcmd,ecmd]
+  if outline.findall('parsing'):
+   parser[outline.findtext('name')]=expandxml(outline.findall('parsing')[0],{})
+  if outline.findall('evaluation'):
+   evaluator[outline.findtext('name')]=expandxml(outline.findall('evaluation')[0],{})
+  tmp = []
+  for set in outline.findall('testing/set'):
+   tmp.append(set.text)
+  tester[outline.findtext('name')]=tmp[:]
  # targets
  for outline in config.findall('//target'):
   name = outline.findtext('name')
@@ -82,8 +88,8 @@ def readxmlconfig (cfg):
    line += ' 2> '+cmd.attrib['err']
   tools[outline.findtext('name')]=line
 
- print 'Read',len(shortcuts),'shortcuts,',len(tools),'tools,',len(actions),'actions,',
- print len(sources),'sources','('+`len(implementations)`,'implemented),',len(targets),'targets.'
+ print 'Read',len(shortcuts),'shortcuts,',len(tools),'tools,',len(actions),'actions,',len(targets),'targets,'
+ print len(testsets),'test sets,',len(extractor),'sources:',len(parser),'parsers &',len(evaluator),'evaluators'
 
 def expandone(tag,text,rep):
  if text:
@@ -148,7 +154,7 @@ def makegraph():
 def dumpgraph(df):
  dot = open(df+'_large.dot','w')
  dot.write('digraph generated{ {rank=same; node [shape=ellipse, style=bold];')
- for x in sources.keys():
+ for x in extractor.keys():
   dot.write(quote(x))
   if x in failednode:
    dot.write(' [color=red]')
@@ -179,7 +185,7 @@ def dumpgraph(df):
    dot.write(' ['+par+']')
   dot.write(';\n')
  for node in nodezz:
-  if node not in sources.keys():
+  if node not in extractor.keys():
    if node not in targets.keys():
     if node in failednode:
      dot.write(quote(node)+' [color=red];')
@@ -192,7 +198,7 @@ def dumpgraph(df):
  os.system(run)
  dot = open(df+'_small.dot','w')
  dot.write('digraph generated{ {rank=same;')
- for x in sources.keys():
+ for x in extractor.keys():
   dot.write(quote(x))
   if x in failednode:
    dot.write(' [color=red]')
@@ -227,8 +233,8 @@ def copyfile(x,y):
  yh.close()
 
 def extractall():
- for bgf in sources.keys():
-  run = ' '.join(sources[bgf])+' bgf/'+bgf+'.bgf'
+ for bgf in extractor.keys():
+  run = extractor[bgf]+' bgf/'+bgf+'.bgf'
   logwrite(run)
   if os.system(run+shutup):
    print 'Extraction failed on',bgf
@@ -244,7 +250,7 @@ def extractall():
  print 'Extraction finished.'
 
 def validateall():
- for bgf in sources.keys():
+ for bgf in extractor.keys():
   if bgf in failednode:
    continue
   run = tools['validation']+' bgf/'+bgf+'.bgf'
@@ -260,7 +266,7 @@ def preparebgf(cut):
  if len(cut)==1:
   return cut[0]
  else:
-  if cut[0] in sources.keys():
+  if cut[0] in extractor.keys():
    # starting point is a source
    curname = cut[0]
   else:
@@ -306,7 +312,7 @@ def buildtargets():
   for t in unordered:
    flag = True
    for i in targets[t][0]:
-    if (i[0] not in ordered) and (i[0] not in sources.keys()):
+    if (i[0] not in ordered) and (i[0] not in extractor.keys()):
      flag = False
    if flag:
     ordered.append(t)
@@ -353,102 +359,55 @@ def diffall(t,car,cdr):
    diffall(t,car,[head])
   diffall(t,cdr[0],cdr[1:])
 
-def unpacksamples():
- run = expanduni(tools['testset'],{})+' testset/samples.xml'
- logwrite(run)
- if os.system(run+shutup):
-  print 'Test set extraction failed, no cases tested'
-  #sysexit(6)
-  return
- library={}
- cx = 0
- tree = ElementTree.parse('testset/samples.xml')
- for outline in tree.findall("//sample"):
-  cx+=1
-  torun = open ('testset/sample'+`cx`,"w")
-  for line in outline.text.split('\n'):
-   if line.strip()!='':
-    torun.write(line.strip()+'\n')
-  torun.close()
-  if outline.attrib.has_key('id'):
-   library[outline.attrib['id']]=outline.text
-  if outline.attrib.has_key('sort'):
-   sort=outline.attrib['sort']
-  else:
-   sort=None
-  testset.append(['testset/sample'+`cx`,None,None,sort])
- # All executions
- for outline in tree.findall("//runnable"):
-  cx+=1
-  # sample,context,yields,sort
-  yields=None
-  context=None
-  torun = open ('testset/sample'+`cx`,'w')
-  line = outline.findtext('main')
-  for arg in outline.findall("argument"):
-   line += ' ' + arg.text
-  torun.write(line+'\n')
-  torun.close()
-  if outline.findtext('yields'):
-   yields=outline.findtext('yields')
-  if outline.findtext('context'):
-   if library.has_key(outline.findtext('context')):
-    context='testset/sample'+`cx`+'.context'
-    con = open (context,'w')
-    for line in library[outline.findtext('context')].split('\n'):
-     if line.strip()!='':
-      con.write(line.strip()+'\n')
-    con.close()
-   else:
-    print "No context found for sample",cx,'('+outline.findtext('context')+'), test case not used'
-    continue
-  testset.append(['testset/sample'+`cx`,context,yields,''])
- print cx,'samples in the test set.'
-
 def runtestset():
- for testcase in testset:
-  if testcase[3]:
-   # sort explicitly given
-   print 'Test case',testcase[0],'skipped for the lack of functionality to test samples of sort',testcase[3]
-  elif testcase[1]:
-   # evaluate if context is given
-   results = {}
-   for program in implementations.keys():
-    run = expanduni(implementations[program][1]+' '+testcase[1]+' '+testcase[0]+' '+testcase[2],{})
-    logwrite(run)
+ for testset in testsets.keys():
+  # extracting
+  print 'Test set',testset,
+  run = testsets[testset]+' '+testset
+  logwrite(run)
+  if os.system(run+shutup):
+   print 'could not be extracted'
+   continue
+  print 'extracted'
+  # testing parser
+  for testcase in glob.glob(testset+'/*.src'):
+   results={}
+   for program in parser.keys():
+    if testset in tester[program]:
+     run = parser[program]+' '+testcase
+     logwrite(run)
     results[program]=os.system(run+shutup)
-   print 'Test case',testcase[0].replace('testset/sample',''),
-   if results.values()==[0]*len(implementations):
-    # all zeros
-    print 'passed'
+   print 'Test case',testcase,
+   if results.values()==[0]*len(results):
+    print 'passed parsing'
    else:
     print 'failed'
     for r in results.keys():
-     if results[r]!=0:
-      print r,'evaluated it differently'
-  else:
-   # parse otherwise
-   results = {}
-   for program in implementations.keys():
-    run = expanduni(implementations[program][0]+' '+testcase[0],{})
-    logwrite(run)
-    results[program]=os.system(run+shutup)
-   print 'Test case',testcase[0].replace('testset/sample',''),
-   if results.values()==[0]*len(implementations):
-    # all zeros
-    print 'passed'
-   else:
-    print 'failed'
-    for r in results.keys():
-     if results[r]!=0:
+     if results[r]:
       print r,'did not parse it correctly'
+  # testing evaluator
+  for testcase in glob.glob(testset+'/*.run'):
+   results={}
+   for program in evaluator.keys():
+    if testset in tester[program]:
+     run = evaluator[program]+' '+testcase.replace('.run','.src')+' '+testcase+' '+testcase.replace('.run','.val')
+     logwrite(run)
+    results[program]=os.system(run+shutup)
+   print 'Test case',testcase,
+   if results.values()==[0]*len(results):
+    print 'passed evaluation'
+   else:
+    print 'failed'
+    for r in results.keys():
+     if results[r]:
+      print r,'evaluated it differently'
 
 def checkconsistency():
  # some simple assertions
  # all targets depend on existing targets or sources
  for t in targets.keys():
   for i in targets[t][0]:
-   if not (targets.has_key(i[0]) or sources.has_key(i[0])):
+   if not (targets.has_key(i[0]) or extractor.has_key(i[0])):
     print 'Target',t,'needs',i[0],'which is not defined'
     sysexit(7)
  # all actions can be found
@@ -460,7 +419,7 @@ def checkconsistency():
   #sysexit(8)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.9'
+ print 'Language Covergence Infrastructure v1.10'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])
@@ -471,8 +430,7 @@ if __name__ == "__main__":
    validateall()
   buildtargets()
   print 'Grammar convergence finished.'
-  if tools.has_key('testset'):
-   unpacksamples()
+  if testsets:
    runtestset()
    print 'Testing finished.'
   else:

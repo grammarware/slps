@@ -9,11 +9,11 @@ cd ${LOCAL1}
 
 if [ $# -ne 3 ]; then
     echo "This script wraps up the Prolog (dcg) evaluator"
-    echo "Usage: $0 <context> <input> <yields>"
+    echo "Usage: $0 <context-source> <input-expression> <expected-value>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 fi
 
-swipl -q -f ${SLPS}/topics/fl/prolog1/TestEvaluator.pro -t "main('$1','$2',$3)"
+swipl -q -f ${SLPS}/topics/fl/prolog1/TestEvaluator.pro -t "main('$1','$2',`cat $3`)"

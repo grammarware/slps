@@ -9,11 +9,11 @@ cd ${LOCAL1}
 
 if [ $# -ne 3 ]; then
     echo "This script wraps up the ANTLR (java1) evaluator"
-    echo "Usage: $0 <context> <input> <yields>"
+    echo "Usage: $0 <context-source> <input-expression> <expected-value>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 fi
 
-java -cp ${CLASSPATH}:${SLPS}/topics/fl/java1/javafl.jar -ea TestEvaluator $1 $2 $3
+java -cp ${CLASSPATH}:${SLPS}/topics/fl/java1/javafl.jar -ea TestEvaluator $1 $2 `cat $3`
