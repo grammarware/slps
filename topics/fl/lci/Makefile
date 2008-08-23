@@ -8,8 +8,8 @@ test:
 
 check:
 	${validator} lcf fl.lcf
-	ls -1 xbgf/*.xbgf | xargs -1 ${validator} xbgf
-	ls -1  bgf/*.bgf  | xargs -1 ${validator} bgf
+	ls -1 xbgf/*.xbgf | xargs -n1 ${validator} xbgf
+	ls -1  bgf/*.bgf  | xargs -n1 ${validator} bgf
 
 clean:
 	rm -f *~

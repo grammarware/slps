@@ -49,7 +49,7 @@ def unpacksamples(where,dir):
   torun.write(line+'\n')
   torun.close()
   cx+=1
- print cx,'samples in the test set.'
+ print cx-1,'samples in the test set.'
 
 if __name__ == "__main__":
  print 'Sample Set Extractor'

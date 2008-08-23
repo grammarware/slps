@@ -1,6 +1,7 @@
+build:
+
 test:
-	xsltproc ../../../shared/xsl/ldf2samples.xslt ../../fl/ldf/fl.ldf > samples.xml
-	python xml2set.py samples.xml samples
+	python ldf2set.py ../../fl/ldf/fl.ldf samples
 
 clean:
 	rm -rf samples/* samples.xml *.pyc
