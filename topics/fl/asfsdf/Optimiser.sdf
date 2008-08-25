@@ -1,7 +1,7 @@
 module Optimiser
 
 imports Syntax
-imports Calculator
+imports Numbers
 	
 hiddens
 	context-free start-symbols Program
