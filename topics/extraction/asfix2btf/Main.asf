@@ -5,179 +5,133 @@ main(parsetree(&T1,&I1))
 =
 <btf:root xmlns:btf="http://planet-sl.org/btf" xmlns:bgf="http://planet-sl.org/bgf">
 	asfix2bgf(&T1)
-	mapTree(&T1)
+	trafoTree(&T1)
 </btf:root>
 
-[kill-layout-before]
-mapTree(appl(prod([cf(opt(layout)),&Scs1],&S0,&As1),[&T1,&Tcs1]))
-=
-mapTree(appl(prod([&Scs1],&S0,&As1),[&Tcs1]))
+%%[tree-to-null] trafoTree(appl(prod([],&S0,&As1),&B1)) =
+%%[default-tree-to-null] trafoTree(appl(list(&S1),&B1)) =
+%%[tree-to-null] trafoTree(appl(prod([&Scs1],lex(&S1),&As1),&B1)) = 
+%%[tree-to-null] trafoTree(appl(prod([&Scs1],lit(&Z1),&As1),&B1)) = 
 
-[kill-layout-after]
-mapTree(appl(prod([&Scs1,cf(opt(layout))],&S0,&As1),[&Tcs1,&T1]))
-=
-mapTree(appl(prod([&Scs1],&S0,&As1),[&Tcs1]))
+[kill-layout-before] trafoTree(appl(prod([cf(opt(layout)),&Scs1],&S0,&As1),[&T1,&Tcs2])) = trafoTree(appl(prod([&Scs1],&S0,&As1),[&Tcs2]))
+[kill-layout-before] trafoTree(appl(prod([cf(layout),&Scs1],&S0,&As1),[&T1,&Tcs2])) = trafoTree(appl(prod([&Scs1],&S0,&As1),[&Tcs2]))
+%%[kill-layout-before] trafoTree(appl(prod([lex(&S1),&Scs1],&S0,&As1),[&T1,&Tcs2])) = trafoTree(appl(prod([&Scs1],&S0,&As1),[&Tcs2]))
 
-[map-start-symbol]  
-mapTree(appl(prod([&S1],sort("<START>"),&As1),[&T1]))
-=
-mapTree(&T1)
-%%<btf:tree xmlns:btf="http://planet-sl.org/btf" xmlns:bgf="http://planet-sl.org/bgf">
+[kill-layout-final] trafoTree(appl(prod([cf(layout)],&S0,&As1),[&Tcs2])) = 
+[kill-layout-final] trafoTree(appl(prod([cf(opt(layout))],&S0,&As1),[&Tcs2])) =
+%%[kill-layout-final] trafoTree(appl(prod([lex(&S1)],&S0,&As1),[&Tcs2])) =
 
-[default-map-one-prod]
-mapTree(appl(prod([cf(&S1)],&S0,&As1),[&T1]))
+[map-start-symbol]   trafoTree(appl(prod([&Scs1],sort("<START>"),&As1),[&T1,&Tcs2])) = trafoTree(&T1)
+
+[tree-iter-plus]
+trafoTree(appl(prod([cf(iter(sort(&Z1)))],cf(sort(&Z0)),&As1),[appl(list(cf(iter(sort(&Z1)))),[&Tcs1])]))
 =
 <btf:tree>
 	<nonterminal>
-		<bgf:production>
-			symbol2content(&S0)
-			mapExpr(&S1)
-		</bgf:production>
-		mapTree(&T1)
-	</nonterminal>
-</btf:tree>
-
-[default-map-one-list]
-mapTree(appl(list(cf(iter(sort(&Z1)))),[&Tcs1]))
-=
-<btf:tree>
-	<plus>
-		mapTrees2Trees([&Tcs1])
-	</plus>
-</btf:tree>
-
-[default-map-more-cf]
-mapTree(appl(prod([cf(&S1), &Scs2],&S0,&As1),[&T1, &Tcs2]))
-=
-<btf:tree>
-	<nonterminal>
-		<bgf:production>
-			symbol2content(&S0)
-			<bgf:expression>
-				<sequence>
-					mapExpr(&S1)
-					mapExprs([&Scs2])
-				</sequence>
-			</bgf:expression>
-		</bgf:production>
+		trafoProd(prod([cf(iter(sort(&Z1)))],cf(sort(&Z0)),&As1))
 		<btf:tree>
-			<sequence>
-				mapTree(&T1)
-				mapTrees2Trees([&Tcs2])
-			</sequence>
+			<plus>
+				trafoTrees(&Tcs1)
+			</plus>
 		</btf:tree>
 	</nonterminal>
 </btf:tree>
 
-%% attributes contains cons(bla), need to recover !
-[default-map-more-lit]
-mapTree(appl(prod([lit(&Z1), &Scs2],&S0,&As1),[&T1, &Tcs2]))
+[tree-iter-plus]
+trafoTree(appl(list(cf(iter(sort(&Z1)))),[&Tcs1]))
+=
+<btf:tree>
+	<plus>
+		trafoTrees(&Tcs1)
+	</plus>
+</btf:tree>
+
+[tree-iter-star]
+trafoTree(appl(prod([cf(iter-star(sort(&Z1)))],cf(sort(&Z0)),&As1),[appl(list(cf(iter-star(sort(&Z1)))),[&Tcs1])]))
 =
 <btf:tree>
 	<nonterminal>
-		<bgf:production>
-			symbol2content(&S0)
-			<bgf:expression>
-				<sequence>
-					<bgf:expression><value>string</value></bgf:expression>
-					mapExprs([&Scs2])
-				</sequence>
-			</bgf:expression>
-		</bgf:production>
+		trafoProd(prod([cf(iter(sort(&Z1)))],cf(sort(&Z0)),&As1))
 		<btf:tree>
-			<sequence>
-				<btf:tree><terminal>strcon2chardata(&Z1)</terminal></btf:tree>
-				mapTrees2Trees([&Tcs2])
-			</sequence>
+			<star>
+				trafoTrees(&Tcs1)
+			</star>
 		</btf:tree>
 	</nonterminal>
 </btf:tree>
 
-%%[map-plus-iteration]
-%%mapTree(appl(list(cf(iter(sort("Function")))),[&Tcs1]))
-%%=
-%%<btf:tree>
-%%</btf:tree>
-
-
-[map-plus-in-production]
-mapExpr(iter(&S1))
-=
-<bgf:expression>
-	<plus>
-		<bgf:expression>
-			symbol2content(&S1)
-		</bgf:expression>
-	</plus>
-</bgf:expression>
-
-[map-nonterm-in-production]
-mapExpr(sort(&Z1))
-=
-<bgf:expression>
-	<nonterminal>strcon2chardata(&Z1)</nonterminal>
-</bgf:expression>
-
-[dont-care-if-context-free]
-mapExpr(cf(&S1)) = mapExpr(&S1)
-
-[dont-care-if-lexical]
-mapExpr(lex(&S1)) = mapExpr(&S1)
-
-[s2c1]
-symbol2content(cf(&S1)) = symbol2content(&S1)
-
-[s2c2]
-&C1 := strcon2chardata(&Z1)
-===================================
-symbol2content(sort(&Z1)) = <nonterminal>&C1</nonterminal>
-
-%%[map-plus-in-tree]
-%%mapTree(appl(list(cf(iter(&S1))),[&T1]))
-%%=
-%%<btf:tree>
-%%	<plus>
-%%		mapTree(&T1)
-%%	</plus>
-%%</btf:tree>
-
-[recursive-expr-1]
-mapExprs([&S1]) = mapExpr(&S1)
-
-[recursive-expr-2]
-mapExprs([cf(opt(layout)),&Scs2]) = mapExprs([&Scs2])
-
-[default-recursive-expr-2]
-mapExprs([&S1,&Scs2]) = mapExpr(&S1)mapExprs([&Scs2])
-
-[map-literal-to-terminal]
-mapExpr(lit(&Z1))
-=
-<bgf:expression>
-	<terminal>strcon2chardata(&Z1)</terminal>
-</bgf:expression>
-
-[map-optional-to-expr]
-mapExpr(opt(&S1))
-=
-<bgf:expression>
-	<optional>
-		mapExpr(&S1)
-	</optional>
-</bgf:expression>
-
-
-[map-literal-to-tree]
-mapTree(appl(prod(&Ss1,lit(&Z1),&As1),[&Tcs1]))
+[tree-iter-star]
+trafoTree(appl(list(cf(iter-star(sort(&Z1)))),[&Tcs1]))
 =
 <btf:tree>
-	<terminal>
-		strcon2chardata(&Z1)
-	</terminal>
+	<star>
+		trafoTrees(&Tcs1)
+	</star>
 </btf:tree>
 
-[map-literal-production-to-tree]
-mapTree(appl(prod([lit(&Z1)],cf(sort(&Z0)),&As1),[&T1]))
+[tree-iter-star-nothing]
+trafoTree(appl(prod([cf(iter-star(sort(&Z1)))],cf(sort(&Z0)),&As1),[appl(list(cf(iter-star(sort(&Z1)))),[])]))
+=
+<btf:tree>
+	<nonterminal>
+		trafoProd(prod([cf(iter(sort(&Z1)))],cf(sort(&Z0)),&As1))
+		<btf:tree>
+			<star>
+				<btf:tree><epsilon/></btf:tree>
+			</star>
+		</btf:tree>
+	</nonterminal>
+</btf:tree>
+
+[tree-iter-star-nothing]
+trafoTree(appl(list(cf(iter-star(sort(&Z1)))),[]))
+=
+<btf:tree>
+	<star>
+		<btf:tree><epsilon/></btf:tree>
+	</star>
+</btf:tree>
+
+[tree-optional-no]
+trafoTree(appl(prod([cf(opt(sort(&Z1)))],cf(sort(&Z0)),&As1),[appl(prod([],cf(opt(sort(&Z1))),&As2),[])]))
+=
+<btf:tree>
+	<nonterminal>
+		trafoProd(prod([cf(opt(sort(&Z1)))],cf(sort(&Z0)),&As1))
+		<btf:tree>
+			<optional>
+				<btf:tree><epsilon/></btf:tree>
+			</optional>
+		</btf:tree>
+	</nonterminal>
+</btf:tree>
+
+[tree-optional-yes]
+trafoTree(appl(prod([cf(opt(sort(&Z1)))],cf(sort(&Z0)),&As1),[appl(prod([cf(sort(&Z1))],cf(opt(sort(&Z1))),&As2),[&Tcs1])]))
+=
+<btf:tree>
+	<nonterminal>
+		trafoProd(prod([cf(opt(sort(&Z1)))],cf(sort(&Z0)),&As1))
+		<btf:tree>
+			<optional>
+				trafoTrees(&Tcs1)
+			</optional>
+		</btf:tree>
+	</nonterminal>
+</btf:tree>
+
+[tree-sort]
+trafoTree(appl(prod([cf(sort(&Z1))],cf(sort(&Z0)),&As1),[&T1]))
+=
+<btf:tree>
+	<nonterminal>
+		trafoProd(prod([cf(sort(&Z1))],cf(sort(&Z0)),&As1))
+		trafoTree(&T1)
+	</nonterminal>
+</btf:tree>
+
+[tree-literal]
+trafoTree(appl(prod([lex(sort(&Z0))],cf(sort(&Z0)),&As1),[&T1]))
 =
 <btf:tree>
 	<nonterminal>
@@ -188,30 +142,22 @@ mapTree(appl(prod([lit(&Z1)],cf(sort(&Z0)),&As1),[&T1]))
 			</bgf:expression>
 		</bgf:production>
 		<btf:tree>
-			<terminal>strcon2chardata(&Z1)</terminal>
+			<value>
+				<string>getName(&T1)</string>
+			</value>
 		</btf:tree>
 	</nonterminal>
 </btf:tree>
 
-[map-optional-to-tree]
-mapTree(appl(prod([&Scs1],cf(opt(&S1)),&As1),[&Tcs1]))
+[tree-terminal-from-literal]
+trafoTree(appl(prod([&Scs1],lit(&Z0),&As1),&B1))
 =
 <btf:tree>
-	<optional>
-		mapTree(appl(prod([&Scs1],&S1,&As1),[&Tcs1]))
-	</optional>
+	<terminal>strcon2chardata(&Z0)</terminal>
 </btf:tree>
 
-[map-empty-optional-to-tree]
-mapTree(appl(prod([],cf(opt(&S1)),&As1),[]))
-=
-<btf:tree>
-	<optional>
-	</optional>
-</btf:tree>
-
-[map-literal-nonterminals-to-tree]
-mapTree(appl(prod([lex(sort(&Z0))],cf(sort(&Z0)),&As1),[&T1]))
+[tree-terminal-from-context-free]
+trafoTree(appl(prod([lit(&Z1)],cf(sort(&Z0)),&As1),&B1))
 =
 <btf:tree>
 	<nonterminal>
@@ -222,32 +168,36 @@ mapTree(appl(prod([lex(sort(&Z0))],cf(sort(&Z0)),&As1),[&T1]))
 			</bgf:expression>
 		</bgf:production>
 		<btf:tree>
-			<terminal>mapTree(&T1)</terminal>
+			<value>
+				<string>strcon2chardata(&Z1)</string>
+			</value>
 		</btf:tree>
 	</nonterminal>
 </btf:tree>
 
-[recursive-tree-empty]
-mapTrees2Trees([]) = 
-
-[recursive-tree-1]
-mapTrees2Trees([&T1]) = mapTree(&T1)
-
-[recursive-tree-no-layout]
-mapTrees2Trees([appl(prod([&Scs1],cf(opt(layout)),&As1),[&Tcs1]),&Tcs2]) = mapTrees2Trees([&Tcs2])
-
-[default-recursive-tree-2]
-mapTrees2Trees([&T1,&Tcs2]) = mapTree(&T1)mapTrees2Trees([&Tcs2])
-
-[wip]
-mapTree(appl(prod(&Ss1,lex(&S1),&As1),[appl(list(lex(&S2)),[&Tcs1])]))
+[default-tree-iter]
+trafoTree(appl(prod([&S1,&Scs2],cf(sort(&Z0)),&As1),[&T1,&Tcs2]))
 =
-tree2chardata([&Tcs1])
+<btf:tree>
+	<nonterminal>
+		trafoProd(prod([&S1,&Scs2],cf(sort(&Z0)),&As1))
+		<btf:tree>
+			<sequence>
+				trafoTrees(&T1,&Tcs2)
+			</sequence>
+		</btf:tree>
+	</nonterminal>
+</btf:tree>
 
-[terrible]
-mapExprs([]) = 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[map-lex-literal]
-mapTree(appl(prod([lit(&Z1)],lex(&S1),&As1),[&Tcs1]))
-=
-strcon2chardata(&Z1)
+[get-name-1] getName(appl(prod([lex(iter(char-class(&CR1)))],lex(sort(&Z0)),&As1),[appl(list(lex(iter(char-class(&CR1)))),&B1)])) = tree2chardata(&B1)
+[get-name-2] getName(appl(prod([lex(opt(lit(&Z1))),&Scs1],lex(sort(&Z0)),&As1),[&T1,&Tcs2])) = getName(&T1)getName(appl(prod([&Scs1],lex(sort(&Z0)),&As1),[&Tcs2]))
+[get-name-3] getName(appl(prod([lex(sort(&Z1))],lex(sort(&Z0)),&As1),[&T1])) = getName(&T1)
+[get-name-4] getName(appl(prod([&S1],lex(opt(lit(&Z1))),&As1),[&T1])) = strcon2chardata(&Z1)
+[get-name-5] getName(appl(prod([lit(&Z1)],lex(sort(&Z0)),&As1),&B1)) = strcon2chardata(&Z1)
+[get-name-6] getName(appl(prod([],lex(opt(lit(&Z1))),&As1),[])) = 
+
+[multiple-trees-more]  trafoTrees(&T1,&Tcs2) = trafoTree(&T1)trafoTrees(&Tcs2)
+[multiple-trees-one]   trafoTrees(&T1) = trafoTree(&T1)
+[multiple-trees-empty] trafoTrees() = 

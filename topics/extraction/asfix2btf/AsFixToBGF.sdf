@@ -12,12 +12,12 @@ exports
 		Element Tree
 	context-free syntax
 		asfix2bgf(Tree) -> Element
+		trafoProd(Production) -> Content*
 
 hiddens
 context-free syntax
 	accuProds({Tree ","}+,Production*) -> Production* {traversal(accu,top-down,break)}
 	trafoProds(Production*) -> Content*
-	trafoProd(Production) -> Content*
 	symbols2expr(Symbols) -> Element
 	flattenexprs(Symbols) -> Content*
 	derivelabel(Attributes) -> Content*

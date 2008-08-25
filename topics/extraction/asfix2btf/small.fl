@@ -1,2 +1,2 @@
-fun x = 1
+fun x y z = -1
 

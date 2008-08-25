@@ -33,7 +33,8 @@ test:
 	@cat ../../fl/shared/factorial.txt | python ../../fl/asfsdf/pre.py | sglr -p ../../fl/asfsdf/FL.tbl -t >> fac.trm
 	@echo ")" >> fac.trm
 	cat asfix.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > small.btf
-	cat fac.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > myfactorial.btf
+	cat fac.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > myfactorial1.btf
+	xsltproc ../../../shared/xsl/btf2btf.xslt myfactorial1.btf > myfactorial.btf
 	cp ../xml2btf/tests/factorial.btf .
 	ls -1 *.btf | xargs -n1 checkxml btf
  

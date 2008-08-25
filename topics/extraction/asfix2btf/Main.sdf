@@ -21,6 +21,9 @@ module Main
   hiddens
 
     context-free syntax
+	trafoTree(Tree) -> Content*
+	trafoTrees({Tree ","}*) -> Content*
+	getName(Tree) -> Content*
 	"mapTrees" "(" {Tree ","}* ")" -> Content*
 	"mapTree" "(" Tree ")" -> Element
 %%	"mapTree2Tree" "(" Tree ")" -> Element
@@ -59,3 +62,4 @@ module Main
 	"&I" [0-9]+ -> NatCon
 	"&Ics" [0-9]+ -> {NatCon ","}+
 	"&B" [0-9]+ -> Args
+	"&CR" [0-9]+ -> CharRanges

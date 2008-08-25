@@ -1,7 +1,7 @@
 fl = ..
 tools = ../../../shared/tools
 xbgf = ${fl}/lci/xbgf
-sdf = ${fl}/asfsdf/syntax
+sdf = ${fl}/asfsdf
 
 build: limit.bgf limit.btf
 
@@ -17,7 +17,7 @@ append.xbgf:
 		${xbgf}/reroot.xbgf
 
 limit.bgf: append.xbgf
-	${tools}/sdf2bgf ${sdf}/FL.sdf ${sdf}/Numbers.sdf source.bgf
+	${tools}/sdf2bgf ${sdf}/*.sdf source.bgf
 	${tools}/xbgf append.xbgf source.bgf limit.bgf
 
 limit.btf: append.xbgf
