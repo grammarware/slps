@@ -1,0 +1,11 @@
+In order to run it, one usually needs:
+
+1) wget, http://www.statusq.org/wp-content/uploads/2008/07/wget.zip
+2) PCRE, http://sourceforge.net/projects/pcre/
+3) GODI, http://download.camlcity.org/download/godi-rocketboost-20080630.tar.gz
+4) godi-galax, directly from godi_console, with all dependent packages
+
+This all was needed to establish the infrastructure for Mac OS X Leopard, use and change accordingly.
+
+Manual is here: http://www.galaxquery.org/doc/commandline.html
+
