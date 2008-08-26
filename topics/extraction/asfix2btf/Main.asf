@@ -162,15 +162,14 @@ trafoTree(appl(prod([lit(&Z1)],cf(sort(&Z0)),&As1),&B1))
 <btf:tree>
 	<nonterminal>
 		<bgf:production>
+			derivelabel(&As1)
 			<nonterminal>strcon2chardata(&Z0)</nonterminal>
 			<bgf:expression>
-				<value>string</value>
+				<terminal>strcon2chardata(&Z1)</terminal>
 			</bgf:expression>
 		</bgf:production>
 		<btf:tree>
-			<value>
-				<string>strcon2chardata(&Z1)</string>
-			</value>
+			<terminal>strcon2chardata(&Z1)</terminal>
 		</btf:tree>
 	</nonterminal>
 </btf:tree>

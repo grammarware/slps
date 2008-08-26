@@ -13,6 +13,7 @@ exports
 	context-free syntax
 		asfix2bgf(Tree) -> Element
 		trafoProd(Production) -> Content*
+		derivelabel(Attributes) -> Content*
 
 hiddens
 context-free syntax
@@ -20,7 +21,6 @@ context-free syntax
 	trafoProds(Production*) -> Content*
 	symbols2expr(Symbols) -> Element
 	flattenexprs(Symbols) -> Content*
-	derivelabel(Attributes) -> Content*
 	
 variables
 	"&A" [0-9]+ -> Attr
