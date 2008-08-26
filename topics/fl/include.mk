@@ -1,10 +1,10 @@
 shared = ../shared
 xsd = ../xsd
 factorial = ${shared}/factorial.txt
-xfactorial =  ${xsd}/factorial.xml
+xfactorial =  ${shared}/factorial.xml
 temp = temp.txt
 schema =  ${xsd}/fl.xsd
 apply = ${shared}/fac5.txt
-xapply = ${xsd}/fac5.xml
+xapply = ${shared}/fac5.xml
 unoptimized = ${shared}/sample88a.txt
 optimized = ${shared}/sample88b.txt

@@ -1,9 +1,7 @@
-root = ../../..
-shared = ${root}/shared
-fl = ..
-tools = ${shared}/tools
-xsd = ${shared}/xsd
-xbgf = ${fl}/lci/xbgf
+include ../include.mk
+
+tools = ../../../shared/tools
+xbgf = ../lci/xbgf
 
 build: limit.bgf limit.btf
 
@@ -18,11 +16,11 @@ append.xbgf:
 		${xbgf}/mkSignature.xbgf
 
 limit.bgf: append.xbgf
-	${tools}/xsd2bgf ${fl}/xsd/fl.xsd source.bgf
+	${tools}/xsd2bgf ${schema} source.bgf
 	${tools}/xbgf append.xbgf source.bgf limit.bgf
 
 limit.btf: append.xbgf
-	${tools}/xml2btf ${fl}/xsd/fl.xsd ${fl}/xsd/factorial.xml source.btf
+	${tools}/xml2btf ${schema} ${xfactorial} source.btf
 	${tools}/xbtf append.xbgf source.btf limit.btf
 
 rebuild:
@@ -40,3 +38,4 @@ clean:
 	rm -f *.bgf
 	rm -f *.btf
 	rm -f *.xbgf
+
