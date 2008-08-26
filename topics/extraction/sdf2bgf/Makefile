@@ -27,8 +27,7 @@ tblcat:
 test:
 	@echo Building FL.trm from ${flsdf} ...
 	@echo "main(definition" > FL.trm
-	@cat ${flsdf}/syntax/FL.sdf >> FL.trm
-	@cat ${flsdf}/syntax/Numbers.sdf >> FL.trm
+	@cat ${flsdf}/*.sdf >> FL.trm
 	@echo ")" >>FL.trm
 	cat FL.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > fl.bgf
 	../../../shared/tools/checkxml bgf fl.bgf
