@@ -32,19 +32,26 @@
     </command>
   </tool>
 
-  <testset>
-    <name>codesamples</name>
-    <command>
-      <expand>tools</expand>/ldf2set <expand>fl</expand>/ldf/fl.ldf
-    </command>
-  </testset>
-
   <tool>
     <name>transformation</name>
     <command>
       <expand>tools</expand>/xbgf
     </command>
   </tool>
+
+  <testset>
+    <name>xmlsamples</name>
+    <command>
+      <expand>tools</expand>/buildtestsetxml
+    </command>
+  </testset>
+
+  <testset>
+    <name>codesamples</name>
+    <command>
+      <expand>tools</expand>/ldf2set <expand>fl</expand>/ldf/fl.ldf
+    </command>
+  </testset>
 
   <source>
     <name>antlr</name>
@@ -102,13 +109,19 @@
   </source>
 
   <source>
-    <name>xsd</name>
+    <name>xml</name>
     <extraction>
       <expand>tools</expand>/xsd2bgf <expand>fl</expand>/xsd/fl.xsd
     </extraction>
     <parsing>
       <expand>tools</expand>/runxsdparser
     </parsing>
+    <evaluation>
+      <expand>tools</expand>/runxqueryevaluator
+    </evaluation>
+    <testing>
+      <set>xmlsamples</set>
+    </testing>
   </source>
 
   <source>
@@ -148,7 +161,7 @@
       <perform>unerase</perform>
     </branch>
     <branch>
-      <input>xsd</input>
+      <input>xml</input>
       <perform>trimXsd</perform>
       <perform>downcase</perform>
       <perform>massageXsd</perform>

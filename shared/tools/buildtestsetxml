@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 1 ]; then
+    echo "This script builds an XML test set for FL"
+    echo "Usage: $0 <output-directory>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+cp ${SLPS}/topics/fl/shared/factorial.xml $1/factorial.src
+cp ${SLPS}/topics/fl/shared/fac5.xml $1/factorial.run
+echo 120 > $1/factorial.val
+
