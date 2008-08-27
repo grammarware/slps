@@ -1,4 +1,6 @@
 declare default element namespace "fl";
+declare variable $context external;
+declare variable $evalexpr external;
 
 declare function local:evalbinary($left,$op,$right)
 {
@@ -99,14 +101,9 @@ declare function local:evaluate($expr,$prg)
   else 0 (:("null" ,data($type)) :)
 };
 
-let $prg := doc("factorial.xml")
-for $expr in doc("fac5.xml")//Fragment
+let $prg := $context
+for $expr in $evalexpr//Fragment
 return
 	<Fragment xsi:type="Literal">
 		<info>{local:evaluate($expr,$prg)}</info>
 	</Fragment>
-(: Stylus Studio meta-information - (c) 2004-2006. Progress Software Corporation. All rights reserved.
-<metaInformation>
-<scenarios ><scenario default="yes" name="Scenario1" userelativepaths="yes" externalpreview="no" useresolver="yes" url="" outputurl="" processortype="datadirect" tcpport="0" profilemode="0" profiledepth="" profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" host="" port="0" user="" password="" validateoutput="no" validator="internal" customvalidator="" ><advancedProperties name="bSchemaAware" value="false"/><advancedProperties name="bXml11" value="false"/><advancedProperties name="iValidation" value="0"/><advancedProperties name="bExtensions" value="true"/><advancedProperties name="iWhitespace" value="0"/><advancedProperties name="bTinyTree" value="true"/><advancedProperties name="bWarnings" value="true"/><advancedProperties name="bUseDTD" value="false"/></scenario></scenarios><MapperMetaTag><MapperInfo srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/><MapperBlockPosition></MapperBlockPosition><TemplateContext></TemplateContext><MapperFilter side="source"></MapperFilter></MapperMetaTag>
-</metaInformation>
-:)

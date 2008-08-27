@@ -1,4 +1,5 @@
 declare default element namespace "fl";
+declare variable $input external;
 
 declare function local:convert($name)
 {
@@ -45,7 +46,7 @@ declare function local:pprint($fun)
   else ("NICHT",data($type))
 };
 
-let $prg := doc("factorial.xml")
+let $prg := $input
 return
   ("
 ",for $f in $prg//function

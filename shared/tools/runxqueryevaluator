@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 3 ]; then
+    echo "This script wraps up the XQuery evaluator"
+    echo "Usage: $0 <context-source> <input-expression> <expected-value>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+galax-run ${SLPS}/topics/fl/xquery/eval.xq -serialize wf -doc context="$1" -doc evalexpr="$2" | xpath "//info/text()" > $3.result
+diff -b $3 $3.result
+rm -f $3.result
+
