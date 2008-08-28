@@ -23,7 +23,8 @@ asfix2bgf(&T1)
 [kill-layout-before] trafoProd(prod([lex(&S1),&Scs1],&S0,&As1)) = trafoProd(prod([&Scs1],&S0,&As1))
 [kill-layout-before] trafoProd(prod([cf(layout),&Scs1],&S0,&As1)) = trafoProd(prod([&Scs1],&S0,&As1))
 
-[prod-start] trafoProd(prod([cf(sort(&Z1)),&Scs1],sort("<START>"),&As1)) = <root>strcon2chardata(&Z1)</root>
+[prod-start] trafoProd(prod([cf(sort(&Z1)),&Scs1],sort("<START>"),&As1)) = 
+%% <root>strcon2chardata(&Z1)</root>
 
 [a]
 trafoProd(prod(&Ss1,cf(sort(&Z0)),&As1))
