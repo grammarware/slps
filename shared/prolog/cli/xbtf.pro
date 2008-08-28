@@ -9,7 +9,7 @@ main
     loadXml(BtfInFile, BtfInXml),
     xml2xbgf(XbgfXml,Xbgf),
     xmlToRoot(BtfInXml,RootIn),
-    transformR(Xbgf,RootIn,RootOut),
+    transformT(Xbgf,RootIn,RootOut),
     tToXml(RootOut,BtfOutXml),
     saveXml(BtfOutFile,BtfOutXml),
     halt.

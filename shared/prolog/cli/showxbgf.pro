@@ -8,7 +8,7 @@ main :-
    loadXml(XbgfFile,XbgfXml),
    rootToBtf(SG,XbgfXml,RootIn),
    xml2xbgf(XbgfXbgfXml,Xbgf),
-   transformR(Xbgf,RootIn,RootOut),
+   transformT(Xbgf,RootIn,RootOut),
    implodeRoot(RootOut,Imploded),
    ppList('  ', Imploded),nl,
    halt.

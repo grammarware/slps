@@ -21,7 +21,9 @@ limit.bgf: append.xbgf
 
 limit.btf: append.xbgf
 	${tools}/xml2btf ${schema} ${xfactorial} source.btf
+	${tools}/checkbtf source.btf
 	${tools}/xbtf append.xbgf source.btf limit.btf
+	${tools}/checkbtf limit.btf
 
 rebuild:
 	make clean

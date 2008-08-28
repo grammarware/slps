@@ -2,17 +2,62 @@
 % Extract BGF from BTF %
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-btf2bgf(T,g([],Ps2))
+btf2bgf(r(G1,T),G2)
+ :-
+    !,
+    definedNs(G1,Ns),
+    btf2bgf(Ns,T,G2).
+
+btf2bgf(Ns,T,g([],Ps3))
  :-
     collect(used_p_rule,T,Ps1),
-    list_to_set(Ps1,Ps2).
+    list_to_set(Ps1,Ps2),
+    filter(unless_v_rules(Ns),Ps2,Ps3).
 
 used_p_rule(n(P,_),[P]).
+
+unless_v_rules(Ns,p(_,N,v(string)))
+ :-
+    \+ member(N,Ns),
+    !,
+    fail.
+
+unless_v_rules(_,_).
 
 
 %
 % Check structural integrity of tree
 %
+
+checkbtf(T1)
+ :-
+    T1 = r(G1,T2),
+    btf2bgf(T1,G2),
+    ( checkbtf(G1,T2) -> 
+      true; 
+      (
+        write(G1),nl,
+        write(G2),nl,
+        write('Sanity checking failed.'), nl,
+        fail
+      )
+    ),
+    ( subsetG(G2,G1) ->
+      true;
+      (
+        write('Subset check failed; invoking diff.'), nl,
+        diffG((
+          ('bgf-declared-by-btf',G1),
+          ('bgf-used-by-btf',G2))),
+        fail
+      )
+    ),
+    !.
+
+checkbtf(g(_,Ps),r(_,T))
+ :-
+    !,
+    checkbtf(Ps,T).
 
 checkbtf(Ps,n(p(_,_,X),T))
  :-
@@ -31,6 +76,11 @@ checkbtf(Ps,n(N),v(string(_)))
 checkbtf(_,t(V),t(V))
  :-
     !.
+
+checkbtf(Ps,s(S,X),s(S,T))
+ :-
+    !,
+    checkbtf(Ps,X,T). 
 
 checkbtf(_,v(string),v(string(_)))
  :-

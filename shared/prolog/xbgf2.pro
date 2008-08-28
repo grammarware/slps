@@ -1,17 +1,24 @@
-:- module(xbgf2,[transformR/3,transformT/3]).
+:- module(xbgf2,[transformT/3]).
 :- use_module('xbgf1.pro').
 
-transformR(Xbgf,r(G1,T1),r(G2,T2))
+transformT(sequence([]),T,T)
+ :-
+    !.
+    
+transformT(sequence([X|Y]),T1,T3)
+ :-
+     !,
+     transformT(X,T1,T2),
+     transformT(sequence(Y),T2,T3),
+     !.
+
+transformT(Xbgf,r(G1,T1),T4)
  :-
     xbgf1:transformG(Xbgf,G1,G2),
-    xbgf2:transformT(Xbgf,T1,T2).
-
-transformT(T,T1,T3)
- :-
-    T =.. [F|_],
-    format('Applying ~q transformation.~n',[F]),
-    apply(T,[T1,T2]),
-    ytransform(xbgf2:normalizeT_rules,T2,T3),    
+    apply(Xbgf,[T1,T2]),
+    ytransform(xbgf2:normalizeT_rules,T2,T3),
+    T4 = r(G2,T3),
+    checkbtf(T4),
     !.
 
 normalizeT_rules(','([]),true).
@@ -194,11 +201,23 @@ modulo_strategy(n(N),n(N),n(P,T),n(P,T))
  :-
     P = p(_,N,_).
 
-modulo_strategy(X1,s(S,X2),T1,s(S,T2))
+modulo_strategy(
+  v(string),
+  v(string),
+  v(string(V)),
+  v(string(V))).
+
+modulo_strategy(
+  v(int),
+  v(int),
+  v(int(V)),
+  v(int(V))).
+
+modulo_strategy(s(S,X1),X2,s(S,T1),T2)
  :-
     modulo_strategy(X1,X2,T1,T2).
 
-modulo_strategy(s(S,X1),X2,s(S,T1),T2)
+modulo_strategy(X1,s(S,X2),T1,s(S,T2))
  :-
     modulo_strategy(X1,X2,T1,T2).
 

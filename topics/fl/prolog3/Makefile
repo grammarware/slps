@@ -22,7 +22,9 @@ limit.bgf: append.xbgf
 
 limit.btf: append.xbgf
 	${tools}/asfix2btf ${sdf} ${fl}/shared/factorial.txt source.btf
+	${tools}/checkbtf source.btf
 	${tools}/xbtf append.xbgf source.btf limit.btf
+	${tools}/checkbtf limit.btf
 
 rebuild:
 	make clean
