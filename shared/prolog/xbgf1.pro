@@ -627,7 +627,7 @@ renameS_rule(S1,S2,s(S1,X),s(S2,X)).
 % Assign new roots to the grammar
 %
 
-reroot(Rs,g(Rs1,Ps),g(Rs,Ps))
+reroot(Rs,g(_,Ps),g(Rs,Ps))
  :- 
     definedNs(Ps,Ns1),
     subtract(Rs,Ns1,Ns2),

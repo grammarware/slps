@@ -403,7 +403,7 @@ renameS_scope(T) :- \+ T = n(_,_).
 % Assign new roots to the grammar
 %
 
-reroot(_,T1,T1) :- trace.
+reroot(_,T1,T1).
 
 
 %
