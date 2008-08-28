@@ -593,7 +593,7 @@ uqImportXsd(SGs1,(Pfx,Ns),G1,G4)
     member(SG1,SGs1),
     SG1 = (S1,_,_),
     attribute(targetNamespace,S1,Ns),
-    transform(delpfx_rules(Pfx),G1,G2),
+    transform(try(delpfx_rules(Pfx)),G1,G2),
     definedNs(G2,Defined1),
     completeXsd(SG1,G3),
     definedNs(G3,Defined2),

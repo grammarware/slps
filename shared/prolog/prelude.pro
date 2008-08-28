@@ -23,6 +23,11 @@ require(G,F,Args)
     ) ).
 
 
+% Stratego-like try
+
+try(G,X,Y) :- (apply(G,[X,Y]); Y = X), !.
+
+
 % Right-associative list fold
 
 foldr(_,E,[],E).
@@ -137,7 +142,7 @@ collect(G,X,L2)
 
 transform(G,X,Z)
  :-
-    ( apply(G,[X,Y]) -> true; Y = X ),
+    apply(G,[X,Y]),
     Y =.. [F|Ys],
     maplist(transform(G),Ys,Zs),
     Z =.. [F|Zs],
@@ -145,7 +150,7 @@ transform(G,X,Z)
 
 transformWhile(G1,G2,X,Z)
  :-
-    ( apply(G1,[X,Y]) -> true; Y = X ),
+    apply(G1,[X,Y]),
     ( apply(G2,[Y]) -> 
           (
             Y =.. [F|Ys],
@@ -162,7 +167,7 @@ transformWhile(G1,G2,X,Z)
 
 ytransform(G,X,Z)
  :-
-    transform(G,X,Y),
+    transform(try(G),X,Y),
     ( X == Y -> Z = Y; ytransform(G,Y,Z) ),
     !.
 

@@ -1,15 +1,10 @@
 :- module(xbgf2,[transformT/3]).
 :- use_module('xbgf1.pro').
 
-transformT(sequence([]),T,T)
- :-
-    !.
-    
-transformT(sequence([X|Y]),T1,T3)
+transformT(sequence(Xs),T1,T2)
  :-
      !,
-     transformT(X,T1,T2),
-     transformT(sequence(Y),T2,T3),
+     accum(xbgf2:transformT,Xs,T1,T2),
      !.
 
 transformT(Xbgf,r(G1,T1),T4)
@@ -22,10 +17,13 @@ transformT(Xbgf,r(G1,T1),T4)
     !.
 
 normalizeT_rules(','([]),true).
-normalizeT_rules(','([T]),T).
+normalizeT_rules(','([Z]),Z).
 normalizeT_rules('+'(true),true).
+normalizeT_rules('+'([true]),true).
 normalizeT_rules('*'(true),true).
+normalizeT_rules('*'([true]),true).
 normalizeT_rules('?'(true),true).
+normalizeT_rules('?'([true]),true).
 normalizeT_rules(','(Ts1),','(Ts5))
  :-
     append(Ts2,[','(Ts3)|Ts4],Ts1),
@@ -59,7 +57,7 @@ caseFirstUp(G1,G2) :- case(first,up,G1,G2).
 
 case(Q,UD,T1,T2) 
  :-
-    transform(xbgf2:case_rule(Q,UD),T1,T2).
+    transform(try(xbgf2:case_rule(Q,UD)),T1,T2).
 
 case_rule(Q,UD,g(Rs1,Ps),g(Rs2,Ps)) :- maplist(xbgf1:doCase(Q,UD),Rs1,Rs2).
 case_rule(Q,UD,p(As,N1,X),p(As,N2,X)) :- xbgf1:doCase(Q,UD,N1,N2).
@@ -74,7 +72,37 @@ case_rule(Q,UD,s(S1,X),s(S2,X)) :- xbgf1:doCase(Q,UD,S1,S2).
 % Define a nonterminal
 %
 
-define(_,T1,T1).
+define(Ps,T1,T2)
+ :-
+    accum(xbgf2:define_strategy,Ps,T1,T2).
+
+define_strategy(P,T1,T2)
+ :-
+    transform(xbgf2:define_rules(P),T1,T2).
+
+define_rules(P1,n(P2,T1),n(P1,T2))
+ :-
+    P1 = p(_,N,X1),
+    P2 = p(_,N,X2),
+    !,
+    (
+      X1 == X2, !,
+      T2 = T1
+    ;
+      X1 == v(string), X2 == v(int), !,
+      T1 = v(int(V1)),
+      T2 = v(string(V3)),
+      number_chars(V1,V2),
+      atom_chars(V3,V2)
+    ;
+      X2 == v(string), X1 == v(int), !,
+      T1 = v(string(V1)),
+      T2 = v(int(V3)),
+      atom_chars(V1,V2), 
+      number_chars(V3,V2)
+    ).
+
+define_rules(_,X,X).
 
 
 %
@@ -85,7 +113,7 @@ define(_,T1,T1).
 
 designate(P1,T1,T2)
  :-
-    transform(xbgf2:designate_rule(P1),T1,T2).
+    transform(try(xbgf2:designate_rule(P1)),T1,T2).
 
 designate_rule(P1,n(P2,T),n(P1,T))
  :-
@@ -142,8 +170,16 @@ id(T1,T1).
 % Inline a nonterminal definition (and eliminate it)
 %
 
-inline(_,T1,T1).
-    
+inline(N,T1,T2) 
+ :-
+    collect(xbgf2:inline_rule1(N),T1,Xs1),
+    list_to_set(Xs1,Xs2),
+    transform(try(xbgf2:inline_rules2(N,Xs2)),T1,T2).
+
+inline_rule1(N,p(_,N,X),[X]).
+inline_rules2(N,[X],n(N),X).
+inline_rules2(N,_,n(p(_,N,_),T),T).
+
 
 %
 % p([l(introduce)], f, +n(p))
@@ -162,7 +198,7 @@ introduce(_,T1,T1).
 
 lassoc(P1,T1,T2)
  :-
-    transform(xbgf2:lassoc_rule(P1),T1,T2).
+    transform(try(xbgf2:lassoc_rule(P1)),T1,T2).
 
 lassoc_rule(P1,n(P2,','([T1,'*'(Ts)])),T2)
  :-
@@ -185,7 +221,7 @@ lassoc_strategy(P,[','([Ta,Tb])|Ts],T1,T2)
 
 modulo(P1,T1,T2)
  :-
-    transform(xbgf2:modulo_rule(P1),T1,T2).
+    transform(try(xbgf2:modulo_rule(P1)),T1,T2).
 
 modulo_rule(P2,n(P1,T1),n(P2,T2))
  :-
@@ -253,7 +289,27 @@ modulo_strategy('?'(X1),'?'(X2),'?'(Ts1),'?'(Ts2))
 % Permute the body of a production
 %
 
-permute(_,T1,T1).
+permute(p(_,N,','(Xs)),T1,T2)
+ :-
+    transform(try(xbgf2:permute_rule(N,Xs)),T1,T2).
+
+permute_rule(N,Xs1,
+  n(p(As,N,','(Xs2)),','(Ts1)),
+  n(p(As,N,','(Xs1)),','(Ts2)))
+ :-
+    permuteXs(Xs2,Xs1,Ts1,Ts2).
+
+permuteXs([],[],[],[]).
+permuteXs(Xs1,[X|Xs2],Ts1,[T|Ts2])
+ :-
+    append(Xs1a,[X|Xs1b],Xs1),
+    length(Xs1a,Len),
+    append(Xs1a,Xs1b,Xs3),
+    append(Ts1a,[T|Ts1b],Ts1),
+    length(Ts1a,Len),
+    append(Ts1a,Ts1b,Ts3),
+    permuteXs(Xs3,Xs2,Ts3,Ts2),
+    !.
 
 
 %
@@ -269,8 +325,13 @@ permute(_,T1,T1).
 % (Assume epsilon as missing definition)
 %
 
-prune(_,T1,T1).
+prune(N,T1,T2)
+ :-
+    transform(try(xbgf2:prune_rules(N)),T1,T2).
     
+prune_rules(N,n(N),true).
+prune_rules(N,n(p(_,N,_),_),true).
+
 
 % p([l(relax)], f, n(p))
 
@@ -301,7 +362,7 @@ renameL((L1,L2),T1,T2)
 
 renameL(L1,L2,T1,T2)
  :-
-    transform(xbgf1:renameL_rule(L1,L2),T1,T2).
+    transform(try(xbgf1:renameL_rule(L1,L2)),T1,T2).
 
 renameN((N1,N2),T1,T2)
  :-
@@ -309,7 +370,7 @@ renameN((N1,N2),T1,T2)
 
 renameN(N1,N2,T1,T2)
  :-
-    transform(xbgf1:renameN_rules(N1,N2),T1,T2).
+    transform(try(xbgf1:renameN_rules(N1,N2)),T1,T2).
 
 renameS((S1,S2),T1,T2)
  :-
@@ -317,18 +378,18 @@ renameS((S1,S2),T1,T2)
 
 renameS([],S1,S2,T1,T2)
  :-
-    transform(xbgf1:renameS_rule(S1,S2),T1,T2).
+    transform(try(xbgf1:renameS_rule(S1,S2)),T1,T2).
 
 renameS([L],S1,S2,T1,T2)
  :-
-    transform(xbgf2:renameS_rule(L,S1,S2),T1,T2).
+    transform(try(xbgf2:renameS_rule(L,S1,S2)),T1,T2).
 
 renameS_rule(L,S1,S2,n(P1,T1),n(P2,T2))
  :-
     P1 = p([l(L)],_,_),
-    transform(xbgf1:renameS_rule(S1,S2),P1,P2),
+    transform(try(xbgf1:renameS_rule(S1,S2)),P1,P2),
     transformWhile(
-      xbgf1:renameS_rule(S1,S2),
+      try(xbgf1:renameS_rule(S1,S2)),
       xbgf2:renameS_scope,
       T1, 
       T2).
@@ -342,7 +403,7 @@ renameS_scope(T) :- \+ T = n(_,_).
 % Assign new roots to the grammar
 %
 
-reroot(_,T1,T1).
+reroot(_,T1,T1) :- trace.
 
 
 %
@@ -355,11 +416,9 @@ restrict(_,T1,T1).
 
 
 % p([l(sequence)], f, *(n(f)))
-
-sequence(Ts,T1,T2)
- :-
-    accum(xbgf2:transformT,Ts,T1,T2).
-
+%
+% Covered by definition of transformT/3.
+%
 
 %
 % p([l(skip)], f, n(p))
@@ -367,7 +426,11 @@ sequence(Ts,T1,T2)
 % Skip a production
 %
 
-skip(_,T1,T1).
+skip(P,T1,T2)
+ :-
+    transform(try(xbgf2:skip_rule(P)),T1,T2).
+
+skip_rule(P,n(P,T),T).
 
 
 %
@@ -389,9 +452,13 @@ stripS(_,T1,T1).
 
 stripSs(T1,T2)
  :-
-    transform(xbgf2:stripS_rule,T1,T2).
+    transform(try(xbgf2:stripS_rule),T1,T2).
 
-stripTs(T1,T1).
+stripTs(T1,T2) 
+ :-
+    transform(try(xbgf2:stripTs_rule),T1,T2).
+
+stripTs_rule(t(_),true).
 
 stripT(_,T1,T1).
 
@@ -406,7 +473,7 @@ stripS_rule(s(_,X),X).
 
 unchain(N,T1,T2)
  :-
-    transform(xbgf2:unchain_rule(N),T1,T2).
+    transform(try(xbgf2:unchain_rule(N)),T1,T2).
 
 unchain_rule(
     N1,
@@ -465,7 +532,7 @@ unite(_,_,T1,T1).
 
 verticalL(L,T1,T2)
  :-
-    transform(xbgf2:verticalL_rule(L),T1,T2).
+    transform(try(xbgf2:verticalL_rule(L)),T1,T2).
 
 verticalL_rule(
   L,
@@ -477,7 +544,7 @@ verticalL_rule(
 
 verticalN(N,T1,T2)
  :-
-    transform(xbgf2:verticalN_rule(N),T1,T2).
+    transform(try(xbgf2:verticalN_rule(N)),T1,T2).
 
 verticalN_rule(
   N,

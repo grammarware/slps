@@ -6,14 +6,15 @@
 % Make sure that vacouous transformations are rejected.
 %
 
-transformG(T,G1,G3)
+transformG(Xbgf,G1,G4)
  :-
-    T =.. [F|_],
+    Xbgf =.. [F|_],
     format('Applying ~q transformation.~n',[F]),
     normalizeG(G1,G2),
-    apply(T,[G2,G3]),
+    apply(Xbgf,[G2,G3]),
+    normalizeG(G3,G4),
     require(
-      ( \+ G2 == G3 ),
+      ( \+ G2 == G4 ),
       'Vacuous transformation detected.',
       []),
     !.
@@ -327,18 +328,15 @@ inline(N,g(Rs,Ps1),g(Rs,Ps4))
       member(N,Uses1),
       'Nonterminal ~q must be used.',
       [N]),
-    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
-    require(
-       Ps2 = [p(_,_,X)],
-       'Nonterminal ~q must be defined horizontally.',
-       [N]),
-    usedNs(Ps2,Uses2),
+    splitN1(Ps1,N,P2,Ps2a,Ps2b),
+    P2 = p(_,_,X),
+    usedNs([P2],Uses2),
     require(
       ( \+ member(N,Uses2) ),
       'Nonterminal ~q must not be used in its definition.',
       [N]),
     append(Ps2a,Ps2b,Ps3),
-    transform(xbgf1:inline_rule(N,X),Ps3,Ps4).
+    transform(try(xbgf1:inline_rule(N,X)),Ps3,Ps4).
     
 inline_rule(N,X,n(N),X).
 
@@ -501,7 +499,7 @@ prune(N,G1,G2)
        member(N,Us),
        'Nonterminal ~q must be in use.',
        [N]),
-    transform(xbgf1:prune_rule(N),G1,G2).
+    transform(try(xbgf1:prune_rule(N)),G1,G2).
     
 prune_rule(N,n(N),true).
 
@@ -560,7 +558,7 @@ renameL(L1,L2,G1,G2)
        (\+ member(L2,Ls)),
        'Target name ~q for renaming must be fresh.',
        [L2]),
-    transform(xbgf1:renameL_rule(L1,L2),G1,G2).
+    transform(try(xbgf1:renameL_rule(L1,L2)),G1,G2).
 
 renameL_rule(L1,L2,p([l(L1)],N,X),p([l(L2)],N,X)).
 
@@ -579,7 +577,7 @@ renameN(N1,N2,G1,G2)
        (\+ member(N2,Ns)),
        'Target name ~q for renaming must be fresh.',
        [N2]),
-    transform(xbgf1:renameN_rules(N1,N2),G1,G2).
+    transform(try(xbgf1:renameN_rules(N1,N2)),G1,G2).
 
 renameN_rules(N1,N2,g(Rs1,Ps),g(Rs2,Ps))
  :-
@@ -603,7 +601,7 @@ renameS([],S1,S2,G1,G2)
        (\+ member(S2,Ss)),
        'Target name ~q for renaming must be fresh.',
        [S2]),
-    transform(xbgf1:renameS_rule(S1,S2),G1,G2).
+    transform(try(xbgf1:renameS_rule(S1,S2)),G1,G2).
 
 renameS([L],S1,S2,g(Rs,Ps1),g(Rs,Ps3))
  :-
@@ -617,7 +615,7 @@ renameS([L],S1,S2,g(Rs,Ps1),g(Rs,Ps3))
        (\+ member(S2,Ss)),
        'Target name ~q for renaming must be fresh.',
        [S2]),
-    transform(xbgf1:renameS_rule(S1,S2),P1,P2),
+    transform(try(xbgf1:renameS_rule(S1,S2)),P1,P2),
     append(Ps2a,[P2|Ps2b],Ps3).
 
 renameS_rule(S1,S2,s(S1,X),s(S2,X)).
@@ -629,8 +627,8 @@ renameS_rule(S1,S2,s(S1,X),s(S2,X)).
 % Assign new roots to the grammar
 %
 
-reroot(Rs,g(_,Ps),g(Rs,Ps))
- :-
+reroot(Rs,g(Rs1,Ps),g(Rs,Ps))
+ :- 
     definedNs(Ps,Ns1),
     subtract(Rs,Ns1,Ns2),
     require(
@@ -772,11 +770,11 @@ stripS(S,G1,g(Rs,Ps2))
       'Selector ~q must be in use.',
       [S]),
     G1 = g(Rs,Ps1),
-    transform(xbgf1:stripS_rule(S),Ps1,Ps2).
+    transform(try(xbgf1:stripS_rule(S)),Ps1,Ps2).
 
 stripSs(g(Rs,Ps1),g(Rs,Ps2))
  :-
-    transform(xbgf1:stripS_rule,Ps1,Ps2).
+    transform(try(xbgf1:stripS_rule),Ps1,Ps2).
 
 stripS_rule(s(_,X),X).
 
@@ -784,7 +782,7 @@ stripS_rule(S,s(S,X),X).
 
 stripTs(G1,G2)
  :-
-    transform(xbgf1:stripT_rule,G1,G2).
+    transform(try(xbgf1:stripT_rule),G1,G2).
 
 stripT(T,G1,G2) 
  :-
@@ -793,7 +791,7 @@ stripT(T,G1,G2)
       member(T,Ts),
       'The terminal ~q must occur.',
       [T]),
-    transform(xbgf1:stripT_rule(T),G1,G2).
+    transform(try(xbgf1:stripT_rule(T)),G1,G2).
 
 stripT_rule(t(_),true).
 
@@ -884,7 +882,7 @@ unite(N1,N2,G1,G2)
        ( member(N1,Ns), member(N2,Ns) ),
        'Both ~q and ~q must not be fresh.',
        [N1,N2]),
-    transform(xbgf1:renameN_rules(N1,N2),G1,G2).
+    transform(try(xbgf1:renameN_rules(N1,N2)),G1,G2).
 
 
 %

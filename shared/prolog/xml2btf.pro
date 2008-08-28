@@ -34,7 +34,7 @@ rootToBtf(SG,E,r(G2,n(P,T2)))
       'No root determined,',
       []),
     eToBtf(SG,QN,X,E,T1),
-    transform(delpfx_rules,T1,T2),
+    transform(try(delpfx_rules),T1,T2),
     !.
 
 delpfx_rules(p(As,N1,X),p(As,N2,X))

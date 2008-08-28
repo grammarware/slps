@@ -7,7 +7,7 @@ main :-
    loadXml(BtfFileIn, BtfXml),
    xmlToRoot(BtfXml,Btf),
    Btf = r(G1,T),
-   btf2bgf(T,G2),
+   btf2bgf(Btf,G2),
    gToXml(G2,BgfXml),   
    saveXml(BgfFileOut,BgfXml),
    ( subsetG(G2,G1) -> true; (

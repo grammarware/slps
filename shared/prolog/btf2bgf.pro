@@ -36,9 +36,8 @@ checkbtf(T1)
     ( checkbtf(G1,T2) -> 
       true; 
       (
-        write(G1),nl,
-        write(G2),nl,
         write('Sanity checking failed.'), nl,
+        write(G1),nl,
         fail
       )
     ),
@@ -96,6 +95,8 @@ checkbtf(_,true,true)
 
 checkbtf(Ps,','(Xs),','(Ts))
  :-
+    length(Xs,Len),
+    length(Ts,Len),
     !,
     maplist(checkbtf(Ps),Xs,Ts).
 
@@ -126,9 +127,5 @@ checkbtf(Ps,'?'(X),'?'(Ts))
 
 checkbtf(_,X,T)
  :-
-    X =.. [F1|L1],
-    T =.. [F2|L2],
-    length(L1,N1),
-    length(L2,N2),
-    format('BTF check failed: grammar level: ~q/~q; tree level: ~q/~q.~n',[F1,N1,F2,N2]),
+    format('BTF check failed:~ngrammar level: ~q~ntree level: ~q.~n',[X,T]),
     fail.

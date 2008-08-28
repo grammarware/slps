@@ -32,6 +32,11 @@ rebuild:
 
 test: build
 
+check:
+	make build
+	cd ../prolog2; make build
+	tdt ../prolog2/limit.btf limit.btf
+
 show: build
 	${tools}/showbgf limit.bgf
 	${tools}/showpnf limit.btf
