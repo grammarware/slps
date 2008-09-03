@@ -8,11 +8,11 @@ LOCAL2=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 1 ]; then
-    echo "Usage: showbgf <BGF-input>"
+    echo "Usage: showg <BGF-input>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    swipl -q -f ${LOCAL2}/prolog/cli/showbgf.pro -- $1
+    swipl -q -f ${LOCAL2}/prolog/cli/showg.pro -- $1
 fi
