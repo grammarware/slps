@@ -22,9 +22,30 @@
   <xbgf:vertical>
     <nonterminal>expr</nonterminal>
   </xbgf:vertical>
-  <xbgf:unchain>apply</xbgf:unchain>
-  <xbgf:unchain>binary</xbgf:unchain>
-  <xbgf:unchain>ifThenElse</xbgf:unchain>
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>expr</nonterminal>
+      <bgf:expression>
+        <nonterminal>apply</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>expr</nonterminal>
+      <bgf:expression>
+        <nonterminal>binary</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>expr</nonterminal>
+      <bgf:expression>
+        <nonterminal>ifThenElse</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
   <xbgf:vertical>
     <nonterminal>atom</nonterminal>
   </xbgf:vertical>

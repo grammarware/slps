@@ -6,7 +6,7 @@ main
     append(_,['--',Input],Argv),
     loadXsd(Input,G1),
     completeXsd(G1,G2),
-    ppBgf(G2),
+    ppG(G2),
     halt.
 
 :- run.

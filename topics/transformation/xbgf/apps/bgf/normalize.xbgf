@@ -4,6 +4,22 @@
   <xbgf:vertical>
     <nonterminal>expression</nonterminal>
   </xbgf:vertical>
+  <xbgf:rassoc>
+    <bgf:production>
+      <label>sequence</label>
+      <nonterminal>expression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>expression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>expression</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:rassoc>
   <xbgf:vertical>
     <nonterminal>value</nonterminal>
   </xbgf:vertical>

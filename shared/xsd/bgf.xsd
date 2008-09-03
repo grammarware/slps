@@ -74,14 +74,14 @@
         <xsd:element name="sequence">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element ref="bgf:expression" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="bgf:expression" minOccurs="1" maxOccurs="unbounded"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
         <xsd:element name="choice">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element ref="bgf:expression" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="bgf:expression" minOccurs="1" maxOccurs="unbounded"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>

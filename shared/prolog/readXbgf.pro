@@ -110,6 +110,13 @@ xml2xbgf(T,prune(N))
     !,
     content(T,N).
 
+xml2xbgf(T,rassoc(P2))
+ :-
+    self(name(xbgf:rassoc),T),
+    !,
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
 xml2xbgf(T,remove(P2))
  :-
     self(name(xbgf:remove),T),
@@ -217,11 +224,12 @@ xml2xbgf(T,stripTs)
     child(name(allTerminals),T,_),
     !.
 
-xml2xbgf(T,unchain(N))
+xml2xbgf(T,unchain(P2))
  :-
     self(name(xbgf:unchain),T),
     !,
-    content(T,N).
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
 
 xml2xbgf(T,undefine(N))
  :-

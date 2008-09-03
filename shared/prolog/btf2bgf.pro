@@ -45,6 +45,8 @@ checkbtf(T1)
       true;
       (
         write('Subset check failed; invoking diff.'), nl,
+        ppG(G1),
+        ppG(G2),
         diffG((
           ('bgf-declared-by-btf',G1),
           ('bgf-used-by-btf',G2))),
@@ -61,6 +63,10 @@ checkbtf(g(_,Ps),r(_,T))
 checkbtf(Ps,n(p(_,_,X),T))
  :-
     checkbtf(Ps,X,T).
+
+checkbtf(Ps,T)
+ :-
+    checkbtf(Ps,_,T).
 
 checkbtf(Ps,n(N),n(p(_,N,X),T))
  :-

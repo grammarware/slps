@@ -1,3 +1,13 @@
+% Nicer syntax
+
+'+'(P,X,Y)     :- many1(P,X,Y).
+'*'(P,X,Y)     :- many(P,X,Y).
+'+'(P,L,X,Y)   :- many1(P,L,X,Y).
+'*'(P,L,X,Y)   :- many(P,L,X,Y).
+'?'(D,P,R,X,Y) :- option(D,P,R,X,Y).
+@(S,X,Y) :- special(S,X,Y).
+
+
 % EBNF
 
 many1(P,X,Z) :- apply(P,[X,Y]), many(P,Y,Z).

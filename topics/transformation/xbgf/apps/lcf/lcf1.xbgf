@@ -8,16 +8,8 @@
   <xbgf:inline>toolType</xbgf:inline>
   <xbgf:inline>sourceType</xbgf:inline>
   <xbgf:inline>targetType</xbgf:inline>
+  <xbgf:inline>testsetType</xbgf:inline>
   <xbgf:vertical>
     <nonterminal>tool</nonterminal>
   </xbgf:vertical>
-  <xbgf:remove>
-    <bgf:production>
-      <label>testset</label>
-      <nonterminal>tool</nonterminal>
-      <bgf:expression>
-        <epsilon/>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:remove>
 </xbgf:sequence>

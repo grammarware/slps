@@ -10,9 +10,12 @@ transformT(sequence(Xs),T1,T2)
 transformT(Xbgf,r(G1,T1),T4)
  :-
     xbgf1:transformG(Xbgf,G1,G2),
+    !,
     apply(Xbgf,[T1,T2]),
+    !,
     ytransform(xbgf2:normalizeT_rules,T2,T3),
     T4 = r(G2,T3),
+    !,
     checkbtf(T4),
     !.
 
@@ -333,6 +336,41 @@ prune_rules(N,n(N),true).
 prune_rules(N,n(p(_,N,_),_),true).
 
 
+%
+% p([l(rassoc)], f, n(p))
+%
+% Interpret separator list right-associatively
+%
+
+rassoc(P1,T1,T2)
+ :-
+    transform(try(xbgf2:rassoc_rules(P1)),T1,T2).
+
+rassoc_rules(P1,n(P2,','([T1,'*'(Ts)])),T2)
+ :-
+    P1 = p(As,N,X1),
+    P2 = p(As,N,X2),
+    xbgf1:rassoc_rule1(N,X1,X2),
+    rassoc_strategy1(P2,Ts,T1,T2).
+
+rassoc_rules(P1,n(P2,+([T1|Ts])),T2)
+ :-
+    P1 = p(As,N,X1),
+    P2 = p(As,N,X2),
+    xbgf1:rassoc_rule2(N,X1,X2),
+    rassoc_strategy2(P2,Ts,T1,T2).
+
+rassoc_strategy1(_,[],T,T).
+rassoc_strategy1(P,[','([Ta,Tb])|Ts],T1,T2)
+ :-
+    rassoc_strategy1(P,Ts,n(P,','([T1,Ta,Tb])),T2).
+
+rassoc_strategy2(_,[],T,T).
+rassoc_strategy2(P,[T1|Ts],T2,T3)
+ :-
+    rassoc_strategy2(P,Ts,n(P,','([T2,T1])),T3).
+
+
 % p([l(relax)], f, n(p))
 
 % p([l(relabel)], f, n(p))
@@ -466,25 +504,35 @@ stripS_rule(s(_,X),X).
 
 
 %
-% p([l(unchain)], f, n(n))
+% p([l(unchain)], f, n(p))
 %
-% Unchain a nonterminal -- a restricted unfold
+% Unchain a production -- a restricted unfold
 %
 
-unchain(N,T1,T2)
+unchain(P,T1,T3)
  :-
-    transform(try(xbgf2:unchain_rule(N)),T1,T2).
+    transform(try(xbgf2:unchain_rule1(P)),T1,T2),
+    transform(try(xbgf2:unchain_rule2(P)),T2,T3).
 
-unchain_rule(
-    N1,
-    n(p(As1,N2,n(N1)),n(p(_,N1,X),T)),
-    n(p(As2,N2,X),T))
+unchain_rule1(
+    P1,
+    n(P1,n(P2,T)),
+    n(p(As2,N1,X),T))
  :-
-    unchain_label(As1,N1,As2).
+    P1 = p(As1,N1,n(N2)),
+    P2 = p(_,N2,X),
+    unchain_label(As1,N2,As2).
 
 unchain_label([],N,[l(N)]).
 unchain_label([l(L)],_,[l(L)]).
 
+unchain_rule2(
+    P1,
+    n(P2,T),
+    T)
+ :-
+    P1 = p(_,_,n(N)),
+    P2 = p(_,N,_).
 
 %
 % p([l(undefine)], f, n(n))

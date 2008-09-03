@@ -9,11 +9,11 @@ isMySpace(X) :- isSpace(X), \+ isEoln(X).
 
 % Keywords of FL
 
-isKeyword(if).
-isKeyword(then).
-isKeyword(else).
+isReserved(if).
+isReserved(then).
+isReserved(else).
 
-keyword(S) --> spaces, string(S), ( follows(isSpace) ; eof ).
+reserved(S) --> spaces, string(S), ( follows(isSpace) ; eof ).
 
 
 % Special characters
@@ -40,4 +40,4 @@ int(I) -->
 name(N) --> 
     spaces,
     munch1(isLower,S),
-    { name(N,S), \+ isKeyword(N) }.
+    { name(N,S), \+ isReserved(N) }.

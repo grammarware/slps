@@ -99,6 +99,13 @@ find_selector(s(S,_),[S]).
 
 % Find a single production by LHS and possibly label
 
+findP(Ps1,P,Ps1a,Ps1b)
+ :-
+    require(
+      append(Ps1a,[P|Ps1b],Ps1),
+      'Production ~q not found.',
+      [P]).
+
 findP(Ps1,As,N,P,Ps3a,Ps4a)
  :-
     splitN(Ps1,N,Ps2,Ps3,Ps4),
@@ -114,6 +121,17 @@ findP(Ps1,As,N,P,Ps3a,Ps4a)
     append(Ps3,Ps2a,Ps3a),
     append(Ps2b,Ps4,Ps4a),
     !.
+
+
+% Find definitions of nonterminals
+
+findN(Ps1,N,Ps2)
+ :- 
+    splitN(Ps1,N,Ps2,_,_).
+
+findN1(Ps,N,P)
+ :- 
+    splitN1(Ps,N,P,_,_).
 
 
 % Split productions into those for N and their pre- and postfix
@@ -232,7 +250,7 @@ normalize_algebraically_rules(';'(Xs1),';'(Xs2))
 
 % Pretty print grammar
 
-ppBgf(g(Rs,Ps))
+ppG(g(Rs,Ps))
  :-
     format('g( ~q, ',[Rs]),
     ppList('  ',Ps),

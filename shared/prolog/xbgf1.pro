@@ -504,6 +504,37 @@ prune(N,G1,G2)
 prune_rule(N,n(N),true).
 
 
+%
+% p([l(rassoc)], f, n(p))
+%
+% Interpret separator list right-associatively
+%
+
+rassoc(P1,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    P1 = p(As,N,X1),
+    findP(Ps1,As,N,P2,Ps2a,Ps2b),
+    P2 = p(As,N,X2),
+    require(
+      xbgf1:rassoc_rules(N,X1,X2),
+      '~q must admit associativity transformation.',
+      [P1]),
+    append(Ps2a,[P1|Ps2b],Ps2).
+
+rassoc_rules(N,X1,X2) :- rassoc_rule1(N,X1,X2).
+rassoc_rules(N,X1,X2) :- rassoc_rule2(N,X1,X2).
+
+rassoc_rule1(
+  N,
+  ','([n(N),X,n(N)]), 
+  ','([n(N),'*'(','([X,n(N)]))])).
+
+rassoc_rule2(
+  N,
+  ','([n(N),n(N)]), 
+  +(n(N))).
+
+
 % p([l(relax)], f, n(p))
 
 % p([l(relabel)], f, n(p))
@@ -515,13 +546,10 @@ prune_rule(N,n(N),true).
 % Remove a production
 %
 
-remove(P1,g(Rs,Ps1),g(Rs,Ps2))
+remove(P,g(Rs,Ps1),g(Rs,Ps2))
  :- 
-    P1 = p(_,N,_),
-    require(
-      append(Ps1a,[P1|Ps1b],Ps1),
-      'Production ~q not found.',
-      [P1]),
+    findP(Ps1,P,Ps1a,Ps1b),
+    P = p(_,N,_),
     append(Ps1a,Ps1b,Ps2),
     definedNs(Ps2,Ns),
     require(
@@ -799,41 +827,44 @@ stripT_rule(T,t(T),true).
 
 
 %
-% p([l(unchain)], f, n(n))
+% p([l(unchain)], f, n(p))
 %
-% Unchain a nonterminal -- a restricted unfold
+% Unchain a production -- a restricted unfold
 %
 
-unchain(N1,g(Rs,Ps1),g(Rs,Ps3))
+unchain(P1,g(Rs,Ps1),g(Rs,Ps4))
  :-
+    findP(Ps1,P1,Ps1a,Ps1b),
     require(
-       (\+ member(N1,Rs) ),
-       'Nonterminal ~q must not be root.',
-       [N1]),
-    splitN1(Ps1,N1,p(_,_,X),Ps1a,Ps1b),
+      P1 = p(As1,N1,n(N2)),
+      'Production ~q must be chain production.',
+      [P1]),
     append(Ps1a,Ps1b,Ps2),
+    findN1(Ps2,N2,p(_,_,X)),
     require(
-       append(Ps2a,[p(As1,N2,n(N1))|Ps2b],Ps2),
-       'Nonterminal ~q must be used within a chain production.',
-       [N1]),
+       (\+ member(N2,Rs) ),
+       'Nonterminal ~q must not be root.',
+       [N2]),
+    append(Ps1a,[p(As2,N1,X)|Ps1b],Ps3),
     (
       As1 = [l(_)] ->
           As2 = As1
         ; (
             allLs(Ps2,Ls),
             require(
-              ( \+ member(N1,Ls) ),
+              ( \+ member(N2,Ls) ),
               '~q must not be a label in use.',
               [N1]),
-            As2 = [l(N1)] 
+            As2 = [l(N2)] 
           )
     ),
-    append(Ps2a,[p(As2,N2,X)|Ps2b],Ps3),
-    allNs(Ps3,Ns),
+    splitN1(Ps3,N2,_,Ps3a,Ps3b),
+    append(Ps3a,Ps3b,Ps4),
+    allNs(Ps4,Ns),
     require(
-      (\+ member(N1,Ns) ),
+      (\+ member(N2,Ns) ),
       'Nonterminal ~q must appear occur exactly once.',
-      [N1]).
+      [N2]).
 
 
 %

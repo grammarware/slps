@@ -39,6 +39,7 @@
       <xsd:element ref="xbgf:permute"/>
       <xsd:element ref="xbgf:project"/>
       <xsd:element ref="xbgf:prune"/>
+      <xsd:element ref="xbgf:rassoc"/>
       <xsd:element ref="xbgf:relax"/>
       <xsd:element ref="xbgf:relabel"/>
       <xsd:element ref="xbgf:remove"/>
@@ -287,6 +288,19 @@
     </xsd:annotation>
   </xsd:element>
 
+  <xsd:element name="rassoc">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="relabel">
     <xsd:annotation>
       <xsd:documentation>
@@ -489,12 +503,17 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="unchain" type="bgf:nonterminal">
+  <xsd:element name="unchain">
     <xsd:annotation>
       <xsd:documentation>
         T.B.D.
       </xsd:documentation>
     </xsd:annotation>
+    <xsd:complexType>
+       <xsd:choice>
+         <xsd:element ref="bgf:production"/>
+       </xsd:choice>
+    </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="undefine" type="bgf:nonterminal">

@@ -1,78 +1,71 @@
 :- ensure_loaded('../slps.pro').
 
 
-gFromDcg(Cs,g([],Ps))
+dcgToG(Cs,g([],Ps))
  :-
-    maplist(pFromClause,Cs,Ps).
+    maplist(dcToP,Cs,Ps).
 
-pFromClause((Lhs --> Rhs),p(As2,N,X))
+dcToP((Lhs --> Rhs),p(L,N,X))
  :-
-    xFromRhs(As1,Rhs,X),
-    Lhs =.. [N|Args],
-    ( ( last(Args,Arg),
-        nonvar(Arg),
-        Arg =.. [F|_],
-        \+ member(F,[',','.',[],';'])
-      ) ->
-          As2 = [l(F)]
-        ; As2 = As1
-    ),
-    !.
+    dcToL(Lhs,Rhs,L),
+    Lhs =.. [N|_],
+    rhsToX(Rhs,X).
 
-xFromRhs([],[],true)
- :- 
-    !.
-
-xFromRhs([],{_},true)
+dcToL(Lhs,_,[l(F)])
  :-
-    !.
+    Lhs =.. [_|Ts],
+    last(Ts,T),
+    nonvar(T),
+    T =.. [F|_],
+    \+ member(F,[',','.',[]]).
 
-xFromRhs([],Rhs,X)
+dcToL(_,Rhs,[l(F)])
  :-
-    Rhs = (_,_),
-    !,
-    rhsToList(Rhs,L),
-    xFromList(L,X).
+    Rhs =.. [lassoc,_,_,F,_].
 
-xFromRhs([],Rhs,'+'(X))
- :-
-    Rhs =.. [many1,Arg|_],
-    !,
-    xFromRhs(_,Arg,X).
+dcToL(_,_,[]).
 
-xFromRhs([],Rhs,'*'(X))
- :-
-    Rhs =.. [many,Arg|_],
-    !,
-    xFromRhs(_,Arg,X).
+rhsToX([],true).
 
-xFromRhs([],Rhs,t(Y))
+rhsToX({_},true).
+
+rhsToX(R,X)
  :-
-    Rhs =.. [F,X],
-    member(F,[keyword,special]),
-    !,
+    R = (_,_),
+    rhsToList(R,L),
+    listToX(L,X).
+
+rhsToX(R1,X)
+ :-
+    R1 =.. [F,R2|_],
+    member(F,[*,+,?]),
+    X =.. [F,Y],
+    rhsToX(R2,Y).
+
+rhsToX(R,t(Y))
+ :-
+    R =.. [F,X],
+    member(F,[reserved,@]),
     name(Y,X).
 
-xFromRhs([l(F)],Rhs,','([Y,'*'(','([X,Y]))]))
+rhsToX(R1,','([Y,*(','([X,Y]))]))
  :-
-    Rhs =.. [lassoc,Ops,Arg,F,_],
-    !,
-    xFromRhs(_,Ops,X),
-    xFromRhs(_,Arg,Y).
+    R1 =.. [lassoc,R2,R3,_,_],
+    rhsToX(R2,X),
+    rhsToX(R3,Y).
 
-xFromRhs(_,T,n(N))
+rhsToX(T,n(N))
  :- 
     T =.. [N|_].
 
+rhsToList({_},[]).
+rhsToList(({_},R),L) :- rhsToList(R,L).
+rhsToList((R1,R2),[R1|R3]) :- rhsToList(R2,R3).
+rhsToList(R,[R]).
 
-rhsToList({_},[]) :- !.
-rhsToList(({_},Rhs),L) :- !, rhsToList(Rhs,L).
-rhsToList((A,B),[A|R]) :- !, rhsToList(B,R).
-rhsToList(Rhs,[Rhs]) :- !.
-
-xFromList([],true) :- !.
-xFromList([Rhs],X) :- !, xFromRhs(_,Rhs,X).
-xFromList(Rhs,','(Xs)) :- !, maplist(xFromRhs(_),Rhs,Xs).
+listToX([],true).
+listToX([R],X) :- rhsToX(R,X).
+listToX(R,','(Xs)) :- maplist(rhsToX,R,Xs).
 
 
 readDcg(S,L) 
@@ -91,7 +84,7 @@ readDcg(S,L)
    append(_,['--',Input,Output],Argv),
    open(Input, read, IStream),
    readDcg(IStream, Dcg),
-   gFromDcg(Dcg,G1),
+   dcgToG(Dcg,G1),
    gToXml(G1,G2),
    open(Output, write, OStream),
    xml_write(OStream,G2,[]),

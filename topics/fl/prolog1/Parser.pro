@@ -6,17 +6,17 @@
 
 % Programs as lists of function definitions
 
-program(Fs) --> many1(function,Fs).
+program(Fs) --> +(function,Fs).
 
 
 % Function definitions
 
 function((N,Ns,E)) -->
        name(N),
-       many1(name,Ns),
-       special("="),
+       +(name,Ns),
+       @("="),
        expr(E),
-       many1(newline).
+       +(newline).
 
 
 % Top-level layer of expression forms
@@ -25,14 +25,14 @@ expr(E) --> lassoc(ops,atom,binary,E).
 
 expr(apply(N,Es)) -->
        name(N),
-       many1(atom,Es).
+       +(atom,Es).
 
 expr(ifThenElse(E1,E2,E3)) -->
-       keyword("if"),
+       reserved("if"),
        expr(E1),
-       keyword("then"),
+       reserved("then"),
        expr(E2),
-       keyword("else"),
+       reserved("else"),
        expr(E3).
 
 
@@ -40,11 +40,11 @@ expr(ifThenElse(E1,E2,E3)) -->
 
 atom(literal(I)) --> int(I).
 atom(argument(N)) --> name(N).
-atom(E) --> special("("), expr(E), special(")").
+atom(E) --> @("("), expr(E), @(")").
 
 
 % Operation symbols
 
-ops(equal) --> special("==").
-ops(plus) --> special("+").
-ops(minus) --> special("-").
+ops(equal) --> @("==").
+ops(plus) --> @("+").
+ops(minus) --> @("-").
