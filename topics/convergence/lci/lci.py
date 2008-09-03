@@ -18,6 +18,7 @@ graph_big = []
 graph_small = []
 log = None
 tools = {}
+treetools = {}
 almostfailed = []
 failednode = []
 failedarc  = []
@@ -80,15 +81,11 @@ def readxmlconfig (cfg):
    targets[name][0].append(branch)
  # tools
  for outline in config.findall('//tool'):
-  cmd = outline.findall('command')[0]
-  line = expandxml(cmd,{})
-  if cmd.attrib.has_key('out'):
-   line += ' 1> '+cmd.attrib['out']
-  if cmd.attrib.has_key('err'):
-   line += ' 2> '+cmd.attrib['err']
-  tools[outline.findtext('name')]=line
+  tools[outline.findtext('name')] = expandxml(outline.findall('grammar')[0],{})
+  if outline.findall('tree'):
+   treetools[outline.findtext('name')] = expandxml(outline.findall('tree')[0],{})
 
- print 'Read',len(shortcuts),'shortcuts,',len(tools),'tools,',len(actions),'actions,',len(targets),'targets,'
+ print 'Read',len(shortcuts),'shortcuts,',`len(tools)`+'+'+`len(treetools)`,'tools,',len(actions),'actions,',len(targets),'targets,'
  print len(testsets),'test sets,',len(extractor),'sources:',len(parser),'parsers &',len(evaluator),'evaluators'
 
 def expandone(tag,text,rep):

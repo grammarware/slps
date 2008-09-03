@@ -173,7 +173,8 @@
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="name" type="lcf:tool"/>
-      <xsd:element name="command" type="lcf:xstring"/>
+      <xsd:element name="grammar" type="lcf:xstring"/>
+      <xsd:element name="tree" type="lcf:xstring" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
 

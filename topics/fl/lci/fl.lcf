@@ -28,23 +28,32 @@
   
   <tool>
     <name>validation</name>
-    <command>
+    <grammar>
       <expand>tools</expand>/checkxml bgf
-    </command>
+    </grammar>
+    <tree>
+      <expand>tools</expand>/checkbtf
+    </tree>
   </tool>
 
   <tool>
     <name>comparison</name>
-    <command>
+    <grammar>
       <expand>tools</expand>/gdt
-    </command>
+    </grammar>
+    <tree>
+      <expand>tools</expand>/tdt
+    </tree>
   </tool>
 
   <tool>
     <name>transformation</name>
-    <command>
+    <grammar>
       <expand>tools</expand>/xbgf
-    </command>
+    </grammar>
+    <tree>
+      <expand>tools</expand>/xbtf
+    </tree>
   </tool>
   
 

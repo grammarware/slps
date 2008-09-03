@@ -21,22 +21,22 @@
           That is, FL is capable of expressing the factorial function.
           We need a helper function for multiplication because FL provides addition but not multiplication.
         </text>
-        <sample language="http://planet-sl.org/fl/" id="main_library">
+        <sample language="http://planet-sl.org/fl/" id="factorial">
           mult n m = if (n==0) then 0 else (m + (mult (n - 1) m))
           fac n = if (n==0) then 1 else (mult n (fac (n - 1)))
         </sample>
         <text>
           Functions are called by placing their arguments after their names:
         </text>
-        <runnable language="http://planet-sl.org/fl/">
-          <context>main_library</context>
+        <runnable language="http://planet-sl.org/fl/" id="mult5by7">
+          <context>factorial</context>
           <main>mult</main>
           <argument>5</argument>
           <argument>7</argument>
           <yields>35</yields>
         </runnable>
-        <runnable language="http://planet-sl.org/fl/">
-          <context>main_library</context>
+        <runnable language="http://planet-sl.org/fl/" id="fac5">
+          <context>factorial</context>
           <main>fac</main>
           <argument>5</argument>
           <yields>120</yields>

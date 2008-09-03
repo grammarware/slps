@@ -139,6 +139,15 @@
     </xsd:sequence>
     <xsd:attribute name="language" type="xsd:anyURI" use="required"/>
     <xsd:attribute name="version" type="xsd:token" use="optional"/>
+    <xsd:attribute name="id" type="xsd:ID" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          The means to refer to this particular sample later in the same document.
+          For example, this sample introduces a function that is used in one of the next samples.
+          It can also be a full text of a program that is run with different set of attributes later.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
   </xsd:complexType>
 
   <xsd:complexType name="sectionType">

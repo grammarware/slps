@@ -15,41 +15,49 @@ def unpacksamples(where,dir):
  tree = ElementTree.parse(where)
  for outline in tree.findall("//sample"):
   cx+=1
-  torun = open (dir+'/sample'+`cx`+'.src',"w")
+  if outline.attrib.has_key('id'):
+   name = outline.attrib['id']
+  else:
+   name = 'untitled'+`cx`
+  torun = open (dir+'/'+name+'.src',"w")
   for line in outline.text.split('\n'):
    if line.strip()!='':
     torun.write(line.strip()+'\n')
   torun.close()
   if outline.attrib.has_key('id'):
-   library[outline.attrib['id']]=outline.text
+   library[name]=outline.text
   if outline.attrib.has_key('sort'):
    sort=outline.attrib['sort']
   else:
    sort=None
  # All executions
  for outline in tree.findall("//runnable"):
+  cx+=1
+  if outline.attrib.has_key('id'):
+   name = outline.attrib['id']
+  else:
+   name = 'untitled'+`cx`
   if outline.findtext('context'):
    if not library.has_key(outline.findtext('context')):
-    print "No context found for sample",cx,'('+outline.findtext('context')+'), test case not used'
+    print "No context found for sample",name,'('+outline.findtext('context')+'), test case not used'
     continue
    else:
-    con = open (dir+'/sample'+`cx`+'.src','w')
+    con = open (dir+'/'+name+'.src','w')
     for line in library[outline.findtext('context')].split('\n'):
      if line.strip()!='':
       con.write(line.strip()+'\n')
     con.close()
   if outline.findtext('yields'):
-   con = open (dir+'/sample'+`cx`+'.val','w')
+   con = open (dir+'/'+name+'.val','w')
    con.write(outline.findtext('yields'))
    con.close()
-  torun = open (dir+'/sample'+`cx`+'.run','w')
+  torun = open (dir+'/'+name+'.run','w')
   line = outline.findtext('main')
   for arg in outline.findall("argument"):
    line += ' ' + arg.text
   torun.write(line+'\n')
   torun.close()
-  cx+=1
- print cx-1,'samples in the test set.'
+ print cx,'samples in the test set.'
 
 if __name__ == "__main__":
  print 'Sample Set Extractor'
