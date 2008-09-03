@@ -20,6 +20,22 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:rassoc>
+  <xbgf:rassoc>
+    <bgf:production>
+      <label>choice</label>
+      <nonterminal>expression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>expression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>expression</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:rassoc>
   <xbgf:vertical>
     <nonterminal>value</nonterminal>
   </xbgf:vertical>
