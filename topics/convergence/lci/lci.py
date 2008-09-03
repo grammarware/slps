@@ -4,6 +4,9 @@ import sys
 import glob
 from elementtree import ElementTree
 
+# A global flag, if set, LCI will exit with a non-zero status
+problem = False
+
 shutup = ' 1> /dev/null 2> /dev/null'
 shortcuts = {}
 actions = []
@@ -31,13 +34,6 @@ def postfix2prefix(post):
  pre = post.split('.')
  pre.reverse()
  return ' '.join(pre)
-
-def prefix2postfix(pre):
- #  input: 'a b c x'
- # output: 'x.c.b.a'
- post = pre.split()
- post.reverse()
- return '.'.join(post)
 
 def logwrite(s):
  log.write(s+'\n')
@@ -196,7 +192,9 @@ def dumpgraph(df):
  dot.close()
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
  logwrite(run)
- os.system(run)
+ if os.system(run):
+  print 'Diagram not generated'
+  problem = True
  dot = open(df+'_small.dot','w')
  dot.write('digraph generated{ {rank=same;')
  for x in extractor.keys():
@@ -224,7 +222,9 @@ def dumpgraph(df):
  dot.close()
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_small.pdf'
  logwrite(run)
- os.system(run)
+ if os.system(run):
+  print 'Diagram not generated'
+  problem = True
 
 def copyfile(x,y):
  xh=open(x,'r')
@@ -246,6 +246,7 @@ def extractall():
     almostfailed.append(bgf)
    else:
     failednode.append(bgf)
+    problem = True
    #sysexit(3)
   else:
    copyfile('bgf/'+bgf+'.bgf','snapshot/'+bgf+'.bgf')
@@ -258,6 +259,7 @@ def validateall():
   run = tools['validation']+' bgf/'+bgf+'.bgf'
   logwrite(run)
   if os.system(run+shutup):
+   problem = True
    print 'Validation failed on',bgf
    failednode.append(bgf)
    #sysexit(3)
@@ -283,6 +285,7 @@ def preparebgf(cut):
     run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+a+'.bgf'
     logwrite(run)
     if os.system(run+shutup):
+     problem = True
      print a,'failed on',curname
      failedarc.append([curname,a])
      failednode.append(cut[0]+"'"*(curname.count('.')+1))
@@ -301,6 +304,7 @@ def preparebgf(cut):
   logwrite(a)
   print 'Performed',name,'-',
   if os.system(a+shutup):
+   problem = True
    print 'NOT',
   print 'valid'
  else:
@@ -354,8 +358,8 @@ def diffall(t,car,cdr):
  if len(cdr)==1:
   run = tools['comparison']+' bgf/'+car+'.bgf bgf/'+cdr[0]+'.bgf'
   logwrite(run)
-  ret = os.system(run+shutup)
-  if ret!=0:
+  if os.system(run+shutup):
+   problem = True
    print 'Error occured building target',t,'-',car,'differs from',cdr[0]
    failednode.append(t)
    #sysexit(3)
@@ -377,6 +381,7 @@ def chainXBTF(testcase,steps,t):
   logwrite(run)
   #print 'Performing coupled',step,'on',fr,'-',
   if os.system(run+shutup):
+   problem = True
    print 'Performing coupled',step,'on',ft,'failed'
    break
   fr = re
@@ -386,6 +391,7 @@ def chainXBTF(testcase,steps,t):
  if treetools.has_key('validation'):
   run = treetools['validation']+' '+re
   if os.system(run+shutup):
+   problem = True
    print '- NOT valid',
   else:
    print '- valid'
@@ -406,17 +412,19 @@ def diffBTFs(t):
     run = treetools['comparison']+' '+basetestcase+' '+testcase
     print 'Found',basetestcase.split('/')[1],'in',basetestset,'and',testset,'- they',
     if os.system(run+shutup):
+     problem = True
      print 'DIFFER'
     else:
      print 'match'
 
-def runtestset():
+def convergetestset():
  for testset in testsets.keys():
   # extracting
   print 'Test set',testset,
   run = testsets[testset]+' '+testset
   logwrite(run)
   if os.system(run+shutup):
+   problem = True
    print 'could not be extracted'
    continue
   print 'extracted'
@@ -427,6 +435,7 @@ def runtestset():
     logwrite(run)
     print 'Tree extraction from',testcase,
     if os.system(run+shutup):
+     problem = True
      print 'failed'
     else:
      print 'completed'
@@ -443,6 +452,8 @@ def runtestset():
      for testcase in glob.glob(testset+'/*.'+branch[0]+'.btf'):
       chainXBTF(testcase,branch[1:],t)
   diffBTFs(t)
+
+def runtestset():
  for testset in testsets.keys():
   # testing parser
   for testcase in glob.glob(testset+'/*.src'):
@@ -456,6 +467,7 @@ def runtestset():
    if results.values()==[0]*len(results):
     print 'passed parsing'
    else:
+    problem = True
     print 'failed'
     for r in results.keys():
      if results[r]:
@@ -467,11 +479,12 @@ def runtestset():
     if testset in tester[program]:
      run = evaluator[program]+' '+testcase.replace('.run','.ctx')+' '+testcase+' '+testcase.replace('.run','.val')
      logwrite(run)
-    results[program]=os.system(run+shutup)
+     results[program]=os.system(run+shutup)
    print 'Test case',testcase,
    if results.values()==[0]*len(results):
     print 'passed evaluation'
    else:
+    problem = True
     print 'failed'
     for r in results.keys():
      if results[r]:
@@ -507,11 +520,12 @@ if __name__ == "__main__":
   print '----- Grammar convergence phase finished. -----'
   if testsets:
    runtestset()
+   convergetestset()
    print '----- Tree convergence phase finished. -----'
   else:
    print 'No testing performed.'
   dumpgraph(sys.argv[2])
-  if failednode or failedarc:
+  if problem:
    sysexit(100)
   log.close()
  else:
