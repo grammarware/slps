@@ -25,7 +25,6 @@
     </expansion>
   </shortcut>
 
-  
   <tool>
     <name>validation</name>
     <grammar>
@@ -55,7 +54,6 @@
       <expand>tools</expand>/xbtf
     </tree>
   </tool>
-  
 
   <testset>
     <name>xmlsamples</name>
@@ -70,7 +68,6 @@
       <expand>tools</expand>/ldf2set <expand>fl</expand>/ldf/fl.ldf
     </command>
   </testset>
-
   
   <source>
     <name>antlr</name>
@@ -136,7 +133,7 @@
   </source>
 
   <source>
-    <name>xml</name>
+    <name>xsd</name>
     <grammar>
       <extraction>
         <expand>tools</expand>/xsd2bgf <expand>fl</expand>/xsd/fl.xsd
@@ -167,6 +164,7 @@
     </grammar>
   </source>
 
+<!--
   <source>
     <name>ldf</name>
     <grammar>
@@ -174,8 +172,8 @@
         <expand>tools</expand>/ldf2bgf <expand>fl</expand>/ldf/fl.ldf
       </extraction>
     </grammar>
-  </source>
-
+  </source
+-->
   
   <target>
     <name>java</name>
@@ -200,7 +198,7 @@
       <perform>unerase</perform>
     </branch>
     <branch>
-      <input>xml</input>
+      <input>xsd</input>
       <perform>trimXsd</perform>
       <perform>downcase</perform>
       <perform>massageXsd</perform>
