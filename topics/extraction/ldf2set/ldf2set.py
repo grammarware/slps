@@ -41,7 +41,7 @@ def unpacksamples(where,dir):
     print "No context found for sample",name,'('+xmlnode.findtext('context')+'), test case not used'
     continue
    else:
-    con = open (dir+'/'+name+'.src','w')
+    con = open (dir+'/'+name+'.ctx','w')
     for line in library[xmlnode.findtext('context')].split('\n'):
      if line.strip()!='':
       con.write(line.strip()+'\n')

@@ -465,7 +465,7 @@ def runtestset():
    results={}
    for program in evaluator.keys():
     if testset in tester[program]:
-     run = evaluator[program]+' '+testcase.replace('.run','.src')+' '+testcase+' '+testcase.replace('.run','.val')
+     run = evaluator[program]+' '+testcase.replace('.run','.ctx')+' '+testcase+' '+testcase.replace('.run','.val')
      logwrite(run)
     results[program]=os.system(run+shutup)
    print 'Test case',testcase,
@@ -504,10 +504,10 @@ if __name__ == "__main__":
   if tools.has_key('validation'):
    validateall()
   buildtargets()
-  print '>>> Grammar convergence phase finished.'
+  print '----- Grammar convergence phase finished. -----'
   if testsets:
    runtestset()
-   print '>>> Tree convergence phase finished.'
+   print '----- Tree convergence phase finished. -----'
   else:
    print 'No testing performed.'
   dumpgraph(sys.argv[2])

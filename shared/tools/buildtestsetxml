@@ -18,6 +18,6 @@ fi
 
 cp ${SLPS}/topics/fl/shared/factorial.xml $1/factorial.src
 cp ${SLPS}/topics/fl/shared/fac5.xml $1/fac5.run
-cp ${SLPS}/topics/fl/shared/factorial.xml $1/fac5.src
+cp ${SLPS}/topics/fl/shared/factorial.xml $1/fac5.ctx
 echo 120 > $1/factorial.val
 
