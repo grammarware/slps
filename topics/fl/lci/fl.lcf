@@ -17,7 +17,15 @@
       <expand>slps</expand>/shared/tools
     </expansion>
   </shortcut>
+  
+  <shortcut>
+    <name>wrappers</name>
+    <expansion>
+      <expand>slps</expand>/shared/wrappers
+    </expansion>
+  </shortcut>
 
+  
   <tool>
     <name>validation</name>
     <command>
@@ -38,6 +46,7 @@
       <expand>tools</expand>/xbgf
     </command>
   </tool>
+  
 
   <testset>
     <name>xmlsamples</name>
@@ -53,17 +62,20 @@
     </command>
   </testset>
 
+  
   <source>
     <name>antlr</name>
-    <extraction>
-      <expand>tools</expand>/antlr2bgf <expand>fl</expand>/java1/FL.g
-    </extraction>
-    <parsing>
-      <expand>tools</expand>/runantlrparser
-    </parsing>
-    <evaluation>
-      <expand>tools</expand>/runantlrevaluator
-    </evaluation>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/antlr2bgf <expand>fl</expand>/java1/FL.g
+      </extraction>
+      <parsing>
+        <expand>wrappers</expand>/runantlrparser
+      </parsing>
+      <evaluation>
+        <expand>wrappers</expand>/runantlrevaluator
+      </evaluation>
+    </grammar>
     <testing>
       <set>codesamples</set>
     </testing>
@@ -71,15 +83,17 @@
 
   <source>
     <name>dcg</name>
-    <extraction>
-      <expand>tools</expand>/dcg2bgf <expand>fl</expand>/prolog1/Parser.pro
-    </extraction>
-    <parsing>
-      <expand>tools</expand>/runprologparser
-    </parsing>
-    <evaluation>
-      <expand>tools</expand>/runprologevaluator
-    </evaluation>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/dcg2bgf <expand>fl</expand>/prolog1/Parser.pro
+      </extraction>
+      <parsing>
+        <expand>wrappers</expand>/runprologparser
+      </parsing>
+      <evaluation>
+        <expand>wrappers</expand>/runprologevaluator
+      </evaluation>
+    </grammar>
     <testing>
       <set>codesamples</set>
     </testing>
@@ -87,15 +101,17 @@
 
   <source>
     <name>sdf</name>
-    <extraction>
-      <expand>tools</expand>/sdf2bgf <expand>fl</expand>/asfsdf/*.sdf
-    </extraction>
-    <parsing>
-      <expand>tools</expand>/runasfsdfparser
-    </parsing>
-    <evaluation>
-      <expand>tools</expand>/runasfsdfevaluator
-    </evaluation>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/sdf2bgf <expand>fl</expand>/asfsdf/*.sdf
+      </extraction>
+      <parsing>
+        <expand>wrappers</expand>/runasfsdfparser
+      </parsing>
+      <evaluation>
+        <expand>wrappers</expand>/runasfsdfevaluator
+      </evaluation>
+    </grammar>
     <testing>
       <set>codesamples</set>
     </testing>
@@ -103,22 +119,31 @@
 
   <source>
     <name>om</name>
-    <extraction>
-      <expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
-    </extraction>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
+      </extraction>
+    </grammar>
   </source>
 
   <source>
     <name>xml</name>
-    <extraction>
-      <expand>tools</expand>/xsd2bgf <expand>fl</expand>/xsd/fl.xsd
-    </extraction>
-    <parsing>
-      <expand>tools</expand>/runxsdparser
-    </parsing>
-    <evaluation>
-      <expand>tools</expand>/runxqueryevaluator
-    </evaluation>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/xsd2bgf <expand>fl</expand>/xsd/fl.xsd
+      </extraction>
+      <parsing>
+        <expand>wrappers</expand>/runxsdparser
+      </parsing>
+      <evaluation>
+        <expand>wrappers</expand>/runxqueryevaluator
+      </evaluation>
+    </grammar>
+    <tree>
+      <extraction>
+        <expand>tools</expand>/xml2btf <expand>fl</expand>/xsd/fl.xsd
+      </extraction>
+    </tree>
     <testing>
       <set>xmlsamples</set>
     </testing>
@@ -126,18 +151,23 @@
 
   <source>
     <name>jaxb</name>
-    <extraction>
-      <expand>tools</expand>/java2bgf <expand>fl</expand>/java3 fl
-    </extraction>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/java2bgf <expand>fl</expand>/java3 fl
+      </extraction>
+    </grammar>
   </source>
 
   <source>
     <name>ldf</name>
-    <extraction>
-      <expand>tools</expand>/ldf2bgf <expand>fl</expand>/ldf/fl.ldf
-    </extraction>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/ldf2bgf <expand>fl</expand>/ldf/fl.ldf
+      </extraction>
+    </grammar>
   </source>
 
+  
   <target>
     <name>java</name>
     <branch>

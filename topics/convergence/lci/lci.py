@@ -59,12 +59,12 @@ def readxmlconfig (cfg):
   testsets[outline.findtext('name')]=expandxml(outline.findall('command')[0],{})
  # sources
  for outline in config.findall('//source'):
-  extractor[outline.findtext('name')]=expandxml(outline.findall('extraction')[0],{})
+  extractor[outline.findtext('name')]=expandxml(outline.findall('grammar/extraction')[0],{})
   pcmd = ecmd = ''
-  if outline.findall('parsing'):
-   parser[outline.findtext('name')]=expandxml(outline.findall('parsing')[0],{})
-  if outline.findall('evaluation'):
-   evaluator[outline.findtext('name')]=expandxml(outline.findall('evaluation')[0],{})
+  if outline.findall('grammar/parsing'):
+   parser[outline.findtext('name')]=expandxml(outline.findall('grammar/parsing')[0],{})
+  if outline.findall('grammar/evaluation'):
+   evaluator[outline.findtext('name')]=expandxml(outline.findall('grammar/evaluation')[0],{})
   tmp = []
   for set in outline.findall('testing/set'):
    tmp.append(set.text)
@@ -419,7 +419,7 @@ def checkconsistency():
   #sysexit(8)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.10'
+ print 'Language Covergence Infrastructure v1.10alpha'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])

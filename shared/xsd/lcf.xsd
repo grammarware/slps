@@ -65,9 +65,37 @@
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string" />
-      <xsd:element name="extraction" type="lcf:xstring" />
-      <xsd:element name="parsing" type="lcf:xstring" minOccurs="0" />
-      <xsd:element name="evaluation" type="lcf:xstring" minOccurs="0" />
+      <xsd:element name="grammar">
+        <xsd:complexType>
+          <xsd:annotation>
+            <xsd:documentation>
+              This extractor must take a grammar in its source format and output the corresponding BGF.
+              This parser must take a test case, try to parse it and report through exit status.
+              This evaluator must take a test case, try to evaluate it and report through exit status.
+            </xsd:documentation>
+          </xsd:annotation>
+          <xsd:sequence>
+            <xsd:element name="extraction" type="lcf:xstring" />
+            <xsd:element name="parsing" type="lcf:xstring" minOccurs="0" />
+            <xsd:element name="evaluation" type="lcf:xstring" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="tree" minOccurs="0">
+        <xsd:complexType>
+          <xsd:annotation>
+            <xsd:documentation>
+              This extractor must take a BGF and a source file and output the corresponding BTF.
+              There is no parser since a valid BTF always parses.
+              This evaluator must take a BTF, try to evaluate it and report through exit status.
+            </xsd:documentation>
+          </xsd:annotation>
+          <xsd:sequence>
+            <xsd:element name="extraction" type="lcf:xstring" />
+            <xsd:element name="evaluation" type="lcf:xstring" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
       <xsd:element name="testing" minOccurs="0">
         <xsd:complexType>
           <xsd:sequence>
