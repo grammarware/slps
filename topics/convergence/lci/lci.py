@@ -10,6 +10,7 @@ actions = []
 testsets = {}
 tester = {}
 extractor = {}
+treeextractor = {}
 targets = {}
 parser = {}
 evaluator = {}
@@ -49,41 +50,44 @@ def sysexit(n):
 def readxmlconfig (cfg):
  config = ElementTree.parse(cfg)
  # shortcuts
- for outline in config.findall('//shortcut'):
-  shortcuts[outline.findtext('name')]=expandxml(outline.findall('expansion')[0],{})
+ for xmlnode in config.findall('//shortcut'):
+  shortcuts[xmlnode.findtext('name')]=expandxml(xmlnode.findall('expansion')[0],{})
  # actions
- for outline in config.findall('//target/branch/perform'):
-  if outline.text not in actions:
-   actions.append(outline.text)
+ for xmlnode in config.findall('//target/branch/perform'):
+  if xmlnode.text not in actions:
+   actions.append(xmlnode.text)
  # testset
- for outline in config.findall('//testset'):
-  testsets[outline.findtext('name')]=expandxml(outline.findall('command')[0],{})
+ for xmlnode in config.findall('//testset'):
+  testsets[xmlnode.findtext('name')]=expandxml(xmlnode.findall('command')[0],{})
  # sources
- for outline in config.findall('//source'):
-  extractor[outline.findtext('name')]=expandxml(outline.findall('grammar/extraction')[0],{})
-  pcmd = ecmd = ''
-  if outline.findall('grammar/parsing'):
-   parser[outline.findtext('name')]=expandxml(outline.findall('grammar/parsing')[0],{})
-  if outline.findall('grammar/evaluation'):
-   evaluator[outline.findtext('name')]=expandxml(outline.findall('grammar/evaluation')[0],{})
+ for xmlnode in config.findall('//source'):
+  extractor[xmlnode.findtext('name')]=expandxml(xmlnode.findall('grammar/extraction')[0],{})
+  if xmlnode.findall('grammar/parsing'):
+   parser[xmlnode.findtext('name')]=expandxml(xmlnode.findall('grammar/parsing')[0],{})
+  if xmlnode.findall('grammar/evaluation'):
+   evaluator[xmlnode.findtext('name')]=expandxml(xmlnode.findall('grammar/evaluation')[0],{})
+  if xmlnode.findall('tree/extraction'):
+   treeextractor[xmlnode.findtext('name')]=expandxml(xmlnode.findall('tree/extraction')[0],{})
+  if xmlnode.findall('tree/evaluation'):
+   treeevaluator[xmlnode.findtext('name')]=expandxml(xmlnode.findall('tree/evaluation')[0],{})
   tmp = []
-  for set in outline.findall('testing/set'):
+  for set in xmlnode.findall('testing/set'):
    tmp.append(set.text)
-  tester[outline.findtext('name')]=tmp[:]
+  tester[xmlnode.findtext('name')]=tmp[:]
  # targets
- for outline in config.findall('//target'):
-  name = outline.findtext('name')
+ for xmlnode in config.findall('//target'):
+  name = xmlnode.findtext('name')
   targets[name]= [[],'']
-  for br in outline.findall('branch'):
+  for br in xmlnode.findall('branch'):
    branch = [br.findtext('input')]
    for p in br.findall('perform'):
     branch.append(p.text)
    targets[name][0].append(branch)
  # tools
- for outline in config.findall('//tool'):
-  tools[outline.findtext('name')] = expandxml(outline.findall('grammar')[0],{})
-  if outline.findall('tree'):
-   treetools[outline.findtext('name')] = expandxml(outline.findall('tree')[0],{})
+ for xmlnode in config.findall('//tool'):
+  tools[xmlnode.findtext('name')] = expandxml(xmlnode.findall('grammar')[0],{})
+  if xmlnode.findall('tree'):
+   treetools[xmlnode.findtext('name')] = expandxml(xmlnode.findall('tree')[0],{})
 
  print 'Read',len(shortcuts),'shortcuts,',`len(tools)`+'+'+`len(treetools)`,'tools,',len(actions),'actions,',len(targets),'targets,'
  print len(testsets),'test sets,',len(extractor),'sources:',len(parser),'parsers &',len(evaluator),'evaluators'
@@ -238,6 +242,7 @@ def extractall():
    if os.access('snapshot/'+bgf+'.bgf',os.R_OK):
     print 'Rolled back to the saved version, proceeding...'
     copyfile('snapshot/'+bgf+'.bgf','bgf/'+bgf+'.bgf')
+    logwrite('cp snapshot/'+bgf+'.bgf bgf/'+bgf+'.bgf')
     almostfailed.append(bgf)
    else:
     failednode.append(bgf)
@@ -294,7 +299,7 @@ def preparebgf(cut):
  elif tools.has_key('validation'):
   a = tools['validation']+' bgf/'+curname+'.bgf'
   logwrite(a)
-  print 'Performed',name,'- the result is',
+  print 'Performed',name,'-',
   if os.system(a+shutup):
    print 'NOT',
   print 'valid'
@@ -302,8 +307,8 @@ def preparebgf(cut):
   print 'Performed',name
  return curname
 
-def buildtargets():
- unordered = targets.keys()
+def ordertargets():
+ unordered = targets.keys()[:]
  ordered = []
  while len(unordered):
   for t in unordered:
@@ -314,7 +319,10 @@ def buildtargets():
    if flag:
     ordered.append(t)
     unordered.remove(t)
- for t in ordered:
+ return ordered
+
+def buildtargets():
+ for t in ordertargets():
   inputs = targets[t][0]
   fileinputs = ['']*len(inputs)
   for i in range(0,len(inputs)):
@@ -356,6 +364,52 @@ def diffall(t,car,cdr):
    diffall(t,car,[head])
   diffall(t,cdr[0],cdr[1:])
 
+def chainXBTF(testcase,steps,t):
+ fr = testcase
+ for step in steps:
+  if step==steps[-1]:
+   # name it after the target
+   re = fr.split('.')[0]+'.'+t+'.btf'
+  else:
+   # name it as input.transformationName.btf
+   re = '.'.join(fr.split('.')[:-1])+'.'+step+'.btf'
+  run = treetools['transformation']+' xbgf/'+step+'.xbgf '+fr+' '+re
+  logwrite(run)
+  #print 'Performing coupled',step,'on',fr,'-',
+  if os.system(run+shutup):
+   print 'Performing coupled',step,'on',ft,'failed'
+   break
+  fr = re
+ tmp = steps[:]
+ tmp.reverse()
+ print 'Performed coupled',' '.join(tmp),'on',testcase,
+ if treetools.has_key('validation'):
+  run = treetools['validation']+' '+re
+  if os.system(run+shutup):
+   print '- NOT valid',
+  else:
+   print '- valid'
+ else:
+  print
+
+def diffBTFs(t):
+ if len(testsets)<2:
+  # with one test set there's nothing to diff
+  return
+ if not treetools.has_key('comparison'):
+  # no tree diff tool specified
+  rturn
+ basetestset = testsets.keys()[0]
+ for basetestcase in glob.glob(basetestset+'/*.'+t+'.btf'):
+  for testset in testsets.keys()[1:]:
+   for testcase in glob.glob(testset+'/'+basetestcase.split('/')[1]):
+    run = treetools['comparison']+' '+basetestcase+' '+testcase
+    print 'Found',basetestcase.split('/')[1],'in',basetestset,'and',testset,'- they',
+    if os.system(run+shutup):
+     print 'DIFFER'
+    else:
+     print 'match'
+
 def runtestset():
  for testset in testsets.keys():
   # extracting
@@ -366,6 +420,30 @@ def runtestset():
    print 'could not be extracted'
    continue
   print 'extracted'
+ for src in treeextractor.keys():
+  for testset in tester[src]:
+   for testcase in glob.glob(testset+'/*.src'):
+    run = treeextractor[src]+' '+testcase+' '+testcase+'.btf'
+    logwrite(run)
+    print 'Tree extraction from',testcase,
+    if os.system(run+shutup):
+     print 'failed'
+    else:
+     print 'completed'
+ for t in ordertargets():
+  for branch in targets[t][0]:
+   if treeextractor.has_key(branch[0]):
+    # it's a source, let's check it we have an extracted tree
+    for testset in tester[branch[0]]:
+     for testcase in glob.glob(testset+'/*.src.btf'):
+      chainXBTF(testcase,branch[1:],t)
+   if targets.has_key(branch[0]):
+    # it's a target, let's see if we have any test cases arrived at it
+    for testset in testsets.keys():
+     for testcase in glob.glob(testset+'/*.'+branch[0]+'.btf'):
+      chainXBTF(testcase,branch[1:],t)
+  diffBTFs(t)
+ for testset in testsets.keys():
   # testing parser
   for testcase in glob.glob(testset+'/*.src'):
    results={}
@@ -416,7 +494,7 @@ def checkconsistency():
   #sysexit(8)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.10alpha'
+ print 'Language Covergence Infrastructure v1.11'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])
@@ -426,21 +504,18 @@ if __name__ == "__main__":
   if tools.has_key('validation'):
    validateall()
   buildtargets()
-  print 'Grammar convergence finished.'
+  print '>>> Grammar convergence phase finished.'
   if testsets:
    runtestset()
-   print 'Testing finished.'
+   print '>>> Tree convergence phase finished.'
   else:
    print 'No testing performed.'
   dumpgraph(sys.argv[2])
-  #print failednode
-  #print failedarc
-  #print almostfailed
   if failednode or failedarc:
    sysexit(100)
   log.close()
  else:
   print 'Usage:'
-  print ' ',sys.argv[0],'<configuration file>','<output pdf>'
+  print ' ',sys.argv[0],'<configuration file>','<diagram prefix>'
   sysexit(1)
 

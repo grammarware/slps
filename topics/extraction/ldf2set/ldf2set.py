@@ -13,50 +13,49 @@ def unpacksamples(where,dir):
  library={}
  cx = 0
  tree = ElementTree.parse(where)
- for outline in tree.findall("//sample"):
+ for xmlnode in tree.findall("//sample"):
   cx+=1
-  if outline.attrib.has_key('id'):
-   name = outline.attrib['id']
+  if xmlnode.attrib.has_key('id'):
+   name = xmlnode.attrib['id']
+   library[name]=xmlnode.text
   else:
    name = 'untitled'+`cx`
-  torun = open (dir+'/'+name+'.src',"w")
-  for line in outline.text.split('\n'):
-   if line.strip()!='':
-    torun.write(line.strip()+'\n')
-  torun.close()
-  if outline.attrib.has_key('id'):
-   library[name]=outline.text
-  if outline.attrib.has_key('sort'):
-   sort=outline.attrib['sort']
+  if xmlnode.attrib.has_key('sort'):
+   print 'Test case',name,'of sort',xmlnode.attrib['sort'],'not extracted.'
   else:
-   sort=None
+   src = open (dir+'/'+name+'.src',"w")
+   for line in xmlnode.text.split('\n'):
+    if line.strip()!='':
+     src.write(line.strip()+'\n')
+   src.close()
+   print 'Test case',name,'extracted.'
  # All executions
- for outline in tree.findall("//runnable"):
+ for xmlnode in tree.findall("//runnable"):
   cx+=1
-  if outline.attrib.has_key('id'):
-   name = outline.attrib['id']
+  if xmlnode.attrib.has_key('id'):
+   name = xmlnode.attrib['id']
   else:
    name = 'untitled'+`cx`
-  if outline.findtext('context'):
-   if not library.has_key(outline.findtext('context')):
-    print "No context found for sample",name,'('+outline.findtext('context')+'), test case not used'
+  if xmlnode.findtext('context'):
+   if not library.has_key(xmlnode.findtext('context')):
+    print "No context found for sample",name,'('+xmlnode.findtext('context')+'), test case not used'
     continue
    else:
     con = open (dir+'/'+name+'.src','w')
-    for line in library[outline.findtext('context')].split('\n'):
+    for line in library[xmlnode.findtext('context')].split('\n'):
      if line.strip()!='':
       con.write(line.strip()+'\n')
     con.close()
-  if outline.findtext('yields'):
+  if xmlnode.findtext('yields'):
    con = open (dir+'/'+name+'.val','w')
-   con.write(outline.findtext('yields'))
+   con.write(xmlnode.findtext('yields'))
    con.close()
-  torun = open (dir+'/'+name+'.run','w')
-  line = outline.findtext('main')
-  for arg in outline.findall("argument"):
+  run = open (dir+'/'+name+'.run','w')
+  line = xmlnode.findtext('main')
+  for arg in xmlnode.findall("argument"):
    line += ' ' + arg.text
-  torun.write(line+'\n')
-  torun.close()
+  run.write(line+'\n')
+  run.close()
  print cx,'samples in the test set.'
 
 if __name__ == "__main__":

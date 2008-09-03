@@ -118,6 +118,11 @@
         <expand>wrappers</expand>/runasfsdfevaluator
       </evaluation>
     </grammar>
+    <tree>
+      <extraction>
+        <expand>tools</expand>/asfix2btf bgf/sdf.bgf
+    </extraction>
+    </tree>
     <testing>
       <set>codesamples</set>
     </testing>
