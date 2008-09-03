@@ -351,24 +351,24 @@ rassoc_rules(P1,n(P2,','([T1,'*'(Ts)])),T2)
     P1 = p(As,N,X1),
     P2 = p(As,N,X2),
     xbgf1:rassoc_rule1(N,X1,X2),
-    rassoc_strategy1(P2,Ts,T1,T2).
+    rassoc_strategy1(P1,Ts,T1,T2).
 
-rassoc_rules(P1,n(P2,+([T1|Ts])),T2)
+rassoc_rules(P1,n(P2,+(Ts)),T1)
  :-
     P1 = p(As,N,X1),
     P2 = p(As,N,X2),
     xbgf1:rassoc_rule2(N,X1,X2),
-    rassoc_strategy2(P2,Ts,T1,T2).
+    rassoc_strategy2(P1,Ts,T1).
 
 rassoc_strategy1(_,[],T,T).
 rassoc_strategy1(P,[','([Ta,Tb])|Ts],T1,T2)
  :-
     rassoc_strategy1(P,Ts,n(P,','([T1,Ta,Tb])),T2).
 
-rassoc_strategy2(_,[],T,T).
-rassoc_strategy2(P,[T1|Ts],T2,T3)
+rassoc_strategy2(_,[T],T).
+rassoc_strategy2(P,[T1,T2|Ts],n(P,','([T1,T3])))
  :-
-    rassoc_strategy2(P,Ts,n(P,','([T2,T1])),T3).
+    rassoc_strategy2(P,[T2|Ts],T3).
 
 
 % p([l(relax)], f, n(p))
