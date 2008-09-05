@@ -14,6 +14,7 @@ testsets = {}
 tester = {}
 extractor = {}
 treeextractor = {}
+treeevaluator = {}
 targets = {}
 parser = {}
 evaluator = {}
@@ -452,6 +453,9 @@ def convergetestset():
      for testcase in glob.glob(testset+'/*.'+branch[0]+'.btf'):
       chainXBTF(testcase,branch[1:],t)
   diffBTFs(t)
+ final = ordertargets()[-1]
+ for evaluator in treeevaluator.keys():
+  pass
 
 def runtestset():
  for testset in testsets.keys():
@@ -462,7 +466,7 @@ def runtestset():
     if testset in tester[program]:
      run = parser[program]+' '+testcase
      logwrite(run)
-    results[program]=os.system(run+shutup)
+     results[program]=os.system(run+shutup)
    print 'Test case',testcase,
    if results.values()==[0]*len(results):
     print 'passed parsing'
