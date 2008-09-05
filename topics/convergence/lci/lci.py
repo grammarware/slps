@@ -383,7 +383,7 @@ def chainXBTF(testcase,steps,t):
   #print 'Performing coupled',step,'on',fr,'-',
   if os.system(run+shutup):
    problem = True
-   print 'Performing coupled',step,'on',ft,'failed'
+   print 'Performing coupled',step,'on',fr,'failed'
    break
   fr = re
  tmp = steps[:]
