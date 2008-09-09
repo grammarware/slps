@@ -17,7 +17,7 @@
       <expand>slps</expand>/shared/tools
     </expansion>
   </shortcut>
-  
+
   <shortcut>
     <name>wrappers</name>
     <expansion>
@@ -68,7 +68,7 @@
       <expand>tools</expand>/ldf2set <expand>fl</expand>/ldf/fl.ldf
     </command>
   </testset>
-  
+
   <source>
     <name>antlr</name>
     <grammar>
@@ -121,7 +121,10 @@
     <tree>
       <extraction>
         <expand>tools</expand>/asfix2btf bgf/sdf.bgf
-    </extraction>
+      </extraction>
+      <evaluation>
+        <expand>wrappers</expand>/runbtfevaluator
+      </evaluation>
     </tree>
     <testing>
       <set>codesamples</set>
@@ -169,7 +172,7 @@
     </grammar>
   </source>
 
-<!--
+  <!--
   <source>
     <name>ldf</name>
     <grammar>
@@ -179,7 +182,7 @@
     </grammar>
   </source
 -->
-  
+
   <target>
     <name>java</name>
     <branch>
