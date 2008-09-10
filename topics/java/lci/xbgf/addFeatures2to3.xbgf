@@ -42,4 +42,12 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <xbgf:chain>
+    <bgf:production>
+      <nonterminal>ClassDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>NormalClassDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:chain>
 </xbgf:sequence>
