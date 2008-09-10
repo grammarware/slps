@@ -136,6 +136,14 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
+        <nonterminal>rassoc</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
         <nonterminal>remove</nonterminal>
       </bgf:expression>
     </bgf:production>

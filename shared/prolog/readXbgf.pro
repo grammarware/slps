@@ -104,6 +104,13 @@ xml2xbgf(T,permute(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
+xml2xbgf(T,project(P2))
+ :-
+    self(name(xbgf:project),T),
+    !,
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
 xml2xbgf(T,prune(N))
  :-
     self(name(xbgf:prune),T),

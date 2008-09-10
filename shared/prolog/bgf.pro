@@ -271,12 +271,20 @@ prefixG(g(_,Ps))
      rectest(not(=(';'(_))),Ps),
 
      % Nonterminals with multiple productions must be labelled. 
-     \+ ( member(P1,Ps),
-          member(P2,Ps),
-          P1  = p([],N,_),
-          P2  = p(_,N,_),
-          \+ P1 == P2 ).
+     findall(N,label_prop(Ps,N),Ns1),
+     list_to_set(Ns1,Ns2),
+     soft(
+       ( Ns2 == [] ),
+       'Definition with insufficient labeling: ~q.',
+       [Ns2]).
 
+label_prop(Ps,N)
+ :-
+    member(P1,Ps),
+    member(P2,Ps),
+    \+ P1 == P2,
+    P1  = p([],N,_),
+    P2  = p(_,N,_).
 
 % Test grammars for subset relationship
 

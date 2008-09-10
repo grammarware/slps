@@ -13,6 +13,18 @@ run
 
 % Assertion checking
 
+soft(G,F,Args)
+ :-
+    ( G -> true ; ( 
+      write('Assertion failed: '),
+      format(F,Args),
+      nl,
+      write('Program continues.'),
+      nl,
+      !,
+      fail
+    ) ).
+
 require(G,F,Args)
  :-
     ( G -> true ; ( 

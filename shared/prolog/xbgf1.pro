@@ -480,20 +480,48 @@ permuteXs([X|Xs1],Xs2)
 % Apply projection to the body of a production
 %
 
+project(P1,g(Rs,Ps1),g(Rs,Ps5))
+ :- 
+    P1 = p(As1,N1,X1),
+    require(
+      X1 = ','(Xs1),
+      'Projection requires a sequence instead of ~q.',
+      [X1]),
+    findP(Ps1,As1,N1,P2,Ps3,Ps4),
+    P2 = p(As1,N1,X2),
+    require(
+      X2 = ','(Xs2),
+      'Projection requires a sequence instead of ~q.',
+      [X2]),
+    require(
+      xbgf1:projectXs(Xs1,Xs2),
+      'Phrases ~q must be of a subsequence of ~q.',
+      [X1,X2]),
+    append(Ps3,[P1|Ps4],Ps5).
+
+projectXs([],_)
+ :-
+    !.
+
+projectXs([X|Xs1],[X|Xs2])
+ :-
+    !,
+    projectXs(Xs1,Xs2).
+
+projectXs(Xs1,[_|Xs2])
+ :-
+    !,
+    projectXs(Xs1,Xs2).
+
+
 %
 % p([l(prune)], f, n(n))
 %
-% Prune nonterminals
-% (Assume epsilon as missing definition)
+% Prune nonterminal occurrences
 %
 
 prune(N,G1,G2)
  :-
-    definedNs(G1,Ds),
-    require(
-       ( \+ member(N,Ds) ),
-       'Nonterminal ~q must not be defined.',
-       [N]),
     usedNs(G1,Us),
     require(
        member(N,Us),

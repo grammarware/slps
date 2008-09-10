@@ -514,7 +514,7 @@ xFromTypeRef(S,QN,v(N2))
     dxmlns(S,Pfx,Ns),
     sxmlns(xsd,Ns),
     require(
-      member(N1,[anyURI,'IDREF',int,string,token]),
+      member(N1,[anyURI,'ID','IDREF',int,string,token]),
       'Cannot handle XSD type ~q.',
       [N1]
       ),

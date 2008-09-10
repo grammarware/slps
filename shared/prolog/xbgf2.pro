@@ -321,11 +321,35 @@ permuteXs(Xs1,[X|Xs2],Ts1,[T|Ts2])
 % Apply projection to the body of a production
 %
 
+project(p(_,N,','(Xs)),T1,T2)
+ :-
+    transform(try(xbgf2:project_rule(N,Xs)),T1,T2).
+
+project_rule(N,Xs1,
+  n(p(As,N,','(Xs2)),','(Ts1)),
+  n(p(As,N,','(Xs1)),','(Ts2)))
+ :-
+    projectXs(Xs2,Xs1,Ts1,Ts2).
+
+projectXs([],[],[],[])
+ :-
+    !.
+
+projectXs([X|Xs1],[X|Xs2],[T|Ts1],[T|Ts2])
+ :-
+    !,
+    projectXs(Xs1,Xs2,Ts1,Ts2).
+
+projectXs([_|Xs1],Xs2,[_|Ts1],Ts2)
+ :-
+    !,
+    projectXs(Xs1,Xs2,Ts1,Ts2).
+
+
 %
 % p([l(prune)], f, n(n))
 %
 % Prune nonterminals
-% (Assume epsilon as missing definition)
 %
 
 prune(N,T1,T2)
