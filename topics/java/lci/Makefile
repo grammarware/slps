@@ -2,6 +2,9 @@ validator = ../../../shared/tools/checkxml
 
 build:
 
+diff: test
+	gdt bgf/jls2.prefer3.mkSignature.addFeatures2to3.bgf bgf/jls3.fixErrors3.mkSignature.make3converge.bgf
+
 test:
 	python ../../convergence/lci/lci.py java.lcf architecture
 	@rm -f architecture*.dot
@@ -17,5 +20,5 @@ clean:
 	rm -rf bin obj
 	rm -f *.user *.suo
 	rm -f architecture*
-	rm -f fl.log
+	rm -f java.log
 

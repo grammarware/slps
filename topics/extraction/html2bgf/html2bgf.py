@@ -225,11 +225,17 @@ def readGrammar(fn):
      choices.append([a,b])
  src.close()
 
+def printGrammarText(fn):
+ ext = open(fn,'w')
+ for nt in prods.keys():
+  ext.write(serialiseT(nt,prods[nt]))
+ ext.close()
+
 def printGrammar(fn):
  ext = open(fn,'w')
  ext.write('<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">')
  for nt in prods.keys():
-  ext.write(serialise(nt,prods[nt]))
+  ext.write(serialiseX(nt,prods[nt]))
  ext.write('</bgf:grammar>')
  ext.close()
 
@@ -283,6 +289,11 @@ def automatedImprove():
       bs[i]='"("'
       bs[i+2]='")"'
       print 'Bracketing heuristic fix in',nt,'(singleton group)'
+     if i+4<len(bs) and bs[i+4]==')' and ((bs[i+1]=='[' and bs[i+3]==']') or (bs[i+1]=='{' and bs[i+3]=='}')):
+      # ([x]) or ({x}) is not BNF bracketing either
+      bs[i]='"("'
+      bs[i+4]='")"'
+      print 'Bracketing heuristic fix in',nt,'(singleton complex group)'
    newprods.append(fixBrackets(nt,' '.join(bs).split()))
   prods[nt]=newprods
  pass
@@ -336,15 +347,21 @@ def fixBracketPair(nt,arr,left,right):
 
 if __name__ == "__main__":
  print 'HTML to Grammar automated extractor'
- if len(sys.argv) == 3:
+ if len(sys.argv)==3 or len(sys.argv)==4:
   print 'Reading the HTML document...'
   readGrammar(sys.argv[1])
   print 'Massaging the grammar...'
   automatedImprove()
   print 'Writing the extracted grammar...'
-  printGrammar(sys.argv[2])
+  if sys.argv[-1]=='-bnf':
+   printGrammarText(sys.argv[2])
+  else:
+   printGrammar(sys.argv[2])
  else:
   print 'Usage:'
-  print ' ',sys.argv[0],'<input>','<output>'
+  print ' ',sys.argv[0],'''<input> <output> [<options>]
+
+Possible options:
+	-bnf			Outputs in EBNF rather then in BGF'''
   sys.exit(1)
 

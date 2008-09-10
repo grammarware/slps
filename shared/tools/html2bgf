@@ -7,13 +7,13 @@ cd ../..
 SLPS=${PWD}
 cd ${LOCAL1}
 
-if [ $# -ne 2 ]; then
+if [ $# -lt 2 ]; then
     echo "This tool extracts a BGF from Java Language Standard"
-    echo "Usage: $0 <input-hypertext-document> <output-bgf>"
+    echo "Usage: $0 <input-hypertext-document> <output-bgf> [options]"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    python ${SLPS}/topics/extraction/html2bgf/html2bgf.py $1 $2
+    python ${SLPS}/topics/extraction/html2bgf/html2bgf.py $@
 fi
