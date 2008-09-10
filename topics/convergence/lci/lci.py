@@ -250,7 +250,13 @@ def extractall():
     problem = True
    #sysexit(3)
   else:
-   copyfile('bgf/'+bgf+'.bgf','snapshot/'+bgf+'.bgf')
+   run = tools['comparison'] + ' bgf/'+bgf+'.bgf snapshot/'+bgf+'.bgf'
+   logwrite(run)
+   if os.system(run+shutup):
+    # different from the saved version
+    print 'Extracted a newer version of',bgf
+    copyfile('bgf/'+bgf+'.bgf','snapshot/'+bgf+'.bgf')
+    logwrite('cp bgf/'+bgf+'.bgf snapshot/'+bgf+'.bgf')
  print 'Extraction finished.'
 
 def validateall():
