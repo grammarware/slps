@@ -1,0 +1,23 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:undefine>Block</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>Block</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BlockStatements</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+</xbgf:sequence>

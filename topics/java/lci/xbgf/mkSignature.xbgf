@@ -1,0 +1,10 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:vertical>
+    <nonterminal>Modifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Selector</nonterminal>
+  </xbgf:vertical>
+</xbgf:sequence>

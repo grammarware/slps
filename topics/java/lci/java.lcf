@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<lcf:configuration xmlns:lcf="http://planet-sl.org/lcf">
+
+  <shortcut>
+    <name>slps</name>
+    <expansion>../../..</expansion>
+  </shortcut>
+
+  <shortcut>
+    <name>java</name>
+    <expansion>..</expansion>
+  </shortcut>
+
+  <shortcut>
+    <name>tools</name>
+    <expansion>
+      <expand>slps</expand>/shared/tools
+    </expansion>
+  </shortcut>
+
+  <shortcut>
+    <name>wrappers</name>
+    <expansion>
+      <expand>slps</expand>/shared/wrappers
+    </expansion>
+  </shortcut>
+
+  <tool>
+    <name>validation</name>
+    <grammar>
+      <expand>tools</expand>/checkxml bgf
+    </grammar>
+    <tree>
+      <expand>tools</expand>/checkbtf
+    </tree>
+  </tool>
+
+  <tool>
+    <name>comparison</name>
+    <grammar>
+      <expand>tools</expand>/gdt
+    </grammar>
+    <tree>
+      <expand>tools</expand>/tdt
+    </tree>
+  </tool>
+
+  <tool>
+    <name>transformation</name>
+    <grammar>
+      <expand>tools</expand>/xbgf
+    </grammar>
+    <tree>
+      <expand>tools</expand>/xbtf
+    </tree>
+  </tool>
+
+  <source>
+    <name>jls2</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/syntax.html
+      </extraction>
+    </grammar>
+  </source>
+
+  <source>
+    <name>jls3</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/syntax.html
+      </extraction>
+    </grammar>
+  </source>
+
+  <target>
+    <name>limit</name>
+    <branch>
+      <input>jls2</input>
+      <perform>prefer3</perform>
+      <perform>mkSignature</perform>
+      <perform>addFeatures2to3</perform>
+    </branch>
+    <branch>
+      <input>jls3</input>
+      <perform>fixErrors3</perform>
+      <perform>mkSignature</perform>
+    </branch>
+  </target>
+
+</lcf:configuration>
