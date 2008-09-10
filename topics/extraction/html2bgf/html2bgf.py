@@ -105,16 +105,22 @@ def traverse(c):
    line += map2expr(alt)
   return line+'</choice></bgf:expression>'
 
-def addProduction(name,choices):
+def addProduction(name,choices,oneof):
  bs = []
- for s in range(0,len(choices)):
-  ss = []
-  for i in range(0,len(choices[s][0])):
-   if choices[s][1][i]:
-    ss.append(choices[s][0][i])
-   else:
-    ss.append('"'+choices[s][0][i]+'"')
-  bs.append(ss)
+ if oneof:
+  # concatenate all choices
+  for c in choices:
+   for s in c[0]:
+    bs.append(['"'+s+'"'])
+ else:
+  for s in range(0,len(choices)):
+   ss = []
+   for i in range(0,len(choices[s][0])):
+    if choices[s][1][i]:
+     ss.append(choices[s][0][i])
+    else:
+     ss.append('"'+choices[s][0][i]+'"')
+   bs.append(ss)
  prods[name]=bs
 
 def serialiseT(name,choices):
@@ -162,6 +168,29 @@ def parseLine(line):
    emph[0] = True
    line = line[7:]
    continue
+  if line.find('<sub><i>opt</i></sub>')==0:
+   last = tokens.pop()
+   lastf = flags.pop()
+   tokens.extend(['[',last,']'])
+   flags.extend([True,lastf,True])
+   line = line[21:]
+   continue
+  if line.find('<sub><i>opt')==0:
+   last = tokens.pop()
+   lastf = flags.pop()
+   tokens.extend(['[',last,']'])
+   flags.extend([True,lastf,True])
+   line = line[11:]
+   continue
+  if line.find('</sub>')==0:
+   line = line[6:]
+   continue
+  if line.find('<sub>')==0:
+   line = line[5:]
+   continue
+  if line.find('<')==0:
+   print 'Found unknown tag while parsing "'+line+'", skipping!'
+   line = line[line.index('>')+1:]
   else:
    if line.find('<')>0:
     extra = line[:line.index('<')].strip().split()
@@ -190,6 +219,7 @@ def ifContinuation(s):
  return True
 
 def readGrammar(fn):
+ oneof = False
  src = open(fn,'r')
  grammar = False
  name = ''
@@ -197,7 +227,7 @@ def readGrammar(fn):
  for line in src:
   if line.find('<pre>')>=0 or line.find('</pre>')>=0:
    if grammar:
-    addProduction(name,choices)
+    addProduction(name,choices,oneof)
    else:
     # dummy parse line for the sake of <i>/<em>
     a,b=parseLine(line.split('<pre>')[1])
@@ -214,17 +244,26 @@ def readGrammar(fn):
      # new definition
      if choices:
       # flush the current one
-      addProduction(name,choices)
+      addProduction(name,choices,oneof)
      choices = []
      name = a[0]
+     oneof = False
     elif len(a)==4 and a[0]==a[2] and a[1]==':' and a[-1]==':':
      # new mingled definition
      if choices:
       # flush the current one
-      addProduction(name,choices)
+      addProduction(name,choices,oneof)
      choices = []
      name = a[0]
+     oneof = False
      print name,'double-declared, fixed'
+    elif len(a)==4 and a[1]==':' and a[2]=='one' and a[3]=='of':
+     # new "one-of" definition
+     if choices:
+      addProduction(name,choices,oneof)
+     choices = []
+     name = a[0]
+     oneof = True
     elif cont:
      # line continuation
      print 'Line continuation enforced while parsing',name
@@ -271,13 +310,20 @@ def automatedImprove():
   newprods = []
   for bs in prods[nt]:
    for i in range(0,len(bs)):
-    if bs[i]=='"|"' and len(bs)>1:
+    if bs[i]=='"|"' and len(bs)>1 and nt.find('Or')<0:
      print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
      bs[i] = '|'
     elif bs[i][0]=='"':
      if bs[i][1].isupper() and bs[i][1:-1] in prods.keys():
       print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
       bs[i]=bs[i][1:-1]
+      continue
+     if bs[i]=='"opt"':
+      print 'Structural heuristic fix:',bs[i],'in',nt,'(changed to BNF optional)'
+      newbs=bs[:i-1]
+      newbs.extend(['[',bs[i-1],']'])
+      newbs.extend(bs[i+1:])
+      bs = newbs
       continue
      if bs[i].find('&')<0:
       bs[i] = breakWords(nt,bs[i])
@@ -294,17 +340,17 @@ def automatedImprove():
       # () is not BNF bracketing
       bs[i]='"("'
       bs[i+1]='")"'
-      print 'Bracketing heuristic fix in',nt,'(empty group)'
+      print 'Structural heuristic fix in',nt,'(empty group)'
      if i+2<len(bs) and bs[i+2]==')':
       # (x) is not BNF bracketing
       bs[i]='"("'
       bs[i+2]='")"'
-      print 'Bracketing heuristic fix in',nt,'(singleton group)'
+      print 'Structural heuristic fix in',nt,'(singleton group)'
      if i+4<len(bs) and bs[i+4]==')' and ((bs[i+1]=='[' and bs[i+3]==']') or (bs[i+1]=='{' and bs[i+3]=='}')):
       # ([x]) or ({x}) is not BNF bracketing either
       bs[i]='"("'
       bs[i+4]='")"'
-      print 'Bracketing heuristic fix in',nt,'(singleton complex group)'
+      print 'Structural heuristic fix in',nt,'(singleton complex group)'
    newprods.append(fixBrackets(nt,' '.join(bs).split()))
   prods[nt]=newprods
  pass
@@ -327,7 +373,7 @@ def fixBracketPair(nt,arr,left,right):
  if cx==0:
   return arr
  else:
-  print 'Bracketing heuristic fix in',nt,
+  print 'Structural  heuristic fix in',nt,
   #print arr,'->'
   arr.reverse()
   while(cx>0):
