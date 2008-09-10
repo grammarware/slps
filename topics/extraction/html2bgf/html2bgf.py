@@ -178,6 +178,17 @@ def cleanup(line):
  return line.replace('<!-- </i> -->','').replace('        ','\t')
  #.replace('<code>','"').replace('</code>','"')
 
+def ifContinuation(s):
+ if not s:
+  return False
+ if s[0]=='\t':
+  return False
+ if s[0]==' ':
+  return False
+ if s[0]=='<':
+  return ifContinuation(s[s.index('>')+1:])
+ return True
+
 def readGrammar(fn):
  src = open(fn,'r')
  grammar = False
@@ -193,7 +204,7 @@ def readGrammar(fn):
    grammar = not grammar
    continue
   if grammar:
-   cont = line[0] not in ('\t','<',' ')
+   cont = ifContinuation(line)
    line = preprocess(cleanup(line))
    #print 'Parsing "'+line+'"...'
    a,b=parseLine(line)
