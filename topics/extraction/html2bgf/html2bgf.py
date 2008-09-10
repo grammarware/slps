@@ -130,7 +130,7 @@ def addSpaces(line,symb):
  return line.replace(symb,' '+symb+' ')
 
 def preprocess(line):
- l2 = addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(line.strip(),'}'),'{'),'['),']'),')'),'('),';')
+ l2 = addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(line.strip(),'}'),'{'),'['),']'),')'),'('),';'),':')
  return l2.replace('&gt ; ','&gt;').replace('&lt ; ','&lt;').replace('&amp ; ','&amp;')
 
 def parseLine(line):
@@ -175,7 +175,7 @@ def parseLine(line):
  return tokens,flags
 
 def cleanup(line):
- return line.replace('<!-- </i> -->','').replace(' :',':').replace('        ','\t')
+ return line.replace('<!-- </i> -->','').replace('        ','\t')
  #.replace('<code>','"').replace('</code>','"')
 
 def readGrammar(fn):
@@ -194,22 +194,29 @@ def readGrammar(fn):
    continue
   if grammar:
    cont = line[0] not in ('\t','<',' ')
-   # FIXME!
-   #cont = False
    line = preprocess(cleanup(line))
-   #print 'Parsing "',line,'"...'
+   #print 'Parsing "'+line+'"...'
    a,b=parseLine(line)
    if a:
    # non-empty line
-    if b[0] and len(a)==1 and a[0][-1]==':':
+    if len(a)==2 and a[-1]==':':
      # new definition
      if choices:
       # flush the current one
       addProduction(name,choices)
      choices = []
-     name = a[0][:-1]
+     name = a[0]
+    elif len(a)==4 and a[0]==a[2] and a[1]==':' and a[-1]==':':
+     # new mingled definition
+     if choices:
+      # flush the current one
+      addProduction(name,choices)
+     choices = []
+     name = a[0]
+     print name,'double-declared, fixed'
     elif cont:
      # line continuation
+     print 'Line continuation enforced while parsing',name
      for i in range(0,len(a)):
       choices[-1][0].append(a[i])
       choices[-1][1].append(b[i])
@@ -226,23 +233,58 @@ def printGrammar(fn):
  ext.write('</bgf:grammar>')
  ext.close()
 
+def breakWords(nt,s):
+ # transforms terminals like "aaa.bbb" to "aaa" "." "bbb"
+ word = s[1:-1]
+ res = '"'
+ f = word[0].isalpha()
+ for letter in word:
+  if f==letter.isalpha():
+   res += letter
+  else:
+   res += '" "'+letter
+  f=letter.isalpha()
+ cx = res.count(' ')
+ if cx:
+  print 'Multiple terminals heuristic fix:',s,'in',nt,'('+`cx+1`+')'
+ return res+'"'
+
 def automatedImprove():
  for nt in prods.keys():
+  newprods = []
   for bs in prods[nt]:
    for i in range(0,len(bs)):
     if bs[i]=='"|"' and len(bs)>1:
-     print 'Suspicious context for "|" in',nt+', treating as a BNF bar'
+     print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
      bs[i] = '|'
     elif bs[i][0]=='"':
+     if bs[i][1].isupper() and bs[i][1:-1] in prods.keys():
+      print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+      bs[i]=bs[i][1:-1]
+      continue
+     if bs[i].find('&')<0:
+      bs[i] = breakWords(nt,bs[i])
      continue
     if bs[i].isalnum():
      if bs[i][0].islower() and (bs[i] not in prods.keys()):
-      print 'Cannot find definition for',bs[i]+', treating as a terminal in',nt
+      print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(no definition)'
       bs[i] = '"'+bs[i]+'"'
     elif bs[i][0] not in ('[',']','{','}','|','(',')'):
-     print 'Guessing that "'+bs[i]+'" in',nt,'must be a terminal symbol'
+     print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(weird name)'
      bs[i] = '"'+bs[i]+'"'
-   bs = fixBrackets(nt,bs)
+    elif bs[i]=='(':
+     if i+1<len(bs) and bs[i+1]==')':
+      # () is not BNF bracketing
+      bs[i]='"("'
+      bs[i+1]='")"'
+      print 'Bracketing heuristic fix in',nt,'(empty group)'
+     if i+2<len(bs) and bs[i+2]==')':
+      # (x) is not BNF bracketing
+      bs[i]='"("'
+      bs[i+2]='")"'
+      print 'Bracketing heuristic fix in',nt,'(singleton group)'
+   newprods.append(fixBrackets(nt,' '.join(bs).split()))
+  prods[nt]=newprods
  pass
 
 def fixBrackets(nt,arr):
@@ -263,21 +305,33 @@ def fixBracketPair(nt,arr,left,right):
  if cx==0:
   return arr
  else:
-  print 'Bracketing mismatch in',nt,', trying to fix'
+  print 'Bracketing heuristic fix in',nt,
+  #print arr,'->'
   arr.reverse()
   while(cx>0):
    if '"'+right+'"' in arr:
     arr[arr.index('"'+right+'"')]=right
-   else:
+    print '(transformed terminal)'
+   elif left in arr:
     arr.remove(left)
+    print '(removed left bracket)'
+   else:
+    print '(added right bracket)'
+    arr=[right].extend(arr)
    cx -= 1
   arr.reverse()
   while(cx<0):
    if '"'+left+'"' in arr:
     arr[arr.index('"'+left+'"')]=left
-   else:
+    print '(transformed terminal)'
+   elif right in arr:
     arr.remove(right)
+    print '(removed right bracket)'
+   else:
+    print '(added left bracket)'
+    arr=[left].extend(arr)
    cx += 1
+  #print arr
   return arr
 
 if __name__ == "__main__":
