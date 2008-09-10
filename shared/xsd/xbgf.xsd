@@ -25,6 +25,7 @@
     <xsd:choice>
       <xsd:element ref="xbgf:add"/>
       <xsd:element ref="xbgf:case"/>
+      <xsd:element ref="xbgf:chain"/>
       <xsd:element ref="xbgf:define"/>
       <xsd:element ref="xbgf:designate"/>
       <xsd:element ref="xbgf:eliminate"/>
@@ -106,6 +107,19 @@
           </xsd:element>
         </xsd:choice>
       </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="chain">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
     </xsd:complexType>
   </xsd:element>
 
