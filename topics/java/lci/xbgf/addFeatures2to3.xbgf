@@ -50,4 +50,57 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>ClassDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>EnumDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <xbgf:vertical>
+    <nonterminal>ForInit</nonterminal>
+  </xbgf:vertical>
+  <xbgf:chain>
+    <bgf:production>
+      <nonterminal>InterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>NormalInterfaceDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:chain>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>InterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>AnnotationTypeDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>SwitchLabel</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>case</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>EnumConstantName</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>:</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <!--xbgf:fold>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <nonterminal>ParExpression</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:fold-->
 </xbgf:sequence>

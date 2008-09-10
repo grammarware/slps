@@ -8,8 +8,8 @@
     <ProjectGuid>{9DF685A6-6572-47F9-8DE3-1E827BFDB62F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>fl_lci</RootNamespace>
-    <AssemblyName>fl-lci</AssemblyName>
+    <RootNamespace>java_lci</RootNamespace>
+    <AssemblyName>java-lci</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -57,20 +57,7 @@
     <None Include="..\..\..\shared\xsd\xbgf.xsd">
       <Link>xbgf.xsd</Link>
     </None>
-    <None Include="fl.lcf" />
-    <None Include="xbgf\defineLex.xbgf" />
-    <None Include="xbgf\downcase.xbgf" />
-    <None Include="xbgf\massageXsd.xbgf" />
+    <None Include="java.lcf" />
     <None Include="xbgf\mkSignature.xbgf" />
-    <None Include="xbgf\permuteArgs.xbgf" />
-    <None Include="xbgf\preferDcg.xbgf" />
-    <None Include="xbgf\preferJaxb.xbgf" />
-    <None Include="xbgf\removeLayers.xbgf" />
-    <None Include="xbgf\reroot.xbgf" />
-    <None Include="xbgf\stripTerminals.xbgf" />
-    <None Include="xbgf\trimJaxb.xbgf" />
-    <None Include="xbgf\trimOm.xbgf" />
-    <None Include="xbgf\trimXsd.xbgf" />
-    <None Include="xbgf\unerase.xbgf" />
   </ItemGroup>
 </Project>

@@ -310,7 +310,7 @@ def automatedImprove():
   newprods = []
   for bs in prods[nt]:
    for i in range(0,len(bs)):
-    if bs[i]=='"|"' and len(bs)>1 and nt.find('Or')<0:
+    if bs[i]=='"|"' and len(bs)>1 and nt.find('OrExpression')<0:
      print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
      bs[i] = '|'
     elif bs[i][0]=='"':

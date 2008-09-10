@@ -7,4 +7,28 @@
   <xbgf:vertical>
     <nonterminal>Selector</nonterminal>
   </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>IdentifierSuffix</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Type</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>MemberDecl</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Expression3</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>InterfaceMemberDecl</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Primary</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:vertical>
 </xbgf:sequence>

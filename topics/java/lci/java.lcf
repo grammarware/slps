@@ -56,6 +56,15 @@
   </tool>
 
   <source>
+    <name>jls1</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/jls2bgf <expand>java</expand>/jls1/syntax.html
+      </extraction>
+    </grammar>
+  </source>
+
+  <source>
     <name>jls2</name>
     <grammar>
       <extraction>
@@ -74,6 +83,16 @@
   </source>
 
   <target>
+    <name>onetwo</name>
+    <branch>
+      <input>jls1</input>
+    </branch>
+    <branch>
+      <input>jls2</input>
+    </branch>
+  </target>
+
+  <target>
     <name>limit</name>
     <branch>
       <input>jls2</input>
@@ -85,6 +104,7 @@
       <input>jls3</input>
       <perform>fixErrors3</perform>
       <perform>mkSignature</perform>
+      <perform>make3converge</perform>
     </branch>
   </target>
 
