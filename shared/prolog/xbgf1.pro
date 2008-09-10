@@ -26,6 +26,16 @@ transformG(Xbgf,G1,G4)
 % Add a production to an existing definition
 %
 
+add(P,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    P = p(_,N,_),
+    require(
+      splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+      'Nonterminal ~q must be defined.',
+      [N]),
+    concat([Ps2a,Ps2,[P],Ps2b],Ps3),
+    !.
+
 
 %
 % p([l(caseAllDown)], f, true)
@@ -101,6 +111,34 @@ testCase(Q,UD,X)
  :-
     doCase(Q,UD,X,Y),
     \+ X == Y.
+
+
+%
+% p([l(chain)], f, n(p))
+%
+% Establish a chain production; a restricted kind of extract
+%
+
+chain(P1,g(Rs,Ps1),g(Rs,Ps4))
+ :-
+    P1 = p(As,N1,X1),
+    require(
+      X1 = n(N2),
+      'Production ~q must be a chain production.',
+      [P1]),
+    require(
+      splitN(Ps1,N1,Ps2,Ps2a,Ps2b),
+      'Nonterminal ~q must be defined.',
+      [N1]),
+    allNs(Ps1,Ns),
+    require(
+      (\+ member(N2,Ns)),
+      'Nonterminal ~q must be fresh.',
+      [N2]),
+    findP(Ps2,As,N1,P2,Ps3a,Ps3b),
+    P2 = p(_,_,X2),
+    concat([Ps2a,Ps3a,[P1],Ps3b,[p([],N2,X2)],Ps2b],Ps4),
+    !.
 
 
 %
