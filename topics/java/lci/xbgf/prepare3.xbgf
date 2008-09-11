@@ -2,16 +2,23 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   <xbgf:vertical>
+    <nonterminal>Type</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Primary</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
     <nonterminal>Modifier</nonterminal>
   </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:vertical>
+
   <xbgf:vertical>
     <nonterminal>Selector</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
     <nonterminal>IdentifierSuffix</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Type</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
     <nonterminal>MemberDecl</nonterminal>
@@ -23,12 +30,14 @@
     <nonterminal>InterfaceMemberDecl</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
-    <nonterminal>Statement</nonterminal>
+    <nonterminal>ClassDeclaration</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
-    <nonterminal>Primary</nonterminal>
+    <nonterminal>SwitchLabel</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
-    <nonterminal>Statement</nonterminal>
+    <nonterminal>InterfaceDeclaration</nonterminal>
   </xbgf:vertical>
+
+  <xbgf:inline>FormalParameterDecls</xbgf:inline>
 </xbgf:sequence>

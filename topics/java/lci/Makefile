@@ -3,7 +3,7 @@ validator = ../../../shared/tools/checkxml
 build:
 
 diff: test
-	gdt bgf/jls2.prefer3.mkSignature.addFeatures2to3.bgf bgf/jls3.fixErrors3.mkSignature.make3converge.bgf
+	gdt bgf/jls1.prepare1.structure1.bgf bgf/jls2.prepare2.bgf
 
 test:
 	python ../../convergence/lci/lci.py java.lcf architecture

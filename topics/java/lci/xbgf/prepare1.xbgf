@@ -1,0 +1,21 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:vertical>
+    <nonterminal>Type</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Primary</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Modifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:vertical>
+  <!--xbgf:vertical>
+    <nonterminal>ForStatement</nonterminal>
+  </xbgf:vertical-->
+
+  <xbgf:eliminate>Goal</xbgf:eliminate>
+</xbgf:sequence>

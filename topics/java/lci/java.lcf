@@ -86,24 +86,26 @@
     <name>onetwo</name>
     <branch>
       <input>jls1</input>
+      <perform>prepare1</perform>
+      <perform>structure1</perform>
     </branch>
     <branch>
       <input>jls2</input>
+      <perform>prepare2</perform>
     </branch>
   </target>
 
   <target>
     <name>limit</name>
     <branch>
-      <input>jls2</input>
+      <input>onetwo</input>
       <perform>prefer3</perform>
-      <perform>mkSignature</perform>
       <perform>addFeatures2to3</perform>
     </branch>
     <branch>
       <input>jls3</input>
       <perform>fixErrors3</perform>
-      <perform>mkSignature</perform>
+      <perform>prepare3</perform>
       <perform>make3converge</perform>
     </branch>
   </target>
