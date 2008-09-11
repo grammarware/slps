@@ -56,10 +56,19 @@
   </tool>
 
   <source>
-    <name>jls1</name>
+    <name>jls1app</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/jls2bgf <expand>java</expand>/jls1/syntax.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/syntax.kw <expand>java</expand>/jls1/syntax.html
+      </extraction>
+    </grammar>
+  </source>
+
+  <source>
+    <name>jls1doc</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/collect.kw <expand>java</expand>/jls1/collected.html
       </extraction>
     </grammar>
   </source>
@@ -83,10 +92,21 @@
   </source>
 
   <target>
+    <name>one</name>
+    <branch>
+      <input>jls1app</input>
+      <perform>prepare1</perform>
+    </branch>
+    <branch>
+      <input>jls1doc</input>
+      <perform>preferLALR</perform>
+    </branch>
+  </target>
+  
+  <target>
     <name>onetwo</name>
     <branch>
-      <input>jls1</input>
-      <perform>prepare1</perform>
+      <input>one</input>
       <perform>refactorStatements</perform>
       <perform>structure1</perform>
       <perform>addFeatures1to2</perform>

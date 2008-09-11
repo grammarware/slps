@@ -8,12 +8,21 @@ SLPS=${PWD}
 cd ${LOCAL1}
 
 if [ $# -lt 2 ]; then
-    echo "This tool extracts a BGF from Java Language Standard"
-    echo "Usage: $0 <input-hypertext-document> <output-bgf> [options]"
+    echo "This tool extracts a BGF from Java Language Specification or a similarly typeset HTML"
+    echo "Usage:"
+    echo "        html2bgf [<keywords-list>] <input-hypertext-document> <output-bgf>"
+    echo "   or:  html2bgf [<keywords-list>] <input-hypertext-document> <output-bnf> -bnf"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
+elif [ $# -eq 2 ]; then
+    python ${SLPS}/topics/extraction/html2bgf/html2bgf.py $1 $2
+elif [ "$3" == "-bnf" ]; then
+    python ${SLPS}/topics/extraction/html2bgf/html2bgf.py $1 $2 $3
 else
-    python ${SLPS}/topics/extraction/html2bgf/html2bgf.py $@
+    python ${SLPS}/topics/extraction/html2bgf/xpathpre.py $1 $2 $2.fixed
+    python ${SLPS}/topics/extraction/html2bgf/html2bgf.py $2.fixed $3 $4
+    rm -f $2.fixed
 fi
+

@@ -23,3 +23,12 @@ rebuild:
 	curl -k http://java.sun.com/docs/books/jls/first_edition/html/10.doc.html >>jls1/collected.html
 	curl -k http://java.sun.com/docs/books/jls/first_edition/html/14.doc.html >>jls1/collected.html
 	curl -k http://java.sun.com/docs/books/jls/first_edition/html/15.doc.html >>jls1/collected.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/typesValues.doc.html >jls2/collected.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/names.doc.html >>jls2/collected.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/packages.doc.html >>jls2/collected.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/classes.doc.html >>jls2/collected.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/interfaces.doc.html >>jls2/collected.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/arrays.doc.html >>jls2/collected.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/statements.doc.html >>jls2/collected.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/expressions.doc.html >>jls2/collected.html
+

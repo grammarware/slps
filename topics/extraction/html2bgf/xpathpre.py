@@ -4,7 +4,7 @@ import sys
 yes = []
 no = []
 
-def checkSection(text,tagN,includeFlag):
+def checkSection(text,tagN,includeFlag,p):
  for chapter in text.split('<h'+`tagN`+'>')[1:]:
   grammar = includeFlag
   content = chapter.split('</h'+`tagN`+'>')
@@ -16,34 +16,39 @@ def checkSection(text,tagN,includeFlag):
     grammar = False
   if grammar and content[1].find('<h')==-1:
    for chunk in content[1].split('<pre>')[1:]:
-    print chunk.split('</pre>')[0].replace('<br>','').replace('&#32;',' ')
-    print '<hr>'
+    p.write(chunk.split('</pre>')[0].replace('<br>','').replace('&#32;',' '))
+    p.write('<hr>')
   else:
    #print 'Going deeper than',content[0].split()[0]
    if grammar:
     for chunk in content[1].split('<h'+`tagN+1`+'>')[0].split('<pre>')[1:]:
-     print chunk.split('</pre>')[0].replace('<br>','').replace('&#32;',' ')
-     print '<hr>'
-   checkSection(content[1],tagN+1,grammar)
+     p.write(chunk.split('</pre>')[0].replace('<br>','').replace('&#32;',' '))
+     p.write('<hr>')
+   checkSection(content[1],tagN+1,grammar,p)
 
-if len(sys.argv)<2:
+if len(sys.argv)!=4:
  print '''This tool simulates a particular XPath query that it can execute upon a badly composed HTML.
 
 Usage:
-	python xpathpre.py keyword [keyword ...] <input >output
+	python xpathpre.py <keywords-list> <input-document> <output-bgf>
 
 It will read the input, looking for sections (<h?>) that contain keywords in the title.
 Once found, it will output the content of all <pre> tags from such sections.
-Keywords can be positive or negative, with positive being default.'''
+Keywords can be positive or negative, with positive being default.
+<pre> inside <blockquote> is not used.'''
 else:
- for kw in sys.argv[1:]:
-  if kw[0]=='-':
+ for kw in open(sys.argv[1],'r').readlines():
+  kw = kw.strip()
+  if not kw:
+   continue
+  elif kw[0]=='-':
    no.append(kw[1:])
   elif kw[0]=='+':
    yes.append(kw[1:])
   else:
    yes.append(kw)
- print '<pre>'
- checkSection(''.join(sys.stdin.readlines()),1,False)
- print '</pre>'
-
+ out = open(sys.argv[3],'w')
+ out.write('<pre>')
+ checkSection(''.join(open(sys.argv[2],'r').readlines()),1,False,out)
+ out.write('</pre>')
+ out.close()
