@@ -210,7 +210,7 @@ def cleanup(line):
 def ifContinuation(s):
  if not s:
   return False
- if s[0]=='\t':
+ if s[0]=='\t' and s[1]!='\t':
   return False
  if s[0]==' ':
   return False
@@ -264,7 +264,7 @@ def readGrammar(fn):
      choices = []
      name = a[0]
      oneof = True
-    elif cont:
+    elif cont and choices:
      # line continuation
      print 'Line continuation enforced while parsing',name
      for i in range(0,len(a)):
@@ -302,7 +302,7 @@ def breakWords(nt,s):
   f=letter.isalpha()
  cx = res.count(' ')
  if cx:
-  print 'Multiple terminals heuristic fix:',s,'in',nt,'('+`cx+1`+')'
+  print 'Multiple terminals heuristic fix:',s,'in',nt,'(1 to',`cx+1`+')'
  return res+'"'
 
 def automatedImprove():
@@ -310,6 +310,8 @@ def automatedImprove():
   newprods = []
   for bs in prods[nt]:
    for i in range(0,len(bs)):
+    if not bs[i]:
+     continue
     if bs[i]=='"|"' and len(bs)>1 and nt.find('OrExpression')<0:
      print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
      bs[i] = '|'
@@ -352,6 +354,25 @@ def automatedImprove():
       bs[i+4]='")"'
       print 'Structural heuristic fix in',nt,'(singleton complex group)'
    newprods.append(fixBrackets(nt,' '.join(bs).split()))
+  prods[nt]=newprods
+ for nt in prods.keys():
+  newprods = []
+  for bs in prods[nt]:
+   for i in range(0,len(bs)):
+    if not bs[i]:
+     continue
+    if bs[i][0]=='"':
+     if i+1<len(bs) and bs[i+1][0]=='"' and len(bs[i+1])==3 and bs[i+1][1].isalpha():
+      bs[i]='"'+bs[i][1:-1]+bs[i+1][1]+'"'
+      bs[i+1]=''
+      print 'Multiple terminals heuristic fix:',bs[i],'in',nt,'(2 to 1)'
+      continue
+     if i+1<len(bs) and bs[i+1][0]=='"' and len(bs[i])==3 and bs[i][1].isalpha():
+      bs[i]='"'+bs[i][1]+bs[i+1][1:-1]+'"'
+      bs[i+1]=''
+      print 'Multiple terminals heuristic fix:',bs[i],'in',nt,'(2 to 1)'
+      continue
+   newprods.append(' '.join(bs).split())
   prods[nt]=newprods
  pass
 
