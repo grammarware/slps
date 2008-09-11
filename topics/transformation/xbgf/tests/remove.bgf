@@ -1,0 +1,11 @@
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  <bgf:production>
+    <nonterminal>MethodBody</nonterminal>
+    <bgf:expression>
+      <choice>
+        <bgf:expression><nonterminal>Block</nonterminal></bgf:expression>
+        <bgf:expression><terminal>;</terminal></bgf:expression>
+      </choice>
+    </bgf:expression>
+  </bgf:production>
+</bgf:grammar>
