@@ -75,7 +75,7 @@
     <to>Statement</to>
   </xbgf:unite>
   <xbgf:inline>Finally</xbgf:inline>
-  <xbgf:fold>
+  <!--xbgf:fold>
     <bgf:production>
       <nonterminal>DoStatement</nonterminal>
       <bgf:expression>
@@ -98,7 +98,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:fold>
+  </xbgf:fold-->
   <xbgf:project>
     <bgf:production>
       <nonterminal>ContinueStatement</nonterminal>
@@ -148,9 +148,6 @@
   <xbgf:inline>SwitchBlock</xbgf:inline>
 
 
-  <!--xbgf:restrict>
-    
-  </xbgf:restrict-->
   <xbgf:undefine>StatementExpression</xbgf:undefine>
   <xbgf:define>
     <bgf:production>
@@ -161,4 +158,18 @@
     </bgf:production>
   </xbgf:define>
 
+  <!--xbgf:lassoc>
+    <bgf:production>
+      <nonterminal>SwitchBlockStatementGroups</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <nonterminal>SwitchBlockStatementGroup</nonterminal>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:lassoc-->
+  
+  <!--...-->
 </xbgf:sequence>

@@ -1,0 +1,14 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>Modifier</nonterminal>
+      <bgf:expression>
+        <terminal>strictfp</terminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+
+</xbgf:sequence>

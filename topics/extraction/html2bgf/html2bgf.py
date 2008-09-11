@@ -3,6 +3,7 @@ import sys
 
 #global
 emph = [False]
+pessimistic = [False,0]
 prods = {}
 
 def serialise(name,choices):
@@ -144,6 +145,11 @@ def parseLine(line):
  flags = []
  while line:
   line = line.strip()
+  if pessimistic[0]:
+   if line=='<hr>':
+    pessimistic[0]=False
+   line = ''
+   continue
   if line.find('</i>')==0:
    emph[0] = False
    line = line[4:]
@@ -169,17 +175,21 @@ def parseLine(line):
    line = line[7:]
    continue
   if line.find('<sub><i>opt</i></sub>')==0:
-   last = tokens.pop()
-   lastf = flags.pop()
-   tokens.extend(['[',last,']'])
-   flags.extend([True,lastf,True])
+   tokens.append('?????')
+   flags.append(True)
+   #last = tokens.pop()
+   #lastf = flags.pop()
+   #tokens.extend(['[',last,']'])
+   #flags.extend([True,lastf,True])
    line = line[21:]
    continue
   if line.find('<sub><i>opt')==0:
-   last = tokens.pop()
-   lastf = flags.pop()
-   tokens.extend(['[',last,']'])
-   flags.extend([True,lastf,True])
+   tokens.append('?????')
+   flags.append(True)
+   #last = tokens.pop()
+   #lastf = flags.pop()
+   #tokens.extend(['[',last,']'])
+   #flags.extend([True,lastf,True])
    line = line[11:]
    continue
   if line.find('</sub>')==0:
@@ -187,6 +197,15 @@ def parseLine(line):
    continue
   if line.find('<sub>')==0:
    line = line[5:]
+   continue
+  if line.find('<hr>')==0:
+   line = line.replace('<hr>','')
+   pessimistic[0] = False
+   continue
+  if line.find('<a')==0:
+   #print 'Anchor found, skipping everything that is left of this snippet.'
+   pessimistic[0] = True
+   pessimistic[1] += 1
    continue
   if line.find('<')==0:
    print 'Found unknown tag while parsing "'+line+'", skipping!'
@@ -274,6 +293,8 @@ def readGrammar(fn):
      # add choice branch
      choices.append([a,b])
  src.close()
+ if pessimistic[1]:
+  print 'Skipped',pessimistic[1],'anchor-containing snippets'
 
 def printGrammarText(fn):
  ext = open(fn,'w')
@@ -311,6 +332,11 @@ def automatedImprove():
   for bs in prods[nt]:
    for i in range(0,len(bs)):
     if not bs[i]:
+     continue
+    if bs[i]=='?????':
+     # Change to classic EBNF
+     bs[i-1] = '[ '+bs[i-1]
+     bs[i]   = ']'
      continue
     if bs[i]=='"|"' and len(bs)>1 and nt.find('OrExpression')<0:
      print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
@@ -355,23 +381,86 @@ def automatedImprove():
       print 'Structural heuristic fix in',nt,'(singleton complex group)'
    newprods.append(fixBrackets(nt,' '.join(bs).split()))
   prods[nt]=newprods
+ pass
+
+def glueSymbols():
  for nt in prods.keys():
   newprods = []
   for bs in prods[nt]:
-   for i in range(0,len(bs)):
+   for i in range(0,len(bs)-1):
     if not bs[i]:
      continue
-    if bs[i][0]=='"':
-     if i+1<len(bs) and bs[i+1][0]=='"' and len(bs[i+1])==3 and bs[i+1][1].isalpha():
-      bs[i]='"'+bs[i][1:-1]+bs[i+1][1]+'"'
-      bs[i+1]=''
-      print 'Multiple terminals heuristic fix:',bs[i],'in',nt,'(2 to 1)'
-      continue
-     if i+1<len(bs) and bs[i+1][0]=='"' and len(bs[i])==3 and bs[i][1].isalpha():
-      bs[i]='"'+bs[i][1]+bs[i+1][1:-1]+'"'
-      bs[i+1]=''
-      print 'Multiple terminals heuristic fix:',bs[i],'in',nt,'(2 to 1)'
-      continue
+    if bs[i][0]=='"' and len(bs[i])==3 and bs[i][1].isalpha():
+     if bs[i+1][0]=='"':
+      # "N" "ame"
+      test = bs[i][1]+bs[i+1][1:-1]
+     else:
+      # "N" ame
+      test = bs[i][1]+bs[i+1]
+     if test.isalnum():
+      if test in prods.keys():
+       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       bs[i] = test
+       bs[i+1]=''
+       print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+      elif not (bs[i+1][0].isupper() or bs[i+1] in prods.keys()):
+       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       bs[i] = '"'+test+'"'
+       bs[i+1]=''
+    elif bs[i][0]!='"' and len(bs[i])==1 and bs[i][0].isalpha():
+     if bs[i+1][0]=='"':
+      # N "ame"
+      test = bs[i][0]+bs[i+1][1:-1]
+     else:
+      # N ame
+      test = bs[i][0]+bs[i+1]
+     if test.isalnum():
+      if test in prods.keys():
+       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       bs[i] = test
+       bs[i+1]=''
+       print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+      elif not (bs[i+1][0].isupper() or bs[i+1] in prods.keys()):
+       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       bs[i] = '"'+test+'"'
+       bs[i+1]=''
+   for i in range(1,len(bs)):
+    if not bs[i]:
+     continue
+    if bs[i][0]=='"' and len(bs[i])==3 and bs[i][1].isalpha():
+     if bs[i-1][0]=='"':
+      # "continu" "e"
+      test = bs[i-1][1:-1]+bs[i][1]
+     else:
+      # continu "e"
+      test = bs[i-1]+bs[i][1]
+     if test.isalnum():
+      if test in prods.keys():
+       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       bs[i] = test
+       bs[i-1]=''
+       print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+      elif bs[i-1] not in prods.keys():
+       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       bs[i]='"'+test+'"'
+       bs[i-1]=''
+    elif bs[i][0]!='"' and len(bs[i])==1 and bs[i][0].isalpha():
+     if bs[i-1][0]=='"':
+      # "continu" e
+      test = bs[i-1][1:-1]+bs[i][0]
+     else:
+      # continu e
+      test = bs[i-1]+bs[i][0]
+     if test.isalnum():
+      if test in prods.keys():
+       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       bs[i] = test
+       bs[i-1]=''
+       print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+      elif bs[i-1] not in prods.keys():
+       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       bs[i]='"'+test+'"'
+       bs[i-1]=''
    newprods.append(' '.join(bs).split())
   prods[nt]=newprods
  pass
@@ -429,6 +518,7 @@ if __name__ == "__main__":
   print 'Reading the HTML document...'
   readGrammar(sys.argv[1])
   print 'Massaging the grammar...'
+  glueSymbols()
   automatedImprove()
   print 'Writing the extracted grammar...'
   if sys.argv[-1]=='-bnf':

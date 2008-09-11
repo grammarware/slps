@@ -89,5 +89,35 @@
   
   
   <xbgf:inline>PackageDeclaration</xbgf:inline>
+  <xbgf:unite>
+    <add>PrimaryNoNewArray</add>
+    <to>Primary</to>
+  </xbgf:unite>
+  <!--xbgf:inline>PrimaryNoNewArray</xbgf:inline-->
+  <xbgf:inline>ArrayCreationExpression</xbgf:inline>
 
+  <!--xbgf:extract>
+    <bgf:production>
+      <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ModifiersOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <choice>
+              <bgf:expression>
+                <nonterminal>ClassDeclaration</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>InterfaceDeclaration</nonterminal>
+              </bgf:expression>
+            </choice>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract-->
+
+  <!--...-->
 </xbgf:sequence>
