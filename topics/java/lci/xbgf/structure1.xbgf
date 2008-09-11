@@ -1,25 +1,6 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:inline>ForStatement</xbgf:inline>
-  <xbgf:inline>WhileStatement</xbgf:inline>
-  <xbgf:inline>IfThenStatement</xbgf:inline>
-  <xbgf:inline>LabeledStatement</xbgf:inline>
-  <xbgf:inline>IfThenElseStatement</xbgf:inline>
-  <xbgf:inline>StatementWithoutTrailingSubstatement</xbgf:inline>
-  
-  <!--xbgf:restrict>
-    
-  </xbgf:restrict-->
-  <xbgf:undefine>StatementExpression</xbgf:undefine>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>StatementExpression</nonterminal>
-      <bgf:expression>
-        <nonterminal>Expression</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
 
   <xbgf:project>
     <bgf:production>
@@ -56,5 +37,57 @@
   <xbgf:inline>Super</xbgf:inline>
   <xbgf:inline>Interfaces</xbgf:inline>
 
+  <xbgf:undefine>ExtendsInterfaces</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ExtendsInterfaces</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>extends</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TypeList</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:inline>ExtendsInterfaces</xbgf:inline>
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>InterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>interface</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>extends</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>TypeList</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>InterfaceBody</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
+  
+  
   <xbgf:inline>PackageDeclaration</xbgf:inline>
+
 </xbgf:sequence>

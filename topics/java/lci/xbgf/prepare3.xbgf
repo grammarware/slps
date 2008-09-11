@@ -1,6 +1,10 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
+
   <xbgf:vertical>
     <nonterminal>Type</nonterminal>
   </xbgf:vertical>

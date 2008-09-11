@@ -1,6 +1,9 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
   <xbgf:vertical>
     <nonterminal>Type</nonterminal>
   </xbgf:vertical>
@@ -29,4 +32,31 @@
   <xbgf:vertical>
     <nonterminal>InterfaceMemberDecl</nonterminal>
   </xbgf:vertical>
+
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ForInitOpt</nonterminal>
+      <bgf:expression>
+        <optional>
+          <bgf:expression>
+            <nonterminal>ForInit</nonterminal>
+          </bgf:expression>
+        </optional>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:inline>ForInitOpt</xbgf:inline>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ForUpdateOpt</nonterminal>
+      <bgf:expression>
+        <optional>
+          <bgf:expression>
+            <nonterminal>ForUpdate</nonterminal>
+          </bgf:expression>
+        </optional>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:inline>ForUpdateOpt</xbgf:inline>
 </xbgf:sequence>

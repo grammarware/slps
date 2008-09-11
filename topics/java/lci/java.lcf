@@ -87,6 +87,7 @@
     <branch>
       <input>jls1</input>
       <perform>prepare1</perform>
+      <perform>refactorStatements</perform>
       <perform>structure1</perform>
     </branch>
     <branch>
