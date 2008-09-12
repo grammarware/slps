@@ -34,6 +34,7 @@
       <xsd:element ref="xbgf:fold"/>
       <xsd:element ref="xbgf:horizontal"/>
       <xsd:element ref="xbgf:id"/>
+      <xsd:element ref="xbgf:inject"/>
       <xsd:element ref="xbgf:inline"/>
       <xsd:element ref="xbgf:introduce"/>
       <xsd:element ref="xbgf:lassoc"/>
@@ -222,6 +223,19 @@
     </xsd:annotation>
     <xsd:complexType/>
   </xsd:element>
+
+  <xsd:element name="inject">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>  
 
   <xsd:element name="inline" type="bgf:nonterminal">
     <xsd:annotation>

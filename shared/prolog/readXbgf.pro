@@ -104,6 +104,13 @@ xml2xbgf(T,id)
     self(name(xbgf:id),T),
     !.
 
+xml2xbgf(T,inject(P2))
+ :-
+    self(name(xbgf:inject),T),
+    !,
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
 xml2xbgf(T,inline(N))
  :-
     self(name(xbgf:inline),T),

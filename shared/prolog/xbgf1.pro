@@ -431,6 +431,28 @@ horizontal(N,g(Rs,Ps1),g(Rs,Ps3))
 
 id(G,G).
 
+%
+% p([l(inject)], f, n(p))
+%
+% Inverse of apply projection to the body of a production
+%
+
+inject(P1,g(Rs,Ps1),g(Rs,Ps5))
+ :- 
+    P1 = p(As1,N1,X1),
+    require(
+      X1 = ','(Xs1),
+      'Projection requires a sequence instead of ~q.',
+      [X1]),
+    findP(Ps1,As1,N1,P2,Ps2a,Ps2b),
+    P2 = p(As1,N1,X2),
+    ( X2 = ','(Xs2) -> true; Xs2 = [X2] ),
+    require(
+      xbgf1:projectXs(Xs2,Xs1),
+      'Phrases ~q must be of a subsequence of ~q.',
+      [X2,X1]),
+    append(Ps2a,[P1|Ps2b],Ps5).
+
 
 %
 % p([l(inline)], f, n(n))
@@ -604,11 +626,8 @@ permuteXs([X|Xs1],Xs2)
 project(P1,g(Rs,Ps1),g(Rs,Ps5))
  :- 
     P1 = p(As1,N1,X1),
-    require(
-      X1 = ','(Xs1),
-      'Projection requires a sequence instead of ~q.',
-      [X1]),
-    findP(Ps1,As1,N1,P2,Ps3,Ps4),
+    ( X1 = ','(Xs1) -> true; Xs1 = [X1] ),
+    findP(Ps1,As1,N1,P2,Ps2a,Ps2b),
     P2 = p(As1,N1,X2),
     require(
       X2 = ','(Xs2),
@@ -618,7 +637,7 @@ project(P1,g(Rs,Ps1),g(Rs,Ps5))
       xbgf1:projectXs(Xs1,Xs2),
       'Phrases ~q must be of a subsequence of ~q.',
       [X1,X2]),
-    append(Ps3,[P1|Ps4],Ps5).
+    append(Ps2a,[P1|Ps2b],Ps5).
 
 projectXs([],_)
  :-
