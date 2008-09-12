@@ -7,9 +7,12 @@ test:
 	cd jls1 ; make
 	cd jls2 ; make
 	cd jls3 ; make
-	../../shared/tools/gdt jls1/jls1.bgf lci/snapshot/jls1.bgf
-	../../shared/tools/gdt jls2/jls2.bgf lci/snapshot/jls2.bgf
-	../../shared/tools/gdt jls3/jls3.bgf lci/snapshot/jls3.bgf
+	../../shared/tools/gdt jls1/jls1.bgf lci/snapshot/jls1syntax.bgf
+	../../shared/tools/gdt jls2/jls2.bgf lci/snapshot/jls2syntax.bgf
+	../../shared/tools/gdt jls3/jls3.bgf lci/snapshot/jls3syntax.bgf
+	../../shared/tools/gdt jls1/jls1c.bgf lci/snapshot/jls1doc.bgf
+	../../shared/tools/gdt jls2/jls2c.bgf lci/snapshot/jls2doc.bgf
+	../../shared/tools/gdt jls3/jls3c.bgf lci/snapshot/jls3doc.bgf
 
 rebuild:
 	curl -k http://java.sun.com/docs/books/jls/first_edition/html/19.doc.html > jls1/syntax.html
@@ -31,4 +34,11 @@ rebuild:
 	curl -k http://java.sun.com/docs/books/jls/second_edition/html/arrays.doc.html >>jls2/collected.html
 	curl -k http://java.sun.com/docs/books/jls/second_edition/html/statements.doc.html >>jls2/collected.html
 	curl -k http://java.sun.com/docs/books/jls/second_edition/html/expressions.doc.html >>jls2/collected.html
-
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/typesValues.html >jls3/collected.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/names.html >>jls3/collected.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/packages.html >>jls3/collected.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/classes.html >>jls3/collected.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/interfaces.html >>jls3/collected.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/arrays.html >>jls3/collected.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/statements.html >>jls3/collected.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/expressions.html >>jls3/collected.html

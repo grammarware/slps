@@ -5,19 +5,16 @@
     <name>slps</name>
     <expansion>../../..</expansion>
   </shortcut>
-
   <shortcut>
     <name>java</name>
     <expansion>..</expansion>
   </shortcut>
-
   <shortcut>
     <name>tools</name>
     <expansion>
       <expand>slps</expand>/shared/tools
     </expansion>
   </shortcut>
-
   <shortcut>
     <name>wrappers</name>
     <expansion>
@@ -30,29 +27,18 @@
     <grammar>
       <expand>tools</expand>/checkxml bgf
     </grammar>
-    <tree>
-      <expand>tools</expand>/checkbtf
-    </tree>
   </tool>
-
   <tool>
     <name>comparison</name>
     <grammar>
       <expand>tools</expand>/gdt
     </grammar>
-    <tree>
-      <expand>tools</expand>/tdt
-    </tree>
   </tool>
-
   <tool>
     <name>transformation</name>
     <grammar>
       <expand>tools</expand>/xbgf
     </grammar>
-    <tree>
-      <expand>tools</expand>/xbtf
-    </tree>
   </tool>
 
   <source>
@@ -63,7 +49,6 @@
       </extraction>
     </grammar>
   </source>
-
   <source>
     <name>jls1doc</name>
     <grammar>
@@ -81,7 +66,6 @@
       </extraction>
     </grammar>
   </source>
-
   <source>
     <name>jls2doc</name>
     <grammar>
@@ -92,10 +76,18 @@
   </source>
 
   <source>
-    <name>jls3</name>
+    <name>jls3syntax</name>
     <grammar>
       <extraction>
         <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/syntax.html
+      </extraction>
+    </grammar>
+  </source>
+  <source>
+    <name>jls3doc</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/collect.kw <expand>java</expand>/jls3/collected.html
       </extraction>
     </grammar>
   </source>
@@ -122,6 +114,18 @@
       <input>jls2doc</input>
     </branch>
   </target>
+
+  <target>
+    <name>three</name>
+    <branch>
+      <input>jls3syntax</input>
+      <perform>fixErrors3</perform>
+      <perform>prepare3</perform>
+    </branch>
+    <branch>
+      <input>jls3doc</input>
+    </branch>
+  </target>
   
   <target>
     <name>onetwo</name>
@@ -146,9 +150,38 @@
       <perform>addFeatures2to3</perform>
     </branch>
     <branch>
-      <input>jls3</input>
-      <perform>fixErrors3</perform>
-      <perform>prepare3</perform>
+      <input>three</input>
+    </branch>
+    <branch>
+      <input>formal</input>
+    </branch>
+    <branch>
+      <input>doc</input>
+    </branch>
+  </target>
+
+  <target>
+    <name>doc</name>
+    <branch>
+      <input>jls1doc</input>
+    </branch>
+    <branch>
+      <input>jls2doc</input>
+    </branch>
+    <branch>
+      <input>jls3doc</input>
+    </branch>
+  </target>
+  <target>
+    <name>formal</name>
+    <branch>
+      <input>jls1syntax</input>
+    </branch>
+    <branch>
+      <input>jls2syntax</input>
+    </branch>
+    <branch>
+      <input>jls3syntax</input>
     </branch>
   </target>
 

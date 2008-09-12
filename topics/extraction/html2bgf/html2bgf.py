@@ -354,7 +354,8 @@ def automatedImprove():
      print 'Structural heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
      pessimistic[2] += 1
      newbs = bs[:i]
-     newbs.append(bs[i][:-3])
+     if bs[i]!='opt':
+      newbs.append(bs[i][:-3])
      newbs.append('?????')
      newbs.extend(bs[i+1:])
      bs = newbs
