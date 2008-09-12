@@ -10,7 +10,7 @@
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
- <xbgf:vertical>
+  <xbgf:vertical>
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
   <xbgf:rename>
@@ -19,7 +19,7 @@
       <to>Name</to>
     </nonterminal>
   </xbgf:rename>
-  
+
   <xbgf:unite>
     <add>MethodName</add>
     <to>Name</to>
@@ -36,13 +36,435 @@
     <add>ExpressionName</add>
     <to>Name</to>
   </xbgf:unite>
-  <!--xbgf:restrict>
+
+  <xbgf:extract>
     <bgf:production>
+      <nonterminal>QualifiedName</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Name</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  <xbgf:vertical>
+    <nonterminal>Name</nonterminal>
+  </xbgf:vertical>
+  <xbgf:designate>
+    <bgf:production>
+      <label>idtoname</label>
       <nonterminal>Name</nonterminal>
+      <bgf:expression>
+        <nonterminal>Identifier</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:chain>
+    <bgf:production>
+      <label>idtoname</label>
+      <nonterminal>Name</nonterminal>
+      <bgf:expression>
+        <nonterminal>SimpleName</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:chain>
+  <!-- horizontal also kills the temporary label -->
+  <xbgf:horizontal>Name</xbgf:horizontal>
+
+  <xbgf:undefine>ClassOrInterfaceType</xbgf:undefine>
+  <xbgf:undefine>InterfaceType</xbgf:undefine>
+  <xbgf:undefine>ClassType</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>InterfaceType</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ClassType</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ClassOrInterfaceType</nonterminal>
+      <bgf:expression>
+        <nonterminal>Name</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:unite>
+    <add>SimpleTypeName</add>
+    <to>SimpleName</to>
+  </xbgf:unite>
+
+  <xbgf:vertical>
+    <nonterminal>ClassModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>InterfaceModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>ConstructorModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>AbstractMethodModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>MethodModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>FieldModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>ConstantModifiers</nonterminal>
+  </xbgf:vertical>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassModifier</from>
+      <to>Modifier</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:unite>
+    <add>InterfaceModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>ConstructorModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>AbstractMethodModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>MethodModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>FieldModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <!-- NB: weird name (plural) -->
+  <xbgf:unite>
+    <add>ConstantModifiers</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassModifiers</from>
+      <to>Modifiers</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:unite>
+    <add>InterfaceModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>ConstructorModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>AbstractMethodModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>MethodModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>FieldModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>MethodDeclarator</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>FormalParameterList</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <xbgf:horizontal>MethodDeclarator</xbgf:horizontal>
+
+  <!-- begin local rename aka substitute-->
+  <xbgf:vertical>
+    <nonterminal>ArrayCreationExpression</nonterminal>
+  </xbgf:vertical>
+  <xbgf:designate>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>ArrayCreationExpression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>new</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Name</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>DimExprs</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Dims</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:project>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>ArrayCreationExpression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>new</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>DimExprs</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Dims</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
+  <xbgf:inject>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>ArrayCreationExpression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>new</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ClassOrInterfaceType</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>DimExprs</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Dims</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  <xbgf:horizontal>ArrayCreationExpression</xbgf:horizontal>
+  <!-- end local rename aka substitute-->
+
+  <xbgf:vertical>
+    <nonterminal>CastExpression</nonterminal>
+  </xbgf:vertical>
+  <!-- begin local rename aka substitute-->
+  <xbgf:designate>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>CastExpression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ReferenceType</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>UnaryExpressionNotPlusMinus</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:project>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>CastExpression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>UnaryExpressionNotPlusMinus</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
+  <xbgf:inject>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>CastExpression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>UnaryExpressionNotPlusMinus</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  <!-- end local rename aka substitute-->
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>CastExpression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Name</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Dims</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>UnaryExpressionNotPlusMinus</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <xbgf:horizontal>CastExpression</xbgf:horizontal>
+
+  <!-- fake extract (not quite) -->
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>AbstractMethodDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>AbstractMethodDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>MethodHeader</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  
+  <!-- there was an error in the original definition!!! -->
+  <!-- there should've been opportunity for multiple modifiers -->
+  <xbgf:undefine>ConstantDeclaration</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ConstantDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>FieldDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+
+  <!-- the following fix this mismatch:
+  
+    - Fail: ArrayType.
+      - [], ,([n(Type), t([), t(])])
+     vs.
+      - [], ;([,([n(PrimitiveType), t([), t(])]), ,([n(Name), t([), t(])]), ,([n(ArrayType), t([), t(])])])
+ 
+  It would've been better to unchain Type, then unchain ReferenceType, then unchain ClassOrInterfaceType,
+  and then do a very smart transformation pushing choices outwards.
+  
+  Yet unchain does not work with trailing terminals, and inline cannot be used locally.
+  -->
+  <xbgf:undefine>ArrayType</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ArrayType</nonterminal>
       <bgf:expression>
         <choice>
           <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>PrimitiveType</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>[</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>]</terminal>
+              </bgf:expression>
+            </sequence>
           </bgf:expression>
           <bgf:expression>
             <sequence>
@@ -50,20 +472,180 @@
                 <nonterminal>Name</nonterminal>
               </bgf:expression>
               <bgf:expression>
-                <terminal>.</terminal>
+                <terminal>[</terminal>
               </bgf:expression>
               <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
+                <terminal>]</terminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>ArrayType</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>[</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>]</terminal>
               </bgf:expression>
             </sequence>
           </bgf:expression>
         </choice>
       </bgf:expression>
     </bgf:production>
-  </xbgf:restrict-->
-  <!--xbgf:add>
+  </xbgf:define>
+  
+  <!-- the following fix this mismatch:
+  
+     - Fail: MethodHeader.
+      - [], ,([?(n(Modifiers)), n(ResultType), n(MethodDeclarator), ?(n(Throws))])
+     vs.
+      - [], ;([,([?(n(Modifiers)), n(Type), n(MethodDeclarator), ?(n(Throws))]), ,([?(n(Modifiers)), t(void), n(MethodDeclarator), ?(n(Throws))])])
+
+  It would've been better to inline ResultType and the push choices to the outmost position.
+  -->
+  <xbgf:undefine>MethodHeader</xbgf:undefine>
+  <xbgf:define>
     <bgf:production>
-      <nonterminal></nonterminal>
+      <nonterminal>MethodHeader</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Modifiers</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Type</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>MethodDeclarator</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Throws</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Modifiers</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>void</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>MethodDeclarator</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Throws</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
     </bgf:production>
-  </xbgf:add-->
+  </xbgf:define>
+  <xbgf:eliminate>ResultType</xbgf:eliminate>
+  
+  <!-- last bits -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>MethodInvocation</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>Name</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>(</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>ArgumentList</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>)</terminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>Primary</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>.</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>(</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>ArgumentList</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>)</terminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <terminal>super</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>.</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>(</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>ArgumentList</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>)</terminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
 </xbgf:sequence>
