@@ -1,0 +1,16 @@
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  <bgf:production>
+    <nonterminal>TypeDeclaration</nonterminal>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>ClassDeclaration</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>InterfaceDeclaration</nonterminal>
+        </bgf:expression>
+        <bgf:expression><terminal>;</terminal></bgf:expression>
+      </choice>
+    </bgf:expression>
+  </bgf:production>
+</bgf:grammar>

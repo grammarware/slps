@@ -4,8 +4,13 @@ build:
 
 test:
 	make remove.test
+	make extract.test
 
-%.test: 
+rebuild:
+	make clean
+	make test
+
+%.test:
 	${tools}/checkxml bgf $*.bgf
 	${tools}/checkxml xbgf $*.xbgf
 	${tools}/xbgf $*.xbgf $*.bgf $*.out

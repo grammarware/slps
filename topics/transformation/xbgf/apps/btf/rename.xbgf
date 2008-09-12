@@ -25,6 +25,12 @@
   </xbgf:rename>
   <xbgf:rename>
     <selector>
+      <from>value</from>
+      <to>@v</to>
+    </selector>
+  </xbgf:rename>
+  <xbgf:rename>
+    <selector>
       <from>selectable</from>
       <to>@s</to>
     </selector>

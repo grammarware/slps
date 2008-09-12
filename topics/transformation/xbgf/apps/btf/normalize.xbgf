@@ -1,8 +1,35 @@
-<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf">
+<xbgf:sequence 
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:extract>
+     <bgf:production>
+       <nonterminal>@v</nonterminal>
+       <bgf:expression>
+         <choice>
+           <bgf:expression>
+             <selectable>
+               <selector>@int</selector>
+               <bgf:expression>
+                 <value>int</value>
+               </bgf:expression>
+             </selectable>
+           </bgf:expression>
+           <bgf:expression>
+             <selectable>
+               <selector>@string</selector>
+               <bgf:expression>
+                 <value>string</value>
+               </bgf:expression>
+             </selectable>
+           </bgf:expression>
+         </choice>
+       </bgf:expression>
+     </bgf:production>
+  </xbgf:extract>
   <xbgf:vertical>
     <nonterminal>tree</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
-    <label>value</label>
-  </xbgf:vertical>
+    <nonterminal>@v</nonterminal>
+  </xbgf:vertical> -->
 </xbgf:sequence>

@@ -12,8 +12,8 @@ append.xbgf:
 		../bgf/rename.xbgf \
 		rename.xbgf \
 		reroot.xbgf \
-		normalize.xbgf \
-		strip.xbgf
+		normalize.xbgf
+#		strip.xbgf
 
 ${final}: append.xbgf
 	${tools}/xsd2bgf ${xsd}/btf.xsd btf0.bgf
