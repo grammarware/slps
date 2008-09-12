@@ -24,6 +24,14 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
+        <nonterminal>chain</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
         <nonterminal>define</nonterminal>
       </bgf:expression>
     </bgf:production>
@@ -33,6 +41,14 @@
       <nonterminal>f</nonterminal>
       <bgf:expression>
         <nonterminal>designate</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <nonterminal>deyaccify</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:unchain>
@@ -184,7 +200,7 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
-        <nonterminal>restrict</nonterminal>
+        <nonterminal>narrow</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:unchain>
@@ -249,6 +265,14 @@
       <nonterminal>f</nonterminal>
       <bgf:expression>
         <nonterminal>vertical</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <nonterminal>widen</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:unchain>

@@ -7,6 +7,7 @@ rebuild:
 
 test:
 	make build
+	cd topics/transformation/xbgf; make test
 
 clean:
 	rm -f *~

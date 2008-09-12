@@ -469,12 +469,12 @@ reroot(_,T1,T1).
 
 
 %
-% p([l(restrict)], f, n(p))
+% p([l(narrow)], f, n(p))
 %
-% Restrict the grammar by expression replacement
+% Narrow the grammar by expression replacement
 %
 
-restrict(_,T1,T1).
+narrow(_,T1,T1).
 
 
 % p([l(sequence)], f, *(n(f)))

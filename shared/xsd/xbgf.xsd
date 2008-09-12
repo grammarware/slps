@@ -28,6 +28,7 @@
       <xsd:element ref="xbgf:chain"/>
       <xsd:element ref="xbgf:define"/>
       <xsd:element ref="xbgf:designate"/>
+      <xsd:element ref="xbgf:deyaccify"/>
       <xsd:element ref="xbgf:eliminate"/>
       <xsd:element ref="xbgf:extract"/>
       <xsd:element ref="xbgf:fold"/>
@@ -37,6 +38,7 @@
       <xsd:element ref="xbgf:introduce"/>
       <xsd:element ref="xbgf:lassoc"/>
       <xsd:element ref="xbgf:modulo"/>
+      <xsd:element ref="xbgf:narrow"/>
       <xsd:element ref="xbgf:permute"/>
       <xsd:element ref="xbgf:project"/>
       <xsd:element ref="xbgf:prune"/>
@@ -46,7 +48,6 @@
       <xsd:element ref="xbgf:remove"/>
       <xsd:element ref="xbgf:rename"/>
       <xsd:element ref="xbgf:reroot"/>
-      <xsd:element ref="xbgf:restrict"/>
       <xsd:element ref="xbgf:sequence"/>
       <xsd:element ref="xbgf:skip"/>
       <xsd:element ref="xbgf:strip"/>
@@ -55,6 +56,7 @@
       <xsd:element ref="xbgf:unfold"/>
       <xsd:element ref="xbgf:unite"/>
       <xsd:element ref="xbgf:vertical"/>
+      <xsd:element ref="xbgf:widen"/>
     </xsd:choice>
   </xsd:group>
   
@@ -151,6 +153,14 @@
         <xsd:element ref="bgf:production"/>
       </xsd:choice>
     </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="deyaccify" type="bgf:nonterminal">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
   </xsd:element>
 
   <xsd:element name="eliminate" type="bgf:nonterminal">
@@ -251,6 +261,19 @@
   </xsd:element>
 
   <xsd:element name="modulo">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="narrow">
     <xsd:annotation>
       <xsd:documentation>
         T.B.D.
@@ -412,19 +435,6 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="restrict">
-    <xsd:annotation>
-      <xsd:documentation>
-        T.B.D.
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:choice>
-        <xsd:element ref="bgf:production"/>
-      </xsd:choice>
-    </xsd:complexType>
-  </xsd:element>
-
   <xsd:element name="sequence">
     <xsd:annotation>
       <xsd:documentation>
@@ -572,6 +582,19 @@
       <xsd:choice>
         <xsd:element name="label" type="bgf:label"/>
         <xsd:element name="nonterminal" type="bgf:nonterminal"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="widen">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>

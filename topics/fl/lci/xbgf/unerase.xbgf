@@ -1,7 +1,7 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:restrict>
+  <xbgf:narrow>
     <bgf:production>
       <nonterminal>program</nonterminal>
       <bgf:expression>
@@ -17,8 +17,8 @@
         </selectable>
       </bgf:expression>
     </bgf:production>
-  </xbgf:restrict>
-  <xbgf:restrict>
+  </xbgf:narrow>
+  <xbgf:narrow>
     <bgf:production>
       <nonterminal>function</nonterminal>
       <bgf:expression>
@@ -55,8 +55,8 @@
       </bgf:expression>
 
     </bgf:production>
-  </xbgf:restrict>
-  <xbgf:restrict>
+  </xbgf:narrow>
+  <xbgf:narrow>
     <bgf:production>
       <nonterminal>apply</nonterminal>
       <bgf:expression>
@@ -84,5 +84,5 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:restrict>
+  </xbgf:narrow>
 </xbgf:sequence>

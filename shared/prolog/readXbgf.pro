@@ -59,6 +59,12 @@ xml2xbgf(T,designate(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
+xml2xbgf(T,deyaccify(N))
+ :-
+    self(name(xbgf:deyaccify),T),
+    !,
+    content(T,N).
+
 xml2xbgf(T,eliminate(N))
  :-
     self(name(xbgf:eliminate),T),
@@ -86,6 +92,12 @@ xml2xbgf(T,fold(P2))
     !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
+
+xml2xbgf(T,horizontal(N))
+ :-
+    self(name(xbgf:horizontal),T),
+    !,
+    content(T,N).
 
 xml2xbgf(T,id)
  :-
@@ -115,6 +127,13 @@ xml2xbgf(T,lassoc(P2))
 xml2xbgf(T,modulo(P2))
  :-
     self(name(xbgf:modulo),T),
+    !,
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
+xml2xbgf(T,narrow(P2))
+ :-
+    self(name(xbgf:narrow),T),
     !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
@@ -192,13 +211,6 @@ xml2xbgf(T,reroot(Rs2))
     !,
     children(name(root),T,Rs1),
     maplist(content,Rs1,Rs2).
-
-xml2xbgf(T,restrict(P2))
- :-
-    self(name(xbgf:restrict),T),
-    !,
-    child(name(bgf:production),T,P1),
-    xmlToP(P1,P2).
 
 xml2xbgf(T,sequence(Ts2))
  :-
@@ -295,3 +307,10 @@ xml2xbgf(T,verticalN(N))
     child(name(nonterminal),T,T1),
     !,
     content(T1,N).
+
+xml2xbgf(T,widen(P2))
+ :-
+    self(name(xbgf:widen),T),
+    !,
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).

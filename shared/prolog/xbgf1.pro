@@ -29,10 +29,7 @@ transformG(Xbgf,G1,G4)
 add(P,g(Rs,Ps1),g(Rs,Ps3))
  :-
     P = p(_,N,_),
-    require(
-      splitN(Ps1,N,Ps2,Ps2a,Ps2b),
-      'Nonterminal ~q must be defined.',
-      [N]),
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
     concat([Ps2a,Ps2,[P],Ps2b],Ps3),
     !.
 
@@ -126,10 +123,7 @@ chain(P1,g(Rs,Ps1),g(Rs,Ps4))
       X1 = n(N2),
       'Production ~q must be a chain production.',
       [P1]),
-    require(
-      splitN(Ps1,N1,Ps2,Ps2a,Ps2b),
-      'Nonterminal ~q must be defined.',
-      [N1]),
+    splitN(Ps1,N1,Ps2,Ps2a,Ps2b),
     allNs(Ps1,Ns),
     require(
       (\+ member(N2,Ns)),
@@ -194,6 +188,54 @@ designate(P1,g(Rs,Ps1),g(Rs,Ps2))
       [P2]),
     append(As1,As2,As3),
     append(Ps1a,[p(As3,N,X)|Ps1b],Ps2).
+
+
+%
+% p([l(deyaccify)], f, n(n))
+%
+% Replace a BNF-like recursion by an EBNF one
+%
+
+deyaccify(N,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    splitN1(Ps1,N,P1,Ps2a,Ps2b),
+    P1 = p(As,N,X1),    
+    P2 = p(As,N,X2),
+    require(
+      xbgf1:deyaccify_rule(N,X1,X2),
+      'Nonterminal ~q is defined by non-EBNF-like shape ~q.',
+      [N,X1]),
+    append(Ps2a,[P2|Ps2b],Ps2).
+
+deyaccify_rule(N1,X1,X2) 
+ :-
+    X1 = ';'(Xs1),
+    length(Xs1,2),
+    member(n(N2),Xs1),
+    member(','(Xs2),Xs1),
+    length(Xs2,2),
+    member(n(N2),Xs2),
+    member(n(N1),Xs2),
+    X2 = +(n(N2)).
+
+deyaccify_rule(N1,X1,X2) 
+ :-
+    X1 = ';'(Xs1),
+    length(Xs1,2),
+    member(true,Xs1),
+    member(','(Xs2),Xs1),
+    length(Xs2,2),
+    member(n(N2),Xs2),
+    member(n(N1),Xs2),
+    X2 = *(n(N2)).
+
+deyaccify_rule(_,X1,X2) 
+ :-
+    X1 = ';'(Xs1),
+    length(Xs1,2),
+    member(true,Xs1),
+    member(n(N2),Xs1),
+    X2 = ?(n(N2)).
 
 
 %
@@ -368,6 +410,17 @@ foldX('+'(X1),'+'(X2),N,X)
 %
 % Turn multiple productions into choice
 %
+
+horizontal(N,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    require(
+       ( length(Ps2, Len), Len > 1 ),
+       'Nonterminal ~q must be defined vertically.',
+       [N]),
+
+    maplist(arg(3),Ps2,Xs),
+    concat([Ps2a,[p([],N,';'(Xs))],Ps2b],Ps3).
 
 
 %
@@ -762,12 +815,12 @@ reroot(Rs,g(_,Ps),g(Rs,Ps))
 
 
 %
-% p([l(restrict)], f, n(p))
+% p([l(narrow)], f, n(p))
 %
-% Restrict the grammar by expression replacement
+% Narrow the grammar by expression replacement
 %
 
-restrict(P1,g(Rs,Ps1),g(Rs,Ps3))
+narrow(P1,g(Rs,Ps1),g(Rs,Ps3))
  :-
     P1 = p(As1,N1,X1),
     findP(Ps1,As1,N1,P2,Ps2a,Ps2b),
@@ -777,50 +830,50 @@ restrict(P1,g(Rs,Ps1),g(Rs,Ps3))
       'The phrases ~q and ~q must be different.',
       [X1,X2]),
     require(
-      xbgf1:restrictX(X1,X2),
-      'The phrase ~q must be (algorithmically) restricted by ~q.',
+      xbgf1:narrowX(X1,X2),
+      'The phrase ~q must be (algorithmically) narrowed by ~q.',
       [X1,X2]),
     append(Ps2a,[P1|Ps2b],Ps3).
 
 
-% Anything trivially restricts itself.
+% Anything trivially narrows itself.
 
-restrictX(X,X).    
+narrowX(X,X).    
 
-% Anything trivially restricts "any".
+% Anything trivially narrows "any".
 
-restrictX(_,a).
+narrowX(_,a).
 
-% Epsilon trivially restricts anything.
+% Epsilon trivially narrows anything.
 
-restrictX(true,_).
+narrowX(true,_).
 
 % "*"
 
-restrictX('*'(X1),'*'(X2)) :- restrictX(X1,X2).
-restrictX('+'(X1),'*'(X2)) :- restrictX(X1,X2).
-restrictX('?'(X1),'*'(X2)) :- restrictX(X1,X2).
-restrictX(X1,'*'(X2)) :- restrictX(X1,X2).
+narrowX('*'(X1),'*'(X2)) :- narrowX(X1,X2).
+narrowX('+'(X1),'*'(X2)) :- narrowX(X1,X2).
+narrowX('?'(X1),'*'(X2)) :- narrowX(X1,X2).
+narrowX(X1,'*'(X2)) :- narrowX(X1,X2).
 
 % "+"
 
-restrictX('+'(X1),'+'(X2)) :- restrictX(X1,X2).
-restrictX(X1,'+'(X2)) :- restrictX(X1,X2).
+narrowX('+'(X1),'+'(X2)) :- narrowX(X1,X2).
+narrowX(X1,'+'(X2)) :- narrowX(X1,X2).
 
 % "?"
 
-restrictX('?'(X1),'?'(X2)) :- restrictX(X1,X2).
-restrictX(X1,'?'(X2)) :- restrictX(X1,X2).
+narrowX('?'(X1),'?'(X2)) :- narrowX(X1,X2).
+narrowX(X1,'?'(X2)) :- narrowX(X1,X2).
 
-% Restriction while using selectors to "sync"
+% Narrowion while using selectors to "sync"
 
-restrictX(s(S,X1),s(S,X2)) :- restrictX(X1,X2).
+narrowX(s(S,X1),s(S,X2)) :- narrowX(X1,X2).
 
 % ","
 
-restrictX(','(Xs1),','(Xs2))
+narrowX(','(Xs1),','(Xs2))
  :-
-    maplist(xbgf1:restrictX,Xs1,Xs2).
+    maplist(xbgf1:narrowX,Xs1,Xs2).
 
 
 % p([l(sequence)], f, *(n(f)))
@@ -1084,3 +1137,25 @@ vertical_strategy(';'(Xs),X2)
 vertical_strategy(s(S,X1),s(S,X2))
  :-
     vertical_strategy(X1,X2).
+
+
+%
+% p([l(widen)], f, n(p))
+%
+% Widen the grammar by expression replacement
+%
+
+widen(P1,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    P1 = p(As1,N1,X1),
+    findP(Ps1,As1,N1,P2,Ps2a,Ps2b),
+    P2 = p(As1,N1,X2),
+    require(
+      ( \+ X1 == X2 ),
+      'The phrases ~q and ~q must be different.',
+      [X1,X2]),
+    require(
+      xbgf1:narrowX(X2,X1),
+      'The phrase ~q must be (algorithmically) narrowed by ~q.',
+      [X2,X1]),
+    append(Ps2a,[P1|Ps2b],Ps3).

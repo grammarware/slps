@@ -3,6 +3,7 @@ tools = ../../../../shared/tools
 build:
 
 test:
+	make deyaccify.test
 	make doubles.test
 	make extract.test
 	make remove.test
