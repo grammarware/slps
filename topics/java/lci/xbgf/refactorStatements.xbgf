@@ -54,7 +54,14 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  <xbgf:prune>IfThenStatement</xbgf:prune>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Statement</nonterminal>
+      <bgf:expression>
+        <nonterminal>IfThenStatement</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
   <xbgf:inline>IfThenElseStatement</xbgf:inline>
 
   <xbgf:inline>ForStatement</xbgf:inline>
@@ -63,10 +70,18 @@
   <xbgf:vertical>
     <nonterminal>StatementWithoutTrailingSubstatement</nonterminal>
   </xbgf:vertical>
-  <xbgf:unite>
+ <xbgf:unite>
     <add>StatementWithoutTrailingSubstatement</add>
     <to>Statement</to>
   </xbgf:unite>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Statement</nonterminal>
+      <bgf:expression>
+        <nonterminal>Statement</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
   <xbgf:vertical>
     <nonterminal>TryStatement</nonterminal>
   </xbgf:vertical>
@@ -74,6 +89,14 @@
     <add>TryStatement</add>
     <to>Statement</to>
   </xbgf:unite>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Statement</nonterminal>
+      <bgf:expression>
+        <nonterminal>Statement</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
   <xbgf:inline>Finally</xbgf:inline>
   <!--xbgf:fold>
     <bgf:production>
@@ -158,18 +181,22 @@
     </bgf:production>
   </xbgf:define>
 
-  <!--xbgf:lassoc>
+  <xbgf:undefine>StatementExpressionList</xbgf:undefine>
+  <xbgf:define>
     <bgf:production>
-      <nonterminal>SwitchBlockStatementGroups</nonterminal>
+      <nonterminal>StatementExpressionList</nonterminal>
       <bgf:expression>
-        <star>
+        <sequence>
           <bgf:expression>
-            <nonterminal>SwitchBlockStatementGroup</nonterminal>
+            <nonterminal>StatementExpression</nonterminal>
           </bgf:expression>
-        </star>
+          <bgf:expression>
+            <nonterminal>MoreStatementExpressions</nonterminal>
+          </bgf:expression>
+        </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:lassoc-->
-  
+  </xbgf:define>
+  <xbgf:inline>StatementExpressionList</xbgf:inline>
   <!--...-->
 </xbgf:sequence>

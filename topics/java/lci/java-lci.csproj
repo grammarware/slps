@@ -58,10 +58,15 @@
       <Link>xbgf.xsd</Link>
     </None>
     <None Include="java.lcf" />
+    <None Include="xbgf\addFeatures1to2.xbgf" />
     <None Include="xbgf\addFeatures2to3.xbgf" />
+    <None Include="xbgf\cropFeatures1.xbgf" />
+    <None Include="xbgf\preferLALR.xbgf" />
     <None Include="xbgf\prepare1.xbgf" />
     <None Include="xbgf\prepare2.xbgf" />
     <None Include="xbgf\prepare3.xbgf" />
+    <None Include="xbgf\refactorStatements.xbgf" />
+    <None Include="xbgf\refactorTypes.xbgf" />
     <None Include="xbgf\structure1.xbgf" />
   </ItemGroup>
 </Project>

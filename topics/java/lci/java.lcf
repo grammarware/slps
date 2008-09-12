@@ -102,14 +102,16 @@
       <perform>preferLALR</perform>
     </branch>
   </target>
-  
+
   <target>
     <name>onetwo</name>
     <branch>
       <input>one</input>
       <perform>refactorStatements</perform>
+      <perform>refactorTypes</perform>
       <perform>structure1</perform>
       <perform>addFeatures1to2</perform>
+      <perform>cropFeatures1</perform>
     </branch>
     <branch>
       <input>jls2</input>

@@ -32,6 +32,9 @@
   <xbgf:vertical>
     <nonterminal>InterfaceMemberDecl</nonterminal>
   </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>BasicType</nonterminal>
+  </xbgf:vertical>
 
   <xbgf:define>
     <bgf:production>
