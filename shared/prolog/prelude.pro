@@ -25,6 +25,10 @@ soft(G,F,Args)
       fail
     ) ).
 
+cease(F,Args)
+ :-
+    require(fail,F,Args).
+
 require(G,F,Args)
  :-
     ( G -> true ; ( 
@@ -47,15 +51,14 @@ foldr(_,E,[],E).
 foldr(O,E,[H|T],R2)
  :-
     foldr(O,E,T,R1),
-    apply(O,[H,R1,R2]),
-    !.
+    apply(O,[H,R1,R2]).
 
 
 % Count the number of occurrences of an element in a list
 
 countocc(_,[],0).
-countocc(X,[X|Xs],N1) :- !, countocc(X,Xs,N0), N1 is N0 + 1.
-countocc(X,[_|Xs],N0) :- countocc(X,Xs,N0).
+countocc(X,[X|Xs],N1) :- countocc(X,Xs,N0), N1 is N0 + 1.
+countocc(X,[Y|Xs],N0) :- \+ X = Y, countocc(X,Xs,N0).
 
 
 % Concat a list of lists
@@ -95,8 +98,7 @@ accum(_,[],A,A).
 accum(G,[H|T],A1,A3)
  :-
     apply(G,[H,A1,A2]),
-    accum(G,T,A2,A3),
-    !.
+    accum(G,T,A2,A3).
 
 
 % Accumulation and list construction
@@ -106,18 +108,16 @@ accum(_,[],A,A,[]).
 accum(G,[H1|T1],A1,A3,[H2|T2])
  :-
     apply(G,[H1,A1,A2,H2]),
-    accum(G,T1,A2,A3,T2),
-    !.
+    accum(G,T1,A2,A3,T2).
 
 
 % Visit data by term traversal
 
 visit(G,X)
  :-
-    ( apply(G,[X]); true ),
+    once((apply(G,[X]);true)),
     X =.. [_|Xs],
-    maplist(visit(G),Xs),
-    !.
+    maplist(visit(G),Xs).
 
 
 % Test data by term traversal
@@ -126,8 +126,7 @@ rectest(G,X)
  :-
     apply(G,[X]),
     X =.. [_|Xs],
-    maplist(rectest(G),Xs),
-    !.
+    maplist(rectest(G),Xs).
 
 
 % Negation by failure
@@ -146,8 +145,7 @@ collect(G,X,L2)
     ( apply(G,[X,L1]) -> true; L1 = [] ),
     X =.. [_|Xs],
     maplist(collect(G),Xs,Ys),
-    concat([L1|Ys],L2),
-    !.
+    concat([L1|Ys],L2).
 
 
 % Transform data by term traversal
@@ -157,8 +155,7 @@ transform(G,X,Z)
     apply(G,[X,Y]),
     Y =.. [F|Ys],
     maplist(transform(G),Ys,Zs),
-    Z =.. [F|Zs],
-    !.
+    Z =.. [F|Zs].
 
 transformWhile(G1,G2,X,Z)
  :-
@@ -171,8 +168,7 @@ transformWhile(G1,G2,X,Z)
           )
         ;
           Z = Y
-    ),
-    !.
+    ).
 
 
 % Repeat until no more changes
@@ -180,8 +176,7 @@ transformWhile(G1,G2,X,Z)
 ytransform(G,X,Z)
  :-
     transform(try(G),X,Y),
-    ( X == Y -> Z = Y; ytransform(G,Y,Z) ),
-    !.
+    ( X == Y -> Z = Y; ytransform(G,Y,Z) ).
 
 
 % Zip together two lists

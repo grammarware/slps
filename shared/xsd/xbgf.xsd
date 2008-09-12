@@ -166,21 +166,18 @@
   <xsd:element name="extract">
     <xsd:annotation>
       <xsd:documentation>
-        Extract a new definition d from an existing production p.
-        The operand of the transformation is a production p' that is the modified p.
-        The operand p' is used as follows:
-        1. The label (if any) and the nonterminal of p' are used to look up p.
-        2. p and p' are compared to find one difference in the phrase-based tree structure.
-        3. The difference must involve a nonterminal n on the side of p'.
-        4. We refer to the deviating subphrase in p as x.
-        5. p is now replaced by p' and the definition n -> x is added to the grammar.
-        The nonterminal n must be fresh in the input grammar for the transformation to succeed.
+        Extract a new definition d.
+        The RHS of the argument production identifies the relevant phrase.
+        The LHS designates the nonterminal for the new definition.
+        Unless a label is given to restrict the scope, the phrase is extracted
+        from all possible occurrences in the grammar.
       </xsd:documentation>      
     </xsd:annotation>
     <xsd:complexType>
-      <xsd:choice>
+      <xsd:sequence>
+        <xsd:element name="in" type="bgf:label" minOccurs="0"/>
         <xsd:element ref="bgf:production"/>
-      </xsd:choice>
+      </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
 

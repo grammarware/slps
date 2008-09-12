@@ -65,10 +65,18 @@ xml2xbgf(T,eliminate(N))
     !,
     content(T,N).
 
-xml2xbgf(T,extract(P2))
+xml2xbgf(T,extract(L,P2))
  :-
     self(name(xbgf:extract),T),
     !,
+    ( child(name(in),T,In) ->
+        ( 
+          content(In,Z0),
+          L = [Z0]
+        )
+      ;
+        L = []
+    ),
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 

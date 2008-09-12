@@ -219,12 +219,42 @@ eliminate(N,g(Rs1,Ps1),g(Rs2,Ps2))
 
 
 %
-% p([l(extract)], f, n(p))
+% p([l(extract)], f, ','([?(n(l)), n(p)]))
 %
 % Extract a nonterminal definition
 %
 
-extract(P1,g(Rs,Ps1),g(Rs,Ps5))
+extract([_],_,_,_)
+ :-
+    cease('Operator form unsupported.',[]).
+
+
+extract([],P1,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    P1 = p(_,N,X),
+    definedNs(Ps1,Defined),
+    require(
+       (\+ member(N,Defined) ),
+       'Nonterminal ~q must be fresh.',
+       [N]),
+    transform(try(xbgf1:extract_rule(X,n(N))),Ps1,Ps2),
+    require(
+      ( \+ Ps1 == Ps2 ),
+      'No ocurrences of ~q found for extraction.',
+      [X]),
+    append(Ps2,[P1],Ps3).
+
+extract_rule(X,Y,X,Y).
+extract_rule(X1,Y1,X2,';'(Xs3))
+ :-
+    \+ X1 = X2,
+    X1 = ';'(Xs1),
+    X2 = ';'(Xs2),
+    append(Xs1a,Xs1b,Xs2),
+    append(Xs1,Xs1c,Xs1b),
+    concat([Xs1a,[Y1],Xs1c],Xs3).
+
+extract_old(P1,g(Rs,Ps1),g(Rs,Ps5))
  :-
     P1 = p(As1,N1,X1),
     findP(Ps1,As1,N1,P2,Ps3,Ps4),
@@ -1009,12 +1039,17 @@ vertical(N,X1,Ps1a,Ps1b,Ps4)
     maplist(vertical_rules(N),Xs,Ps2),
     append(Ps1a,Ps1b,Ps3),
     allLs(Ps2,Ls1),
-    allLs(Ps3,Ls2),
-    intersection(Ls1,Ls2,Ls3),
+    doubles(Ls1,Ls2),
+    allLs(Ps3,Ls3),
+    intersection(Ls1,Ls3,Ls4),
     require(
-      Ls3 == [],
-      'Verticalization with ambigious labels ~q.',
-      [Ls3]),
+      Ls2 == [],
+      'Verticalization labels are ambigious ~q.',
+      [Ls2]),
+    require(
+      Ls4 == [],
+      'Verticalization labels clash with preexisting labels ~q.',
+      [Ls4]),
     concat([Ps1a,Ps2,Ps1b],Ps4).
 
 vertical_rules(N,s(S,X),p([l(S)],N,X)).
@@ -1023,7 +1058,7 @@ vertical_rules(N,X,p([],N,X)) :- \+ X = s(_,_).
 vertical_strategy(X,X)
  :-
     X =.. [F|_],
-    member(F,[true,fail,a,t,n]).
+    member(F,[true,fail,a,t,n,v]).
 
 vertical_strategy('*'(X1),'*'(X2))
  :-
