@@ -56,7 +56,7 @@
   </tool>
 
   <source>
-    <name>jls1app</name>
+    <name>jls1syntax</name>
     <grammar>
       <extraction>
         <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/syntax.kw <expand>java</expand>/jls1/syntax.html
@@ -74,10 +74,19 @@
   </source>
 
   <source>
-    <name>jls2</name>
+    <name>jls2syntax</name>
     <grammar>
       <extraction>
         <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/syntax.html
+      </extraction>
+    </grammar>
+  </source>
+
+  <source>
+    <name>jls2doc</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/collect.kw <expand>java</expand>/jls2/collected.html
       </extraction>
     </grammar>
   </source>
@@ -94,7 +103,7 @@
   <target>
     <name>one</name>
     <branch>
-      <input>jls1app</input>
+      <input>jls1syntax</input>
       <perform>prepare1</perform>
     </branch>
     <branch>
@@ -103,6 +112,17 @@
     </branch>
   </target>
 
+  <target>
+    <name>two</name>
+    <branch>
+      <input>jls2syntax</input>
+      <perform>prepare2</perform>
+    </branch>
+    <branch>
+      <input>jls2doc</input>
+    </branch>
+  </target>
+  
   <target>
     <name>onetwo</name>
     <branch>
@@ -114,8 +134,7 @@
       <perform>cropFeatures1</perform>
     </branch>
     <branch>
-      <input>jls2</input>
-      <perform>prepare2</perform>
+      <input>two</input>
     </branch>
   </target>
 
@@ -130,7 +149,6 @@
       <input>jls3</input>
       <perform>fixErrors3</perform>
       <perform>prepare3</perform>
-      <perform>make3converge</perform>
     </branch>
   </target>
 
