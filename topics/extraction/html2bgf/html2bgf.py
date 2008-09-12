@@ -3,7 +3,7 @@ import sys
 
 #global
 emph = [False]
-pessimistic = [False,0]
+pessimistic = [False,0,0]
 prods = {}
 
 def serialise(name,choices):
@@ -177,11 +177,12 @@ def parseLine(line):
   if line.find('<sub><i>opt</i></sub>')==0:
    tokens.append('?????')
    flags.append(True)
-   #last = tokens.pop()
-   #lastf = flags.pop()
-   #tokens.extend(['[',last,']'])
-   #flags.extend([True,lastf,True])
    line = line[21:]
+   continue
+  if line.find('<sub>opt</sub>')==0:
+   tokens.append('?????')
+   flags.append(True)
+   line = line[14:]
    continue
   if line.find('<sub><i>opt')==0:
    tokens.append('?????')
@@ -209,6 +210,7 @@ def parseLine(line):
    continue
   if line.find('<')==0:
    print 'Found unknown tag while parsing "'+line+'", skipping!'
+   pessimistic[2] += 1
    line = line[line.index('>')+1:]
   else:
    if line.find('<')>0:
@@ -276,6 +278,7 @@ def readGrammar(fn):
      name = a[0]
      oneof = False
      print name,'double-declared, fixed'
+     pessimistic[2] += 1
     elif len(a)==4 and a[1]==':' and a[2]=='one' and a[3]=='of':
      # new "one-of" definition
      if choices:
@@ -286,6 +289,7 @@ def readGrammar(fn):
     elif cont and choices:
      # line continuation
      print 'Line continuation enforced while parsing',name
+     pessimistic[2] += 1
      for i in range(0,len(a)):
       choices[-1][0].append(a[i])
       choices[-1][1].append(b[i])
@@ -324,61 +328,129 @@ def breakWords(nt,s):
  cx = res.count(' ')
  if cx:
   print 'Multiple terminals heuristic fix:',s,'in',nt,'(1 to',`cx+1`+')'
+  pessimistic[2] += 1
  return res+'"'
 
 def automatedImprove():
  for nt in prods.keys():
   newprods = []
   for bs in prods[nt]:
-   for i in range(0,len(bs)):
+   i=0
+   while i<len(bs):
     if not bs[i]:
+     i+=1
      continue
     if bs[i]=='?????':
      # Change to classic EBNF
-     bs[i-1] = '[ '+bs[i-1]
-     bs[i]   = ']'
+     if i>0:
+      newbs = bs[:i-1]
+     else:
+      newbs = []
+     newbs.extend(['[',bs[i-1],']'])
+     newbs.extend(bs[i+1:])
+     bs = newbs
+     continue
+    if bs[i].rfind('opt')!=-1 and bs[i].rfind('opt')==len(bs[i])-3:
+     print 'Structural heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
+     pessimistic[2] += 1
+     newbs = bs[:i]
+     newbs.append(bs[i][:-3])
+     newbs.append('?????')
+     newbs.extend(bs[i+1:])
+     bs = newbs
      continue
     if bs[i]=='"|"' and len(bs)>1 and nt.find('OrExpression')<0:
      print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
+     pessimistic[2] += 1
      bs[i] = '|'
-    elif bs[i][0]=='"':
+     i+=1
+     continue
+    if bs[i]!='.' and bs[i]!='"."' and bs[i]!='...' and bs[i]!='"..."' and bs[i].find('.')>=0:
+     if bs[i][0]=='"':
+      quote = True
+      word = bs[i][1:-1]
+     else:
+      quote = False
+      word = bs[i]
+     if word[0]=='.' or word[-1]=='.':
+      print 'Multiple terminals heuristic fix:',bs[i],'in',nt,'(1 to 2)'
+     else:
+      print 'Multiple terminals heuristic fix:',bs[i],'in',nt,'(1 to 3)'
+     pessimistic[2] += 1
+     if i>0:
+      newbs = bs[:i-1]
+     else:
+      newbs = []
+     if quote:
+      if word[0]!='.':
+       newbs.append('"'+word[:word.index('.')]+'"')
+      newbs.append('"."')
+      if word[-1]!='.':
+       newbs.append('"'+word[word.index('.')+1:]+'"')
+     else:
+      if word[0]!='.':
+       newbs.append(word[:word.index('.')])
+      newbs.append('"."')
+      if word[-1]!='.':
+       newbs.append(word[word.index('.')+1:])
+     if i+1<len(bs):
+      newbs.extend(bs[i+1:])
+     bs = newbs
+     continue
+    if bs[i][0]=='"':
      if bs[i][1].isupper() and bs[i][1:-1] in prods.keys():
       print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+      pessimistic[2] += 1
       bs[i]=bs[i][1:-1]
+      i+=1
       continue
      if bs[i]=='"opt"':
       print 'Structural heuristic fix:',bs[i],'in',nt,'(changed to BNF optional)'
-      newbs=bs[:i-1]
-      newbs.extend(['[',bs[i-1],']'])
-      newbs.extend(bs[i+1:])
-      bs = newbs
+      pessimistic[2] += 1
+      bs[i]='?????'
       continue
      if bs[i].find('&')<0:
       bs[i] = breakWords(nt,bs[i])
+     i+=1
      continue
     if bs[i].isalnum():
      if bs[i][0].islower() and (bs[i] not in prods.keys()):
       print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(no definition)'
+      pessimistic[2] += 1
       bs[i] = '"'+bs[i]+'"'
+      continue
     elif bs[i][0] not in ('[',']','{','}','|','(',')'):
      print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(weird name)'
+     pessimistic[2] += 1
      bs[i] = '"'+bs[i]+'"'
-    elif bs[i]=='(':
-     if i+1<len(bs) and bs[i+1]==')':
+     i+=1
+     continue
+    elif bs[i]==')':
+     if i>0 and bs[i-1]=='(':
       # () is not BNF bracketing
-      bs[i]='"("'
-      bs[i+1]='")"'
+      bs[i-1]='"("'
+      bs[i]='")"'
       print 'Structural heuristic fix in',nt,'(empty group)'
-     if i+2<len(bs) and bs[i+2]==')':
+      pessimistic[2] += 1
+      i+=1
+      continue
+     if i>1 and bs[i-2]=='(':
       # (x) is not BNF bracketing
-      bs[i]='"("'
-      bs[i+2]='")"'
+      bs[i-2]='"("'
+      bs[i]='")"'
       print 'Structural heuristic fix in',nt,'(singleton group)'
-     if i+4<len(bs) and bs[i+4]==')' and ((bs[i+1]=='[' and bs[i+3]==']') or (bs[i+1]=='{' and bs[i+3]=='}')):
+      pessimistic[2] += 1
+      i+=1
+      continue
+     if i>3 and bs[i-4]=='(' and ((bs[i-3]=='[' and bs[i-1]==']') or (bs[i-3]=='{' and bs[i-1]=='}')):
       # ([x]) or ({x}) is not BNF bracketing either
-      bs[i]='"("'
-      bs[i+4]='")"'
+      bs[i-4]='"("'
+      bs[i]='")"'
       print 'Structural heuristic fix in',nt,'(singleton complex group)'
+      pessimistic[2] += 1
+      i+=1
+      continue
+    i+=1
    newprods.append(fixBrackets(nt,' '.join(bs).split()))
   prods[nt]=newprods
  pass
@@ -403,10 +475,12 @@ def glueSymbols():
        bs[i] = test
        bs[i+1]=''
        print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+       pessimistic[2] += 2
       elif not (bs[i+1][0].isupper() or bs[i+1] in prods.keys()):
        print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = '"'+test+'"'
        bs[i+1]=''
+       pessimistic[2] += 1
     elif bs[i][0]!='"' and len(bs[i])==1 and bs[i][0].isalpha():
      if bs[i+1][0]=='"':
       # N "ame"
@@ -420,8 +494,10 @@ def glueSymbols():
        bs[i] = test
        bs[i+1]=''
        print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+       pessimistic[2] += 2
       elif not (bs[i+1][0].isupper() or bs[i+1] in prods.keys()):
        print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       pessimistic[2] += 1
        bs[i] = '"'+test+'"'
        bs[i+1]=''
    for i in range(1,len(bs)):
@@ -440,8 +516,10 @@ def glueSymbols():
        bs[i] = test
        bs[i-1]=''
        print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+       pessimistic[2] += 2
       elif bs[i-1] not in prods.keys():
        print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       pessimistic[2] += 1
        bs[i]='"'+test+'"'
        bs[i-1]=''
     elif bs[i][0]!='"' and len(bs[i])==1 and bs[i][0].isalpha():
@@ -457,8 +535,10 @@ def glueSymbols():
        bs[i] = test
        bs[i-1]=''
        print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+       pessimistic[2] += 2
       elif bs[i-1] not in prods.keys():
        print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       pessimistic[2] += 1
        bs[i]='"'+test+'"'
        bs[i-1]=''
    newprods.append(' '.join(bs).split())
@@ -484,6 +564,7 @@ def fixBracketPair(nt,arr,left,right):
   return arr
  else:
   print 'Structural  heuristic fix in',nt,
+  pessimistic[2] += 1
   #print arr,'->'
   arr.reverse()
   while(cx>0):
@@ -525,6 +606,8 @@ if __name__ == "__main__":
    printGrammarText(sys.argv[2])
   else:
    printGrammar(sys.argv[2])
+  if pessimistic[2]:
+   print 'Total of',pessimistic[2]+pessimistic[1],'problems encountered and coped with.'
  else:
   print 'Usage:'
   print ' ',sys.argv[0],'''<input> <output> [<options>]

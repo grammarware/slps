@@ -15,15 +15,19 @@ def checkSection(text,tagN,includeFlag,p):
    if content[0].find(kw)>=0:
     grammar = False
   if grammar and content[1].find('<h')==-1:
-   for chunk in content[1].split('<pre>')[1:]:
-    p.write(chunk.split('</pre>')[0].replace('<br>','').replace('&#32;',' '))
-    p.write('<hr>')
+   chunks = content[1].split('<pre>')
+   for i in range(1,len(chunks)):
+    if chunks[i-1].rfind('<blockquote>')!=len(chunks[i-1])-12:
+     p.write(chunks[i].split('</pre>')[0].replace('<br>','').replace('&#32;',' '))
+     p.write('\n<hr>')
   else:
    #print 'Going deeper than',content[0].split()[0]
    if grammar:
-    for chunk in content[1].split('<h'+`tagN+1`+'>')[0].split('<pre>')[1:]:
-     p.write(chunk.split('</pre>')[0].replace('<br>','').replace('&#32;',' '))
-     p.write('<hr>')
+    chunks = content[1].split('<h'+`tagN+1`+'>')[0].split('<pre>')
+    for i in range(1,len(chunks)):
+     if chunks[i-1].rfind('<blockquote>')!=len(chunks[i-1])-12:
+      p.write(chunks[i].split('</pre>')[0].replace('<br>','').replace('&#32;',' '))
+      p.write('\n<hr>')
    checkSection(content[1],tagN+1,grammar,p)
 
 if len(sys.argv)!=4:
