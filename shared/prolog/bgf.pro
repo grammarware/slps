@@ -206,14 +206,19 @@ normalizeG_grouping(Z,Z).
 
 
 normalizePs_grouping([],[]).
-normalizePs_grouping([P|Ps1],Ps5)
+normalizePs_grouping([P|Ps1],Ps6)
  :-
     P = p(_,N,_),
     filter(unifiable(p(_,N,_)),Ps1,Ps2),
     filter(nonunifiable(p(_,N,_)),Ps1,Ps3),
     normalizePs_grouping(Ps3,Ps4),
-    append([P|Ps2],Ps4,Ps5),
+    remove_doubles([P|Ps2],Ps5),
+    append(Ps5,Ps4,Ps6),
     !.
+
+remove_doubles(Ps1,Ps2) 
+ :-
+    list_to_set(Ps1,Ps2).
 
 
 %

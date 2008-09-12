@@ -3,8 +3,9 @@ tools = ../../../../shared/tools
 build:
 
 test:
-	make remove.test
+	make doubles.test
 	make extract.test
+	make remove.test
 
 rebuild:
 	make clean
