@@ -4,17 +4,17 @@
 
   <xbgf:extract>
     <bgf:production>
-      <nonterminal>WhileStatement</nonterminal>
+      <nonterminal>ParExpression</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <terminal>while</terminal>
+            <terminal>(</terminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>ParExpression</nonterminal>
+            <nonterminal>Expression</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>Statement</nonterminal>
+            <terminal>)</terminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
