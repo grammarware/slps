@@ -1,0 +1,24 @@
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+   <bgf:production>
+    <nonterminal>IfThenStatement</nonterminal>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>if</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>(</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Expression</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>)</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Statement</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </bgf:production>
+</bgf:grammar>

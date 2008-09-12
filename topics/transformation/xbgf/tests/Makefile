@@ -7,6 +7,7 @@ test:
 	make deyaccify.test
 	make doubles.test
 	make extract.test
+	make extract2.test
 	make remove.test
 
 rebuild:
