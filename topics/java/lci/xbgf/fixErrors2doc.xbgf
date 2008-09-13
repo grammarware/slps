@@ -1,0 +1,220 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <!--
+  This is an error (typo) in JLS2.
+  
+     - Fail: ConstantModifiers.
+      - [], ;([n(ConstantModifier), ,([n(ConstantModifiers), n(ConstantModifier)])])
+     vs.
+      - [], ;([n(ConstantModifier), ,([n(ConstantModifiers), n(ConstantModifer)])])
+  -->
+  <xbgf:unite>
+    <add>ConstantModifer</add>
+    <to>ConstantModifier</to>
+  </xbgf:unite>
+  
+  <!--
+  Error in markup of JLS2
+     - Fail: InterfaceBody.
+      - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
+     vs.
+      - [], *(?(n(InterfaceMemberDeclarations)))
+  -->
+  <xbgf:undefine>InterfaceBody</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>InterfaceBody</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>InterfaceMemberDeclarations</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  
+  <!--
+   Error in markup of JLS2
+     - Fail: ClassBody.
+      - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
+     vs.
+      - [], *(?(n(ClassBodyDeclarations)))
+  -->
+  <xbgf:undefine>ClassBody</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ClassBody</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ClassBodyDeclarations</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  
+  <!--
+  Error in markup in JLS2
+  
+     - Fail: ConstructorBody.
+      - [], ,([t({), ?(n(ExplicitConstructorInvocation)), ?(n(BlockStatements)), t(})])
+     vs.
+      - [], *(,([?(n(ExplicitConstructorInvocation)), ?(n(BlockStatements))]))
+  -->
+  <xbgf:undefine>ConstructorBody</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ConstructorBody</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>ExplicitConstructorInvocation</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>BlockStatements</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+
+  <!--
+     - Fail: Block.
+      - [], ,([t({), ?(n(BlockStatements)), t(})])
+     vs.
+      - [], *(?(n(BlockStatements)))
+  -->
+  <xbgf:undefine>Block</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>Block</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>BlockStatements</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  
+  <!--
+     - Fail: SwitchBlock.
+      - [], ,([t({), ?(n(SwitchBlockStatementGroups)), ?(n(SwitchLabels)), t(})])
+     vs.
+      - [], *(,([?(n(SwitchBlockStatementGroups)), ?(n(SwitchLabels))]))
+  -->
+  <xbgf:undefine>SwitchBlock</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>SwitchBlock</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>SwitchBlockStatementGroups</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>SwitchLabels</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  
+  <!--
+     - Fail: ConstructorBody.
+      - [], ,([t({), ?(n(ExplicitConstructorInvocation)), ?(n(BlockStatements)), t(})])
+     vs.
+      - [], *(,([?(n(ExplicitConstructorInvocation)), ?(n(BlockStatements))]))
+  -->
+  <xbgf:undefine>ConstructorBody</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ConstructorBody</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ExplicitConstructorInvocation</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>BlockStatements</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+ 
+</xbgf:sequence>

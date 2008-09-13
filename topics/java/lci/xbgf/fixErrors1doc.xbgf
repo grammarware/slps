@@ -1,0 +1,80 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <!--
+   This was an error in the JLS1
+  
+     - Fail: ConstantModifiers.
+      - [], ;([t(public), t(static), t(final)])
+     vs.
+      - [], ;([n(ConstantModifier), ,([n(ConstantModifiers), n(ConstantModifer)])])
+  -->
+  <xbgf:chain>
+    <bgf:production>
+      <nonterminal>ConstantModifiers</nonterminal>
+      <bgf:expression>
+        <nonterminal>ConstantModifier</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:chain>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>ConstantModifiers</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ConstantModifiers</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ConstantModifier</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <xbgf:horizontal>ConstantModifiers</xbgf:horizontal>
+
+  <!--
+  The authors fix an old problem here.
+  Fixed by "substitute" in XBGF.
+  
+     - Fail: ConstantDeclaration.
+      - [], ,([n(ConstantModifiers), n(Type), n(VariableDeclarator)])
+     vs.
+      - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators)])
+  -->
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>ConstantDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>ConstantDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ConstantModifiers</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>VariableDeclarators</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+</xbgf:sequence>

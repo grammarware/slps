@@ -360,6 +360,12 @@ def automatedImprove():
      newbs.extend(bs[i+1:])
      bs = newbs
      continue
+    if bs[i]=='|' and nt.find('OrExpression')>=0:
+     print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(appropriate context)'
+     pessimistic[2] += 1
+     bs[i]='"|"'
+     i+=1
+     continue
     if bs[i]=='"|"' and len(bs)>1 and nt.find('OrExpression')<0:
      print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
      pessimistic[2] += 1
@@ -420,34 +426,25 @@ def automatedImprove():
       pessimistic[2] += 1
       bs[i] = '"'+bs[i]+'"'
       continue
-    elif bs[i][0] not in ('[',']','{','}','|','(',')'):
+    elif bs[i] not in ('[',']','{','}','|','(',')'):
      print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(weird name)'
      pessimistic[2] += 1
      bs[i] = '"'+bs[i]+'"'
      i+=1
      continue
     elif bs[i]==')':
-     if i>0 and bs[i-1]=='(':
-      # () is not BNF bracketing
-      bs[i-1]='"("'
-      bs[i]='")"'
-      print 'Structural heuristic fix in',nt,'(empty group)'
-      pessimistic[2] += 1
+     if '(' not in bs:
+      # bracketing problem
       i+=1
       continue
-     if i>1 and bs[i-2]=='(':
-      # (x) is not BNF bracketing
-      bs[i-2]='"("'
-      bs[i]='")"'
-      print 'Structural heuristic fix in',nt,'(singleton group)'
-      pessimistic[2] += 1
+     left = bs.index('(')
+     if i+1<len(bs) and bs[i+1]=='?????':
       i+=1
       continue
-     if i>3 and bs[i-4]=='(' and ((bs[i-3]=='[' and bs[i-1]==']') or (bs[i-3]=='{' and bs[i-1]=='}')):
-      # ([x]) or ({x}) is not BNF bracketing either
-      bs[i-4]='"("'
+     if '|' not in bs[left:i]:
+      bs[left]='"("'
       bs[i]='")"'
-      print 'Structural heuristic fix in',nt,'(singleton complex group)'
+      print 'Structural heuristic fix in',nt,'(useless group)'
       pessimistic[2] += 1
       i+=1
       continue

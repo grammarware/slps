@@ -164,9 +164,13 @@
     <name>doc</name>
     <branch>
       <input>jls1doc</input>
+      <perform>fixErrors1doc</perform>
+      <perform>restructure1doc</perform>
+      <perform>addFeatures1to2doc</perform>
     </branch>
     <branch>
       <input>jls2doc</input>
+      <perform>fixErrors2doc</perform>
     </branch>
     <branch>
       <input>jls3doc</input>

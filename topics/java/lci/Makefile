@@ -14,6 +14,13 @@ check:
 	ls -1 xbgf/*.xbgf | xargs -n1 ${validator} xbgf
 	ls -1  bgf/*.bgf  | xargs -n1 ${validator} bgf
 
+debug:
+	../../../shared/tools/html2bgf ../jls1/syntax.kw ../jls1/syntax.html 1.bnf -bnf >/dev/null
+	../../../shared/tools/html2bgf ../jls1/collect.kw ../jls1/collected.html q.bnf -bnf >/dev/null
+	../../../shared/tools/html2bgf ../jls2/syntax.html 2.bnf -bnf >/dev/null
+	../../../shared/tools/html2bgf ../jls2/collect.kw ../jls2/collected.html w.bnf -bnf >/dev/null
+	../../../shared/tools/html2bgf ../jls3/syntax.html 3.bnf -bnf >/dev/null
+	../../../shared/tools/html2bgf ../jls3/collect.kw ../jls3/collected.html e.bnf -bnf >/dev/null
 clean:
 	rm -f *~
 	rm -f bgf/*
