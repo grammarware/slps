@@ -4,9 +4,7 @@
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
-  <xbgf:vertical>
-    <nonterminal>Type</nonterminal>
-  </xbgf:vertical>
+  
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
