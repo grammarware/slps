@@ -24,37 +24,62 @@
     </bgf:expression>  
   </xbgf:massage>
   <xbgf:inline>scope</xbgf:inline>
-  <xbgf:massage>
-    <bgf:expression>
-      <epsilon/>
-    </bgf:expression>
-    <bgf:expression>
-      <selectable>
-      <selector>extract</selector>
-        <bgf:expression>
-          <epsilon/>
-        </bgf:expression>
-      </selectable>
-    </bgf:expression>
-    <in>
+  <xbgf:vertical>
+    <label>extract</label>
+  </xbgf:vertical>
+  <xbgf:designate>
+    <bgf:production>
       <label>extract</label>
-    </in>
-  </xbgf:massage>
-  <xbgf:rename>
-    <selector>
-      <in>extract</in>
-      <from>label</from>
-      <to>extractL</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>extract</in>
-      <from>nonterminal</from>
-      <to>extractN</to>
-    </selector>
-  </xbgf:rename>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <nonterminal>p</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
 <!--
+  <xbgf:designate>
+    <bgf:production>
+      <label>extractL</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression> 
+        <sequence>
+          <bgf:expression>
+            <nonterminal>p</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <selectable>
+              <selector>label</selector>
+              <bgf:expression>
+                <nonterminal>l</nonterminal>
+              </bgf:expression>
+            </selectable>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:designate>
+    <bgf:production>
+      <label>extractN</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>p</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <selectable>
+              <selector>nonterminal</selector>
+              <bgf:expression>
+                <nonterminal>n</nonterminal>
+              </bgf:expression>
+            </selectable>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
   <xbgf:rename>`
     <selector>
       <in>rename</in>

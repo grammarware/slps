@@ -176,23 +176,17 @@ ps2n(Ps1,N)
 
 designate(P1,g(Rs,Ps1),g(Rs,Ps2))
  :-
-    P1 = p(As1,N,X),
+    P1 = p(As,N,X),
     require(
-       ( As1 = [l(_)] ),
+       ( \+ As == [] ),
        'Production ~q must be labeled.',
        [P1]),
+    P2 = p([],N,X),
     require(
-      ( P2 = p(As2,N,X),
-        append(Ps1a,[P2|Ps1b],Ps1) 
-      ),
-      'Production ~q (w/o label) not found.',
-      [P1]),
-    require(
-      As2 = [],
-      'Production must be unlabeled',
+      append(Ps1a,[P2|Ps1b],Ps1),
+      'Production ~q not found.',
       [P2]),
-    append(As1,As2,As3),
-    append(Ps1a,[p(As3,N,X)|Ps1b],Ps2).
+    append(Ps1a,[P1|Ps1b],Ps2).
 
 
 %
