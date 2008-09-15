@@ -121,6 +121,9 @@
     </bgf:production>
   </xbgf:inject>
   <xbgf:horizontal>TypeName</xbgf:horizontal>
+  <xbgf:strip>
+    <selector>target</selector>
+  </xbgf:strip>
 
   <!--
   Resolve brutally. Is there a better way?

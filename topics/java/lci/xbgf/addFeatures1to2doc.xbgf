@@ -2,7 +2,25 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
- <!--
+  <!--
+     - Fail: ConstantDeclaration.
+      - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarator)])
+     vs.
+      - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators)])
+  -->
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>VariableDeclarator</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>VariableDeclarators</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>ConstantDeclaration</nonterminal>
+    </in>
+  </xbgf:replace>
+
+  <!--
     - Fail: FieldAccess.
       - [], ;([,([n(Primary), t(.), n(Identifier)]), ,([t(super), t(.), n(Identifier)])])
      vs.
@@ -102,7 +120,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
   <xbgf:define>
     <bgf:production>
       <nonterminal>InstanceInitializer</nonterminal>
@@ -111,6 +128,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
+  
   <!--
      - Fail: ClassMemberDeclaration.
       - [], ;([n(FieldDeclaration), n(MethodDeclaration)])

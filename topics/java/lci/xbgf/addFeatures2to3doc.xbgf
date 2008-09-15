@@ -1211,6 +1211,15 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>MethodInvocation</xbgf:horizontal>
+  <xbgf:strip>
+    <selector>target2</selector>
+  </xbgf:strip>
+  <xbgf:strip>
+    <selector>target3</selector>
+  </xbgf:strip>
+  <xbgf:strip>
+    <selector>target4</selector>
+  </xbgf:strip>
 
   <!--
      - Fail: FormalParameterList.
@@ -1398,6 +1407,9 @@
     </bgf:production>
   </xbgf:inject>
   <xbgf:horizontal>PrimaryNoNewArray</xbgf:horizontal>
+  <xbgf:strip>
+    <selector>target</selector>
+  </xbgf:strip>
 
   <!--
      - Fail: ConstantDeclaration.
@@ -1930,6 +1942,16 @@
     </bgf:production>
   </xbgf:define>
   <xbgf:horizontal>ExplicitConstructorInvocation</xbgf:horizontal>
+  <xbgf:strip>
+    <selector>target1</selector>
+  </xbgf:strip>
+  <xbgf:strip>
+    <selector>target2</selector>
+  </xbgf:strip>
+  <xbgf:strip>
+    <selector>target3</selector>
+  </xbgf:strip>
+
 
   <!--
      - Fail: ClassInstanceCreationExpression.
@@ -2275,6 +2297,12 @@
     </bgf:production>
   </xbgf:inject>
   <xbgf:horizontal>ArrayCreationExpression</xbgf:horizontal>
+  <xbgf:strip>
+    <selector>target1</selector>
+  </xbgf:strip>
+  <xbgf:strip>
+    <selector>target2</selector>
+  </xbgf:strip>
 
   <!-- last bits -->
 

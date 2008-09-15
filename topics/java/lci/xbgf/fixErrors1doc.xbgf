@@ -35,48 +35,28 @@
   <xbgf:horizontal>ConstantModifiers</xbgf:horizontal>
 
   <!--
-  The authors fix an old problem here.
-  Fixed by "substitute" in XBGF.
+  The authors fix an old problem here. (fixed partially
   
      - Fail: ConstantDeclaration.
       - [], ,([n(ConstantModifiers), n(Type), n(VariableDeclarator)])
      vs.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators)])
   -->
-  <xbgf:project>
-    <bgf:production>
+  <xbgf:widen>
+    <bgf:expression>
+      <nonterminal>ConstantModifiers</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>ConstantModifiers</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <in>
       <nonterminal>ConstantDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Type</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:project>
-  <xbgf:inject>
-    <bgf:production>
-      <nonterminal>ConstantDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ConstantModifiers</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Type</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>VariableDeclarators</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:inject>
+    </in>
+  </xbgf:widen>
   
   <!--   Wrong markup makes the extractor enforce line continuation   
   

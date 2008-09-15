@@ -44,7 +44,10 @@
     </bgf:production>
   </xbgf:permute>
   <xbgf:horizontal>ConstantModifiers</xbgf:horizontal>
-
+  <xbgf:strip>
+    <selector>target</selector>
+  </xbgf:strip>
+  
   <!--
     - Fail: FieldModifier.
       - [], ;([t(public), t(protected), t(private), t(static), t(final), t(transient), t((volatile))])

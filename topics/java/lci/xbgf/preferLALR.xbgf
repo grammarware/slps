@@ -76,8 +76,10 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
-  <!-- horizontal also kills the temporary label -->
   <xbgf:horizontal>Name</xbgf:horizontal>
+  <xbgf:strip>
+    <selector>idtoname</selector>
+  </xbgf:strip>
 
   <xbgf:undefine>ClassOrInterfaceType</xbgf:undefine>
   <xbgf:undefine>InterfaceType</xbgf:undefine>
@@ -298,6 +300,9 @@
     </bgf:production>
   </xbgf:inject>
   <xbgf:horizontal>ArrayCreationExpression</xbgf:horizontal>
+  <xbgf:strip>
+    <selector>target</selector>
+  </xbgf:strip>
   <!-- end local rename aka substitute-->
 
   <xbgf:vertical>
@@ -368,6 +373,10 @@
     </bgf:production>
   </xbgf:inject>
   <!-- end local rename aka substitute-->
+  <xbgf:strip>
+    <label>target</label>
+  </xbgf:strip>
+
   <xbgf:add>
     <bgf:production>
       <nonterminal>CastExpression</nonterminal>

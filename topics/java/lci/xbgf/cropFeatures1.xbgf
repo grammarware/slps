@@ -7,7 +7,9 @@
   <xbgf:remove>
     <bgf:production>
       <nonterminal>MethodBody</nonterminal>
-      <bgf:expression><terminal>;</terminal></bgf:expression>
+      <bgf:expression>
+        <terminal>;</terminal>
+      </bgf:expression>
     </bgf:production>
   </xbgf:remove>
 </xbgf:sequence>
