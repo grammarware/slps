@@ -7,7 +7,7 @@ build: ${final}
 
 append.xbgf:
 	cd ../bgf; make append.xbgf
-	appendxbgf append.xbgf \
+	${tools}/appendxbgf append.xbgf \
 		../bgf/normalize.xbgf \
 		../bgf/rename.xbgf \
 		rename.xbgf \

@@ -1,6 +1,7 @@
 <xbgf:sequence
     xmlns:bgf="http://planet-sl.org/bgf"
     xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:inline>scope</xbgf:inline>
   <xbgf:vertical>
     <nonterminal>f</nonterminal>
   </xbgf:vertical>
@@ -9,14 +10,6 @@
       <nonterminal>f</nonterminal>
       <bgf:expression>
         <nonterminal>add</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:unchain>
-  <xbgf:unchain>
-    <bgf:production>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
-        <nonterminal>case</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:unchain>
@@ -88,14 +81,6 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
-        <nonterminal>id</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:unchain>
-  <xbgf:unchain>
-    <bgf:production>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
         <nonterminal>inject</nonterminal>
       </bgf:expression>
     </bgf:production>
@@ -128,7 +113,7 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
-        <nonterminal>modulo</nonterminal>
+        <nonterminal>massage</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:unchain>
@@ -152,14 +137,6 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
-        <nonterminal>prune</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:unchain>
-  <xbgf:unchain>
-    <bgf:production>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
         <nonterminal>rassoc</nonterminal>
       </bgf:expression>
     </bgf:production>
@@ -176,14 +153,6 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
-        <nonterminal>relabel</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:unchain>
-  <xbgf:unchain>
-    <bgf:production>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
         <nonterminal>rename</nonterminal>
       </bgf:expression>
     </bgf:production>
@@ -193,14 +162,6 @@
       <nonterminal>f</nonterminal>
       <bgf:expression>
         <nonterminal>reroot</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:unchain>
-  <xbgf:unchain>
-    <bgf:production>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
-        <nonterminal>relax</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:unchain>
@@ -284,113 +245,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:unchain>
-  <xbgf:vertical>
-    <label>case</label>
-  </xbgf:vertical>
-  <xbgf:designate>
-    <bgf:production>
-      <label>caseFirstUp</label>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <selectable>
-              <selector>first</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>up</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:designate>
-    <bgf:production>
-      <label>caseFirstDown</label>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <selectable>
-              <selector>first</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>down</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:designate>
-    <bgf:production>
-      <label>caseAllUp</label>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <selectable>
-              <selector>all</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>up</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:designate>
-    <bgf:production>
-      <label>caseAllDown</label>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <selectable>
-              <selector>all</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>down</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:rename>
     <selector>
       <in>rename</in>
@@ -422,93 +276,65 @@
   <xbgf:vertical>
     <label>rename</label>
   </xbgf:vertical>
-  <xbgf:modulo>
-    <bgf:production>
-      <label>strip</label>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <selectable>
-              <selector>stripL</selector>
-              <bgf:expression>
-                <nonterminal>l</nonterminal>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>stripLs</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>stripS</selector>
-              <bgf:expression>
-                <nonterminal>s</nonterminal>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>stripSs</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>stripT</selector>
-              <bgf:expression>
-                <nonterminal>t</nonterminal>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>stripTs</selector>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:modulo>
+  <xbgf:rename>
+    <selector>
+      <in>strip</in>
+      <from>label</from>
+      <to>stripL</to>
+    </selector>
+  </xbgf:rename>
+  <xbgf:rename>
+    <selector>
+      <in>strip</in>
+      <from>allLabels</from>
+      <to>stripLs</to>
+    </selector>
+  </xbgf:rename>
+  <xbgf:rename>
+    <selector>
+      <in>strip</in>
+      <from>selector</from>
+      <to>stripS</to>
+    </selector>
+  </xbgf:rename>
+  <xbgf:rename>
+    <selector>
+      <in>strip</in>
+      <from>allSelectors</from>
+      <to>stripSs</to>
+    </selector>
+  </xbgf:rename>
+  <xbgf:rename>
+    <selector>
+      <in>strip</in>
+      <from>terminal</from>
+      <to>stripT</to>
+    </selector>
+  </xbgf:rename>
+  <xbgf:rename>
+    <selector>
+      <in>strip</in>
+      <from>allTerminals</from>
+      <to>stripTs</to>
+    </selector>
+  </xbgf:rename>
   <xbgf:vertical>
     <label>strip</label>
   </xbgf:vertical>
-  <xbgf:modulo>
-    <bgf:production>
-      <label>vertical</label>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <selectable>
-              <selector>verticalL</selector>
-              <bgf:expression>
-                <nonterminal>l</nonterminal>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>verticalN</selector>
-              <bgf:expression>
-                <nonterminal>n</nonterminal>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:modulo>
+  <xbgf:rename>
+    <selector>
+      <in>vertical</in>
+      <from>label</from>
+      <to>verticalL</to>
+    </selector>
+  <xbgf:rename>
+  <xbgf:rename>
+    <selector>
+      <in>vertical</in>
+      <from>nonterminal</from>
+      <to>verticalN</to>
+    </selector>
+  <xbgf:rename>
   <xbgf:vertical>
     <label>vertical</label>
   </xbgf:vertical>
