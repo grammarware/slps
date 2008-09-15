@@ -1,9 +1,35 @@
 <xbgf:sequence
     xmlns:bgf="http://planet-sl.org/bgf"
     xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <xbgf:strip>
+    <selector>label</selector>
+  </xbgf:strip>
+
+  <xbgf:strip>
+    <selector>nonterminal</selector>
+  </xbgf:strip>
+
+  <xbgf:strip>
+    <selector>selector</selector>
+  </xbgf:strip>
+
+  <xbgf:strip>
+    <selector>terminal</selector>
+  </xbgf:strip>
+
+  <xbgf:strip>
+    <selector>from</selector>
+  </xbgf:strip>
+
+  <xbgf:strip>
+    <selector>to</selector>
+  </xbgf:strip>
+
   <xbgf:strip>
     <selector>in</selector>
   </xbgf:strip>
+
   <xbgf:massage>
     <bgf:expression>
       <optional>
@@ -23,10 +49,13 @@
       </choice>
     </bgf:expression>  
   </xbgf:massage>
+
   <xbgf:inline>scope</xbgf:inline>
+
   <xbgf:vertical>
     <label>extract</label>
   </xbgf:vertical>
+
   <xbgf:designate>
     <bgf:production>
       <label>extract</label>
@@ -36,7 +65,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-<!--
+
   <xbgf:designate>
     <bgf:production>
       <label>extractL</label>
@@ -47,17 +76,13 @@
             <nonterminal>p</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <selectable>
-              <selector>label</selector>
-              <bgf:expression>
-                <nonterminal>l</nonterminal>
-              </bgf:expression>
-            </selectable>
+            <nonterminal>l</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+
   <xbgf:designate>
     <bgf:production>
       <label>extractN</label>
@@ -68,56 +93,340 @@
             <nonterminal>p</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <selectable>
-              <selector>nonterminal</selector>
-              <bgf:expression>
-                <nonterminal>n</nonterminal>
-              </bgf:expression>
-            </selectable>
+            <nonterminal>n</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
 
-  <xbgf:rename>`
-    <selector>
-      <in>rename</in>
-      <from>label</from>
-      <to>renameL</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>rename</in>
-      <from>nonterminal</from>
-      <to>renameN</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>rename</in>
-      <from>selector</from>
-      <to>renameS</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>rename</in>
-      <from>terminal</from>
-      <to>renameT</to>
-    </selector>
-  </xbgf:rename>
+  <xbgf:vertical>
+    <label>fold</label>
+  </xbgf:vertical>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>fold</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <nonterminal>n</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>foldL</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression> 
+        <sequence>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>l</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>foldN</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:vertical>
+    <label>massage</label>
+  </xbgf:vertical>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>massage</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>massageL</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression> 
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>l</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>massageN</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:vertical>
+    <label>narrow</label>
+  </xbgf:vertical>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>narrow</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>narrowL</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression> 
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>l</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>narrowN</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
   <xbgf:vertical>
     <label>rename</label>
   </xbgf:vertical>
-  <xbgf:rename>
-    <selector>
-      <in>strip</in>
-      <from>label</from>
-      <to>stripL</to>
-    </selector>
-  </xbgf:rename>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>renameL</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+  	  <bgf:expression>
+            <nonterminal>l</nonterminal>
+	  </bgf:expression>
+	  <bgf:expression>
+            <nonterminal>l</nonterminal>
+	  </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>renameN</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+	  <bgf:expression>
+            <nonterminal>n</nonterminal>
+	  </bgf:expression>
+	  <bgf:expression>
+            <nonterminal>n</nonterminal>
+	  </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>renameS</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+	  <bgf:expression>
+	    <optional>
+	      <bgf:expression>
+	        <nonterminal>l</nonterminal>
+	      </bgf:expression>
+	    </optional>
+ 	  </bgf:expression>
+ 	  <bgf:expression>
+            <nonterminal>s</nonterminal>
+ 	  </bgf:expression>
+	  <bgf:expression>
+            <nonterminal>s</nonterminal>
+	  </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>renameT</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+	  <bgf:expression>
+            <nonterminal>t</nonterminal>
+	  </bgf:expression>
+	  <bgf:expression>
+            <nonterminal>t</nonterminal>
+ 	  </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:vertical>
+    <label>replace</label>
+  </xbgf:vertical>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>replace</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>replaceL</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression> 
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>l</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>replaceN</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:massage>
+    <bgf:expression>
+      <nonterminal>l</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>stripL</selector>
+        <bgf:expression>
+          <nonterminal>l</nonterminal>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+    <in>
+      <label>strip</label>
+    </in>
+  </xbgf:massage>
+
   <xbgf:rename>
     <selector>
       <in>strip</in>
@@ -125,13 +434,24 @@
       <to>stripLs</to>
     </selector>
   </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>strip</in>
-      <from>selector</from>
-      <to>stripS</to>
-    </selector>
-  </xbgf:rename>
+
+  <xbgf:massage>
+    <bgf:expression>
+      <nonterminal>s</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>stripS</selector>
+        <bgf:expression>
+          <nonterminal>s</nonterminal>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+    <in>
+      <label>strip</label>
+    </in>
+  </xbgf:massage>
+
   <xbgf:rename>
     <selector>
       <in>strip</in>
@@ -139,13 +459,24 @@
       <to>stripSs</to>
     </selector>
   </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>strip</in>
-      <from>terminal</from>
-      <to>stripT</to>
-    </selector>
-  </xbgf:rename>
+
+  <xbgf:massage>
+    <bgf:expression>
+      <nonterminal>t</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>stripT</selector>
+        <bgf:expression>
+          <nonterminal>t</nonterminal>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+    <in>
+      <label>strip</label>
+    </in>
+  </xbgf:massage>
+
   <xbgf:rename>
     <selector>
       <in>strip</in>
@@ -153,25 +484,156 @@
       <to>stripTs</to>
     </selector>
   </xbgf:rename>
+
   <xbgf:vertical>
     <label>strip</label>
   </xbgf:vertical>
-  <xbgf:rename>
-    <selector>
-      <in>vertical</in>
-      <from>label</from>
-      <to>verticalL</to>
-    </selector>
-  <xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>vertical</in>
-      <from>nonterminal</from>
-      <to>verticalN</to>
-    </selector>
-  <xbgf:rename>
+
+  <xbgf:vertical>
+    <label>unfold</label>
+  </xbgf:vertical>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>unfold</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <nonterminal>n</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>unfoldL</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression> 
+        <sequence>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>l</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>unfoldN</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:massage>
+    <bgf:expression>
+      <nonterminal>l</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>verticalL</selector>
+        <bgf:expression>
+          <nonterminal>l</nonterminal>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+    <in>
+      <label>vertical</label>
+    </in>
+  </xbgf:massage>
+
+  <xbgf:massage>
+    <bgf:expression>
+      <nonterminal>n</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>verticalN</selector>
+        <bgf:expression>
+          <nonterminal>n</nonterminal>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+    <in>
+      <label>vertical</label>
+    </in>
+  </xbgf:massage>
+
   <xbgf:vertical>
     <label>vertical</label>
   </xbgf:vertical>
--->
+
+  <xbgf:vertical>
+    <label>widen</label>
+  </xbgf:vertical>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>widen</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>widenL</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression> 
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>l</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>widenN</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
 </xbgf:sequence>

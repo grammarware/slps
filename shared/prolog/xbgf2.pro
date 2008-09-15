@@ -17,7 +17,6 @@ transformT(Xbgf,r(G1,T1),T4)
     T4 = r(G2,T3),
     !,
     checkbtf(T4),
-    write(foo),nl,
     !.
 
 normalizeT_rules(','([]),true).

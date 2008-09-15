@@ -13,9 +13,9 @@ append.xbgf:
 		rename.xbgf \
 		reroot.xbgf \
 		unchainF.xbgf \
-		pnfF.xbgf 
-#		strip.xbgf \
-#		../bgf/designate.xbgf \
+		pnfF.xbgf \
+                strip.xbgf \
+		../bgf/designate.xbgf
 
 ${final}: append.xbgf
 	${tools}/xsd2bgf ${xsd}/xbgf.xsd xbgf0.bgf
