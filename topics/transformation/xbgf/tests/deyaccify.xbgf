@@ -1,18 +1,5 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:horizontal>decs</xbgf:horizontal>
   <xbgf:deyaccify>decs</xbgf:deyaccify>
-  <xbgf:widen>
-    <bgf:production>
-      <nonterminal>decs</nonterminal>
-      <bgf:expression>
-        <star>
-          <bgf:expression>
-            <nonterminal>dec</nonterminal>
-          </bgf:expression>
-        </star>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:widen>
 </xbgf:sequence>

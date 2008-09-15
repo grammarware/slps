@@ -1,0 +1,30 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:massage>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <selectable>
+            <selector>fun</selector>
+            <bgf:expression>
+              <nonterminal>function</nonterminal>
+            </bgf:expression>
+          </selectable>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>fun</selector>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>function</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+  </xbgf:massage>
+</xbgf:sequence>

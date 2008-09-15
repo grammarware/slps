@@ -1,13 +1,12 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:vertical>
-    <nonterminal>MethodBody</nonterminal>
-  </xbgf:vertical>
   <xbgf:remove>
     <bgf:production>
-      <nonterminal>MethodBody</nonterminal>
-      <bgf:expression><terminal>;</terminal></bgf:expression>
+      <nonterminal>expr</nonterminal>
+      <bgf:expression>
+        <nonterminal>id</nonterminal>
+      </bgf:expression>
     </bgf:production>
   </xbgf:remove>
 </xbgf:sequence>

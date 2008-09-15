@@ -96,6 +96,14 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
+        <nonterminal>inject</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
         <nonterminal>inline</nonterminal>
       </bgf:expression>
     </bgf:production>

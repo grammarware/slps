@@ -1,0 +1,19 @@
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  <bgf:production>
+    <label>onedec</label>
+    <nonterminal>decs</nonterminal>
+    <bgf:expression>
+      <nonterminal>dec</nonterminal>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
+    <label>moredecs</label>
+    <nonterminal>decs</nonterminal>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression><nonterminal>dec</nonterminal></bgf:expression>
+        <bgf:expression><nonterminal>decs</nonterminal></bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </bgf:production>
+</bgf:grammar>

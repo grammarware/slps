@@ -1,0 +1,17 @@
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  <bgf:production>
+    <nonterminal>program</nonterminal>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <selectable>
+            <selector>fun</selector>
+            <bgf:expression>
+              <nonterminal>function</nonterminal>
+            </bgf:expression>
+          </selectable>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+  </bgf:production>
+</bgf:grammar>

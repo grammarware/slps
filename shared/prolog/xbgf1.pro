@@ -6,6 +6,11 @@
 % Make sure that vacouous transformations are rejected.
 %
 
+transformG(sequence(Ts),G1,G2)
+ :-
+    !,
+    accum(xbgf1:transformG,Ts,G1,G2).
+
 transformG(Xbgf,G1,G4)
  :-
     Xbgf =.. [F|_],
@@ -193,7 +198,7 @@ designate(P1,g(Rs,Ps1),g(Rs,Ps2))
 %
 % p([l(deyaccify)], f, n(n))
 %
-% Replace a BNF-like recursion by an EBNF one
+% Use EBNF-based regular expression operator instead of BNF encoding
 %
 
 deyaccify(N,g(Rs,Ps1),g(Rs,Ps2))
@@ -202,12 +207,12 @@ deyaccify(N,g(Rs,Ps1),g(Rs,Ps2))
     P1 = p(As,N,X1),    
     P2 = p(As,N,X2),
     require(
-      xbgf1:deyaccify_rule(N,X1,X2),
+      xbgf1:deyaccify_rules(N,X1,X2),
       'Nonterminal ~q is defined by non-EBNF-like shape ~q.',
       [N,X1]),
     append(Ps2a,[P2|Ps2b],Ps2).
 
-deyaccify_rule(N1,X1,X2) 
+deyaccify_rules(N1,X1,X2) 
  :-
     X1 = ';'(Xs1),
     length(Xs1,2),
@@ -218,7 +223,7 @@ deyaccify_rule(N1,X1,X2)
     member(n(N1),Xs2),
     X2 = +(n(N2)).
 
-deyaccify_rule(N1,X1,X2) 
+deyaccify_rules(N1,X1,X2) 
  :-
     X1 = ';'(Xs1),
     length(Xs1,2),
@@ -229,7 +234,7 @@ deyaccify_rule(N1,X1,X2)
     member(n(N1),Xs2),
     X2 = *(n(N2)).
 
-deyaccify_rule(_,X1,X2) 
+deyaccify_rules(_,X1,X2) 
  :-
     X1 = ';'(Xs1),
     length(Xs1,2),
@@ -261,148 +266,78 @@ eliminate(N,g(Rs1,Ps1),g(Rs2,Ps2))
 
 
 %
-% p([l(extract)], f, ','([?(n(l)), n(p)]))
+% p([l(extract)], f, n(p))
+% p([l(extractN)], f, (n(p),n(n)))
+% p([l(extractL)], f, (n(p),n(l)))
 %
 % Extract a nonterminal definition
 %
 
-extract([_],_,_,_)
+extract(P1,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    cease('Operator form unsupported.',[]).
+    extract(P1,Ps1,Ps1,[],[],Ps3).
 
+extractN(P1,N,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    extract(P1,Ps1,Ps2,Ps2a,Ps2b,Ps3).
 
-extract([],P1,g(Rs,Ps1),g(Rs,Ps3))
+extractL(P1,L,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitL(Ps1,L,P2,Ps2a,Ps2b),
+    extract(P1,Ps1,[P2],Ps2a,Ps2b,Ps3).
+
+extract(P1,Ps1,Ps2,Ps2a,Ps2b,Ps4)
  :-
     P1 = p(_,N,X),
     definedNs(Ps1,Defined),
     require(
-       (\+ member(N,Defined) ),
+       ( \+ member(N,Defined) ),
        'Nonterminal ~q must be fresh.',
        [N]),
-    transform(try(xbgf1:extract_rule(X,n(N))),Ps1,Ps2),
+    transform(try(xbgf1:replace_rules(X,n(N))),Ps2,Ps3),
     require(
-      ( \+ Ps1 == Ps2 ),
+      ( \+ Ps2 == Ps3 ),
       'No ocurrences of ~q found for extraction.',
       [X]),
-    append(Ps2,[P1],Ps3).
-
-extract_rule(X,Y,X,Y).
-extract_rule(X1,Y1,X2,';'(Xs3))
- :-
-    \+ X1 = X2,
-    X1 = ';'(Xs1),
-    X2 = ';'(Xs2),
-    append(Xs1a,Xs1b,Xs2),
-    append(Xs1,Xs1c,Xs1b),
-    concat([Xs1a,[Y1],Xs1c],Xs3).
-
-extract_old(P1,g(Rs,Ps1),g(Rs,Ps5))
- :-
-    P1 = p(As1,N1,X1),
-    findP(Ps1,As1,N1,P2,Ps3,Ps4),
-    P2 = p(As1,N1,X2),
-    require(
-      ( \+ X1 == X2),
-      'Phrases ~q and ~q must differ.',
-      [X1,X2]),
-    require(
-      xbgf1:foldXs(X1,X2,N2,X3),
-      'Phrases ~q and ~q do not match.',
-      [X1,X2]),
-    allNs(Ps1,Ns),
-    require(
-      ( \+ member(N2,Ns) ),
-      'Nonterminal ~q must be fresh.',
-      [N2]),
-    append(Ps3,[p(As1,N1,X1),p([],N2,X3)|Ps4],Ps5).
+    concat([Ps2a,Ps3,[P1],Ps2b],Ps4).
 
 
 %
-% p([l(fold)], f, n(p))
+% p([l(fold)], f, n(n))
+% p([l(foldN)], f, (n(n),n(n)))
+% p([l(foldL)], f, (n(n),n(l)))
 %
 % Fold an expression to its defining nonterminal
 %
 
-fold(P0,G1,G3)
+fold(N1,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    fu(X1,X2,foldXs(X1,X2),P0,G1,G3).
+    fold(N1,Ps1,Ps1,[],[],Ps3).
 
-
-% Commmon core of fold and unfold
-
-fu(X1,X2,G,P1,G1,G3)
+foldN(N1,N2,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    G1 = g(Rs,Ps1),
-    P1 = p(As1,N1,X1),
-    findP(Ps1,As1,N1,P2,Ps3,Ps4),
-    P2 = p(As1,N1,X2),
-    require(
-      ( \+ X1 == X2),
-      'Phrases ~q and ~q must differ.',
-      [X1,X2]),
-    require(
-      apply(G,[N2,X3]),
-      'Phrases ~q and ~q do not match.',
-      [X1,X2]),
-    require(
-      splitN(Ps1,N2,[p([],N2,X3)],_,_),
-      'Nonterminal ~q must be defined as ~q.',
-      [N2,X3]),
-    append(Ps3,[p(As1,N1,X1)|Ps4],Ps5),
-    G2 = g(Rs,Ps5),
-    normalizeG(G2,G3),
-    !.
+    splitN(Ps1,N2,Ps2,Ps2a,Ps2b),
+    fold(N1,Ps1,Ps2,Ps2a,Ps2b,Ps3).
 
-foldXs(X1,X2,N,X3)
+foldL(N1,L,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    \+ X1 = ','(_),
-    !,
-    foldXs(','([X1]),X2,N,X3).
+    splitL(Ps1,L,P2,Ps2a,Ps2b),
+    fold(N1,Ps1,[P2],Ps2a,Ps2b,Ps3).
 
-foldXs(X1,X2,N,X3)
+fold(N1,Ps1,Ps2,Ps2a,Ps2b,Ps4)
  :-
-    \+ X2 = ','(_), 
-    !,
-    foldXs(X1,','([X2]),N,X3).
-
-foldXs(','([X|X1s]),','([X|X2s]),N,X3)
- :-
-    !,
-    foldXs(','(X1s),','(X2s),N,X3).
-
-foldXs(','([n(N)|X1s]),','(X2s),N,','(X3s))
- :-
-    !,
-    append(X3s,X1s,X2s).
-
-foldXs(','([X1|X1s]),','([X2|X1s]),N,X3s)
- :-
-    !,
-    foldX(X1,X2,N,X3s).
-
-foldX(n(N),X,N,X)
- :-
-    !.
-
-foldX(s(S,X1),s(S,X2),N,X)
- :-
-    !,
-    foldX(X1,X2,N,X).
-
-foldX('?'(X1),'?'(X2),N,X)
- :-
-    !,
-    foldX(X1,X2,N,X).
-
-foldX('*'(X1),'*'(X2),N,X)
- :-
-    !,
-    foldX(X1,X2,N,X).
-
-foldX('+'(X1),'+'(X2),N,X)
- :-
-    !,
-    foldX(X1,X2,N,X).
+    splitN1(Ps1,N1,P1,_,_),
+    P1 = p(_,_,X),
+    ( append(Ps2c,[P1|Ps2d],Ps2) ->
+        ( 
+          transform(try(xbgf1:replace_rules(X,n(N1))),Ps2c,Ps2e),
+          transform(try(xbgf1:replace_rules(X,n(N1))),Ps2d,Ps2f),
+          append(Ps2e,[P1|Ps2f],Ps3)
+        )
+      ; transform(try(xbgf1:replace_rules(X,n(N1))),Ps2,Ps3)
+    ),
+    concat([Ps2a,Ps3,Ps2b],Ps4).
 
 
 %
@@ -419,8 +354,11 @@ horizontal(N,g(Rs,Ps1),g(Rs,Ps3))
        'Nonterminal ~q must be defined vertically.',
        [N]),
 
-    maplist(arg(3),Ps2,Xs),
+    maplist(xbgf1:horizontal_rule,Ps2,Xs),
     concat([Ps2a,[p([],N,';'(Xs))],Ps2b],Ps3).
+
+horizontal_rule(p([],_,X),X).
+horizontal_rule(p([l(L)],_,X),s(L,X)).
 
 
 %
@@ -517,69 +455,73 @@ new(Ps1,N,G1,G2)
 % Interpret separator list left-associatively
 %
 
-lassoc(P1,g(Rs,Ps1),g(Rs,Ps2))
+lassoc(P1,G1,G2)
+ :-
+    assoc(P1,G1,G2).
+
+assoc(P1,g(Rs,Ps1),g(Rs,Ps2))
  :-
     P1 = p(As,N,X1),
     findP(Ps1,As,N,P2,Ps2a,Ps2b),
     P2 = p(As,N,X2),
     require(
-      xbgf1:lassoc_rule(N,X1,X2),
-      'p(~q,~q,...) must define a separator list.',
-      [As,N]),
+      xbgf1:assoc_rules(N,X1,X2),
+      '~q must admit associativity transformation.',
+      [P1]),
     append(Ps2a,[P1|Ps2b],Ps2).
 
-lassoc_rule(
+assoc_rules(N,X1,X2) :- assoc_rule1(N,X1,X2).
+assoc_rules(N,X1,X2) :- assoc_rule2(N,X1,X2).
+
+assoc_rule1(
   N,
   ','([n(N),X,n(N)]), 
   ','([n(N),'*'(','([X,n(N)]))])).
 
+assoc_rule2(
+  N,
+  ','([n(N),n(N)]), 
+  +(n(N))).
+
 
 %
-% p([l(modulo)], f, n(p))
+% p([l(massage)], f, (n(x),n(x)))
+% p([l(massageN)], f, (n(x),n(x),n(n)))
+% p([l(massageL)], f, (n(x),n(x),n(l)))
 %
-% Equality modulo selectors
+% Semantics-preserving expression replacement
 %
 
-modulo(P2,g(Rs,Ps1),g(Rs,Ps2))
+massage(X1,X2,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    P2 = p(As,N,X2),
-    findP(Ps1,As,N,P1,Ps2a,Ps2b),
-    P1 = p(As,N,X1),
-    require(
-      xbgf1:modulo_strategy(X1,X2),
-      'Cannot rewrite p(~q,~q,...) modulo selectors.',
-      [As,N]),
-    append(Ps2a,[P2|Ps2b],Ps2).
+    massage(X1,X2,Ps1,[],[],Ps3).
 
-modulo_strategy(X,X).
-
-modulo_strategy(s(_,X1),X2)
- :- 
-    modulo_strategy(X1,X2).
-
-modulo_strategy(X1,s(_,X2))
+massageN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    modulo_strategy(X1,X2).
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    massage(X1,X2,Ps2,Ps2a,Ps2b,Ps3).
 
-modulo_strategy(','(X1s),','(X2s))
- :- 
-    maplist(xbgf1:modulo_strategy,X1s,X2s).
-
-modulo_strategy(';'(X1s),';'(X2s))
- :- 
-    maplist(xbgf1:modulo_strategy,X1s,X2s).
-
-modulo_strategy('*'(X1),'*'(X2))
+massageL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    modulo_strategy(X1,X2).
+    splitL(Ps1,L,P,Ps2a,Ps2b),
+    massage(X1,X2,[P],Ps2a,Ps2b,Ps3).
 
-modulo_strategy('+'(X1),'+'(X2))
+massage(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
  :-
-    modulo_strategy(X1,X2).
+     require(
+       ( xbgf1:massage_rules(X1,X2); xbgf1:massage_rules(X2,X1) ),
+       '~q and ~q are not in massage relation.',
+       [X1,X2]),
+     transform(try(xbgf1:replace_rules(X1,X2)),Ps2,Ps4),
+     concat([Ps2a,Ps4,Ps2b],Ps3).
 
-modulo_strategy('?'(X1),'?'(X2))
- :-
-    modulo_strategy(X1,X2).
+massage_rules(s(_,X),X).
+massage_rules(?(s(S,X)),s(S,?(X))).
+massage_rules(*(s(S,X)),s(S,*(X))).
+massage_rules(+(s(S,X)),s(S,+(X))).
+massage_rules(?(X),';'(L)) :- length(L,2),member(X,L),member(true,L).
+massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(true,L).
+massage_rules(+(X),','([X,*(X)])).
 
 
 %
@@ -655,57 +597,14 @@ projectXs(Xs1,[_|Xs2])
 
 
 %
-% p([l(prune)], f, n(n))
-%
-% Prune nonterminal occurrences
-%
-
-prune(N,G1,G2)
- :-
-    usedNs(G1,Us),
-    require(
-       member(N,Us),
-       'Nonterminal ~q must be in use.',
-       [N]),
-    transform(try(xbgf1:prune_rule(N)),G1,G2).
-    
-prune_rule(N,n(N),true).
-
-
-%
 % p([l(rassoc)], f, n(p))
 %
 % Interpret separator list right-associatively
 %
 
-rassoc(P1,g(Rs,Ps1),g(Rs,Ps2))
+rassoc(P1,G1,G2)
  :-
-    P1 = p(As,N,X1),
-    findP(Ps1,As,N,P2,Ps2a,Ps2b),
-    P2 = p(As,N,X2),
-    require(
-      xbgf1:rassoc_rules(N,X1,X2),
-      '~q must admit associativity transformation.',
-      [P1]),
-    append(Ps2a,[P1|Ps2b],Ps2).
-
-rassoc_rules(N,X1,X2) :- rassoc_rule1(N,X1,X2).
-rassoc_rules(N,X1,X2) :- rassoc_rule2(N,X1,X2).
-
-rassoc_rule1(
-  N,
-  ','([n(N),X,n(N)]), 
-  ','([n(N),'*'(','([X,n(N)]))])).
-
-rassoc_rule2(
-  N,
-  ','([n(N),n(N)]), 
-  +(n(N))).
-
-
-% p([l(relax)], f, n(p))
-
-% p([l(relabel)], f, n(p))
+    assoc(P1,G1,G2).
 
 
 %
@@ -816,6 +715,63 @@ renameS([L],S1,S2,g(Rs,Ps1),g(Rs,Ps3))
 
 renameS_rule(S1,S2,s(S1,X),s(S2,X)).
 
+renameT(T1,T2,G1,G2)
+ :-
+    allTs(G1,Ts),
+    require(
+       member(T1,Ts),
+       'Source name ~q for renaming must not be fresh.',
+       [T1]),
+    require(
+       (\+ member(T2,Ts)),
+       'Target name ~q for renaming must be fresh.',
+       [T2]),
+    transform(try(xbgf1:renameT_rule(T1,T2)),G1,G2).
+
+renameT_rule(T1,T2,t(T1),t(T2)).
+
+
+%
+% p([l(replace)], f, (n(x),n(x)))
+% p([l(replaceN)], f, (n(x),n(x),n(n)))
+% p([l(replaceL)], f, (n(x),n(x),n(l)))
+%
+% Unconstrainted expression-level editing
+%
+
+replace(X1,X2,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    replace(X1,X2,Ps1,[],[],Ps3).
+
+replaceN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    replace(X1,X2,Ps2,Ps2a,Ps2b,Ps3).
+
+replaceL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitL(Ps1,L,P,Ps2a,Ps2b),
+    replace(X1,X2,[P],Ps2a,Ps2b,Ps3).
+
+replace(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
+ :-
+     transform(try(xbgf1:replace_rules(X1,X2)),Ps2,Ps4),
+     concat([Ps2a,Ps4,Ps2b],Ps3).
+
+replace_rules(X1,X2,X1,X2).
+replace_rules(','(Xs1),Y1,','(Xs2),','(Xs3))
+ :-
+    \+ Xs1 = Xs2,
+    append(Xs1a,Xs1b,Xs2),
+    append(Xs1,Xs1c,Xs1b),
+    concat([Xs1a,[Y1],Xs1c],Xs3).
+replace_rules(';'(Xs1),Y1,';'(Xs2),';'(Xs3))
+ :-
+    \+ Xs1 = Xs2,
+    append(Xs1a,Xs1b,Xs2),
+    append(Xs1,Xs1c,Xs1b),
+    concat([Xs1a,[Y1],Xs1c],Xs3).
+
 
 %
 % p([l(reroot)], f, *(n(n)))
@@ -825,7 +781,7 @@ renameS_rule(S1,S2,s(S1,X),s(S2,X)).
 
 reroot(Rs,g(_,Ps),g(Rs,Ps))
  :- 
-    definedNs(Ps,Ns1),
+    allNs(Ps,Ns1),
     subtract(Rs,Ns1,Ns2),
     require(
        subset(Rs,Ns1),
@@ -834,72 +790,43 @@ reroot(Rs,g(_,Ps),g(Rs,Ps))
 
 
 %
-% p([l(narrow)], f, n(p))
+% p([l(narrow)], f, (n(x),n(x)))
+% p([l(narrowN)], f, (n(x),n(x),n(n)))
+% p([l(narrowL)], f, (n(x),n(x),n(l)))
 %
-% Narrow the grammar by expression replacement
+% Decrease generated language by expression replacement
 %
 
-narrow(P1,g(Rs,Ps1),g(Rs,Ps3))
+narrow(X1,X2,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    P1 = p(As1,N1,X1),
-    findP(Ps1,As1,N1,P2,Ps2a,Ps2b),
-    P2 = p(As1,N1,X2),
-    require(
-      ( \+ X1 == X2 ),
-      'The phrases ~q and ~q must be different.',
-      [X1,X2]),
-    require(
-      xbgf1:narrowX(X1,X2),
-      'The phrase ~q must be (algorithmically) narrowed by ~q.',
-      [X1,X2]),
-    append(Ps2a,[P1|Ps2b],Ps3).
+    narrow(X1,X2,Ps1,[],[],Ps3).
 
-
-% Anything trivially narrows itself.
-
-narrowX(X,X).    
-
-% Anything trivially narrows "any".
-
-narrowX(_,a).
-
-% Epsilon trivially narrows anything.
-
-narrowX(true,_).
-
-% "*"
-
-narrowX('*'(X1),'*'(X2)) :- narrowX(X1,X2).
-narrowX('+'(X1),'*'(X2)) :- narrowX(X1,X2).
-narrowX('?'(X1),'*'(X2)) :- narrowX(X1,X2).
-narrowX(X1,'*'(X2)) :- narrowX(X1,X2).
-
-% "+"
-
-narrowX('+'(X1),'+'(X2)) :- narrowX(X1,X2).
-narrowX(X1,'+'(X2)) :- narrowX(X1,X2).
-
-% "?"
-
-narrowX('?'(X1),'?'(X2)) :- narrowX(X1,X2).
-narrowX(X1,'?'(X2)) :- narrowX(X1,X2).
-
-% Narrowion while using selectors to "sync"
-
-narrowX(s(S,X1),s(S,X2)) :- narrowX(X1,X2).
-
-% ","
-
-narrowX(','(Xs1),','(Xs2))
+narrowN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    maplist(xbgf1:narrowX,Xs1,Xs2).
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    narrow(X1,X2,Ps2,Ps2a,Ps2b,Ps3).
 
-
-% p([l(sequence)], f, *(n(f)))
-
-sequence(Ts,G1,G2)
+narrowL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    accum(xbgf1:transformG,Ts,G1,G2).
+    splitL(Ps1,L,P,Ps2a,Ps2b),
+    narrow(X1,X2,[P],Ps2a,Ps2b,Ps3).
+
+narrow(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
+ :-
+     require(
+       xbgf1:narrow_rules(X1,X2),
+       '~q and ~q are not in narrowing relation.',
+       [X1,X2]),
+     transform(try(xbgf1:replace_rules(X1,X2)),Ps2,Ps4),
+     concat([Ps2a,Ps4,Ps2b],Ps3).
+
+narrow_rules(*(X),+(X)).
+narrow_rules(*(X),?(X)).
+narrow_rules(*(X),X).
+narrow_rules(+(X),?(X)).
+narrow_rules(+(X),X).
+narrow_rules(?(X),X).
+narrow_rules(';'(L),X) :- length(L,2),member(X,L),member(true,L).
 
 
 %
@@ -1058,14 +985,40 @@ undefine(N,g(Rs1,Ps1),g(Rs2,Ps2))
 
 
 %
-% p([l(unfold)], f, n(p))
+% p([l(unfold)], f, n(n))
+% p([l(unfoldN)], f, (n(n),n(n)))
+% p([l(unfoldL)], f, (n(n),n(l)))
 %
-% Unfold a nonterminal in a production
+% Unfold occurrences of a nonterminal to its defining expression
 %
 
-unfold(P1,G1,G2)
+unfold(N1,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    fu(X2,X1,foldXs(X1,X2),P1,G1,G2).
+    unfold(N1,Ps1,Ps1,[],[],Ps3).
+
+unfoldN(N1,N2,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitN(Ps1,N2,Ps2,Ps2a,Ps2b),
+    unfold(N1,Ps1,Ps2,Ps2a,Ps2b,Ps3).
+
+unfoldL(N1,L,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitL(Ps1,L,P2,Ps2a,Ps2b),
+    unfold(N1,Ps1,[P2],Ps2a,Ps2b,Ps3).
+
+unfold(N1,Ps1,Ps2,Ps2a,Ps2b,Ps4)
+ :-
+    splitN1(Ps1,N1,P1,_,_),
+    P1 = p(_,_,X),
+    ( append(Ps2c,[P1|Ps2d],Ps2) ->
+        ( 
+          transform(try(xbgf1:replace_rules(n(N1),X)),Ps2c,Ps2e),
+          transform(try(xbgf1:replace_rules(n(N1),X)),Ps2d,Ps2f),
+          append(Ps2e,[P1|Ps2f],Ps3)
+        )
+      ; transform(try(xbgf1:replace_rules(n(N1),X)),Ps2,Ps3)
+    ),
+    concat([Ps2a,Ps3,Ps2b],Ps4).
 
 
 %
@@ -1159,22 +1112,50 @@ vertical_strategy(s(S,X1),s(S,X2))
 
 
 %
-% p([l(widen)], f, n(p))
+% p([l(widen)], f, (n(x),n(x)))
+% p([l(widenN)], f, (n(x),n(x),n(n)))
+% p([l(widenL)], f, (n(x),n(x),n(l)))
 %
-% Widen the grammar by expression replacement
+% Increase generated language by expression replacement
 %
 
-widen(P1,g(Rs,Ps1),g(Rs,Ps3))
+widen(X1,X2,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    P1 = p(As1,N1,X1),
-    findP(Ps1,As1,N1,P2,Ps2a,Ps2b),
-    P2 = p(As1,N1,X2),
+    widen(X1,X2,Ps1,[],[],Ps3).
+
+widenN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    widen(X1,X2,Ps2,Ps2a,Ps2b,Ps3).
+
+widenL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitL(Ps1,L,P,Ps2a,Ps2b),
+    widen(X1,X2,[P],Ps2a,Ps2b,Ps3).
+
+widen(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
+ :-
+     require(
+       xbgf1:narrow_rules(X2,X1),
+       '~q and ~q are not in widening relation.',
+       [X1,X2]),
+     transform(try(xbgf1:replace_rules(X1,X2)),Ps2,Ps4),
+     concat([Ps2a,Ps4,Ps2b],Ps3).
+
+
+%
+% p([l(yaccify)], f, n(p))
+%
+% Expand EBNF-based regular expression operator via BNF encoding
+%
+
+yaccify(P1,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    P1 = p(As,N,X1),
+    splitN1(Ps1,N,P2,Ps2a,Ps2b),
+    P2 = p(As,N,X2),
     require(
-      ( \+ X1 == X2 ),
-      'The phrases ~q and ~q must be different.',
+      xbgf1:deyaccify_rules(N,X1,X2),
+      '~q and ~q not suitable for yaccification.',
       [X1,X2]),
-    require(
-      xbgf1:narrowX(X2,X1),
-      'The phrase ~q must be (algorithmically) narrowed by ~q.',
-      [X2,X1]),
-    append(Ps2a,[P1|Ps2b],Ps3).
+    append(Ps2a,[P1|Ps2b],Ps2).

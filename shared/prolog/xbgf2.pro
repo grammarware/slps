@@ -207,7 +207,7 @@ lassoc_rule(P1,n(P2,','([T1,'*'(Ts)])),T2)
  :-
     P1 = p(As,N,X1),
     P2 = p(As,N,X2),
-    xbgf1:lassoc_rule(N,X1,X2),
+    xbgf1:assoc_rule(N,X1,X2),
     lassoc_strategy(P2,Ts,T1,T2).
 
 lassoc_strategy(_,[],T,T).
@@ -347,20 +347,6 @@ projectXs([_|Xs1],Xs2,[_|Ts1],Ts2)
 
 
 %
-% p([l(prune)], f, n(n))
-%
-% Prune nonterminals
-%
-
-prune(N,T1,T2)
- :-
-    transform(try(xbgf2:prune_rules(N)),T1,T2).
-    
-prune_rules(N,n(N),true).
-prune_rules(N,n(p(_,N,_),_),true).
-
-
-%
 % p([l(rassoc)], f, n(p))
 %
 % Interpret separator list right-associatively
@@ -374,14 +360,14 @@ rassoc_rules(P1,n(P2,','([T1,'*'(Ts)])),T2)
  :-
     P1 = p(As,N,X1),
     P2 = p(As,N,X2),
-    xbgf1:rassoc_rule1(N,X1,X2),
+    xbgf1:assoc_rule1(N,X1,X2),
     rassoc_strategy1(P1,Ts,T1,T2).
 
 rassoc_rules(P1,n(P2,+(Ts)),T1)
  :-
     P1 = p(As,N,X1),
     P2 = p(As,N,X2),
-    xbgf1:rassoc_rule2(N,X1,X2),
+    xbgf1:assoc_rule2(N,X1,X2),
     rassoc_strategy2(P1,Ts,T1).
 
 rassoc_strategy1(_,[],T,T).
@@ -393,11 +379,6 @@ rassoc_strategy2(_,[T],T).
 rassoc_strategy2(P,[T1,T2|Ts],n(P,','([T1,T3])))
  :-
     rassoc_strategy2(P,[T2|Ts],T3).
-
-
-% p([l(relax)], f, n(p))
-
-% p([l(relabel)], f, n(p))
 
 
 %

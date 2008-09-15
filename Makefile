@@ -1,5 +1,4 @@
 build:
-	cd topics/transformation/xbgf; make build
 
 rebuild:
 	make clean
@@ -7,8 +6,6 @@ rebuild:
 
 test:
 	make build
-	cd topics/transformation/xbgf; make test
 
 clean:
 	rm -f *~
-	cd topics/transformation/xbgf; make clean

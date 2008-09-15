@@ -71,27 +71,21 @@ xml2xbgf(T,eliminate(N))
     !,
     content(T,N).
 
-xml2xbgf(T,extract(L,P2))
+xml2xbgf(T,G)
  :-
     self(name(xbgf:extract),T),
     !,
-    ( child(name(in),T,In) ->
-        ( 
-          content(In,Z0),
-          L = [Z0]
-        )
-      ;
-        L = []
-    ),
     child(name(bgf:production),T,P1),
-    xmlToP(P1,P2).
+    xmlToP(P1,P2),
+    inScope2xbgf(extract,extractL,extractN,[P2],T,G).
 
-xml2xbgf(T,fold(P2))
+xml2xbgf(T,G)
  :-
     self(name(xbgf:fold),T),
     !,
-    child(name(bgf:production),T,P1),
-    xmlToP(P1,P2).
+    child(name(nonterminal),T,T1),
+    content(T1,N),
+    inScope2xbgf(fold,foldL,foldN,[N],T,G).
 
 xml2xbgf(T,horizontal(N))
  :-
@@ -131,19 +125,24 @@ xml2xbgf(T,lassoc(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
-xml2xbgf(T,modulo(P2))
+xml2xbgf(T,G)
  :-
-    self(name(xbgf:modulo),T),
+    self(name(xbgf:massage),T),
     !,
-    child(name(bgf:production),T,P1),
-    xmlToP(P1,P2).
+    children(name(bgf:expression),T,[T1,T2]),
+    xmlToExpression(T1,X1),
+    xmlToExpression(T2,X2),
+    inScope2xbgf(massage,massageL,massageN,[X1,X2],T,G).
 
-xml2xbgf(T,narrow(P2))
+xml2xbgf(T,G)
  :-
     self(name(xbgf:narrow),T),
     !,
-    child(name(bgf:production),T,P1),
-    xmlToP(P1,P2).
+    !,
+    children(name(bgf:expression),T,[T1,T2]),
+    xmlToExpression(T1,X1),
+    xmlToExpression(T2,X2),
+    inScope2xbgf(narrow,narrowL,narrowN,[X1,X2],T,G).
 
 xml2xbgf(T,permute(P2))
  :-
@@ -158,12 +157,6 @@ xml2xbgf(T,project(P2))
     !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
-
-xml2xbgf(T,prune(N))
- :-
-    self(name(xbgf:prune),T),
-    !,
-    content(T,N).
 
 xml2xbgf(T,rassoc(P2))
  :-
@@ -203,6 +196,10 @@ xml2xbgf(T,F3)
             F = renameS([])
       ),
       C = selector
+    ;
+      child(name(terminal),T,X),
+      F = renameT,
+      C = terminal
     ),
     child(name(from),X,From),
     child(name(to),X,To),
@@ -211,6 +208,16 @@ xml2xbgf(T,F3)
     F =.. F1,
     append(F1,[Z1,Z2],F2),
     F3 =.. F2.
+
+xml2xbgf(T,G)
+ :-
+    self(name(xbgf:replace),T),
+    !,
+    !,
+    children(name(bgf:expression),T,[T1,T2]),
+    xmlToExpression(T1,X1),
+    xmlToExpression(T2,X2),
+    inScope2xbgf(replace,replaceL,replaceN,[X1,X2],T,G).
 
 xml2xbgf(T,reroot(Rs2))
  :-
@@ -285,12 +292,13 @@ xml2xbgf(T,undefine(N))
     !,
     content(T,N).
 
-xml2xbgf(T,unfold(P2))
+xml2xbgf(T,G)
  :-
     self(name(xbgf:unfold),T),
     !,
-    child(name(bgf:production),T,P1),
-    xmlToP(P1,P2).
+    child(name(nonterminal),T,T1),
+    content(T1,N),
+    inScope2xbgf(unfold,unfoldL,unfoldN,[N],T,G).
 
 xml2xbgf(T,unite(N1,N2))
  :-
@@ -315,9 +323,37 @@ xml2xbgf(T,verticalN(N))
     !,
     content(T1,N).
 
-xml2xbgf(T,widen(P2))
+xml2xbgf(T,yaccify(P2))
  :-
-    self(name(xbgf:widen),T),
+    self(name(xbgf:yaccify),T),
     !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
+
+xml2xbgf(T,G)
+ :-
+    self(name(xbgf:widen),T),
+    !,
+    !,
+    children(name(bgf:expression),T,[T1,T2]),
+    xmlToExpression(T1,X1),
+    xmlToExpression(T2,X2),
+    inScope2xbgf(widen,widenL,widenN,[X1,X2],T,G).
+
+inScope2xbgf(None,L,N,Args,T,G)
+ :-
+    ( child(name(in),T,T1) -> 
+      ( 
+        child(name(label),T1,T2),
+        content(T2,C),
+        append(Args,[C],Args1),
+        G =.. [L|Args1]
+      ;
+        child(name(nonterminal),T1,T2),
+        content(T2,C),
+        append(Args,[C],Args1),
+        G =.. [N|Args1]
+      )
+    ;
+      G =.. [None|Args]
+    ).

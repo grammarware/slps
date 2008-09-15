@@ -152,10 +152,10 @@ collect(G,X,L2)
 
 transform(G,X,Z)
  :-
-    apply(G,[X,Y]),
+    X =.. [F|Xs],
+    maplist(transform(G),Xs,Ys),
     Y =.. [F|Ys],
-    maplist(transform(G),Ys,Zs),
-    Z =.. [F|Zs].
+    apply(G,[Y,Z]).
 
 transformWhile(G1,G2,X,Z)
  :-
