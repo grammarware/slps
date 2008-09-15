@@ -22,8 +22,9 @@ def processSection(text,tagN,cx,p):
  subsections=content[1].split('<h'+`tagN+1`+'>')
  for pre in subsections[0].split('<pre>')[1:]:
   if max:
+   print 'Matched <pre> in',content[0].split()[0]
    p.write(pre.split('</pre>')[0].replace('<br>','').replace('&#32;',' '))
-   p.write('\n<hr>')
+   p.write('\n<hr>\n')
    max -= 1
   else:
    #print 'Skipped <pre> in',content[0].split()[0]

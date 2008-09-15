@@ -141,6 +141,7 @@ def preprocess(line):
  return l2.replace('&gt ; ','&gt;').replace('&lt ; ','&lt;').replace('&amp ; ','&amp;')
 
 def parseLine(line):
+ oldline = line[:]
  tokens = []
  flags = []
  while line:
@@ -163,8 +164,14 @@ def parseLine(line):
    line = line[5:]
    continue
   if line.find('<em>')==0:
-   emph[0] = True
-   line = line[4:]
+   if emph[0] and tokens and oldline.find(tokens[-1]+'<em>'+line[4:line.index('>')])>=0:
+    print 'Token-breaking <em> tag endangers',
+    line = tokens.pop()+line[4:]
+    print line.split()[0].split('<')[0]
+    flags.pop()
+   else:
+    emph[0] = True
+    line = line[4:]
    continue
   if line.find('<code>')==0:
    emph[0] = False
@@ -228,15 +235,21 @@ def cleanup(line):
  return line.replace('<!-- </i> -->','').replace('        ','\t')
  #.replace('<code>','"').replace('</code>','"')
 
-def ifContinuation(s):
+def ifContinuation(s,olds):
  if not s:
   return False
- if s[0]=='\t' and s[1]!='\t':
+ if s[0]=='\t' and (s[1]!='\t' or s[1]==olds[1]):
   return False
  if s[0]==' ':
+  i=0
+  while s[i]==' ' and olds[i]==' ':
+   i+=1
+  if olds[i]!=' ' and s[i]==' ' and s[i+1]!=' ':
+   # one space indentation equals line continuation
+   return True
   return False
  if s[0]=='<':
-  return ifContinuation(s[s.index('>')+1:])
+  return ifContinuation(s[s.index('>')+1:],olds)
  return True
 
 def readGrammar(fn):
@@ -244,6 +257,7 @@ def readGrammar(fn):
  src = open(fn,'r')
  grammar = False
  name = ''
+ oldline = ''
  choices = []
  for line in src:
   if line.find('<pre>')>=0 or line.find('</pre>')>=0:
@@ -255,7 +269,8 @@ def readGrammar(fn):
    grammar = not grammar
    continue
   if grammar:
-   cont = ifContinuation(line)
+   cont = ifContinuation(line,oldline)
+   oldline = line
    line = preprocess(cleanup(line))
    #print 'Parsing "'+line+'"...'
    a,b=parseLine(line)
