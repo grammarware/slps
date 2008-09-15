@@ -8,7 +8,7 @@
      - Fail: TypeImportOnDemandDeclaration.
       - [], ,([t(import), n(PackageName), t(.), t(*), t((;))])
      vs.
-      - [], ,([t(import), n(PackageOrType), n(Name), t(.), t(*), t((;))])
+      - [], ,([t(import), n(PackageOrTypeName), t(.), t(*), t((;))])
   -->
   <xbgf:project>
     <bgf:production>
@@ -40,10 +40,7 @@
             <terminal>import</terminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>PackageOrType</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Name</nonterminal>
+            <nonterminal>PackageOrTypeName</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <terminal>.</terminal>

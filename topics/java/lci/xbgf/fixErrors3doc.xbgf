@@ -1,0 +1,94 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <!--
+   Typo in JLS3 (propagated from earlier versions):
+     - Fail: ConstantModifiers.
+      - [], ;([n(ConstantModifier), ,([n(ConstantModifier), n(ConstantModifiers)])])
+     vs.
+      - [], ;([n(ConstantModifier), ,([n(ConstantModifier), n(ConstantModifers)])])
+  -->
+  <xbgf:unite>
+    <add>ConstantModifers</add>
+    <to>ConstantModifiers</to>
+  </xbgf:unite>
+
+  <!--
+  The definition of TypeParameters was manually parsed from the following:
+      <blockquote><pre>
+<em>TypeParameters ::= &lt; TypeParameterList &gt;
+</em>
+<em>TypeParameterList    ::= TypeParameterList , TypeParameter
+</em>
+                      |<em>  TypeParameter
+</em></pre></blockquote>
+  -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>TypeParameters</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>&lt;</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TypeParameterList</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>&gt;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>TypeParameterList</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>TypeParameterList</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>,</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>TypeParameter</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TypeParameter</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+
+  <!--
+  Unopened tag:
+  <em>InterfaceDeclaration:
+        NormalInterfaceDeclaration
+        AnnotationTypeDeclaration</em>
+        </pre></blockquote>
+
+  -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>InterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>NormalInterfaceDeclaration</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>AnnotationTypeDeclaration</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+ 
+</xbgf:sequence>

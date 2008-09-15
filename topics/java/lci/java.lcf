@@ -167,13 +167,18 @@
       <perform>fixErrors1doc</perform>
       <perform>restructure1doc</perform>
       <perform>addFeatures1to2doc</perform>
+      <perform>enhanceModifiers</perform>
+      <perform>addFeatures2to3doc</perform>
     </branch>
     <branch>
       <input>jls2doc</input>
       <perform>fixErrors2doc</perform>
+      <perform>enhanceModifiers</perform>
+      <perform>addFeatures2to3doc</perform>
     </branch>
     <branch>
       <input>jls3doc</input>
+      <perform>fixErrors3doc</perform>
     </branch>
   </target>
   <target>

@@ -2,8 +2,11 @@ validator = ../../../shared/tools/checkxml
 
 build:
 
-diff: test
+diff2: test
 	gdt bgf/jls1app.prepare1.refactorStatements.refactorTypes.structure1.addFeatures1to2.cropFeatures1.bgf bgf/jls2.prepare2.bgf
+
+diff: test
+	../../../shared/tools/gdt bgf/jls2doc.fixErrors2doc.enhanceModifiers.addFeatures2to3doc.bgf bgf/jls3doc.fixErrors3doc.bgf
 
 test:
 	python ../../convergence/lci/lci.py java.lcf architecture
