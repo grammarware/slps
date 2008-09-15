@@ -14,14 +14,12 @@ sxmlns(xbgf,'http://planet-sl.org/xbgf').
 xml2xbgf(T,add(P2))
  :-
     self(name(xbgf:add),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,Case)
  :-
     self(name(xbgf:case),T),
-    !,
     ( 
       child(name(first),T,_),
       Q = 'First'
@@ -41,40 +39,34 @@ xml2xbgf(T,Case)
 xml2xbgf(T,chain(P2))
  :-
     self(name(xbgf:chain),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,define(Ps2))
  :-
     self(name(xbgf:define),T),
-    !,
     children(name(bgf:production),T,Ps1),
     maplist(xmlToP,Ps1,Ps2).
 
 xml2xbgf(T,designate(P2))
  :-
     self(name(xbgf:designate),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,deyaccify(N))
  :-
     self(name(xbgf:deyaccify),T),
-    !,
     content(T,N).
 
 xml2xbgf(T,eliminate(N))
  :-
     self(name(xbgf:eliminate),T),
-    !,
     content(T,N).
 
 xml2xbgf(T,G)
  :-
     self(name(xbgf:extract),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2),
     inScope2xbgf(extract,extractL,extractN,[P2],T,G).
@@ -82,7 +74,6 @@ xml2xbgf(T,G)
 xml2xbgf(T,G)
  :-
     self(name(xbgf:fold),T),
-    !,
     child(name(nonterminal),T,T1),
     content(T1,N),
     inScope2xbgf(fold,foldL,foldN,[N],T,G).
@@ -90,45 +81,38 @@ xml2xbgf(T,G)
 xml2xbgf(T,horizontal(N))
  :-
     self(name(xbgf:horizontal),T),
-    !,
     content(T,N).
 
 xml2xbgf(T,id)
  :-
-    self(name(xbgf:id),T),
-    !.
+    self(name(xbgf:id),T).
 
 xml2xbgf(T,inject(P2))
  :-
     self(name(xbgf:inject),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,inline(N))
  :-
     self(name(xbgf:inline),T),
-    !,
     content(T,N).
 
 xml2xbgf(T,introduce(Ps2))
  :-
     self(name(xbgf:introduce),T),
-    !,
     children(name(bgf:production),T,Ps1),
     maplist(xmlToP,Ps1,Ps2).
 
 xml2xbgf(T,lassoc(P2))
  :-
     self(name(xbgf:lassoc),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,G)
  :-
     self(name(xbgf:massage),T),
-    !,
     children(name(bgf:expression),T,[T1,T2]),
     xmlToExpression(T1,X1),
     xmlToExpression(T2,X2),
@@ -137,8 +121,6 @@ xml2xbgf(T,G)
 xml2xbgf(T,G)
  :-
     self(name(xbgf:narrow),T),
-    !,
-    !,
     children(name(bgf:expression),T,[T1,T2]),
     xmlToExpression(T1,X1),
     xmlToExpression(T2,X2),
@@ -147,35 +129,30 @@ xml2xbgf(T,G)
 xml2xbgf(T,permute(P2))
  :-
     self(name(xbgf:permute),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,project(P2))
  :-
     self(name(xbgf:project),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,rassoc(P2))
  :-
     self(name(xbgf:rassoc),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,remove(P2))
  :-
     self(name(xbgf:remove),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,F3)
  :-
     self(name(xbgf:rename),T),
-    !,
     (
       child(name(label),T,X),
       F = renameL,
@@ -212,8 +189,6 @@ xml2xbgf(T,F3)
 xml2xbgf(T,G)
  :-
     self(name(xbgf:replace),T),
-    !,
-    !,
     children(name(bgf:expression),T,[T1,T2]),
     xmlToExpression(T1,X1),
     xmlToExpression(T2,X2),
@@ -222,21 +197,19 @@ xml2xbgf(T,G)
 xml2xbgf(T,reroot(Rs2))
  :-
     self(name(xbgf:reroot),T),
-    !,
     children(name(root),T,Rs1),
     maplist(content,Rs1,Rs2).
 
 xml2xbgf(T,sequence(Ts2))
  :-
     self(name(xbgf:sequence),T),
-    !,
     children(element,T,Ts1),
-    maplist(xml2xbgf,Ts1,Ts2).
+    !,
+    maplist(once(xml2xbgf),Ts1,Ts2).
 
 xml2xbgf(T,skip(P2))
  :-
     self(name(xbgf:skip),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
@@ -244,58 +217,49 @@ xml2xbgf(T,stripL(L))
  :-
     self(name(xbgf:strip),T),
     child(name(label),T,T1),
-    !,
     content(T1,L).
 
 xml2xbgf(T,stripLs)
  :-
     self(name(xbgf:strip),T),
-    child(name(allLabels),T,_),
-    !.
+    child(name(allLabels),T,_).
 
 xml2xbgf(T,stripS(S))
  :-
     self(name(xbgf:strip),T),
     child(name(selector),T,T1),
-    !,
     content(T1,S).
 
 xml2xbgf(T,stripSs)
  :-
     self(name(xbgf:strip),T),
-    child(name(allSelectors),T,_),
-    !.
+    child(name(allSelectors),T,_).
 
 xml2xbgf(T,stripT(T2))
  :-
     self(name(xbgf:strip),T),
     child(name(terminal),T,T1),
-    !,
     content(T1,T2).
 
 xml2xbgf(T,stripTs)
  :-
     self(name(xbgf:strip),T),
-    child(name(allTerminals),T,_),
-    !.
+    child(name(allTerminals),T,_).
 
 xml2xbgf(T,unchain(P2))
  :-
     self(name(xbgf:unchain),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,undefine(N))
  :-
     self(name(xbgf:undefine),T),
-    !,
     content(T,N).
 
 xml2xbgf(T,G)
  :-
     self(name(xbgf:unfold),T),
-    !,
     child(name(nonterminal),T,T1),
     content(T1,N),
     inScope2xbgf(unfold,unfoldL,unfoldN,[N],T,G).
@@ -303,7 +267,6 @@ xml2xbgf(T,G)
 xml2xbgf(T,unite(N1,N2))
  :-
     self(name(xbgf:unite),T),
-    !,
     child(name(add),T,Add),
     child(name(to),T,To),
     content(Add,N1),
@@ -313,32 +276,36 @@ xml2xbgf(T,verticalL(L))
  :-
     self(name(xbgf:vertical),T),
     child(name(label),T,T1),
-    !,
     content(T1,L).
 
 xml2xbgf(T,verticalN(N))
  :-
     self(name(xbgf:vertical),T),
     child(name(nonterminal),T,T1),
-    !,
     content(T1,N).
 
 xml2xbgf(T,yaccify(P2))
  :-
     self(name(xbgf:yaccify),T),
-    !,
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,G)
  :-
     self(name(xbgf:widen),T),
-    !,
-    !,
     children(name(bgf:expression),T,[T1,T2]),
     xmlToExpression(T1,X1),
     xmlToExpression(T2,X2),
     inScope2xbgf(widen,widenL,widenN,[X1,X2],T,G).
+
+xml2xbgf(T,_)
+ :-
+    T = element(N,_,_),
+    format(
+      'Cannot read XML tree ~q(...).~n',
+      [N]),
+    !,
+    fail.
 
 inScope2xbgf(None,L,N,Args,T,G)
  :-

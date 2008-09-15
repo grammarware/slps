@@ -12,9 +12,10 @@ append.xbgf:
 		../bgf/rename.xbgf \
 		rename.xbgf \
 		reroot.xbgf \
-		normalize.xbgf \
-		strip.xbgf \
-		../bgf/designate.xbgf
+		unchainF.xbgf \
+		pnfF.xbgf 
+#		strip.xbgf \
+#		../bgf/designate.xbgf \
 
 ${final}: append.xbgf
 	${tools}/xsd2bgf ${xsd}/xbgf.xsd xbgf0.bgf

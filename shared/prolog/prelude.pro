@@ -44,6 +44,11 @@ require(G,F,Args)
 try(G,X,Y) :- (apply(G,[X,Y]); Y = X), !.
 
 
+% Generalized once
+
+once(G,X,Y) :- apply(G,[X,Y]), !.
+
+
 % Right-associative list fold
 
 foldr(_,E,[],E).

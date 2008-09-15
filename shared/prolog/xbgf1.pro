@@ -701,7 +701,7 @@ renameS([],S1,S2,G1,G2)
 renameS([L],S1,S2,g(Rs,Ps1),g(Rs,Ps3))
  :-
     splitL(Ps1,L,P1,Ps2a,Ps2b),
-    allSs(P1,Ss),
+    allSs(Ps1,Ss),
     require(
        member(S1,Ss),
        'Source name ~q for renaming must not be fresh.',

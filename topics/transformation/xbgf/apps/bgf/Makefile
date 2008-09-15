@@ -6,11 +6,12 @@ final = bgf1.bgf
 build: ${final}
 
 append.xbgf:
-	appendxbgf append.xbgf \
+	${tools}/appendxbgf append.xbgf \
 		normalize.xbgf \
 		rename.xbgf \
 		strip.xbgf \
-		designate.xbgf
+		designate.xbgf \
+		reroot.xbgf
 
 ${final}: append.xbgf
 	${tools}/xsd2bgf ${xsd}/bgf.xsd bgf0.bgf

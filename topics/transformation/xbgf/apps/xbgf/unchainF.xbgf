@@ -1,7 +1,6 @@
 <xbgf:sequence
     xmlns:bgf="http://planet-sl.org/bgf"
     xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:inline>scope</xbgf:inline>
   <xbgf:vertical>
     <nonterminal>f</nonterminal>
   </xbgf:vertical>
@@ -161,6 +160,14 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
+        <nonterminal>replace</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
         <nonterminal>reroot</nonterminal>
       </bgf:expression>
     </bgf:production>
@@ -245,97 +252,12 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:unchain>
-  <xbgf:rename>
-    <selector>
-      <in>rename</in>
-      <from>label</from>
-      <to>renameL</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>rename</in>
-      <from>nonterminal</from>
-      <to>renameN</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>rename</in>
-      <from>selector</from>
-      <to>renameS</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>rename</in>
-      <from>terminal</from>
-      <to>renameT</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:vertical>
-    <label>rename</label>
-  </xbgf:vertical>
-  <xbgf:rename>
-    <selector>
-      <in>strip</in>
-      <from>label</from>
-      <to>stripL</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>strip</in>
-      <from>allLabels</from>
-      <to>stripLs</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>strip</in>
-      <from>selector</from>
-      <to>stripS</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>strip</in>
-      <from>allSelectors</from>
-      <to>stripSs</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>strip</in>
-      <from>terminal</from>
-      <to>stripT</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>strip</in>
-      <from>allTerminals</from>
-      <to>stripTs</to>
-    </selector>
-  </xbgf:rename>
-  <xbgf:vertical>
-    <label>strip</label>
-  </xbgf:vertical>
-  <xbgf:rename>
-    <selector>
-      <in>vertical</in>
-      <from>label</from>
-      <to>verticalL</to>
-    </selector>
-  <xbgf:rename>
-  <xbgf:rename>
-    <selector>
-      <in>vertical</in>
-      <from>nonterminal</from>
-      <to>verticalN</to>
-    </selector>
-  <xbgf:rename>
-  <xbgf:vertical>
-    <label>vertical</label>
-  </xbgf:vertical>
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <nonterminal>yaccify</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
 </xbgf:sequence>
