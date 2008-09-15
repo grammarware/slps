@@ -251,7 +251,11 @@ normalize_algebraically_rules(';'(Xs1),';'(Xs2))
  :-
     append(Xs1a,[fail|Xs1b],Xs1),
     append(Xs1a,Xs1b,Xs2).
-
+normalize_algebraically_rules(';'(Xs1),';'(Xs2))
+ :-
+    append(Xs1a,[X|Xs1b],Xs1),
+    append(Xs1a,Xs1b,Xs2),
+    append(_,[X|_],Xs2).
 
 % Pretty print grammar
 
