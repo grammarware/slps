@@ -11,8 +11,19 @@
   </xsd:annotation>
 
   <xsd:import namespace="http://planet-sl.org/bgf" schemaLocation="bgf.xsd"/>
- 
-  <xsd:group name="transformation">
+
+  <xsd:element name="sequence">
+    <xsd:annotation>
+      <xsd:documentation>
+        Sequential composition of multiple transformations.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:group ref="xbgf:transformation" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:complexType>
+  </xsd:element>
+
+   <xsd:group name="transformation">
      <xsd:annotation>
       <xsd:documentation>
         Here is an alphabetical list of all the XBGF transformations.
@@ -41,7 +52,6 @@
       <xsd:element ref="xbgf:rename"/>
       <xsd:element ref="xbgf:replace"/>
       <xsd:element ref="xbgf:reroot"/>
-      <xsd:element ref="xbgf:sequence"/>
       <xsd:element ref="xbgf:skip"/>
       <xsd:element ref="xbgf:strip"/>
       <xsd:element ref="xbgf:unchain"/>
@@ -471,17 +481,6 @@
       <xsd:sequence>
         <xsd:element name="root" type="bgf:nonterminal" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="sequence">
-    <xsd:annotation>
-      <xsd:documentation>
-        Sequential composition of multiple transformations.
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:group ref="xbgf:transformation" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:complexType>
   </xsd:element>
 

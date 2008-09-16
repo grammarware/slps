@@ -38,6 +38,13 @@ require(G,F,Args)
       halt(-1) 
     ) ).
 
+require_ground(T)
+ :-
+    require(
+      ground(T),
+      '~q corrupted -- not ground!',
+      [T]).
+
 
 % Stratego-like try
 
@@ -57,6 +64,14 @@ foldr(O,E,[H|T],R2)
  :-
     foldr(O,E,T,R1),
     apply(O,[H,R1,R2]).
+
+
+% List-pattern matching
+
+listmatch(L1,L2,L3,L123)
+ :-
+    append(L1,L23,L123),
+    append(L2,L3,L23).
 
 
 % Count the number of occurrences of an element in a list
@@ -173,6 +188,15 @@ transformWhile(G1,G2,X,Z)
           )
         ;
           Z = Y
+    ).
+
+stoptd(G,X,Y)
+ :-
+    apply(G,[X,Y])
+    ; 
+    ( X =.. [F|Xs],
+      maplist(stoptd(G),Xs,Ys),
+      Y =.. [F|Ys]
     ).
 
 

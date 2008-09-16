@@ -289,7 +289,7 @@ extract(P1,Ps1,Ps2,Ps2a,Ps2b,Ps4)
        ( \+ member(N,Defined) ),
        'Nonterminal ~q must be fresh.',
        [N]),
-    transform(try(xbgf1:replace_rules(X,n(N))),Ps2,Ps3),
+    stoptd(xbgf1:replace_rules(X,n(N)),Ps2,Ps3),
     require(
       ( \+ Ps2 == Ps3 ),
       'No ocurrences of ~q found for extraction.',
@@ -325,11 +325,11 @@ fold(N1,Ps1,Ps2,Ps2a,Ps2b,Ps4)
     P1 = p(_,_,X),
     ( append(Ps2c,[P1|Ps2d],Ps2) ->
         ( 
-          transform(try(xbgf1:replace_rules(X,n(N1))),Ps2c,Ps2e),
-          transform(try(xbgf1:replace_rules(X,n(N1))),Ps2d,Ps2f),
+          stoptd(xbgf1:replace_rules(X,n(N1)),Ps2c,Ps2e),
+          stoptd(xbgf1:replace_rules(X,n(N1)),Ps2d,Ps2f),
           append(Ps2e,[P1|Ps2f],Ps3)
         )
-      ; transform(try(xbgf1:replace_rules(X,n(N1))),Ps2,Ps3)
+      ; stoptd(xbgf1:replace_rules(X,n(N1)),Ps2,Ps3)
     ),
     concat([Ps2a,Ps3,Ps2b],Ps4).
 
@@ -503,11 +503,14 @@ massageL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
 massage(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
  :-
      require(
-       ( xbgf1:massage_rules(X1,X2); xbgf1:massage_rules(X2,X1) ),
+       xbgf1:massage_bothways(X1,X2),
        '~q and ~q are not in massage relation.',
        [X1,X2]),
-     transform(try(xbgf1:replace_rules(X1,X2)),Ps2,Ps4),
+     stoptd(xbgf1:replace_rules(X1,X2),Ps2,Ps4),
      concat([Ps2a,Ps4,Ps2b],Ps3).
+
+massage_bothways(X1,X2) :- massage_rules(X1,X2), !.
+massage_bothways(X1,X2) :- massage_rules(X2,X1), !.
 
 massage_rules(s(_,X),X).
 massage_rules(?(s(S,X)),s(S,?(X))).
@@ -749,7 +752,7 @@ replaceL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
 
 replace(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
  :-
-     transform(try(xbgf1:replace_rules(X1,X2)),Ps2,Ps4),
+     stoptd(xbgf1:replace_rules(X1,X2),Ps2,Ps4),
      concat([Ps2a,Ps4,Ps2b],Ps3).
 
 replace_rules(X1,X2,X1,X2).
@@ -811,7 +814,7 @@ narrow(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
        xbgf1:narrow_rules(X1,X2),
        '~q and ~q are not in narrowing relation.',
        [X1,X2]),
-     transform(try(xbgf1:replace_rules(X1,X2)),Ps2,Ps4),
+     stoptd(xbgf1:replace_rules(X1,X2),Ps2,Ps4),
      concat([Ps2a,Ps4,Ps2b],Ps3).
 
 narrow_rules(*(X),+(X)).
@@ -865,19 +868,17 @@ stripL(L,G1,g(Rs,Ps2))
       'Label ~q must be unique.',
       [L]),
     G1 = g(Rs,Ps1),
-    maplist(xbgf1:stripL_rule(L),Ps1,Ps2).
+    maplist(xbgf1:stripL_rules(L),Ps1,Ps2).
 
 stripLs(g(Rs,Ps1),g(Rs,Ps2))
  :-
-    maplist(xbgf1:stripL_rule,Ps1,Ps2).
+    maplist(xbgf1:stripLs_rule,Ps1,Ps2).
 
-stripL_rule(p(_,N,X),p([],N,X)).
+stripL_rules(L,p([l(L)],N,X),p([],N,X)) :- !.
+stripL_rules(_,P,P).
 
-stripL_rule(L,p([l(L)],N,X),p([],N,X))
- :-
-    !.
+stripLs_rule(p(_,N,X),p([],N,X)).
 
-stripL_rule(_,P,P).
 
 stripS(S,G1,g(Rs,Ps2))
  :-
@@ -891,15 +892,15 @@ stripS(S,G1,g(Rs,Ps2))
 
 stripSs(g(Rs,Ps1),g(Rs,Ps2))
  :-
-    transform(try(xbgf1:stripS_rule),Ps1,Ps2).
-
-stripS_rule(s(_,X),X).
+    transform(try(xbgf1:stripSs_rule),Ps1,Ps2).
 
 stripS_rule(S,s(S,X),X).
 
+stripSs_rule(s(_,X),X).
+
 stripTs(G1,G2)
  :-
-    transform(try(xbgf1:stripT_rule),G1,G2).
+    transform(try(xbgf1:stripTs_rule),G1,G2).
 
 stripT(T,G1,G2) 
  :-
@@ -910,9 +911,9 @@ stripT(T,G1,G2)
       [T]),
     transform(try(xbgf1:stripT_rule(T)),G1,G2).
 
-stripT_rule(t(_),true).
-
 stripT_rule(T,t(T),true).
+
+stripTs_rule(t(_),true).
 
 
 %
@@ -1006,11 +1007,11 @@ unfold(N1,Ps1,Ps2,Ps2a,Ps2b,Ps4)
     P1 = p(_,_,X),
     ( append(Ps2c,[P1|Ps2d],Ps2) ->
         ( 
-          transform(try(xbgf1:replace_rules(n(N1),X)),Ps2c,Ps2e),
-          transform(try(xbgf1:replace_rules(n(N1),X)),Ps2d,Ps2f),
+          stoptd(xbgf1:replace_rules(n(N1),X),Ps2c,Ps2e),
+          stoptd(xbgf1:replace_rules(n(N1),X),Ps2d,Ps2f),
           append(Ps2e,[P1|Ps2f],Ps3)
         )
-      ; transform(try(xbgf1:replace_rules(n(N1),X)),Ps2,Ps3)
+      ; stoptd(xbgf1:replace_rules(n(N1),X),Ps2,Ps3)
     ),
     concat([Ps2a,Ps3,Ps2b],Ps4).
 
@@ -1133,7 +1134,7 @@ widen(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
        xbgf1:narrow_rules(X2,X1),
        '~q and ~q are not in widening relation.',
        [X1,X2]),
-     transform(try(xbgf1:replace_rules(X1,X2)),Ps2,Ps4),
+     stoptd(xbgf1:replace_rules(X1,X2),Ps2,Ps4),
      concat([Ps2a,Ps4,Ps2b],Ps3).
 
 

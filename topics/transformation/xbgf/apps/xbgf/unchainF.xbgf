@@ -184,14 +184,6 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
-        <nonterminal>sequence</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:unchain>
-  <xbgf:unchain>
-    <bgf:production>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
         <nonterminal>skip</nonterminal>
       </bgf:expression>
     </bgf:production>

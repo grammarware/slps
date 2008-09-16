@@ -45,31 +45,6 @@ normalizeT_rules(','(Ts1),','(Ts2))
 
 
 %
-% p([l(caseAllDown)], f, true)
-% p([l(caseAllUp)], f, true)
-% p([l(caseFirstDown)], f, true)
-% p([l(caseFirstUp)], f, true)
-%
-% Normalize case for all sorts of symbols
-%
-
-caseAllDown(G1,G2) :- case(all,down,G1,G2).
-caseAllUp(G1,G2) :- case(all,up,G1,G2).
-caseFirstDown(G1,G2) :- case(first,down,G1,G2).
-caseFirstUp(G1,G2) :- case(first,up,G1,G2).
-
-case(Q,UD,T1,T2) 
- :-
-    transform(try(xbgf2:case_rule(Q,UD)),T1,T2).
-
-case_rule(Q,UD,g(Rs1,Ps),g(Rs2,Ps)) :- maplist(xbgf1:doCase(Q,UD),Rs1,Rs2).
-case_rule(Q,UD,p(As,N1,X),p(As,N2,X)) :- xbgf1:doCase(Q,UD,N1,N2).
-case_rule(Q,UD,n(N1),n(N2)) :- xbgf1:doCase(Q,UD,N1,N2).
-case_rule(Q,UD,l(L1),l(L2)) :- xbgf1:doCase(Q,UD,L1,L2).
-case_rule(Q,UD,s(S1,X),s(S2,X)) :- xbgf1:doCase(Q,UD,S1,S2).
-
-
-%
 % p([l(define)], f, +n(p))
 %
 % Define a nonterminal
@@ -139,8 +114,6 @@ eliminate(_,T,T).
 % Extract a nonterminal definition
 %
 
-extract(_,T1,T1).
-
 
 %
 % p([l(fold)], f, n(p))
@@ -148,23 +121,12 @@ extract(_,T1,T1).
 % Fold an expression to its defining nonterminal
 %
 
-fold(_,T1,T1).
-
 
 %
 % p([l(horizontal)], f, n(n))
 %
 % Turn multiple productions into choice
 %
-
-
-%
-% p([l(id)], f, true)
-%
-% Identity
-%
-
-id(T1,T1).
 
 
 %
@@ -217,73 +179,95 @@ lassoc_strategy(P,[','([Ta,Tb])|Ts],T1,T2)
 
 
 %
-% p([l(modulo)], f, n(p))
+% p([l(massage)], f, (n(x),n(x)))
+% p([l(massageN)], f, (n(x),n(x),n(n)))
+% p([l(massageL)], f, (n(x),n(x),n(l)))
 %
-% Equality modulo selectors
+% Semantics-preserving expression replacement
 %
 
-modulo(P1,T1,T2)
+massage(X1,X2,T1,T2) 
  :-
-    transform(try(xbgf2:modulo_rule(P1)),T1,T2).
+    btf2x(T1,X3),
+    RX = xbgf2:replace_relation(X1,X2),
+    RT = xbgf2:massage_relation(X1,X2),
+    replace_strategy(RX,RT,[],[],X3,_,T1,T2).
 
-modulo_rule(P2,n(P1,T1),n(P2,T2))
+massageN(X1,X2,N,T1,T2) 
  :-
-    P1 = p(As,N,X1),
-    P2 = p(As,N,X2),
-    modulo_strategy(X1,X2,T1,T2).
+    btf2x(T1,X3),
+    RX = xbgf2:replace_relationN(X1,X2,N),
+    RT = xbgf2:massage_relationN(X1,X2,N),
+    replace_strategy(RX,RT,[],[],X3,_,T1,T2).
 
-modulo_strategy(true,true,true,true).
-
-modulo_strategy(t(T),t(T),t(T),t(T)).
-
-modulo_strategy(n(N),n(N),n(P,T),n(P,T))
+massageL(X1,X2,L,T1,T2) 
  :-
-    P = p(_,N,_).
+    btf2x(T1,X3),
+    RX = xbgf2:replace_relationL(X1,X2,L),
+    RT = xbgf2:massage_relationL(X1,X2,L),
+    replace_strategy(RX,RT,[],[],X3,_,T1,T2).
+    
 
-modulo_strategy(
-  v(string),
-  v(string),
-  v(string(V)),
-  v(string(V))).
+% ------------------------------------------------------------
 
-modulo_strategy(
-  v(int),
-  v(int),
-  v(int(V)),
-  v(int(V))).
+% Massage-based replace relations on derivation trees
 
-modulo_strategy(s(S,X1),X2,s(S,T1),T2)
- :-
-    modulo_strategy(X1,X2,T1,T2).
-
-modulo_strategy(X1,s(S,X2),T1,s(S,T2))
- :-
-    modulo_strategy(X1,X2,T1,T2).
-
-modulo_strategy(','(Xs1),','(Xs2),','(Ts1),','(Ts2))
+massage_relation(X1,X2,_,_,X1,X2,T1,T2)
  :- 
-    maplist(xbgf2:modulo_strategy,Xs1,Xs2,Ts1,Ts2).
+    massage_bothways(X1,X2,T1,T2).
 
-modulo_strategy(';'(Xs1),';'(Xs2),';'(X1,T1),';'(X2,T2))
- :-
-    maplist(xbgf1:modulo_strategy,Xs1,Xs2),
-    append(Xs1a,[X1|_],Xs1),
-    append(Xs2a,[X2|_],Xs2),
-    length(Xs1a,Len),
-    length(Xs2a,Len),
-    modulo_strategy(X1,X2,T1,T2).
+massage_relationN(X1,X2,N,[N],_,X1,X2,T1,T2)
+ :- 
+    massage_bothways(X1,X2,T1,T2).
 
-modulo_strategy('*'(X1),'*'(X2),'*'(Ts1),'*'(Ts2))
- :-
-    maplist(xbgf2:modulo_strategy(X1,X2),Ts1,Ts2).
+massage_relationL(X1,X2,L,_,[l(L)],X1,X2,T1,T2)
+ :- 
+    massage_bothways(X1,X2,T1,T2).
 
-modulo_strategy('+'(X1),'+'(X2),'+'(Ts1),'+'(Ts2))
- :-
-    maplist(xbgf2:modulo_strategy(X1,X2),Ts1,Ts2).
 
-modulo_strategy('?'(X1),'?'(X2),'?'(Ts1),'?'(Ts2))
+% ------------------------------------------------------------
+
+massage_bothways(X1,X2,T1,T2) :- massage_rules(X1,X2,T1,T2), !.
+massage_bothways(X1,X2,T1,T2) :- massage_rules(X2,X1,T2,T1), !.
+
+massage_rules(X1,X2,T1,T2)
  :-
-    maplist(xbgf2:modulo_strategy(X1,X2),Ts1,Ts2).
+    massage_s_rule(X1,X2,T1,T2).
+
+massage_rules(X1,s(S,X2),T1,s(S,T2))
+ :-
+    member(F,[*,+,?]),
+    X1 =.. [F,s(S,X)],
+    X2 =.. [F,X],
+    T1 =.. [F,Ts1],
+    T2 =.. [F,Ts2],
+    maplist(xbgf2:massage_s_rule(s(S,X),X),Ts1,Ts2).
+
+massage_rules( ?(X), ';'(L)
+             , ?(Ts), ';'(Y,T)) 
+ :- 
+    length(L,2),
+    member(X,L),
+    member(true,L),
+    ( Ts = [], Y = true, T = true
+    ; Ts = [T], Y = X
+    ).
+
+massage_rules( *(X), ';'(L)
+             , *(Ts), ';'(Y,T)) 
+ :- 
+    length(L,2),
+    member(+(X),L),
+    member(true,L),
+    ( Ts = [], Y = true, T = true
+    ; Ts = [_|_], Y = +(X), T = +(Ts)
+    ).
+
+massage_rules( +(X), ','([X,*(X)])
+             , +([T|Ts]),','([T,*(Ts)]) ).
+
+
+massage_s_rule(s(S,X),X,s(S,T),T).
 
 
 %
@@ -387,8 +371,6 @@ rassoc_strategy2(P,[T1,T2|Ts],n(P,','([T1,T3])))
 % Remove a production
 %
 
-remove(_,T1,T1).   
-
 
 %
 % p([l(renameL)], f, ','([n(l), n(l)]))
@@ -455,13 +437,6 @@ reroot(_,T1,T1).
 % Narrow the grammar by expression replacement
 %
 
-narrow(_,T1,T1).
-
-
-% p([l(sequence)], f, *(n(f)))
-%
-% Covered by definition of transformT/3.
-%
 
 %
 % p([l(skip)], f, n(p))
@@ -487,25 +462,29 @@ skip_rule(P,n(P,T),T).
 % Strip labels, selectors, and terminals
 %
 
-stripL(_,T1,T1).
+stripL(L,T1,T2)
+ :-
+    transform(try(xbgf1:stripL_rules(L)),T1,T2).
 
-stripLs(T1,T1).
+stripLs(T1,T2)
+ :-
+    transform(try(xbgf1:stripSs_rule),T1,T2).
 
-stripS(_,T1,T1).
+stripS(S,T1,T2)
+ :-
+    transform(try(xbgf1:stripS_rule(S)),T1,T2).
 
 stripSs(T1,T2)
  :-
-    transform(try(xbgf2:stripS_rule),T1,T2).
+    transform(try(xbgf1:stripSs_rule),T1,T2).
+
+stripT(T,T1,T2)
+ :-
+    transform(try(xbgf1:stripT_rule(T)),T1,T2).
 
 stripTs(T1,T2) 
  :-
-    transform(try(xbgf2:stripTs_rule),T1,T2).
-
-stripTs_rule(t(_),true).
-
-stripT(_,T1,T1).
-
-stripS_rule(s(_,X),X).
+    transform(try(xbgf1:stripTs_rule),T1,T2).
 
 
 %
@@ -514,12 +493,11 @@ stripS_rule(s(_,X),X).
 % Unchain a production -- a restricted unfold
 %
 
-unchain(P,T1,T3)
+unchain(P,T1,T2)
  :-
-    transform(try(xbgf2:unchain_rule1(P)),T1,T2),
-    transform(try(xbgf2:unchain_rule2(P)),T2,T3).
+    transform(try(xbgf2:unchain_rule(P)),T1,T2).
 
-unchain_rule1(
+unchain_rule(
     P1,
     n(P1,n(P2,T)),
     n(p(As2,N1,X),T))
@@ -531,13 +509,6 @@ unchain_rule1(
 unchain_label([],N,[l(N)]).
 unchain_label([l(L)],_,[l(L)]).
 
-unchain_rule2(
-    P1,
-    n(P2,T),
-    T)
- :-
-    P1 = p(_,_,n(N)),
-    P2 = p(_,N,_).
 
 %
 % p([l(undefine)], f, n(n))
@@ -564,16 +535,12 @@ undefine_rule(N1,n(P,_))
 % Unfold a nonterminal in a production
 %
 
-unfold(_,T1,T1).
-
 
 %
 % p([l(unite)], f, ','([n(n), n(n)]))
 %
 % Confusing renaming, also called "unification"
 %
-
-unite(_,_,T1,T1).
 
 
 %
@@ -617,7 +584,6 @@ vertical(N,X1,P,T1,T3)
 vertical_rules(N,s(S,X),p([l(S)],N,X),s(S,T),T).
 vertical_rules(N,X,p([],N,X),T,T) :- \+ X = s(_,_).
 
-
 vertical_strategy(true,true,true)
  :-
     !.
@@ -653,7 +619,7 @@ vertical_strategy('+'(X1),'+'(Ts1),'+'(Ts2))
     maplist(xbgf2:vertical_strategy(X1),Ts1,Ts2),
     !.
 
-vertical_strategy('?'(X1),'?'(Ts1),'?'(Ts2))
+vertical_strategy(?(X1),?(Ts1),?(Ts2))
  :-
     maplist(xbgf2:vertical_strategy(X1),Ts1,Ts2),
     !.
@@ -669,3 +635,107 @@ vertical_strategy(X,';'(_,T1),T2)
 vertical_strategy(s(S,X),s(S,T1),s(S,T2))
  :-
     vertical_strategy(X,T1,T2).
+
+
+% ------------------------------------------------------------
+
+% Top-down with stop to perform replacements in grammar expressions
+
+replace_strategy(RX,Ns,Ls,X1,X2)
+ :-
+    apply(RX,[Ns,Ls,X1,X2]),
+    !.
+
+replace_strategy(_,_,_,LeafX,LeafX)
+ :-
+    member(LeafX,[true,a,v(_),t(_),n(_)]),
+    !.
+
+replace_strategy(RX,Ns,Ls,s(S,X1),s(S,X2))
+ :-
+    replace_strategy(RX,Ns,Ls,X1,X2),
+    !.
+
+replace_strategy(RX,Ns,Ls,FX1,FX2)
+ :-
+    member(F,[*,+,?]),
+    FX1 =.. [F,X1],
+    FX2 =.. [F,X2],
+    replace_strategy(RX,Ns,Ls,X1,X2),
+    !.
+
+replace_strategy(RX,Ns,Ls,','(Xs1),','(Xs2))
+ :-
+    maplist(xbgf2:replace_strategy(RX,Ns,Ls),Xs1,Xs2),
+    !.
+
+replace_strategy(RX,Ns,Ls,';'(Xs1),';'(Xs2))
+ :-
+    maplist(xbgf2:replace_strategy(RX,Ns,Ls),Xs1,Xs2),
+    !.
+
+
+% ------------------------------------------------------------
+
+% Top-down with stop to perform replacements in derivation trees
+
+replace_strategy(_,RT,Ns,Ls,X1,X2,T1,T2)
+ :-
+    apply(RT,[Ns,Ls,X1,X2,T1,T2]),
+    !.
+
+replace_strategy(_,_,_,_,LeafX,LeafX,T,T)
+ :-
+    member(LeafX,[true,a,v(_),t(_)]),
+    !.
+
+replace_strategy(RX,RT,_,_,n(N),n(N),n(P1,T1),n(P2,T2))
+ :-
+    P1 = p(Ls,N,X1), % ??
+    P2 = p(Ls,N,X2), % ?? 
+    replace_strategy(RX,RT,[N],Ls,X1,X2,T1,T2),
+    !.
+
+replace_strategy(RX,RT,Ns,Ls,s(S,X1),s(S,X2),s(S,T1),s(S,T2))
+ :-
+    replace_strategy(RX,RT,Ns,Ls,X1,X2,T1,T2),
+    !.
+
+replace_strategy(RX,RT,Ns,Ls,FX1,FX2,FTs1,FTs2)
+ :-
+    member(F,[*,+,?]),
+    FX1 =.. [F,X1],
+    FX2 =.. [F,X2],
+    FTs1 =.. [F,Ts1],
+    FTs2 =.. [F,Ts2],
+    xbgf2:replace_strategy(RX,Ns,Ls,X1,X2),
+    maplist(xbgf2:replace_strategy(RX,RT,Ns,Ls,X1,X2),Ts1,Ts2),
+    !.
+
+replace_strategy(RX,RT,Ns,Ls,','(Xs1),','(Xs2),','(Ts1),','(Ts2))
+ :-
+    maplist(xbgf2:replace_strategy(RX,RT,Ns,Ls),Xs1,Xs2,Ts1,Ts2),
+    !.
+
+replace_strategy(RX,RT,Ns,Ls,';'(Xs1),';'(Xs2),';'(X1,T1),';'(X2,T2))
+ :-
+    maplist(xbgf2:replace_strategy(RX,Ns,Ls),Xs1,Xs2),
+    replace_strategy(RX,RT,Ns,Ls,X1,X2,T1,T2),
+    !.
+
+replace_strategy(_,_,_,_,X1,_,T1,_)
+ :-
+    X1 =.. [FX|_], 
+    T1 =.. [FT|_], 
+    cease('Replacement failed at ~q/~q.',[FX,FT]).
+
+
+% ------------------------------------------------------------
+
+% Replace relations on grammar expressions
+
+replace_relation(X1,X2,_,_,X1,X2).
+
+replace_relationN(X1,X2,N,[N],_,X1,X2).
+
+replace_relationL(X1,X2,L,_,[l(L)],X1,X2).
