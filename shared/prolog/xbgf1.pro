@@ -516,6 +516,15 @@ massage_rules(s(_,X),X).
 massage_rules(?(s(S,X)),s(S,?(X))).
 massage_rules(*(s(S,X)),s(S,*(X))).
 massage_rules(+(s(S,X)),s(S,+(X))).
+massage_rules(?(+(X)),*(X)).
+massage_rules(?(*(X)),*(X)).
+massage_rules(?(?(X)),?(X)).
+massage_rules(*(*(X)),*(X)).
+massage_rules(*(+(X)),*(X)).
+massage_rules(*(?(X)),*(X)).
+massage_rules(+(+(X)),+(X)).
+massage_rules(+(*(X)),*(X)).
+massage_rules(+(?(X)),*(X)).
 massage_rules(?(X),';'(L)) :- length(L,2),member(X,L),member(true,L).
 massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(true,L).
 massage_rules(+(X),','([X,*(X)])).

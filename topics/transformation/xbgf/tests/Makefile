@@ -26,6 +26,7 @@ test:
 	make massage1.test
 	make massage2.test
 	make massage3.test
+	make massage4.test
 	make narrow1.test
 	make narrow2.test
 	make narrow3.test
