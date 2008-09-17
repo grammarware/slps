@@ -188,12 +188,12 @@
     <branch>
       <input>jaxb</input>
       <perform>trimJaxb</perform>
-      <perform>downcase</perform>
+      <perform>renameJaxb</perform>
     </branch>
     <branch>
       <input>om</input>
       <perform>trimOm</perform>
-      <perform>downcase</perform>
+      <perform>renameOm</perform>
       <perform>preferJaxb</perform>
     </branch>
   </target>
@@ -208,7 +208,7 @@
     <branch>
       <input>xsd</input>
       <perform>trimXsd</perform>
-      <perform>downcase</perform>
+      <perform>renameXsd</perform>
       <perform>massageXsd</perform>
     </branch>
   </target>
@@ -232,7 +232,7 @@
     </branch>
     <branch>
       <input>sdf</input>
-      <perform>downcase</perform>
+      <perform>renameSdf</perform>
     </branch>
   </target>
 

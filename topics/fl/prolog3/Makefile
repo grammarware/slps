@@ -9,16 +9,19 @@ test:
 	swipl -q -f TestEvaluator.pro -t main -- 120 limit.btf fac 5
 
 append.xbgf:
-	appendxbgf append.xbgf \
-		${xbgf}/downcase.xbgf \
+	${tools}/appendxbgf append.xbgf \
+		${xbgf}/renameSdf.xbgf \
 		${xbgf}/defineLex.xbgf \
 		${xbgf}/stripTerminals.xbgf \
 		${xbgf}/permuteArgs.xbgf \
 		${xbgf}/reroot.xbgf
+	${tools}/checkxml xbgf append.xbgf
 
 limit.bgf: append.xbgf
 	${tools}/sdf2bgf ${sdf}/*.sdf source.bgf
+	${tools}/checkxml bgf source.bgf
 	${tools}/xbgf append.xbgf source.bgf limit.bgf
+	${tools}/checkxml bgf limit.bgf
 
 limit.btf: append.xbgf
 	${tools}/asfix2btf ${sdf} ${fl}/shared/factorial.txt source.btf

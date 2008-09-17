@@ -46,7 +46,7 @@ require_ground(T)
       [T]).
 
 
-% Stratego-like try
+% Try application and behave as identity otherwise
 
 try(G,X,Y) :- (apply(G,[X,Y]); Y = X), !.
 
@@ -54,6 +54,11 @@ try(G,X,Y) :- (apply(G,[X,Y]); Y = X), !.
 % Generalized once
 
 once(G,X,Y) :- apply(G,[X,Y]), !.
+
+
+% Generalized apply
+
+apply(F,Args1,X,Y) :- append(Args1,[X,Y],Args2), apply(F,Args2).
 
 
 % Right-associative list fold
@@ -212,6 +217,12 @@ ytransform(G,X,Z)
 
 zip([],[],[]).
 zip([H1|T1],[H2|T2],[(H1,H2)|L]) :- zip(T1,T2,L).
+
+
+% Repeat an element
+
+repeat(0,_,[]).
+repeat(N,E,[E|Es]) :- N > 0, N1 is N - 1, repeat(N1,E,Es).
 
 
 % Unification tests

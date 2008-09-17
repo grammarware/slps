@@ -1,0 +1,20 @@
+#! /bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ..
+LOCALROOT=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 3 ]; then
+    echo "Usage: casexbgf <MODE> <BGF-input> <XBGF-output>"
+    echo "<MODE> can be 1,2,3, or 4."
+    exit 1
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+    exit 1
+else
+    rm -f $3
+    swipl -q -f ${LOCALROOT}/prolog/cli/casexbgf.pro -- $1 $2 $3
+fi

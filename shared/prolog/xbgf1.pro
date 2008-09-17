@@ -40,82 +40,6 @@ add(P,g(Rs,Ps1),g(Rs,Ps3))
 
 
 %
-% p([l(caseAllDown)], f, true)
-% p([l(caseAllUp)], f, true)
-% p([l(caseFirstDown)], f, true)
-% p([l(caseFirstUp)], f, true)
-%
-% Normalize case for all sorts of symbols
-%
-
-caseAllDown(G1,G2) :- case(all,down,G1,G2).
-caseAllUp(G1,G2) :- case(all,up,G1,G2).
-caseFirstDown(G1,G2) :- case(first,down,G1,G2).
-caseFirstUp(G1,G2) :- case(first,up,G1,G2).
-
-case(Q,UD,G1,G4) 
- :-
-    % Downcase nonterminals
-
-    allNs(G1,Ns1),
-    filter(xbgf1:testCase(Q,UD),Ns1,Ns2),
-    format(' * case(~q,~q) nonterminals ~q~n',[Q,UD,Ns2]),
-    maplist(xbgf1:doCase(Q,UD),Ns2,Ns3),
-    zip(Ns2,Ns3,Ns4),
-    accum(xbgf1:renameN,Ns4,G1,G2),
-
-    % Downcase labels
-
-    allLs(G2,Ls1),
-    filter(xbgf1:testCase(Q,UD),Ls1,Ls2),
-    format(' * case(~q,~q) labels ~q~n',[Q,UD,Ls2]),
-    maplist(xbgf1:doCase(Q,UD),Ls2,Ls3),
-    zip(Ls2,Ls3,Ls4),
-    accum(xbgf1:renameL,Ls4,G2,G3),
-
-    % Downcase selectors
-
-    allSs(G2,Ss1),
-    filter(xbgf1:testCase(Q,UD),Ss1,Ss2),
-    format(' * case(~q,~q) selectors ~q~n',[Q,UD,Ss2]),
-    maplist(xbgf1:doCase(Q,UD),Ss2,Ss3),
-    zip(Ss2,Ss3,Ss4),
-    accum(xbgf1:renameS,Ss4,G3,G4).
-
-
-% Test a name to be worth down/up-casing
-
-doCase(all,down,X1,X2)
- :- 
-    downcase_atom(X1,X2).
-
-doCase(all,up,X1,X2)
- :- 
-    upcase_atom(X1,X2).
-
-doCase(first,down,X1,X7) 
- :-
-    name(X1,[X2|X3]),
-    name(X4,[X2]),
-    downcase_atom(X4,X5),
-    name(X5,[X6]),
-    name(X7,[X6|X3]).
-
-doCase(first,up,X1,X7) 
- :-
-    name(X1,[X2|X3]),
-    name(X4,[X2]),
-    upcase_atom(X4,X5),
-    name(X5,[X6]),
-    name(X7,[X6|X3]).
-
-testCase(Q,UD,X) 
- :-
-    doCase(Q,UD,X,Y),
-    \+ X == Y.
-
-
-%
 % p([l(chain)], f, n(p))
 %
 % Establish a chain production; a restricted kind of extract
@@ -826,6 +750,7 @@ narrow(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
      stoptd(xbgf1:replace_rules(X1,X2),Ps2,Ps4),
      concat([Ps2a,Ps4,Ps2b],Ps3).
 
+narrow_rules(a,_).
 narrow_rules(*(X),+(X)).
 narrow_rules(*(X),?(X)).
 narrow_rules(*(X),X).

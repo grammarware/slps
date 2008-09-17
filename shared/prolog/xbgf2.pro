@@ -189,52 +189,52 @@ lassoc_strategy(P,[','([Ta,Tb])|Ts],T1,T2)
 massage(X1,X2,T1,T2) 
  :-
     btf2x(T1,X3),
-    RX = xbgf2:replace_relation(X1,X2),
-    RT = xbgf2:massage_relation(X1,X2),
-    replace_strategy(RX,RT,[],[],X3,_,T1,T2).
+    RX = xbgf2:grammar_replace(X1,X2),
+    RT = xbgf2:tree_massage(X1,X2),
+    tree_strategy((RX,RT),[],[],(X3,T1),(_,T2)).
 
 massageN(X1,X2,N,T1,T2) 
  :-
     btf2x(T1,X3),
-    RX = xbgf2:replace_relationN(X1,X2,N),
-    RT = xbgf2:massage_relationN(X1,X2,N),
-    replace_strategy(RX,RT,[],[],X3,_,T1,T2).
+    RX = xbgf2:grammar_replaceN(X1,X2,N),
+    RT = xbgf2:tree_massageN(X1,X2,N),
+    tree_strategy((RX,RT),[],[],(X3,T1),(_,T2)).
 
 massageL(X1,X2,L,T1,T2) 
  :-
     btf2x(T1,X3),
-    RX = xbgf2:replace_relationL(X1,X2,L),
-    RT = xbgf2:massage_relationL(X1,X2,L),
-    replace_strategy(RX,RT,[],[],X3,_,T1,T2).
-    
+    RX = xbgf2:grammar_replaceL(X1,X2,L),
+    RT = xbgf2:tree_massageL(X1,X2,L),
+    tree_strategy((RX,RT),[],[],(X3,T1),(_,T2)).
+
 
 % ------------------------------------------------------------
 
 % Massage-based replace relations on derivation trees
 
-massage_relation(X1,X2,_,_,X1,X2,T1,T2)
+tree_massage(X1,X2,_,_,(X1,T1),(X2,T2))
  :- 
-    massage_bothways(X1,X2,T1,T2).
+    massage_bothways((X1,T1),(X2,T2)).
 
-massage_relationN(X1,X2,N,[N],_,X1,X2,T1,T2)
- :- 
-    massage_bothways(X1,X2,T1,T2).
+tree_massageN(X1,X2,N,[N],_,(X1,T1),(X2,T2))
+ :-
+    massage_bothways((X1,T1),(X2,T2)).
 
-massage_relationL(X1,X2,L,_,[l(L)],X1,X2,T1,T2)
+tree_massageL(X1,X2,L,_,[l(L)],(X1,T1),(X2,T2))
  :- 
-    massage_bothways(X1,X2,T1,T2).
+    massage_bothways((X1,T1),(X2,T2)).
 
 
 % ------------------------------------------------------------
 
-massage_bothways(X1,X2,T1,T2) :- massage_rules(X1,X2,T1,T2), !.
-massage_bothways(X1,X2,T1,T2) :- massage_rules(X2,X1,T2,T1), !.
+massage_bothways((X1,T1),(X2,T2)) :- massage_rules((X1,T1),(X2,T2)), !.
+massage_bothways((X1,T1),(X2,T2)) :- massage_rules((X2,T2),(X1,T1)), !.
 
-massage_rules(X1,X2,T1,T2)
+massage_rules((X1,T1),(X2,T2))
  :-
     massage_s_rule(X1,X2,T1,T2).
 
-massage_rules(X1,s(S,X2),T1,s(S,T2))
+massage_rules((X1,T1),(s(S,X2),s(S,T2)))
  :-
     member(F,[*,+,?]),
     X1 =.. [F,s(S,X)],
@@ -243,8 +243,7 @@ massage_rules(X1,s(S,X2),T1,s(S,T2))
     T2 =.. [F,Ts2],
     maplist(xbgf2:massage_s_rule(s(S,X),X),Ts1,Ts2).
 
-massage_rules( ?(X), ';'(L)
-             , ?(Ts), ';'(Y,T)) 
+massage_rules((?(X),?(Ts)),(';'(L),';'(Y,T)))
  :- 
     length(L,2),
     member(X,L),
@@ -253,8 +252,7 @@ massage_rules( ?(X), ';'(L)
     ; Ts = [T], Y = X
     ).
 
-massage_rules( *(X), ';'(L)
-             , *(Ts), ';'(Y,T)) 
+massage_rules((*(X),*(Ts)),(';'(L),';'(Y,T))) 
  :- 
     length(L,2),
     member(+(X),L),
@@ -263,9 +261,7 @@ massage_rules( *(X), ';'(L)
     ; Ts = [_|_], Y = +(X), T = +(Ts)
     ).
 
-massage_rules( +(X), ','([X,*(X)])
-             , +([T|Ts]),','([T,*(Ts)]) ).
-
+massage_rules((+(X),+([T|Ts])),(','([X,*(X)]),','([T,*(Ts)]))).
 
 massage_s_rule(s(S,X),X,s(S,T),T).
 
@@ -639,103 +635,108 @@ vertical_strategy(s(S,X),s(S,T1),s(S,T2))
 
 % ------------------------------------------------------------
 
-% Top-down with stop to perform replacements in grammar expressions
+% Top-down type propagation, bottom-up rewriting
+% at the level of grammar expressions
 
-replace_strategy(RX,Ns,Ls,X1,X2)
+grammar_strategy(RX,Ns,Ls,X1,X3)
  :-
-    apply(RX,[Ns,Ls,X1,X2]),
-    !.
+    once(xbgf2:grammar_recurse(RX,Ns,Ls,X1,X2)),
+    once(try(apply(RX,[Ns,Ls]),X2,X3)).
 
-replace_strategy(_,_,_,LeafX,LeafX)
+grammar_recurse(_,_,_,X,X)
  :-
-    member(LeafX,[true,a,v(_),t(_),n(_)]),
-    !.
+    member(X,[true,a,v(_),t(_),n(_)]).
 
-replace_strategy(RX,Ns,Ls,s(S,X1),s(S,X2))
+grammar_recurse(RX,Ns,Ls,s(S,X1),s(S,X2))
  :-
-    replace_strategy(RX,Ns,Ls,X1,X2),
-    !.
+    grammar_strategy(RX,Ns,Ls,X1,X2).
 
-replace_strategy(RX,Ns,Ls,FX1,FX2)
+grammar_recurse(RX,Ns,Ls,FX1,FX2)
  :-
     member(F,[*,+,?]),
     FX1 =.. [F,X1],
     FX2 =.. [F,X2],
-    replace_strategy(RX,Ns,Ls,X1,X2),
-    !.
+    grammar_strategy(RX,Ns,Ls,X1,X2).
 
-replace_strategy(RX,Ns,Ls,','(Xs1),','(Xs2))
+grammar_recurse(RX,Ns,Ls,','(Xs1),','(Xs2))
  :-
-    maplist(xbgf2:replace_strategy(RX,Ns,Ls),Xs1,Xs2),
-    !.
+    maplist(xbgf2:grammar_strategy(RX,Ns,Ls),Xs1,Xs2).
 
-replace_strategy(RX,Ns,Ls,';'(Xs1),';'(Xs2))
+grammar_recurse(RX,Ns,Ls,';'(Xs1),';'(Xs2))
  :-
-    maplist(xbgf2:replace_strategy(RX,Ns,Ls),Xs1,Xs2),
-    !.
+    maplist(xbgf2:grammar_strategy(RX,Ns,Ls),Xs1,Xs2).
+
+grammar_recurse(_,_,_,X1,_)
+ :-
+    X1 =.. [FX|_], 
+    cease('Grammar rewriting failed at ~q.',[FX]).
 
 
 % ------------------------------------------------------------
 
-% Top-down with stop to perform replacements in derivation trees
+% Replace relations
+% at the level of grammar expressions
 
-replace_strategy(_,RT,Ns,Ls,X1,X2,T1,T2)
+grammar_replace(X1,X2,_,_,X1,X2).
+
+grammar_replaceN(X1,X2,N,[N],_,X1,X2).
+
+grammar_replaceL(X1,X2,L,_,[l(L)],X1,X2).
+
+
+% ------------------------------------------------------------
+
+% Top-down type propagation, bottom-up rewriting
+% at the level of derivation trees, and hence coupled
+
+tree_strategy((RX,RT),Ns,Ls,(X1,T1),(X3,T3))
  :-
-    apply(RT,[Ns,Ls,X1,X2,T1,T2]),
-    !.
+    once(xbgf2:tree_recurse((RX,RT),Ns,Ls,(X1,T1),(X2,T2))),
+    once(try(apply(RT,[Ns,Ls]),(X2,T2),(X3,T3))).
 
-replace_strategy(_,_,_,_,LeafX,LeafX,T,T)
+tree_recurse(_,_,_,(X,T),(X,T))
  :-
-    member(LeafX,[true,a,v(_),t(_)]),
-    !.
+    member(X,[true,a,v(_),t(_)]).
 
-replace_strategy(RX,RT,_,_,n(N),n(N),n(P1,T1),n(P2,T2))
+tree_recurse(Rs,_,_,(n(N),n(P1,T1)),(n(N),n(P2,T2)))
  :-
-    P1 = p(Ls,N,X1), % ??
-    P2 = p(Ls,N,X2), % ?? 
-    replace_strategy(RX,RT,[N],Ls,X1,X2,T1,T2),
-    !.
+    P1 = p(Ls,N,X1),
+    P2 = p(Ls,N,X2), 
+    tree_strategy(Rs,[N],Ls,(X1,T1),(X2,T2)).
 
-replace_strategy(RX,RT,Ns,Ls,s(S,X1),s(S,X2),s(S,T1),s(S,T2))
+tree_recurse(Rs,Ns,Ls,(s(S,X1),s(S,T1)),(s(S,X2),s(S,T2)))
  :-
-    replace_strategy(RX,RT,Ns,Ls,X1,X2,T1,T2),
-    !.
+    tree_strategy(Rs,Ns,Ls,(X1,T1),(X2,T2)).
 
-replace_strategy(RX,RT,Ns,Ls,FX1,FX2,FTs1,FTs2)
+tree_recurse((RX,RT),Ns,Ls,(FX1,FTs1),(FX2,FTs2))
  :-
     member(F,[*,+,?]),
     FX1 =.. [F,X1],
     FX2 =.. [F,X2],
     FTs1 =.. [F,Ts1],
     FTs2 =.. [F,Ts2],
-    xbgf2:replace_strategy(RX,Ns,Ls,X1,X2),
-    maplist(xbgf2:replace_strategy(RX,RT,Ns,Ls,X1,X2),Ts1,Ts2),
-    !.
+    xbgf2:grammar_strategy(RX,Ns,Ls,X1,X2),
+    length(Ts1,Len),
+    length(Ts2,Len),
+    repeat(Len,X1,Xs1),
+    repeat(Len,X2,Xs2),
+    zip(Xs1,Ts1,XTs1),
+    zip(Xs2,Ts2,XTs2),
+    maplist(xbgf2:tree_strategy((RX,RT),Ns,Ls),XTs1,XTs2).
 
-replace_strategy(RX,RT,Ns,Ls,','(Xs1),','(Xs2),','(Ts1),','(Ts2))
+tree_recurse(Rs,Ns,Ls,(','(Xs1),','(Ts1)),(','(Xs2),','(Ts2)))
  :-
-    maplist(xbgf2:replace_strategy(RX,RT,Ns,Ls),Xs1,Xs2,Ts1,Ts2),
-    !.
+    zip(Xs1,Ts1,XTs1),
+    zip(Xs2,Ts2,XTs2),
+    maplist(xbgf2:tree_strategy(Rs,Ns,Ls),XTs1,XTs2).
 
-replace_strategy(RX,RT,Ns,Ls,';'(Xs1),';'(Xs2),';'(X1,T1),';'(X2,T2))
+tree_recurse((RX,RT),Ns,Ls,(';'(Xs1),';'(X1,T1)),(';'(Xs2),';'(X2,T2)))
  :-
-    maplist(xbgf2:replace_strategy(RX,Ns,Ls),Xs1,Xs2),
-    replace_strategy(RX,RT,Ns,Ls,X1,X2,T1,T2),
-    !.
+    maplist(xbgf2:grammar_strategy(RX,Ns,Ls),Xs1,Xs2),
+    tree_strategy((RX,RT),Ns,Ls,(X1,T1),(X2,T2)).
 
-replace_strategy(_,_,_,_,X1,_,T1,_)
+tree_recurse(_,_,_,(X1,T1),_)
  :-
     X1 =.. [FX|_], 
     T1 =.. [FT|_], 
-    cease('Replacement failed at ~q/~q.',[FX,FT]).
-
-
-% ------------------------------------------------------------
-
-% Replace relations on grammar expressions
-
-replace_relation(X1,X2,_,_,X1,X2).
-
-replace_relationN(X1,X2,N,[N],_,X1,X2).
-
-replace_relationL(X1,X2,L,_,[l(L)],X1,X2).
+    cease('Tree rewriting failed at ~q/~q.',[FX,FT]).

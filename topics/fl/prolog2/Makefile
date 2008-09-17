@@ -9,15 +9,18 @@ test:
 	swipl -q -f TestEvaluator.pro -t main -- 120 limit.btf fac 5
 
 append.xbgf:
-	appendxbgf append.xbgf \
+	${tools}/appendxbgf append.xbgf \
 		${xbgf}/trimXsd.xbgf \
-		${xbgf}/downcase.xbgf \
+		${xbgf}/renameXsd.xbgf \
 		${xbgf}/massageXsd.xbgf \
 		${xbgf}/mkSignature.xbgf
+	${tools}/checkxml xbgf append.xbgf
 
 limit.bgf: append.xbgf
 	${tools}/xsd2bgf ${schema} source.bgf
+	${tools}/checkxml bgf source.bgf
 	${tools}/xbgf append.xbgf source.bgf limit.bgf
+	${tools}/checkxml bgf limit.bgf
 
 limit.btf: append.xbgf
 	${tools}/xml2btf ${schema} ${xfactorial} source.btf

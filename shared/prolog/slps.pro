@@ -16,6 +16,7 @@
 :- use_module('xbgf1.pro').
 :- use_module('xbgf2.pro').
 :- ensure_loaded('readXbgf.pro').
+:- ensure_loaded('writeXbgf.pro').
 
 :- ensure_loaded('xsd2bgf.pro').
 :- ensure_loaded('xml2btf.pro').
