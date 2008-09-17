@@ -239,7 +239,7 @@ def extractall():
   run = extractor[bgf]+' bgf/'+bgf+'.bgf'
   logwrite(run)
   if os.system(run+shutup):
-   print 'Extraction failed on',bgf
+   print 'Extraction of',bgf+'.bgf failed'
    if os.access('snapshot/'+bgf+'.bgf',os.R_OK):
     print 'Rolled back to the saved version, proceeding...'
     copyfile('snapshot/'+bgf+'.bgf','bgf/'+bgf+'.bgf')
@@ -254,7 +254,7 @@ def extractall():
    logwrite(run)
    if os.system(run+shutup):
     # different from the saved version
-    print 'Extracted a newer version of',bgf
+    print 'Extracted a newer version of',bgf+'.bgf'
     copyfile('bgf/'+bgf+'.bgf','snapshot/'+bgf+'.bgf')
     logwrite('cp bgf/'+bgf+'.bgf snapshot/'+bgf+'.bgf')
  print 'Extraction finished.'
@@ -267,7 +267,7 @@ def validateall():
   logwrite(run)
   if os.system(run+shutup):
    problem = True
-   print 'Validation failed on',bgf
+   print 'Validation failed on',bgf+'.bgf'
    failednode.append(bgf)
    #sysexit(3)
  print 'Validation finished.'
@@ -293,7 +293,7 @@ def preparebgf(cut):
     logwrite(run)
     if os.system(run+shutup):
      problem = True
-     print a,'failed on',curname
+     print a+'.xbgf','failed on',curname+'.bgf'
      failedarc.append([curname,a])
      failednode.append(cut[0]+"'"*(curname.count('.')+1))
      failedaction.append(postfix2prefix(curname+'.'+a))
@@ -348,7 +348,7 @@ def buildtargets():
     break
    cx+=1
   if cx<len(fileinputs):
-   print 'Target',t,'reached as',fileinputs[cx]
+   print 'Target',t,'reached as',fileinputs[cx]+'.bgf'
    targets[t][1] = fileinputs[cx]
   else:
    # Tough luck: all branches failed
@@ -367,7 +367,7 @@ def diffall(t,car,cdr):
   logwrite(run)
   if os.system(run+shutup):
    problem = True
-   print 'Error occured building target',t,'-',car,'differs from',cdr[0]
+   print 'Error occured building target',t,'-',car+'.bgf','differs from',cdr[0]+'.bgf'
    failednode.append(t)
    #sysexit(3)
  else:
