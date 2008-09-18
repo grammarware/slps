@@ -7,7 +7,8 @@ test:
 	make chain.test
 	make define.test
 	make designate.test
-	make deyaccify.test
+	make deyaccify1.test
+	make deyaccify2.test
 	make eliminate.test
 	make extract1.test
 	make extract2.test

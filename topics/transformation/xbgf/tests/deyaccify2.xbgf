@@ -1,0 +1,6 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:deyaccify>ExpressionList</xbgf:deyaccify>
+  <xbgf:deyaccify>Extends</xbgf:deyaccify>
+</xbgf:sequence>
