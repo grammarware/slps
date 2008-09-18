@@ -1,0 +1,300 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <!--
+   - Fail: Statement.
+      - [], ,([n(Identifier), t(:), n(Statement)])
+      - [], n(ExpressionStatement)
+      - [], t((;))
+      - [], ,([t(continue), ?(n(Identifier))])
+      - [], ,([t(break), ?(n(Identifier))])
+      - [], ,([t(throw), n(Expression), t((;))])
+      - [], ,([t(return), ?(n(Expression)), t((;))])
+      - [], ,([t(synchronized), n(ParExpression), n(Block)])
+      - [], ,([t(switch), n(ParExpression), t({), n(SwitchBlockStatementGroups), t(})])
+      - [], ,([t(try), n(Block), ?(n(Catches)), t(finally), n(Block)])
+      - [], ,([t(try), n(Block), n(Catches)])
+      - [], ,([t(do), n(Statement), t(while), n(ParExpression), t((;))])
+      - [], ,([t(while), n(ParExpression), n(Statement)])
+      - [], ,([t(for), t((), ?(n(ForInit)), t((;)), ?(n(Expression)), t((;)), ?(n(ForUpdate)), t()), n(Statement)])
+      - [], ,([t(if), n(ParExpression), n(Statement), ?(,([t(else), n(Statement)]))])
+      - [], n(Block)
+     vs.
+      - [], ;([n(StatementWithoutTrailingSubstatement), n(LabeledStatement), n(IfThenStatement), n(IfThenElseStatement), n(WhileStatement), n(ForStatement)])
+  -->
+  <xbgf:inline>StatementWithoutTrailingSubstatement</xbgf:inline>
+  <xbgf:inline>LabeledStatement</xbgf:inline>
+  <xbgf:inline>IfThenElseStatement</xbgf:inline>
+  <xbgf:inline>WhileStatement</xbgf:inline>
+  <xbgf:inline>ForStatement</xbgf:inline>
+  <xbgf:inline>TryStatement</xbgf:inline>
+  <xbgf:inline>ThrowStatement</xbgf:inline>
+  <xbgf:inline>SynchronizedStatement</xbgf:inline>
+  <xbgf:inline>ReturnStatement</xbgf:inline>
+  <xbgf:inline>ContinueStatement</xbgf:inline>
+  <xbgf:inline>BreakStatement</xbgf:inline>
+  <xbgf:inline>DoStatement</xbgf:inline>
+  <xbgf:inline>EmptyStatement</xbgf:inline>
+  <xbgf:inline>SwitchBlock</xbgf:inline>
+  <xbgf:inline>Finally</xbgf:inline>
+  <xbgf:vertical>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:vertical>
+
+  <!--
+   - Fail: Statement.
+      - [], ,([t(if), n(ParExpression), n(Statement), ?(,([t(else), n(Statement)]))])
+     vs.
+      - [], ,([t(if), n(ParExpression), n(StatementNoShortIf), t(else), n(Statement)])
+      - [], ,([t(if), n(ParExpression), n(Statement)])
+  -->
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Statement</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>if</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>StatementNoShortIf</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>else</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Statement</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>IfThenStatement</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>if</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Statement</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>else</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Statement</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  <xbgf:inline>IfThenStatement</xbgf:inline>
+  <xbgf:undefine>StatementNoShortIf</xbgf:undefine>
+  <xbgf:eliminate>WhileStatementNoShortIf</xbgf:eliminate>
+  <xbgf:eliminate>IfThenElseStatementNoShortIf</xbgf:eliminate>
+  <xbgf:eliminate>ForStatementNoShortIf</xbgf:eliminate>
+  <xbgf:eliminate>LabeledStatementNoShortIf</xbgf:eliminate>
+
+  <!--
+  The collected grammar permits the use of SwitchLabels.
+  
+   - Fail: Statement.
+      - [], ,([t(switch), n(ParExpression), t({), n(SwitchBlockStatementGroups), t(})])
+     vs.
+      - [], ,([t(switch), n(ParExpression), t({), n(SwitchBlockStatementGroups), ?(n(SwitchLabels)), t(})])
+  -->
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>SwitchStatement</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>switch</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>SwitchBlockStatementGroups</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
+  <xbgf:inline>SwitchStatement</xbgf:inline>
+
+  <!--
+   - Fail: BlockStatements.
+      - [], *(n(BlockStatement))
+     vs.
+      - [], +n(BlockStatement)
+  -->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>BlockStatementsOpt</nonterminal>
+      <bgf:expression>
+        <optional>
+          <bgf:expression>
+            <nonterminal>BlockStatements</nonterminal>
+          </bgf:expression>
+        </optional>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  <!-- FIXING AN ERROR -->
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>BlockStatements</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>BlockStatementsOpt</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>SwitchBlockStatementGroup</nonterminal>
+    </in>
+  </xbgf:replace>
+  <!-- END OF FIX -->
+  <xbgf:inline>BlockStatements</xbgf:inline>
+  <xbgf:rename>
+    <nonterminal>
+      <from>BlockStatementsOpt</from>
+      <to>BlockStatements</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <nonterminal>BlockStatement</nonterminal>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <nonterminal>BlockStatement</nonterminal>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+  </xbgf:massage>
+  
+  <!--
+  The collected grammar does not allow interface declarations and labelled statements inside blocks.
+  
+   - Fail: BlockStatement.
+      - [], ;([n(LocalVariableDeclarationStatement), n(ClassOrInterfaceDeclaration), ,([?(,([n(Identifier), t(:)])), n(Statement)])])
+     vs.
+      - [], ;([n(LocalVariableDeclarationStatement), n(ClassDeclaration), n(Statement)])
+  -->
+  <xbgf:vertical>
+    <nonterminal>BlockStatement</nonterminal>
+  </xbgf:vertical>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>BlockStatement</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>BlockStatement</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <xbgf:designate>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>BlockStatement</nonterminal>
+      <bgf:expression>
+        <nonterminal>Statement</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:inject>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>BlockStatement</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <nonterminal>Identifier</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>:</terminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Statement</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  <xbgf:strip>
+    <label>target</label>
+  </xbgf:strip>
+  <xbgf:horizontal>BlockStatement</xbgf:horizontal>
+  
+  <!--
+   - Fail: LocalVariableDeclarationStatement.
+      - [], ,([?(t(final)), n(Type), n(VariableDeclarators), t((;))])
+     vs.
+      - [], ,([n(LocalVariableDeclaration), t((;))])
+  -->
+  <xbgf:inline>LocalVariableDeclaration</xbgf:inline>
+</xbgf:sequence>

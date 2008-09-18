@@ -1,6 +1,10 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
+  
   <!--
   This is an error (typo) in JLS2.
   
@@ -213,62 +217,6 @@
             <terminal>}</terminal>
           </bgf:expression>
         </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-
-  <!--   Wrong markup makes the extractor enforce line continuation   
-  
-     - Fail: InterfaceDeclaration.
-      - [], ,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
-     vs.
-      - [], ;([,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(TypeParameters))]), ,([?(n(ExtendsInterfaces)), n(InterfaceBody)])])
-  -->
-  <xbgf:undefine>InterfaceDeclaration</xbgf:undefine>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>InterfaceDeclaration</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>InterfaceModifiers</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>interface</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>TypeParameters</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>ExtendsInterfaces</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>InterfaceBody</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
       </bgf:expression>
     </bgf:production>
   </xbgf:define>

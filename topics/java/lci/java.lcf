@@ -15,19 +15,13 @@
       <expand>slps</expand>/shared/tools
     </expansion>
   </shortcut>
-  <shortcut>
-    <name>wrappers</name>
-    <expansion>
-      <expand>slps</expand>/shared/wrappers
-    </expansion>
-  </shortcut>
 
-  <tool>
+  <!--tool>
     <name>validation</name>
     <grammar>
       <expand>tools</expand>/checkxml bgf
     </grammar>
-  </tool>
+  </tool-->
   <tool>
     <name>comparison</name>
     <grammar>
@@ -92,7 +86,7 @@
     </grammar>
   </source>
 
-  <target>
+  <!--target>
     <name>one</name>
     <branch>
       <input>jls1syntax</input>
@@ -102,20 +96,27 @@
       <input>jls1doc</input>
       <perform>preferLALR</perform>
     </branch>
-  </target>
+  </target-->
 
   <target>
     <name>two</name>
     <branch>
       <input>jls2syntax</input>
+      <perform>fixErrors2</perform>
       <perform>prepare2</perform>
     </branch>
     <branch>
       <input>jls2doc</input>
+      <perform>fixErrors2doc</perform>
+      <perform>deyaccify2doc</perform>
+      <perform>inlineStatements2doc</perform>
+      <perform>inlineExpressions2doc</perform>
+      <perform>refactorDeclarations2doc</perform>
+      <perform>breakSemantics2doc</perform>
     </branch>
   </target>
 
-  <target>
+  <!--target>
     <name>three</name>
     <branch>
       <input>jls3syntax</input>
@@ -192,6 +193,6 @@
     <branch>
       <input>jls3syntax</input>
     </branch>
-  </target>
+  </target-->
 
 </lcf:configuration>

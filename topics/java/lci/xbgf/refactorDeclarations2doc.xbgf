@@ -1,0 +1,174 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!--
+   - Fail: TypeDeclaration.
+      - [], ;([n(ClassOrInterfaceDeclaration), t((;))])
+     vs.
+      - [], ;([n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
+  -->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>ClassDeclaration</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>InterfaceDeclaration</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+
+  <!--
+   - Fail: ClassBody.
+      - [], ,([t({), *(n(ClassBodyDeclaration)), t(})])
+     vs.
+      - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
+  -->
+  <xbgf:deyaccify>ClassBodyDeclarations</xbgf:deyaccify>
+  <xbgf:inline>ClassBodyDeclarations</xbgf:inline>
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <nonterminal>ClassBodyDeclaration</nonterminal>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <nonterminal>ClassBodyDeclaration</nonterminal>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+  </xbgf:massage>
+
+  <!--
+   - Fail: InterfaceDeclaration.
+      - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
+     vs.
+      - [], ,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
+  -->
+  <!--xbgf:deyaccify>ExtendsInterfaces</xbgf:deyaccify-->
+  <!-- temp fix begin -->
+  <xbgf:undefine>ExtendsInterfaces</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ExtendsInterfaces</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>extends</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>InterfaceType</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>InterfaceType</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <!-- temp fix end -->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>TypeList</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>InterfaceType</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>InterfaceType</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  <xbgf:inline>ExtendsInterfaces</xbgf:inline>
+  
+  <!--
+   - Fail: InterfaceBody.
+      - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
+     vs.
+      - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
+  -->
+  <xbgf:deyaccify>InterfaceMemberDeclarations</xbgf:deyaccify>
+  <xbgf:inline>InterfaceMemberDeclarations</xbgf:inline>
+  <xbgf:massage>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>{</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <plus>
+                <bgf:expression>
+                  <nonterminal>InterfaceBodyDeclaration</nonterminal>
+                </bgf:expression>
+              </plus>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>}</terminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>{</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>InterfaceBodyDeclaration</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>}</terminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:massage>
+  
+  <!--
+  -->
+</xbgf:sequence>

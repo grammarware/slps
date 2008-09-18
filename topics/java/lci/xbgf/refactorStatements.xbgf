@@ -98,30 +98,6 @@
     </bgf:production>
   </xbgf:remove>
   <xbgf:inline>Finally</xbgf:inline>
-  <!--xbgf:fold>
-    <bgf:production>
-      <nonterminal>DoStatement</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>do</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Statement</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>while</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ParExpression</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:fold-->
   <xbgf:project>
     <bgf:production>
       <nonterminal>ContinueStatement</nonterminal>
@@ -170,7 +146,6 @@
   <xbgf:inline>EmptyStatement</xbgf:inline>
   <xbgf:inline>SwitchBlock</xbgf:inline>
 
-
   <xbgf:undefine>StatementExpression</xbgf:undefine>
   <xbgf:define>
     <bgf:production>
@@ -198,5 +173,6 @@
     </bgf:production>
   </xbgf:define>
   <xbgf:inline>StatementExpressionList</xbgf:inline>
+  
   <!--...-->
 </xbgf:sequence>

@@ -13,9 +13,6 @@
   <xbgf:vertical>
     <nonterminal>Modifier</nonterminal>
   </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Statement</nonterminal>
-  </xbgf:vertical>
 
   <xbgf:vertical>
     <nonterminal>Selector</nonterminal>
@@ -62,4 +59,37 @@
     </bgf:production>
   </xbgf:define>
   <xbgf:inline>ForUpdateOpt</xbgf:inline>
+  
+  <!--
+   - Fail: Catches.
+      - [], ,([n(CatchClause), *(n(CatchClause))])
+     vs.
+      - [], +n(CatchClause)
+  -->
+  <xbgf:massage>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>CatchClause</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>CatchClause</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <plus>
+        <bgf:expression>
+          <nonterminal>CatchClause</nonterminal>
+        </bgf:expression>
+      </plus>
+    </bgf:expression>
+    <in>
+      <nonterminal>Catches</nonterminal>
+    </in>
+  </xbgf:massage>
 </xbgf:sequence>

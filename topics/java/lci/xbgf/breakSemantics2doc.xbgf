@@ -1,0 +1,63 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!--
+  NOT semantic-preserving in any way.
+  
+   - Fail: MethodBody.
+      - [], n(Block)
+     vs.
+      - [], ;([n(Block), t((;))])
+  -->
+  <xbgf:vertical>
+    <nonterminal>MethodBody</nonterminal>
+  </xbgf:vertical>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>MethodBody</nonterminal>
+      <bgf:expression>
+        <terminal>;</terminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  
+  <!--
+   - Fail: InterfaceDeclaration.
+      - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
+     vs.
+      - [], ,([?(n(InterfaceModifiers)), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
+  -->
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>InterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>interface</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>extends</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>TypeList</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>InterfaceBody</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
+</xbgf:sequence>
