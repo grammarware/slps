@@ -125,10 +125,13 @@ deyaccify(N,g(Rs,Ps1),g(Rs,Ps2))
     P1 = p(As,N,X1),    
     P2 = p(As,N,X2),
     require(
-      xbgf1:deyaccify_rules(N,X1,X2),
+      once(xbgf1:deyaccify_rules(N,X1,X2)),
       'Nonterminal ~q is defined by non-EBNF-like shape ~q.',
       [N,X1]),
     append(Ps2a,[P2|Ps2b],Ps2).
+
+
+% (n(N2) ; (n(N1) , n(N2))) --> +(n(N2))
 
 deyaccify_rules(N1,X1,X2) 
  :-
@@ -139,7 +142,11 @@ deyaccify_rules(N1,X1,X2)
     length(Xs2,2),
     member(n(N2),Xs2),
     member(n(N1),Xs2),
-    X2 = +(n(N2)).
+    X2 = +(n(N2)),
+    \+ N1 == N2.
+
+
+% (true ; (n(N1) , n(N2))) --> *(n(N2))
 
 deyaccify_rules(N1,X1,X2) 
  :-
@@ -150,7 +157,11 @@ deyaccify_rules(N1,X1,X2)
     length(Xs2,2),
     member(n(N2),Xs2),
     member(n(N1),Xs2),
-    X2 = *(n(N2)).
+    X2 = *(n(N2)),
+    \+ N1 == N2.
+
+
+% (true ; n(N2)) --> ?(n(N2))
 
 deyaccify_rules(_,X1,X2) 
  :-
@@ -159,6 +170,17 @@ deyaccify_rules(_,X1,X2)
     member(true,Xs1),
     member(n(N2),Xs1),
     X2 = ?(n(N2)).
+
+
+% (X3 ; (n(N1) , X4)) --> (X3 , *(X4))
+
+deyaccify_rules(N1,X1,X2) 
+ :-
+    X1 = ';'(Xs1),
+    length(Xs1,2),
+    member(X3,Xs1),
+    member(','([n(N1)|Xs2]),Xs1),
+    X2 = ','([X3,*(','(Xs2))]).
 
 
 %
