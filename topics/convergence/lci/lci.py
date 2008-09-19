@@ -86,8 +86,22 @@ def readxmlconfig (cfg):
   if xmlnode.findall('tree'):
    treetools[xmlnode.findtext('name')] = expandxml(xmlnode.findall('tree')[0],{})
 
- print 'Read',len(shortcuts),'shortcuts,',`len(tools)`+'+'+`len(treetools)`,'tools,',len(actions),'actions,',len(targets),'targets,'
- print len(testsets),'test sets,',len(extractor),'sources:',len(parser),'parsers &',len(evaluator),'evaluators'
+ print 'Read',
+ if shortcuts:
+  print len(shortcuts),'shortcuts,',
+ if tools or treetools:
+  print `len(tools)`+'+'+`len(treetools)`,'tools,',
+ if actions:
+  print len(actions),'actions,',
+ if targets:
+  print len(targets),'targets,',
+ if testsets:
+  print len(testsets),'test sets,',
+ if extractor:
+  print len(extractor),'sources,',
+ if parser or evaluator:
+  print len(parser),'parsers &',len(evaluator),'evaluators,',
+ print 'LCF is fine.'
 
 def expandone(tag,text,rep):
  if text:
@@ -118,8 +132,7 @@ def expanduni(where,rep):
    elif rep.has_key(cut[i]):
     cut[i]=rep[cut[i]]
    else:
-    print 'Misused expand, referencing undefined "'+cut[i]+'":'
-    print '?????',where
+    print '[FAIL] Misused expand, referencing undefined "'+cut[i]+'":'
     sysexit(11)
  return ''.join(cut)
 
@@ -194,7 +207,7 @@ def dumpgraph(df):
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
  logwrite(run)
  if os.system(run):
-  print 'Diagram not generated'
+  print '[WARN] Detailed diagram not generated'
   problem = True
  dot = open(df+'_small.dot','w')
  dot.write('digraph generated{ {rank=same;')
@@ -224,7 +237,7 @@ def dumpgraph(df):
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_small.pdf'
  logwrite(run)
  if os.system(run):
-  print 'Diagram not generated'
+  print '[WARN] Abstract diagram not generated'
   problem = True
 
 def copyfile(x,y):
@@ -239,13 +252,13 @@ def extractall():
   run = extractor[bgf]+' bgf/'+bgf+'.bgf'
   logwrite(run)
   if os.system(run+shutup):
-   print 'Extraction of',bgf+'.bgf failed'
    if os.access('snapshot/'+bgf+'.bgf',os.R_OK):
-    print 'Rolled back to the saved version, proceeding...'
+    print '[WARN] Extraction of',bgf+'.bgf failed, LCI rolled back'
     copyfile('snapshot/'+bgf+'.bgf','bgf/'+bgf+'.bgf')
     logwrite('cp snapshot/'+bgf+'.bgf bgf/'+bgf+'.bgf')
     almostfailed.append(bgf)
    else:
+    print '[FAIL] Extraction of',bgf+'.bgf failed'
     failednode.append(bgf)
     problem = True
    #sysexit(3)
@@ -254,10 +267,10 @@ def extractall():
    logwrite(run)
    if os.system(run+shutup):
     # different from the saved version
-    print 'Extracted a newer version of',bgf+'.bgf'
+    print '[PASS] Extracted a newer version of',bgf+'.bgf'
     copyfile('bgf/'+bgf+'.bgf','snapshot/'+bgf+'.bgf')
     logwrite('cp bgf/'+bgf+'.bgf snapshot/'+bgf+'.bgf')
- print 'Extraction finished.'
+ print '[PASS] Extraction finished.'
 
 def validateall():
  for bgf in extractor.keys():
@@ -267,10 +280,11 @@ def validateall():
   logwrite(run)
   if os.system(run+shutup):
    problem = True
-   print 'Validation failed on',bgf+'.bgf'
+   print '[FAIL] Validation failed on',bgf+'.bgf'
    failednode.append(bgf)
    #sysexit(3)
- print 'Validation finished.'
+ if not problem:
+  print '[PASS] Validation finished.'
 
 def preparebgf(cut):
  # executes preparational actions (abstract, unerase, etc) before comparison
@@ -293,11 +307,14 @@ def preparebgf(cut):
     logwrite(run)
     if os.system(run+shutup):
      problem = True
-     print a+'.xbgf','failed on',curname+'.bgf'
+     print '[FAIL]',
      failedarc.append([curname,a])
      failednode.append(cut[0]+"'"*(curname.count('.')+1))
      failedaction.append(postfix2prefix(curname+'.'+a))
      ontheroll = False
+    else:
+     print '[PASS]',
+    print 'Applied',a+'.xbgf','to',curname+'.bgf'
    else:
     failedarc.append([curname,a])
     failednode.append(cut[0]+"'"*(curname.count('.')+1))
@@ -305,17 +322,19 @@ def preparebgf(cut):
    curname += '.'+a
  name = postfix2prefix('.'.join(cut))
  if name in failedaction:
-  print 'Failed',name
- elif tools.has_key('validation'):
+  print '[FAIL]',
+ else:
+  print '[PASS]',
+ print 'Branch finished'
+ if name not in failedaction and tools.has_key('validation'):
   a = tools['validation']+' bgf/'+curname+'.bgf'
   logwrite(a)
-  print 'Performed',name,'-',
   if os.system(a+shutup):
    problem = True
-   print 'NOT',
-  print 'valid'
- else:
-  print 'Performed',name
+   print '[FAIL]',
+  else:
+   print '[PASS]',
+  print 'Branch result validated'
  return curname
 
 def ordertargets():
@@ -348,7 +367,7 @@ def buildtargets():
     break
    cx+=1
   if cx<len(fileinputs):
-   print 'Target',t,'reached as',fileinputs[cx]+'.bgf'
+   print '[PASS] Target',t,'reached as',fileinputs[cx]+'.bgf'
    targets[t][1] = fileinputs[cx]
   else:
    # Tough luck: all branches failed
@@ -367,7 +386,7 @@ def diffall(t,car,cdr):
   logwrite(run)
   if os.system(run+shutup):
    problem = True
-   print 'Error occured building target',t,'-',car+'.bgf','differs from',cdr[0]+'.bgf'
+   print '[FAIL] Mismatch in target',t+':',car+'.bgf','differs from',cdr[0]+'.bgf'
    failednode.append(t)
    #sysexit(3)
  else:
@@ -389,12 +408,12 @@ def chainXBTF(testcase,steps,t):
   #print 'Performing coupled',step,'on',fr,'-',
   if os.system(run+shutup):
    problem = True
-   print 'Performing coupled',step,'on',fr,'failed'
+   print '[FAIL] Performing coupled',step,'on',fr,'failed'
    break
   fr = re
  tmp = steps[:]
  tmp.reverse()
- print 'Performed coupled',' '.join(tmp),'on',testcase,
+ print '[PASS] Performed coupled',' '.join(tmp),'on',testcase,
  if treetools.has_key('validation'):
   run = treetools['validation']+' '+re
   if os.system(run+shutup):
@@ -417,12 +436,12 @@ def diffBTFs(t):
   for testset in testsets.keys()[1:]:
    for testcase in glob.glob(testset+'/'+basetestcase.split('/')[1]):
     run = treetools['comparison']+' '+basetestcase+' '+testcase
-    print 'Found',basetestcase.split('/')[1],'in',basetestset,'and',testset,'- they',
     if os.system(run+shutup):
      problem = True
-     print 'DIFFER'
+     print '[FAIL]',
     else:
-     print 'match'
+     print '[PASS]',
+    print 'Found and compared',basetestcase.split('/')[1],'in',basetestset,'and',testset
 
 def convergetestset():
  for testset in testsets.keys():
@@ -432,20 +451,20 @@ def convergetestset():
   logwrite(run)
   if os.system(run+shutup):
    problem = True
-   print 'could not be extracted'
+   print '[FAIL] Test set',testset,'could not be extracted'
    continue
-  print 'extracted'
+  print '[PASS] Test set',testset,'extracted'
  for src in treeextractor.keys():
   for testset in tester[src]:
    for testcase in glob.glob(testset+'/*.src'):
     run = treeextractor[src]+' '+testcase+' '+testcase+'.btf'
     logwrite(run)
-    print 'Tree extraction from',testcase,
     if os.system(run+shutup):
      problem = True
-     print 'failed'
+     print '[FAIL]',
     else:
-     print 'completed'
+     print '[PASS]',
+    print 'Tree extracted from',testcase
  for t in ordertargets():
   for branch in targets[t][0]:
    if treeextractor.has_key(branch[0]):
@@ -473,15 +492,14 @@ def runtestset():
      run = parser[program]+' '+testcase
      logwrite(run)
      results[program]=os.system(run+shutup)
-   print 'Test case',testcase,
    if results.values()==[0]*len(results):
-    print 'passed parsing'
+    print '[PASS] Test case',testcase,'parsed'
    else:
     problem = True
-    print 'failed'
+    print '[FAIL] Test case',testcase,'failed parsing'
     for r in results.keys():
      if results[r]:
-      print r,'did not parse it correctly'
+      print '[FAIL]',r,'did not parse it correctly'
   # testing evaluator
   for testcase in glob.glob(testset+'/*.run'):
    results={}
@@ -490,15 +508,14 @@ def runtestset():
      run = evaluator[program]+' '+testcase.replace('.run','.ctx')+' '+testcase+' '+testcase.replace('.run','.val')
      logwrite(run)
      results[program]=os.system(run+shutup)
-   print 'Test case',testcase,
    if results.values()==[0]*len(results):
-    print 'passed evaluation'
+    print '[PASS] Test case',testcase,'evaluated'
    else:
     problem = True
-    print 'failed'
+    print '[FAIL] Test case',testcase,'failed evaluation'
     for r in results.keys():
      if results[r]:
-      print r,'evaluated it differently'
+      print '[FAIL]',r,'evaluated it differently'
 
 def checkconsistency():
  # some simple assertions
@@ -506,14 +523,14 @@ def checkconsistency():
  for t in targets.keys():
   for i in targets[t][0]:
    if not (targets.has_key(i[0]) or extractor.has_key(i[0])):
-    print 'Target',t,'needs',i[0],'which is not defined'
+    print '[FAIL] Target',t,'needs',i[0],'which is not defined'
     sysexit(7)
  # all actions can be found
  try:
   for a in actions:
    open('xbgf/'+a+'.xbgf','r').close()
  except IOError, e:
-  print 'Undefined action used: need',e.filename
+  print '[FAIL] Undefined action used: need',e.filename
   #sysexit(8)
 
 if __name__ == "__main__":
@@ -533,7 +550,7 @@ if __name__ == "__main__":
    convergetestset()
    print '----- Tree convergence phase finished. -----'
   else:
-   print 'No testing performed.'
+   print '[WARN] No testing performed.'
   dumpgraph(sys.argv[2])
   if problem:
    sysexit(100)
