@@ -1,0 +1,25 @@
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  <bgf:production>
+    <nonterminal>Declarator</nonterminal>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>Identifier</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Declarator</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>[</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>]</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+  </bgf:production>
+</bgf:grammar>
