@@ -381,11 +381,23 @@ def automatedImprove():
      bs[i]='"|"'
      i+=1
      continue
+    if bs[i]=='|' and i>1 and i+1<len(bs) and bs[i-2]=='"("' and bs[i+2]=='")"':
+     # solution not generalised - brutal!
+     # general problem here is when BNF bar is used without groups - it makes the extractor produce n((|)) instead of real choices
+     newbs = bs[:i-1]
+     newbs.append('(')
+     newbs.extend(bs[i-1:i+2])
+     newbs.append(')')
+     newbs.extend(bs[i+2:])
+     bs = newbs
+     i -= 2
+     pessimistic[2] += 1
+     print 'Structural heuristic fix in',nt,'(group introduced)'
+     continue
     if bs[i]=='"|"' and len(bs)>1 and nt.find('OrExpression')<0:
      print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
      pessimistic[2] += 1
      bs[i] = '|'
-     i+=1
      continue
     if bs[i]!='.' and bs[i]!='"."' and bs[i]!='...' and bs[i]!='"..."' and bs[i].find('.')>=0:
      if bs[i][0]=='"':
