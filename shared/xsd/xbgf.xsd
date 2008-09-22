@@ -35,8 +35,10 @@
       <xsd:element ref="xbgf:define"/>
       <xsd:element ref="xbgf:designate"/>
       <xsd:element ref="xbgf:deyaccify"/>
+      <xsd:element ref="xbgf:distribute"/>
       <xsd:element ref="xbgf:eliminate"/>
       <xsd:element ref="xbgf:extract"/>
+      <xsd:element ref="xbgf:factor"/>
       <xsd:element ref="xbgf:fold"/>
       <xsd:element ref="xbgf:horizontal"/>
       <xsd:element ref="xbgf:inject"/>
@@ -142,6 +144,20 @@
     </xsd:annotation>
   </xsd:element>
 
+  <xsd:element name="distribute">
+    <xsd:annotation>
+      <xsd:documentation>
+        Given an inner choice, distribute the sequential factors so that
+        a top-level choice is obtained. The transformation can be either
+        applied to all productions for a given nonterminal, or to a
+        specific one appointed by label.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:group ref="xbgf:scope"/>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="eliminate" type="bgf:nonterminal">
     <xsd:annotation>
       <xsd:documentation>
@@ -175,6 +191,20 @@
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="factor">
+    <xsd:annotation>
+      <xsd:documentation>
+        Given a top-level choice, factor out common parts of a sequence,
+        so that the choice moves inside. The transformation can be either
+        applied to all productions for a given nonterminal, or to a
+        specific one appointed by label.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:group ref="xbgf:scope"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -634,13 +664,14 @@
   <xsd:element name="vertical">
     <xsd:annotation>
       <xsd:documentation>
-        Turn an expression with choice into one based on multiple productions.
-        The relevant expression can be identified in two different manners.
-        If a given nonterminal is defined horizontally (i.e., in terms of a
-        single production), then the entire definition may be verticalized,
-        and it is sufficient to appoint the definition by means of the defined
-        nonterminal. Alternatively, one can appoint a single production 
-        by means of its label.
+        Turn an expression with a top-level choice into one based on
+        multiple productions. The relevant expression can be identified in
+        two different manners. If a given nonterminal is defined
+        horizontally (i.e., in terms of a single production), then the
+        entire definition may be verticalized, and it is sufficient to
+        appoint the definition by means of the defined nonterminal.
+        Alternatively, one can appoint a single production by means of
+        its label.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
