@@ -108,7 +108,9 @@
     <branch>
       <input>jls2doc</input>
       <perform>fixErrors2doc</perform>
+      <perform>unifyModifiers</perform>
       <perform>deyaccify2doc</perform>
+      <perform>refactorTypes</perform>
       <perform>inlineStatements2doc</perform>
       <perform>inlineExpressions2doc</perform>
       <perform>refactorDeclarations2doc</perform>

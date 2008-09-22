@@ -22,42 +22,21 @@
     </bgf:production>
   </xbgf:remove>
   
-  <!--
-   - Fail: InterfaceDeclaration.
-      - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
+<!--
+   - Fail: SwitchBlockStatementGroup.
+      - [], ,([n(SwitchLabel), n(BlockStatements)])
      vs.
-      - [], ,([?(n(InterfaceModifiers)), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
-  -->
-  <xbgf:project>
-    <bgf:production>
-      <nonterminal>InterfaceDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>interface</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>extends</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>TypeList</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>InterfaceBody</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:project>
+      - [], ,([n(SwitchLabels), n(BlockStatements)])
+-->
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>SwitchLabels</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>SwitchLabel</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>SwitchBlockStatementGroup</nonterminal>
+    </in>
+  </xbgf:replace>
 </xbgf:sequence>

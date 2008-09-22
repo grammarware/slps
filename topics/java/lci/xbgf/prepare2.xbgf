@@ -5,13 +5,7 @@
     <root>CompilationUnit</root>
   </xbgf:reroot>
   <xbgf:vertical>
-    <nonterminal>Type</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Modifier</nonterminal>
   </xbgf:vertical>
 
   <xbgf:vertical>
@@ -28,9 +22,6 @@
   </xbgf:vertical>
   <xbgf:vertical>
     <nonterminal>InterfaceMemberDecl</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>BasicType</nonterminal>
   </xbgf:vertical>
 
   <xbgf:define>

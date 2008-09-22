@@ -194,36 +194,7 @@
      vs.
       - [], ;([n(StatementExpressionList), ,([?(t(final)), n(Type), n(VariableDeclarators)])])
   -->
-  <!--xbgf:deyaccify>StatementExpressionList</xbgf:deyaccify-->
-  <!-- Use this while deyaccify doesn't work-->
-  <xbgf:undefine>StatementExpressionList</xbgf:undefine>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>StatementExpressionList</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>StatementExpression</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <star>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>,</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>StatementExpression</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </star>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <!-- end of fake deyaccify -->
+  <xbgf:deyaccify>StatementExpressionList</xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>MoreStatementExpressions</nonterminal>
@@ -253,36 +224,8 @@
      vs.
       - [], ,([t({), ?(n(VariableInitializers)), ?(t((,))), t(})])
   -->
-  <!--xbgf:deyaccify>VariableInitializers</xbgf:deyaccify-->
-  <!-- Use this while deyaccify doesn't work-->
-  <xbgf:undefine>VariableInitializers</xbgf:undefine>
-  <xbgf:define><bgf:production>
-    <nonterminal>VariableInitializers</nonterminal>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <nonterminal>VariableInitializer</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <star>
-            <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <terminal>,</terminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>VariableInitializer</nonterminal>
-                </bgf:expression>
-              </sequence>
-            </bgf:expression>
-          </star>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-  </bgf:production>
-</xbgf:define>
-  <!-- end of fake deyaccify -->
-  <xbgf:inline>VariableInitializers</xbgf:inline>
+  <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
+   <xbgf:inline>VariableInitializers</xbgf:inline>
 
   <!--
   And one more time:
@@ -292,35 +235,6 @@
      vs.
       - [], ;([n(VariableDeclarator), ,([n(VariableDeclarators), t((,)), n(VariableDeclarator)])])
   -->
-  <!--xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify-->
-  <!-- Use this while deyaccify doesn't work-->
-  <xbgf:undefine>VariableDeclarators</xbgf:undefine>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>VariableDeclarators</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>VariableDeclarator</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <star>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>,</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>VariableDeclarator</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </star>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <!-- end of fake deyaccify -->
-
+  <xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify>
+ 
 </xbgf:sequence>

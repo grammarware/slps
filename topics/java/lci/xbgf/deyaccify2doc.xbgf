@@ -27,7 +27,6 @@
       <to>SwitchBlockStatementGroups</to>
     </nonterminal>
   </xbgf:rename>
-  <!-- replace by massage later -->
   <xbgf:massage>
     <bgf:expression>
       <optional>
