@@ -6,7 +6,8 @@ diff2: test
 	gdt bgf/jls1app.prepare1.refactorStatements.refactorTypes.structure1.addFeatures1to2.cropFeatures1.bgf bgf/jls2.prepare2.bgf
 
 diff:
-	../../../shared/tools/gdt bgf/jls2syntax.fixErrors2.prepare2.bgf bgf/jls2doc.fixErrors2doc.unifyModifiers.deyaccify2doc.refactorTypes.inlineStatements2doc.inlineExpressions2doc.refactorDeclarations2doc.breakSemantics2doc.bgf
+	../../../shared/tools/gdt bgf/jls2syntax.fixErrors2.prepare2.expandOps.bgf bgf/jls2doc.fixErrors2doc.unifyModifiers.unifyNames.deyaccify2doc.refactorTypes.deyaccifyExpressions.inlineStatements2doc.inlineExpressions2doc.refactorClassDeclarations.refactorDeclarations2doc.breakSemantics2doc.bgf
+
 
 test:
 	python ../../convergence/lci/lci.py java.lcf architecture

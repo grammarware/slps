@@ -4,25 +4,10 @@
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
-  <xbgf:vertical>
-    <nonterminal>Primary</nonterminal>
-  </xbgf:vertical>
-
-  <xbgf:vertical>
-    <nonterminal>Selector</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>IdentifierSuffix</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>MemberDecl</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Expression3</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>InterfaceMemberDecl</nonterminal>
-  </xbgf:vertical>
+  
+  <xbgf:fold>
+    <nonterminal>QualifiedIdentifier</nonterminal>
+  </xbgf:fold>
 
   <xbgf:define>
     <bgf:production>

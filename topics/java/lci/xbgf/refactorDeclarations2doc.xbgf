@@ -3,86 +3,6 @@
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
   <!--
-   - Fail: TypeDeclaration.
-      - [], ;([n(ClassOrInterfaceDeclaration), t((;))])
-     vs.
-      - [], ;([n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
-  -->
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>ClassDeclaration</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>InterfaceDeclaration</nonterminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
-
-  <!--
-   - Fail: ClassOrInterfaceDeclaration.
-      - [], ,([n(ModifiersOpt), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])
-     vs.
-      - [], ;([n(ClassDeclaration), n(InterfaceDeclaration)])
-  -->
-  <xbgf:inject>
-    <bgf:production>
-      <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <choice>
-              <bgf:expression>
-                <nonterminal>ClassDeclaration</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>InterfaceDeclaration</nonterminal>
-              </bgf:expression>
-            </choice>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:inject>
-
-  <!--
-   - Fail: ClassBody.
-      - [], ,([t({), *(n(ClassBodyDeclaration)), t(})])
-     vs.
-      - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
-  -->
-  <xbgf:deyaccify>ClassBodyDeclarations</xbgf:deyaccify>
-  <xbgf:inline>ClassBodyDeclarations</xbgf:inline>
-  <xbgf:massage>
-    <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <plus>
-            <bgf:expression>
-              <nonterminal>ClassBodyDeclaration</nonterminal>
-            </bgf:expression>
-          </plus>
-        </bgf:expression>
-      </optional>
-    </bgf:expression>
-    <bgf:expression>
-      <star>
-        <bgf:expression>
-          <nonterminal>ClassBodyDeclaration</nonterminal>
-        </bgf:expression>
-      </star>
-    </bgf:expression>
-  </xbgf:massage>
-
-  <!--
    - Fail: InterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
      vs.
@@ -167,47 +87,6 @@
   <xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
 
   <!--
-   - Fail: ClassDeclaration.
-      - [], ,([t(class), n(Identifier), ?(,([t(extends), n(Type)])), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
-     vs.
-      - [], ,([n(ModifiersOpt), t(class), n(Identifier), ?(n(Super)), ?(n(Interfaces)), n(ClassBody)])
-  -->
-  <xbgf:project>
-    <bgf:production>
-      <nonterminal>ClassDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>class</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>Super</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>Interfaces</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ClassBody</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:project>
-  <xbgf:inline>Super</xbgf:inline>
-  <xbgf:inline>Interfaces</xbgf:inline>
-
-  <!--
   - Fail: VariableDeclaratorId.
       - [], ,([n(Identifier), n(BracketsOpt)])
      vs.
@@ -271,34 +150,11 @@
       <nonterminal>VariableDeclarator</nonterminal>
     </in>
   </xbgf:unfold>
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>VariableDeclaratorRest</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>=</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>VariableInitializer</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
+  <xbgf:fold>
+    <nonterminal>VariableDeclaratorRest</nonterminal>
+  </xbgf:fold>
   <!-- end of ugly thing -->
-  
+
   <!--
    - Fail: CompilationUnit.
       - [], ,([?(,([t(package), n(QualifiedIdentifier), t((;))])), *(n(ImportDeclaration)), *(n(TypeDeclaration))])
@@ -306,11 +162,6 @@
       - [], ,([?(n(PackageDeclaration)), ?(n(ImportDeclarations)), ?(n(TypeDeclarations))])
   -->
   <xbgf:inline>PackageDeclaration</xbgf:inline>
-  <xbgf:deyaccify>PackageName</xbgf:deyaccify>
-  <xbgf:unite>
-    <add>PackageName</add>
-    <to>QualifiedIdentifier</to>
-  </xbgf:unite>
   <xbgf:deyaccify>ImportDeclarations</xbgf:deyaccify>
   <xbgf:inline>ImportDeclarations</xbgf:inline>
   <xbgf:massage>
@@ -366,9 +217,163 @@
   <xbgf:inline>TypeImportOnDemandDeclaration</xbgf:inline>
   <!--
    - Fail: ImportDeclaration.
-      - [], ,([t(import), n(Identifier), *(,([t(.), n(Identifier)])), ?(,([t(.), t(*)])), t((;))])
+      - [], ,([t(import), n(QualifiedIdentifier), ?(,([t(.), t(*)])), t((;))])
      vs.
-      - [], ;([,([t(import), n(Identifier), *(,([t(.), n(Identifier)])), t((;))]),
-               ,([t(import), n(Identifier), *(,([t(.), n(Identifier)])), t(.), t(*), t((;))])])
+      - [], ;([,([t(import), n(QualifiedIdentifier), t((;))]),
+               ,([t(import), n(QualifiedIdentifier), t(.), t(*), t((;))])])
   -->
+  <!-- Need a smart "fold-ebnf" operation here, really -->
+  <!-- What follows is a straightforward replacement -->
+  <xbgf:vertical>
+    <nonterminal>ImportDeclaration</nonterminal>
+  </xbgf:vertical>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>ImportDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>import</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>*</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>ImportDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>import</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>.</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>*</terminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  <!-- End of substitute -->
+  
+  <!--
+   - Fail: InterfaceBodyDeclaration.
+      - [], ;([t((;)),
+             ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
+     vs.
+      - [], ;([,([n(ModifiersOpt), n(Type), n(VariableDeclarators)]),
+               ,([n(ModifiersOpt), n(ResultType), n(MethodDeclarator), ?(n(Throws)), t((;))]),
+               n(ClassOrInterfaceDeclaration),
+               t((;))])
+               
+  Solved brutally for now
+  -->
+  <xbgf:undefine>InterfaceBodyDeclaration</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>InterfaceBodyDeclaration</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>ModifiersOpt</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>InterfaceMemberDecl</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>InterfaceMemberDecl</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <terminal>void</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+
+  <!-- ArgumentList -->
+  <xbgf:deyaccify>ArgumentList</xbgf:deyaccify>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>Arguments</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ArgumentList</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  <xbgf:inline>ArgumentList</xbgf:inline>
+  
+  
 </xbgf:sequence>

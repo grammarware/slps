@@ -97,4 +97,23 @@
     <label>BreakStatement</label>
   </xbgf:strip>
 
+  <!--
+  Expression is referenced as Expr:
+  
+  Expression3 is defined as:
+     PrefixOp Expression3
+     "(" Expr | Type ")" Expression3
+     Primary { Selector } { PostfixOp }
+  -->
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>Expr</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>Expression</nonterminal>
+    </bgf:expression>
+  </xbgf:replace>
+ 
+  <!-- unused non-terminals -->
+  <xbgf:eliminate>ArgumentsOpt</xbgf:eliminate>
 </xbgf:sequence>

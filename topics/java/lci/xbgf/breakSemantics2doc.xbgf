@@ -21,8 +21,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  
-<!--
+
+  <!--
    - Fail: SwitchBlockStatementGroup.
       - [], ,([n(SwitchLabel), n(BlockStatements)])
      vs.
@@ -37,6 +37,185 @@
     </bgf:expression>
     <in>
       <nonterminal>SwitchBlockStatementGroup</nonterminal>
+    </in>
+  </xbgf:replace>
+
+  <!--
+  ConstructorBody is defined as:
+     { [ ExplicitConstructorInvocation ] [ BlockStatements ] }
+  -->
+  <xbgf:undefine>ConstructorBody</xbgf:undefine>
+  <xbgf:unite>
+    <add>ConstructorBody</add>
+    <to>MethodBody</to>
+  </xbgf:unite>
+
+  <!--
+  ConstructorDeclaratorRest is defined as:
+     FormalParameters [ "throws" QualifiedIdentifierList ] MethodBody
+  -->
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>TypeList</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>QualifiedIdentifierList</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>ConstructorDeclaratorRest</nonterminal>
+    </in>
+  </xbgf:replace>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>TypeList</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>QualifiedIdentifierList</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>MethodDeclaratorRest</nonterminal>
+    </in>
+  </xbgf:replace>
+
+  <!--
+   - Fail: MethodDeclaratorRest.
+      - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), ;([n(MethodBody), t((;))])])
+     vs.
+      - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(MethodBody)])
+  -->
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>MethodDeclaratorRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>FormalParameters</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>throws</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>QualifiedIdentifierList</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>MethodBody</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>MethodBody</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>MethodBody</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>;</terminal>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <in>
+      <nonterminal>MethodDeclaratorRest</nonterminal>
+    </in>
+  </xbgf:replace>
+
+  <!--
+   - Fail: ArrayInitializer.
+      - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
+     vs.
+      - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)]))])), ?(t((,))), t(})])
+      
+   ArrayInitializer is defined as:                          (collected)
+     "{" [ VariableInitializers ] [ "," ] "}"
+   ArrayInitializer is defined as:                          (syntax)
+     "{" [ VariableInitializers [ "," ] ] "}"
+  -->
+  <xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <nonterminal>VariableInitializer</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <star>
+                    <bgf:expression>
+                      <sequence>
+                        <bgf:expression>
+                          <terminal>,</terminal>
+                        </bgf:expression>
+                        <bgf:expression>
+                          <nonterminal>VariableInitializer</nonterminal>
+                        </bgf:expression>
+                      </sequence>
+                    </bgf:expression>
+                  </star>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <terminal>,</terminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>VariableInitializer</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <star>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <terminal>,</terminal>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <nonterminal>VariableInitializer</nonterminal>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </star>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <terminal>,</terminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <in>
+      <nonterminal>ArrayInitializer</nonterminal>
     </in>
   </xbgf:replace>
 </xbgf:sequence>

@@ -18,6 +18,12 @@
     <to>ConstantModifier</to>
   </xbgf:unite>
   
+  <!-- Another type of JLS2 -->
+  <xbgf:unite>
+    <add>Identifer</add>
+    <to>Identifier</to>
+  </xbgf:unite>
+  
   <!--
   Error in markup of JLS2
      - Fail: InterfaceBody.
@@ -221,4 +227,40 @@
     </bgf:production>
   </xbgf:define>
 
+  <!-- Left forgotten and undefined -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ClassName</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>AmbiguousName</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>.</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  
+  <!-- Error in PrimaryNoNewArray undetected by the extractor due to lacking definition -->
+  <xbgf:replace>
+    <bgf:expression>
+      <terminal>ClassName</terminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>ClassName</nonterminal>
+    </bgf:expression>
+  </xbgf:replace>
 </xbgf:sequence>

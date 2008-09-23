@@ -13,29 +13,6 @@
   <xbgf:vertical>
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
-  <xbgf:rename>
-    <nonterminal>
-      <from>AmbiguousName</from>
-      <to>Name</to>
-    </nonterminal>
-  </xbgf:rename>
-
-  <xbgf:unite>
-    <add>MethodName</add>
-    <to>Name</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>TypeName</add>
-    <to>Name</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>PackageName</add>
-    <to>Name</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>ExpressionName</add>
-    <to>Name</to>
-  </xbgf:unite>
 
   <!--
     - Fail: Name.

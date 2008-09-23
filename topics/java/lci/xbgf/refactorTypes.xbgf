@@ -84,11 +84,11 @@
     </nonterminal>
   </xbgf:rename>
   <!-- Surfacing the qualified identifier -->
-  <xbgf:unite>
+  <!--xbgf:unite>
     <add>PackageOrTypeName</add>
     <to>TypeName</to>
   </xbgf:unite>
-  <xbgf:deyaccify>TypeName</xbgf:deyaccify>
+  <xbgf:deyaccify>TypeName</xbgf:deyaccify-->
   <!-- Merging interfaces with classes and making lists and other things conform -->
   <xbgf:replace>
     <bgf:expression>
@@ -197,7 +197,6 @@
     </bgf:production>
   </xbgf:remove>
   <!-- Finishing touches -->
-  <xbgf:inline>TypeName</xbgf:inline>
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
   <xbgf:inline>ReferenceType</xbgf:inline>

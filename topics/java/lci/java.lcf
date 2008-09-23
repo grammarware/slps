@@ -94,6 +94,7 @@
     </branch>
     <branch>
       <input>jls1doc</input>
+      <perform>unifyNames</perform>
       <perform>preferLALR</perform>
     </branch>
   </target-->
@@ -104,15 +105,19 @@
       <input>jls2syntax</input>
       <perform>fixErrors2</perform>
       <perform>prepare2</perform>
+      <perform>expandOps</perform>
     </branch>
     <branch>
       <input>jls2doc</input>
       <perform>fixErrors2doc</perform>
       <perform>unifyModifiers</perform>
+      <perform>unifyNames</perform>
       <perform>deyaccify2doc</perform>
       <perform>refactorTypes</perform>
+      <perform>deyaccifyExpressions</perform>
       <perform>inlineStatements2doc</perform>
       <perform>inlineExpressions2doc</perform>
+      <perform>refactorClassDeclarations</perform>
       <perform>refactorDeclarations2doc</perform>
       <perform>breakSemantics2doc</perform>
     </branch>

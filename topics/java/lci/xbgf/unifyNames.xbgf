@@ -1,0 +1,63 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!--
+  MethodName is defined as:
+     Identifier
+     AmbiguousName "." Identifier
+  TypeName is defined as:
+     Identifier
+     PackageOrTypeName "." Identifier
+  PackageName is defined as:
+     Identifier
+     PackageName "." Identifier
+  PackageOrTypeName is defined as:
+     Identifier
+     PackageOrTypeName "." Identifier
+  AmbiguousName is defined as:
+     Identifier
+     AmbiguousName "." Identifier
+  ExpressionName is defined as:
+     Identifier
+     AmbiguousName "." Identifier
+     
+vs
+
+  QualifiedIdentifier is defined as:
+     Identifier { "." Identifier }
+  
+  -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>AmbiguousName</from>
+      <to>QualifiedIdentifier</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:unite>
+    <add>MethodName</add>
+    <to>QualifiedIdentifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>TypeName</add>
+    <to>QualifiedIdentifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>PackageName</add>
+    <to>QualifiedIdentifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>PackageOrTypeName</add>
+    <to>QualifiedIdentifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>ExpressionName</add>
+    <to>QualifiedIdentifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>ClassName</add>
+    <to>QualifiedIdentifier</to>
+  </xbgf:unite>
+  <xbgf:deyaccify>QualifiedIdentifier</xbgf:deyaccify>
+  
+</xbgf:sequence>
