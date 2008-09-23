@@ -52,6 +52,48 @@
 
   <xbgf:inline>scope</xbgf:inline>
 
+  <xbgf:massage>
+    <bgf:expression>
+      <nonterminal>l</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>distributeL</selector>
+        <bgf:expression>
+          <nonterminal>l</nonterminal>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+    <in>
+      <label>distribute</label>
+    </in>
+  </xbgf:massage>
+
+  <xbgf:massage>
+    <bgf:expression>
+      <nonterminal>n</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>distributeN</selector>
+        <bgf:expression>
+          <nonterminal>n</nonterminal>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+    <in>
+      <label>distribute</label>
+    </in>
+  </xbgf:massage>
+
+  <xbgf:vertical>
+    <label>distribute</label>
+  </xbgf:vertical>
+
+  <xbgf:distribute>
+    <label>extract</label>
+  </xbgf:distribute>
+
   <xbgf:vertical>
     <label>extract</label>
   </xbgf:vertical>
@@ -100,6 +142,48 @@
     </bgf:production>
   </xbgf:designate>
 
+  <xbgf:massage>
+    <bgf:expression>
+      <nonterminal>l</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>factorL</selector>
+        <bgf:expression>
+          <nonterminal>l</nonterminal>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+    <in>
+      <label>factor</label>
+    </in>
+  </xbgf:massage>
+
+  <xbgf:massage>
+    <bgf:expression>
+      <nonterminal>n</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>factorN</selector>
+        <bgf:expression>
+          <nonterminal>n</nonterminal>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+    <in>
+      <label>factor</label>
+    </in>
+  </xbgf:massage>
+
+  <xbgf:vertical>
+    <label>factor</label>
+  </xbgf:vertical>
+
+  <xbgf:distribute>
+    <label>fold</label>
+  </xbgf:distribute>
+
   <xbgf:vertical>
     <label>fold</label>
   </xbgf:vertical>
@@ -147,6 +231,10 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+
+  <xbgf:distribute>
+    <label>massage</label>
+  </xbgf:distribute>
 
   <xbgf:vertical>
     <label>massage</label>
@@ -208,6 +296,10 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+
+  <xbgf:distribute>
+    <label>narrow</label>
+  </xbgf:distribute>
 
   <xbgf:vertical>
     <label>narrow</label>
@@ -349,6 +441,10 @@
     </bgf:production>
   </xbgf:designate>
 
+  <xbgf:distribute>
+    <label>replace</label>
+  </xbgf:distribute>
+
   <xbgf:vertical>
     <label>replace</label>
   </xbgf:vertical>
@@ -489,6 +585,10 @@
     <label>strip</label>
   </xbgf:vertical>
 
+  <xbgf:distribute>
+    <label>unfold</label>
+  </xbgf:distribute>
+
   <xbgf:vertical>
     <label>unfold</label>
   </xbgf:vertical>
@@ -574,6 +674,10 @@
   <xbgf:vertical>
     <label>vertical</label>
   </xbgf:vertical>
+
+  <xbgf:distribute>
+    <label>widen</label>
+  </xbgf:distribute>
 
   <xbgf:vertical>
     <label>widen</label>

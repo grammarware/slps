@@ -100,6 +100,66 @@ designate_rule(P1,n(P2,T),n(P1,T))
 
 
 %
+% p([l(distributeL)], f, n(l))
+% p([l(distributeN)], f, n(n))
+%
+% Distribute sequential composition over choices
+%
+
+distributeL(L,T1,T2)
+ :-
+    transform(try(xbgf2:distributeL_rule(L)),T1,T2).
+
+distributeL_rule(
+  L,
+  n(p([l(L)],N,X),T1),
+  n(p([l(L)],N,';'(Xs)),T2)
+)
+ :-
+    distribute(X,Xs,T1,T2).
+
+distributeN(N,T1,T2)
+ :-
+    transform(try(xbgf2:distributeN_rule(N)),T1,T2).
+
+distributeN_rule(
+  N,
+  n(p(As,N,X),T1),
+  n(p(As,N,';'(Xs)),T2)
+)
+ :-
+    distribute(X,Xs,T1,T2).
+  
+distribute(X1,Xs,T1,';'(X2,T2))
+ :-
+    require(
+      xbgf1:distribute_x(X1,Xs),
+      'Grammar-level distribution failed ~q.',
+      [X1]),
+    require(
+      ( 
+        member(X2,Xs),
+        xbgf2:distribute_t(X2,T1,T2)
+      ),
+      'Tree-level distribution failed ~q/~q.',
+      [X2,T1]).
+
+distribute_t(X,T,T)
+ :-
+    X =.. [F|_],
+    T =.. [F|_],
+    member(F,[true,s,t,n,a,v,?,+,*]).
+
+distribute_t(X,';'(_,T1),T2)
+ :-
+    distribute_t(X,T1,T2).
+
+distribute_t(','(Xs),','(Ts1),','(Ts2))
+ :-
+    maplist(xbgf2:distribute_t,Xs,Ts1,Ts2).
+
+
+%
 % p([l(eliminate)], f, n(n))
 %
 % Eliminate a defined, otherwise unused nonterminal
@@ -552,11 +612,11 @@ verticalL(L,T1,T2)
 
 verticalL_rule(
   L,
-  n(p([l(L)],N,X),T1),
+  n(p([l(L)],N,';'(Xs)),T1),
   n(P,T2)
 )
  :-
-    vertical(N,X,P,T1,T2).
+    vertical(N,Xs,P,T1,T2).
 
 verticalN(N,T1,T2)
  :-
@@ -564,73 +624,19 @@ verticalN(N,T1,T2)
 
 verticalN_rule(
   N,
-  n(p(_,N,X),T1),
+  n(p(_,N,';'(Xs)),T1),
   n(P,T2)
 )
  :-
-    vertical(N,X,P,T1,T2).
+    vertical(N,Xs,P,T1,T2).
   
-vertical(N,X1,P,T1,T3)
+vertical(N,Xs,P,';'(X,T1),T2)
  :-
-    findall(X2,xbgf1:vertical_strategy(X1,X2),Xs),
-    member(X3,Xs),
-    vertical_strategy(X3,T1,T2),
-    vertical_rules(N,X3,P,T2,T3).
+    member(X,Xs),
+    vertical_rules(N,X,P,T1,T2).
 
 vertical_rules(N,s(S,X),p([l(S)],N,X),s(S,T),T).
 vertical_rules(N,X,p([],N,X),T,T) :- \+ X = s(_,_).
-
-vertical_strategy(true,true,true)
- :-
-    !.
-
-vertical_strategy(a,a(Ns),a(Ns))
- :-
-    !.
-
-vertical_strategy(t(V),t(V),t(V))
- :-
-    !.
-
-vertical_strategy(v(string),v(string(V)),v(string(V)))
- :-
-    !.
-
-vertical_strategy(v(int),v(int(V)),v(string(V)))
- :-
-    !.
-
-vertical_strategy(n(N),n(P,T),n(P,T))
- :-
-    P = p(_,N,_),
-    !.
-
-vertical_strategy('*'(X1),'*'(Ts1),'*'(Ts2))
- :-
-    maplist(xbgf2:vertical_strategy(X1),Ts1,Ts2),
-    !.
-
-vertical_strategy('+'(X1),'+'(Ts1),'+'(Ts2))
- :-
-    maplist(xbgf2:vertical_strategy(X1),Ts1,Ts2),
-    !.
-
-vertical_strategy(?(X1),?(Ts1),?(Ts2))
- :-
-    maplist(xbgf2:vertical_strategy(X1),Ts1,Ts2),
-    !.
-
-vertical_strategy(','(Xs),','(Ts1),','(Ts2))
- :-
-    maplist(xbgf2:vertical_strategy,Xs,Ts1,Ts2).
-
-vertical_strategy(X,';'(_,T1),T2)
- :-
-    vertical_strategy(X,T1,T2).
-
-vertical_strategy(s(S,X),s(S,T1),s(S,T2))
- :-
-    vertical_strategy(X,T1,T2).
 
 
 % ------------------------------------------------------------

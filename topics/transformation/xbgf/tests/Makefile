@@ -10,6 +10,7 @@ test:
 	make deyaccify1.test
 	make deyaccify2.test
 	make deyaccify3.test
+	make distribute1.test
 	make eliminate.test
 	make extract1.test
 	make extract2.test

@@ -184,6 +184,57 @@ deyaccify_rules(N1,X1,X2)
 
 
 %
+% p([l(distributeL)], f, n(l))
+% p([l(distributeN)], f, n(n))
+%
+% Distribute sequential composition over choices
+%
+
+distributeL(L,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitL(Ps1,L,P,Ps2a,Ps2b),
+    distribute([P],Ps2a,Ps2b,Ps3).
+
+distributeN(N,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    distribute(Ps2,Ps2a,Ps2b,Ps3).
+
+distribute(Ps1,Ps1a,Ps1b,Ps3)
+ :-
+    maplist(xbgf1:distribute_p,Ps1,Ps2),
+    concat([Ps1a,Ps2,Ps1b],Ps3).
+
+distribute_p(p(As,N,X),p(As,N,';'(Xs)))
+ :-
+    distribute_x(X,Xs).
+
+distribute_x(X,[X])
+ :-
+    \+ X = ';'(_),
+    \+ X = ','(_).
+
+distribute_x(';'(Xs1),Xs2)
+ :-
+    maplist(xbgf1:distribute_x,Xs1,Xss2),
+    concat(Xss2,Xs2).
+
+distribute_x(','(Xs1),Xs3)
+ :-
+    maplist(xbgf1:distribute_x,Xs1,Xss2),
+    findall(Xs2,distribute_sequence(Xss2,Xs2),Xs3).
+
+distribute_sequence([Xs],','([X]))
+ :- 
+    member(X,Xs).
+
+distribute_sequence([Xs1|Xss],','([X|Xs2]))
+ :-
+    member(X,Xs1),
+    distribute_sequence(Xss,','(Xs2)).
+
+
+%
 % p([l(eliminate)], f, n(n))
 %
 % Eliminate a defined, otherwise unused nonterminal
@@ -283,7 +334,7 @@ fold(N1,Ps1,Ps2,Ps2a,Ps2b,Ps4)
 %
 % p([l(horizontal)], f, n(n))
 %
-% Turn multiple productions into choice
+% Turn multiple productions into choices
 %
 
 horizontal(N,g(Rs,Ps1),g(Rs,Ps3))
@@ -992,74 +1043,51 @@ unite(N1,N2,G1,G2)
 % p([l(verticalL)], f, n(l))
 % p([l(verticalN)], f, n(n))
 %
-% Turn choices into definitions of multiple productions
+% Turn top-level choices into multiple productions
 %
 
-verticalL(L,g(Rs,Ps1),g(Rs,Ps2))
+verticalL(L,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    splitL(Ps1,L,p(_,N,X),Ps1a,Ps1b),
-    vertical(N,X,Ps1a,Ps1b,Ps2).
+    splitL(Ps1,L,P,Ps2a,Ps2b),
+    vertical([P],Ps2a,Ps2b,Ps3).
 
-verticalN(N,g(Rs,Ps1),g(Rs,Ps2))
+verticalN(N,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    splitN1(Ps1,N,p(_,_,X),Ps1a,Ps1b),
-    vertical(N,X,Ps1a,Ps1b,Ps2).
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    vertical(Ps2,Ps2a,Ps2b,Ps3).
 
-vertical(N,X1,Ps1a,Ps1b,Ps4)
+vertical(Ps1,Ps1a,Ps1b,Ps4)
  :-
-    findall(X2,vertical_strategy(X1,X2),Xs),
-    require(
-      Xs = [_,_|_],
-      'Verticalization must involve choice.',
-      []),
-    maplist(vertical_rules(N),Xs,Ps2),
-    append(Ps1a,Ps1b,Ps3),
+    maplist(xbgf1:vertical_p,Ps1,Pss2),
+    concat(Pss2,Ps2),
     allLs(Ps2,Ls1),
     doubles(Ls1,Ls2),
-    allLs(Ps3,Ls3),
-    intersection(Ls1,Ls3,Ls4),
     require(
       Ls2 == [],
-      'Verticalization labels are ambigious ~q.',
+      'Outermost selectors ambigious ~q.',
       [Ls2]),
+    concat([Ps1a,Ps1b],Ps3),
+    allLs(Ps3,Ls3),
+    intersection(Ls2,Ls3,Ls4),
     require(
       Ls4 == [],
-      'Verticalization labels clash with preexisting labels ~q.',
+      'Outermost selectors clash with labels ~q.',
       [Ls4]),
     concat([Ps1a,Ps2,Ps1b],Ps4).
 
-vertical_rules(N,s(S,X),p([l(S)],N,X)).
-vertical_rules(N,X,p([],N,X)) :- \+ X = s(_,_).
-
-vertical_strategy(X,X)
+vertical_p(p(_,N,';'(Xs)),Ps)
  :-
-    X =.. [F|_],
-    member(F,[true,fail,a,t,n,v]).
+    maplist(xbgf1:vertical_x(N),Xs,Ps).
 
-vertical_strategy('*'(X1),'*'(X2))
+vertical_p(P,[P])
  :-
-    vertical_strategy(X1,X2).
+    \+ P = p(_,_,';'(_)).
 
-vertical_strategy('+'(X1),'+'(X2))
- :-
-    vertical_strategy(X1,X2).
+vertical_x(N,s(S,X),p([l(S)],N,X)).
 
-vertical_strategy('?'(X1),'?'(X2))
+vertical_x(N,X,p([],N,X))
  :-
-    vertical_strategy(X1,X2).
-
-vertical_strategy(','(Xs1),','(Xs2))
- :-
-    maplist(xbgf1:vertical_strategy,Xs1,Xs2).
-
-vertical_strategy(';'(Xs),X2)
- :-
-    member(X1,Xs),
-    vertical_strategy(X1,X2).
-
-vertical_strategy(s(S,X1),s(S,X2))
- :-
-    vertical_strategy(X1,X2).
+    \+ X = s(_,_).
 
 
 %

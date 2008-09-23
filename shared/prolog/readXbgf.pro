@@ -17,27 +17,6 @@ xml2xbgf(T,add(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
-/*
-xml2xbgf(T,Case)
- :-
-    self(name(xbgf:case),T),
-    ( 
-      child(name(first),T,_),
-      Q = 'First'
-    ;
-      child(name(all),T,_),
-      Q = 'All'
-    ),
-    ( 
-      child(name(up),T,_),
-      UpDown = 'Up'
-    ;
-      child(name(down),T,_),
-      UpDown = 'Down'
-    ),
-    concat_atom([case,Q,UpDown],Case).
-*/
-
 xml2xbgf(T,chain(P2))
  :-
     self(name(xbgf:chain),T),
@@ -61,6 +40,18 @@ xml2xbgf(T,deyaccify(N))
     self(name(xbgf:deyaccify),T),
     content(T,N).
 
+xml2xbgf(T,distributeL(L))
+ :-
+    self(name(xbgf:distribute),T),
+    child(name(label),T,T1),
+    content(T1,L).
+
+xml2xbgf(T,distributeN(N))
+ :-
+    self(name(xbgf:distribute),T),
+    child(name(nonterminal),T,T1),
+    content(T1,N).
+
 xml2xbgf(T,eliminate(N))
  :-
     self(name(xbgf:eliminate),T),
@@ -72,6 +63,18 @@ xml2xbgf(T,G)
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2),
     inScope2xbgf(extract,extractL,extractN,[P2],T,G).
+
+xml2xbgf(T,factorL(L))
+ :-
+    self(name(xbgf:factor),T),
+    child(name(label),T,T1),
+    content(T1,L).
+
+xml2xbgf(T,factorN(N))
+ :-
+    self(name(xbgf:factor),T),
+    child(name(nonterminal),T,T1),
+    content(T1,N).
 
 xml2xbgf(T,G)
  :-
