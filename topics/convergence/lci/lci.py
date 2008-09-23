@@ -273,6 +273,7 @@ def extractall():
  print '[PASS] Extraction finished.'
 
 def validateall():
+ problem = False
  for bgf in extractor.keys():
   if bgf in failednode:
    continue
