@@ -197,7 +197,7 @@
   <xsd:element name="factor">
     <xsd:annotation>
       <xsd:documentation>
-        Factor out common prefixes and postfixes for choices so that choices
+        Factor out common prefixes and postfixes of choices so that choices
         are pushed insight sequences. The transformation
         is either attempted for all productions of a nonterminal or for a
         specific one appointed by its label.

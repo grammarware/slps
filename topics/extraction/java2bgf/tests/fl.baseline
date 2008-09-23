@@ -1,13 +1,44 @@
+Loading XSD file '/Users/laemmel/projects/slps/shared/xsd/bgf.xsd'.
+Loading XML file '/Users/laemmel/projects/slps/topics/transformation/xbgf/apps/bgf/append.xbgf'.
 Loading XML file 'tests/fl.bgf'.
+Applying verticalN transformation.
+Applying rassoc transformation.
+Applying rassoc transformation.
+Applying verticalN transformation.
+Applying renameN transformation.
+Applying renameN transformation.
+Applying renameN transformation.
+Applying renameN transformation.
+Applying renameN transformation.
+Applying renameN transformation.
+Applying renameN transformation.
+Applying renameN transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying renameL transformation.
+Applying stripSs transformation.
+Applying designate transformation.
+Applying designate transformation.
+Applying reroot transformation.
 g( [], [
-  p([], 'Apply', ','([s(name, v(string)), s(args, *(a))])),
+  p([], 'Apply', (s(name, v(string)), s(args, *(a)))),
   p([], 'Argument', s(name, v(string))),
-  p([], 'Binary', ','([s(ops, n('Ops')), s(left, n('Expr')), s(right, n('Expr'))])),
-  p([], 'Expr', ;([n('Apply'), n('Argument'), n('Binary'), n('IfThenElse'), n('Literal')])),
-  p([], 'Function', ','([s(name, v(string)), s(args, *(a)), s(rhs, n('Expr'))])),
-  p([], 'IfThenElse', ','([s(ifExpr, n('Expr')), s(thenExpr, n('Expr')), s(elseExpr, n('Expr'))])),
+  p([], 'Binary', (s(ops, n('Ops')), s(left, n('Expr')), s(right, n('Expr')))),
+  p([], 'Expr', (n('Apply');n('Argument');n('Binary');n('IfThenElse');n('Literal'))),
+  p([], 'Function', (s(name, v(string)), s(args, *(a)), s(rhs, n('Expr')))),
+  p([], 'IfThenElse', (s(ifExpr, n('Expr')), s(thenExpr, n('Expr')), s(elseExpr, n('Expr')))),
   p([], 'Literal', s(info, v(int))),
-  p([], 'Ops', ;([s('Equal', true), s('Plus', true), s('Minus', true)])),
+  p([], 'Ops', (s('Equal', true);s('Plus', true);s('Minus', true))),
   p([], 'Program', s(functions, *(a))),
   p([], 'Visitor', fail)
 ])
+
