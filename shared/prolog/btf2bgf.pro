@@ -5,6 +5,23 @@
 btf2x(n(P,_),n(N)) :- P = p(_,N,_).
 
 
+% Accept BTF shallowly
+% That is, do not recurse into production-rooted subtrees.
+
+shallowT(a,a).
+shallowT(true,true).
+shallowT(t(V),t(V)).
+shallowT(n(N),n(p(_,N,_),_)).
+shallowT(v(int),v(int(_))).
+shallowT(v(string),v(string(_))).
+shallowT(s(S,X),s(S,T)) :- shallowT(X,T).
+shallowT(*(X),*(Ts)) :- maplist(shallowT(X),Ts).
+shallowT(+(X),+(Ts)) :- maplist(shallowT(X),Ts).
+shallowT(?(X),?(Ts)) :- maplist(shallowT(X),Ts).
+shallowT(','(Xs),','(Ts)) :- maplist(shallowT,Xs,Ts).
+shallowT(';'(Xs),';'(X,T)) :- member(X,Xs), shallowT(X,T).
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%
 % Extract BGF from BTF %
 %%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,6 +1,7 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+  <!-- Take dependency of normalization (true) -->
   <xbgf:factor>
     <bgf:expression>
       <choice>

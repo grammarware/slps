@@ -6,15 +6,15 @@
 % Make sure that vacouous transformations are rejected.
 %
 
-transformG(sequence(Ts),G1,G2)
+transformG(sequence(Ts1),G1,G2)
  :-
     !,
-    accum(xbgf1:transformG,Ts,G1,G2).
+    normalizeG(Ts1,Ts2),
+    accum(xbgf1:transformG,Ts2,G1,G2).
 
 transformG(Xbgf,G1,G4)
  :-
-    Xbgf =.. [F|_],
-    format('Applying ~q transformation.~n',[F]),
+    format('[XBGF] ~q~n',[Xbgf]),
     normalizeG(G1,G2),
     apply(Xbgf,[G2,G3]),
     normalizeG(G3,G4),
@@ -323,7 +323,8 @@ factor(X1,X2,Ps1,Ps1a,Ps1b,Ps2)
         xbgf1:distribute_x(X1,Xs1),
         xbgf1:distribute_x(X2,Xs2),
         normalizeG(Xs1,Xs3),
-        normalizeG(Xs2,Xs3)
+        normalizeG(Xs2,Xs4),
+        eqX(';'(Xs3),';'(Xs4))
       ),
       'Expressions ~q and ~q must be related by distribution.',
       [X1,X2]
@@ -796,22 +797,28 @@ replaceL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
 
 replace(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
  :-
+     format('~q and ~q~n',[X1,X2]),
      stoptd(xbgf1:replace_rules(X1,X2),Ps2,Ps4),
      concat([Ps2a,Ps4,Ps2b],Ps3).
 
-replace_rules(X1,X2,X1,X2).
+replace_rules(X1,X2,X3,X2)
+ :-
+    eqX(X1,X3),
+    !.
+
 replace_rules(','(Xs1),Y1,','(Xs2),','(Xs3))
  :-
-    \+ Xs1 = Xs2,
     append(Xs1a,Xs1b,Xs2),
-    append(Xs1,Xs1c,Xs1b),
-    concat([Xs1a,[Y1],Xs1c],Xs3).
+    append(Xs1c,Xs1d,Xs1b),
+    eqX(','(Xs1),','(Xs1c)),
+    concat([Xs1a,[Y1],Xs1d],Xs3).
+
 replace_rules(';'(Xs1),Y1,';'(Xs2),';'(Xs3))
  :-
-    \+ Xs1 = Xs2,
     append(Xs1a,Xs1b,Xs2),
-    append(Xs1,Xs1c,Xs1b),
-    concat([Xs1a,[Y1],Xs1c],Xs3).
+    append(Xs1c,Xs1d,Xs1b),
+    eqX(';'(Xs1),';'(Xs1c)),
+    concat([Xs1a,[Y1],Xs1d],Xs3).
 
 
 %

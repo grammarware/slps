@@ -1,6 +1,7 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+  <!-- Baseline scenario for factor operator -->
   <xbgf:factor>
     <bgf:expression>
       <choice>

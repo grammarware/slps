@@ -99,12 +99,15 @@ find_selector(s(S,_),[S]).
 
 % Find a single production by LHS and possibly label
 
-findP(Ps1,P,Ps1a,Ps1b)
+findP(Ps1,P1,Ps1a,Ps1b)
  :-
     require(
-      append(Ps1a,[P|Ps1b],Ps1),
+      (
+        append(Ps1a,[P2|Ps1b],Ps1),
+        eqP(P1,P2)
+      ),
       'Production ~q not found.',
-      [P]).
+      [P1]).
 
 findP(Ps1,As,N,P,Ps3a,Ps4a)
  :-
@@ -428,11 +431,38 @@ diffLXs([LX1|LXs1],LXs2,Q1,Q3)
 
 % Liberal equality test
 
-diffEq(LX,LX) :- !.
-diffEq((As,';'(Xs1)),(As,';'(Xs2)))
+diffEq((As,X1),(As,X2))
  :-
-    length(Xs1,Len),
-    length(Xs2,Len),
-    subset(Xs1,Xs2),
-    subset(Xs2,Xs1),
+    eqX(X1,X2),
     !.
+
+
+% Liberal equality test on grammar fragments
+
+eqP(p(As,N,X1),p(As,N,X2)) :- eqX(X1,X2).
+
+eqX(X1,X2)
+ :-
+    X1 =.. [F|Xs1],
+    X2 =.. [F|Xs2],
+    eqXs(F,Xs1,Xs2).
+
+eqXs(true,[],[]) :- !.
+eqXs(fail,[],[]) :- !.
+eqXs(a,[],[]) :- !.
+eqXs(t,[V],[V]) :- !.
+eqXs(n,[V],[V]) :- !.
+eqXs(v,[V],[V]) :- !.
+eqXs(*,[X1],[X2]) :- eqX(X1,X2).
+eqXs(+,[X1],[X2]) :- eqX(X1,X2).
+eqXs(?,[X1],[X2]) :- eqX(X1,X2).
+eqXs(s,[S,X1],[S,X2]) :- eqX(X1,X2).
+eqXs(',',[Xs1],[Xs2]) :- maplist(eqX,Xs1,Xs2).
+eqXs(';',[[]],[[]]).
+eqXs(';',[[X1|Xs1]],[Xs2])
+ :-
+    append(Xs2a,[X2|Xs2b],Xs2),
+    eqX(X1,X2),
+    !,
+    append(Xs2a,Xs2b,Xs3),
+    eqXs(';',[Xs1],[Xs3]).

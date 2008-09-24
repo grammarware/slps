@@ -1,10 +1,11 @@
 :- module(xbgf2,[transformT/3]).
 :- use_module('xbgf1.pro').
 
-transformT(sequence(Xs),T1,T2)
+transformT(sequence(Ts1),T1,T2)
  :-
      !,
-     accum(xbgf2:transformT,Xs,T1,T2),
+     normalizeG(Ts1,Ts2),
+     accum(xbgf2:transformT,Ts2,T1,T2),
      !.
 
 transformT(Xbgf,r(G1,T1),T4)
@@ -144,11 +145,13 @@ distribute(X1,Xs,T1,';'(X2,T2))
       'Tree-level distribution failed ~q/~q.',
       [X2,T1]).
 
+
 distribute_t(X,T,T)
  :-
     X =.. [F|_],
     T =.. [F|_],
-    member(F,[true,s,t,n,a,v,?,+,*]).
+    \+ member(F,[',',';']),
+    shallowT(X,T).
 
 distribute_t(X,';'(_,T1),T2)
  :-
