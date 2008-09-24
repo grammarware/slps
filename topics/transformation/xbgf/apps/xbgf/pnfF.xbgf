@@ -142,43 +142,70 @@
     </bgf:production>
   </xbgf:designate>
 
-  <xbgf:massage>
-    <bgf:expression>
-      <nonterminal>l</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <selectable>
-        <selector>factorL</selector>
-        <bgf:expression>
-          <nonterminal>l</nonterminal>
-        </bgf:expression>
-      </selectable>
-    </bgf:expression>
-    <in>
-      <label>factor</label>
-    </in>
-  </xbgf:massage>
-
-  <xbgf:massage>
-    <bgf:expression>
-      <nonterminal>n</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <selectable>
-        <selector>factorN</selector>
-        <bgf:expression>
-          <nonterminal>n</nonterminal>
-        </bgf:expression>
-      </selectable>
-    </bgf:expression>
-    <in>
-      <label>factor</label>
-    </in>
-  </xbgf:massage>
+  <xbgf:distribute>
+    <label>factor</label>
+  </xbgf:distribute>
 
   <xbgf:vertical>
     <label>factor</label>
   </xbgf:vertical>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>factor</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>factorL</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression> 
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>l</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>factorN</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
 
   <xbgf:distribute>
     <label>fold</label>

@@ -197,14 +197,21 @@
   <xsd:element name="factor">
     <xsd:annotation>
       <xsd:documentation>
-        Factor out common prefixes and postfixes of choices so that choices
-        are pushed insight sequences. The transformation
+        Massage modulo factorization over choices. The transformation
         is either attempted for all productions of a nonterminal or for a
         specific one appointed by its label.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-      <xsd:group ref="xbgf:scope"/>
+      <xsd:sequence>
+        <xsd:element ref="bgf:expression"/>
+        <xsd:element ref="bgf:expression"/>
+        <xsd:element name="in" minOccurs="0">
+          <xsd:complexType>
+            <xsd:group ref="xbgf:scope"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
 

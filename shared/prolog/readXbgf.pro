@@ -64,11 +64,13 @@ xml2xbgf(T,G)
     xmlToP(P1,P2),
     inScope2xbgf(extract,extractL,extractN,[P2],T,G).
 
-xml2xbgf(T,factorL(L))
+xml2xbgf(T,G)
  :-
     self(name(xbgf:factor),T),
-    child(name(label),T,T1),
-    content(T1,L).
+    children(name(bgf:expression),T,[T1,T2]),
+    xmlToExpression(T1,X1),
+    xmlToExpression(T2,X2),
+    inScope2xbgf(factor,factorL,factorN,[X1,X2],T,G).
 
 xml2xbgf(T,factorN(N))
  :-

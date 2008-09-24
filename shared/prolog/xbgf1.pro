@@ -295,6 +295,41 @@ extract(P1,Ps1,Ps2,Ps2a,Ps2b,Ps4)
 
 
 %
+% p([l(factor)], f, (n(x),n(x)))
+% p([l(factorL)], f, (n(x),n(x),n(l)))
+% p([l(factorN)], f, (n(x),n(x),n(n)))
+%
+% Massage modulo factorization over choices.
+%
+
+factor(X1,X2,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    factor(X1,X2,Ps1,[],[],Ps2).
+
+factorL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitL(Ps1,L,P,Ps2a,Ps2b),
+    factor(X1,X2,[P],Ps2a,Ps2b,Ps3).
+
+factorN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    factor(X1,X2,Ps2,Ps2a,Ps2b,Ps3).
+
+factor(X1,X2,Ps1,Ps1a,Ps1b,Ps2)
+ :-
+    require(
+      (
+        xbgf1:distribute_x(X1,Xs),
+        xbgf1:distribute_x(X2,Xs)
+      ),
+      'Expressions ~q and ~q must be related by distribution.',
+      [X1,X2]
+    ),
+    replace(X1,X2,Ps1,Ps1a,Ps1b,Ps2).
+
+
+%
 % p([l(fold)], f, n(n))
 % p([l(foldN)], f, (n(n),n(n)))
 % p([l(foldL)], f, (n(n),n(l)))
