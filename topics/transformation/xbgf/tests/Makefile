@@ -19,6 +19,7 @@ test:
 	make factor1.test
 	make factor2.test
 	make factor3.test
+	make factor4.test
 	make fold1.test
 	make fold2.test
 	make fold3.test
