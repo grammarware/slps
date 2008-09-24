@@ -1,0 +1,22 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:replace>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>c</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>b</nonterminal>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>d</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>a</nonterminal>
+    </in>
+  </xbgf:replace>
+</xbgf:sequence>

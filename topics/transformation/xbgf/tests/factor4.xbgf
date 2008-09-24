@@ -10,7 +10,7 @@
 	      <nonterminal>b</nonterminal>
 	    </bgf:expression>
 	    <bgf:expression>
-	      <nonterminal>d</nonterminal>
+	      <nonterminal>c</nonterminal>
 	    </bgf:expression>
 	  </sequence>
 	</bgf:expression>
@@ -20,7 +20,7 @@
 	      <nonterminal>b</nonterminal>
 	    </bgf:expression>
 	    <bgf:expression>
-	      <nonterminal>c</nonterminal>
+	      <nonterminal>d</nonterminal>
 	    </bgf:expression>
 	  </sequence>
 	</bgf:expression>

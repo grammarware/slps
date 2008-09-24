@@ -50,6 +50,7 @@ test:
 	make replace1.test
 	make replace2.test
 	make replace3.test
+	make replace4.test
 	make reroot.test
 	make skip.test
 	make strip1.test
