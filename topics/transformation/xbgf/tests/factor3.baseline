@@ -1,44 +1,38 @@
-<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
-  <bgf:production>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xns1:grammar xmlns:xns1="http://planet-sl.org/bgf">
+  <xns1:production>
     <nonterminal>a</nonterminal>
-    <bgf:expression>
+    <xns1:expression>
       <sequence>
-        <bgf:expression>
-          <nonterminal>b</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>arest</nonterminal>
-        </bgf:expression>
+	<xns1:expression>
+	  <nonterminal>b</nonterminal>
+	</xns1:expression>
+	<xns1:expression>
+	  <choice>
+	    <xns1:expression>
+	      <sequence>
+		<xns1:expression>
+		  <nonterminal>c</nonterminal>
+		</xns1:expression>
+		<xns1:expression>
+		  <nonterminal>d</nonterminal>
+		</xns1:expression>
+	      </sequence>
+	    </xns1:expression>
+	    <xns1:expression>
+	      <sequence>
+		<xns1:expression>
+		  <nonterminal>e</nonterminal>
+		</xns1:expression>
+		<xns1:expression>
+		  <nonterminal>f</nonterminal>
+		</xns1:expression>
+	      </sequence>
+	    </xns1:expression>
+	  </choice>
+	</xns1:expression>
       </sequence>
-    </bgf:expression>
-  </bgf:production>
-
-  <bgf:production>
-    <nonterminal>arest</nonterminal>
-    <bgf:expression>
-      <choice>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <nonterminal>c</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>d</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <nonterminal>e</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>f</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </choice>
-    </bgf:expression>
-  </bgf:production>
-
-</bgf:grammar>
+    </xns1:expression>
+  </xns1:production>
+</xns1:grammar>

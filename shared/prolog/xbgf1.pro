@@ -320,8 +320,10 @@ factor(X1,X2,Ps1,Ps1a,Ps1b,Ps2)
  :-
     require(
       (
-        xbgf1:distribute_x(X1,Xs),
-        xbgf1:distribute_x(X2,Xs)
+        xbgf1:distribute_x(X1,Xs1),
+        xbgf1:distribute_x(X2,Xs2),
+        normalizeG(Xs1,Xs3),
+        normalizeG(Xs2,Xs3)
       ),
       'Expressions ~q and ~q must be related by distribution.',
       [X1,X2]
@@ -446,6 +448,7 @@ inline(N,g(Rs,Ps1),g(Rs,Ps4))
     transform(try(xbgf1:inline_rule(N,X)),Ps3,Ps4).
     
 inline_rule(N,X,n(N),X).
+
 
 %
 % p([l(introduce)], f, +n(p))

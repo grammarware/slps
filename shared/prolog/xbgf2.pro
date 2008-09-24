@@ -11,7 +11,7 @@ transformT(Xbgf,r(G1,T1),T4)
  :-
     xbgf1:transformG(Xbgf,G1,G2),
     !,
-    apply(Xbgf,[T1,T2]),
+    apply(Xbgf,[(G1,T1),(G2,T2)]),
     !,
     ytransform(xbgf2:normalizeT_rules,T2,T3),
     T4 = r(G2,T3),
@@ -50,7 +50,7 @@ normalizeT_rules(','(Ts1),','(Ts2))
 % Define a nonterminal
 %
 
-define(Ps,T1,T2)
+define(Ps,(_,T1),(_,T2))
  :-
     accum(xbgf2:define_strategy,Ps,T1,T2).
 
@@ -89,7 +89,7 @@ define_rules(_,X,X).
 % Label a production
 %
 
-designate(P1,T1,T2)
+designate(P1,(_,T1),(_,T2))
  :-
     transform(try(xbgf2:designate_rule(P1)),T1,T2).
 
@@ -106,7 +106,7 @@ designate_rule(P1,n(P2,T),n(P1,T))
 % Distribute sequential composition over choices
 %
 
-distributeL(L,T1,T2)
+distributeL(L,(_,T1),(_,T2))
  :-
     transform(try(xbgf2:distributeL_rule(L)),T1,T2).
 
@@ -118,7 +118,7 @@ distributeL_rule(
  :-
     distribute(X,Xs,T1,T2).
 
-distributeN(N,T1,T2)
+distributeN(N,(_,T1),(_,T2))
  :-
     transform(try(xbgf2:distributeN_rule(N)),T1,T2).
 
@@ -165,7 +165,7 @@ distribute_t(','(Xs),','(Ts1),','(Ts2))
 % Eliminate a defined, otherwise unused nonterminal
 %
 
-eliminate(_,T,T).
+eliminate(_,(_,T),(_,T)).
 
 
 %
@@ -195,15 +195,13 @@ eliminate(_,T,T).
 % Inline a nonterminal definition (and eliminate it)
 %
 
-inline(N,T1,T2) 
+inline(N,(G,T1),(_,T2)) 
  :-
-    collect(xbgf2:inline_rule1(N),T1,Xs1),
-    list_to_set(Xs1,Xs2),
-    transform(try(xbgf2:inline_rules2(N,Xs2)),T1,T2).
+    splitN1(G,N,p(_,_,X),_,_),
+    transform(try(xbgf2:inline_rules(N,X)),T1,T2).
 
-inline_rule1(N,p(_,N,X),[X]).
-inline_rules2(N,[X],n(N),X).
-inline_rules2(N,_,n(p(_,N,_),T),T).
+inline_rules(N,X,n(N),X).
+inline_rules(N,_,n(p(_,N,_),T),T).
 
 
 %
@@ -212,7 +210,7 @@ inline_rules2(N,_,n(p(_,N,_),T),T).
 % Add a definition for a fresh nonterminal
 %
 
-introduce(_,T1,T1).
+introduce(_,(_,T1),(_,T1)).
 
 
 %
@@ -221,7 +219,7 @@ introduce(_,T1,T1).
 % Interpret separator list left-associatively
 %
 
-lassoc(P1,T1,T2)
+lassoc(P1,(_,T1),(_,T2))
  :-
     transform(try(xbgf2:lassoc_rule(P1)),T1,T2).
 
@@ -240,31 +238,31 @@ lassoc_strategy(P,[','([Ta,Tb])|Ts],T1,T2)
 
 %
 % p([l(massage)], f, (n(x),n(x)))
-% p([l(massageN)], f, (n(x),n(x),n(n)))
 % p([l(massageL)], f, (n(x),n(x),n(l)))
+% p([l(massageN)], f, (n(x),n(x),n(n)))
 %
 % Semantics-preserving expression replacement
 %
 
-massage(X1,X2,T1,T2) 
+massage(X1,X2,(_,T1),(_,T2)) 
  :-
     btf2x(T1,X3),
     RX = xbgf2:grammar_replace(X1,X2),
     RT = xbgf2:tree_massage(X1,X2),
     tree_strategy((RX,RT),[],[],(X3,T1),(_,T2)).
 
-massageN(X1,X2,N,T1,T2) 
- :-
-    btf2x(T1,X3),
-    RX = xbgf2:grammar_replaceN(X1,X2,N),
-    RT = xbgf2:tree_massageN(X1,X2,N),
-    tree_strategy((RX,RT),[],[],(X3,T1),(_,T2)).
-
-massageL(X1,X2,L,T1,T2) 
+massageL(X1,X2,L,(_,T1),(_,T2)) 
  :-
     btf2x(T1,X3),
     RX = xbgf2:grammar_replaceL(X1,X2,L),
     RT = xbgf2:tree_massageL(X1,X2,L),
+    tree_strategy((RX,RT),[],[],(X3,T1),(_,T2)).
+
+massageN(X1,X2,N,(_,T1),(_,T2)) 
+ :-
+    btf2x(T1,X3),
+    RX = xbgf2:grammar_replaceN(X1,X2,N),
+    RT = xbgf2:tree_massageN(X1,X2,N),
     tree_strategy((RX,RT),[],[],(X3,T1),(_,T2)).
 
 
@@ -332,7 +330,7 @@ massage_s_rule(s(S,X),X,s(S,T),T).
 % Permute the body of a production
 %
 
-permute(p(_,N,','(Xs)),T1,T2)
+permute(p(_,N,','(Xs)),(_,T1),(_,T2))
  :-
     transform(try(xbgf2:permute_rule(N,Xs)),T1,T2).
 
@@ -361,7 +359,7 @@ permuteXs(Xs1,[X|Xs2],Ts1,[T|Ts2])
 % Apply projection to the body of a production
 %
 
-project(p(_,N,','(Xs)),T1,T2)
+project(p(_,N,','(Xs)),(_,T1),(_,T2))
  :-
     transform(try(xbgf2:project_rule(N,Xs)),T1,T2).
 
@@ -392,7 +390,7 @@ projectXs([_|Xs1],Xs2,[_|Ts1],Ts2)
 % Interpret separator list right-associatively
 %
 
-rassoc(P1,T1,T2)
+rassoc(P1,(_,T1),(_,T2))
  :-
     transform(try(xbgf2:rassoc_rules(P1)),T1,T2).
 
@@ -437,31 +435,31 @@ rassoc_strategy2(P,[T1,T2|Ts],n(P,','([T1,T3])))
 % Rename labels, nonterminals, selectors, and terminals
 %
 
-renameL((L1,L2),T1,T2)
+renameL((L1,L2),(_,T1),(_,T2))
  :-
     renameL(L1,L2,T1,T2).
 
-renameL(L1,L2,T1,T2)
+renameL(L1,L2,(_,T1),(_,T2))
  :-
     transform(try(xbgf1:renameL_rule(L1,L2)),T1,T2).
 
-renameN((N1,N2),T1,T2)
+renameN((N1,N2),(_,T1),(_,T2))
  :-
     renameN(N1,N2,T1,T2).
 
-renameN(N1,N2,T1,T2)
+renameN(N1,N2,(_,T1),(_,T2))
  :-
     transform(try(xbgf1:renameN_rules(N1,N2)),T1,T2).
 
-renameS((S1,S2),T1,T2)
+renameS((S1,S2),(_,T1),(_,T2))
  :-
     renameS([],S1,S2,T1,T2).
 
-renameS([],S1,S2,T1,T2)
+renameS([],S1,S2,(_,T1),(_,T2))
  :-
     transform(try(xbgf1:renameS_rule(S1,S2)),T1,T2).
 
-renameS([L],S1,S2,T1,T2)
+renameS([L],S1,S2,(_,T1),(_,T2))
  :-
     transform(try(xbgf2:renameS_rule(L,S1,S2)),T1,T2).
 
@@ -484,7 +482,7 @@ renameS_scope(T) :- \+ T = n(_,_).
 % Assign new roots to the grammar
 %
 
-reroot(_,T1,T1).
+reroot(_,(_,T1),(_,T1)).
 
 
 %
@@ -500,7 +498,7 @@ reroot(_,T1,T1).
 % Skip a production
 %
 
-skip(P,T1,T2)
+skip(P,(_,T1),(_,T2))
  :-
     transform(try(xbgf2:skip_rule(P)),T1,T2).
 
@@ -518,27 +516,27 @@ skip_rule(P,n(P,T),T).
 % Strip labels, selectors, and terminals
 %
 
-stripL(L,T1,T2)
+stripL(L,(_,T1),(_,T2))
  :-
     transform(try(xbgf1:stripL_rules(L)),T1,T2).
 
-stripLs(T1,T2)
+stripLs((_,T1),(_,T2))
  :-
     transform(try(xbgf1:stripSs_rule),T1,T2).
 
-stripS(S,T1,T2)
+stripS(S,(_,T1),(_,T2))
  :-
     transform(try(xbgf1:stripS_rule(S)),T1,T2).
 
-stripSs(T1,T2)
+stripSs((_,T1),(_,T2))
  :-
     transform(try(xbgf1:stripSs_rule),T1,T2).
 
-stripT(T,T1,T2)
+stripT(T,(_,T1),(_,T2))
  :-
     transform(try(xbgf1:stripT_rule(T)),T1,T2).
 
-stripTs(T1,T2) 
+stripTs((_,T1),(_,T2)) 
  :-
     transform(try(xbgf1:stripTs_rule),T1,T2).
 
@@ -549,7 +547,7 @@ stripTs(T1,T2)
 % Unchain a production -- a restricted unfold
 %
 
-unchain(P,T1,T2)
+unchain(P,(_,T1),(_,T2))
  :-
     transform(try(xbgf2:unchain_rule(P)),T1,T2).
 
@@ -572,7 +570,7 @@ unchain_label([l(L)],_,[l(L)]).
 % Undefine a nonterminal, i.e., remove all productions
 %
 
-undefine(N,T,T)
+undefine(N,(_,T),(_,T))
  :-
     visit(xbgf2:undefine_rule(N),T).
 
@@ -606,7 +604,7 @@ undefine_rule(N1,n(P,_))
 % Turn choices into definitions of multiple productions
 %
 
-verticalL(L,T1,T2)
+verticalL(L,(_,T1),(_,T2))
  :-
     transform(try(xbgf2:verticalL_rule(L)),T1,T2).
 
@@ -618,7 +616,7 @@ verticalL_rule(
  :-
     vertical(N,Xs,P,T1,T2).
 
-verticalN(N,T1,T2)
+verticalN(N,(_,T1),(_,T2))
  :-
     transform(try(xbgf2:verticalN_rule(N)),T1,T2).
 

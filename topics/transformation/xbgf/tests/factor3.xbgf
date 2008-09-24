@@ -64,35 +64,4 @@
       </sequence>
     </bgf:expression>
   </xbgf:factor>
-
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>arest</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>c</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>d</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>e</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>f</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
-
 </xbgf:sequence>

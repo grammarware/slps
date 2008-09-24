@@ -1,19 +1,24 @@
-<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
-  <bgf:production>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xns1:grammar xmlns:xns1="http://planet-sl.org/bgf">
+  <xns1:production>
     <nonterminal>a</nonterminal>
-    <bgf:expression>
+    <xns1:expression>
       <sequence>
-        <bgf:expression>
-          <nonterminal>b</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <optional>
-            <bgf:expression>
-              <nonterminal>c</nonterminal>
-            </bgf:expression>
-          </optional>
-        </bgf:expression>
+	<xns1:expression>
+	  <nonterminal>b</nonterminal>
+	</xns1:expression>
+	<xns1:expression>
+	  <choice>
+	    <xns1:expression>
+	      <epsilon/>
+	    </xns1:expression>
+	    <xns1:expression>
+	      <nonterminal>c</nonterminal>
+	    </xns1:expression>
+	  </choice>
+	</xns1:expression>
       </sequence>
-    </bgf:expression>
-  </bgf:production>
-</bgf:grammar>
+    </xns1:expression>
+  </xns1:production>
+</xns1:grammar>

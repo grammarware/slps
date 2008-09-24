@@ -136,6 +136,10 @@ findN1(Ps,N,P)
 
 % Split productions into those for N and their pre- and postfix
 
+splitN(g(_,Ps1),N,Ps,Ps2,Ps3)
+ :-
+    splitN(Ps1,N,Ps,Ps2,Ps3).
+
 splitN(Ps1,N,Ps,Ps2,Ps3)
  :-
     require(
@@ -149,9 +153,9 @@ splitN(Ps1,N,Ps,Ps2,Ps3)
     filter(unifiable(p(_,N,_)),PsRest,Ps),
     filter(nonunifiable(p(_,N,_)),PsRest,Ps3).
 
-splitN1(Ps1,N,P,Ps2,Ps3)
+splitN1(Z,N,P,Ps2,Ps3)
  :-
-    splitN(Ps1,N,Ps,Ps2,Ps3),
+    splitN(Z,N,Ps,Ps2,Ps3),
     require(
       Ps = [P],
       'Nonterminal ~q must be defined by a single production.',
