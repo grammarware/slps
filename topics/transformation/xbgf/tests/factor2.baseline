@@ -5,17 +5,14 @@
       <sequence>
         <bgf:expression>
           <nonterminal>b</nonterminal>
-	</bgf:expression>        
+        </bgf:expression>
         <bgf:expression>
-          <choice>
+          <optional>
             <bgf:expression>
               <nonterminal>c</nonterminal>
-	    </bgf:expression>        
-            <bgf:expression>
-              <nonterminal>d</nonterminal>
-	    </bgf:expression>        
-	  </choice>
-        </bgf:expression>        
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
       </sequence>
     </bgf:expression>
   </bgf:production>
