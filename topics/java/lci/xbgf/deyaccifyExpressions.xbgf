@@ -211,11 +211,10 @@ vs
   <xbgf:inline>PreIncrementExpression</xbgf:inline>
   <xbgf:inline>PreDecrementExpression</xbgf:inline>
   <xbgf:inline>UnaryExpressionNotPlusMinus</xbgf:inline>
-  <xbgf:vertical>
+  <xbgf:distribute>
     <nonterminal>UnaryExpression</nonterminal>
-  </xbgf:vertical>
-  <xbgf:horizontal>UnaryExpression</xbgf:horizontal>
-  <xbgf:rename>
+  </xbgf:distribute>
+   <xbgf:rename>
     <nonterminal>
       <from>UnaryExpression</from>
       <to>Expression3</to>
@@ -373,10 +372,80 @@ vs
     </bgf:production>
   </xbgf:define>
   <xbgf:inline>PostfixExpression</xbgf:inline>
-  <xbgf:vertical>
-    <nonterminal>Expression3</nonterminal>
-  </xbgf:vertical>
-  <xbgf:horizontal>Expression3</xbgf:horizontal>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>Arguments</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <nonterminal>Expression</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <star>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>,</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <nonterminal>Expression</nonterminal>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                    </star>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>InnerCreator</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ClassCreatorRest</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ClassCreatorRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Arguments</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ClassBody</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
 
   <!-- Now to Expression2, using the expressway -->
   <xbgf:undefine>ConditionalOrExpression</xbgf:undefine>
@@ -518,7 +587,6 @@ vs
   <xbgf:eliminate>ConditionalAndExpression</xbgf:eliminate>
 
   <!-- And now "Expression1" -->
-
   <xbgf:vertical>
     <nonterminal>ConditionalExpression</nonterminal>
   </xbgf:vertical>
@@ -648,4 +716,5 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+
 </xbgf:sequence>

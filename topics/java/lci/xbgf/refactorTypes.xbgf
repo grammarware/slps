@@ -73,10 +73,9 @@
   <xbgf:inline>IntegralType</xbgf:inline>
   <xbgf:inline>FloatingPointType</xbgf:inline>
   <xbgf:inline>NumericType</xbgf:inline>
-  <xbgf:vertical>
+  <xbgf:distribute>
     <nonterminal>PrimitiveType</nonterminal>
-  </xbgf:vertical>
-  <xbgf:horizontal>PrimitiveType</xbgf:horizontal>
+  </xbgf:distribute>
   <xbgf:rename>
     <nonterminal>
       <from>PrimitiveType</from>
@@ -200,96 +199,4 @@
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
   <xbgf:inline>ReferenceType</xbgf:inline>
-  
-  <!--xbgf:vertical>
-    <nonterminal>PrimitiveType</nonterminal>
-  </xbgf:vertical>
-  <xbgf:remove>
-    <bgf:production>
-      <nonterminal>PrimitiveType</nonterminal>
-      <bgf:expression>
-        <nonterminal>NumericType</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:remove>
-  <xbgf:eliminate>NumericType</xbgf:eliminate>
-  <xbgf:vertical>
-    <nonterminal>IntegralType</nonterminal>
-  </xbgf:vertical>
-  <xbgf:unite>
-    <add>IntegralType</add>
-    <to>PrimitiveType</to>
-  </xbgf:unite>
-  <xbgf:vertical>
-    <nonterminal>FloatingPointType</nonterminal>
-  </xbgf:vertical>
-  <xbgf:unite>
-    <add>FloatingPointType</add>
-    <to>PrimitiveType</to>
-  </xbgf:unite>
-  <xbgf:rename>
-    <nonterminal>
-      <from>PrimitiveType</from>
-      <to>BasicType</to>
-    </nonterminal>
-  </xbgf:rename>
-
-  <xbgf:undefine>ReferenceType</xbgf:undefine>
-  <xbgf:unite>
-    <add>ReferenceType</add>
-    <to>Type</to>
-  </xbgf:unite>
-  <xbgf:undefine>ClassType</xbgf:undefine>
-  <xbgf:unite>
-    <add>ClassType</add>
-    <to>Type</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>InterfaceType</add>
-    <to>Type</to>
-  </xbgf:unite>
-  <xbgf:eliminate>ArrayType</xbgf:eliminate>
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>Type</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <star>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>.</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Identifier</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </star>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-
-  <xbgf:rename>
-    <nonterminal>
-      <from>ClassTypeList</from>
-      <to>TypeList</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:unite>
-    <add>InterfaceTypeList</add>
-    <to>TypeList</to>
-  </xbgf:unite>
-
-  <xbgf:deyaccify>TypeList</xbgf:deyaccify>
-  ...-->
 </xbgf:sequence>

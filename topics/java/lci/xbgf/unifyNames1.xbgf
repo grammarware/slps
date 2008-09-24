@@ -50,14 +50,6 @@ vs
     <add>ExpressionName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
-  <xbgf:unite>
-    <add>PackageOrTypeName</add>
-    <to>QualifiedIdentifier</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>ClassName</add>
-    <to>QualifiedIdentifier</to>
-  </xbgf:unite>
   <xbgf:deyaccify>QualifiedIdentifier</xbgf:deyaccify>
   
 </xbgf:sequence>

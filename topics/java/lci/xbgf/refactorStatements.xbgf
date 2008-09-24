@@ -21,39 +21,60 @@
     </bgf:production>
   </xbgf:extract>
 
-  <xbgf:undefine>IfThenElseStatement</xbgf:undefine>
-  <xbgf:define>
-    <bgf:production>
+  <!-- this transformation widens semantics -->
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>StatementNoShortIf</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>Statement</nonterminal>
+    </bgf:expression>
+    <in>
       <nonterminal>IfThenElseStatement</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>if</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ParExpression</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Statement</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>else</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Statement</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
+    </in>
+  </xbgf:replace>
+  <!-- should be -->
+  <!--
+  <xbgf:inline>IfThenStatement</xbgf:inline>
+  <xbgf:inline>IfThenElseStatement</xbgf:inline>
+  <xbgf:factor>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:factor>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <empty/>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>else</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Statement</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>else</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Statement</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  -->
+  <!-- but substituted as -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -62,8 +83,38 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <xbgf:inline>IfThenElseStatement</xbgf:inline>
-
+  <xbgf:narrow>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>else</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Statement</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>else</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Statement</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <in>
+      <nonterminal>IfThenElseStatement</nonterminal>
+    </in>
+  </xbgf:narrow>
+    <xbgf:inline>IfThenElseStatement</xbgf:inline>
+<!-- end of substitute -->
+  
   <xbgf:inline>ForStatement</xbgf:inline>
   <xbgf:inline>WhileStatement</xbgf:inline>
   <xbgf:inline>LabeledStatement</xbgf:inline>
@@ -173,6 +224,10 @@
     </bgf:production>
   </xbgf:define>
   <xbgf:inline>StatementExpressionList</xbgf:inline>
-  
+
+  <xbgf:distribute>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:distribute>
+  <xbgf:horizontal>Statement</xbgf:horizontal>
   <!--...-->
 </xbgf:sequence>

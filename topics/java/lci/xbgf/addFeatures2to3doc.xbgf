@@ -1222,40 +1222,11 @@
   </xbgf:strip>
 
   <!--
-     - Fail: FormalParameterList.
-      - [], ;([n(FormalParameter), ,([n(FormalParameterList), t((,)), n(FormalParameter)])])
-     vs.
-      - [], ;([n(LastFormalParameter), ,([n(FormalParameters), t((,)), n(LastFormalParameter)])])
      - Fail: ConstructorDeclarator.
-      - [], ,([n(SimpleTypeName), t((), ?(n(FormalParameterList)), t())])
+      - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
      vs.
-      - [], ,([?(n(TypeParameters)), n(SimpleTypeName), t((), ?(n(FormalParameterList)), t())])
-
+      - [], ,([?(n(TypeParameters)), n(Identifier), t((), ?(n(FormalParameterList)), t())])
   -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>FormalParameterList</from>
-      <to>FormalParameters</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:project>
-    <bgf:production>
-      <nonterminal>ConstructorDeclarator</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>SimpleTypeName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:project>
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ConstructorDeclarator</nonterminal>
@@ -1269,7 +1240,7 @@
             </optional>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>SimpleTypeName</nonterminal>
+            <nonterminal>Identifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <terminal>(</terminal>
@@ -1288,6 +1259,46 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
+
+  <!--
+     - Fail: FormalParameterList.
+      - [], ;([n(FormalParameter), ,([n(FormalParameterList), t((,)), n(FormalParameter)])])
+     vs.
+      - [], ;([n(LastFormalParameter), ,([n(FormalParameters), t((,)), n(LastFormalParameter)])])
+   - Fail: MethodDeclarator.
+      - [], ,([n(Identifier), t((), ?(n(FormalParameters)), t())])
+     vs.
+      - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
+
+  -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>FormalParameterList</from>
+      <to>FormalParameters</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>FormalParameters</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>FormalParameterList</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>MethodDeclarator</nonterminal>
+    </in>
+  </xbgf:replace>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>FormalParameters</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>FormalParameterList</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>ConstructorDeclarator</nonterminal>
+    </in>
+  </xbgf:replace>
   <xbgf:define>
     <bgf:production>
       <nonterminal>FormalParameterList</nonterminal>
@@ -1342,74 +1353,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-
-  <!--
-     - Fail: PrimaryNoNewArray.
-      - [], ;([n(Literal), ,([n(Type), t(.), t(class)]), ,([t(void), t(.), t(class)]), t(this), ,([t(ClassName), t(.), t(this)]), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
-     vs.
-      - [], ;([n(Literal), ,([n(Type), t(.), t(class)]), ,([t(void), t(.), t(class)]), t(this), ,([n(ClassName), t(.), t(this)]), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
-  -->
-  <xbgf:vertical>
-    <nonterminal>PrimaryNoNewArray</nonterminal>
-  </xbgf:vertical>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>PrimaryNoNewArray</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>ClassName</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>this</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:project>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>PrimaryNoNewArray</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>this</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:project>
-  <xbgf:inject>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>PrimaryNoNewArray</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ClassName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>this</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:inject>
-  <xbgf:horizontal>PrimaryNoNewArray</xbgf:horizontal>
-  <xbgf:strip>
-    <selector>target</selector>
-  </xbgf:strip>
 
   <!--
      - Fail: ConstantDeclaration.

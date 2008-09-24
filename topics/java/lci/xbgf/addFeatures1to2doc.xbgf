@@ -54,7 +54,32 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>FieldAccess</xbgf:horizontal>
-  
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ClassName</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>AmbiguousName</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>.</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+
   <!--
      - Fail: LocalVariableDeclaration.
       - [], ,([n(Type), n(VariableDeclarators)])

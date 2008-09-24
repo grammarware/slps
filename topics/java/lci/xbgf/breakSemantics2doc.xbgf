@@ -49,10 +49,11 @@
     <add>ConstructorBody</add>
     <to>MethodBody</to>
   </xbgf:unite>
+  <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
+  <xbgf:eliminate>ArgumentList</xbgf:eliminate>
 
   <!--
-  ConstructorDeclaratorRest is defined as:
-     FormalParameters [ "throws" QualifiedIdentifierList ] MethodBody
+   Some productions use a more general QualifiedIdentifierList instead of TypeList
   -->
   <xbgf:replace>
     <bgf:expression>
@@ -76,6 +77,54 @@
       <nonterminal>MethodDeclaratorRest</nonterminal>
     </in>
   </xbgf:replace>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>TypeList</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>QualifiedIdentifierList</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
+    </in>
+  </xbgf:replace>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>TypeList</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>QualifiedIdentifierList</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>InterfaceMethodDeclaratorRest</nonterminal>
+    </in>
+  </xbgf:replace>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>QualifiedIdentifierList</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>QualifiedIdentifier</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
 
   <!--
    - Fail: MethodDeclaratorRest.
@@ -133,6 +182,45 @@
       <nonterminal>MethodDeclaratorRest</nonterminal>
     </in>
   </xbgf:replace>
+  
+  <!--
+   - Fail: InterfaceMethodDeclaratorRest.
+      - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
+     vs.
+      - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
+  -->
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>InterfaceMethodDeclaratorRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>FormalParameters</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>throws</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>QualifiedIdentifierList</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
 
   <!--
    - Fail: ArrayInitializer.

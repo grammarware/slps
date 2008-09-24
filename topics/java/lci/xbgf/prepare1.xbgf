@@ -14,6 +14,16 @@
   <xbgf:vertical>
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
-  
+
+  <!--
+   - Fail: Name.
+      - [], ;([n(SimpleName), n(QualifiedName)])
+     vs.
+      - [], ,([n(Identifier), *(,([t(.), n(Identifier)]))])
+  -->
+  <xbgf:inline>SimpleName</xbgf:inline>
+  <xbgf:inline>QualifiedName</xbgf:inline>
+  <xbgf:deyaccify>Name</xbgf:deyaccify>
+
   <xbgf:eliminate>Goal</xbgf:eliminate>
 </xbgf:sequence>

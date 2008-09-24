@@ -276,10 +276,6 @@
   </xbgf:extract>
   <xbgf:deyaccify>FormalParameterList</xbgf:deyaccify>
   <xbgf:inline>FormalParameterList</xbgf:inline>
-  <xbgf:unite>
-    <add>SimpleTypeName</add>
-    <to>Identifier</to>
-  </xbgf:unite>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>ConstructorDeclaratorRest</nonterminal>
@@ -334,6 +330,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:distribute>
+    <nonterminal>ClassBodyDeclaration</nonterminal>
+  </xbgf:distribute>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>MethodOrFieldDecl</nonterminal>
@@ -371,34 +370,11 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>VariableDeclaratorRest</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>=</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>VariableInitializer</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
   <xbgf:horizontal>MethodOrFieldRest</xbgf:horizontal>
 
+  <xbgf:vertical>
+    <nonterminal>ClassBodyDeclaration</nonterminal>
+  </xbgf:vertical>
   <xbgf:designate>
     <bgf:production>
       <label>target</label>
@@ -436,7 +412,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <xbgf:eliminate>FieldDeclaration</xbgf:eliminate>
+  
   <!-- ... -->
-  <xbgf:inline>Throws</xbgf:inline>
-
+  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
+  
 </xbgf:sequence>

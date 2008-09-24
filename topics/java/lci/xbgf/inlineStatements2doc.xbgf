@@ -37,6 +37,9 @@
   <xbgf:inline>EmptyStatement</xbgf:inline>
   <xbgf:inline>SwitchBlock</xbgf:inline>
   <xbgf:inline>Finally</xbgf:inline>
+  <xbgf:distribute>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:distribute>
   <xbgf:vertical>
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
@@ -161,6 +164,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
+  <xbgf:undefine>SwitchLabels</xbgf:undefine>
   <xbgf:inline>SwitchStatement</xbgf:inline>
 
   <!--
@@ -297,4 +301,7 @@
       - [], ,([n(LocalVariableDeclaration), t((;))])
   -->
   <xbgf:inline>LocalVariableDeclaration</xbgf:inline>
+  
+  <!-- done! -->
+  <xbgf:horizontal>Statement</xbgf:horizontal>
 </xbgf:sequence>

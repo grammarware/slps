@@ -4,17 +4,10 @@
 
   <xbgf:inline>PrefixOp</xbgf:inline>
   <xbgf:inline>PostfixOp</xbgf:inline>
-  <xbgf:vertical>
+  <xbgf:distribute>
     <nonterminal>Expression3</nonterminal>
-  </xbgf:vertical>
-  <xbgf:horizontal>Expression3</xbgf:horizontal>
-
-  <!--xbgf:inline>Infixop</xbgf:inline>
-  <xbgf:vertical>
-    <nonterminal>Expression2Rest</nonterminal>
-  </xbgf:vertical>
-  <xbgf:horizontal>Expression2Rest</xbgf:horizontal-->
-
+  </xbgf:distribute>
+  
   <xbgf:inline>Expression1Rest</xbgf:inline>
   <xbgf:extract>
     <bgf:production>
@@ -59,10 +52,13 @@
   </xbgf:massage>
 
   
-  <!-- fake part that will become obsolete once factor and distribute are introduced -->
+  <!-- fake part that will become obsolete once factor is introduced -->
   <xbgf:inline>MemberDecl</xbgf:inline>
-  <xbgf:vertical>
+  <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
-  </xbgf:vertical>
+  </xbgf:distribute>
+  <xbgf:distribute>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:distribute>
   <!-- fake part end -->
 </xbgf:sequence>

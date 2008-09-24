@@ -2,6 +2,9 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
+  <xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
   <!--
   Local substitution:
   
@@ -131,7 +134,7 @@
      - Fail: PrimaryNoNewArray.
       - [], ;([n(Literal), t(this), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
      vs.
-      - [], ;([n(Literal), ,([n(Type), t(.), t(class)]), ,([t(void), t(.), t(class)]), t(this), ,([t(ClassName), t(.), t(this)]), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
+      - [], ;([n(Literal), ,([n(Type), t(.), t(class)]), ,([t(void), t(.), t(class)]), t(this), ,([n(ClassName), t(.), t(this)]), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
     -->
   <xbgf:undefine>PrimaryNoNewArray</xbgf:undefine>
   <xbgf:define>
@@ -174,7 +177,7 @@
           <bgf:expression>
             <sequence>
               <bgf:expression>
-                <terminal>ClassName</terminal>
+                <nonterminal>ClassName</nonterminal>
               </bgf:expression>
               <bgf:expression>
                 <terminal>.</terminal>

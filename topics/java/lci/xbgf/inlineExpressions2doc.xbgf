@@ -49,6 +49,9 @@
   <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
   <xbgf:inline>FieldAccess</xbgf:inline>
   <!--xbgf:inline>ArrayCreationExpression</xbgf:inline-->
+  <xbgf:distribute>
+    <nonterminal>Primary</nonterminal>
+  </xbgf:distribute>
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
@@ -153,6 +156,10 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <xbgf:eliminate>ArrayCreationExpression</xbgf:eliminate>
+  <xbgf:eliminate>DimExprs</xbgf:eliminate>
+  <xbgf:eliminate>DimExpr</xbgf:eliminate>
+  <xbgf:eliminate>Dims</xbgf:eliminate>
   <xbgf:add>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -190,7 +197,65 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ArrayCreatorRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>[</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <choice>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>]</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>BracketsOpt</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>ArrayInitializer</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <nonterminal>Expression</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>]</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <star>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>[</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <nonterminal>Expression</nonterminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <terminal>]</terminal>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                    </star>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>BracketsOpt</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </choice>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
   <!--
    - Fail: ForUpdate.
       - [], ,([n(StatementExpression), n(MoreStatementExpressions)])
@@ -233,16 +298,6 @@
   -->
   <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
-
-  <!--
-  And one more time:
-  
-   - Fail: VariableDeclarators.
-      - [], ,([n(VariableDeclarator), *(,([t((,)), n(VariableDeclarator)]))])
-     vs.
-      - [], ;([n(VariableDeclarator), ,([n(VariableDeclarators), t((,)), n(VariableDeclarator)])])
-  -->
-  <xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify>
 
  <!--
    - Fail: Primary.
@@ -432,6 +487,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <xbgf:eliminate>ArrayAccess</xbgf:eliminate>
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -440,6 +496,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <xbgf:eliminate>MethodInvocation</xbgf:eliminate>
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -448,6 +505,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <xbgf:eliminate>ClassInstanceCreationExpression</xbgf:eliminate>
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>

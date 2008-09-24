@@ -18,7 +18,7 @@
     <to>ConstantModifier</to>
   </xbgf:unite>
   
-  <!-- Another type of JLS2 -->
+  <!-- Another typo of JLS2 -->
   <xbgf:unite>
     <add>Identifer</add>
     <to>Identifier</to>
@@ -263,4 +263,18 @@
       <nonterminal>ClassName</nonterminal>
     </bgf:expression>
   </xbgf:replace>
+
+  <!--
+   - Fail: ConstructorDeclarator.
+      - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
+     vs.
+      - [], ,([n(SimpleTypeName), t((), ?(n(FormalParameterList)), t())])
+      
+  SimpleTypeName is not defined formally in the JLS2
+  -->
+  <xbgf:unite>
+    <add>SimpleTypeName</add>
+    <to>Identifier</to>
+  </xbgf:unite>
+
 </xbgf:sequence>

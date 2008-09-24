@@ -96,6 +96,7 @@
   <xbgf:strip>
     <label>BreakStatement</label>
   </xbgf:strip>
+  <xbgf:horizontal>Statement</xbgf:horizontal>
 
   <!--
   Expression is referenced as Expr:
@@ -114,6 +115,25 @@
     </bgf:expression>
   </xbgf:replace>
  
+  <!-- undefined non-terminals -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ExpressionStatement</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>StatementExpression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+
   <!-- unused non-terminals -->
   <xbgf:eliminate>ArgumentsOpt</xbgf:eliminate>
+  <xbgf:eliminate>VoidMethodDeclaratorRest</xbgf:eliminate>
+  <xbgf:eliminate>VariableDeclaratorsRest</xbgf:eliminate>
 </xbgf:sequence>

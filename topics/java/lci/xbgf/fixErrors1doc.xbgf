@@ -58,59 +58,24 @@
     </in>
   </xbgf:widen>
   
-  <!--   Wrong markup makes the extractor enforce line continuation   
-  
-     - Fail: InterfaceDeclaration.
-      - [], ,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
+   
+  <!--
+   - Fail: ConstructorDeclarator.
+      - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
      vs.
-      - [], ;([,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(TypeParameters))]), ,([?(n(ExtendsInterfaces)), n(InterfaceBody)])])
+      - [], ,([n(SimpleTypeName), t((), ?(n(FormalParameterList)), t())])
+      
+  SimpleTypeName is not defined formally in the JLS1
   -->
-  <xbgf:undefine>InterfaceDeclaration</xbgf:undefine>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>InterfaceDeclaration</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>InterfaceModifiers</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>interface</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>TypeParameters</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>ExtendsInterfaces</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>InterfaceBody</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
+  <xbgf:unite>
+    <add>SimpleTypeName</add>
+    <to>Identifier</to>
+  </xbgf:unite>
+
+  <!-- Another typo of JLS2 -->
+  <xbgf:unite>
+    <add>Identifer</add>
+    <to>Identifier</to>
+  </xbgf:unite>
+  
 </xbgf:sequence>

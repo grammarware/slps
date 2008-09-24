@@ -68,4 +68,7 @@
       <nonterminal>Catches</nonterminal>
     </in>
   </xbgf:massage>
+
+  <!-- undefine lexical term -->
+  <xbgf:undefine>Identifier</xbgf:undefine>
 </xbgf:sequence>

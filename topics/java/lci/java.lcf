@@ -16,12 +16,12 @@
     </expansion>
   </shortcut>
 
-  <!--tool>
+  <tool>
     <name>validation</name>
     <grammar>
       <expand>tools</expand>/checkxml bgf
     </grammar>
-  </tool-->
+  </tool>
   <tool>
     <name>comparison</name>
     <grammar>
@@ -86,7 +86,7 @@
     </grammar>
   </source>
 
-  <!--target>
+  <target>
     <name>one</name>
     <branch>
       <input>jls1syntax</input>
@@ -94,10 +94,11 @@
     </branch>
     <branch>
       <input>jls1doc</input>
-      <perform>unifyNames</perform>
+      <perform>fixErrors1doc</perform>
+      <perform>unifyNames1</perform>
       <perform>preferLALR</perform>
     </branch>
-  </target-->
+  </target>
 
   <target>
     <name>two</name>
@@ -118,12 +119,13 @@
       <perform>inlineStatements2doc</perform>
       <perform>inlineExpressions2doc</perform>
       <perform>refactorClassDeclarations</perform>
-      <perform>refactorDeclarations2doc</perform>
+      <perform>refactorInterfaceDeclarations</perform>
+      <perform>refactorMiscDeclarations</perform>
       <perform>breakSemantics2doc</perform>
     </branch>
   </target>
 
-  <!--target>
+  <target>
     <name>three</name>
     <branch>
       <input>jls3syntax</input>
@@ -189,6 +191,7 @@
       <perform>fixErrors3doc</perform>
     </branch>
   </target>
+  
   <target>
     <name>formal</name>
     <branch>
@@ -200,6 +203,6 @@
     <branch>
       <input>jls3syntax</input>
     </branch>
-  </target-->
+  </target>
 
 </lcf:configuration>

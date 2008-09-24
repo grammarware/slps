@@ -4,6 +4,7 @@
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
+  
   <xbgf:vertical>
     <nonterminal>Type</nonterminal>
   </xbgf:vertical>
@@ -14,56 +15,13 @@
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
 
-  <!--
-    - Fail: Name.
-      - [], ;([n(Identifier), ,([n(Name), t(.), n(Identifier)])])
-     vs.
-      - [], ;([n(SimpleName), n(QualifiedName)])
-  -->
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>QualifiedName</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Name</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
-  <xbgf:vertical>
-    <nonterminal>Name</nonterminal>
-  </xbgf:vertical>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>Name</nonterminal>
-      <bgf:expression>
-        <nonterminal>Identifier</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:chain>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>Name</nonterminal>
-      <bgf:expression>
-        <nonterminal>SimpleName</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:chain>
-  <xbgf:strip>
-    <label>target</label>
-  </xbgf:strip>
-  <xbgf:horizontal>Name</xbgf:horizontal>
-
+  <xbgf:rename>
+    <nonterminal>
+      <from>QualifiedIdentifier</from>
+      <to>Name</to>
+    </nonterminal>
+  </xbgf:rename>
+  
   <!--
    - Fail: ClassOrInterfaceType.
       - [], ;([n(ClassType), n(InterfaceType)])
@@ -112,17 +70,6 @@
   </xbgf:fold>
 
   <!--
-     - Fail: ConstructorDeclarator.
-      - [], ,([n(SimpleTypeName), t((), ?(n(FormalParameterList)), t())])
-     vs.
-      - [], ,([n(SimpleName), t((), ?(n(FormalParameterList)), t())])
-  -->
-  <xbgf:unite>
-    <add>SimpleTypeName</add>
-    <to>SimpleName</to>
-  </xbgf:unite>
-
-  <!--
    - Fail: FieldDeclaration.
       - [], ,([?(n(FieldModifiers)), n(Type), n(VariableDeclarators), t((;))])
      vs.
@@ -148,7 +95,7 @@
     <nonterminal>FieldModifier</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
-    <nonterminal>ConstantModifiers</nonterminal>
+    <nonterminal>ConstantModifier</nonterminal>
   </xbgf:vertical>
   <xbgf:rename>
     <nonterminal>
@@ -176,9 +123,9 @@
     <add>FieldModifier</add>
     <to>Modifier</to>
   </xbgf:unite>
-  <!-- NB: weird name (plural) -->
+  <!-- NB: was a weird name (plural) -->
   <xbgf:unite>
-    <add>ConstantModifiers</add>
+    <add>ConstantModifier</add>
     <to>Modifier</to>
   </xbgf:unite>
   <xbgf:rename>
@@ -187,6 +134,10 @@
       <to>Modifiers</to>
     </nonterminal>
   </xbgf:rename>
+  <xbgf:unite>
+    <add>ConstantModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
   <xbgf:unite>
     <add>InterfaceModifiers</add>
     <to>Modifiers</to>
@@ -222,20 +173,13 @@
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
+            <nonterminal>MethodDeclarator</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <terminal>(</terminal>
+            <terminal>[</terminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>FormalParameterList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
+            <terminal>]</terminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
@@ -261,10 +205,9 @@
     </in>
   </xbgf:fold>
   <xbgf:inline>ResultType</xbgf:inline>
-  <xbgf:vertical>
+  <xbgf:distribute>
     <nonterminal>MethodHeader</nonterminal>
-  </xbgf:vertical>
-  <xbgf:horizontal>MethodHeader</xbgf:horizontal>
+  </xbgf:distribute>
   
   <!--
    - Fail: ArrayCreationExpression.
@@ -313,14 +256,13 @@
       <nonterminal>CastExpression</nonterminal>
     </in>
   </xbgf:replace>
-  <xbgf:vertical>
+  <xbgf:distribute>
     <nonterminal>CastExpression</nonterminal>
-  </xbgf:vertical>
-  <xbgf:horizontal>CastExpression</xbgf:horizontal>
+  </xbgf:distribute>
 
   <!--
    - Fail: ConstantDeclaration.
-      - [], ,([n(Modifier), n(Type), n(VariableDeclarator)])
+      - [], ,([?(n(Modifiers)), n(Type), n(VariableDeclarator)])
      vs.
       - [], n(FieldDeclaration)
       
@@ -331,7 +273,11 @@
     <bgf:expression>
       <sequence>
         <bgf:expression>
-          <nonterminal>Modifier</nonterminal>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Modifiers</nonterminal>
+            </bgf:expression>
+          </optional>
         </bgf:expression>
         <bgf:expression>
           <nonterminal>Type</nonterminal>
@@ -374,8 +320,8 @@
       <nonterminal>ArrayType</nonterminal>
     </in>
   </xbgf:unfold>
-  <xbgf:vertical>
+  <xbgf:distribute>
     <nonterminal>ArrayType</nonterminal>
-  </xbgf:vertical>
-  <xbgf:horizontal>ArrayType</xbgf:horizontal>
+  </xbgf:distribute>
+  
 </xbgf:sequence>
