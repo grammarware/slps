@@ -83,15 +83,15 @@ rebuild:
 	@rm -f $*.log
 	@touch $*.log
 	@${tools}/checkxml bgf $*.bgf ${log}
-	@${tools}/showbgf $*.bgf ${log}
 	@${tools}/checkxml xbgf $*.xbgf ${log}
-	@${tools}/showxbgf $*.xbgf ${log}
 	@${tools}/xbgf $*.xbgf $*.bgf $*.out ${log}
-	@${tools}/showbgf $*.out ${log}
 	@${tools}/gdt $*.out $*.baseline ${log}
 
 %.quiet:
 	@make $*.test log="${redirect}"
+	@${tools}/showbgf $*.bgf ${redirect}
+	@${tools}/showxbgf $*.xbgf ${redirect}
+	@${tools}/showbgf $*.out ${redirect}
 
 clean:
 	rm -f *.out
