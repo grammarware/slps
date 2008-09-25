@@ -1,0 +1,39 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -eq 1 ]; then
+    OUTPUT=`basename $1 .bgf`.bnf
+elif [ $# -ne 2 ]; then
+    echo "This tool transforms XML BNF-like Grammar Format documents to EBNF dialect used in JLS."
+    echo "Usage: bgf2bnf <input-bgf-document> [<output-text>]"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    OUTPUT=$2
+fi
+
+${SLPS}/shared/tools/xbgf ${SLPS}/topics/presentation/bgf2bnf/strips.xbgf $1 $1.noselectors > /dev/null
+if [ ! -r $1.noselectors ]; then
+    ${SLPS}/shared/tools/xbgf ${SLPS}/topics/presentation/bgf2bnf/stripl.xbgf $1 $1.nolabels > /dev/null
+    if [ -r $1.nolabels ]; then
+        mv $1.nolabels $1.stripped
+    else
+        cp $1 $1.stripped
+    fi
+else
+    ${SLPS}/shared/tools/xbgf ${SLPS}/topics/presentation/bgf2bnf/stripl.xbgf $1.noselectors $1.nolabels > /dev/null
+    if [ -r $1.nolabels ]; then
+        mv $1.nolabels $1.stripped
+    else
+        mv $1.noselectors $1.stripped
+    fi
+fi
+xsltproc ${SLPS}/shared/xsl/bgf2bnf.xslt $1.stripped > ${OUTPUT}
+rm -f $1.stripped $1.noselectors $1.nolabels
