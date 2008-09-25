@@ -177,4 +177,13 @@
     </bgf:production>
   </xbgf:define>
 
+  <!-- "Expression1" and "Expression2" define different "Expression"s in AssertStatement actually -->
+  <xbgf:unite>
+    <add>Expression1</add>
+    <to>Expression</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>Expression2</add>
+    <to>Expression</to>
+  </xbgf:unite>
 </xbgf:sequence>

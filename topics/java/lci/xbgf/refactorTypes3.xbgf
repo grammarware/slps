@@ -85,17 +85,6 @@
   <!-- Merging interfaces with classes and making lists and other things conform -->
   <xbgf:replace>
     <bgf:expression>
-      <nonterminal>ClassType</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>Type</nonterminal>
-    </bgf:expression>
-    <in>
-      <nonterminal>ClassTypeList</nonterminal>
-    </in>
-  </xbgf:replace>
-  <xbgf:replace>
-    <bgf:expression>
       <nonterminal>InterfaceType</nonterminal>
     </bgf:expression>
     <bgf:expression>
@@ -131,13 +120,13 @@
     <add>InterfaceType</add>
     <to>ClassType</to>
   </xbgf:unite>
-  <xbgf:unite>
+  <!--xbgf:unite>
     <add>InterfaceTypeList</add>
     <to>ClassTypeList</to>
-  </xbgf:unite>
+  </xbgf:unite-->
   <xbgf:rename>
     <nonterminal>
-      <from>ClassTypeList</from>
+      <from>InterfaceTypeList</from>
       <to>TypeList</to>
     </nonterminal>
   </xbgf:rename>
@@ -186,6 +175,15 @@
       <nonterminal>ReferenceType</nonterminal>
       <bgf:expression>
         <nonterminal>ArrayType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:inline>TypeVariable</xbgf:inline>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>ReferenceType</nonterminal>
+      <bgf:expression>
+        <nonterminal>Identifier</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>

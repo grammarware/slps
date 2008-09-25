@@ -11,12 +11,6 @@
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Modifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Statement</nonterminal>
-  </xbgf:vertical>
 
   <xbgf:vertical>
     <nonterminal>Selector</nonterminal>
