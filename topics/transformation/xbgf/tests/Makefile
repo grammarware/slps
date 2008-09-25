@@ -53,6 +53,7 @@ test:
 	@make replace2.quiet
 	@make replace3.quiet
 	@make replace4.quiet
+	@make replace5.quiet
 	@make reroot.quiet
 	@make skip.quiet
 	@make strip1.quiet
