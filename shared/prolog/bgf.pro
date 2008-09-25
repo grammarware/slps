@@ -466,3 +466,15 @@ eqXs(';',[[X1|Xs1]],[Xs2])
     !,
     append(Xs2a,Xs2b,Xs3),
     eqXs(';',[Xs1],[Xs3]).
+
+
+% Subtracting subset test on sets of expressions
+
+subsetXs([],Xs,Xs).
+subsetXs([X1|Xs1],Xs2,Xs4)
+ :-
+    append(Xs2a,[X2|Xs2b],Xs2),
+    eqX(X1,X2),
+    append(Xs2a,Xs2b,Xs3),
+    !,
+    subsetXs(Xs1,Xs3,Xs4).

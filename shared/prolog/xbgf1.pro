@@ -818,7 +818,13 @@ replace_rules(';'(Xs1),Y1,';'(Xs2),';'(Xs3))
     append(Xs1a,Xs1b,Xs2),
     append(Xs1c,Xs1d,Xs1b),
     eqX(';'(Xs1),';'(Xs1c)),
-    concat([Xs1a,[Y1],Xs1d],Xs3).
+    concat([Xs1a,[Y1],Xs1d],Xs3),
+    !.
+
+replace_rules(';'(Xs1),Y1,';'(Xs2),';'([Y1|Xs3]))
+ :-
+    subsetXs(Xs1,Xs2,Xs3),
+    !.
 
 
 %
