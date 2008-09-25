@@ -813,6 +813,8 @@ replace_rules(','(Xs1),Y1,','(Xs2),','(Xs3))
     eqX(','(Xs1),','(Xs1c)),
     concat([Xs1a,[Y1],Xs1d],Xs3).
 
+% Incomplete but order-preserving replacement for choices
+
 replace_rules(';'(Xs1),Y1,';'(Xs2),';'(Xs3))
  :-
     append(Xs1a,Xs1b,Xs2),
@@ -820,6 +822,8 @@ replace_rules(';'(Xs1),Y1,';'(Xs2),';'(Xs3))
     eqX(';'(Xs1),';'(Xs1c)),
     concat([Xs1a,[Y1],Xs1d],Xs3),
     !.
+
+% Complete but non-order-preserving replacement for choices
 
 replace_rules(';'(Xs1),Y1,';'(Xs2),';'([Y1|Xs3]))
  :-
