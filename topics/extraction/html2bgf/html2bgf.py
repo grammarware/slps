@@ -122,7 +122,34 @@ def addProduction(name,choices,oneof):
     else:
      ss.append('"'+choices[s][0][i]+'"')
    bs.append(ss)
- prods[name]=bs
+ if name in prods.keys():
+  print 'Duplicate definition of',name,'found, merged.'
+  pessimistic[2] += 1
+  for c in bs:
+   addifnew(c,name)
+ else:
+  prods[name]=bs
+
+def killDuplicates():
+ for name in prods.keys():
+  oldbs = prods[name][:]
+  prods[name] = []
+  for c in oldbs:
+   addifnew(c,name)
+
+def addifnew(c,name):
+ for p in prods[name]:
+  if structuralEq(c,p):
+   return
+ prods[name].append(c)
+
+def structuralEq(arr1,arr2):
+ if len(arr1) != len(arr2):
+  return False
+ for i in range(0,len(arr1)):
+  if arr1[i] != arr2[i]:
+   return False
+ return True
 
 def serialiseT(name,choices):
  line=name+' is defined as:\n'
@@ -194,10 +221,6 @@ def parseLine(line):
   if line.find('<sub><i>opt')==0:
    tokens.append('?????')
    flags.append(True)
-   #last = tokens.pop()
-   #lastf = flags.pop()
-   #tokens.extend(['[',last,']'])
-   #flags.extend([True,lastf,True])
    line = line[11:]
    continue
   if line.find('</sub>')==0:
@@ -275,7 +298,7 @@ def readGrammar(fn):
    #print 'Parsing "'+line+'"...'
    a,b=parseLine(line)
    if a:
-   # non-empty line
+    # non-empty line
     if len(a)==2 and a[-1]==':':
      # new definition
      if choices:
@@ -284,6 +307,10 @@ def readGrammar(fn):
      choices = []
      name = a[0]
      oneof = False
+     if not emph[0] and line.find('</em>')<0 and line.find('</i>')<0 and line.find('<code>')<0:
+      emph[0] = True
+      print 'Enforcing BNF mode (<em>) when new definition starts.'
+      pessimistic[2] += 1
     elif len(a)==4 and a[0]==a[2] and a[1]==':' and a[-1]==':':
      # new mingled definition
      if choices:
@@ -459,6 +486,22 @@ def automatedImprove():
      bs[i] = '"'+bs[i]+'"'
      i+=1
      continue
+    if bs[i]==']' and i>0 and bs[i-1]=='[':
+     # bracketing problem
+     bs[i-1]='"["'
+     bs[i]='"]"'
+     print 'Structural heuristic fix in',nt,'(empty optional group)'
+     pessimistic[2] += 1
+     i+=1
+     continue
+    if bs[i]=='}' and i>0 and bs[i-1]=='{':
+     # bracketing problem
+     bs[i-1]='"{"'
+     bs[i]='"}"'
+     print 'Structural heuristic fix in',nt,'(empty starred group)'
+     pessimistic[2] += 1
+     i+=1
+     continue
     elif bs[i]==')':
      if '(' not in bs:
       # bracketing problem
@@ -588,7 +631,7 @@ def fixBracketPair(nt,arr,left,right):
  if cx==0:
   return arr
  else:
-  print 'Structural  heuristic fix in',nt,
+  print 'Structural heuristic fix in',nt,
   pessimistic[2] += 1
   #print arr,'->'
   arr.reverse()
@@ -626,6 +669,7 @@ if __name__ == "__main__":
   print 'Massaging the grammar...'
   glueSymbols()
   automatedImprove()
+  killDuplicates()
   print 'Writing the extracted grammar...'
   if sys.argv[-1]=='-bnf':
    printGrammarText(sys.argv[2])
