@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 1 ]; then
+    echo "This tool runs some metrics on a BGF document"
+    echo "Usage: bgflc <BGF-input>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    /bin/echo -n "Total productions:   "
+    xpath $1 `cat ${SLPS}/topics/presentation/metrics/productions.xpath` 2> /dev/null
+    /bin/echo -n "Total nonterminals:  "
+    xpath $1 `cat ${SLPS}/topics/presentation/metrics/nonterminals.xpath` 2> /dev/null
+    /bin/echo -n "Top nonterminals:    "
+    xpath $1 `cat ${SLPS}/topics/presentation/metrics/top.xpath` 2> /dev/null
+    /bin/echo -n "Bottom nonterminals: "
+    xpath $1 `cat ${SLPS}/topics/presentation/metrics/bottom.xpath` 2> /dev/null
+fi
