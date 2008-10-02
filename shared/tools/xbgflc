@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 1 ]; then
+    echo "This tool runs some metrics on a XBGF document"
+    echo "Usage: xbgflc <BGF-input>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    /bin/echo -n "Total lines:     "
+    wc -l $1
+    /bin/echo -n "Total transformations: "
+    xpath $1 `cat ${SLPS}/topics/presentation/metrics/transformations.xpath` 2> /dev/null
+    /bin/echo -n "Total issues solved:   "
+    cat $1 | grep -c "<\!--"
+fi
