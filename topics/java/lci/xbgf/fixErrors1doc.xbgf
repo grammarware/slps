@@ -1,6 +1,12 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- in the extracted version root is undefined -->
+  <xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
+
   <!--
    This was an error in the JLS1
   
@@ -57,8 +63,8 @@
       <nonterminal>ConstantDeclaration</nonterminal>
     </in>
   </xbgf:widen>
-  
-   
+
+
   <!--
    - Fail: ConstructorDeclarator.
       - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
@@ -77,5 +83,152 @@
     <add>Identifer</add>
     <to>Identifier</to>
   </xbgf:unite>
+
+  <!--
+  The productions were "repeated for convenience", but repeated incorrectly, which led to this ugly thing:
   
+  CastExpression
+      - [], ;([,([t((), n(PrimitiveType), t()), n(UnaryExpression)]),
+               ,([t((), n(ReferenceType), t()), n(UnaryExpressionNotPlusMinus)]),
+               ,([t((), n(PrimitiveType), ?(n(Dims)), t()), n(UnaryExpression)])])
+  -->
+  <xbgf:factor>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>PrimitiveType</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>UnaryExpression</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>PrimitiveType</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>Dims</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>UnaryExpression</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>(</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>PrimitiveType</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <epsilon/>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>Dims</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>)</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>UnaryExpression</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>Dims</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+
+  <!-- In all other places BlockStatements is optional (also in the syntax appendix) -->
+  <xbgf:widen>
+    <bgf:expression>
+      <nonterminal>BlockStatements</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>BlockStatements</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <in>
+      <nonterminal>SwitchBlockStatementGroup</nonterminal>
+    </in>
+  </xbgf:widen>
 </xbgf:sequence>

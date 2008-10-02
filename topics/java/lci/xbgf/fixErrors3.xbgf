@@ -1,6 +1,20 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+  
+  <!-- in the extracted version root is undefined -->
+  <xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
+
+  <!--
+  The extractor can't tell if {} are terminals or BNF
+  
+   - Fail: Block.
+      - [], *(n(BlockStatements))
+     vs.
+      - [], ,([t({), n(BlockStatements), t(})])
+  -->
   <xbgf:undefine>Block</xbgf:undefine>
   <xbgf:define>
     <bgf:production>

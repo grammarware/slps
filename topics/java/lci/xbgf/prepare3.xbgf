@@ -1,10 +1,8 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:reroot>
-    <root>CompilationUnit</root>
-  </xbgf:reroot>
 
+  <!-- getting the choices right -->
   <xbgf:vertical>
     <nonterminal>Type</nonterminal>
   </xbgf:vertical>
@@ -28,14 +26,12 @@
     <nonterminal>InterfaceMemberDecl</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
-    <nonterminal>ClassDeclaration</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
     <nonterminal>SwitchLabel</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
     <nonterminal>InterfaceDeclaration</nonterminal>
   </xbgf:vertical>
 
+  <!-- discard unused nonterminal -->
   <xbgf:inline>FormalParameterDecls</xbgf:inline>
 </xbgf:sequence>

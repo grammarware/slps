@@ -185,19 +185,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <!-- FIXING AN ERROR -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>BlockStatements</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>BlockStatementsOpt</nonterminal>
-    </bgf:expression>
-    <in>
-      <nonterminal>SwitchBlockStatementGroup</nonterminal>
-    </in>
-  </xbgf:replace>
-  <!-- END OF FIX -->
   <xbgf:inline>BlockStatements</xbgf:inline>
   <xbgf:rename>
     <nonterminal>

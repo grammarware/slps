@@ -1,14 +1,13 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:reroot>
-    <root>CompilationUnit</root>
-  </xbgf:reroot>
-  
+
+  <!-- This nonterminal is used more consistently in the collected part -->
   <xbgf:fold>
     <nonterminal>QualifiedIdentifier</nonterminal>
   </xbgf:fold>
 
+  <!-- They forgot to define a nonterminal with "intuitive" name - we predicted it in ISO N3977! -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ForInitOpt</nonterminal>
@@ -22,6 +21,8 @@
     </bgf:production>
   </xbgf:define>
   <xbgf:inline>ForInitOpt</xbgf:inline>
+
+  <!-- They forgot to define a nonterminal with "intuitive" name - we predicted it in ISO N3977! -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ForUpdateOpt</nonterminal>

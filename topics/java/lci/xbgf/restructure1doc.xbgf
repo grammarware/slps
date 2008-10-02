@@ -2,9 +2,6 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <xbgf:reroot>
-    <root>CompilationUnit</root>
-  </xbgf:reroot>
   <!--
   Local substitution:
   
@@ -13,51 +10,17 @@
      vs.
       - [], ,([t(import), n(PackageOrTypeName), t(.), t(*), t((;))])
   -->
-  <xbgf:project>
-    <bgf:production>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>PackageName</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>PackageOrTypeName</nonterminal>
+    </bgf:expression>
+    <in>
       <nonterminal>TypeImportOnDemandDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>import</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>*</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:project>
-  <xbgf:inject>
-    <bgf:production>
-      <nonterminal>TypeImportOnDemandDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>import</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>PackageOrTypeName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>*</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:inject>
+    </in>
+  </xbgf:replace>
 
   <!--
   Local substitution:
@@ -66,67 +29,17 @@
      vs.
       - [], ;([n(Identifier), ,([n(PackageOrTypeName), t(.), n(Identifier)])])
    -->
-  <xbgf:vertical>
-    <nonterminal>TypeName</nonterminal>
-  </xbgf:vertical>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>PackageName</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>PackageOrTypeName</nonterminal>
+    </bgf:expression>
+    <in>
       <nonterminal>TypeName</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>PackageName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:project>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>TypeName</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:project>
-  <xbgf:inject>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>TypeName</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>PackageOrTypeName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:inject>
-  <xbgf:horizontal>TypeName</xbgf:horizontal>
-  <xbgf:strip>
-    <selector>target</selector>
-  </xbgf:strip>
+    </in>
+  </xbgf:replace>
 
   <!--
   Resolve brutally. Is there a better way?
@@ -354,24 +267,5 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  <!--xbgf:vertical>
-    <nonterminal>ClassBodyDeclaration</nonterminal>
-  </xbgf:vertical>
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>InstanceInitializer</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>InstanceInitializer</nonterminal>
-      <bgf:expression>
-        <nonterminal>Block</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define-->
+ 
 </xbgf:sequence>

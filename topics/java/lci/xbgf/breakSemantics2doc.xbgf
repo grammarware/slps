@@ -132,38 +132,6 @@
      vs.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(MethodBody)])
   -->
-  <xbgf:inject>
-    <bgf:production>
-      <nonterminal>MethodDeclaratorRest</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>FormalParameters</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>throws</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>QualifiedIdentifierList</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>MethodBody</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:inject>
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>MethodBody</nonterminal>
@@ -182,47 +150,8 @@
       <nonterminal>MethodDeclaratorRest</nonterminal>
     </in>
   </xbgf:replace>
-  
-  <!--
-   - Fail: InterfaceMethodDeclaratorRest.
-      - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
-     vs.
-      - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
-  -->
-  <xbgf:inject>
-    <bgf:production>
-      <nonterminal>InterfaceMethodDeclaratorRest</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>FormalParameters</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>throws</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>QualifiedIdentifierList</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:inject>
 
-  <!--
+ <!--
    - Fail: ArrayInitializer.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
      vs.

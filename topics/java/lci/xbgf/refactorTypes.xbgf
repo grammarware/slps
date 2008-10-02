@@ -82,6 +82,7 @@
       <to>BasicType</to>
     </nonterminal>
   </xbgf:rename>
+  
   <!-- Merging interfaces with classes and making lists and other things conform -->
   <xbgf:replace>
     <bgf:expression>
@@ -142,6 +143,7 @@
     </nonterminal>
   </xbgf:rename>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
+  
   <!-- Introducing brackets brutally, too hard to derive -->
   <xbgf:inject>
     <bgf:production>
@@ -189,6 +191,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  
   <!-- Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>

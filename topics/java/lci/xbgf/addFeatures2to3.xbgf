@@ -1,7 +1,11 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- not used anymore? -->
   <xbgf:undefine>Block</xbgf:undefine>
+
+  <!-- new feature: annotations! -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>Modifier</nonterminal>
@@ -10,6 +14,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
+
+  <!-- new feature: enumerations! -->
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>EnumDeclaration</nonterminal>
@@ -58,6 +64,26 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>SwitchLabel</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>case</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>EnumConstantName</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>:</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+
+  <!-- annotated declarations -->
   <xbgf:vertical>
     <nonterminal>ForInit</nonterminal>
   </xbgf:vertical>
@@ -77,30 +103,5 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>SwitchLabel</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>case</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>EnumConstantName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>:</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <!--xbgf:fold>
-    <bgf:production>
-      <nonterminal>Primary</nonterminal>
-      <bgf:expression>
-        <nonterminal>ParExpression</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:fold-->
+
 </xbgf:sequence>

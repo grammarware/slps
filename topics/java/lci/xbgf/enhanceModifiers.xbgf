@@ -228,8 +228,6 @@
   </xbgf:add>
   <xbgf:horizontal>VariableModifiers</xbgf:horizontal>
 
-
-
   <!--
      - Fail: VariableModifier.
       - [], ?(t(final))
@@ -331,7 +329,7 @@
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <terminal>Identifier</terminal>
+            <nonterminal>Identifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <terminal>=</terminal>

@@ -221,7 +221,7 @@
                 <terminal>assert</terminal>
               </bgf:expression>
               <bgf:expression>
-                <nonterminal>Expression1</nonterminal>
+                <nonterminal>Expression</nonterminal>
               </bgf:expression>
               <bgf:expression>
                 <terminal>;</terminal>
@@ -234,13 +234,13 @@
                 <terminal>assert</terminal>
               </bgf:expression>
               <bgf:expression>
-                <nonterminal>Expression1</nonterminal>
+                <nonterminal>Expression</nonterminal>
               </bgf:expression>
               <bgf:expression>
                 <terminal>:</terminal>
               </bgf:expression>
               <bgf:expression>
-                <nonterminal>Expression2</nonterminal>
+                <nonterminal>Expression</nonterminal>
               </bgf:expression>
               <bgf:expression>
                 <terminal>;</terminal>

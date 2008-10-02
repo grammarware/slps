@@ -108,7 +108,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  
+
   <!--
      - Fail: MethodModifier.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(synchronized), t(native)])
@@ -127,7 +127,7 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>MethodModifier</xbgf:horizontal>
-  
+
   <!--
      - Fail: ClassBodyDeclaration.
       - [], ;([n(ClassMemberDeclaration), n(StaticInitializer), n(ConstructorDeclaration)])
@@ -154,7 +154,7 @@
     </bgf:production>
   </xbgf:define>
   <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
-  
+
   <!--
      - Fail: ClassMemberDeclaration.
       - [], ;([n(FieldDeclaration), n(MethodDeclaration)])
@@ -189,7 +189,7 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
-  
+
   <!--
      - Fail: InterfaceMemberDeclaration.
       - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration)])
@@ -243,7 +243,7 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>BlockStatement</xbgf:horizontal>
-  
+
   <!--
      - Fail: ClassModifier.
       - [], ;([t(public), t(abstract), t(final)])
@@ -286,7 +286,7 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>ClassModifier</xbgf:horizontal>
-  
+
   <!--
      - Fail: ExplicitConstructorInvocation.
       - [], ;([,([t(this), t((), ?(n(ArgumentList)), t()), t((;))]), ,([t(super), t((), ?(n(ArgumentList)), t()), t((;))])])
@@ -331,7 +331,7 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>ExplicitConstructorInvocation</xbgf:horizontal>
-  
+
   <!--
      - Fail: MethodInvocation.
       - [], ;([,([n(MethodName), t((), ?(n(ArgumentList)), t())]), ,([n(Primary), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())])])
@@ -379,7 +379,7 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>MethodInvocation</xbgf:horizontal>
-  
+
   <!--
      - Fail: InterfaceModifier.
       - [], ;([t(public), t(abstract)])
@@ -422,7 +422,7 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>InterfaceModifier</xbgf:horizontal>
-  
+
   <!--
      - Fail: ArrayCreationExpression.
       - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(TypeName), n(DimExprs), ?(n(Dims))])])
@@ -475,7 +475,7 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>ArrayCreationExpression</xbgf:horizontal>
-  
+
   <!--
      - Fail: FormalParameter.
       - [], ,([n(Type), n(VariableDeclaratorId)])

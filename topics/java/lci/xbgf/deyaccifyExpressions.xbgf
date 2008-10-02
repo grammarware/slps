@@ -112,9 +112,8 @@
      "(" PrimitiveType [ Dims ] ")" UnaryExpression
      "(" ReferenceType ")" UnaryExpressionNotPlusMinus
 
-  -->
-
-  <!-- Complicated surgery on CastExpression - kind of fold mod new type system
+  
+  Complicated surgery on CastExpression - kind of fold mod new type system
   
   p([], 'CastExpression', ','([t('('), n('BasicType'), ?(n('Dims')), t(')'), n('UnaryExpression')])),
   p([], 'CastExpression', ','([t('('), n('QualifiedIdentifier'), n('BracketsOpt'), t(')'), n('UnaryExpressionNotPlusMinus')])),
@@ -214,7 +213,7 @@ vs
   <xbgf:distribute>
     <nonterminal>UnaryExpression</nonterminal>
   </xbgf:distribute>
-   <xbgf:rename>
+  <xbgf:rename>
     <nonterminal>
       <from>UnaryExpression</from>
       <to>Expression3</to>
@@ -587,10 +586,6 @@ vs
   <xbgf:eliminate>ConditionalAndExpression</xbgf:eliminate>
 
   <!-- And now "Expression1" -->
-  <xbgf:vertical>
-    <nonterminal>ConditionalExpression</nonterminal>
-  </xbgf:vertical>
-  <!-- substitute for fold-ebnf: -->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>Expression1Rest</nonterminal>
@@ -612,42 +607,63 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <xbgf:remove>
-    <bgf:production>
-      <nonterminal>ConditionalExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Expression2</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Expression1Rest</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:remove>
-  <xbgf:inject>
-    <bgf:production>
-      <nonterminal>ConditionalExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Expression2</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>Expression1Rest</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:inject>
-  <!-- end of substitute -->
+  <xbgf:factor>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>Expression2</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Expression2</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Expression1Rest</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>Expression2</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <epsilon/>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Expression1Rest</nonterminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Expression1Rest</nonterminal>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>Expression1Rest</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
 
+  <!-- last effort for Expression1-->
   <xbgf:vertical>
     <nonterminal>AssignmentExpression</nonterminal>
   </xbgf:vertical>
@@ -671,9 +687,8 @@ vs
   <xbgf:fold>
     <nonterminal>Expression1</nonterminal>
   </xbgf:fold>
-  
-  <!-- Expression -->
 
+  <!-- Expression -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Expression</nonterminal>
@@ -700,7 +715,7 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  
+
   <!--
    - Fail: StatementExpression.
       - [], n(Expression)
@@ -716,5 +731,4 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-
 </xbgf:sequence>

@@ -1,0 +1,19 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <!--
+  Enumerations in the syntax appendix look like this:
+  
+  EnumDeclaration is defined as:
+     "enum" Identifier [ "implements" TypeList ] EnumBody
+  EnumBodyDeclarations is defined as:
+     ";" { ClassBodyDeclaration }
+
+  While in the text of the spec it is:
+
+  EnumDeclaration is defined as:
+     [ ClassModifiers ] "enum" Identifier [ Interfaces ] EnumBody
+  EnumBodyDeclarations is defined as:
+     ";" [ ClassBodyDeclarations ]
+  -->
+</xbgf:sequence>

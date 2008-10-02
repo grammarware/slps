@@ -63,9 +63,8 @@
   MethodHeader is defined as:
      [ MethodModifiers ] ResultType MethodDeclarator [ Throws ]
   
-  -->
-
-  <!--
+  
+  
    - Fail: TypeDeclaration.
       - [], ;([n(ClassOrInterfaceDeclaration), t((;))])
      vs.
@@ -203,55 +202,65 @@
   <xbgf:inline>ConstructorDeclarator</xbgf:inline>
   <xbgf:inline>ResultType</xbgf:inline>
   <xbgf:inline>MethodHeader</xbgf:inline>
-  <xbgf:vertical>
-    <nonterminal>ClassBodyDeclaration</nonterminal>
-  </xbgf:vertical>
 
-  <!-- replace with factor later -->
-  <xbgf:remove>
-    <bgf:production>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>Block</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:remove>
-  <xbgf:remove>
-    <bgf:production>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>static</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Block</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:remove>
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
+  <!-- refactor alternatives to BNF optional -->
+  <xbgf:factor>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>Block</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>static</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Block</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <choice>
+              <bgf:expression>
+                <epsilon/>
+              </bgf:expression>
               <bgf:expression>
                 <terminal>static</terminal>
               </bgf:expression>
-            </optional>
+            </choice>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Block</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <!-- end of substitute -->
+  </xbgf:factor>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>static</terminal>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <terminal>static</terminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
 
+  <!-- next step -->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>FormalParameters</nonterminal>
@@ -307,6 +316,13 @@
    ','([n('ModifiersOpt'), t(void), n('Identifier'), n('FormalParameters'), ?(','([t(throws), n('TypeList')])), n('MethodBody')])),
 
   -->
+  <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
+  <xbgf:fold>
+    <nonterminal>BracketsOpt</nonterminal>
+    <in>
+      <nonterminal>MethodDeclarator</nonterminal>
+    </in>
+  </xbgf:fold>
   <xbgf:inline>MethodDeclarator</xbgf:inline>
   <xbgf:extract>
     <bgf:production>
@@ -315,6 +331,9 @@
         <sequence>
           <bgf:expression>
             <nonterminal>FormalParameters</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <optional>
@@ -372,6 +391,7 @@
   </xbgf:add>
   <xbgf:horizontal>MethodOrFieldRest</xbgf:horizontal>
 
+  <!-- modifiers -->
   <xbgf:vertical>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:vertical>
@@ -404,6 +424,7 @@
     <label>target</label>
   </xbgf:strip>
 
+  <!-- finishing touches -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -413,8 +434,6 @@
     </bgf:production>
   </xbgf:remove>
   <xbgf:eliminate>FieldDeclaration</xbgf:eliminate>
-  
-  <!-- ... -->
   <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
-  
+
 </xbgf:sequence>

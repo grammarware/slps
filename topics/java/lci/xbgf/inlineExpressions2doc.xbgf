@@ -2,6 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
+  <!-- introducing parenthesized expression -->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>ParExpression</nonterminal>
@@ -32,7 +33,7 @@
       <nonterminal>Expression3</nonterminal>
     </in>
   </xbgf:unfold>
-  
+
   <!--
    - Fail: Primary.
       - [], ,([t(void), t(.), t(class)])
@@ -48,7 +49,6 @@
  -->
   <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
   <xbgf:inline>FieldAccess</xbgf:inline>
-  <!--xbgf:inline>ArrayCreationExpression</xbgf:inline-->
   <xbgf:distribute>
     <nonterminal>Primary</nonterminal>
   </xbgf:distribute>
@@ -299,7 +299,7 @@
   <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
 
- <!--
+  <!--
    - Fail: Primary.
       - [], ,([n(QualifiedIdentifier), ?(n(IdentifierSuffix))])
      vs.

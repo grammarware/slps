@@ -1,10 +1,8 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:reroot>
-    <root>CompilationUnit</root>
-  </xbgf:reroot>
-  
+
+  <!-- prepare choices -->
   <xbgf:vertical>
     <nonterminal>Type</nonterminal>
   </xbgf:vertical>
@@ -15,13 +13,14 @@
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
 
+  <!-- use another name -->
   <xbgf:rename>
     <nonterminal>
       <from>QualifiedIdentifier</from>
       <to>Name</to>
     </nonterminal>
   </xbgf:rename>
-  
+
   <!--
    - Fail: ClassOrInterfaceType.
       - [], ;([n(ClassType), n(InterfaceType)])
@@ -158,34 +157,6 @@
     <add>FieldModifiers</add>
     <to>Modifiers</to>
   </xbgf:unite>
-  
-  <!--
-  This is weird: looks like we are adding a new feature
-  
-   - Fail: MethodDeclarator.
-      - [], ,([n(MethodDeclarator), t([), t(])])
-     vs.
-      - [], ;([,([n(Identifier), t((), ?(n(FormalParameterList)), t())]), ,([n(MethodDeclarator), t([), t(])])])
-  -->
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>MethodDeclarator</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>MethodDeclarator</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>[</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>]</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <xbgf:horizontal>MethodDeclarator</xbgf:horizontal>
 
   <!--
   - Fail: MethodHeader.
@@ -208,7 +179,7 @@
   <xbgf:distribute>
     <nonterminal>MethodHeader</nonterminal>
   </xbgf:distribute>
-  
+
   <!--
    - Fail: ArrayCreationExpression.
       - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(Name), n(DimExprs), ?(n(Dims))])])
@@ -294,7 +265,7 @@
       <nonterminal>ConstantDeclaration</nonterminal>
     </in>
   </xbgf:replace>
-  
+
   <!--
    - Fail: ArrayType.
       - [], ,([n(Type), t([), t(])])
@@ -323,5 +294,5 @@
   <xbgf:distribute>
     <nonterminal>ArrayType</nonterminal>
   </xbgf:distribute>
-  
+
 </xbgf:sequence>

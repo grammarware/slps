@@ -1,6 +1,12 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- in the extracted version root is undefined -->
+  <xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
+
   <!-- let's complete some of the statements with a trailing semicolon-->
   <xbgf:vertical>
     <nonterminal>Statement</nonterminal>
@@ -50,6 +56,7 @@
   <xbgf:strip>
     <label>ContinueStatement</label>
   </xbgf:strip>
+  <!-- let's complete some of the statements with a trailing semicolon-->
   <xbgf:designate>
     <bgf:production>
       <label>BreakStatement</label>
@@ -114,7 +121,46 @@
       <nonterminal>Expression</nonterminal>
     </bgf:expression>
   </xbgf:replace>
- 
+  
+ <!--
+   - Fail: VoidInterfaceMethodDeclaratorRest.
+      - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
+     vs.
+      - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
+ -->
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>FormalParameters</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>throws</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>QualifiedIdentifierList</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  
   <!-- undefined non-terminals -->
   <xbgf:define>
     <bgf:production>
