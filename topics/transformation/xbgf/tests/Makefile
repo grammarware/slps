@@ -36,6 +36,7 @@ test:
 	@make massage2.quiet
 	@make massage3.quiet
 	@make massage4.quiet
+	@make massage5.quiet
 	@make narrow1.quiet
 	@make narrow2.quiet
 	@make narrow3.quiet
