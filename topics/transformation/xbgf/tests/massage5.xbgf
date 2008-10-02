@@ -1,7 +1,8 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:massage>
+  <xbgf:factor>
+    <!-- Factor b -->
     <bgf:expression>
       <choice>
         <bgf:expression>
@@ -33,13 +34,69 @@
           <nonterminal>b</nonterminal>
         </bgf:expression>
         <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <epsilon/>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>c</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  <xbgf:massage>
+    <!-- Massage use of epsilon to use of optional -->
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+        <bgf:expression>
           <optional>
             <bgf:expression>
               <nonterminal>c</nonterminal>
             </bgf:expression>
           </optional>
         </bgf:expression>
-      </sequence>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>c</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:massage>
+    <!-- Massage double optional to single optional -->
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>c</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>c</nonterminal>
+        </bgf:expression>
+      </optional>
     </bgf:expression>
   </xbgf:massage>
 </xbgf:sequence>
