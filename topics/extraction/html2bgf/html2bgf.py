@@ -124,7 +124,7 @@ def addProduction(name,choices,oneof):
    bs.append(ss)
  if name in prods.keys():
   print 'Duplicate definition of',name,'found, merged.'
-  pessimistic[2] += 1
+  #pessimistic[2] += 1
   for c in bs:
    addifnew(c,name)
  else:
@@ -433,27 +433,36 @@ def automatedImprove():
      else:
       quote = False
       word = bs[i]
+     print 'Multiple terminals heuristic fix:',bs[i],'in',nt,
      if word[0]=='.' or word[-1]=='.':
-      print 'Multiple terminals heuristic fix:',bs[i],'in',nt,'(1 to 2)'
+      print '(1 to 2)'
      else:
-      print 'Multiple terminals heuristic fix:',bs[i],'in',nt,'(1 to 3)'
+      print '(1 to 3)'
      pessimistic[2] += 1
      if i>0:
-      newbs = bs[:i-1]
+      newbs = bs[:i]
      else:
       newbs = []
      if quote:
-      if word[0]!='.':
+      if word.find('...')<0:
+       if word[0]!='.':
+        newbs.append('"'+word[:word.index('.')]+'"')
+       newbs.append('"."')
+       if word[-1]!='.':
+        newbs.append('"'+word[word.index('.')+1:]+'"')
+      else:
        newbs.append('"'+word[:word.index('.')]+'"')
-      newbs.append('"."')
-      if word[-1]!='.':
-       newbs.append('"'+word[word.index('.')+1:]+'"')
+       newbs.append('"..."')
      else:
-      if word[0]!='.':
+      if word.find('...')<0:
+       if word[0]!='.':
+        newbs.append(word[:word.index('.')])
+       newbs.append('"."')
+       if word[-1]!='.':
+        newbs.append(word[word.index('.')+1:])
+      else:
        newbs.append(word[:word.index('.')])
-      newbs.append('"."')
-      if word[-1]!='.':
-       newbs.append(word[word.index('.')+1:])
+       newbs.append('"..."')
      if i+1<len(bs):
       newbs.extend(bs[i+1:])
      bs = newbs
@@ -638,7 +647,7 @@ def fixBracketPair(nt,arr,left,right):
   while(cx>0):
    if '"'+right+'"' in arr:
     arr[arr.index('"'+right+'"')]=right
-    print '(transformed terminal)'
+    print '(transformed terminal bracket)'
    elif left in arr:
     arr.remove(left)
     print '(removed left bracket)'
@@ -650,7 +659,7 @@ def fixBracketPair(nt,arr,left,right):
   while(cx<0):
    if '"'+left+'"' in arr:
     arr[arr.index('"'+left+'"')]=left
-    print '(transformed terminal)'
+    print '(transformed terminal bracket)'
    elif right in arr:
     arr.remove(right)
     print '(removed right bracket)'
