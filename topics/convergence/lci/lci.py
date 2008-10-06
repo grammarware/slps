@@ -153,9 +153,9 @@ def makegraph():
     name  = src[0]
     qname = src[0]
     for i in range(1,len(src)-1):
-     addarc(name,name+"'",qname,src[i])
-     qname += '.'+src[i]
-     name += "'"
+     qname += '_'+src[i]
+     addarc(name,qname,name,src[i])
+     name = qname
     addarc(name,x,qname,src[-1])
  # make a simplified one
  for x in targets.keys():
@@ -182,7 +182,8 @@ def dumpgraph(df):
  dot.write('node [shape=box, style=solid];\n')
  nodezz=[]
  for arc in graph_big:
-  dot.write(quote(arc[0])+'->'+quote(arc[1]))
+  #dot.write(quote(arc[0])+'->'+quote(arc[1]))
+  dot.write(arc[0]+'->'+arc[1])
   if arc[0] not in nodezz:
    nodezz.append(arc[0])
   if arc[1] not in nodezz:
@@ -199,9 +200,14 @@ def dumpgraph(df):
   if node not in extractor.keys():
    if node not in targets.keys():
     if node in failednode:
-     dot.write(quote(node)+' [color=red];')
+     colour = 'red'
     elif node in almostfailed:
-     dot.write(quote(node)+' [color=blue];')
+     colour = 'blue'
+    else:
+     colour = 'black'
+    label = node.split('_')
+    label = label[0]+("'"*(len(label)-1))
+    dot.write(node+' [label="'+label+'" color='+colour+'];')
  dot.write('}')
  dot.close()
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
@@ -535,7 +541,7 @@ def checkconsistency():
   #sysexit(8)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.11'
+ print 'Language Covergence Infrastructure v1.12'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])

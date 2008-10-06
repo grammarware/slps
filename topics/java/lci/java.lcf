@@ -36,7 +36,7 @@
   </tool>
 
   <source>
-    <name>jls1syntax</name>
+    <name>jls1app</name>
     <grammar>
       <extraction>
         <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/syntax.kw <expand>java</expand>/jls1/syntax.html
@@ -53,7 +53,7 @@
   </source>
 
   <source>
-    <name>jls2syntax</name>
+    <name>jls2app</name>
     <grammar>
       <extraction>
         <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/syntax.html
@@ -70,7 +70,7 @@
   </source>
 
   <source>
-    <name>jls3syntax</name>
+    <name>jls3app</name>
     <grammar>
       <extraction>
         <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/syntax.html
@@ -89,7 +89,7 @@
   <target>
     <name>one</name>
     <branch>
-      <input>jls1syntax</input>
+      <input>jls1app</input>
       <perform>fixErrors1</perform>
       <perform>prepare1</perform>
     </branch>
@@ -104,7 +104,7 @@
   <target>
     <name>two</name>
     <branch>
-      <input>jls2syntax</input>
+      <input>jls2app</input>
       <perform>fixErrors2</perform>
       <perform>prepare2</perform>
       <perform>expandOps</perform>
@@ -126,10 +126,10 @@
     </branch>
   </target>
 
-  <!--<target>
+  <target>
     <name>three</name>
     <branch>
-      <input>jls3syntax</input>
+      <input>jls3app</input>
       <perform>fixErrors3</perform>
       <perform>prepare3</perform>
     </branch>
@@ -147,7 +147,7 @@
     </branch>
   </target>
 
-  <target>
+  <!--<target>
     <name>onetwo</name>
     <branch>
       <input>one</input>
@@ -205,13 +205,13 @@
   <target>
     <name>formal</name>
     <branch>
-      <input>jls1syntax</input>
+      <input>jls1app</input>
     </branch>
     <branch>
-      <input>jls2syntax</input>
+      <input>jls2app</input>
     </branch>
     <branch>
-      <input>jls3syntax</input>
+      <input>jls3app</input>
     </branch>
   </target-->
 
