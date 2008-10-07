@@ -21,4 +21,6 @@ else
     xpath $1 `cat ${SLPS}/topics/presentation/metrics/transformations.xpath` 2> /dev/null
     /bin/echo -n "Total issues solved:   "
     cat $1 | grep -c "<\!--"
+    /bin/echo "XBGF commands statistics:"
+    galax-run ${SLPS}/topics/presentation/metrics/perxbgfcommand.xq -serialize wf -doc xsd=${SLPS}/shared/xsd/xbgf.xsd -doc xbgf=$1 -language dxq | grep -v "glx:result"
 fi
