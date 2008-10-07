@@ -12,6 +12,7 @@ test:
 	@make deyaccify1.quiet
 	@make deyaccify2.quiet
 	@make deyaccify3.quiet
+	@make deyaccify4.quiet
 	@make distribute1.quiet
 	@make eliminate.quiet
 	@make extract1.quiet
