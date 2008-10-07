@@ -299,7 +299,7 @@ def readGrammar(fn):
    a,b=parseLine(line)
    if a:
     # non-empty line
-    if len(a)==2 and a[-1]==':':
+    if len(a)==2 and a[-1]==':' and oldline[0]!=' ' and oldline[0]!='\t':
      # new definition
      if choices:
       # flush the current one
@@ -309,7 +309,7 @@ def readGrammar(fn):
      oneof = False
      if not emph[0] and line.find('</em>')<0 and line.find('</i>')<0 and line.find('<code>')<0:
       emph[0] = True
-      print 'Enforcing BNF mode (<em>) when new definition starts.'
+      print 'Enforcing BNF mode (<em>) when new definition of',name,'starts.'
       pessimistic[2] += 1
     elif len(a)==4 and a[0]==a[2] and a[1]==':' and a[-1]==':':
      # new mingled definition
