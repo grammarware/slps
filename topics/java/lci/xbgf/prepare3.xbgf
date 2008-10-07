@@ -17,9 +17,6 @@
     <nonterminal>IdentifierSuffix</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
-    <nonterminal>MemberDecl</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
     <nonterminal>Expression3</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
@@ -32,6 +29,4 @@
     <nonterminal>InterfaceDeclaration</nonterminal>
   </xbgf:vertical>
 
-  <!-- discard unused nonterminal -->
-  <xbgf:inline>FormalParameterDecls</xbgf:inline>
 </xbgf:sequence>
