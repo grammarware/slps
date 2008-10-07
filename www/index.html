@@ -1,18 +1,17 @@
 <HTML>
 <HEAD>
-<TITLE>Software Language Processing Samples</TITLE>
+<TITLE>Software Language Processing Suite</TITLE>
 </HEAD>
 
 <BODY bgcolor="#99CCFF">
 
-<H1>Software Language Processing Samples</H1>
+<H1>Software Language Processing Suite</H1>
 
 <H3>Mission</H3>
 
-We assume an educational attitude to gather software language
-processing samples while exploring options for implementation
-languages, idioms, and technologies to describe typical facets such as
-evaluation, optimization, parsing or pretty printing.
+<B>The project facilitates education on the subject of language
+processing as well as comparison of approaches in this context -- both
+for the benefit of scientists and practitioners.</B>
 
 <P>
 
@@ -36,30 +35,41 @@ evaluation, optimization, parsing or pretty printing.
 
 <DL>
 
-<DT><B>What's the layout of the samples collection?</B><DT>
+<DT><B>What's the layout of the suite?</B><DT>
 
-<DD>The samples directory holds all the language processing
-samples. Subdirectories of "samples" group different "implementations"
-for the same "language under study" while having in mind certain
-language processsing aspects (such as parsing, evaluation,
-optimization, and pretty printing). There is also a "repository"
-subdirectory with generic content that is reusable among the different
-implementations. The implementations differ with regard to
-implementation language, auxiliary technology, implementation method,
-and leveraged concepts.</DD>
+<DD>The topics directory holds all the language processing samples
+(aka themes, topics, etc.). Typically, subdirectories of each topic
+directory group different "implementations" (aka alternative
+approaches, possibly with differing complementary capabilities).  The
+typical contributor will operate in the directory of one topic,
+perhaps only in the directory of one implementation. For instance, the
+"fl" topic (fl -- Factorial Language) comprises different
+implementations of the fl language that cover components such as
+parser, pretty printer, evaluator, type checker, and optimizer.  There
+are different implementations for Java, Haskell, Prolog, and various
+language processing technologies. A topic may also hold a "shared"
+subdirectory that is meant to hold resources that are reused across
+the different implementations. Next to the topics container, there are
+also the following directories: www -- SLPS web content; shared --
+SLPS libraries and infrastructure not currently assigned to a topic;
+tools -- executable files (such as scripts) to cover recurring actions
+in working with SLPS topics.</DD>
 
 <P>
 
-<DT><B>How to use the samples?</B></DT>
+<DT><B>How to use (install, build, run) the suite?</B></DT>
 
-<DD>First, get an idea of the "layout of the samples collection"; see
-above. Second, check out the subversion repository. Third, find a
-"language" and an "implementation" of interest. Each implementation
-should come with a README.txt file that explains the overall option
-and gives explanations on how to run the sample. Each implementation
-may make very specific assumptions; it may require some efforts meet
-all assumptions. Whenever possible, an implementation comes with a
-Makefile to demo it.</DD>
+<DD>There is no useful way of building or running the suite as a
+whole.  The different implementations are provided by different people
+and rely quite intrinsically on specific libraries and tools that may
+require specific attention. As a general rule, each implementation
+subdirectory of a topic directory should be documented up to the point
+that one can build and run it more or less independently.  The use of
+README files and Makefiles are recommended to this end. The
+colllective build and testing of an entire topic (with several
+implementations) is often not practical because it would just require
+too many third-party libraries and tools to be set up in a specific
+manner.</DD>
 
 <P>
 
@@ -79,11 +89,6 @@ lists identified above.</DD>
 <P>
 
 <HR>
-
-<SMALL>
-maintained by Ralf L&auml;mmel
-(Email: <A HREF=mailto:rlaemmel@gmail.com>rlaemmel@gmail.com</A>)
-</SMALL>
 
 <!-- Start of StatCounter Code -->
 <script type="text/javascript">

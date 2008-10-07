@@ -179,7 +179,9 @@ deyaccify_rules(N1,X1,X2)
     X1 = ';'(Xs1),
     length(Xs1,2),
     member(X3,Xs1),
-    member(','([n(N1)|Xs2]),Xs1),
+    member(X4,Xs1),
+    \+ X3 == X4,
+    X4 = ','([n(N1)|Xs2]),
     X2 = ','([X3,*(','(Xs2))]).
 
 
