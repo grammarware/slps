@@ -7,7 +7,8 @@ ProjectWebCGIScriptDirectory = ${ProjectGroupDirectory}/cgi-bin
 all:
 
 upload:
-	scp index.html ${Username}@${Hostname}:${ProjectWebDirectory}
+	scp index.html rlaemmel,slps@web.sourceforge.net:htdocs
+	#scp index.html ${Username}@${Hostname}:${ProjectWebDirectory}
 
 clean:
 	rm -f *~
