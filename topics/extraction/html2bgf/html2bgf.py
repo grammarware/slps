@@ -300,7 +300,7 @@ def readGrammar(fn):
    a,b=parseLine(line)
    if a:
     # non-empty line
-    if len(a)==2 and a[-1]=='$$$$$':
+    if len(a)==2 and (a[-1]=='$$$$$' or (a[-1]==':' and a[0][0].isalpha())):
      # new definition
      if choices:
       # flush the current one
