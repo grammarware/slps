@@ -164,7 +164,8 @@ def addSpaces(line,symb):
  return line.replace(symb,' '+symb+' ')
 
 def preprocess(line):
- l2 = addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(line.strip(),'}'),'{'),'['),']'),')'),'('),';'),':')
+ l2 = addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(addSpaces(line.strip(),'}'),'{'),'['),']'),')'),'('),';')
+ l2 = l2.replace(' :',' $COLON$').replace(':',' $$$$$').replace('$COLON$',':')
  return l2.replace('&gt ; ','&gt;').replace('&lt ; ','&lt;').replace('&amp ; ','&amp;')
 
 def parseLine(line):
@@ -299,7 +300,7 @@ def readGrammar(fn):
    a,b=parseLine(line)
    if a:
     # non-empty line
-    if len(a)==2 and a[-1]==':' and oldline[0]!=' ' and oldline[0]!='\t':
+    if len(a)==2 and a[-1]=='$$$$$':
      # new definition
      if choices:
       # flush the current one
@@ -311,7 +312,7 @@ def readGrammar(fn):
       emph[0] = True
       print 'Enforcing BNF mode (<em>) when new definition of',name,'starts.'
       pessimistic[2] += 1
-    elif len(a)==4 and a[0]==a[2] and a[1]==':' and a[-1]==':':
+    elif len(a)==4 and a[0]==a[2] and a[1]=='$$$$$' and a[-1]=='$$$$$':
      # new mingled definition
      if choices:
       # flush the current one
@@ -321,7 +322,7 @@ def readGrammar(fn):
      oneof = False
      print name,'double-declared, fixed'
      pessimistic[2] += 1
-    elif len(a)==4 and a[1]==':' and a[2]=='one' and a[3]=='of':
+    elif len(a)==4 and a[1]=='$$$$$' and a[2]=='one' and a[3]=='of':
      # new "one-of" definition
      if choices:
       addProduction(name,choices,oneof)
@@ -382,6 +383,9 @@ def automatedImprove():
     if not bs[i]:
      i+=1
      continue
+    if bs[i]=='"$$$$$"':
+     # production-separation hack
+     bs[i]='":"'
     if bs[i]=='?????':
      # Change to classic EBNF
      if i>0:

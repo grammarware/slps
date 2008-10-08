@@ -86,6 +86,7 @@
     </grammar>
   </source>
 
+  
   <target>
     <name>one</name>
     <branch>
@@ -125,6 +126,7 @@
       <perform>breakSemantics2doc</perform>
     </branch>
   </target>
+  
 
   <target>
     <name>three</name>
@@ -144,10 +146,11 @@
       <perform>inlineStatements2doc</perform>
       <perform>inlineExpressions2doc</perform>
       <perform>refactorClassDeclarations3</perform>
+      <perform>breakSemantics3doc</perform>
     </branch>
   </target>
 
-  <!--<target>
+ <target>
     <name>onetwo</name>
     <branch>
       <input>one</input>
@@ -179,7 +182,7 @@
       <input>doc</input>
     </branch>
   </target>
--->
+
   <target>
     <name>doc</name>
     <branch>
@@ -201,7 +204,7 @@
       <perform>fixErrors3doc</perform>
     </branch>
   </target>
-  <!--
+
   <target>
     <name>formal</name>
     <branch>
@@ -213,6 +216,6 @@
     <branch>
       <input>jls3app</input>
     </branch>
-  </target-->
+  </target>
 
 </lcf:configuration>

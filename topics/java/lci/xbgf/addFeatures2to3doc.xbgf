@@ -341,6 +341,9 @@
     </bgf:production>
   </xbgf:define>
   <xbgf:horizontal>SwitchLabel</xbgf:horizontal>
+  <xbgf:distribute>
+    <nonterminal>SwitchLabel</nonterminal>
+  </xbgf:distribute>
 
   <!--
      - Fail: ImportDeclaration.

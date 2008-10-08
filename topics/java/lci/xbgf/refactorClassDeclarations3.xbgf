@@ -1114,6 +1114,7 @@
       - [], ,([t(<), n(TypeParameterList), t(>)])
   -->
   <xbgf:deyaccify>TypeParameterList</xbgf:deyaccify>
+  <xbgf:inline>TypeParameterList</xbgf:inline>
   
   <!--
    - Fail: TypeParameter.

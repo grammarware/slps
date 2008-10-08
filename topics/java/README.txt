@@ -11,6 +11,7 @@ Versions of Java programming language are:
 3) "Java 2" = "J2SE 1.2" = "Playground" - 1998, standardised by The Java Language Specification Second Edition
 	see http://java.sun.com/docs/books/jls/second_edition/html/j.title.doc.html
 	see http://java.sun.com/docs/books/jls/download/langspec-2.0.pdf
+	see http://java.sun.com/docs/books/jls/clarifications-2-2nd-ed.html
 	see jls2 directory for a grammar extractor from §18 of JLS2
 
 4) "Java 3" = "J2SE 1.3" = "Kestrel", 2000, not standardised due to few language changes
