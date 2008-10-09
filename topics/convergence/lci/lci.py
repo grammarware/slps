@@ -375,10 +375,12 @@ def buildtargets():
    cx+=1
   if cx<len(fileinputs):
    print '[PASS] Target',t,'reached as',fileinputs[cx]+'.bgf'
-   targets[t][1] = fileinputs[cx]
+   copyfile('bgf/'+fileinputs[cx]+'.bgf','bgf/'+t+'.bgf')
+   logwrite('cp bgf/'+fileinputs[cx]+'.bgf bgf/'+t+'.bgf')
   else:
    # Tough luck: all branches failed
-   targets[t][1] = t
+   print '[FAIL] Target',t,'unreachable'
+  targets[t][1] = t
 
 def isbad(x):
 # checks if the file x failed building
