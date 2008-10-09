@@ -1,0 +1,149 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!--
+  See refactorTypes, this is its version tweaked for JLS1
+  -->
+  
+  <!-- First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
+  <xbgf:inline>IntegralType</xbgf:inline>
+  <xbgf:inline>FloatingPointType</xbgf:inline>
+  <xbgf:inline>NumericType</xbgf:inline>
+  <xbgf:distribute>
+    <nonterminal>PrimitiveType</nonterminal>
+  </xbgf:distribute>
+  <xbgf:rename>
+    <nonterminal>
+      <from>PrimitiveType</from>
+      <to>BasicType</to>
+    </nonterminal>
+  </xbgf:rename>
+  
+  <!-- Merging interfaces with classes and making lists and other things conform -->
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>ClassType</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>Type</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>ClassTypeList</nonterminal>
+    </in>
+  </xbgf:replace>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>InterfaceType</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>Type</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>InterfaceTypeList</nonterminal>
+    </in>
+  </xbgf:replace>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>InterfaceType</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>Type</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>ExtendsInterfaces</nonterminal>
+    </in>
+  </xbgf:replace>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>ClassType</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>Type</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>Super</nonterminal>
+    </in>
+  </xbgf:replace>
+  <xbgf:unite>
+    <add>InterfaceType</add>
+    <to>ClassType</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>InterfaceTypeList</add>
+    <to>ClassTypeList</to>
+  </xbgf:unite>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassTypeList</from>
+      <to>TypeList</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:deyaccify>TypeList</xbgf:deyaccify>
+  
+  <xbgf:vertical>
+    <nonterminal>ReferenceType</nonterminal>
+  </xbgf:vertical>
+  <xbgf:undefine>ArrayType</xbgf:undefine>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>ReferenceType</nonterminal>
+      <bgf:expression>
+        <nonterminal>ArrayType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  
+  <!-- Finishing touches -->
+  <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
+  <xbgf:inline>ClassType</xbgf:inline>
+  <xbgf:inline>ReferenceType</xbgf:inline>
+  
+  <!-- solves multiple problems later -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>Name</from>
+      <to>QualifiedIdentifier</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  <!--
+   - Fail: Type.
+      - [], ;([n(BasicType), n(QualifiedIdentifier)])
+     vs.
+      - [], ;([,([n(QualifiedIdentifier), n(BracketsOpt)]), n(BasicType)])
+  -->
+  <xbgf:vertical>
+    <nonterminal>Type</nonterminal>
+  </xbgf:vertical>
+  <xbgf:designate>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <nonterminal>QualifiedIdentifier</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:inject>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  <xbgf:strip>
+    <label>target</label>
+  </xbgf:strip>
+  <xbgf:horizontal>Type</xbgf:horizontal>
+
+</xbgf:sequence>

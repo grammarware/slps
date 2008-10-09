@@ -2,7 +2,11 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- strictfp keyword modifier -->
+  <!--
+   - Fail: Modifier.
+     vs.
+      - [], t(strictfp)
+  -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>Modifier</nonterminal>
@@ -11,5 +15,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
+  <xbgf:horizontal>Modifier</xbgf:horizontal>
 
 </xbgf:sequence>

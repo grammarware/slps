@@ -1,8 +1,13 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  
-  <!-- ... -->
+
+  <!--
+  - Fail: MethodBody.
+      - [], ;([n(Block), t((;))])
+     vs.
+      - [], n(Block)
+  -->
   <xbgf:vertical>
     <nonterminal>MethodBody</nonterminal>
   </xbgf:vertical>
@@ -14,4 +19,5 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  
 </xbgf:sequence>

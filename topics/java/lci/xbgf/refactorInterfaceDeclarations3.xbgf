@@ -1,0 +1,237 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!--
+  Expressions in the syntax appendix look like this:
+  
+  InterfaceDeclaration is defined as:
+     NormalInterfaceDeclaration
+     AnnotationTypeDeclaration
+  NormalInterfaceDeclaration is defined as:
+     "interface" Identifier [ TypeParameters ] [ "extends" TypeList ] InterfaceBody
+  InterfaceBody is defined as:
+     "{" { InterfaceBodyDeclaration } "}"
+  InterfaceBodyDeclaration is defined as:
+     ";"
+     ModifiersOpt InterfaceMemberDecl
+  InterfaceMemberDecl is defined as:
+     InterfaceMethodOrFieldDecl
+     "void" Identifier VoidInterfaceMethodDeclaratorRest
+     ClassOrInterfaceDeclaration
+  InterfaceMethodOrFieldDecl is defined as:
+     Type Identifier InterfaceMethodOrFieldRest
+  InterfaceMethodOrFieldRest is defined as:
+     ConstantDeclaratorsRest ";"
+     InterfaceMethodDeclaratorRest
+  ConstantDeclaratorsRest is defined as:
+     ConstantDeclaratorRest { "," ConstantDeclarator }
+  InterfaceMethodDeclaratorRest is defined as:
+     FormalParameters BracketsOpt [ "throws" QualifiedIdentifierList ] ";"
+  VoidInterfaceMethodDeclaratorRest is defined as:
+     FormalParameters [ "throws" QualifiedIdentifierList ] ";"
+
+
+  While in the text of the spec it is yaccified:
+
+  InterfaceDeclaration is defined as:
+     NormalInterfaceDeclaration
+     AnnotationTypeDeclaration
+  NormalInterfaceDeclaration is defined as:
+     [ InterfaceModifiers ] "interface" Identifier [ ExtendsInterfaces ] InterfaceBody
+  ExtendsInterfaces is defined as:
+     "extends" InterfaceType
+     ExtendsInterfaces "," InterfaceType
+  InterfaceBody is defined as:
+     { [ InterfaceMemberDeclarations ] }
+  InterfaceMemberDeclarations is defined as:
+     InterfaceMemberDeclaration
+     InterfaceMemberDeclarations InterfaceMemberDeclaration
+  InterfaceMemberDeclaration is defined as:
+     ConstantDeclaration
+     AbstractMethodDeclaration
+     ClassDeclaration
+     InterfaceDeclaration
+     ";"
+  ConstantDeclaration is defined as:
+     [ ConstantModifiers ] Type VariableDeclarators
+  AbstractMethodDeclaration is defined as:
+     [ AbstractMethodModifiers ] ResultType MethodDeclarator [ Throws ] ";"
+  MethodDeclarator is defined as:
+     Identifier "(" [ FormalParameterList ] ")"
+  
+ 
+  
+   - Fail: NormalInterfaceDeclaration.
+      - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
+     vs.
+      - [], ,([n(ModifiersOpt), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
+  -->
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>NormalInterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>interface</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ExtendsInterfaces</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>InterfaceBody</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
+  <xbgf:deyaccify>ExtendsInterfaces</xbgf:deyaccify>
+  <xbgf:fold>
+    <nonterminal>TypeList</nonterminal>
+    <in>
+      <nonterminal>ExtendsInterfaces</nonterminal>
+    </in>
+  </xbgf:fold>
+  <xbgf:inline>ExtendsInterfaces</xbgf:inline>
+  
+  <!--
+   - Fail: InterfaceBody.
+      - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
+     vs.
+      - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
+  -->
+  <xbgf:deyaccify>InterfaceMemberDeclarations</xbgf:deyaccify>
+  <xbgf:inline>InterfaceMemberDeclarations</xbgf:inline>
+  <xbgf:rename>
+    <nonterminal>
+      <from>InterfaceMemberDeclaration</from>
+      <to>InterfaceBodyDeclaration</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <nonterminal>InterfaceBodyDeclaration</nonterminal>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <nonterminal>InterfaceBodyDeclaration</nonterminal>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+  </xbgf:massage>
+
+  <!--
+   - Fail: InterfaceBodyDeclaration.
+      - [], ;([t((;)), ,([*(n(Modifier)), n(InterfaceMemberDecl)])])
+     vs.
+      - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration), n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
+  -->
+  <xbgf:inline>ConstantDeclaration</xbgf:inline>
+  <xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
+  
+  <xbgf:vertical>
+    <nonterminal>InterfaceBodyDeclaration</nonterminal>
+  </xbgf:vertical>
+
+  <!-- modifiers -->
+  <xbgf:designate>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>InterfaceBodyDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:inject>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>InterfaceBodyDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ModifiersOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ClassDeclaration</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  <xbgf:strip>
+    <label>target</label>
+  </xbgf:strip>
+  <xbgf:designate>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>InterfaceBodyDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>InterfaceDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:inject>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>InterfaceBodyDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ModifiersOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>InterfaceDeclaration</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  <xbgf:strip>
+    <label>target</label>
+  </xbgf:strip>
+
+  <!-- let's remove for simplicity -->
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>InterfaceBodyDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ModifiersOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>VariableDeclarators</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+
+  <!-- ... -->
+  <xbgf:inline>Throws</xbgf:inline>
+
+
+</xbgf:sequence>
