@@ -121,10 +121,8 @@ vs
   p([], 'CastExpression', ','([t('('), ;([n('Expression'), n('Type')]), t(')'), n('UnaryExpression')])),
 
   -->
-  <xbgf:vertical>
-    <nonterminal>CastExpression</nonterminal>
-  </xbgf:vertical>
-  <xbgf:add>
+  <xbgf:undefine>CastExpression</xbgf:undefine>
+  <xbgf:define>
     <bgf:production>
       <nonterminal>CastExpression</nonterminal>
       <bgf:expression>
@@ -151,59 +149,7 @@ vs
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
-  <xbgf:remove>
-    <bgf:production>
-      <nonterminal>CastExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>BasicType</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>Dims</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>UnaryExpression</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:remove>
-  <xbgf:remove>
-    <bgf:production>
-      <nonterminal>CastExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>QualifiedIdentifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>UnaryExpressionNotPlusMinus</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:remove>
+  </xbgf:define>
   <xbgf:inline>CastExpression</xbgf:inline>
 
   <!-- Defining PrefixOp; smart extract needed -->

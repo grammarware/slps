@@ -26,7 +26,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  
+
   <!--
    - Fail: SwitchBlockStatementGroups.
       - [], ;([n(SwitchBlockStatementGroup), ,([n(SwitchBlockStatementGroups), n(SwitchBlockStatementGroup)])])
@@ -67,7 +67,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  
+
   <!--
    - Fail: Statement.
       - [], ,([t(switch), n(ParExpression), t({), n(SwitchBlockStatementGroups), ?(n(SwitchLabels)), t(})])
@@ -131,7 +131,7 @@
   <xbgf:distribute>
     <nonterminal>Statement</nonterminal>
   </xbgf:distribute>
-  
+
   <!--
    - Fail: Statement.
       - [], ,([t(if), n(ParExpression), n(StatementNoShortIf), t(else), n(Statement)])
@@ -252,6 +252,13 @@
     </bgf:expression>
   </xbgf:massage>
 
+  <!-- Getting rid of all of them -->
+  <xbgf:undefine>StatementNoShortIf</xbgf:undefine>
+  <xbgf:eliminate>ForStatementNoShortIf</xbgf:eliminate>
+  <xbgf:eliminate>WhileStatementNoShortIf</xbgf:eliminate>
+  <xbgf:eliminate>LabeledStatementNoShortIf</xbgf:eliminate>
+  <xbgf:eliminate>IfThenElseStatementNoShortIf</xbgf:eliminate>
+
   <!--
    - Fail: BlockStatements.
       - [], ;([n(BlockStatement), ,([n(BlockStatements), n(BlockStatement)])])
@@ -301,7 +308,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  
+
   <!--
    - Fail: BlockStatement.
       - [], ;([n(LocalVariableDeclarationStatement), n(Statement)])
@@ -359,7 +366,7 @@
     <label>target</label>
   </xbgf:strip>
   <xbgf:horizontal>BlockStatement</xbgf:horizontal>
- 
+
   <!--
    - Fail: ForUpdate.
       - [], n(StatementExpressionList)
@@ -396,7 +403,7 @@
     </bgf:production>
   </xbgf:extract>
   <xbgf:inline>StatementExpressionList</xbgf:inline>
-  
+
   <!--
    - Fail: ForInit.
       - [], ;([,([n(StatementExpression), n(MoreStatementExpressions)]), n(LocalVariableDeclaration)])
@@ -426,7 +433,7 @@
     </bgf:production>
   </xbgf:inject>
   <xbgf:inline>LocalVariableDeclaration</xbgf:inline>
-  
+
   <!--
    - Fail: Catches.
       - [], ;([n(CatchClause), ,([n(Catches), n(CatchClause)])])
@@ -434,7 +441,7 @@
       - [], +n(CatchClause)
   -->
   <xbgf:deyaccify>Catches</xbgf:deyaccify>
-  
+
   <!--
    - Fail: VariableDeclarators.
       - [], ;([n(VariableDeclarator), ,([n(VariableDeclarators), t((,)), n(VariableDeclarator)])])
@@ -442,7 +449,7 @@
       - [], ,([n(VariableDeclarator), *(,([t((,)), n(VariableDeclarator)]))])
   -->
   <xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify>
-  
+
   <!--
    - Fail: VariableDeclaratorId.
       - [], ;([n(Identifier), ,([n(VariableDeclaratorId), t([), t(])])])
