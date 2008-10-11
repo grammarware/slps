@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+python ${SLPS}/topics/presentation/metrics/xbgfover.py $1 $2 $3
+
