@@ -3,8 +3,10 @@ redirect = >> $*.log 2>&1
 tools = ../../../../shared/tools
 
 build:
+	@cd ../apps/xbgf; make build
 
 test:
+	make build
 	@make add1.quiet
 	@make add2.quiet
 	@make chain.quiet
@@ -80,7 +82,7 @@ test:
 
 rebuild:
 	make clean
-	make test
+	make build
 
 %.test:
 	@echo [Test XBGF] $*
