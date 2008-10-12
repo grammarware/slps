@@ -5,7 +5,8 @@ tools = ../../../../shared/tools
 build:
 
 test:
-	@make add.quiet
+	@make add1.quiet
+	@make add2.quiet
 	@make chain.quiet
 	@make define.quiet
 	@make designate.quiet

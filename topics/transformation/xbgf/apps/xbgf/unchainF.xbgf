@@ -64,6 +64,15 @@
     <bgf:production>
       <nonterminal>f</nonterminal>
       <bgf:expression>
+        <nonterminal>dump</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:unchain>
+
+  <xbgf:unchain>
+    <bgf:production>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
         <nonterminal>eliminate</nonterminal>
       </bgf:expression>
     </bgf:production>

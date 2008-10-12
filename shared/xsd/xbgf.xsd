@@ -36,6 +36,7 @@
       <xsd:element ref="xbgf:designate"/>
       <xsd:element ref="xbgf:deyaccify"/>
       <xsd:element ref="xbgf:distribute"/>
+      <xsd:element ref="xbgf:dump"/>
       <xsd:element ref="xbgf:eliminate"/>
       <xsd:element ref="xbgf:extract"/>
       <xsd:element ref="xbgf:factor"/>
@@ -69,16 +70,31 @@
   <xsd:element name="add">
     <xsd:annotation>
       <xsd:documentation>
-        A given production is added to an existing definition. That is,
-        the nonterminal is meant to be extended. The define operator
-        should be used instead when an the definition of an undefined
-        nonterminal is added. The introduce operator should be used
-        instead when a fresh nonterminal is to be defined.
+        Nonterminal definitions can be extended ("added to") vertically
+        and horizontally. In the former case, a given production is added
+        to an existing definition. In the latter case, a given branch is
+        added to a given expression, possibly restricted to a scope. The
+        horizontal mode is there for convenience only because it could be
+        simulated by a sequence of extraction, vertical addition, and 
+        inlining. There are two operators that are very similar to the 
+        (vertical) add operator: define and introduce. The define operator
+        should be used when an the definition of an undefined nonterminal
+        is added. The introduce operator should be used when a fresh 
+        nonterminal is to be defined.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
       <xsd:choice>
         <xsd:element ref="bgf:production"/>
+        <xsd:sequence>
+          <xsd:element ref="bgf:expression"/>
+          <xsd:element ref="bgf:expression"/>
+          <xsd:element name="in" minOccurs="0">
+            <xsd:complexType>
+              <xsd:group ref="xbgf:scope"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>
@@ -156,6 +172,17 @@
     <xsd:complexType>
       <xsd:group ref="xbgf:scope"/>
     </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="dump">
+    <xsd:annotation>
+      <xsd:documentation>
+        A debugging tool.
+        Upon arrival at current transformation, the input grammar is dumped.
+        See the file xbgf.log.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType/>
   </xsd:element>
 
   <xsd:element name="eliminate" type="bgf:nonterminal">

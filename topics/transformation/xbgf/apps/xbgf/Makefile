@@ -32,5 +32,6 @@ show: build
 
 clean:
 	rm -f *~
+	rm -f *.log
 	rm -f *.bgf
 	rm -f append.xbgf

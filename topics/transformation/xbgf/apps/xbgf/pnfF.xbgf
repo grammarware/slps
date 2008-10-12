@@ -54,6 +54,88 @@
 
   <xbgf:massage>
     <bgf:expression>
+      <nonterminal>p</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <selectable>
+        <selector>addV</selector>
+        <bgf:expression>
+          <nonterminal>p</nonterminal>
+        </bgf:expression>
+      </selectable>
+    </bgf:expression>
+    <in>
+      <label>add</label>
+    </in>
+  </xbgf:massage>
+
+  <xbgf:distribute>
+    <label>add</label>
+  </xbgf:distribute>
+
+  <xbgf:vertical>
+    <label>add</label>
+  </xbgf:vertical>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>addH</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>addHinL</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>l</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:designate>
+    <bgf:production>
+      <label>addHinN</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>x</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>n</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+  <xbgf:massage>
+    <bgf:expression>
       <nonterminal>l</nonterminal>
     </bgf:expression>
     <bgf:expression>

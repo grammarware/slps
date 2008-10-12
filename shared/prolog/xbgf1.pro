@@ -26,17 +26,33 @@ transformG(Xbgf,G1,G4)
 
 
 %
-% p([l(add)], f, n(p))
+% p([l(addV)], f, n(p))
+% p([l(addH)], f, (n(x),n(x)))
+% p([l(addHinL)], f, (n(x),n(x),n(l)))
+% p([l(addHinN)], f, (n(x),n(x),n(n)))
 %
-% Add a production to an existing definition
+% Add a production to an existing definition.
+% Add a branch to a choice (in a scope).
 %
 
-add(P,g(Rs,Ps1),g(Rs,Ps3))
+addV(P,g(Rs,Ps1),g(Rs,Ps3))
  :-
     P = p(_,N,_),
     splitN(Ps1,N,Ps2,Ps2a,Ps2b),
     concat([Ps2a,Ps2,[P],Ps2b],Ps3),
     !.
+
+addH(X1,X2,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    replace(X2,';'([X2,X1]),Ps1,[],[],Ps3).
+
+addHinL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    replaceL(X2,';'([X2,X1]),L,g(Rs,Ps1),g(Rs,Ps3)).
+
+addHinN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    replaceN(X2,';'([X2,X1]),N,g(Rs,Ps1),g(Rs,Ps3)).
 
 
 %
@@ -234,6 +250,19 @@ distribute_sequence([Xs1|Xss],','([X|Xs2]))
  :-
     member(X,Xs1),
     distribute_sequence(Xss,','(Xs2)).
+
+
+%
+% p([l(dump)], f, true)
+%
+% Stop transformation and store current grammar in xbgf.log.
+%
+
+dump(G,_)
+ :-
+    gToXml(G,BgfOutXml),
+    saveXml('xbgf.log',BgfOutXml),
+    cease('Dump transformation encountered.',[]).
 
 
 %
@@ -518,8 +547,8 @@ assoc_rule2(
 
 %
 % p([l(massage)], f, (n(x),n(x)))
-% p([l(massageN)], f, (n(x),n(x),n(n)))
 % p([l(massageL)], f, (n(x),n(x),n(l)))
+% p([l(massageN)], f, (n(x),n(x),n(n)))
 %
 % Semantics-preserving expression replacement
 %
@@ -528,15 +557,15 @@ massage(X1,X2,g(Rs,Ps1),g(Rs,Ps3))
  :-
     massage(X1,X2,Ps1,[],[],Ps3).
 
-massageN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
- :-
-    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
-    massage(X1,X2,Ps2,Ps2a,Ps2b,Ps3).
-
 massageL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
  :-
     splitL(Ps1,L,P,Ps2a,Ps2b),
     massage(X1,X2,[P],Ps2a,Ps2b,Ps3).
+
+massageN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    massage(X1,X2,Ps2,Ps2a,Ps2b,Ps3).
 
 massage(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
  :-
@@ -777,8 +806,8 @@ renameT_rule(T1,T2,t(T1),t(T2)).
 
 %
 % p([l(replace)], f, (n(x),n(x)))
-% p([l(replaceN)], f, (n(x),n(x),n(n)))
 % p([l(replaceL)], f, (n(x),n(x),n(l)))
+% p([l(replaceN)], f, (n(x),n(x),n(n)))
 %
 % Unconstrainted expression-level editing
 %
@@ -787,15 +816,15 @@ replace(X1,X2,g(Rs,Ps1),g(Rs,Ps3))
  :-
     replace(X1,X2,Ps1,[],[],Ps3).
 
-replaceN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
- :-
-    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
-    replace(X1,X2,Ps2,Ps2a,Ps2b,Ps3).
-
 replaceL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
  :-
     splitL(Ps1,L,P,Ps2a,Ps2b),
     replace(X1,X2,[P],Ps2a,Ps2b,Ps3).
+
+replaceN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    replace(X1,X2,Ps2,Ps2a,Ps2b,Ps3).
 
 replace(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
  :-

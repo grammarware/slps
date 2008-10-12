@@ -11,11 +11,19 @@ sxmlns(xbgf,'http://planet-sl.org/xbgf').
 % Convert XML to predicates
 %
 
-xml2xbgf(T,add(P2))
+xml2xbgf(T,addV(P2))
  :-
     self(name(xbgf:add),T),
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
+
+xml2xbgf(T,G)
+ :-
+    self(name(xbgf:add),T),
+    children(name(bgf:expression),T,[T1,T2]),
+    xmlToExpression(T1,X1),
+    xmlToExpression(T2,X2),
+    inScope2xbgf(addH,addHinL,addHinN,[X1,X2],T,G).
 
 xml2xbgf(T,chain(P2))
  :-
@@ -51,6 +59,10 @@ xml2xbgf(T,distributeN(N))
     self(name(xbgf:distribute),T),
     child(name(nonterminal),T,T1),
     content(T1,N).
+
+xml2xbgf(T,dump)
+ :-
+    self(name(xbgf:dump),T).
 
 xml2xbgf(T,eliminate(N))
  :-
