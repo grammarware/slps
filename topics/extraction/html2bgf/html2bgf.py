@@ -271,6 +271,10 @@ def ifContinuation(s,olds):
   if olds[i]!=' ' and s[i]==' ' and s[i+1]!=' ':
    # one space indentation equals line continuation
    return True
+  if i>0 and olds[i]!=' ' and s[i:i+8]==' '*8 and s[i+8]!=' ':
+   # eight space indentation equals line continuation
+   print 'Long tab detected in "'+s.rstrip()+'"'
+   return True
   return False
  if s[0]=='<':
   return ifContinuation(s[s.index('>')+1:],olds)
