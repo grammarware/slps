@@ -207,29 +207,42 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!-- let's remove for simplicity -->
-  <xbgf:remove>
+  <!--
+   - Fail: Annotations.
+      - [], ,([n(Annotation), ?(n(Annotations))])
+     vs.
+      - [], ;([n(Annotation), ,([n(Annotations), n(Annotation)])])
+  -->
+  <xbgf:deyaccify>Annotations</xbgf:deyaccify>
+
+  <!--
+   - Fail: AnnotationTypeDeclaration.
+      - [], ,([t(@), t(interface), n(Identifier), n(AnnotationTypeBody)])
+     vs.
+      - [], ,([*(n(Modifier)), t(@), t(interface), n(Identifier), n(AnnotationTypeBody)])
+  -->
+  <xbgf:project>
     <bgf:production>
-      <nonterminal>InterfaceBodyDeclaration</nonterminal>
+      <nonterminal>AnnotationTypeDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
+            <terminal>@</terminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>Type</nonterminal>
+            <terminal>interface</terminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>VariableDeclarators</nonterminal>
+            <nonterminal>Identifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <terminal>;</terminal>
+            <nonterminal>AnnotationTypeBody</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:remove>
-
+  </xbgf:project>
+  
   <!-- ... -->
   <xbgf:inline>Throws</xbgf:inline>
 

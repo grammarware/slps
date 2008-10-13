@@ -9,7 +9,6 @@
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
-
   <xbgf:vertical>
     <nonterminal>Selector</nonterminal>
   </xbgf:vertical>
@@ -25,8 +24,70 @@
   <xbgf:vertical>
     <nonterminal>SwitchLabel</nonterminal>
   </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>InterfaceDeclaration</nonterminal>
-  </xbgf:vertical>
+
+  <!--
+   - Fail: Annotations.
+      - [], ,([n(Annotation), ?(n(Annotations))])
+     vs.
+      - [], ;([n(Annotation), ,([n(Annotations), n(Annotation)])])
+      
+  Later this should become just deyaccify
+  -->
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>Annotations</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Annotations</nonterminal>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <in>
+      <nonterminal>Annotations</nonterminal>
+    </in>
+  </xbgf:massage>
+  <xbgf:distribute>
+    <nonterminal>Annotations</nonterminal>
+  </xbgf:distribute>
+  <xbgf:deyaccify>Annotations</xbgf:deyaccify>
+
+  <!--
+   - Fail: Catches.
+      - [], ,([n(CatchClause), *(n(CatchClause))])
+     vs.
+      - [], +n(CatchClause)
+  -->
+  <xbgf:massage>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>CatchClause</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>CatchClause</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <plus>
+        <bgf:expression>
+          <nonterminal>CatchClause</nonterminal>
+        </bgf:expression>
+      </plus>
+    </bgf:expression>
+  </xbgf:massage>
 
 </xbgf:sequence>

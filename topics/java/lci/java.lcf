@@ -35,11 +35,12 @@
     </grammar>
   </tool>
 
+  <!--
   <source>
     <name>jls1app</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/syntax.kw <expand>java</expand>/jls1/syntax.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/syntax.kw <expand>java</expand>/jls1/app.html
       </extraction>
     </grammar>
   </source>
@@ -47,7 +48,7 @@
     <name>jls1doc</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/collect.kw <expand>java</expand>/jls1/collected.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/collect.kw <expand>java</expand>/jls1/doc.html
       </extraction>
     </grammar>
   </source>
@@ -56,7 +57,7 @@
     <name>jls2app</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/syntax.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/app.html
       </extraction>
     </grammar>
   </source>
@@ -64,16 +65,17 @@
     <name>jls2doc</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/collect.kw <expand>java</expand>/jls2/collected.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/collect.kw <expand>java</expand>/jls2/doc.html
       </extraction>
     </grammar>
   </source>
-
+-->
+  
   <source>
     <name>jls3app</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/syntax.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/app.html
       </extraction>
     </grammar>
   </source>
@@ -81,12 +83,12 @@
     <name>jls3doc</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/collect.kw <expand>java</expand>/jls3/collected.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/collect.kw <expand>java</expand>/jls3/doc.html
       </extraction>
     </grammar>
   </source>
 
-  
+  <!--
   <target>
     <name>one</name>
     <branch>
@@ -126,8 +128,7 @@
       <perform>breakSemantics2doc</perform>
     </branch>
   </target>
-  
-
+  -->
   <target>
     <name>three</name>
     <branch>
@@ -146,17 +147,22 @@
       <perform>inlineStatements2doc</perform>
       <perform>inlineExpressions2doc</perform>
       <perform>refactorClassDeclarations3</perform>
+      <perform>refactorEnumDeclarations</perform>
+      <perform>refactorInterfaceDeclarations3</perform>
       <perform>breakSemantics3doc</perform>
     </branch>
   </target>
-
- <target>
+  
+  <!--
+  <target>
     <name>onetwo</name>
     <branch>
       <input>one</input>
       <perform>refactorStatements</perform>
-      <perform>refactorTypes</perform>
-      <perform>structure1</perform>
+      <perform>refactorTypes1</perform>
+      <perform>upgradeDeclarations1to2</perform>
+      <perform>deyaccifyExpressions</perform>
+      <perform>upgradeExpressions</perform>
       <perform>addFeatures1to2</perform>
       <perform>cropFeatures1</perform>
     </branch>
@@ -164,7 +170,6 @@
       <input>two</input>
     </branch>
   </target>
-
   <target>
     <name>limit</name>
     <branch>
@@ -176,13 +181,9 @@
       <input>three</input>
     </branch>
     <branch>
-      <input>formal</input>
-    </branch>
-    <branch>
       <input>doc</input>
     </branch>
   </target>
-
   <target>
     <name>doc</name>
     <branch>
@@ -204,7 +205,7 @@
       <perform>fixErrors3doc</perform>
     </branch>
   </target>
-
+  
   <target>
     <name>formal</name>
     <branch>
@@ -217,5 +218,5 @@
       <input>jls3app</input>
     </branch>
   </target>
-
+-->
 </lcf:configuration>

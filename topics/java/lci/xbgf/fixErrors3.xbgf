@@ -34,4 +34,34 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  
+  <!--
+   - Fail: AnnotationTypeBody.
+      - [], *(?(n(AnnotationTypeElementDeclarations)))
+     vs.
+      - [], ,([t({), ?(n(AnnotationTypeElementDeclarations)), t(})])
+  -->
+  <xbgf:undefine>AnnotationTypeBody</xbgf:undefine>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>AnnotationTypeBody</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
 </xbgf:sequence>

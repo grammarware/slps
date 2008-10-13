@@ -16,4 +16,18 @@
   EnumBodyDeclarations is defined as:
      ";" [ ClassBodyDeclarations ]
   -->
+  
+  <!--
+   - Fail: Arguments.
+      - [], ,([t((), ?(,([n(Expression), *(,([t((,)), n(Expression)]))])), t())])
+     vs.
+      - [], ,([t((), ?(n(ArgumentList)), t())])
+  -->
+  <xbgf:deyaccify>ArgumentList</xbgf:deyaccify>
+  <xbgf:unfold>
+    <nonterminal>ArgumentList</nonterminal>
+    <in>
+      <nonterminal>Arguments</nonterminal>
+    </in>
+  </xbgf:unfold>
 </xbgf:sequence>
