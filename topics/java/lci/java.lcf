@@ -119,7 +119,7 @@
       <perform>unifyNames</perform>
       <perform>deyaccify2doc</perform>
       <perform>refactorTypes</perform>
-      <perform>deyaccifyExpressions</perform>
+      <perform>unlayerExpressions</perform>
       <perform>inlineStatements2doc</perform>
       <perform>inlineExpressions2doc</perform>
       <perform>refactorClassDeclarations</perform>
@@ -143,11 +143,10 @@
       <perform>unifyNames</perform>
       <perform>deyaccify2doc</perform>
       <perform>refactorTypes3</perform>
-      <perform>deyaccifyExpressions3</perform>
+      <perform>unlayerExpressions3</perform>
       <perform>inlineStatements2doc</perform>
       <perform>inlineExpressions2doc</perform>
       <perform>refactorClassDeclarations3</perform>
-      <perform>refactorEnumDeclarations</perform>
       <perform>refactorInterfaceDeclarations3</perform>
       <perform>breakSemantics3doc</perform>
     </branch>
@@ -161,7 +160,7 @@
       <perform>refactorStatements</perform>
       <perform>refactorTypes1</perform>
       <perform>upgradeDeclarations1to2</perform>
-      <perform>deyaccifyExpressions</perform>
+      <perform>unlayerExpressions</perform>
       <perform>upgradeExpressions</perform>
       <perform>addFeatures1to2</perform>
       <perform>cropFeatures1</perform>

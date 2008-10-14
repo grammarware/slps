@@ -57,9 +57,9 @@
     <None Include="xbgf\addFeatures2to3.xbgf" />
     <None Include="xbgf\addFeatures2to3doc.xbgf" />
     <None Include="xbgf\breakSemantics2doc.xbgf" />
+    <None Include="xbgf\breakSemantics3doc.xbgf" />
     <None Include="xbgf\cropFeatures1.xbgf" />
     <None Include="xbgf\deyaccify2doc.xbgf" />
-    <None Include="xbgf\deyaccifyExpressions.xbgf" />
     <None Include="xbgf\enhanceModifiers.xbgf" />
     <None Include="xbgf\expandOps.xbgf" />
     <None Include="xbgf\fixErrors1.xbgf" />
@@ -70,17 +70,28 @@
     <None Include="xbgf\fixErrors3doc.xbgf" />
     <None Include="xbgf\inlineExpressions2doc.xbgf" />
     <None Include="xbgf\inlineStatements2doc.xbgf" />
+    <None Include="xbgf\prefer3.xbgf" />
     <None Include="xbgf\preferLALR.xbgf" />
     <None Include="xbgf\prepare1.xbgf" />
     <None Include="xbgf\prepare2.xbgf" />
     <None Include="xbgf\prepare3.xbgf" />
     <None Include="xbgf\refactorClassDeclarations.xbgf" />
+    <None Include="xbgf\refactorClassDeclarations3.xbgf" />
+    <None Include="xbgf\refactorEnumDeclarations.xbgf" />
     <None Include="xbgf\refactorInterfaceDeclarations.xbgf" />
+    <None Include="xbgf\refactorInterfaceDeclarations3.xbgf" />
+    <None Include="xbgf\refactorMiscDeclarations.xbgf" />
     <None Include="xbgf\refactorStatements.xbgf" />
     <None Include="xbgf\refactorTypes.xbgf" />
+    <None Include="xbgf\refactorTypes1.xbgf" />
+    <None Include="xbgf\refactorTypes3.xbgf" />
     <None Include="xbgf\restructure1doc.xbgf" />
-    <None Include="xbgf\structure1.xbgf" />
     <None Include="xbgf\unifyModifiers.xbgf" />
     <None Include="xbgf\unifyNames.xbgf" />
+    <None Include="xbgf\unifyNames1.xbgf" />
+    <None Include="xbgf\unlayerExpressions.xbgf" />
+    <None Include="xbgf\unlayerExpressions3.xbgf" />
+    <None Include="xbgf\upgradeDeclarations1to2.xbgf" />
+    <None Include="xbgf\upgradeExpressions.xbgf" />
   </ItemGroup>
 </Project>
