@@ -6,7 +6,17 @@
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
-
+  
+  <!--
+  There's no such thing as TypeName
+  
+Annotation:
+        </em><code>@</code><em> TypeName [<code>(</code> [Identifier <code>=</code>] ElementValue<code>)</code>]
+  -->
+  <xbgf:unite>
+    <add>TypeName</add>
+    <to>QualifiedIdentifier</to>
+  </xbgf:unite>
   <!--
   The extractor can't tell if {} are terminals or BNF
   

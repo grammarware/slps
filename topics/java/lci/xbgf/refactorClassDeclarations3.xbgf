@@ -121,7 +121,7 @@
       </star>
     </bgf:expression>
   </xbgf:massage>
-  
+
   <!-- modifiers -->
   <xbgf:project>
     <bgf:production>
@@ -394,7 +394,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  
+
   <!--
    - Fail: ClassBodyDeclaration.
       - [], ;([t((;)), ... ,([n(ModifiersOpt), n(MemberDecl)])])
@@ -465,6 +465,9 @@
   <!--
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(ResultType), n(MethodDeclarator), ?(n(Throws)), n(MethodBody)])
   -->
+  <xbgf:fold>
+    <nonterminal>BracketsOpt</nonterminal>
+  </xbgf:fold>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>MethodDeclaratorRest</nonterminal>
@@ -474,18 +477,7 @@
             <nonterminal>FormalParameters</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <star>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>[</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <terminal>]</terminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </star>
+            <nonterminal>BracketsOpt</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <optional>
@@ -632,7 +624,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  
+
   <!--
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(GenericMethodOrConstructorRest)])
   -->
@@ -670,14 +662,14 @@
       <nonterminal>GenericMethodOrConstructorDecl</nonterminal>
     </in>
   </xbgf:narrow>
-  
+
   <!--finally-->
   <xbgf:inline>ResultType</xbgf:inline>
- 
+
   <xbgf:vertical>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:vertical>
-  
+
   <!--
    - Fail: VariableDeclaratorId.
       - [], ,([n(Identifier), *(,([t([), t(])]))])
@@ -685,7 +677,7 @@
       - [], ;([n(Identifier), ,([n(VariableDeclaratorId), t([), t(])])])
    -->
   <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
-  
+
   <!--
       - [], ,([*(n(Modifier)), n(Type), n(VariableDeclarators), t((;))])
   -->
@@ -821,18 +813,7 @@
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <star>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>[</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <terminal>]</terminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </star>
+            <nonterminal>BracketsOpt</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <optional>
@@ -871,7 +852,7 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
-  
+
   <!--
    - Fail: ClassBodyDeclaration.
       - [], ;([... ,([*(n(Modifier)), n(MemberDecl)])])
@@ -1006,45 +987,46 @@
   </xbgf:factor>
   <xbgf:extract>
     <bgf:production>
-      <nonterminal>MemberDecl</nonterminal>        <bgf:expression>
-          <choice>
-            <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <nonterminal>Identifier</nonterminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>ConstructorDeclaratorRest</nonterminal>
-                </bgf:expression>
-              </sequence>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>MethodOrFieldDecl</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <terminal>void</terminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>Identifier</nonterminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>VoidMethodDeclaratorRest</nonterminal>
-                </bgf:expression>
-              </sequence>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>InterfaceDeclaration</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>ClassDeclaration</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>GenericMethodOrConstructorDecl</nonterminal>
-            </bgf:expression>
-          </choice>
-        </bgf:expression>
+      <nonterminal>MemberDecl</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>ConstructorDeclaratorRest</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>MethodOrFieldDecl</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <terminal>void</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>VoidMethodDeclaratorRest</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>InterfaceDeclaration</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ClassDeclaration</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>GenericMethodOrConstructorDecl</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
     </bgf:production>
   </xbgf:extract>
 
@@ -1087,7 +1069,7 @@
       - [], ,([n(ModifiersOpt), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])
    -->
   <xbgf:inline>ModifiersOpt</xbgf:inline>
-  
+
   <!--
    - Fail: ConstructorDeclaratorRest.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(MethodBody)])
@@ -1115,7 +1097,7 @@
   -->
   <xbgf:deyaccify>TypeParameterList</xbgf:deyaccify>
   <xbgf:inline>TypeParameterList</xbgf:inline>
-  
+
   <!--
    - Fail: TypeParameter.
       - [], ,([n(Identifier), ?(,([t(extends), n(Bound)]))])

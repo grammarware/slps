@@ -113,6 +113,79 @@
      "(" ReferenceType ")" UnaryExpressionNotPlusMinus
 
   -->
+  
+  <!-- [Dims] vs BracketsOpt-->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>B</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>[</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>]</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  <xbgf:deyaccify>Dims</xbgf:deyaccify>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>BracketsOpt</nonterminal>
+      <bgf:expression>
+        <optional>
+          <bgf:expression>
+            <nonterminal>Dims</nonterminal>
+          </bgf:expression>
+        </optional>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  <xbgf:unfold>
+    <nonterminal>Dims</nonterminal>
+    <in>
+      <nonterminal>BracketsOpt</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:inline>B</xbgf:inline>
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>[</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>]</terminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>[</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>]</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+  </xbgf:massage>
+  
+  <!-- This all needs to be completely redone and rename -->
 
   <!-- Complicated surgery on CastExpression - kind of fold mod new type system
   
@@ -165,11 +238,7 @@ vs
             <nonterminal>BasicType</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>Dims</nonterminal>
-              </bgf:expression>
-            </optional>
+                <nonterminal>BracketsOpt</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <terminal>)</terminal>

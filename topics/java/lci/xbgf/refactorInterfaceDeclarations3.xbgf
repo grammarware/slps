@@ -100,7 +100,7 @@
     </in>
   </xbgf:fold>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
-  
+
   <!--
    - Fail: InterfaceBody.
       - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
@@ -144,7 +144,7 @@
   -->
   <xbgf:inline>ConstantDeclaration</xbgf:inline>
   <xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
-  
+
   <xbgf:vertical>
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
@@ -242,7 +242,335 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
+
+  <!--
+   This is needed for Annotation (see below)
+      
+  ElementValuePairs is defined as:
+     ElementValuePair
+     ElementValuePairs "," ElementValuePair
   
+  so we effectively "narrow" it (by executing remove instead of deyaccify/narrow)
+  (also because narrow(*(L),true) doesn't work)
+  -->
+  <xbgf:vertical>
+    <nonterminal>ElementValuePairs</nonterminal>
+  </xbgf:vertical>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>ElementValuePairs</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ElementValuePairs</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>,</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ElementValuePair</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:inline>ElementValuePairs</xbgf:inline>
+  <!--
+   - Fail: Annotation.
+      - [], ,([t(@), n(TypeName), ?(,([t((), ?(,([n(Identifier), t(=)])), n(ElementValue), t())]))])
+     vs.
+      - [], ;([n(NormalAnnotation), n(MarkerAnnotation), n(SingleElementAnnotation)])
+  -->
+  <xbgf:inline>NormalAnnotation</xbgf:inline>
+  <xbgf:inline>MarkerAnnotation</xbgf:inline>
+  <xbgf:inline>SingleElementAnnotation</xbgf:inline>
+  <xbgf:inline>ElementValuePair</xbgf:inline>
+
+  <!--
+  The following solution breaks semantics by disallowing
+  ,([t(@), n(QualifiedIdentifier), t((), t())])
+  
+   - Fail: Annotation.
+      - [], ,([t(@), n(QualifiedIdentifier), ?(,([t((), ?(,([n(Identifier), t(=)])), n(ElementValue), t())]))])
+     vs.
+   - [], ;([,([t(@), n(QualifiedIdentifier), t((), ?(,([n(Identifier), t(=), n(ElementValue)])), t())]),
+            ,([t(@), n(QualifiedIdentifier)]),
+            ,([t(@), n(QualifiedIdentifier), t((), n(ElementValue), t())])])
+  -->
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>=</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ElementValue</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>=</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ElementValue</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:distribute>
+    <nonterminal>Annotation</nonterminal>
+  </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>Annotation</nonterminal>
+  </xbgf:vertical>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Annotation</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>@</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:horizontal>Annotation</xbgf:horizontal>
+  <xbgf:factor>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>@</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>QualifiedIdentifier</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>=</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ElementValue</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>@</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>QualifiedIdentifier</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>@</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>QualifiedIdentifier</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ElementValue</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>@</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>QualifiedIdentifier</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>(</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <choice>
+                    <bgf:expression>
+                      <sequence>
+                        <bgf:expression>
+                          <nonterminal>Identifier</nonterminal>
+                        </bgf:expression>
+                        <bgf:expression>
+                          <terminal>=</terminal>
+                        </bgf:expression>
+                      </sequence>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <epsilon/>
+                    </bgf:expression>
+                  </choice>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>ElementValue</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>)</terminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+            <bgf:expression>
+              <epsilon/>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>=</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>=</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <nonterminal>Identifier</nonterminal>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <terminal>=</terminal>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ElementValue</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <nonterminal>Identifier</nonterminal>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <terminal>=</terminal>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ElementValue</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
   <!-- ... -->
   <xbgf:inline>Throws</xbgf:inline>
 

@@ -48,12 +48,6 @@
     <None Include="..\..\..\shared\xsd\lcf.xsd">
       <Link>lcf.xsd</Link>
     </None>
-    <None Include="..\..\..\shared\xsd\ldf.xsd">
-      <Link>ldf.xsd</Link>
-    </None>
-    <None Include="..\..\..\shared\xsd\ldx.xsd">
-      <Link>ldx.xsd</Link>
-    </None>
     <None Include="..\..\..\shared\xsd\xbgf.xsd">
       <Link>xbgf.xsd</Link>
     </None>
@@ -65,7 +59,10 @@
     <None Include="xbgf\breakSemantics2doc.xbgf" />
     <None Include="xbgf\cropFeatures1.xbgf" />
     <None Include="xbgf\deyaccify2doc.xbgf" />
+    <None Include="xbgf\deyaccifyExpressions.xbgf" />
     <None Include="xbgf\enhanceModifiers.xbgf" />
+    <None Include="xbgf\expandOps.xbgf" />
+    <None Include="xbgf\fixErrors1.xbgf" />
     <None Include="xbgf\fixErrors1doc.xbgf" />
     <None Include="xbgf\fixErrors2.xbgf" />
     <None Include="xbgf\fixErrors2doc.xbgf" />
@@ -77,10 +74,13 @@
     <None Include="xbgf\prepare1.xbgf" />
     <None Include="xbgf\prepare2.xbgf" />
     <None Include="xbgf\prepare3.xbgf" />
-    <None Include="xbgf\refactorDeclarations2doc.xbgf" />
+    <None Include="xbgf\refactorClassDeclarations.xbgf" />
+    <None Include="xbgf\refactorInterfaceDeclarations.xbgf" />
     <None Include="xbgf\refactorStatements.xbgf" />
     <None Include="xbgf\refactorTypes.xbgf" />
     <None Include="xbgf\restructure1doc.xbgf" />
     <None Include="xbgf\structure1.xbgf" />
+    <None Include="xbgf\unifyModifiers.xbgf" />
+    <None Include="xbgf\unifyNames.xbgf" />
   </ItemGroup>
 </Project>

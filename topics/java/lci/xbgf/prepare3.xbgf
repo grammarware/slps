@@ -89,5 +89,26 @@
       </plus>
     </bgf:expression>
   </xbgf:massage>
+  
+  <!-- This stuff was used in JLS1 and JLS2 -->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>BracketsOpt</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <terminal>[</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>]</terminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
 
 </xbgf:sequence>

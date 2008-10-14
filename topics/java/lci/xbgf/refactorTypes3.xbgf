@@ -147,7 +147,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  <xbgf:define>
+  <!-- WTF!? xbgf:define>
     <bgf:production>
       <nonterminal>BracketsOpt</nonterminal>
       <bgf:expression>
@@ -165,7 +165,7 @@
         </star>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:define-->
   <xbgf:vertical>
     <nonterminal>ReferenceType</nonterminal>
   </xbgf:vertical>

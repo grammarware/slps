@@ -65,7 +65,7 @@ else:
     yes.append(pair[0])
     if pair[1]=='*':
      counter[pair[0]]=1000
-    if pair[1].find('+')>-1:
+    elif pair[1].find('+')>-1:
      counter[pair[0]]=len(pair[1])
      pattern[pair[0]]=pair[1]
     else:
