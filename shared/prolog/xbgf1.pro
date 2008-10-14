@@ -142,7 +142,7 @@ deyaccify(N,g(Rs,Ps1),g(Rs,Ps2))
     P2 = p(As,N,X2),
     require(
       once(xbgf1:deyaccify_rules(N,X1,X2)),
-      'Nonterminal ~q is defined by non-EBNF-like shape ~q.',
+      'Nonterminal ~q of shape ~q is not deyaccifiable.',
       [N,X1]),
     append(Ps2a,[P2|Ps2b],Ps2).
 
@@ -199,6 +199,14 @@ deyaccify_rules(N1,X1,X2)
     \+ X3 == X4,
     X4 = ','([n(N1)|Xs2]),
     X2 = ','([X3,*(','(Xs2))]).
+
+
+% (X3, ?(n(N1))) --> +(X3)
+
+deyaccify_rules(N1,X1,X2) 
+ :-
+    X1 = ','([X3,?(n(N1))]),
+    X2 = +(X3).
 
 
 %
