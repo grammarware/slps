@@ -3,7 +3,8 @@ import sys
 
 yes = []
 no = []
-counter={}
+counter = {}
+pattern = {}
 
 def processSection(text,tagN,cx,p):
  # text - section text
@@ -22,6 +23,11 @@ def processSection(text,tagN,cx,p):
  subsections=content[1].split('<h'+`tagN+1`+'>')
  for pre in subsections[0].split('<pre>')[1:]:
   if max:
+   if pattern.has_key(kw):
+    if pattern[kw][len(pattern[kw])-max]=='-':
+     #print 'Not including one <pre> in',kw
+     max -= 1
+     continue
    #print 'Matched <pre> in',content[0].split()[0]
    p.write(pre.split('</pre>')[0].replace('<br>','').replace('&#32;',' '))
    p.write('\n<hr>\n')
@@ -42,7 +48,8 @@ It will read the input, looking for sections (<h?>) that contain keywords in the
 Once found, it will output the content of <pre> tags from such sections.
 Keywords can be negative: -keyword will make it skip sections with a keyword.
 Keyword/N means that the first N <pre> tags will be copied from a matching section.
-Keyword/* means all <pre>, Keyword without a slash means only the first <pre>.'''
+Keyword/* means all <pre>, Keyword without a slash means only the first <pre>.
+Keyword/-+-+... means to skip all <pre> tags marked as minuses and extract all marked as pluses.'''
 else:
  for kw in open(sys.argv[1],'r').readlines():
   kw = kw.strip()
@@ -58,6 +65,9 @@ else:
     yes.append(pair[0])
     if pair[1]=='*':
      counter[pair[0]]=1000
+    if pair[1].find('+')>-1:
+     counter[pair[0]]=len(pair[1])
+     pattern[pair[0]]=pair[1]
     else:
      counter[pair[0]]=int(pair[1])
    else:
