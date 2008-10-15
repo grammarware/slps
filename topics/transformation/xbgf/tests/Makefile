@@ -17,6 +17,7 @@ test:
 	@make deyaccify3.quiet
 	@make deyaccify4.quiet
 	@make deyaccify5.quiet
+	@make deyaccify6.quiet
 	@make distribute1.quiet
 	@make eliminate.quiet
 	@make extract1.quiet
@@ -73,6 +74,7 @@ test:
 	@make unfold1.quiet
 	@make unfold2.quiet
 	@make unfold3.quiet
+	@make unfold4.quiet
 	@make unite.quiet
 	@make vertical1.quiet
 	@make vertical2.quiet
