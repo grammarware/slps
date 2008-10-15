@@ -18,6 +18,7 @@ test:
 	@make deyaccify4.quiet
 	@make deyaccify5.quiet
 	@make deyaccify6.quiet
+	@make deyaccify7.quiet
 	@make distribute1.quiet
 	@make eliminate.quiet
 	@make extract1.quiet

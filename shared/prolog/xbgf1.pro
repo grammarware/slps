@@ -147,22 +147,60 @@ deyaccify(N,g(Rs,Ps1),g(Rs,Ps2))
     append(Ps2a,[P2|Ps2b],Ps2).
 
 
-% (n(N2) ; (n(N1) , n(N2))) --> +(n(N2))
+%
+% (X3 ; (n(N1) , X3)) --> +(X3)
+% Both sequential orders of second alternative are covered by one clause.
+%
 
 deyaccify_rules(N1,X1,X2) 
  :-
     X1 = ';'(Xs1),
     length(Xs1,2),
-    member(n(N2),Xs1),
-    member(','(Xs2),Xs1),
+    member(X3,Xs1),
+    member(X4,Xs1),
+    \+ X3 == X4,
+    X4 = ','(Xs2),
     length(Xs2,2),
-    member(n(N2),Xs2),
-    member(n(N1),Xs2),
-    X2 = +(n(N2)),
-    \+ N1 == N2.
+    member(X3,Xs2),
+    member(X5,Xs2),
+    X5 = n(N1),
+    \+ X3 == X5,
+    X2 = +(X3).
 
 
+%
+% (','(Xs3) ; (n(N1) , ','(Xs3))) --> +(','(Xs3))
+% Both sequential orders of second alternative are covered by two separate clauses.
+%
+
+deyaccify_rules(N1,X1,X2) 
+ :-
+    X1 = ';'(Xs1),
+    length(Xs1,2),
+    member(X3,Xs1),
+    member(X4,Xs1),
+    \+ X3 == X4,
+    X3 = ','(Xs3),
+    X4 = ','([n(N1)|Xs3]),
+    X2 = +(','(Xs3)).
+
+deyaccify_rules(N1,X1,X2) 
+ :-
+    X1 = ';'(Xs1),
+    length(Xs1,2),
+    member(X3,Xs1),
+    member(X4,Xs1),
+    \+ X3 == X4,
+    X3 = ','(Xs3),
+    X4 = ','(Xs4),
+    append(Xs3,[n(N1)],Xs4),
+    X2 = +(','(Xs3)).
+
+
+%
 % (true ; (n(N1) , n(N2))) --> *(n(N2))
+% Both sequential orders of second alternative are covered by one clause.
+%
 
 deyaccify_rules(N1,X1,X2) 
  :-
@@ -177,7 +215,9 @@ deyaccify_rules(N1,X1,X2)
     \+ N1 == N2.
 
 
+%
 % (true ; n(N2)) --> ?(n(N2))
+%
 
 deyaccify_rules(_,X1,X2) 
  :-
@@ -188,7 +228,9 @@ deyaccify_rules(_,X1,X2)
     X2 = ?(n(N2)).
 
 
+%
 % (X3 ; (n(N1) , X4)) --> (X3 , *(X4))
+%
 
 deyaccify_rules(N1,X1,X2) 
  :-
@@ -201,7 +243,9 @@ deyaccify_rules(N1,X1,X2)
     X2 = ','([X3,*(','(Xs2))]).
 
 
+%
 % (X3, ?(n(N1))) --> +(X3)
+%
 
 deyaccify_rules(N1,X1,X2) 
  :-
