@@ -455,7 +455,6 @@ def diffBTFs(t):
 def convergetestset():
  for testset in testsets.keys():
   # extracting
-  print 'Test set',testset,
   run = testsets[testset]+' '+testset
   logwrite(run)
   if os.system(run+shutup):
