@@ -27,9 +27,9 @@ def noi(filename):
  f.close()
  return c
 
-def report(key,note):
- print note+':',
- for x in targets.keys():
+def report(keys,key,note):
+ print note,
+ for x in keys:
   if results[key][x]:
    print '&',results[key][x],
   else:
@@ -81,19 +81,22 @@ if __name__ == "__main__":
   if not used:
    print '%%',x,'not used in any XBGF script'
    names.remove(x)
+ sorted = targets.keys()[:]
+ sorted.sort()
  print '\\begin{tabular}{l|'+('c|'*len(targets))+'}'
- for x in targets.keys():
+ for x in sorted:
   print '&\\textbf{'+x+'}',
  print '\\\\\\hline'
- report('LOC','Number of lines')
- print 'Number of steps:',
- for x in targets.keys():
+ report(sorted,'LOC','\\numberOfLines')
+ print '\\numberOfSteps',
+ for x in sorted:
   print '&',len(targets[x]),
  print '\\\\'
- report('NOI','Issues solved')
- report('NOX','Transformations total')
+ report(sorted,'NOI','\\numberOfIssues')
+ report(sorted,'NOX','\\numberOfTransformations')
+ print '\\hline'
  for x in names:
-  report(x,'Uses of \\emph{'+x+'}')
+  report(sorted,x,'\\xbgfNumber{'+x+'}')
  print '\\hline'
  print '\\end{tabular}'
  sys.exit(0)
