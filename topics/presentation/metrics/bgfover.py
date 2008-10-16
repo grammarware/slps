@@ -9,6 +9,7 @@ top = "count(/*/*/nonterminal[not(text()=/*/*/*//nonterminal/text()) and not(tex
 bottom = "count(/*/*[not(*//nonterminal)]/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())])"
 
 names   = []
+tnames  = []
 
 bgfns = 'http://planet-sl.org/bgf'
 ET._namespace_map[bgfns] = 'bgf'
@@ -20,17 +21,11 @@ def runxpath(filename,xpathexpr):
  tmp.close()
  return res
 
-def fillinline(path,xexpr):
- s = ''
- for x in names:
-  s += '&'+runxpath(path+x+'.bgf',xexpr)
- return s+'\\\\'
-
 if __name__ == "__main__":
  if len(sys.argv) != 3:
-  print 'This tool generates an overview of a bunch of BGF sources.'
+  print 'This tool generates an overview of a bunch of BGF sources and targets.'
   print 'Usage:'
-  print '      xbgfover <lcf> <bgfs-path>'
+  print '      bgfover <lcf> <bgfs-path>'
   sys.exit(1)
  lcf = ET.parse(sys.argv[1])
  for x in lcf.findall('/source'):
@@ -39,19 +34,18 @@ if __name__ == "__main__":
  srclen = len(names)
  for x in lcf.findall('/target'):
   name = x.findtext('name')
-  names.append(name)
+  tnames.append(name)
  path = sys.argv[2]
  if path[-1]!='/':
   path += '/'
- print '\\begin{tabular}{l|'+('c|'*srclen)+'|'+('c|'*(len(names)-srclen))+'}'
+ print '\\begin{tabular}{l|c|c|c|c}'
+ print '&\\textbf{Total}&\\textbf{Total}&\\textbf{Top}&\\textbf{Bottom}\\\\'
+ print '&\\textbf{productions}&\\textbf{nonterminals}&\\textbf{nonterminals}&\\textbf{nonterminals}\\\\\\hline\\hline'
  for x in names:
-  print '&\\textbf{'+x+'}'
- print '\\\\\\hline'
- print 'Total productions:  ',fillinline(path,productions)
- print 'Total nonterminals: ',fillinline(path,nonterminals)
- print 'Top nonterminals:   ',fillinline(path,top)
- print 'Bottom nonterminals:',fillinline(path,bottom)
+  print '\\emph{'+x+'}&'+runxpath(path+x+'.bgf',productions)+'&'+runxpath(path+x+'.bgf',nonterminals)+'&'+runxpath(path+x+'.bgf',top)+'&'+runxpath(path+x+'.bgf',bottom)+'\\\\\\hline'
  print '\\hline'
+ for x in tnames:
+  print '\\emph{'+x+'}&'+runxpath(path+x+'.bgf',productions)+'&'+runxpath(path+x+'.bgf',nonterminals)+'&'+runxpath(path+x+'.bgf',top)+'&'+runxpath(path+x+'.bgf',bottom)+'\\\\\\hline'
  print '\\end{tabular}'
  sys.exit(0)
 
