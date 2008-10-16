@@ -1,12 +1,12 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  
+
   <!-- in the extracted version root is undefined -->
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
-  
+
   <!--
   There's no such thing as TypeName
   
@@ -17,6 +17,7 @@ Annotation:
     <add>TypeName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
+  
   <!--
   The extractor can't tell if {} are terminals or BNF
   
@@ -44,7 +45,7 @@ Annotation:
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  
+
   <!--
    - Fail: AnnotationTypeBody.
       - [], *(?(n(AnnotationTypeElementDeclarations)))
@@ -74,4 +75,37 @@ Annotation:
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+
+  <!-- Real error in JLS3:
+   - Fail: Expression2Rest.
+      - [], ;([,([t(instanceof), n(Type)]), *(,([n(InfixOp), n(Expression3)]))])
+     vs.
+      - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
+  -->
+  <xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>Expression3</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>instanceof</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Type</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>instanceof</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Type</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:replace>
+  
 </xbgf:sequence>

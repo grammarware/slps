@@ -2,6 +2,209 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
+  <!-- defining the new nonterminals -->
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>ElementValuePair</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>=</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ElementValue</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>ElementValuePairs</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>ElementValuePair</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>ElementValuePairs</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>,</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>ElementValuePair</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>ElementValueArrayInitializer</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ElementValues</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <terminal>,</terminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>MarkerAnnotation</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>@</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TypeName</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>SingleElementAnnotation</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>@</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TypeName</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ElementValue</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>NormalAnnotation</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>@</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TypeName</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ElementValuePairs</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>Annotation</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>NormalAnnotation</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>MarkerAnnotation</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>SingleElementAnnotation</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ElementValue</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>ConditionalExpression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Annotation</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ElementValueArrayInitializer</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ElementValues</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>ElementValue</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>ElementValues</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>,</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>ElementValue</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+
+
   <!--
      - Fail: ConstantModifiers.
       - [], ;([n(ConstantModifier), ,([n(ConstantModifiers), n(ConstantModifier)])])
@@ -144,25 +347,6 @@
   <xbgf:horizontal>MethodModifier</xbgf:horizontal>
 
   <!--
-     - Fail: ConstructorModifier.
-      - [], ;([t(public), t(protected), t(private)])
-     vs.
-      - [], ;([n(Annotation), t(public), t(protected), t(private)])
-  -->
-  <xbgf:vertical>
-    <nonterminal>ConstructorModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>ConstructorModifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>Annotation</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <xbgf:horizontal>ConstructorModifier</xbgf:horizontal>
-
-  <!--
      - Fail: ClassModifier.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(strictfp)])
      vs.
@@ -229,186 +413,57 @@
   <xbgf:horizontal>VariableModifiers</xbgf:horizontal>
 
   <!--
+     - Fail: ConstructorModifier.
+      - [], ;([t(public), t(protected), t(private)])
+     vs.
+      - [], ;([n(Annotation), t(public), t(protected), t(private)])
+  -->
+  <xbgf:vertical>
+    <nonterminal>ConstructorModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>ConstructorModifier</nonterminal>
+      <bgf:expression>
+        <nonterminal>Annotation</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <xbgf:horizontal>ConstructorModifier</xbgf:horizontal>
+
+  <!--
      - Fail: VariableModifier.
       - [], ?(t(final))
      vs.
       - [], ;([t(final), n(Annotation)])
   -->
-  <xbgf:undefine>VariableModifier</xbgf:undefine>
-  <xbgf:define>
+  <xbgf:narrow>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <terminal>final</terminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <terminal>final</terminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>VariableModifier</nonterminal>
+    </in>
+  </xbgf:narrow>
+  <xbgf:add>
     <bgf:production>
       <nonterminal>VariableModifier</nonterminal>
       <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <terminal>final</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Annotation</nonterminal>
-          </bgf:expression>
-        </choice>
+        <nonterminal>Annotation</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:add>
+  <xbgf:horizontal>VariableModifier</xbgf:horizontal>
 
-  <!-- defining the new nonterminals -->
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>Annotation</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>NormalAnnotation</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>MarkerAnnotation</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>SingleElementAnnotation</nonterminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>NormalAnnotation</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>@</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>TypeName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ElementValuePairs</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>ElementValuePairs</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>ElementValuePair</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>ElementValuePairs</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>,</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>ElementValuePair</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>ElementValuePair</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>=</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ElementValue</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>ElementValue</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>ConditionalExpression</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Annotation</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ElementValueArrayInitializer</nonterminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>ElementValueArrayInitializer</nonterminal>
-      <bgf:expression>
-        <star>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>ElementValues</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <terminal>,</terminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </star>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>ElementValues</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>ElementValue</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>ElementValues</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>,</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>ElementValue</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
+
+
+
+
 </xbgf:sequence>

@@ -15,12 +15,49 @@
   <xbgf:deyaccify>DimExprs</xbgf:deyaccify>
   <xbgf:inline>DimExprs</xbgf:inline>
   <xbgf:inline>DimExpr</xbgf:inline>
+
+  <!-- this should be killed later -->
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>[</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>]</terminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>[</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>]</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+  </xbgf:massage>
   <xbgf:fold>
     <nonterminal>BracketsOpt</nonterminal>
     <in>
       <nonterminal>Primary</nonterminal>
     </in>
   </xbgf:fold>
+
   <xbgf:unfold>
     <nonterminal>ParExpression</nonterminal>
     <in>
@@ -30,7 +67,7 @@
   <xbgf:inline>ClassInstanceCreationExpression</xbgf:inline>
   <xbgf:inline>FieldAccess</xbgf:inline>
   <xbgf:inline>MethodInvocation</xbgf:inline>
-<!--  
+  <!--  
   <xbgf:inline>ArrayAccess</xbgf:inline>
 -->
   <xbgf:horizontal>Primary</xbgf:horizontal>
@@ -98,17 +135,17 @@
         <bgf:expression>
           <terminal>super</terminal>
         </bgf:expression>
-                        <bgf:expression>
-                  <terminal>.</terminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>Identifier</nonterminal>
-                </bgf:expression>
-<bgf:expression>
+        <bgf:expression>
+          <terminal>.</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Identifier</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
           <choice>
-                <bgf:expression>
-                  <nonterminal>Arguments</nonterminal>
-                </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Arguments</nonterminal>
+            </bgf:expression>
             <bgf:expression>
               <epsilon/>
             </bgf:expression>
@@ -140,32 +177,32 @@
     <bgf:production>
       <nonterminal>SuperSuffix</nonterminal>
       <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>Arguments</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-            </sequence>
+        <sequence>
+          <bgf:expression>
+            <terminal>.</terminal>
           </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Arguments</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
     </bgf:production>
     <in>
       <nonterminal>Primary</nonterminal>
     </in>
   </xbgf:extract>
-  
+
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
-  
+
   <!--
    - Fail: Primary.
       - [], t(this)
@@ -204,7 +241,7 @@
   <xbgf:strip>
     <label>target</label>
   </xbgf:strip>
-  
+
   <!-- too hard to match:
         - [], n(ArrayAccess)
   -->
@@ -217,7 +254,7 @@
     </bgf:production>
   </xbgf:remove>
   <xbgf:eliminate>ArrayAccess</xbgf:eliminate>
-  
+
   <!--
       - [], ,([n(QualifiedIdentifier), n(Arguments)])
      vs.
@@ -268,6 +305,7 @@
   <xbgf:strip>
     <label>target</label>
   </xbgf:strip>
+
   <!-- same problem -->
   <xbgf:remove>
     <bgf:production>
@@ -316,21 +354,7 @@
             </plus>
           </bgf:expression>
           <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>[</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <terminal>]</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>BracketsOpt</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
+            <nonterminal>BracketsOpt</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
@@ -365,21 +389,7 @@
             </plus>
           </bgf:expression>
           <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>[</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <terminal>]</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>BracketsOpt</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
+            <nonterminal>BracketsOpt</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
@@ -567,7 +577,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  
+
   <!-- yes! -->
   <xbgf:horizontal>Primary</xbgf:horizontal>
 </xbgf:sequence>

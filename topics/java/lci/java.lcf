@@ -35,7 +35,7 @@
     </grammar>
   </tool>
 
-  <!--
+  
   <source>
     <name>jls1app</name>
     <grammar>
@@ -69,7 +69,7 @@
       </extraction>
     </grammar>
   </source>
--->
+
   
   <source>
     <name>jls3app</name>
@@ -88,9 +88,9 @@
     </grammar>
   </source>
 
-  <!--
+  
   <target>
-    <name>one</name>
+    <name>jls1</name>
     <branch>
       <input>jls1app</input>
       <perform>fixErrors1</perform>
@@ -105,7 +105,7 @@
   </target>
 
   <target>
-    <name>two</name>
+    <name>jls2</name>
     <branch>
       <input>jls2app</input>
       <perform>fixErrors2</perform>
@@ -128,9 +128,9 @@
       <perform>breakSemantics2doc</perform>
     </branch>
   </target>
-  -->
+  
   <target>
-    <name>three</name>
+    <name>jls3</name>
     <branch>
       <input>jls3app</input>
       <perform>fixErrors3</perform>
@@ -152,11 +152,11 @@
     </branch>
   </target>
   
-  <!--
+  
   <target>
     <name>onetwo</name>
     <branch>
-      <input>one</input>
+      <input>jls1</input>
       <perform>refactorStatements</perform>
       <perform>refactorTypes1</perform>
       <perform>upgradeDeclarations1to2</perform>
@@ -166,7 +166,7 @@
       <perform>cropFeatures1</perform>
     </branch>
     <branch>
-      <input>two</input>
+      <input>jls2</input>
     </branch>
   </target>
   <target>
@@ -177,14 +177,15 @@
       <perform>addFeatures2to3</perform>
     </branch>
     <branch>
-      <input>three</input>
+      <input>jls3</input>
     </branch>
     <branch>
-      <input>doc</input>
+      <input>jlsdoc</input>
     </branch>
   </target>
+
   <target>
-    <name>doc</name>
+    <name>jlsdoc</name>
     <branch>
       <input>jls1doc</input>
       <perform>fixErrors1doc</perform>
@@ -204,7 +205,7 @@
       <perform>fixErrors3doc</perform>
     </branch>
   </target>
-  
+  <!--
   <target>
     <name>formal</name>
     <branch>

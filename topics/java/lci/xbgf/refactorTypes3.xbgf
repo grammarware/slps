@@ -6,7 +6,7 @@
   The type system of the syntax appendix looks like this:
   
   Type is defined as:
-     Identifier { "." Identifier } BracketsOpt
+     Identifier [ TypeArguments ] { "." Identifier [ TypeArguments ] } { "[" "]" }
      BasicType
   BasicType is defined as:
      "byte"
@@ -67,6 +67,10 @@
   ResultType is defined as:
      Type
      "void"
+     
+  TypeDeclSpecifier is defined as:
+     TypeName
+     ClassOrInterfaceType "." Identifier
   -->
 
   <!-- First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
@@ -147,25 +151,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  <!-- WTF!? xbgf:define>
-    <bgf:production>
-      <nonterminal>BracketsOpt</nonterminal>
-      <bgf:expression>
-        <star>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>[</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>]</terminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </star>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define-->
   <xbgf:vertical>
     <nonterminal>ReferenceType</nonterminal>
   </xbgf:vertical>
@@ -191,4 +176,43 @@
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
   <xbgf:inline>ReferenceType</xbgf:inline>
+  
+  <!--
+  p([], 'TypeDeclSpecifier',
+  ;([n('QualifiedIdentifier'),
+    ','([n('TypeDeclSpecifier'), ?(n('TypeArguments')), n('BracketsOpt'), t('.'), n('Identifier')])])),
+    
+  vs
+  
+  p([], 'Type', ','([n('Identifier'), ?(n('TypeArguments')), *(','([t('.'), n('Identifier'), ?(n('TypeArguments'))])), n('BracketsOpt')])),
+  p([], 'Type', n('BasicType')),
+  -->
+  <xbgf:deyaccify>TypeDeclSpecifier</xbgf:deyaccify>
+  
+  <!-- QUICK FIX - this file needs to be rewritten anyhow -->
+  <xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>TypeDeclSpecifier</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>TypeArguments</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>BracketsOpt</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>Type</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>RelationalExpression</nonterminal>
+    </in>
+  </xbgf:replace>
 </xbgf:sequence>
