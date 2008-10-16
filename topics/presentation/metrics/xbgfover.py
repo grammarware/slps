@@ -29,12 +29,14 @@ def noi(filename):
 
 def report(keys,key,note):
  print note,
+ cx = 0
  for x in keys:
+  cx += results[key][x]
   if results[key][x]:
    print '&',results[key][x],
   else:
    print '& ---',
- print '\\\\'
+ print '&'+`cx`+'\\\\'
 
 if __name__ == "__main__":
  if len(sys.argv) != 4:
@@ -83,15 +85,17 @@ if __name__ == "__main__":
    names.remove(x)
  sorted = targets.keys()[:]
  sorted.sort()
- print '\\begin{tabular}{l|'+('c|'*len(targets))+'}'
+ print '\\begin{tabular}{l|'+('c|'*len(targets))+'|c}'
  for x in sorted:
   print '&\\textbf{'+x+'}',
- print '\\\\\\hline'
+ print '&\\textbf{Total}\\\\\\hline'
  report(sorted,'LOC','\\numberOfLines')
  print '\\numberOfSteps',
+ cx = 0
  for x in sorted:
+  cx += len(targets[x])
   print '&',len(targets[x]),
- print '\\\\'
+ print '&'+`cx`+'\\\\'
  report(sorted,'NOI','\\numberOfIssues')
  report(sorted,'NOX','\\numberOfTransformations')
  print '\\hline'
