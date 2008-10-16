@@ -211,46 +211,30 @@
      vs.
       - [], ;([n(ConstantModifier), ,([n(ConstantModifier), n(ConstantModifers)])])
   -->
-  <xbgf:vertical>
-    <nonterminal>ConstantModifiers</nonterminal>
-  </xbgf:vertical>
-  <xbgf:designate>
+  <xbgf:deyaccify>ConstantModifiers</xbgf:deyaccify>
+  <xbgf:yaccify>
     <bgf:production>
-      <label>target</label>
       <nonterminal>ConstantModifiers</nonterminal>
       <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ConstantModifiers</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ConstantModifier</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:permute>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>ConstantModifiers</nonterminal>
-      <bgf:expression>
-        <sequence>
+        <choice>
           <bgf:expression>
             <nonterminal>ConstantModifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>ConstantModifiers</nonterminal>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>ConstantModifier</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>ConstantModifiers</nonterminal>
+              </bgf:expression>
+            </sequence>
           </bgf:expression>
-        </sequence>
+        </choice>
       </bgf:expression>
     </bgf:production>
-  </xbgf:permute>
-  <xbgf:horizontal>ConstantModifiers</xbgf:horizontal>
-  <xbgf:strip>
-    <selector>target</selector>
-  </xbgf:strip>
-  
+  </xbgf:yaccify>
+
   <!--
     - Fail: FieldModifier.
       - [], ;([t(public), t(protected), t(private), t(static), t(final), t(transient), t((volatile))])
@@ -461,9 +445,5 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>VariableModifier</xbgf:horizontal>
-
-
-
-
 
 </xbgf:sequence>
