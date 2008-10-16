@@ -70,7 +70,6 @@
     </grammar>
   </source>
 
-  
   <source>
     <name>jls3app</name>
     <grammar>
@@ -154,7 +153,7 @@
   
   
   <target>
-    <name>onetwo</name>
+    <name>jls12</name>
     <branch>
       <input>jls1</input>
       <perform>refactorStatements</perform>
@@ -169,34 +168,37 @@
       <input>jls2</input>
     </branch>
   </target>
+  
   <target>
-    <name>limit</name>
+    <name>jls123</name>
     <branch>
-      <input>onetwo</input>
+      <input>jls12</input>
       <perform>prefer3</perform>
       <perform>addFeatures2to3</perform>
     </branch>
     <branch>
       <input>jls3</input>
     </branch>
-    <branch>
-      <input>jlsdoc</input>
-    </branch>
   </target>
 
   <target>
-    <name>jlsdoc</name>
+    <name>jls12doc</name>
     <branch>
       <input>jls1doc</input>
       <perform>fixErrors1doc</perform>
       <perform>restructure1doc</perform>
       <perform>addFeatures1to2doc</perform>
-      <perform>enhanceModifiers</perform>
-      <perform>addFeatures2to3doc</perform>
     </branch>
     <branch>
       <input>jls2doc</input>
       <perform>fixErrors2doc</perform>
+    </branch>
+  </target>
+  
+  <target>
+    <name>jls123doc</name>
+    <branch>
+      <input>jls12doc</input>
       <perform>enhanceModifiers</perform>
       <perform>addFeatures2to3doc</perform>
     </branch>
@@ -205,6 +207,7 @@
       <perform>fixErrors3doc</perform>
     </branch>
   </target>
+  
   <!--
   <target>
     <name>formal</name>
