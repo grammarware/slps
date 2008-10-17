@@ -1,0 +1,7 @@
+Line continuations:continuation
+Duplicate definitions:Duplicate
+Syntax recoveries:Enforcing
+Names merging/splitting:Multiple
+Structural fixes:Structural
+Terminal to nonterminal:Terminal to nonterminal
+Nonterminal to terminal:Nonterminal to terminal
