@@ -172,7 +172,7 @@ if __name__ == "__main__":
    texwrite(tbl,'&')
    tbl = reopenafter(tbl,tblname,total)
    texwrite(tbl,'\\\\')
-  texwrite(tbl,'\\end{tabular}')
+  texwrite(tbl,'\\hline\\end{tabular}')
   sys.exit(0)
  else:
   print 'Usage:'
