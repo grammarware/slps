@@ -7,12 +7,12 @@ test:
 	cd jls1 ; make all
 	cd jls2 ; make all
 	cd jls3 ; make all
-	../../shared/tools/gdts jls1/jls1a.bgf lci/snapshot/jls1app.bgf
-	../../shared/tools/gdts jls2/jls2a.bgf lci/snapshot/jls2app.bgf
-	../../shared/tools/gdts jls3/jls3a.bgf lci/snapshot/jls3app.bgf
-	../../shared/tools/gdts jls1/jls1d.bgf lci/snapshot/jls1doc.bgf
-	../../shared/tools/gdts jls2/jls2d.bgf lci/snapshot/jls2doc.bgf
-	../../shared/tools/gdts jls3/jls3d.bgf lci/snapshot/jls3doc.bgf
+	../../shared/tools/gdts jls1/app1.bgf lci/snapshot/app1.bgf
+	../../shared/tools/gdts jls2/app2.bgf lci/snapshot/app2.bgf
+	../../shared/tools/gdts jls3/app3.bgf lci/snapshot/app3.bgf
+	../../shared/tools/gdts jls1/doc1.bgf lci/snapshot/doc1.bgf
+	../../shared/tools/gdts jls2/doc2.bgf lci/snapshot/doc2.bgf
+	../../shared/tools/gdts jls3/doc3.bgf lci/snapshot/doc3.bgf
 
 rebuild:
 	curl -k http://java.sun.com/docs/books/jls/first_edition/html/19.doc.html > jls1/app.html
