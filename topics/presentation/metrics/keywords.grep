@@ -1,3 +1,6 @@
+Style tag mismatches in markup:Style tag mismatch
+Inappropriate names for nonterminals:Inappropriate name
+Default mode parsings:Parsed in default mode
 Line continuations:continuation
 Duplicate definitions:Duplicate
 Syntax recoveries:Enforcing

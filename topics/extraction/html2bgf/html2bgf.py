@@ -1,8 +1,15 @@
 #!/usr/bin/python
 import sys
 
-#global
-emph = [False]
+MODE_ITALIC = 1
+MODE_FIXED = 2
+MODE_DEFAULT = 3
+
+pp_mode = MODE_DEFAULT
+pp_outer = pp_mode
+# pp_mode == MODE_ITALIC
+# pp_mode == MODE_FIXED
+
 pessimistic = [False,0,0]
 prods = {}
 
@@ -12,10 +19,15 @@ def serialise(name,choices):
 def mapsymbol(symb):
  if symb[0]=='"':
   return '<bgf:expression><terminal>'+symb[1:-1]+'</terminal></bgf:expression>'
+ elif symb=='|':
+  # if there is a bar here, it's not a BNF bar!
+  print 'Nonterminal to terminal heuristic fix:',symb,'(atypical choice)'
+  pessimistic[2] += 1
+  return '<bgf:expression><terminal>'+symb+'</terminal></bgf:expression>'
  else:
   return '<bgf:expression><nonterminal>'+symb+'</nonterminal></bgf:expression>'
 
-def map2expr(seq):
+def serialiseExpression(seq):
  # print 'Mapping',seq,'...'
  if len(seq)==1:
   return mapsymbol(seq[0])
@@ -63,8 +75,8 @@ def map2expr(seq):
      j += 1
     if len(line)==26 and j==len(seq)-1:
      # there is no spoon! I mean, sequence.
-     return '<bgf:expression><star>'+map2expr(pseudoseq)+'</star></bgf:expression>'
-    line += '<bgf:expression><star>'+map2expr(pseudoseq)+'</star></bgf:expression>'
+     return '<bgf:expression><star>'+serialiseExpression(pseudoseq)+'</star></bgf:expression>'
+    line += '<bgf:expression><star>'+serialiseExpression(pseudoseq)+'</star></bgf:expression>'
     i = j + 1
    elif seq[i]=='[':
     # zero or one
@@ -85,8 +97,8 @@ def map2expr(seq):
      j += 1
     if len(line)==26 and j==len(seq)-1:
      # there is no spoon! I mean, sequence.
-     return '<bgf:expression><optional>'+map2expr(pseudoseq)+'</optional></bgf:expression>'
-    line += '<bgf:expression><optional>'+map2expr(pseudoseq)+'</optional></bgf:expression>'
+     return '<bgf:expression><optional>'+serialiseExpression(pseudoseq)+'</optional></bgf:expression>'
+    line += '<bgf:expression><optional>'+serialiseExpression(pseudoseq)+'</optional></bgf:expression>'
     i = j + 1
    else:
     # regular symbol
@@ -99,11 +111,11 @@ def serialiseX(name,choices):
 
 def traverse(c):
  if len(c)==1:
-  return map2expr(c[0])
+  return serialiseExpression(c[0])
  else:
   line = '<bgf:expression><choice>'
   for alt in c:
-   line += map2expr(alt)
+   line += serialiseExpression(alt)
   return line+'</choice></bgf:expression>'
 
 def addProduction(name,choices,oneof):
@@ -117,13 +129,32 @@ def addProduction(name,choices,oneof):
   for s in range(0,len(choices)):
    ss = []
    for i in range(0,len(choices[s][0])):
-    if choices[s][1][i]:
+    if (choices[s][1][i] == MODE_ITALIC) and choices[s][0][i].isalnum():
+     # named nonterminal
      ss.append(choices[s][0][i])
+    elif choices[s][1][i] == MODE_FIXED:
+     # terminal
+     ss.append('"'+choices[s][0][i]+'"')
+    elif (choices[s][1][i] != MODE_FIXED) and choices[s][0][i]=='|':
+     # BNF bar
+     ss.append(choices[s][0][i])
+    elif choices[s][1][i] == MODE_ITALIC and choices[s][0][i] in ('[',']','{','}','(',')','?????'):
+     # Might be BNF
+     ss.append(choices[s][0][i])
+    elif not choices[s][0][i].isalnum():
+     # ex-"weird name"
+     wname = choices[s][0][i]
+     if wname == '$$$$$':
+      wname = ':'
+     if choices[s][1][i] == MODE_ITALIC:
+      print 'Inappropriate name for a nonterminal or BNF construction:','"'+wname+'"'
+     ss.append('"'+wname+'"')
     else:
+     print 'Parsed in default mode as terminals:',choices[s][0][i]
      ss.append('"'+choices[s][0][i]+'"')
    bs.append(ss)
  if name in prods.keys():
-  print 'Duplicate definition of',name,'found, merged.'
+  print 'Duplicate definition of',name,'found, will be merged.'
   #pessimistic[2] += 1
   for c in bs:
    addifnew(c,name)
@@ -168,7 +199,8 @@ def preprocess(line):
  l2 = l2.replace(' :',' $COLON$').replace(':',' $$$$$').replace('$COLON$',':')
  return l2.replace('&gt ; ','&gt;').replace('&lt ; ','&lt;').replace('&amp ; ','&amp;')
 
-def parseLine(line):
+def mapHTMLtoTokenStream(line):
+ global pp_mode, pp_outer
  oldline = line[:]
  tokens = []
  flags = []
@@ -180,33 +212,48 @@ def parseLine(line):
    line = ''
    continue
   if line.find('</i>')==0:
-   emph[0] = False
+   if pp_mode != MODE_ITALIC:
+    print 'Style tag mismatch.'
+   pp_mode = MODE_DEFAULT
+   pp_outer = MODE_DEFAULT
    line = line[4:]
    continue
   if line.find('<i>')==0:
-   emph[0] = True
+   if pp_mode == MODE_ITALIC:
+    print 'Style tag mismatch.'
+   pp_mode = MODE_ITALIC
    line = line[3:]
    continue
   if line.find('</em>')==0:
-   emph[0] = False
+   if pp_mode != MODE_ITALIC:
+    print 'Style tag mismatch.'
+   pp_mode = MODE_DEFAULT
+   pp_outer = MODE_DEFAULT
    line = line[5:]
    continue
   if line.find('<em>')==0:
-   if emph[0] and tokens and oldline.find(tokens[-1]+'<em>'+line[4:line.index('>')])>=0:
+   if pp_mode == MODE_ITALIC:
+    print 'Style tag mismatch.'
+   if (pp_mode == MODE_ITALIC) and tokens and oldline.find(tokens[-1]+'<em>'+line[4:line.index('>')])>=0:
     print 'Token-breaking <em> tag endangers',
     line = tokens.pop()+line[4:]
     print line.split()[0].split('<')[0]
     flags.pop()
    else:
-    emph[0] = True
+    pp_mode = MODE_ITALIC
     line = line[4:]
    continue
   if line.find('<code>')==0:
-   emph[0] = False
+   if pp_mode == MODE_FIXED:
+    print 'Style tag mismatch.'
+   pp_outer = pp_mode
+   pp_mode = MODE_FIXED
    line = line[6:]
    continue
   if line.find('</code>')==0:
-   emph[0] = True
+   if pp_mode != MODE_FIXED:
+    print 'Style tag mismatch.'
+   pp_mode = pp_outer
    line = line[7:]
    continue
   if line.find('<sub><i>opt</i></sub>')==0:
@@ -235,7 +282,7 @@ def parseLine(line):
    pessimistic[0] = False
    continue
   if line.find('<a')==0:
-   #print 'Anchor found, skipping everything that is left of this snippet.'
+   print 'Anchor found, skipping everything that is left of this snippet.'
    pessimistic[0] = True
    pessimistic[1] += 1
    continue
@@ -252,7 +299,7 @@ def parseLine(line):
     line = ''
    for t in extra:
     tokens.append(t)
-    flags.append(emph[0])
+    flags.append(pp_mode)
  return tokens,flags
 
 def cleanup(line):
@@ -280,7 +327,8 @@ def ifContinuation(s,olds):
   return ifContinuation(s[s.index('>')+1:],olds)
  return True
 
-def readGrammar(fn):
+def preprocessConstruct(fn):
+ global pp_mode
  oneof = False
  src = open(fn,'r')
  grammar = False
@@ -293,7 +341,7 @@ def readGrammar(fn):
     addProduction(name,choices,oneof)
    else:
     # dummy parse line for the sake of <i>/<em>
-    a,b=parseLine(line.split('<pre>')[1])
+    a,b = mapHTMLtoTokenStream(line.split('<pre>')[1])
    grammar = not grammar
    continue
   if grammar:
@@ -301,7 +349,7 @@ def readGrammar(fn):
    oldline = line
    line = preprocess(cleanup(line))
    #print 'Parsing "'+line+'"...'
-   a,b=parseLine(line)
+   a,b = mapHTMLtoTokenStream(line)
    if a:
     # non-empty line
     if len(a)==2 and (a[-1]=='$$$$$' or (a[-1]==':' and a[0][0].isalpha())):
@@ -312,8 +360,8 @@ def readGrammar(fn):
      choices = []
      name = a[0]
      oneof = False
-     if not emph[0] and line.find('</em>')<0 and line.find('</i>')<0 and line.find('<code>')<0:
-      emph[0] = True
+     if (pp_mode != MODE_ITALIC) and line.find('</em>')<0 and line.find('</i>')<0 and line.find('<code>')<0:
+      pp_mode = MODE_ITALIC
       print 'Enforcing BNF mode (<em>) when new definition of',name,'starts.'
       pessimistic[2] += 1
     elif len(a)==4 and a[0]==a[2] and a[1]=='$$$$$' and a[-1]=='$$$$$':
@@ -364,21 +412,22 @@ def printGrammar(fn):
 def breakWords(nt,s):
  # transforms terminals like "aaa.bbb" to "aaa" "." "bbb"
  word = s[1:-1]
- res = '"'
+ res = ['']
+ i = 0
  f = word[0].isalpha()
  for letter in word:
   if f==letter.isalpha():
-   res += letter
+   res[i] += letter
   else:
-   res += '" "'+letter
+   i+=1
+   res.append(letter)
   f=letter.isalpha()
- cx = res.count(' ')
- if cx:
-  print 'Multiple terminals heuristic fix:',s,'in',nt,'(1 to',`cx+1`+')'
+ if len(res)>1:
+  print 'Multiple terminals heuristic fix:',s,'in',nt,'(1 to',`len(res)`+')'
   pessimistic[2] += 1
- return res+'"'
+ return res
 
-def automatedImprove():
+def preprocessCorrect():
  for nt in prods.keys():
   newprods = []
   for bs in prods[nt]:
@@ -390,7 +439,10 @@ def automatedImprove():
     if bs[i]=='"$$$$$"':
      # production-separation hack
      bs[i]='":"'
-    if bs[i]=='?????':
+    if bs[i] in ('?????','opt','"opt"'):
+     if bs[i]!='?????':
+      print 'Structural heuristic fix:',bs[i],'in',nt,'(changed to BNF optional)'
+      pessimistic[2] += 1
      # Change to classic EBNF
      if i>0:
       newbs = bs[:i-1]
@@ -410,8 +462,8 @@ def automatedImprove():
      newbs.extend(bs[i+1:])
      bs = newbs
      continue
-    if bs[i]=='|' and nt.find('OrExpression')>=0:
-     print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(appropriate context)'
+    if bs[i]=='|' and len(bs)==1:
+     print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(atomic bar)'
      pessimistic[2] += 1
      bs[i]='"|"'
      i+=1
@@ -429,11 +481,11 @@ def automatedImprove():
      pessimistic[2] += 1
      print 'Structural heuristic fix in',nt,'(group introduced)'
      continue
-    if bs[i]=='"|"' and len(bs)>1 and nt.find('OrExpression')<0:
-     print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
-     pessimistic[2] += 1
-     bs[i] = '|'
-     continue
+    #if bs[i]=='"|"' and len(bs)>1: # and nt.find('OrExpression')<0:
+    # print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
+    # pessimistic[2] += 1
+    # bs[i] = '|'
+    # continue
     if bs[i]!='.' and bs[i]!='"."' and bs[i]!='...' and bs[i]!='"..."' and bs[i].find('.')>=0:
      if bs[i][0]=='"':
       quote = True
@@ -488,7 +540,13 @@ def automatedImprove():
       bs[i]='?????'
       continue
      if bs[i].find('&')<0:
-      bs[i] = breakWords(nt,bs[i])
+      w = breakWords(nt,bs[i])
+      if len(w)>1:
+       newbs = bs[:i]
+       newbs.extend(breakWords(nt,bs[i]))
+       newbs.extend(bs[i+1:])
+       bs = newbs
+       continue
      i+=1
      continue
     if bs[i].isalnum():
@@ -682,10 +740,10 @@ if __name__ == "__main__":
  print 'HTML to Grammar automated extractor'
  if len(sys.argv)==3 or len(sys.argv)==4:
   print 'Reading the HTML document...'
-  readGrammar(sys.argv[1])
+  preprocessConstruct(sys.argv[1])
   print 'Massaging the grammar...'
   glueSymbols()
-  automatedImprove()
+  preprocessCorrect()
   killDuplicates()
   print 'Writing the extracted grammar...'
   if sys.argv[-1]=='-bnf':
