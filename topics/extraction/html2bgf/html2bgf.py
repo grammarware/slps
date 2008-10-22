@@ -417,8 +417,9 @@ def preprocessConstruct(fn):
      oneof = True
     elif cont and choices:
      # line continuation
-     print 'Line continuation enforced while parsing',name,'- indentation went from',countspaces(oldline),'to',countspaces(line)
-     pessimistic[2] += 1
+     if countspaces(oldline)>countspaces(line):
+      print 'Line continuation enforced while parsing',name,'- indentation went from',countspaces(oldline),'to 0'
+      pessimistic[2] += 1
      for i in range(0,len(a)):
       choices[-1][0].append(a[i])
       choices[-1][1].append(b[i])
@@ -433,6 +434,7 @@ def preprocessConstruct(fn):
   print 'Skipped',pessimistic[1],'anchor-containing snippets'
 
 def countspaces(s):
+ olds = s
  cx = 0
  if not s:
   return cx
@@ -489,7 +491,7 @@ def preprocessCorrect():
      bs[i]='":"'
     if bs[i] in ('?????','opt','"opt"'):
      if bs[i]!='?????':
-      print 'Structural heuristic fix:',bs[i],'in',nt,'(changed to BNF optional)'
+      print 'Optional nonterminal heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
       pessimistic[2] += 1
      # Change to classic EBNF
      if i>0:
@@ -501,7 +503,7 @@ def preprocessCorrect():
      bs = newbs
      continue
     if bs[i].rfind('opt')!=-1 and bs[i].rfind('opt')==len(bs[i])-3:
-     print 'Structural heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
+     print 'Optional nonterminal heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
      pessimistic[2] += 1
      newbs = bs[:i]
      if bs[i]!='opt':
@@ -583,7 +585,7 @@ def preprocessCorrect():
       i+=1
       continue
      if bs[i]=='"opt"':
-      print 'Structural heuristic fix:',bs[i],'in',nt,'(changed to BNF optional)'
+      print 'Optional nonterminal heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
       pessimistic[2] += 1
       bs[i]='?????'
       continue

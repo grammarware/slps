@@ -1,7 +1,8 @@
-Style tag mismatches in markup:Style tag
-Line continuations:continuation
+Tag mismatches in markup:Style tag
+Unusual line continuations:continuation
 Duplicate definitions:Duplicate
 Names merging/splitting:Multiple
-Structural fixes:Structural
+Bracketing fixes:Structural
 Terminal to nonterminal:Terminal to nonterminal
 Nonterminal to terminal:Nonterminal to terminal
+Nonterminal to optional nonterminal:opt replaced by BNF optional
