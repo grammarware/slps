@@ -28,7 +28,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>
-          </xsl:text>
+        </xsl:text>
         <xsl:apply-templates select="./bgf:expression"/>
         <xsl:text>
 </xsl:text>
@@ -41,10 +41,9 @@
   </xsl:template>
   
   <xsl:template match="plus">
+    <xsl:text>( </xsl:text>
     <xsl:apply-templates select="./*"/>
-    <xsl:text>{ </xsl:text>
-    <xsl:apply-templates select="./*"/>
-    <xsl:text>} </xsl:text>
+    <xsl:text>)+ </xsl:text>
   </xsl:template>
   
   <xsl:template match="star">
@@ -97,7 +96,8 @@
     <xsl:apply-templates select="./*"/>
   </xsl:template>
 
-  <xsl:template match="choice">
+  <!-- top level choices - one per line -->
+  <xsl:template match="/bgf:grammar/bgf:production/bgf:expression/choice">
     <xsl:call-template name="car">
       <xsl:with-param name="expr" select="./bgf:expression[1]"/>
     </xsl:call-template>
@@ -107,6 +107,18 @@
       </xsl:call-template>
     </xsl:for-each>
   </xsl:template>
+
+  <!-- inner choices - BNF bar -->
+  <xsl:template match="choice">
+    <xsl:text>( </xsl:text>
+    <xsl:apply-templates select="./bgf:expression[1]/*"/>
+    <xsl:for-each select="./bgf:expression[position()>1]">
+      <xsl:text>| </xsl:text>
+      <xsl:apply-templates select="./*"/>
+    </xsl:for-each>
+    <xsl:text>) </xsl:text>
+  </xsl:template>
+
 
   <xsl:template name="car">
     <xsl:param name="expr"/>

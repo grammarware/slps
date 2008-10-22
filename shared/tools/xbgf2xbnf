@@ -1,0 +1,25 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -eq 1 ]; then
+    OUTPUT=/dev/stdout
+elif [ $# -ne 2 ]; then
+    echo "This tool transforms Transformational BGF documents to EBNF dialect used in JLS."
+    echo "Usage: xbgf2xbnf <input-xbgf-document> [<output-text>]"
+    echo "When output file is not specified, stdout is used."
+    exit 1
+else
+    OUTPUT=$2
+fi
+if [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+xsltproc ${SLPS}/shared/xsl/xbgf2xbnf.xslt $1 > ${OUTPUT}
+

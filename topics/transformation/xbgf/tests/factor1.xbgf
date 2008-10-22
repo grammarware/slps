@@ -44,5 +44,8 @@
         </bgf:expression>        
       </sequence>
     </bgf:expression>
+    <in>
+      <nonterminal>a</nonterminal>
+    </in>
   </xbgf:factor>
 </xbgf:sequence>
