@@ -129,12 +129,28 @@ def addProduction(name,choices,oneof):
   for s in range(0,len(choices)):
    ss = []
    for i in range(0,len(choices[s][0])):
-    if (choices[s][1][i] == MODE_ITALIC) and choices[s][0][i].isalnum():
-     # named nonterminal
-     ss.append(choices[s][0][i])
+    """
+    if choices[s][1][i] == MODE_DEFAULT:
+     print 'DEF',
+    elif choices[s][1][i] == MODE_ITALIC:
+     print 'ITA',
     elif choices[s][1][i] == MODE_FIXED:
+     print 'FIX',
+    else:
+     print 'UNK',
+    if choices[s][0][i].isalnum():
+     print 'ALNUM'
+    elif choices[s][0][i] in ('[',']','{','}','(',')','?????','|'):
+     print 'METAS'
+    else:
+     print 'WEIRD'
+    """
+    if choices[s][1][i] == MODE_FIXED:
      # terminal
      ss.append('"'+choices[s][0][i]+'"')
+    elif (choices[s][1][i] == MODE_ITALIC) and choices[s][0][i].isalnum():
+     # named nonterminal
+     ss.append(choices[s][0][i])
     elif (choices[s][1][i] != MODE_FIXED) and choices[s][0][i]=='|':
      # BNF bar
      ss.append(choices[s][0][i])
@@ -219,7 +235,8 @@ def mapHTMLtoTokenStream(line):
    line = line[4:]
    continue
   if line.find('<i>')==0:
-   if pp_mode == MODE_ITALIC:
+   #if pp_mode == MODE_ITALIC:
+   if pp_mode != MODE_DEFAULT:
     print 'Style tag mismatch.'
    pp_mode = MODE_ITALIC
    line = line[3:]
@@ -232,7 +249,8 @@ def mapHTMLtoTokenStream(line):
    line = line[5:]
    continue
   if line.find('<em>')==0:
-   if pp_mode == MODE_ITALIC:
+   #if pp_mode == MODE_ITALIC:
+   if pp_mode != MODE_DEFAULT:
     print 'Style tag mismatch.'
    if (pp_mode == MODE_ITALIC) and tokens and oldline.find(tokens[-1]+'<em>'+line[4:line.index('>')])>=0:
     print 'Token-breaking <em> tag endangers',
@@ -287,7 +305,7 @@ def mapHTMLtoTokenStream(line):
    pessimistic[1] += 1
    continue
   if line.find('<')==0:
-   print 'Found unknown tag while parsing "'+line+'", skipping!'
+   print 'Style tag unknown: "'+line+'", skipping!'
    pessimistic[2] += 1
    line = line[line.index('>')+1:]
   else:
@@ -307,7 +325,7 @@ def cleanup(line):
  #.replace('<code>','"').replace('</code>','"')
 
 def ifContinuation(s,olds):
- if not s:
+ if not s or not olds:
   return False
  if s[0]=='\t' and (s[1]!='\t' or s[1]==olds[1]):
   return False
@@ -327,6 +345,20 @@ def ifContinuation(s,olds):
   return ifContinuation(s[s.index('>')+1:],olds)
  return True
 
+def stripTags(line):
+ s = line.strip()
+ if not s:
+  return s
+ while s[0]=='<':
+  if s.find('>')<0:
+   # not even well-formed
+   return s
+  elif s.find('>')+1==len(s):
+   return ''
+  else:
+   s = s[s.index('>')+1:]
+ return s
+
 def preprocessConstruct(fn):
  global pp_mode
  oneof = False
@@ -342,17 +374,19 @@ def preprocessConstruct(fn):
    else:
     # dummy parse line for the sake of <i>/<em>
     a,b = mapHTMLtoTokenStream(line.split('<pre>')[1])
+   line = ''
    grammar = not grammar
    continue
   if grammar:
    cont = ifContinuation(line,oldline)
-   oldline = line
+   oldline2 = line
    line = preprocess(cleanup(line))
-   #print 'Parsing "'+line+'"...'
+   #print 'Parsing:  "'+line+'"...'
+   #print 'Previous: "'+stripTags(oldline)+'"!'
    a,b = mapHTMLtoTokenStream(line)
    if a:
     # non-empty line
-    if len(a)==2 and (a[-1]=='$$$$$' or (a[-1]==':' and a[0][0].isalpha())):
+    if len(a)==2 and (a[-1]=='$$$$$' or (a[-1]==':' and a[0][0].isalpha())) and (stripTags(oldline)=='' or oldline2[0].isalpha()):
      # new definition
      if choices:
       # flush the current one
@@ -362,7 +396,7 @@ def preprocessConstruct(fn):
      oneof = False
      if (pp_mode != MODE_ITALIC) and line.find('</em>')<0 and line.find('</i>')<0 and line.find('<code>')<0:
       pp_mode = MODE_ITALIC
-      print 'Enforcing BNF mode (<em>) when new definition of',name,'starts.'
+      print 'Style tag enforcing: virtual <em> when new definition of',name,'starts.'
       pessimistic[2] += 1
     elif len(a)==4 and a[0]==a[2] and a[1]=='$$$$$' and a[-1]=='$$$$$':
      # new mingled definition
@@ -383,7 +417,7 @@ def preprocessConstruct(fn):
      oneof = True
     elif cont and choices:
      # line continuation
-     print 'Line continuation enforced while parsing',name
+     print 'Line continuation enforced while parsing',name,'- indentation went from',countspaces(oldline),'to',countspaces(line)
      pessimistic[2] += 1
      for i in range(0,len(a)):
       choices[-1][0].append(a[i])
@@ -391,9 +425,23 @@ def preprocessConstruct(fn):
     else:
      # add choice branch
      choices.append([a,b])
+    oldline = oldline2
+   else:
+    oldline=line=''
  src.close()
  if pessimistic[1]:
   print 'Skipped',pessimistic[1],'anchor-containing snippets'
+
+def countspaces(s):
+ cx = 0
+ if not s:
+  return cx
+ while s[0]=='<':
+  s = '>'.join(s.split('>')[1:])
+ while s[0]==' ' or s[0]=='\t':
+  cx+=1
+  s=s[1:]
+ return cx
 
 def printGrammarText(fn):
  ext = open(fn,'w')
