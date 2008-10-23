@@ -99,6 +99,45 @@
       <nonterminal>ExtendsInterfaces</nonterminal>
     </in>
   </xbgf:fold>
+
+  <!--
+     - Fail: NormalInterfaceDeclaration.
+      - [], ,([t(interface), n(Identifier), ?(n(TypeParameters)), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
+     vs.
+      - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
+-->
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>NormalInterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>interface</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>TypeParameters</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ExtendsInterfaces</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>InterfaceBody</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
 
   <!--
@@ -571,8 +610,13 @@
       </optional>
     </bgf:expression>
   </xbgf:massage>
-  <!-- ... -->
+  
+  <!-- ExceptionTypeList vs QualifiedIdentifierList -->
+  <xbgf:undefine>ExceptionTypeList</xbgf:undefine>
+  <xbgf:unite>
+    <add>ExceptionTypeList</add>
+    <to>QualifiedIdentifierList</to>
+  </xbgf:unite>
   <xbgf:inline>Throws</xbgf:inline>
-
 
 </xbgf:sequence>

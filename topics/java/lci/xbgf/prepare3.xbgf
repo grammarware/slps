@@ -10,9 +10,6 @@
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
-    <nonterminal>Selector</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
     <nonterminal>IdentifierSuffix</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
@@ -111,4 +108,36 @@
     </bgf:production>
   </xbgf:extract>
 
+  <!--
+  ','([n('Primary'), *(n('Selector')), *(n('PostfixOp'))])
+  vs 
+  ;([n('Primary'), n('QualifiedIdentifier'), ','([n('PostfixExpression'), n('PostfixOp')])])
+  -->
+  <xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>Primary</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>Selector</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>Primary</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>QualifiedIdentifier</nonterminal>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+  </xbgf:replace>
+  <xbgf:eliminate>Selector</xbgf:eliminate>
 </xbgf:sequence>

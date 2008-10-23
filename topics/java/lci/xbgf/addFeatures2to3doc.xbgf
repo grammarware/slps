@@ -340,8 +340,11 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  <xbgf:horizontal>SwitchLabel</xbgf:horizontal>
- 
+ <xbgf:horizontal>SwitchLabel</xbgf:horizontal>
+  <xbgf:distribute>
+    <nonterminal>SwitchLabel</nonterminal>
+  </xbgf:distribute>
+  
   <!--
      - Fail: ImportDeclaration.
       - [], ;([n(SingleTypeImportDeclaration), n(TypeImportOnDemandDeclaration)])

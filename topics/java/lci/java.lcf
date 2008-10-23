@@ -35,7 +35,6 @@
     </grammar>
   </tool>
 
-  
   <source>
     <name>app1</name>
     <grammar>
@@ -87,7 +86,6 @@
     </grammar>
   </source>
 
-  
   <target>
     <name>jls1</name>
     <branch>
@@ -127,7 +125,7 @@
       <perform>breakSemantics2doc</perform>
     </branch>
   </target>
-  
+
   <target>
     <name>jls3</name>
     <branch>
@@ -144,14 +142,13 @@
       <perform>refactorTypes3</perform>
       <perform>unlayerExpressions3</perform>
       <perform>inlineStatements2doc</perform>
-      <perform>inlineExpressions2doc</perform>
+      <perform>inlineExpressions3doc</perform>
       <perform>refactorClassDeclarations3</perform>
       <perform>refactorInterfaceDeclarations3</perform>
       <perform>breakSemantics3doc</perform>
     </branch>
   </target>
-  
-  
+
   <target>
     <name>jls12</name>
     <branch>
@@ -168,7 +165,7 @@
       <input>jls2</input>
     </branch>
   </target>
-  
+
   <target>
     <name>jls123</name>
     <branch>
@@ -194,7 +191,7 @@
       <perform>fixErrors2doc</perform>
     </branch>
   </target>
-  
+
   <target>
     <name>doc123</name>
     <branch>
@@ -207,7 +204,7 @@
       <perform>fixErrors3doc</perform>
     </branch>
   </target>
-  
+
   <!--
   <target>
     <name>formal</name>

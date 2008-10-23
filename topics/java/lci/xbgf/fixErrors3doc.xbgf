@@ -407,4 +407,14 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  
+  <!-- extractor's problem -->
+  <xbgf:replace>
+    <bgf:expression>
+      <terminal>ClassName</terminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>ClassName</nonterminal>
+    </bgf:expression>
+  </xbgf:replace>
 </xbgf:sequence>
