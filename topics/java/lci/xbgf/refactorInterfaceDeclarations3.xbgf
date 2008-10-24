@@ -619,4 +619,10 @@
   </xbgf:unite>
   <xbgf:inline>Throws</xbgf:inline>
 
+  <!-- ... -->
+  <xbgf:deyaccify>ElementValues</xbgf:deyaccify>
+  <xbgf:fold>
+    <nonterminal>BracketsOpt</nonterminal>
+  </xbgf:fold>
+  
 </xbgf:sequence>

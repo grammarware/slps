@@ -223,19 +223,6 @@
     p([], 'SwitchLabels', ;([n('SwitchLabel'), ','([n('SwitchLabels'), n('SwitchLabel')])])),
   -->
   <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
-  <xbgf:narrow>
-    <bgf:expression>
-      <plus>
-        <bgf:expression>
-          <nonterminal>SwitchLabel</nonterminal>
-        </bgf:expression>
-      </plus>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>SwitchLabel</nonterminal>
-    </bgf:expression>
-  </xbgf:narrow>
-  <xbgf:inline>SwitchLabels</xbgf:inline>
   
   <!--
    - Fail: ImportDeclaration.

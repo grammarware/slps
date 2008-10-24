@@ -23,24 +23,6 @@
   </xbgf:remove>
 
   <!--
-   - Fail: SwitchBlockStatementGroup.
-      - [], ,([n(SwitchLabel), n(BlockStatements)])
-     vs.
-      - [], ,([n(SwitchLabels), n(BlockStatements)])
--->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>SwitchLabels</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>SwitchLabel</nonterminal>
-    </bgf:expression>
-    <in>
-      <nonterminal>SwitchBlockStatementGroup</nonterminal>
-    </in>
-  </xbgf:replace>
-
-  <!--
   ConstructorBody is defined as:
      { [ ExplicitConstructorInvocation ] [ BlockStatements ] }
   -->

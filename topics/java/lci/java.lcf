@@ -108,6 +108,7 @@
       <perform>fixErrors2</perform>
       <perform>prepare2</perform>
       <perform>expandOps</perform>
+      <perform>allowMultipleLabels</perform>
     </branch>
     <branch>
       <input>doc2</input>
@@ -132,6 +133,7 @@
       <input>app3</input>
       <perform>fixErrors3</perform>
       <perform>prepare3</perform>
+      <perform>allowMultipleLabels</perform>
     </branch>
     <branch>
       <input>doc3</input>

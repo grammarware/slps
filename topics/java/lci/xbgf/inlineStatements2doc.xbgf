@@ -164,7 +164,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
-  <xbgf:undefine>SwitchLabels</xbgf:undefine>
+  <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
   <xbgf:inline>SwitchStatement</xbgf:inline>
 
   <!--
