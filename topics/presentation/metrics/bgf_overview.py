@@ -22,19 +22,15 @@ def runxpath(filename,xpathexpr):
  return res
 
 if __name__ == "__main__":
- if len(sys.argv) != 3:
+ if len(sys.argv) != 4:
   print 'This tool generates an overview of a bunch of BGF sources and targets.'
   print 'Usage:'
-  print '      bgfover <lcf> <bgfs-path>'
+  print '      bgfover <lcf> <bgfs-path> <xpath>'
   sys.exit(1)
  lcf = ET.parse(sys.argv[1])
- for x in lcf.findall('/source'):
+ for x in lcf.findall(sys.argv[3]):
   name = x.findtext('name')
   names.append(name)
- srclen = len(names)
- for x in lcf.findall('/target'):
-  name = x.findtext('name')
-  tnames.append(name)
  path = sys.argv[2]
  if path[-1]!='/':
   path += '/'
@@ -42,9 +38,6 @@ if __name__ == "__main__":
  print '&\\textbf{Total}&\\textbf{Total}&\\textbf{Top}&\\textbf{Bottom}\\\\'
  print '&\\textbf{productions}&\\textbf{nonterminals}&\\textbf{nonterminals}&\\textbf{nonterminals}\\\\\\hline\\hline'
  for x in names:
-  print '\\emph{'+x+'}&'+runxpath(path+x+'.bgf',productions)+'&'+runxpath(path+x+'.bgf',nonterminals)+'&'+runxpath(path+x+'.bgf',top)+'&'+runxpath(path+x+'.bgf',bottom)+'\\\\\\hline'
- print '\\hline'
- for x in tnames:
   print '\\emph{'+x+'}&'+runxpath(path+x+'.bgf',productions)+'&'+runxpath(path+x+'.bgf',nonterminals)+'&'+runxpath(path+x+'.bgf',top)+'&'+runxpath(path+x+'.bgf',bottom)+'\\\\\\hline'
  print '\\end{tabular}'
  sys.exit(0)

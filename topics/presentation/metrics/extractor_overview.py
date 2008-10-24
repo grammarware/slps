@@ -161,7 +161,7 @@ if __name__ == "__main__":
   sorted.sort()
   for src in sorted:
    texwrite(tbl,'&\\textbf{'+src+'}')
-  texwrite(tbl,'&\\textbf{Total}\\\\\\hline')
+  texwrite(tbl,'&\\textbf{Total}\\\\\\hline\\hline')
   for i in range(0,len(o_txt)):
    texwrite(tbl,o_txt[i])
    total = 'expr 0'

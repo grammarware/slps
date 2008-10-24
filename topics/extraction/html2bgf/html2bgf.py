@@ -140,7 +140,9 @@ def addProduction(name,choices,oneof):
      print 'UNK',
     if choices[s][0][i].isalnum():
      print 'ALNUM'
-    elif choices[s][0][i] in ('[',']','{','}','(',')','?????','|'):
+    elif choices[s][0][i] == '|':
+     print 'BNBAR'
+    elif choices[s][0][i] in ('[',']','{','}','(',')','?????'):
      print 'METAS'
     else:
      print 'WEIRD'
