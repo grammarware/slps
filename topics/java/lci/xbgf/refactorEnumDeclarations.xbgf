@@ -30,4 +30,43 @@
       <nonterminal>Arguments</nonterminal>
     </in>
   </xbgf:unfold>
+  
+  <!--
+  - Fail: EnumDeclaration.
+      - [], ,([t(enum), n(Identifier), ?(,([t(implements), n(TypeList)])), n(EnumBody)])
+     vs.
+      - [], ,([*(n(Modifier)), t(enum), n(Identifier), ?(,([t(implements), n(TypeList)])), n(EnumBody)])
+  -->
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>EnumDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>enum</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>implements</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>TypeList</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>EnumBody</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
 </xbgf:sequence>

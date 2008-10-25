@@ -625,4 +625,13 @@
     <nonterminal>BracketsOpt</nonterminal>
   </xbgf:fold>
   
+  <!--
+   - Fail: ImportDeclaration.
+      - [], ,([t(import), ?(t(static)), n(Identifier), *(,([t(.), n(Identifier)])), ?(,([t(.), t(*)])), t((;))])
+     vs.
+      - [], ;([,([t(import), n(QualifiedIdentifier), ?(,([t(.), t(*)])), t((;))]), n(SingleStaticImportDeclaration), n(StaticImportOnDemandDeclaration)])
+  -->
+  <xbgf:inline>SingleStaticImportDeclaration</xbgf:inline>
+  <xbgf:inline>StaticImportOnDemandDeclaration</xbgf:inline>
+  
 </xbgf:sequence>

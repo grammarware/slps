@@ -2,15 +2,12 @@ validator = ../../../shared/tools/checkxml
 
 build:
 
-diff2:
-	xbgf xbgf/unlayerExpressions3.xbgf bgf/jls3doc.fixErrors3doc.unifyModifiers.unifyNames.deyaccify2doc.refactorTypes3.bgf foo
-	gdt xbgf.log bgf/jls3doc.fixErrors3doc.unifyModifiers.unifyNames.deyaccify2doc.refactorTypes3.unlayerExpressions3.bgf | grep -v Ok
-
 diff:
-	gdt bgf/jls3app.fixErrors3.prepare3.bgf bgf/jls3doc.fixErrors3doc.unifyModifiers.unifyNames.deyaccify2doc.refactorTypes3.deyaccifyExpressions3.inlineStatements2doc.inlineExpressions2doc.refactorClassDeclarations3.refactorEnumDeclarations.refactorInterfaceDeclarations3.breakSemantics3doc.bgf
+	python ../../convergence/lci/lci.py java3.lcf architecture
+	gdts bgf/app3.fixErrors3.prepare3.allowMultipleLabels.bgf bgf/doc3.fixErrors3doc.unifyModifiers.unifyNames.deyaccify2doc.refactorTypes3.unlayerExpressions3.inlineStatements2doc.inlineExpressions3doc.refactorClassDeclarations3.refactorInterfaceDeclarations3.refactorMiscDeclarations3.breakSemantics3doc.bgf
 
 test:
-	python ../../convergence/lci/lci.py java3.lcf architecture
+	python ../../convergence/lci/lci.py java.lcf architecture
 	@rm -f architecture*.dot
 
 check:

@@ -216,4 +216,18 @@
     </in>
   </xbgf:replace>
   
+  <!--
+   - Fail: Type.
+      - [], n(BasicType)
+      - [], ,([n(Identifier), ?(n(TypeArguments)), *(,([t(.), n(Identifier), ?(n(TypeArguments))])), n(BracketsOpt)])
+     vs.
+      - [], ;([n(BasicType), ,([n(TypeDeclSpecifier), ?(n(TypeArguments)), n(BracketsOpt)])])
+  -->
+  <xbgf:unfold>
+    <nonterminal>TypeDeclSpecifier</nonterminal>
+    <in>
+      <nonterminal>Type</nonterminal>
+    </in>
+  </xbgf:unfold>
+  
 </xbgf:sequence>

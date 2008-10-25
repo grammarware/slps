@@ -807,32 +807,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>VariableDeclaratorRest</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>=</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>VariableInitializer</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>

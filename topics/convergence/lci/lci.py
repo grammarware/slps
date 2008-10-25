@@ -8,6 +8,7 @@ from elementtree import ElementTree
 problem = False
 
 shutup = ' 1> /dev/null 2> /dev/null'
+orderedsrc = []
 shortcuts = {}
 actions = []
 testsets = {}
@@ -58,6 +59,7 @@ def readxmlconfig (cfg):
   testsets[xmlnode.findtext('name')]=expandxml(xmlnode.findall('command')[0],{})
  # sources
  for xmlnode in config.findall('//source'):
+  orderedsrc.append(xmlnode.findtext('name'));
   extractor[xmlnode.findtext('name')]=expandxml(xmlnode.findall('grammar/extraction')[0],{})
   if xmlnode.findall('grammar/parsing'):
    parser[xmlnode.findtext('name')]=expandxml(xmlnode.findall('grammar/parsing')[0],{})
@@ -164,14 +166,17 @@ def makegraph():
 
 def dumpgraph(df):
  dot = open(df+'_large.dot','w')
- dot.write('digraph generated{ {rank=same; node [shape=ellipse, style=bold];')
- for x in extractor.keys():
+ dot.write('digraph generated{ {rank=same; node [shape=ellipse, style=bold]; edge[style=invis,weight=10];\n')
+ for x in orderedsrc:
   dot.write(quote(x))
   if x in failednode:
    dot.write(' [color=red]')
   elif x in almostfailed:
    dot.write(' [color=blue]')
-  dot.write(';')
+  if x==orderedsrc[-1]:
+   dot.write(';')
+  else:
+   dot.write('->')
  dot.write('}\n')
  dot.write('node [shape=octagon, style=bold];\n')
  for x in targets.keys():
@@ -216,14 +221,17 @@ def dumpgraph(df):
   print '[WARN] Detailed diagram not generated'
   problem = True
  dot = open(df+'_small.dot','w')
- dot.write('digraph generated{ {rank=same;')
- for x in extractor.keys():
+ dot.write('digraph generated{ {rank=same; edge[style=invis,weight=10];\n')
+ for x in orderedsrc:
   dot.write(quote(x))
   if x in failednode:
    dot.write(' [color=red]')
   elif x in almostfailed:
    dot.write(' [color=blue]')
-  dot.write(';')
+  if x == orderedsrc[-1]:
+   dot.write(';')
+  else:
+   dot.write('->')
  dot.write('}')
  dot.write('node [shape=octagon]\n')
  for x in targets.keys():

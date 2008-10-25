@@ -147,6 +147,8 @@
       <perform>inlineExpressions3doc</perform>
       <perform>refactorClassDeclarations3</perform>
       <perform>refactorInterfaceDeclarations3</perform>
+      <perform>refactorEnumDeclarations</perform>
+      <perform>refactorMiscDeclarations3</perform>
       <perform>breakSemantics3doc</perform>
     </branch>
   </target>
