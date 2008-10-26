@@ -184,7 +184,7 @@ def dumpgraph(df):
   if x in failednode:
    dot.write(' [color=red]')
   dot.write(';')
- dot.write('node [shape=box, style=solid];\n')
+ dot.write('node [shape=point, style=solid];\n')
  nodezz=[]
  for arc in graph_big:
   #dot.write(quote(arc[0])+'->'+quote(arc[1]))

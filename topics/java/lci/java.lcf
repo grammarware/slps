@@ -128,7 +128,7 @@
     </branch>
   </target>
 
-  <!--
+  <!---->
   <target>
     <name>jls3</name>
     <branch>
@@ -155,7 +155,7 @@
       <perform>breakSemantics3doc</perform>
     </branch>
   </target>
--->
+
   <target>
     <name>jls12</name>
     <branch>
@@ -171,7 +171,7 @@
       <input>jls2</input>
     </branch>
   </target>
-<!--
+<!---->
   <target>
     <name>jls123</name>
     <branch>
@@ -183,7 +183,7 @@
       <input>jls3</input>
     </branch>
   </target>
--->
+
   <target>
     <name>doc12</name>
     <branch>
