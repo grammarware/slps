@@ -7,11 +7,11 @@ SLPS=${PWD}
 cd ${LOCAL}
 
 if [ $# -eq 1 ]; then
-    OUTPUT=`basename $1 .bgf`.bnf
+    OUTPUT=/dev/stdout
 elif [ $# -ne 2 ]; then
     echo "This tool transforms XML BNF-like Grammar Format documents to EBNF dialect used in JLS."
     echo "Usage: bgf2bnf <input-bgf-document> [<output-text>]"
-    echo "When the output file is not specified, the same filename with .bnf extension is used."
+    echo "When output file is not specified, stdout is used."
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."

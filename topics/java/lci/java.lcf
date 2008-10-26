@@ -109,6 +109,7 @@
       <perform>prepare2</perform>
       <perform>expandOps</perform>
       <perform>allowMultipleLabels</perform>
+      <perform>allowMethodBodyEmpty</perform>
     </branch>
     <branch>
       <input>doc2</input>
@@ -116,7 +117,7 @@
       <perform>unifyModifiers</perform>
       <perform>unifyNames</perform>
       <perform>deyaccify2doc</perform>
-      <perform>refactorTypes</perform>
+      <perform>unifyTypes2</perform>
       <perform>unlayerExpressions</perform>
       <perform>inlineStatements2doc</perform>
       <perform>inlineExpressions2doc</perform>
@@ -127,6 +128,7 @@
     </branch>
   </target>
 
+  <!--
   <target>
     <name>jls3</name>
     <branch>
@@ -134,6 +136,7 @@
       <perform>fixErrors3</perform>
       <perform>prepare3</perform>
       <perform>allowMultipleLabels</perform>
+      <perform>allowMethodBodyEmpty</perform>
     </branch>
     <branch>
       <input>doc3</input>
@@ -141,7 +144,7 @@
       <perform>unifyModifiers</perform>
       <perform>unifyNames</perform>
       <perform>deyaccify2doc</perform>
-      <perform>refactorTypes3</perform>
+      <perform>unifyTypes3</perform>
       <perform>unlayerExpressions3</perform>
       <perform>inlineStatements2doc</perform>
       <perform>inlineExpressions3doc</perform>
@@ -152,24 +155,23 @@
       <perform>breakSemantics3doc</perform>
     </branch>
   </target>
-
+-->
   <target>
     <name>jls12</name>
     <branch>
       <input>jls1</input>
       <perform>refactorStatements</perform>
-      <perform>refactorTypes1</perform>
+      <perform>unifyTypes1</perform>
       <perform>upgradeDeclarations1to2</perform>
       <perform>unlayerExpressions</perform>
       <perform>upgradeExpressions</perform>
       <perform>addFeatures1to2</perform>
-      <perform>cropFeatures1</perform>
     </branch>
     <branch>
       <input>jls2</input>
     </branch>
   </target>
-
+<!--
   <target>
     <name>jls123</name>
     <branch>
@@ -181,7 +183,7 @@
       <input>jls3</input>
     </branch>
   </target>
-
+-->
   <target>
     <name>doc12</name>
     <branch>

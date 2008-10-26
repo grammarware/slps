@@ -2,6 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
+  
   <!--
      - Fail: ConstantDeclaration.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarator)])
@@ -26,6 +27,31 @@
      vs.
       - [], ;([,([n(Primary), t(.), n(Identifier)]), ,([t(super), t(.), n(Identifier)]), ,([n(ClassName), t(.), t(super), t(.), n(Identifier)])])
  -->
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>ClassName</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>AmbiguousName</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>.</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
   <xbgf:vertical>
     <nonterminal>FieldAccess</nonterminal>
   </xbgf:vertical>
@@ -54,31 +80,96 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>FieldAccess</xbgf:horizontal>
+
+  <!--
+  Resolve brutally. Is there a better way?
+  
+     - Fail: PrimaryNoNewArray.
+      - [], ;([n(Literal), t(this), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
+     vs.
+      - [], ;([n(Literal), ,([n(Type), t(.), t(class)]), ,([t(void), t(.), t(class)]), t(this), ,([n(ClassName), t(.), t(this)]), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
+    -->
+  <xbgf:undefine>PrimaryNoNewArray</xbgf:undefine>
   <xbgf:define>
     <bgf:production>
-      <nonterminal>ClassName</nonterminal>
+      <nonterminal>PrimaryNoNewArray</nonterminal>
       <bgf:expression>
         <choice>
           <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
+            <nonterminal>Literal</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <sequence>
               <bgf:expression>
-                <nonterminal>AmbiguousName</nonterminal>
+                <nonterminal>Type</nonterminal>
               </bgf:expression>
               <bgf:expression>
                 <terminal>.</terminal>
               </bgf:expression>
               <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
+                <terminal>class</terminal>
               </bgf:expression>
             </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <terminal>void</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>.</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>class</terminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>this</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>ClassName</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>.</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>this</terminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <terminal>(</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Expression</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>)</terminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ClassInstanceCreationExpression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>FieldAccess</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>MethodInvocation</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ArrayAccess</nonterminal>
           </bgf:expression>
         </choice>
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+
 
   <!--
      - Fail: LocalVariableDeclaration.
@@ -137,6 +228,14 @@
   <xbgf:vertical>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:vertical>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>InstanceInitializer</nonterminal>
+      <bgf:expression>
+        <nonterminal>Block</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -145,14 +244,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>InstanceInitializer</nonterminal>
-      <bgf:expression>
-        <nonterminal>Block</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
   <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
 
   <!--

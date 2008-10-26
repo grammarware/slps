@@ -1,7 +1,13 @@
 all:
 	@echo "Run 'make rebuild' if you want to renew the sources from their URLs."
 	@echo NOT recommended UNLESS you really know what you are doing!
+	@echo "Run 'make debug' to execute all extractors in debug mode"
 	@echo "Run 'make test' to execute all extractors and diff the results with LCI snapshot"
+
+debug:
+	cd jls1 ; make debug
+	cd jls2 ; make debug
+	cd jls3 ; make debug
 
 test:
 	cd jls1 ; make all

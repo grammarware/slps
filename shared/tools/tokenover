@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 1 ]; then
+    echo "This tool provides a token overview"
+    echo "Usage: tokenover <topic>"
+    exit 1
+else
+    /bin/echo "\begin{tabular}{l|c|c|c|}"
+    /bin/echo "Token&\textit{italic}&\texttt{fixed}&default\\\\\hline"
+    /bin/echo -n "\\tokenAlNum&N ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "ITA ALNUM"
+    /bin/echo -n ") &T ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "FIX ALNUM"
+    /bin/echo -n ")&T? ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "DEF ALNUM"
+    /bin/echo ")\\\\"
+    /bin/echo -n "\\tokenBar&M ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "ITA BNBAR"
+    /bin/echo -n ") &T ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "FIX BNBAR"
+    /bin/echo -n ")&M? ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "DEF BNBAR"
+    /bin/echo ")\\\\"
+    /bin/echo -n "\\tokenMeta&M ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "ITA METAS"
+    /bin/echo -n ") &T ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "FIX METAS"
+    /bin/echo -n ")&T? ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "DEF METAS"
+    /bin/echo ")\\\\"
+    /bin/echo -n "\\tokenOther&T ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "ITA WEIRD"
+    /bin/echo -n ") &T ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "FIX WEIRD"
+    /bin/echo -n ")&T ("
+    cd ${SLPS}/topics/$1 ; make debug | grep -c "DEF WEIRD"
+    /bin/echo ")\\\\"
+    /bin/echo "\hline\end{tabular}"
+fi

@@ -11,6 +11,14 @@
   <xbgf:vertical>
     <nonterminal>ReferenceType</nonterminal>
   </xbgf:vertical>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>TypeVariable</nonterminal>
+      <bgf:expression>
+        <nonterminal>Identifier</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
   <xbgf:add>
     <bgf:production>
       <nonterminal>ReferenceType</nonterminal>
@@ -27,6 +35,127 @@
      vs.
       - [], ,([?(n(MethodModifiers)), ?(n(TypeParameters)), n(ResultType), n(MethodDeclarator), ?(n(Throws))])
   -->
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>AdditionalBound</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>&amp;</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>InterfaceType</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>AdditionalBoundList</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>AdditionalBound</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>AdditionalBoundList</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>AdditionalBound</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>TypeBound</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>extends</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ClassOrInterfaceType</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>AdditionalBoundList</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+ <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>TypeParameter</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>TypeVariable</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>TypeBound</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>TypeParameterList</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>TypeParameterList</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>,</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>TypeParameter</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TypeParameter</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>TypeParameters</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>&lt;</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TypeParameterList</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>&gt;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
   <xbgf:inject>
     <bgf:production>
       <nonterminal>MethodHeader</nonterminal>
@@ -63,135 +192,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>TypeParameters</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>&lt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>TypeParameterList</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&gt;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>TypeParameterList</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>TypeParameterList</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>,</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>TypeParameter</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>TypeParameter</nonterminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>TypeParameter</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>TypeVariable</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>TypeBound</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>TypeVariable</nonterminal>
-      <bgf:expression>
-        <nonterminal>Identifier</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>TypeBound</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>extends</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ClassOrInterfaceType</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>AdditionalBoundList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>AdditionalBoundList</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>AdditionalBound</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>AdditionalBoundList</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>AdditionalBound</nonterminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>AdditionalBound</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>&amp;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>InterfaceType</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
 
   <!--
      - Fail: StatementWithoutTrailingSubstatement.
@@ -199,18 +199,7 @@
      vs.
       - [], ;([n(Block), n(EmptyStatement), n(ExpressionStatement), n(AssertStatement), n(SwitchStatement), n(DoStatement), n(BreakStatement), n(ContinueStatement), n(ReturnStatement), n(SynchronizedStatement), n(ThrowStatement), n(TryStatement)])
   -->
-  <xbgf:vertical>
-    <nonterminal>StatementWithoutTrailingSubstatement</nonterminal>
-  </xbgf:vertical>
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>StatementWithoutTrailingSubstatement</nonterminal>
-      <bgf:expression>
-        <nonterminal>AssertStatement</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <xbgf:define>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>AssertStatement</nonterminal>
       <bgf:expression>
@@ -250,7 +239,18 @@
         </choice>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:introduce>
+  <xbgf:vertical>
+    <nonterminal>StatementWithoutTrailingSubstatement</nonterminal>
+  </xbgf:vertical>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>StatementWithoutTrailingSubstatement</nonterminal>
+      <bgf:expression>
+        <nonterminal>AssertStatement</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
   <xbgf:horizontal>StatementWithoutTrailingSubstatement</xbgf:horizontal>
 
   <!--
@@ -259,6 +259,28 @@
      vs.
       - [], ,([?(n(Annotations)), t(package), n(PackageName), t((;))])
   -->
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>Annotations</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>Annotation</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>Annotations</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Annotation</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
   <xbgf:inject>
     <bgf:production>
       <nonterminal>PackageDeclaration</nonterminal>
@@ -284,28 +306,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>Annotations</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>Annotation</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>Annotations</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Annotation</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
 
   <!--
      - Fail: SwitchLabel.
@@ -314,6 +314,14 @@
       - [], ;([,([t(case), n(ConstantExpression), t(:)]),
                ,([t(case), n(EnumConstantName), t(:)])])
   -->
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>EnumConstantName</nonterminal>
+      <bgf:expression>
+        <nonterminal>Identifier</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
   <xbgf:add>
     <bgf:production>
       <nonterminal>SwitchLabel</nonterminal>
@@ -332,14 +340,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>EnumConstantName</nonterminal>
-      <bgf:expression>
-        <nonterminal>Identifier</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
  <xbgf:horizontal>SwitchLabel</xbgf:horizontal>
   <xbgf:distribute>
     <nonterminal>SwitchLabel</nonterminal>
@@ -354,23 +354,7 @@
   <xbgf:vertical>
     <nonterminal>ImportDeclaration</nonterminal>
   </xbgf:vertical>
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>ImportDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>SingleStaticImportDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>ImportDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>StaticImportOnDemandDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <xbgf:define>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>SingleStaticImportDeclaration</nonterminal>
       <bgf:expression>
@@ -396,8 +380,16 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
+  </xbgf:introduce>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>ImportDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>SingleStaticImportDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>StaticImportOnDemandDeclaration</nonterminal>
       <bgf:expression>
@@ -423,7 +415,15 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:introduce>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>ImportDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>StaticImportOnDemandDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
   <xbgf:horizontal>ImportDeclaration</xbgf:horizontal>
 
   <!--
@@ -486,28 +486,54 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  <xbgf:add>
+  <xbgf:introduce>
     <bgf:production>
-      <nonterminal>ClassDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>EnumDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>EnumDeclaration</nonterminal>
+      <nonterminal>Arguments</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
             <optional>
               <bgf:expression>
-                <nonterminal>ClassModifiers</nonterminal>
+                <nonterminal>ArgumentList</nonterminal>
               </bgf:expression>
             </optional>
           </bgf:expression>
           <bgf:expression>
-            <terminal>enum</terminal>
+            <terminal>)</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>EnumBodyDeclarations</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ClassBodyDeclarations</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>EnumConstant</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Annotations</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Identifier</nonterminal>
@@ -515,18 +541,47 @@
           <bgf:expression>
             <optional>
               <bgf:expression>
-                <nonterminal>Interfaces</nonterminal>
+                <nonterminal>Arguments</nonterminal>
               </bgf:expression>
             </optional>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>EnumBody</nonterminal>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ClassBody</nonterminal>
+              </bgf:expression>
+            </optional>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>EnumConstants</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>EnumConstant</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>EnumConstants</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>,</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>EnumConstant</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>EnumBody</nonterminal>
       <bgf:expression>
@@ -559,39 +614,21 @@
         </star>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
+  </xbgf:introduce>
+  <xbgf:introduce>
     <bgf:production>
-      <nonterminal>EnumConstants</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>EnumConstant</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>EnumConstants</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>,</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>EnumConstant</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>EnumConstant</nonterminal>
+      <nonterminal>EnumDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>Annotations</nonterminal>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ClassModifiers</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>enum</terminal>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Identifier</nonterminal>
@@ -599,62 +636,25 @@
           <bgf:expression>
             <optional>
               <bgf:expression>
-                <nonterminal>Arguments</nonterminal>
+                <nonterminal>Interfaces</nonterminal>
               </bgf:expression>
             </optional>
           </bgf:expression>
           <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ClassBody</nonterminal>
-              </bgf:expression>
-            </optional>
+            <nonterminal>EnumBody</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
+  </xbgf:introduce>
+  <xbgf:add>
     <bgf:production>
-      <nonterminal>EnumBodyDeclarations</nonterminal>
+      <nonterminal>ClassDeclaration</nonterminal>
       <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ClassBodyDeclarations</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
+        <nonterminal>EnumDeclaration</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>Arguments</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
+  </xbgf:add>
   <xbgf:horizontal>ClassDeclaration</xbgf:horizontal>
 
   <!--
@@ -663,23 +663,22 @@
      vs.
       - [], ;([n(NormalInterfaceDeclaration), n(AnnotationTypeDeclaration)])
   -->
-  <xbgf:chain>
+  <xbgf:introduce>
     <bgf:production>
-      <nonterminal>InterfaceDeclaration</nonterminal>
+      <nonterminal>DefaultValue</nonterminal>
       <bgf:expression>
-        <nonterminal>NormalInterfaceDeclaration</nonterminal>
+        <sequence>
+          <bgf:expression>
+            <terminal>default</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ElementValue</nonterminal>
+          </bgf:expression>
+        </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:chain>
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>AnnotationTypeDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <xbgf:define>
+  </xbgf:introduce>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>AnnotationTypeDeclaration</nonterminal>
       <bgf:expression>
@@ -706,52 +705,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>AnnotationTypeBody</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>{</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>}</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:define>
+  </xbgf:introduce>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
       <bgf:expression>
@@ -810,22 +765,67 @@
         </choice>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
   <xbgf:define>
     <bgf:production>
-      <nonterminal>DefaultValue</nonterminal>
+      <nonterminal>AnnotationTypeBody</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <terminal>default</terminal>
+            <terminal>{</terminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>ElementValue</nonterminal>
+            <optional>
+              <bgf:expression>
+                <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <xbgf:chain>
+    <bgf:production>
+      <nonterminal>InterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>NormalInterfaceDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:chain>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>InterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>AnnotationTypeDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
   <xbgf:horizontal>InterfaceDeclaration</xbgf:horizontal>
 
   <!--
@@ -2254,5 +2254,6 @@
   </xbgf:strip>
 
   <!-- last bits -->
+
 
 </xbgf:sequence>

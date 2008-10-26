@@ -16,12 +16,13 @@ check:
 	ls -1  bgf/*.bgf  | xargs -n1 ${validator} bgf
 
 debug:
-	../../../shared/tools/html2bgf ../jls1/syntax.kw ../jls1/app.html 1.bnf -bnf >/dev/null
-	../../../shared/tools/html2bgf ../jls1/collect.kw ../jls1/doc.html q.bnf -bnf >/dev/null
-	../../../shared/tools/html2bgf ../jls2/app.html 2.bnf -bnf >/dev/null
-	../../../shared/tools/html2bgf ../jls2/collect.kw ../jls2/doc.html w.bnf -bnf >/dev/null
-	../../../shared/tools/html2bgf ../jls3/app.html 3.bnf -bnf >/dev/null
-	../../../shared/tools/html2bgf ../jls3/collect.kw ../jls3/doc.html e.bnf -bnf >/dev/null
+	../../../shared/tools/bgf2bnf snapshot/app1.bgf 1.bnf
+	../../../shared/tools/bgf2bnf snapshot/app2.bgf 2.bnf
+	../../../shared/tools/bgf2bnf snapshot/app3.bgf 3.bnf
+	../../../shared/tools/bgf2bnf snapshot/doc1.bgf q.bnf
+	../../../shared/tools/bgf2bnf snapshot/doc2.bgf w.bnf
+	../../../shared/tools/bgf2bnf snapshot/doc3.bgf e.bnf
+
 clean:
 	rm -f *~
 	rm -f bgf/*

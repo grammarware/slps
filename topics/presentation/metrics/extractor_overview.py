@@ -172,7 +172,18 @@ if __name__ == "__main__":
    texwrite(tbl,'&')
    tbl = reopenafter(tbl,tblname,total)
    texwrite(tbl,'\\\\')
-  texwrite(tbl,'\\hline\\end{tabular}')
+  # Totals
+  texwrite(tbl,'\\hline\nTotal')
+  total = 'expr 0'
+  for src in sorted:
+   texwrite(tbl,'&')
+   tbl = reopenafter(tbl,tblname,'grep Total '+src+'.data | awk \'{print $3}\'')
+   total += ' + `grep Total '+src+'.data | awk \'{print $3}\'`'
+  texwrite(tbl,'&')
+  tbl = reopenafter(tbl,tblname,total)
+  texwrite(tbl,'\\\\')
+  # End of totals
+  texwrite(tbl,'\\end{tabular}')
   sys.exit(0)
  else:
   print 'Usage:'

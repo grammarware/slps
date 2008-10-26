@@ -7,6 +7,8 @@ MODE_DEFAULT = 3
 
 pp_mode = MODE_DEFAULT
 pp_outer = pp_mode
+verbose = False
+totalerrors = 0
 # pp_mode == MODE_ITALIC
 # pp_mode == MODE_FIXED
 
@@ -119,6 +121,7 @@ def traverse(c):
   return line+'</choice></bgf:expression>'
 
 def addProduction(name,choices,oneof):
+ global verbose
  bs = []
  if oneof:
   # concatenate all choices
@@ -129,24 +132,23 @@ def addProduction(name,choices,oneof):
   for s in range(0,len(choices)):
    ss = []
    for i in range(0,len(choices[s][0])):
-    """
-    if choices[s][1][i] == MODE_DEFAULT:
-     print 'DEF',
-    elif choices[s][1][i] == MODE_ITALIC:
-     print 'ITA',
-    elif choices[s][1][i] == MODE_FIXED:
-     print 'FIX',
-    else:
-     print 'UNK',
-    if choices[s][0][i].isalnum():
-     print 'ALNUM'
-    elif choices[s][0][i] == '|':
-     print 'BNBAR'
-    elif choices[s][0][i] in ('[',']','{','}','(',')','?????'):
-     print 'METAS'
-    else:
-     print 'WEIRD'
-    """
+    if verbose:
+     if choices[s][1][i] == MODE_DEFAULT:
+      print 'DEF',
+     elif choices[s][1][i] == MODE_ITALIC:
+      print 'ITA',
+     elif choices[s][1][i] == MODE_FIXED:
+      print 'FIX',
+     else:
+      print 'UNK',
+     if choices[s][0][i].isalnum():
+      print 'ALNUM'
+     elif choices[s][0][i] == '|':
+      print 'BNBAR'
+     elif choices[s][0][i] in ('[',']','{','}','(',')','?????'):
+      print 'METAS'
+     else:
+      print 'WEIRD'
     if choices[s][1][i] == MODE_FIXED:
      # terminal
      ss.append('"'+choices[s][0][i]+'"')
@@ -173,7 +175,7 @@ def addProduction(name,choices,oneof):
    bs.append(ss)
  if name in prods.keys():
   print 'Duplicate definition of',name,'found, will be merged.'
-  #pessimistic[2] += 1
+  pessimistic[2] += 1
   for c in bs:
    addifnew(c,name)
  else:
@@ -200,15 +202,6 @@ def structuralEq(arr1,arr2):
    return False
  return True
 
-def serialiseT(name,choices):
- line=name+' is defined as:\n'
- for b in choices:
-  line += '     '
-  for s in b:
-   line += s+' '
-  line += '\n'
- return line
-
 def addSpaces(line,symb):
  return line.replace(symb,' '+symb+' ')
 
@@ -232,6 +225,7 @@ def mapHTMLtoTokenStream(line):
   if line.find('</i>')==0:
    if pp_mode != MODE_ITALIC:
     print 'Style tag mismatch.'
+    pessimistic[1]+=1
    pp_mode = MODE_DEFAULT
    pp_outer = MODE_DEFAULT
    line = line[4:]
@@ -240,12 +234,14 @@ def mapHTMLtoTokenStream(line):
    #if pp_mode == MODE_ITALIC:
    if pp_mode != MODE_DEFAULT:
     print 'Style tag mismatch.'
+    pessimistic[1]+=1
    pp_mode = MODE_ITALIC
    line = line[3:]
    continue
   if line.find('</em>')==0:
    if pp_mode != MODE_ITALIC:
     print 'Style tag mismatch.'
+    pessimistic[1]+=1
    pp_mode = MODE_DEFAULT
    pp_outer = MODE_DEFAULT
    line = line[5:]
@@ -254,6 +250,7 @@ def mapHTMLtoTokenStream(line):
    #if pp_mode == MODE_ITALIC:
    if pp_mode != MODE_DEFAULT:
     print 'Style tag mismatch.'
+    pessimistic[1]+=1
    if (pp_mode == MODE_ITALIC) and tokens and oldline.find(tokens[-1]+'<em>'+line[4:line.index('>')])>=0:
     print 'Token-breaking <em> tag endangers',
     line = tokens.pop()+line[4:]
@@ -266,6 +263,7 @@ def mapHTMLtoTokenStream(line):
   if line.find('<code>')==0:
    if pp_mode == MODE_FIXED:
     print 'Style tag mismatch.'
+    pessimistic[1]+=1
    pp_outer = pp_mode
    pp_mode = MODE_FIXED
    line = line[6:]
@@ -273,6 +271,7 @@ def mapHTMLtoTokenStream(line):
   if line.find('</code>')==0:
    if pp_mode != MODE_FIXED:
     print 'Style tag mismatch.'
+    pessimistic[1]+=1
    pp_mode = pp_outer
    line = line[7:]
    continue
@@ -304,11 +303,11 @@ def mapHTMLtoTokenStream(line):
   if line.find('<a')==0:
    print 'Anchor found, skipping everything that is left of this snippet.'
    pessimistic[0] = True
-   pessimistic[1] += 1
+   #pessimistic[1] += 1
    continue
   if line.find('<')==0:
    print 'Style tag unknown: "'+line+'", skipping!'
-   pessimistic[2] += 1
+   pessimistic[1] += 1
    line = line[line.index('>')+1:]
   else:
    if line.find('<')>0:
@@ -399,7 +398,7 @@ def preprocessConstruct(fn):
      if (pp_mode != MODE_ITALIC) and line.find('</em>')<0 and line.find('</i>')<0 and line.find('<code>')<0:
       pp_mode = MODE_ITALIC
       print 'Style tag enforcing: virtual <em> when new definition of',name,'starts.'
-      pessimistic[2] += 1
+      pessimistic[1] += 1
     elif len(a)==4 and a[0]==a[2] and a[1]=='$$$$$' and a[-1]=='$$$$$':
      # new mingled definition
      if choices:
@@ -409,7 +408,7 @@ def preprocessConstruct(fn):
      name = a[0]
      oneof = False
      print name,'double-declared, fixed'
-     pessimistic[2] += 1
+     #pessimistic[2] += 1
     elif len(a)==4 and a[1]=='$$$$$' and a[2]=='one' and a[3]=='of':
      # new "one-of" definition
      if choices:
@@ -421,7 +420,7 @@ def preprocessConstruct(fn):
      # line continuation
      if countspaces(oldline)>countspaces(line):
       print 'Line continuation enforced while parsing',name,'- indentation went from',countspaces(oldline),'to 0'
-      pessimistic[2] += 1
+      pessimistic[1] += 1
      for i in range(0,len(a)):
       choices[-1][0].append(a[i])
       choices[-1][1].append(b[i])
@@ -432,8 +431,8 @@ def preprocessConstruct(fn):
    else:
     oldline=line=''
  src.close()
- if pessimistic[1]:
-  print 'Skipped',pessimistic[1],'anchor-containing snippets'
+ #if pessimistic[1]:
+ # print 'Skipped',pessimistic[1],'anchor-containing snippets'
 
 def countspaces(s):
  olds = s
@@ -446,12 +445,6 @@ def countspaces(s):
   cx+=1
   s=s[1:]
  return cx
-
-def printGrammarText(fn):
- ext = open(fn,'w')
- for nt in prods.keys():
-  ext.write(serialiseT(nt,prods[nt]))
- ext.close()
 
 def printGrammar(fn):
  ext = open(fn,'w')
@@ -792,16 +785,15 @@ if __name__ == "__main__":
  print 'HTML to Grammar automated extractor'
  if len(sys.argv)==3 or len(sys.argv)==4:
   print 'Reading the HTML document...'
+  if sys.argv[-1]=='-v':
+   verbose = True
   preprocessConstruct(sys.argv[1])
   print 'Massaging the grammar...'
   glueSymbols()
   preprocessCorrect()
   killDuplicates()
   print 'Writing the extracted grammar...'
-  if sys.argv[-1]=='-bnf':
-   printGrammarText(sys.argv[2])
-  else:
-   printGrammar(sys.argv[2])
+  printGrammar(sys.argv[2])
   if pessimistic[2]:
    print 'Total of',pessimistic[2]+pessimistic[1],'problems encountered and coped with.'
  else:
@@ -809,6 +801,6 @@ if __name__ == "__main__":
   print ' ',sys.argv[0],'''<input> <output> [<options>]
 
 Possible options:
-	-bnf			Outputs in EBNF rather then in BGF'''
+	-v			verbose mode (report the code of each token)'''
   sys.exit(1)
 
