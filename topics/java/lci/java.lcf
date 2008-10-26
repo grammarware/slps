@@ -90,13 +90,13 @@
     <name>jls1</name>
     <branch>
       <input>app1</input>
-      <perform>fixErrors1</perform>
+      <perform>correct-app1</perform>
       <perform>prepare1</perform>
     </branch>
     <branch>
       <input>doc1</input>
-      <perform>fixErrors1doc</perform>
-      <perform>unifyNames1</perform>
+      <perform>correct-doc1</perform>
+      <perform>generalizeNames-doc1</perform>
       <perform>preferLALR</perform>
     </branch>
   </target>
@@ -105,26 +105,26 @@
     <name>jls2</name>
     <branch>
       <input>app2</input>
-      <perform>fixErrors2</perform>
+      <perform>correct-app2</perform>
       <perform>prepare2</perform>
-      <perform>expandOps</perform>
+      <perform>refactorOps</perform>
       <perform>allowMultipleLabels</perform>
       <perform>allowMethodBodyEmpty</perform>
     </branch>
     <branch>
       <input>doc2</input>
-      <perform>fixErrors2doc</perform>
-      <perform>unifyModifiers</perform>
-      <perform>unifyNames</perform>
-      <perform>deyaccify2doc</perform>
-      <perform>unifyTypes2</perform>
+      <perform>correct-doc2</perform>
+      <perform>generalizeModifiers</perform>
+      <perform>generalizeNames</perform>
+      <perform>deyaccify-doc2</perform>
+      <perform>refactorTypes-doc2</perform>
       <perform>unlayerExpressions</perform>
       <perform>inlineStatements2doc</perform>
-      <perform>inlineExpressions2doc</perform>
-      <perform>refactorClassDeclarations</perform>
-      <perform>refactorInterfaceDeclarations</perform>
-      <perform>refactorMiscDeclarations</perform>
-      <perform>breakSemantics2doc</perform>
+      <perform>editExpressions-doc2</perform>
+      <perform>refactorClasses-doc2</perform>
+      <perform>refactorInterfaces-doc2</perform>
+      <perform>refactorDeclarations-doc2</perform>
+      <perform>extend-doc2</perform>
     </branch>
   </target>
 
@@ -133,26 +133,26 @@
     <name>jls3</name>
     <branch>
       <input>app3</input>
-      <perform>fixErrors3</perform>
+      <perform>correct-app3</perform>
       <perform>prepare3</perform>
       <perform>allowMultipleLabels</perform>
       <perform>allowMethodBodyEmpty</perform>
     </branch>
     <branch>
       <input>doc3</input>
-      <perform>fixErrors3doc</perform>
-      <perform>unifyModifiers</perform>
-      <perform>unifyNames</perform>
-      <perform>deyaccify2doc</perform>
-      <perform>unifyTypes3</perform>
+      <perform>correct-doc3</perform>
+      <perform>generalizeModifiers</perform>
+      <perform>generalizeNames</perform>
+      <perform>deyaccify-doc2</perform>
+      <perform>refactorTypes-doc3</perform>
       <perform>unlayerExpressions3</perform>
       <perform>inlineStatements2doc</perform>
-      <perform>inlineExpressions3doc</perform>
-      <perform>refactorClassDeclarations3</perform>
-      <perform>refactorInterfaceDeclarations3</perform>
+      <perform>editExpressions-doc3</perform>
+      <perform>refactorClasses-doc3</perform>
+      <perform>refactorInterfaces-doc3</perform>
       <perform>refactorEnumDeclarations</perform>
-      <perform>refactorMiscDeclarations3</perform>
-      <perform>breakSemantics3doc</perform>
+      <perform>refactorDeclarations-doc3</perform>
+      <perform>extend-doc3</perform>
     </branch>
   </target>
 
@@ -161,11 +161,11 @@
     <branch>
       <input>jls1</input>
       <perform>refactorStatements</perform>
-      <perform>unifyTypes1</perform>
-      <perform>upgradeDeclarations1to2</perform>
+      <perform>refactorTypes-jls1</perform>
+      <perform>editDeclarations</perform>
       <perform>unlayerExpressions</perform>
-      <perform>upgradeExpressions</perform>
-      <perform>addFeatures1to2</perform>
+      <perform>editExpressions</perform>
+      <perform>extend-jls1</perform>
     </branch>
     <branch>
       <input>jls2</input>
@@ -177,7 +177,7 @@
     <branch>
       <input>jls12</input>
       <perform>prefer3</perform>
-      <perform>addFeatures2to3</perform>
+      <perform>extend-jls2</perform>
     </branch>
     <branch>
       <input>jls3</input>
@@ -188,13 +188,13 @@
     <name>doc12</name>
     <branch>
       <input>doc1</input>
-      <perform>fixErrors1doc</perform>
-      <perform>restructure1doc</perform>
-      <perform>addFeatures1to2doc</perform>
+      <perform>correct-doc1</perform>
+      <perform>edit-doc1</perform>
+      <perform>extend-doc1</perform>
     </branch>
     <branch>
       <input>doc2</input>
-      <perform>fixErrors2doc</perform>
+      <perform>correct-doc2</perform>
     </branch>
   </target>
 
@@ -202,12 +202,12 @@
     <name>doc123</name>
     <branch>
       <input>doc12</input>
-      <perform>enhanceModifiers</perform>
-      <perform>addFeatures2to3doc</perform>
+      <perform>extendModifiers</perform>
+      <perform>extend-doc12</perform>
     </branch>
     <branch>
       <input>doc3</input>
-      <perform>fixErrors3doc</perform>
+      <perform>correct-doc3</perform>
     </branch>
   </target>
 

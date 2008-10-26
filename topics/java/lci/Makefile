@@ -8,7 +8,6 @@ diff:
 
 test:
 	python ../../convergence/lci/lci.py java.lcf architecture
-	@rm -f architecture*.dot
 
 check:
 	${validator} lcf java.lcf

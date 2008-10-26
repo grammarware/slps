@@ -141,6 +141,12 @@ def expanduni(where,rep):
 def quote(a):
  return '"'+a+'"'
 
+def stripSelector(lbl):
+ l = lbl[:]
+ if l.find('-')>0:
+  l = l.split('-')[0]
+ return l
+
 def addarc(fromnode,tonode,q,labelnode):
  if [fromnode,tonode,q,labelnode] not in graph_big:
   graph_big.append([fromnode,tonode,q,labelnode])
@@ -155,10 +161,10 @@ def makegraph():
     name  = src[0]
     qname = src[0]
     for i in range(1,len(src)-1):
-     qname += '_'+src[i]
-     addarc(name,qname,name,src[i])
+     qname += '_'+stripSelector(src[i])
+     addarc(name,qname,name,stripSelector(src[i]))
      name = qname
-    addarc(name,x,qname,src[-1])
+    addarc(name,x,qname,stripSelector(src[-1]))
  # make a simplified one
  for x in targets.keys():
   for src in targets[x][0]:
@@ -166,7 +172,13 @@ def makegraph():
 
 def dumpgraph(df):
  dot = open(df+'_large.dot','w')
- dot.write('digraph generated{ {rank=same; node [shape=ellipse, style=bold]; edge[style=invis,weight=10];\n')
+ dot.write('''digraph generated{
+ edge [fontsize=24];
+ node [fontsize=24];
+ {rank=same;
+ node [shape=ellipse, style=bold];
+ edge[style=invis,weight=10];
+ ''')
  for x in orderedsrc:
   dot.write(quote(x))
   if x in failednode:
@@ -318,23 +330,23 @@ def preparebgf(cut):
   ontheroll = True
   for a in cut[1:]:
    if ontheroll:
-    run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+a+'.bgf'
+    run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector(a)+'.bgf'
     logwrite(run)
     if os.system(run+shutup):
      problem = True
      print '[FAIL]',
      failedarc.append([curname,a])
      failednode.append(cut[0]+"'"*(curname.count('.')+1))
-     failedaction.append(postfix2prefix(curname+'.'+a))
+     failedaction.append(postfix2prefix(curname+'.'+stripSelector(a)))
      ontheroll = False
     else:
      print '[PASS]',
-    print 'Applied',a+'.xbgf','to',curname+'.bgf'
+    print 'Applied',a+'.xbgf','to',stripSelector(curname)+'.bgf'
    else:
     failedarc.append([curname,a])
     failednode.append(cut[0]+"'"*(curname.count('.')+1))
-    failedaction.append(postfix2prefix(curname+'.'+a))
-   curname += '.'+a
+    failedaction.append(postfix2prefix(curname+'.'+stripSelector(a)))
+   curname += '.'+stripSelector(a)
  name = postfix2prefix('.'.join(cut))
  if name in failedaction:
   print '[FAIL]',
