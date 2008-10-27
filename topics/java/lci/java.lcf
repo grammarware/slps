@@ -108,7 +108,7 @@
       <perform>correct-app2</perform>
       <perform>prepare2</perform>
       <perform>refactorOps</perform>
-      <perform>allowMultipleLabels</perform>
+      <perform>generalizeLabels</perform>
       <perform>allowMethodBodyEmpty</perform>
     </branch>
     <branch>
@@ -118,8 +118,8 @@
       <perform>generalizeNames</perform>
       <perform>deyaccify-doc2</perform>
       <perform>refactorTypes-doc2</perform>
-      <perform>unlayerExpressions</perform>
-      <perform>inlineStatements2doc</perform>
+      <perform>refactorExpressions-doc2</perform>
+      <perform>inlineStatements</perform>
       <perform>editExpressions-doc2</perform>
       <perform>refactorClasses-doc2</perform>
       <perform>refactorInterfaces-doc2</perform>
@@ -135,7 +135,7 @@
       <input>app3</input>
       <perform>correct-app3</perform>
       <perform>prepare3</perform>
-      <perform>allowMultipleLabels</perform>
+      <perform>generalizeLabels</perform>
       <perform>allowMethodBodyEmpty</perform>
     </branch>
     <branch>
@@ -145,8 +145,8 @@
       <perform>generalizeNames</perform>
       <perform>deyaccify-doc2</perform>
       <perform>refactorTypes-doc3</perform>
-      <perform>unlayerExpressions3</perform>
-      <perform>inlineStatements2doc</perform>
+      <perform>refactorExpressions-doc3</perform>
+      <perform>inlineStatements</perform>
       <perform>editExpressions-doc3</perform>
       <perform>refactorClasses-doc3</perform>
       <perform>refactorInterfaces-doc3</perform>
@@ -163,7 +163,7 @@
       <perform>refactorStatements</perform>
       <perform>refactorTypes-jls1</perform>
       <perform>editDeclarations</perform>
-      <perform>unlayerExpressions</perform>
+      <perform>refactorExpressions-doc2</perform>
       <perform>editExpressions</perform>
       <perform>extend-jls1</perform>
     </branch>

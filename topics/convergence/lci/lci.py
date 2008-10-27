@@ -222,9 +222,11 @@ def dumpgraph(df):
      colour = 'blue'
     else:
      colour = 'black'
-    label = node.split('_')
-    label = label[0]+("'"*(len(label)-1))
-    dot.write(node+' [label="'+label+'" color='+colour+'];')
+    # labels not needed anymore because nodes became points
+    #label = node.split('_')
+    #label = label[0]+("'"*(len(label)-1))
+    #dot.write(node+' [label="'+label+'" color='+colour+'];')
+    dot.write(node+' [color='+colour+'];\n')
  dot.write('}')
  dot.close()
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
