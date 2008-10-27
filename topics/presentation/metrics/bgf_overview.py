@@ -34,9 +34,16 @@ if __name__ == "__main__":
  path = sys.argv[2]
  if path[-1]!='/':
   path += '/'
- print '\\begin{tabular}{l|c|c|c|c}'
- print '&\\textbf{Total}&\\textbf{Total}&\\textbf{Top}&\\textbf{Bottom}\\\\'
- print '&\\textbf{productions}&\\textbf{nonterminals}&\\textbf{nonterminals}&\\textbf{nonterminals}\\\\\\hline\\hline'
+ #print '\\begin{tabular}{l|c|c|c|c}'
+ #print '&\\textbf{Total}&\\textbf{Total}&\\textbf{Top}&\\textbf{Bottom}\\\\'
+ #print '&\\textbf{productions}&\\textbf{nonterminals}&\\textbf{nonterminals}&\\textbf{nonterminals}\\\\\\hline\\hline'
+ print '''\\begin{tabular}{l|c|c|c|c}
+&\\numberOfProductions
+&\\numberOfNonterminals
+&\\numberOfTops
+&\\numberOfBottoms
+\\\\\\hline\\hline
+'''
  for x in names:
   print '\\emph{'+x+'}&'+runxpath(path+x+'.bgf',productions)+'&'+runxpath(path+x+'.bgf',nonterminals)+'&'+runxpath(path+x+'.bgf',top)+'&'+runxpath(path+x+'.bgf',bottom)+'\\\\\\hline'
  print '\\end{tabular}'

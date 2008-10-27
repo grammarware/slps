@@ -81,6 +81,7 @@ if __name__ == "__main__":
    if results[x][y]:
     used = True
   if not used:
+   print '%%',x,'not used in any XBGF script'
    names.remove(x)
  sorted = targets.keys()[:]
  sorted.sort()
@@ -88,15 +89,8 @@ if __name__ == "__main__":
  for x in sorted:
   print '&\\textbf{'+x+'}',
  print '&\\textbf{Total}\\\\\\hline'
- report(sorted,'LOC','\\numberOfLines')
- print '\\numberOfSteps',
- cx = 0
- for x in sorted:
-  cx += len(targets[x])
-  print '&',len(targets[x]),
- print '&'+`cx`+'\\\\'
- report(sorted,'NOI','\\numberOfIssues')
- report(sorted,'NOX','\\numberOfTransformations')
+ for x in names:
+  report(sorted,x,'\\xbgfNumber{'+x+'}')
  print '\\hline'
  print '\\end{tabular}'
  sys.exit(0)
