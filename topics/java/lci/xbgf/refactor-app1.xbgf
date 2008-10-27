@@ -2,12 +2,8 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- in the extracted version root is undefined -->
-  <xbgf:reroot>
-    <root>CompilationUnit</root>
-  </xbgf:reroot>
-  
-  <!-- getting the choices right -->
+   <!-- ISSUE REFACTOR COMPAS
+   getting the choices right -->
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
@@ -18,7 +14,7 @@
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: Name.
       - [], ;([n(SimpleName), n(QualifiedName)])
      vs.
@@ -28,6 +24,4 @@
   <xbgf:inline>QualifiedName</xbgf:inline>
   <xbgf:deyaccify>Name</xbgf:deyaccify>
 
-  <!-- not used in other versions -->
-  <xbgf:eliminate>Goal</xbgf:eliminate>
 </xbgf:sequence>

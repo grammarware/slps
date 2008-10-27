@@ -2,12 +2,46 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- in the extracted version root is undefined -->
+  <!-- ISSUE CORRECT 
+  in the extracted version root is undefined -->
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
 
-  <!-- let's complete some of the statements with a trailing semicolon-->
+  <!-- ISSUE CORRECT SPECERROR
+  They forgot to define a nonterminal with "intuitive" name - we predicted it in ISO N3977! -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ForInitOpt</nonterminal>
+      <bgf:expression>
+        <optional>
+          <bgf:expression>
+            <nonterminal>ForInit</nonterminal>
+          </bgf:expression>
+        </optional>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:inline>ForInitOpt</xbgf:inline>
+
+  <!-- ISSUE CORRECT SPECERROR
+  They forgot to define a nonterminal with "intuitive" name - we predicted it in ISO N3977! -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ForUpdateOpt</nonterminal>
+      <bgf:expression>
+        <optional>
+          <bgf:expression>
+            <nonterminal>ForUpdate</nonterminal>
+          </bgf:expression>
+        </optional>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:inline>ForUpdateOpt</xbgf:inline>
+
+  <!-- ISSUE CORRECT SPECERROR
+  let's complete some of the statements with a trailing semicolon-->
   <xbgf:vertical>
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
@@ -56,7 +90,9 @@
   <xbgf:strip>
     <label>ContinueStatement</label>
   </xbgf:strip>
-  <!-- let's complete some of the statements with a trailing semicolon-->
+  
+  <!-- ISSUE CORRECT SPECERROR
+  Same for BreakStatement -->
   <xbgf:designate>
     <bgf:production>
       <label>BreakStatement</label>
@@ -105,7 +141,7 @@
   </xbgf:strip>
   <xbgf:horizontal>Statement</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE CORRECT SPECERROR
   Expression is referenced as Expr:
   
   Expression3 is defined as:
@@ -122,7 +158,7 @@
     </bgf:expression>
   </xbgf:replace>
   
- <!--
+ <!-- ISSUE CORRECT INCOMPATIBILITY
    - Fail: VoidInterfaceMethodDeclaratorRest.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
      vs.
@@ -161,7 +197,8 @@
     </bgf:production>
   </xbgf:inject>
   
-  <!-- undefined non-terminals -->
+  <!-- ISSUE CORRECT SPECERROR
+  undefined non-terminals -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ExpressionStatement</nonterminal>
@@ -178,8 +215,14 @@
     </bgf:production>
   </xbgf:define>
 
-  <!-- unused non-terminals -->
+  <!-- ISSUE CORRECT SPECERROR
+  unused non-terminals -->
   <xbgf:eliminate>ArgumentsOpt</xbgf:eliminate>
   <xbgf:eliminate>VoidMethodDeclaratorRest</xbgf:eliminate>
   <xbgf:eliminate>VariableDeclaratorsRest</xbgf:eliminate>
+
+  <!-- ISSUE CORRECT SPECERROR
+  undefine lexical term -->
+  <xbgf:undefine>Identifier</xbgf:undefine>
+
 </xbgf:sequence>

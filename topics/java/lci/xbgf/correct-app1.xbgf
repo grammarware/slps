@@ -2,20 +2,14 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- In all other places BlockStatements is optional (also in the syntax appendix) -->
-  <xbgf:widen>
-    <bgf:expression>
-      <nonterminal>BlockStatements</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <nonterminal>BlockStatements</nonterminal>
-        </bgf:expression>
-      </optional>
-    </bgf:expression>
-    <in>
-      <nonterminal>SwitchBlockStatementGroup</nonterminal>
-    </in>
-  </xbgf:widen>
+  <!-- ISSUE CORRECT
+  in the extracted version root is undefined -->
+  <xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
+
+  <!-- ISSUE CORRECT
+  not used in other versions -->
+  <xbgf:eliminate>Goal</xbgf:eliminate>
+
 </xbgf:sequence>

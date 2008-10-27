@@ -268,10 +268,6 @@
       - [], ,([t({), ?(n(BlockStatements)), t(})])
      vs.
       - [], ,([t({), n(BlockStatements), t(})])
-   - Fail: SwitchBlockStatementGroup.
-      - [], ,([n(SwitchLabels), ?(n(BlockStatements))])
-     vs.
-      - [], ,([n(SwitchLabel), n(BlockStatements)])
    ...
   -->
   <xbgf:deyaccify>BlockStatements</xbgf:deyaccify>

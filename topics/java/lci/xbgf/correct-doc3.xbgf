@@ -2,12 +2,13 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- in the extracted version root is undefined -->
+  <!-- ISSUE CORRECT 
+  in the extracted version root is undefined -->
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
 
-  <!--
+  <!-- ISSUE CORRECT SPECERROR
    Typo in JLS3 (propagated from earlier versions):
      - Fail: ConstantModifiers.
       - [], ;([n(ConstantModifier), ,([n(ConstantModifier), n(ConstantModifiers)])])
@@ -19,7 +20,7 @@
     <to>ConstantModifiers</to>
   </xbgf:unite>
 
-  <!--
+  <!-- ISSUE CORRECT SPECERROR
   The definition of TypeParameters was manually parsed from the following:
       <blockquote><pre>
 <em>TypeParameters ::= &lt; TypeParameterList &gt;
@@ -73,7 +74,7 @@
     </bgf:production>
   </xbgf:define>
 
-  <!--
+  <!-- ISSUE CORRECT SPECERROR
   Unopened tag:
   <em>InterfaceDeclaration:
         NormalInterfaceDeclaration
@@ -97,7 +98,7 @@
     </bgf:production>
   </xbgf:define>
 
-  <!--
+  <!--ISSUE CORRECT SPECERROR
    - Fail: ConstructorDeclarator.
       - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
      vs.
@@ -110,7 +111,7 @@
     <to>Identifier</to>
   </xbgf:unite>
 
-  <!--
+  <!-- ISSUE CORRECT EXTRACTERROR
   Bad layout makes the extractor to force line continuation:
    - Fail: NormalInterfaceDeclaration.
       - [], ,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
@@ -151,7 +152,8 @@
     </bgf:production>
   </xbgf:define>
 
-  <!-- Left forgotten and undefined -->
+  <!-- ISSUE CORRECT SPECERROR
+  Left forgotten and undefined -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ClassName</nonterminal>
@@ -178,7 +180,8 @@
     </bgf:production>
   </xbgf:define>
 
-  <!-- "Expression1" and "Expression2" define different "Expression"s in AssertStatement actually -->
+  <!-- ISSUE CORRECT SPECERROR
+  "Expression1" and "Expression2" define different "Expression"s in AssertStatement actually -->
   <xbgf:unite>
     <add>Expression1</add>
     <to>Expression</to>
@@ -188,7 +191,7 @@
     <to>Expression</to>
   </xbgf:unite>
 
-  <!--
+  <!-- ISSUE CORRECT SPECERROR
   The productions were "repeated for convenience", but repeated incorrectly, which led to this ugly thing:
   
   p([], 'CastExpression',
@@ -319,7 +322,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!--
+  <!-- ISSUE CORRECT SPECERROR
   A mess due to duplicate definitions:
   
    - Fail: TypeName.
@@ -353,24 +356,7 @@
   </xbgf:remove>
   <xbgf:horizontal>TypeName</xbgf:horizontal>
 
-  <!-- In all other places BlockStatements is optional (also in the syntax appendix) -->
-  <xbgf:widen>
-    <bgf:expression>
-      <nonterminal>BlockStatements</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <nonterminal>BlockStatements</nonterminal>
-        </bgf:expression>
-      </optional>
-    </bgf:expression>
-    <in>
-      <nonterminal>SwitchBlockStatementGroup</nonterminal>
-    </in>
-  </xbgf:widen>
-  
-  <!--
+  <!-- ISSUE CORRECT EXTRACTERROR
   Extractor error:
    - Fail: ElementValueArrayInitializer.
       - [], ,([t({), ?(n(ElementValues)), ?(t((,))), t(})])
@@ -408,7 +394,8 @@
     </bgf:production>
   </xbgf:define>
   
-  <!-- extractor's problem -->
+  <!-- ISSUE CORRECT EXTRACTERROR
+  extractor's problem -->
   <xbgf:replace>
     <bgf:expression>
       <terminal>ClassName</terminal>

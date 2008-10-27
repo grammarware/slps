@@ -2,12 +2,13 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- in the extracted version root is undefined -->
+  <!-- ISSUE CORRECT 
+  in the extracted version root is undefined -->
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
 
-  <!--
+  <!-- ISSUE CORRECT SPECERROR
   There's no such thing as TypeName
   
 Annotation:
@@ -18,7 +19,7 @@ Annotation:
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
   
-  <!--
+  <!-- ISSUE CORRECT EXTRACTERROR
   The extractor can't tell if {} are terminals or BNF
   
    - Fail: Block.
@@ -46,7 +47,7 @@ Annotation:
     </bgf:production>
   </xbgf:define>
 
-  <!--
+  <!-- ISSUE CORRECT EXTRACTERROR
    - Fail: AnnotationTypeBody.
       - [], *(?(n(AnnotationTypeElementDeclarations)))
      vs.
@@ -76,7 +77,8 @@ Annotation:
     </bgf:production>
   </xbgf:define>
 
-  <!-- Real error in JLS3:
+  <!-- ISSUE CORRECT SPECERROR
+  Real error in JLS3:
    - Fail: Expression2Rest.
       - [], ;([,([t(instanceof), n(Type)]), *(,([n(InfixOp), n(Expression3)]))])
      vs.

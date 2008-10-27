@@ -1,0 +1,115 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- ISSUE REFACTOR COMPAS
+  getting the choices right -->
+  <xbgf:vertical>
+    <nonterminal>Primary</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>IdentifierSuffix</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>Expression3</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>InterfaceMemberDecl</nonterminal>
+  </xbgf:vertical>
+
+  <!-- ISSUE REFACTOR EBNF
+   - Fail: Annotations.
+      - [], ,([n(Annotation), ?(n(Annotations))])
+     vs.
+      - [], ;([n(Annotation), ,([n(Annotations), n(Annotation)])])
+      
+  Later this should become just deyaccify
+  -->
+  <xbgf:deyaccify>Annotations</xbgf:deyaccify>
+
+  <!-- ISSUE REFACTOR EBNF
+   - Fail: Catches.
+      - [], ,([n(CatchClause), *(n(CatchClause))])
+     vs.
+      - [], +n(CatchClause)
+  -->
+  <xbgf:massage>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>CatchClause</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>CatchClause</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <plus>
+        <bgf:expression>
+          <nonterminal>CatchClause</nonterminal>
+        </bgf:expression>
+      </plus>
+    </bgf:expression>
+  </xbgf:massage>
+
+  <!--  ISSUE REFACTOR FOLDING
+  This stuff was used in JLS1 and JLS2 -->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>BracketsOpt</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <terminal>[</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>]</terminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+
+  <!--  ISSUE REFACTOR FOLDING BRUTAL
+  ','([n('Primary'), *(n('Selector')), *(n('PostfixOp'))])
+  vs 
+  ;([n('Primary'), n('QualifiedIdentifier'), ','([n('PostfixExpression'), n('PostfixOp')])])
+  -->
+  <xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>Primary</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>Selector</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>Primary</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>QualifiedIdentifier</nonterminal>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+  </xbgf:replace>
+  <xbgf:eliminate>Selector</xbgf:eliminate>
+
+</xbgf:sequence>

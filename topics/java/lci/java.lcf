@@ -91,7 +91,7 @@
     <branch>
       <input>app1</input>
       <perform>correct-app1</perform>
-      <perform>prepare1</perform>
+      <perform>refactor-app1</perform>
     </branch>
     <branch>
       <input>doc1</input>
@@ -106,10 +106,9 @@
     <branch>
       <input>app2</input>
       <perform>correct-app2</perform>
-      <perform>prepare2</perform>
-      <perform>refactorOps</perform>
+      <perform>refactor-app2</perform>
       <perform>generalizeLabels</perform>
-      <perform>allowMethodBodyEmpty</perform>
+      <perform>generalizeBlock</perform>
     </branch>
     <branch>
       <input>doc2</input>
@@ -120,6 +119,7 @@
       <perform>refactorTypes-doc2</perform>
       <perform>refactorExpressions-doc2</perform>
       <perform>inlineStatements</perform>
+      <perform>generalizeStatements</perform>
       <perform>editExpressions-doc2</perform>
       <perform>refactorClasses-doc2</perform>
       <perform>refactorInterfaces-doc2</perform>
@@ -134,9 +134,10 @@
     <branch>
       <input>app3</input>
       <perform>correct-app3</perform>
-      <perform>prepare3</perform>
+      <perform>refactor-app3</perform>
       <perform>generalizeLabels</perform>
-      <perform>allowMethodBodyEmpty</perform>
+      <perform>generalizeBlock</perform>
+      <perform>generalize-app3</perform>
     </branch>
     <branch>
       <input>doc3</input>
@@ -161,6 +162,7 @@
     <branch>
       <input>jls1</input>
       <perform>refactorStatements</perform>
+      <perform>generalizeStatements</perform>
       <perform>refactorTypes-jls1</perform>
       <perform>editDeclarations</perform>
       <perform>refactorExpressions-doc2</perform>
@@ -176,7 +178,8 @@
     <name>jls123</name>
     <branch>
       <input>jls12</input>
-      <perform>prefer3</perform>
+      <perform>rename-jls2</perform>
+      <perform>inline-jls2</perform>
       <perform>extend-jls2</perform>
     </branch>
     <branch>

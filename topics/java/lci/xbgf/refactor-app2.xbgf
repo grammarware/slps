@@ -2,14 +2,56 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- getting rid of explicit suffixes -->
+  <!-- ISSUE REFACTOR FOLDING
+  This nonterminal is used more consistently in the collected part -->
+  <xbgf:fold>
+    <nonterminal>QualifiedIdentifier</nonterminal>
+  </xbgf:fold>
+
+
+  <!-- ISSUE REFACTOR EBNF
+   - Fail: Catches.
+      - [], ,([n(CatchClause), *(n(CatchClause))])
+     vs.
+      - [], +n(CatchClause)
+  -->
+  <xbgf:massage>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>CatchClause</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>CatchClause</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <plus>
+        <bgf:expression>
+          <nonterminal>CatchClause</nonterminal>
+        </bgf:expression>
+      </plus>
+    </bgf:expression>
+    <in>
+      <nonterminal>Catches</nonterminal>
+    </in>
+  </xbgf:massage>
+
+  <!-- ISSUE REFACTOR FOLDING
+       getting rid of explicit suffixes -->
   <xbgf:inline>PrefixOp</xbgf:inline>
   <xbgf:inline>PostfixOp</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>Expression3</nonterminal>
   </xbgf:distribute>
   
-  <!-- pushing optionals outside -->
+  <!-- ISSUE REFACTOR EBNF
+  pushing optionals outside -->
   <xbgf:inline>Expression1Rest</xbgf:inline>
   <xbgf:extract>
     <bgf:production>
@@ -53,7 +95,8 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- fake horizontal -->
+  <!-- ISSUE REFACTOR EBNF
+  fake horizontal -->
   <xbgf:inline>MemberDecl</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>

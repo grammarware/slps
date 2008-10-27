@@ -1,12 +1,8 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:rename>
-    <nonterminal>
-      <from>Infixop</from>
-      <to>InfixOp</to>
-    </nonterminal>
-  </xbgf:rename>
+  
+  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:inline>ModifiersOpt</xbgf:inline>
   <xbgf:inline>BracketsOpt</xbgf:inline>
 </xbgf:sequence>

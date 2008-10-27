@@ -2,10 +2,8 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- not used anymore? -->
-  <xbgf:undefine>Block</xbgf:undefine>
-
-  <!-- new feature: annotations! -->
+  <!--  ISSUE EXTEND
+  new feature: annotations! -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>Modifier</nonterminal>
@@ -15,7 +13,8 @@
     </bgf:production>
   </xbgf:add>
 
-  <!-- new feature: enumerations! -->
+  <!-- ISSUE EXTEND
+  new feature: enumerations! -->
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>EnumDeclaration</nonterminal>
@@ -83,7 +82,8 @@
     </bgf:production>
   </xbgf:add>
 
-  <!-- annotated declarations -->
+  <!-- ISSUE EXTEND
+  annotated declarations -->
   <xbgf:vertical>
     <nonterminal>ForInit</nonterminal>
   </xbgf:vertical>

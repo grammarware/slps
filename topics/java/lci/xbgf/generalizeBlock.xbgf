@@ -2,7 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!--
+  <!-- ISSUE CORRECT INCOMPATIBILITY
   - Fail: MethodBody.
       - [], ;([n(Block), t((;))])
      vs.
@@ -17,5 +17,5 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>MethodBody</xbgf:horizontal>
-  
+
 </xbgf:sequence>
