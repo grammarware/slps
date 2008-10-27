@@ -89,6 +89,7 @@ if __name__ == "__main__":
   print '&\\textbf{'+x+'}',
  print '&\\textbf{Total}\\\\\\hline'
  report(sorted,'LOC','\\numberOfLines')
+ report(sorted,'NOX','\\numberOfTransformations')
  print '\\numberOfSteps',
  cx = 0
  for x in sorted:
@@ -96,7 +97,6 @@ if __name__ == "__main__":
   print '&',len(targets[x]),
  print '&'+`cx`+'\\\\'
  report(sorted,'NOI','\\numberOfIssues')
- report(sorted,'NOX','\\numberOfTransformations')
  print '\\hline'
  print '\\end{tabular}'
  sys.exit(0)
