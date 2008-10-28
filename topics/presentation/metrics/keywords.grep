@@ -1,9 +1,11 @@
 Non-well-formedness issues:Not well-formed
 Markup problems:Style tag
 Unusual line continuations:continuation
-Duplicate definitions:Duplicate
-Names merging/splitting:Multiple
-Bracketing fixes:Structural
-Terminal to nonterminal:Terminal to nonterminal
+Matched up parentheses:Structural
+Metasymbol to terminal:Metasymbol to terminal
+Sibling symbols:Sibling
+Decomposed symbols:Decompose
 Nonterminal to terminal:Nonterminal to terminal
-Nonterminal to optional nonterminal:opt replaced by BNF optional
+Terminal to nonterminal:Terminal to nonterminal
+Recovered optionality:opt replaced by BNF optional
+Duplicate definitions:Duplicate

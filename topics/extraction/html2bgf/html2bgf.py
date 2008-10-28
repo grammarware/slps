@@ -23,7 +23,7 @@ def mapsymbol(symb):
   return '<bgf:expression><terminal>'+symb[1:-1]+'</terminal></bgf:expression>'
  elif symb=='|':
   # if there is a bar here, it's not a BNF bar!
-  print 'Nonterminal to terminal heuristic fix:',symb,'(atypical choice)'
+  print 'Metasymbol to terminal heuristic fix:',symb,'(atypical choice)'
   pessimistic[2] += 1
   return '<bgf:expression><terminal>'+symb+'</terminal></bgf:expression>'
  else:
@@ -177,7 +177,8 @@ def addProduction(name,choices,oneof):
   print 'Duplicate definition of',name,'found, will be merged.'
   pessimistic[2] += 1
   for c in bs:
-   addifnew(c,name)
+   # addifnew(c,name)
+   prods[name].append(c)
  else:
   prods[name]=bs
 
@@ -468,7 +469,7 @@ def breakWords(nt,s):
    res.append(letter)
   f=letter.isalpha()
  if len(res)>1:
-  print 'Multiple terminals heuristic fix:',s,'in',nt,'(1 to',`len(res)`+')'
+  print 'Decompose symbols heuristic fix:',s,'in',nt,'(1 to',`len(res)`+')'
   pessimistic[2] += 1
  return res
 
@@ -508,7 +509,7 @@ def preprocessCorrect():
      bs = newbs
      continue
     if bs[i]=='|' and len(bs)==1:
-     print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(atomic bar)'
+     print 'Metasymbol to terminal heuristic fix:',bs[i],'in',nt,'(atomic bar)'
      pessimistic[2] += 1
      bs[i]='"|"'
      i+=1
@@ -538,7 +539,7 @@ def preprocessCorrect():
      else:
       quote = False
       word = bs[i]
-     print 'Multiple terminals heuristic fix:',bs[i],'in',nt,
+     print 'Decompose symbols heuristic fix:',bs[i],'in',nt,
      if word[0]=='.' or word[-1]=='.':
       print '(1 to 2)'
      else:
@@ -601,7 +602,7 @@ def preprocessCorrect():
       bs[i] = '"'+bs[i]+'"'
       continue
     elif bs[i] not in ('[',']','{','}','|','(',')'):
-     print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(weird name)'
+     print 'Unclassified heuristic fix:',bs[i],'in',nt,'(weird name)'
      pessimistic[2] += 1
      bs[i] = '"'+bs[i]+'"'
      i+=1
@@ -610,7 +611,7 @@ def preprocessCorrect():
      # bracketing problem
      bs[i-1]='"["'
      bs[i]='"]"'
-     print 'Structural heuristic fix in',nt,'(empty optional group)'
+     print 'Metasymbol to terminal heuristic fix in',nt,'(empty optional group)'
      pessimistic[2] += 1
      i+=1
      continue
@@ -618,7 +619,7 @@ def preprocessCorrect():
      # bracketing problem
      bs[i-1]='"{"'
      bs[i]='"}"'
-     print 'Structural heuristic fix in',nt,'(empty starred group)'
+     print 'Metasymbol to terminal heuristic fix in',nt,'(empty starred group)'
      pessimistic[2] += 1
      i+=1
      continue
@@ -634,7 +635,7 @@ def preprocessCorrect():
      if '|' not in bs[left:i]:
       bs[left]='"("'
       bs[i]='")"'
-      print 'Structural heuristic fix in',nt,'(useless group)'
+      print 'Metasymbol to terminal heuristic fix in',nt,'(useless group)'
       pessimistic[2] += 1
       i+=1
       continue
@@ -659,13 +660,13 @@ def glueSymbols():
       test = bs[i][1]+bs[i+1]
      if test.isalnum():
       if test in prods.keys():
-       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = test
        bs[i+1]=''
        print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
        pessimistic[2] += 2
       elif not (bs[i+1][0].isupper() or bs[i+1] in prods.keys()):
-       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = '"'+test+'"'
        bs[i+1]=''
        pessimistic[2] += 1
@@ -678,13 +679,13 @@ def glueSymbols():
       test = bs[i][0]+bs[i+1]
      if test.isalnum():
       if test in prods.keys():
-       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = test
        bs[i+1]=''
        print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
        pessimistic[2] += 2
       elif not (bs[i+1][0].isupper() or bs[i+1] in prods.keys()):
-       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        pessimistic[2] += 1
        bs[i] = '"'+test+'"'
        bs[i+1]=''
@@ -700,13 +701,13 @@ def glueSymbols():
       test = bs[i-1]+bs[i][1]
      if test.isalnum():
       if test in prods.keys():
-       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = test
        bs[i-1]=''
        print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
        pessimistic[2] += 2
       elif bs[i-1] not in prods.keys():
-       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        pessimistic[2] += 1
        bs[i]='"'+test+'"'
        bs[i-1]=''
@@ -719,13 +720,13 @@ def glueSymbols():
       test = bs[i-1]+bs[i][0]
      if test.isalnum():
       if test in prods.keys():
-       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = test
        bs[i-1]=''
        print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
        pessimistic[2] += 2
       elif bs[i-1] not in prods.keys():
-       print 'Multiple terminals heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        pessimistic[2] += 1
        bs[i]='"'+test+'"'
        bs[i-1]=''
