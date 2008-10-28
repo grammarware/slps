@@ -55,5 +55,15 @@ vs
   
   <!--ISSUE REFACTOR EBNF-->
   <xbgf:deyaccify>QualifiedIdentifier</xbgf:deyaccify>
-  
+
+  <!-- ISSUE REFACTOR
+  use another name -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>QualifiedIdentifier</from>
+      <to>Name</to>
+    </nonterminal>
+  </xbgf:rename>
+
+
 </xbgf:sequence>

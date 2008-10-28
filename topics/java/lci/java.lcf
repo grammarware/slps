@@ -96,8 +96,9 @@
     <branch>
       <input>doc1</input>
       <perform>correct-doc1</perform>
+      <perform>generalizeModifiers-doc1</perform>
       <perform>generalizeNames-doc1</perform>
-      <perform>preferLALR</perform>
+      <perform>refactor-doc1</perform>
     </branch>
   </target>
 

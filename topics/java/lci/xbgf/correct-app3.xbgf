@@ -110,4 +110,21 @@ Annotation:
     </bgf:expression>
   </xbgf:replace>
   
+  <!-- ISSUE CORRECT SPECERROR 
+  lacking definition copied from JLS2 -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ForUpdate</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>StatementExpression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>MoreStatementExpressions</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
 </xbgf:sequence>
