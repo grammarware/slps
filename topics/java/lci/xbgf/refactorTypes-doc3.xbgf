@@ -73,7 +73,8 @@
      ClassOrInterfaceType "." Identifier
   -->
 
-  <!-- First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
+  <!-- ISSUE REFACTOR FOLDING
+  First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
   <xbgf:inline>IntegralType</xbgf:inline>
   <xbgf:inline>FloatingPointType</xbgf:inline>
   <xbgf:inline>NumericType</xbgf:inline>
@@ -86,7 +87,8 @@
       <to>BasicType</to>
     </nonterminal>
   </xbgf:rename>
-  <!-- Merging interfaces with classes and making lists and other things conform -->
+  <!-- ISSUE REFACTOR
+  Merging interfaces with classes and making lists and other things conform -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>InterfaceType</nonterminal>
@@ -135,7 +137,8 @@
     </nonterminal>
   </xbgf:rename>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
-  <!-- Introducing brackets brutally, too hard to derive -->
+  <!-- ISSUE REFACTOR BRUTAL
+  Introducing brackets brutally, too hard to derive -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ClassOrInterfaceType</nonterminal>
@@ -172,12 +175,13 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <!-- Finishing touches -->
+  <!-- ISSUE REFACTOR FOLDING
+  Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
   <xbgf:inline>ReferenceType</xbgf:inline>
   
-  <!--
+  <!-- ISSUE REFACTOR EBNF
   p([], 'TypeDeclSpecifier',
   ;([n('QualifiedIdentifier'),
     ','([n('TypeDeclSpecifier'), ?(n('TypeArguments')), n('BracketsOpt'), t('.'), n('Identifier')])])),
@@ -189,7 +193,8 @@
   -->
   <xbgf:deyaccify>TypeDeclSpecifier</xbgf:deyaccify>
   
-  <!-- QUICK FIX - this file needs to be rewritten anyhow -->
+  <!-- ISSUE REFACTOR BRUTAL
+  QUICK FIX - this file needs to be rewritten anyhow -->
   <xbgf:replace>
     <bgf:expression>
       <sequence>
@@ -216,7 +221,7 @@
     </in>
   </xbgf:replace>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: Type.
       - [], n(BasicType)
       - [], ,([n(Identifier), ?(n(TypeArguments)), *(,([t(.), n(Identifier), ?(n(TypeArguments))])), n(BracketsOpt)])

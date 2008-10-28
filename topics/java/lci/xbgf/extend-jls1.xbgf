@@ -2,7 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!--
+  <!-- ISSUE EXTEND
    - Fail: Modifier.
      vs.
       - [], t(strictfp)
@@ -17,7 +17,7 @@
   </xbgf:add>
   <xbgf:horizontal>Modifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND 
    - Fail: SuperSuffix.
       - [], ,([t(.), n(Identifier), ?(n(Arguments))])
      vs.
@@ -33,7 +33,8 @@
   </xbgf:add>
   <xbgf:horizontal>SuperSuffix</xbgf:horizontal>
 
-  <!-- can we do this with widen? -->
+  <!-- ISSUE EXTEND GENERALIZE
+  can we do this with widen? -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>MethodBody</nonterminal>
@@ -53,7 +54,8 @@
     </in>
   </xbgf:replace>
 
-  <!-- more features in Primary -->
+  <!-- ISSUE EXTEND 
+  more features in Primary -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>IdentifierSuffix</nonterminal>
@@ -138,6 +140,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
+  
+  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:horizontal>IdentifierSuffix</xbgf:horizontal>
 
 </xbgf:sequence>

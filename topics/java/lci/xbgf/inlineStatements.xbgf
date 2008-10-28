@@ -1,7 +1,8 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <!--
+  
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: Statement.
       - [], ,([n(Identifier), t(:), n(Statement)])
       - [], n(ExpressionStatement)
@@ -44,7 +45,7 @@
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
 
-  <!--
+  <!-- ISSUE CORRECT INCOMPATIBILITY
    - Fail: Statement.
       - [], ,([t(if), n(ParExpression), n(Statement), ?(,([t(else), n(Statement)]))])
      vs.
@@ -126,7 +127,7 @@
   <xbgf:eliminate>ForStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>LabeledStatementNoShortIf</xbgf:eliminate>
 
-  <!--
+  <!-- ISSUE EXTEND
   The collected grammar permits the use of SwitchLabels.
   
    - Fail: Statement.
@@ -167,7 +168,7 @@
   <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
   <xbgf:inline>SwitchStatement</xbgf:inline>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: BlockStatements.
       - [], *(n(BlockStatement))
      vs.
@@ -213,7 +214,7 @@
     </bgf:expression>
   </xbgf:massage>
   
-  <!--
+  <!-- ISSUE CORRECT BRUTAL?
   The collected grammar does not allow interface declarations and labelled statements inside blocks.
   
    - Fail: BlockStatement.
@@ -281,7 +282,7 @@
   </xbgf:strip>
   <xbgf:horizontal>BlockStatement</xbgf:horizontal>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: LocalVariableDeclarationStatement.
       - [], ,([?(t(final)), n(Type), n(VariableDeclarators), t((;))])
      vs.
@@ -289,6 +290,6 @@
   -->
   <xbgf:inline>LocalVariableDeclaration</xbgf:inline>
   
-  <!-- done! -->
+  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:horizontal>Statement</xbgf:horizontal>
 </xbgf:sequence>

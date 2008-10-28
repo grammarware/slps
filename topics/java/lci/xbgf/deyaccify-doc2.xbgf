@@ -1,7 +1,8 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <!--
+  
+  <!-- ISSUE REFACTOR EBNF
    - Fail: SwitchBlockStatementGroups.
       - [], *(n(SwitchBlockStatementGroup))
      vs.
@@ -48,7 +49,7 @@
     </bgf:expression>
   </xbgf:massage>
   
-  <!--
+  <!--  ISSUE REFACTOR EBNF
    - Fail: Catches.
       - [], ,([n(CatchClause), *(n(CatchClause))])
      vs.
@@ -56,7 +57,7 @@
   -->
   <xbgf:deyaccify>Catches</xbgf:deyaccify>
 
-  <!--
+  <!--  ISSUE REFACTOR EBNF
    - Fail: BlockStatements.
       - [], *(n(BlockStatement))
      vs.

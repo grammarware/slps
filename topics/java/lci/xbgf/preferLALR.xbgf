@@ -2,7 +2,8 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- prepare choices -->
+  <!-- ISSUE REFACTOR COMPAS
+  prepare choices -->
   <xbgf:vertical>
     <nonterminal>Type</nonterminal>
   </xbgf:vertical>
@@ -13,7 +14,8 @@
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
 
-  <!-- use another name -->
+  <!-- ISSUE REFACTOR
+  use another name -->
   <xbgf:rename>
     <nonterminal>
       <from>QualifiedIdentifier</from>
@@ -21,7 +23,7 @@
     </nonterminal>
   </xbgf:rename>
 
-  <!--
+  <!-- ISSUE REFACTOR
    - Fail: ClassOrInterfaceType.
       - [], ;([n(ClassType), n(InterfaceType)])
      vs.
@@ -68,7 +70,7 @@
     </in>
   </xbgf:fold>
 
-  <!--
+  <!-- ISSUE REFACTOR GENERALIZE
    - Fail: FieldDeclaration.
       - [], ,([?(n(FieldModifiers)), n(Type), n(VariableDeclarators), t((;))])
      vs.
@@ -158,7 +160,7 @@
     <to>Modifiers</to>
   </xbgf:unite>
 
-  <!--
+  <!-- ISSUE REFACTOR GENERALIZE
   - Fail: MethodHeader.
       - [], ,([?(n(MethodModifiers)), n(ResultType), n(MethodDeclarator), ?(n(Throws))])
      vs.
@@ -180,7 +182,7 @@
     <nonterminal>MethodHeader</nonterminal>
   </xbgf:distribute>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ArrayCreationExpression.
       - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(Name), n(DimExprs), ?(n(Dims))])])
      vs.
@@ -193,7 +195,7 @@
     </in>
   </xbgf:fold>
 
-  <!--
+  <!-- ISSUE REFACTOR BRUTAL
    - Fail: CastExpression.
       - [], ;([,([t((), n(PrimitiveType), ?(n(Dims)), t()), n(UnaryExpression)]),
                ,([t((), n(ReferenceType), t()), n(UnaryExpressionNotPlusMinus)])])
@@ -231,7 +233,7 @@
     <nonterminal>CastExpression</nonterminal>
   </xbgf:distribute>
 
-  <!--
+  <!-- ISSUE REFACTOR BRUTAL
    - Fail: ConstantDeclaration.
       - [], ,([?(n(Modifiers)), n(Type), n(VariableDeclarator)])
      vs.
@@ -266,7 +268,7 @@
     </in>
   </xbgf:replace>
 
-  <!--
+  <!-- ISSUE REFACTOR
    - Fail: ArrayType.
       - [], ,([n(Type), t([), t(])])
      vs.

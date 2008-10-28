@@ -21,6 +21,12 @@ def loc(filename):
  f.close()
  return c-1
 
+def nosi(filename,keyword):
+ f = open(filename,'r')
+ c = ''.join(f.readlines()).count(keyword)
+ f.close()
+ return c
+
 def noi(filename):
  f = open(filename,'r')
  c = ''.join(f.readlines()).count('<!--')
@@ -60,6 +66,9 @@ if __name__ == "__main__":
  results['LOC'] = {}
  results['NOI'] = {}
  results['NOX'] = {}
+ results['NI~'] = {}
+ results['NI!'] = {}
+ results['NI+'] = {}
  for x in names:
   results[x] = {}
   for y in targets.keys():
@@ -68,9 +77,15 @@ if __name__ == "__main__":
   results['LOC'][x] = 0
   results['NOI'][x] = 0
   results['NOX'][x] = 0
+  results['NI~'][x] = 0
+  results['NI+'][x] = 0
+  results['NI!'][x] = 0
   for y in targets[x]:
    results['LOC'][x] += loc(path+y+'.xbgf')
-   results['NOI'][x] += noi(path+y+'.xbgf')
+   results['NOI'][x] += nosi(path+y+'.xbgf','ISSUE')
+   results['NI~'][x] += nosi(path+y+'.xbgf','REFACTOR')
+   results['NI+'][x] += nosi(path+y+'.xbgf','EXTEND')
+   results['NI!'][x] += nosi(path+y+'.xbgf','CORRECT')
    xbgf = ET.parse(path+y+'.xbgf')
    results['NOX'][x] += len(xbgf.findall('/*'))
    for z in names:
@@ -97,6 +112,9 @@ if __name__ == "__main__":
   print '&',len(targets[x]),
  print '&'+`cx`+'\\\\'
  report(sorted,'NOI','\\numberOfIssues')
+ report(sorted,'NI!','\\issuesCorrect')
+ report(sorted,'NI+','\\issuesExtend')
+ report(sorted,'NI~','\\issuesRefactor')
  print '\\hline'
  print '\\end{tabular}'
  sys.exit(0)

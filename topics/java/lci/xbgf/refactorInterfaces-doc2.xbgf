@@ -53,9 +53,9 @@
      [ AbstractMethodModifiers ] ResultType MethodDeclarator [ Throws ] ";"
   MethodDeclarator is defined as:
      Identifier "(" [ FormalParameterList ] ")"
-  
+  -->
  
-  
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
      vs.
@@ -95,7 +95,7 @@
   </xbgf:fold>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
   
-  <!--
+  <!-- ISSUE REFACTOR EBNF
    - Fail: InterfaceBody.
       - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
      vs.
@@ -130,7 +130,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceBodyDeclaration.
       - [], ;([t((;)), ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
      vs.
@@ -165,7 +165,8 @@
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
-  <!-- Serious lack of everything -->
+  <!-- ISSUE REFACTOR FOLDING
+  Serious lack of everything -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
@@ -184,54 +185,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <!--xbgf:factor>
-    <bgf:expression>
-      <choice>
-        <bgf:expression>
-          <nonterminal>VariableDeclaratorId</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <nonterminal>VariableDeclaratorId</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <terminal>=</terminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>VariableInitializer</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </choice>
-    </bgf:expression>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <nonterminal>VariableDeclaratorId</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <choice>
-            <bgf:expression>
-              <epsilon/>
-            </bgf:expression>
-            <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <terminal>=</terminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>VariableInitializer</nonterminal>
-                </bgf:expression>
-              </sequence>
-            </bgf:expression>
-          </choice>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-  </xbgf:factor-->
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceBodyDeclaration.
       - [], ;([t((;)), ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
      vs.
@@ -241,145 +196,6 @@
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(FormalParameters), ?(,([t(throws), n(TypeList)])), t((;))])
       - [], ,([n(ModifiersOpt), n(Type), n(VariableDeclarator), *(,([t((,)), n(VariableDeclarator)]))])
   -->
-  <!--xbgf:unfold>
-    <nonterminal>VariableDeclarator</nonterminal>
-    <in>
-      <nonterminal>InterfaceBodyDeclaration</nonterminal>
-    </in>
-  </xbgf:unfold-->
-  <!--xbgf:factor>
-    <bgf:expression>
-      <choice>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <nonterminal>ModifiersOpt</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>Type</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>Identifier</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>FormalParameters</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <nonterminal>Throws</nonterminal>
-                </bgf:expression>
-              </optional>
-            </bgf:expression>
-            <bgf:expression>
-              <terminal>;</terminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <nonterminal>ModifiersOpt</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>Type</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>Identifier</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>VariableDeclaratorRest</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <star>
-                <bgf:expression>
-                  <sequence>
-                    <bgf:expression>
-                      <terminal>,</terminal>
-                    </bgf:expression>
-                    <bgf:expression>
-                      <nonterminal>Identifier</nonterminal>
-                    </bgf:expression>
-                    <bgf:expression>
-                      <nonterminal>VariableDeclaratorRest</nonterminal>
-                    </bgf:expression>
-                  </sequence>
-                </bgf:expression>
-              </star>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </choice>
-    </bgf:expression>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <nonterminal>ModifiersOpt</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>Type</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>Identifier</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <choice>
-            <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <nonterminal>FormalParameters</nonterminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <optional>
-                    <bgf:expression>
-                      <nonterminal>Throws</nonterminal>
-                    </bgf:expression>
-                  </optional>
-                </bgf:expression>
-                <bgf:expression>
-                  <terminal>;</terminal>
-                </bgf:expression>
-              </sequence>
-            </bgf:expression>
-            <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <nonterminal>VariableDeclaratorRest</nonterminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <star>
-                    <bgf:expression>
-                      <sequence>
-                        <bgf:expression>
-                          <terminal>,</terminal>
-                        </bgf:expression>
-                        <bgf:expression>
-                          <nonterminal>Identifier</nonterminal>
-                        </bgf:expression>
-                        <bgf:expression>
-                          <nonterminal>VariableDeclaratorRest</nonterminal>
-                        </bgf:expression>
-                      </sequence>
-                    </bgf:expression>
-                  </star>
-                </bgf:expression>
-              </sequence>
-            </bgf:expression>
-          </choice>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-  </xbgf:factor-->
-  <!--xbgf:extract>
-    <bgf:production>
-      <nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression></bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract-->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>VoidInterfaceMethodDeclaratorRestFull</nonterminal>
@@ -476,8 +292,10 @@
      ClassOrInterfaceDeclaration
 -->
   
+  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
   
+  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -583,7 +401,7 @@
     </in>
   </xbgf:extract>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceMethodOrFieldRest.
       - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
      vs.
@@ -597,7 +415,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
-  <!--
+  
+  <!-- ISSUE EXTEND
    - Fail: InterfaceMethodOrFieldRest.
       - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
      vs.
@@ -679,7 +498,7 @@
     </bgf:production>
   </xbgf:define>
   
-  <!-- ... -->
+  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:inline>Throws</xbgf:inline>
 
 </xbgf:sequence>

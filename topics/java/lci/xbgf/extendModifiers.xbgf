@@ -2,7 +2,8 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- defining the new nonterminals -->
+  <!-- ISSUE EXTEND
+  defining the new nonterminals -->
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>ElementValuePair</nonterminal>
@@ -205,7 +206,7 @@
   </xbgf:define>
 
 
-  <!--
+  <!-- ISSUE REFACTOR EBNF
      - Fail: ConstantModifiers.
       - [], ;([n(ConstantModifier), ,([n(ConstantModifiers), n(ConstantModifier)])])
      vs.
@@ -235,7 +236,7 @@
     </bgf:production>
   </xbgf:yaccify>
 
-  <!--
+  <!-- ISSUE EXTEND
     - Fail: FieldModifier.
       - [], ;([t(public), t(protected), t(private), t(static), t(final), t(transient), t((volatile))])
      vs.
@@ -254,7 +255,7 @@
   </xbgf:add>
   <xbgf:horizontal>FieldModifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND
      - Fail: InterfaceModifier.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(strictfp)])
      vs.
@@ -273,7 +274,7 @@
   </xbgf:add>
   <xbgf:horizontal>InterfaceModifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND
      - Fail: AbstractMethodModifier.
       - [], ;([t(public), t(abstract)])
      vs.
@@ -292,7 +293,7 @@
   </xbgf:add>
   <xbgf:horizontal>AbstractMethodModifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND
      - Fail: ConstantModifier.
       - [], ;([t(public), t(static), t(final)])
      vs.
@@ -311,7 +312,7 @@
   </xbgf:add>
   <xbgf:horizontal>ConstantModifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND
    - Fail: MethodModifier.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(synchronized), t(native), t(strictfp)])
      vs.
@@ -330,7 +331,7 @@
   </xbgf:add>
   <xbgf:horizontal>MethodModifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND
      - Fail: ClassModifier.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(strictfp)])
      vs.
@@ -349,7 +350,7 @@
   </xbgf:add>
   <xbgf:horizontal>ClassModifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND
    - Fail: LocalVariableDeclaration.
       - [], ,([?(t(final)), n(Type), n(VariableDeclarators)])
      vs.
@@ -396,7 +397,7 @@
   </xbgf:add>
   <xbgf:horizontal>VariableModifiers</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND
      - Fail: ConstructorModifier.
       - [], ;([t(public), t(protected), t(private)])
      vs.
@@ -415,7 +416,7 @@
   </xbgf:add>
   <xbgf:horizontal>ConstructorModifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND
      - Fail: VariableModifier.
       - [], ?(t(final))
      vs.

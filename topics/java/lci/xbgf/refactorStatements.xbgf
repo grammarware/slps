@@ -2,7 +2,8 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- Mismatches like this 
+  <!-- ISSUE REFACTOR FOLDING
+  Mismatches like this 
    - Fail: Statement.
       - [], ,([t(while), t((), n(Expression), t()), n(Statement)])
      vs.
@@ -27,7 +28,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE REFACTOR EBNF
    - Fail: SwitchBlockStatementGroups.
       - [], ;([n(SwitchBlockStatementGroup), ,([n(SwitchBlockStatementGroups), n(SwitchBlockStatementGroup)])])
      vs.
@@ -68,7 +69,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE EXTEND
    - Fail: Statement.
       - [], ,([t(switch), n(ParExpression), t({), n(SwitchBlockStatementGroups), ?(n(SwitchLabels)), t(})])
      vs.
@@ -100,7 +101,7 @@
     </bgf:production>
   </xbgf:project>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: Statement.
       - [], n(ForStatement)
       - [], n(WhileStatement)
@@ -132,7 +133,7 @@
     <nonterminal>Statement</nonterminal>
   </xbgf:distribute>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: Statement.
       - [], ,([t(if), n(ParExpression), n(StatementNoShortIf), t(else), n(Statement)])
       - [], ,([t(if), n(ParExpression), n(Statement)])
@@ -252,14 +253,15 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- Getting rid of all of them -->
+  <!-- ISSUE REFACTOR FOLDING
+  Getting rid of all of them -->
   <xbgf:undefine>StatementNoShortIf</xbgf:undefine>
   <xbgf:eliminate>ForStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>WhileStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>LabeledStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>IfThenElseStatementNoShortIf</xbgf:eliminate>
 
-  <!--
+  <!-- ISSUE REFACTOR EBNF
    - Fail: BlockStatements.
       - [], ;([n(BlockStatement), ,([n(BlockStatements), n(BlockStatement)])])
      vs.
@@ -305,7 +307,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING BRUTAL
    - Fail: BlockStatement.
       - [], ;([n(LocalVariableDeclarationStatement), n(Statement)])
      vs.
@@ -363,7 +365,7 @@
   </xbgf:strip>
   <xbgf:horizontal>BlockStatement</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE REFACTOR EDITING
    - Fail: ForUpdate.
       - [], n(StatementExpressionList)
      vs.
@@ -400,7 +402,7 @@
   </xbgf:extract>
   <xbgf:inline>StatementExpressionList</xbgf:inline>
 
-  <!--
+  <!-- ISSUE EXTEND
    - Fail: ForInit.
       - [], ;([,([n(StatementExpression), n(MoreStatementExpressions)]), n(LocalVariableDeclaration)])
      vs.
@@ -430,7 +432,7 @@
   </xbgf:inject>
   <xbgf:inline>LocalVariableDeclaration</xbgf:inline>
 
-  <!--
+  <!-- ISSUE REFACTOR EBNF
    - Fail: Catches.
       - [], ;([n(CatchClause), ,([n(Catches), n(CatchClause)])])
      vs.
@@ -438,7 +440,7 @@
   -->
   <xbgf:deyaccify>Catches</xbgf:deyaccify>
 
-  <!--
+  <!-- ISSUE REFACTOR EBNF
    - Fail: VariableDeclarators.
       - [], ;([n(VariableDeclarator), ,([n(VariableDeclarators), t((,)), n(VariableDeclarator)])])
      vs.
@@ -446,7 +448,7 @@
   -->
   <xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: VariableDeclaratorId.
       - [], ;([n(Identifier), ,([n(VariableDeclaratorId), t([), t(])])])
      vs.
@@ -473,7 +475,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: VariableDeclarator.
       - [], ;([n(VariableDeclaratorId), ,([n(VariableDeclaratorId), t(=), n(VariableInitializer)])])
      vs.

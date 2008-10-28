@@ -2,7 +2,10 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!--
+  <!-- ISSUE REFACTOR COMPAS -->
+  <xbgf:horizontal>Primary</xbgf:horizontal>
+
+  <!-- ISSUE REFACTOR BRUTAL?
   ConstructorBody is defined as:
      { [ ExplicitConstructorInvocation ] [ BlockStatements ] }
   -->
@@ -14,9 +17,37 @@
   <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
   <xbgf:eliminate>ArgumentList</xbgf:eliminate>
 
-  <!--
+  <!-- ISSUE EXTEND
    Some productions use a more general QualifiedIdentifierList instead of TypeList
   -->
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>QualifiedIdentifierList</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>QualifiedIdentifier</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+
+  <!-- ISSUE REFACTOR GENERALIZE -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>TypeList</nonterminal>
@@ -61,34 +92,8 @@
       <nonterminal>InterfaceMethodDeclaratorRest</nonterminal>
     </in>
   </xbgf:replace>
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>QualifiedIdentifierList</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>QualifiedIdentifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <star>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>,</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>QualifiedIdentifier</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </star>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
 
-  <!--
+  <!-- ISSUE EXTEND GENERALIZE
    - Fail: MethodDeclaratorRest.
       - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), ;([n(MethodBody), t((;))])])
      vs.
@@ -113,7 +118,7 @@
     </in>
   </xbgf:replace>
 
- <!--
+ <!-- ISSUE REFACTOR
    - Fail: ArrayInitializer.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
      vs.

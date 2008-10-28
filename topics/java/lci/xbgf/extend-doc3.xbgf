@@ -1,7 +1,8 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <!--
+
+  <!-- ISSUE EXTEND GENERALIZE
   NOT semantic-preserving in any way.
   
    - Fail: MethodBody.
@@ -20,5 +21,40 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+
+  <!-- ISSUE EXTEND
+   - Fail: Primary.
+      - [], ,([n(NonWildcardTypeArguments), ;([n(ExplicitGenericInvocationSuffix), ,([t(this), n(Arguments)])])])
+     vs.
+  -->
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>NonWildcardTypeArguments</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <choice>
+              <bgf:expression>
+                <nonterminal>ExplicitGenericInvocationSuffix</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>this</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Arguments</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </choice>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
 
 </xbgf:sequence>

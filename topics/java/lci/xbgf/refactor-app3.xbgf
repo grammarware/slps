@@ -111,5 +111,5 @@
     </bgf:expression>
   </xbgf:replace>
   <xbgf:eliminate>Selector</xbgf:eliminate>
-
+  
 </xbgf:sequence>

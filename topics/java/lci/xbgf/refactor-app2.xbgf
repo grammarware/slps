@@ -104,4 +104,10 @@
   <xbgf:distribute>
     <nonterminal>Statement</nonterminal>
   </xbgf:distribute>
+
+  <!-- ISSUE REFACTOR FOLDING -->
+  <xbgf:fold>
+    <nonterminal>ParExpression</nonterminal>
+  </xbgf:fold>
+
 </xbgf:sequence>

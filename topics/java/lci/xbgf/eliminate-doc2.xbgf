@@ -1,0 +1,10 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- ISSUE REFACTOR -->
+  <xbgf:eliminate>ArrayAccess</xbgf:eliminate>
+  <xbgf:eliminate>MethodInvocation</xbgf:eliminate>
+  <xbgf:eliminate>ClassInstanceCreationExpression</xbgf:eliminate>
+
+</xbgf:sequence>

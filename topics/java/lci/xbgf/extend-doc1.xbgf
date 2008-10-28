@@ -3,7 +3,7 @@
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
   
-  <!--
+  <!-- ISSUE EXTEND GENERALIZE
      - Fail: ConstantDeclaration.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarator)])
      vs.
@@ -21,7 +21,7 @@
     </in>
   </xbgf:replace>
 
-  <!--
+  <!-- ISSUE EXTEND 
     - Fail: FieldAccess.
       - [], ;([,([n(Primary), t(.), n(Identifier)]), ,([t(super), t(.), n(Identifier)])])
      vs.
@@ -81,7 +81,7 @@
   </xbgf:add>
   <xbgf:horizontal>FieldAccess</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE REFACTOR BRUTAL
   Resolve brutally. Is there a better way?
   
      - Fail: PrimaryNoNewArray.
@@ -171,7 +171,7 @@
   </xbgf:define>
 
 
-  <!--
+  <!-- ISSUE EXTEND GENERALIZE
      - Fail: LocalVariableDeclaration.
       - [], ,([n(Type), n(VariableDeclarators)])
      vs.
@@ -200,7 +200,7 @@
     </bgf:production>
   </xbgf:inject>
 
-  <!--
+  <!-- ISSUE EXTEND 
      - Fail: MethodModifier.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(synchronized), t(native)])
      vs.
@@ -219,7 +219,7 @@
   </xbgf:add>
   <xbgf:horizontal>MethodModifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND 
      - Fail: ClassBodyDeclaration.
       - [], ;([n(ClassMemberDeclaration), n(StaticInitializer), n(ConstructorDeclaration)])
      vs.
@@ -246,7 +246,7 @@
   </xbgf:add>
   <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND 
      - Fail: ClassMemberDeclaration.
       - [], ;([n(FieldDeclaration), n(MethodDeclaration)])
      vs.
@@ -281,7 +281,7 @@
   </xbgf:add>
   <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND 
      - Fail: InterfaceMemberDeclaration.
       - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration)])
      vs.
@@ -316,7 +316,7 @@
   </xbgf:add>
   <xbgf:horizontal>InterfaceMemberDeclaration</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND 
      - Fail: BlockStatement.
       - [], ;([n(LocalVariableDeclarationStatement), n(Statement)])
      vs.
@@ -335,7 +335,7 @@
   </xbgf:add>
   <xbgf:horizontal>BlockStatement</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND 
      - Fail: ClassModifier.
       - [], ;([t(public), t(abstract), t(final)])
      vs.
@@ -378,7 +378,7 @@
   </xbgf:add>
   <xbgf:horizontal>ClassModifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND 
      - Fail: ExplicitConstructorInvocation.
       - [], ;([,([t(this), t((), ?(n(ArgumentList)), t()), t((;))]), ,([t(super), t((), ?(n(ArgumentList)), t()), t((;))])])
      vs.
@@ -423,7 +423,7 @@
   </xbgf:add>
   <xbgf:horizontal>ExplicitConstructorInvocation</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND GENERALIZE
      - Fail: MethodInvocation.
       - [], ;([,([n(MethodName), t((), ?(n(ArgumentList)), t())]), ,([n(Primary), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())])])
      vs.
@@ -471,7 +471,7 @@
   </xbgf:add>
   <xbgf:horizontal>MethodInvocation</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND 
      - Fail: InterfaceModifier.
       - [], ;([t(public), t(abstract)])
      vs.
@@ -514,7 +514,7 @@
   </xbgf:add>
   <xbgf:horizontal>InterfaceModifier</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND 
      - Fail: ArrayCreationExpression.
       - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(TypeName), n(DimExprs), ?(n(Dims))])])
      vs.
@@ -567,7 +567,7 @@
   </xbgf:add>
   <xbgf:horizontal>ArrayCreationExpression</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE EXTEND GENERALIZE
      - Fail: FormalParameter.
       - [], ,([n(Type), n(VariableDeclaratorId)])
      vs.

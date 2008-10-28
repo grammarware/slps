@@ -2,7 +2,8 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- In all other places BlockStatements is optional (also in the syntax appendix) -->
+  <!-- ISSUE REFACTOR GENERALIZE
+  In all other places BlockStatements is optional (also in the syntax appendix) -->
   <xbgf:widen>
     <bgf:expression>
       <nonterminal>BlockStatements</nonterminal>

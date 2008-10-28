@@ -62,9 +62,9 @@
      MethodHeader MethodBody
   MethodHeader is defined as:
      [ MethodModifiers ] ResultType MethodDeclarator [ Throws ]
-  
-  
-  
+  -->
+
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: TypeDeclaration.
       - [], ;([n(ClassOrInterfaceDeclaration), t((;))])
      vs.
@@ -86,7 +86,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassOrInterfaceDeclaration.
       - [], ,([n(ModifiersOpt), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])
      vs.
@@ -117,7 +117,7 @@
     </bgf:production>
   </xbgf:inject>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassBody.
       - [], ,([t({), *(n(ClassBodyDeclaration)), t(})])
      vs.
@@ -146,7 +146,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassDeclaration.
       - [], ,([t(class), n(Identifier), ?(,([t(extends), n(Type)])), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
      vs.
@@ -188,7 +188,7 @@
   <xbgf:inline>Interfaces</xbgf:inline>
 
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassBodyDeclaration.
       - [], ;([t((;)), ,([?(t(static)), n(Block)]), ,([n(ModifiersOpt), n(MemberDecl)])])
      vs.
@@ -203,7 +203,8 @@
   <xbgf:inline>ResultType</xbgf:inline>
   <xbgf:inline>MethodHeader</xbgf:inline>
 
-  <!-- refactor alternatives to BNF optional -->
+  <!-- ISSUE REFACTOR FOLDING
+  refactor alternatives to BNF optional -->
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -260,7 +261,8 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- next step -->
+  <!-- ISSUE REFACTOR FOLDING
+  next step -->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>FormalParameters</nonterminal>
@@ -308,7 +310,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
   MethodDeclaratorRest is defined as:
      FormalParameters BracketsOpt [ "throws" QualifiedIdentifierList ] ( MethodBody | ";" )
      
@@ -391,7 +393,8 @@
   </xbgf:add>
   <xbgf:horizontal>MethodOrFieldRest</xbgf:horizontal>
 
-  <!-- modifiers -->
+  <!-- ISSUE REFACTOR FOLDING
+  modifiers -->
   <xbgf:vertical>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:vertical>
@@ -424,7 +427,8 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!-- finishing touches -->
+  <!-- ISSUE REFACTOR FOLDING BRUTAL
+  finishing touches -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -434,6 +438,8 @@
     </bgf:production>
   </xbgf:remove>
   <xbgf:eliminate>FieldDeclaration</xbgf:eliminate>
+  
+  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
 
 </xbgf:sequence>

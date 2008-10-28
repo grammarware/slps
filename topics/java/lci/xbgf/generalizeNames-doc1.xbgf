@@ -28,6 +28,8 @@ vs
      Identifier { "." Identifier }
   
   -->
+  
+  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:rename>
     <nonterminal>
       <from>AmbiguousName</from>
@@ -50,6 +52,8 @@ vs
     <add>ExpressionName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
+  
+  <!--ISSUE REFACTOR EBNF-->
   <xbgf:deyaccify>QualifiedIdentifier</xbgf:deyaccify>
   
 </xbgf:sequence>

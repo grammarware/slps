@@ -69,7 +69,8 @@
      "void"
   -->
 
-  <!-- First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
+  <!-- ISSUE REFACTOR FOLDING
+  First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
   <xbgf:inline>IntegralType</xbgf:inline>
   <xbgf:inline>FloatingPointType</xbgf:inline>
   <xbgf:inline>NumericType</xbgf:inline>
@@ -83,7 +84,8 @@
     </nonterminal>
   </xbgf:rename>
   
-  <!-- Merging interfaces with classes and making lists and other things conform -->
+  <!-- ISSUE REFACTOR GENERALIZE
+  Merging interfaces with classes and making lists and other things conform -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>ClassType</nonterminal>
@@ -144,7 +146,8 @@
   </xbgf:rename>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
   
-  <!-- Introducing brackets brutally, too hard to derive -->
+  <!-- ISSUE REFACTOR BRUTAL
+  Introducing brackets brutally, too hard to derive -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ClassOrInterfaceType</nonterminal>
@@ -192,7 +195,8 @@
     </bgf:production>
   </xbgf:remove>
   
-  <!-- Finishing touches -->
+  <!-- ISSUE REFACTOR FOLDING
+  Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
   <xbgf:inline>ReferenceType</xbgf:inline>

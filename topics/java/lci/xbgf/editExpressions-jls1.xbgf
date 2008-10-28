@@ -1,0 +1,595 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- ISSUE REFACTOR FOLDING
+   - Fail: Primary.
+      - [], n(ArrayCreationExpression)
+      - [], n(PrimaryNoNewArray)
+     vs.
+      - [], ;([,([t((), n(Expression), t())]), ,([t(this), ?(n(Arguments))]), ,([t(super), n(SuperSuffix)]), n(Literal), ,([t(new), n(Creator)]), ,([n(QualifiedIdentifier), ?(n(IdentifierSuffix))]), ,([n(BasicType), n(BracketsOpt), t(.), t(class)]), ,([t(void), t(.), t(class)])])
+  -->
+  <xbgf:inline>ArrayCreationExpression</xbgf:inline>
+  <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
+  
+  <!-- ISSUE REFACTOR FOLDING -->
+  <xbgf:deyaccify>Dims</xbgf:deyaccify>
+  <xbgf:inline>Dims</xbgf:inline>
+  <xbgf:deyaccify>DimExprs</xbgf:deyaccify>
+  <xbgf:inline>DimExprs</xbgf:inline>
+  <xbgf:inline>DimExpr</xbgf:inline>
+
+  <!-- ISSUE REFACTOR FOLDING
+  this should be killed later -->
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>[</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>]</terminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>[</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>]</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:fold>
+    <nonterminal>BracketsOpt</nonterminal>
+    <in>
+      <nonterminal>Primary</nonterminal>
+    </in>
+  </xbgf:fold>
+
+  <!-- ISSUE REFACTOR FOLDING-->
+  <xbgf:inline>ClassInstanceCreationExpression</xbgf:inline>
+  <xbgf:inline>FieldAccess</xbgf:inline>
+  <xbgf:inline>MethodInvocation</xbgf:inline>
+  <!--  
+  <xbgf:inline>ArrayAccess</xbgf:inline>
+-->
+  <xbgf:horizontal>Primary</xbgf:horizontal>
+  <xbgf:distribute>
+    <nonterminal>Primary</nonterminal>
+  </xbgf:distribute>
+  
+  <!-- ISSUE REFACTOR FOLDING
+  Multiple cases like this one:
+  
+   - Fail: Primary.
+       - [], ,([t(new), n(QualifiedIdentifier), t((), ?(n(ArgumentList)), t())])
+     vs.
+       - [], ,([t(new), n(QualifiedIdentifier), n(Arguments)])
+ -->
+  <xbgf:deyaccify>ArgumentList</xbgf:deyaccify>
+  <xbgf:inline>ArgumentList</xbgf:inline>
+  <xbgf:fold>
+    <nonterminal>Arguments</nonterminal>
+  </xbgf:fold>
+
+
+  <!-- ISSUE REFACTOR FOLDING
+   - Fail: Primary.
+      - [], ,([t(super), t(.), n(Identifier), n(Arguments)])
+      - [], ,([t(super), t(.), n(Identifier)])
+     vs.
+      - [], ,([t(super), n(SuperSuffix)])
+  -->
+  <xbgf:factor>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>super</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Arguments</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>super</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>super</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>.</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Identifier</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <nonterminal>Arguments</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <epsilon/>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>Arguments</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>Arguments</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>SuperSuffix</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Arguments</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <in>
+      <nonterminal>Primary</nonterminal>
+    </in>
+  </xbgf:extract>
+
+  <!-- ISSUE REFACTOR COMPAS -->
+  <xbgf:vertical>
+    <nonterminal>Primary</nonterminal>
+  </xbgf:vertical>
+
+  <!-- ISSUE EXTEND GENERALIZE
+   - Fail: Primary.
+      - [], t(this)
+     vs.
+      - [], ,([t(this), ?(n(Arguments))])
+  -->
+  <xbgf:designate>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <terminal>this</terminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:inject>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>this</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Arguments</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  <xbgf:strip>
+    <label>target</label>
+  </xbgf:strip>
+
+  <!-- ISSUE REFACTOR BRUTAL
+  too hard to match:
+        - [], n(ArrayAccess)
+  -->
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <nonterminal>ArrayAccess</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:eliminate>ArrayAccess</xbgf:eliminate>
+
+  <!-- ISSUE EXTEND GENERALIZE
+      - [], ,([n(QualifiedIdentifier), n(Arguments)])
+     vs.
+      - [], ,([n(QualifiedIdentifier), ?(n(IdentifierSuffix))])
+  -->
+  <xbgf:designate>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Arguments</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>IdentifierSuffix</nonterminal>
+      <bgf:expression>
+        <nonterminal>Arguments</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <in>
+      <label>target</label>
+    </in>
+  </xbgf:extract>
+  <xbgf:widen>
+    <bgf:expression>
+      <nonterminal>IdentifierSuffix</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>IdentifierSuffix</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <in>
+      <label>target</label>
+    </in>
+  </xbgf:widen>
+  <xbgf:strip>
+    <label>target</label>
+  </xbgf:strip>
+
+  <!-- ISSUE EXTEND BRUTAL
+  same problem -->
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>new</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Arguments</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>new</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BasicType</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <plus>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>[</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Expression</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>]</terminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </plus>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>new</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <plus>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>[</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Expression</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>]</terminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </plus>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>new</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Creator</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>Creator</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <choice>
+              <bgf:expression>
+                <nonterminal>ArrayCreatorRest</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>ClassCreatorRest</nonterminal>
+              </bgf:expression>
+            </choice>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ArrayCreatorRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>[</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <choice>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>]</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>BracketsOpt</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>ArrayInitializer</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <nonterminal>Expression</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>]</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <star>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>[</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <nonterminal>Expression</nonterminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <terminal>]</terminal>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                    </star>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>BracketsOpt</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </choice>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+
+  <!-- ISSUE EXTEND
+  new stuff
+  ,([n(BasicType), n(BracketsOpt), t(.), t(class)]), ,([t(void), t(.), t(class)])-->
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>BasicType</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>class</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>void</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>class</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
+
+  <!-- ISSUE REFACTOR BRUTAL
+  implemented elsewise 
+      - [], ,([n(Primary), t(.), n(Identifier), n(Arguments)])
+      - [], ,([n(Primary), t(.), n(Identifier)])
+-->
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Primary</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Arguments</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+  <xbgf:remove>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Primary</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:remove>
+
+  <!-- ISSUE REFACTOR COMPAS
+  yes! -->
+  <xbgf:horizontal>Primary</xbgf:horizontal>
+  
+  <!-- ISSUE REFACTOR FOLDING -->
+  <xbgf:fold>
+    <nonterminal>ParExpression</nonterminal>
+  </xbgf:fold>
+
+</xbgf:sequence>

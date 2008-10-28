@@ -2,7 +2,34 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!--
+  <!-- ISSUE EXTEND  -->
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>PackageOrTypeName</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>PackageOrTypeName</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>.</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+
+  <!-- ISSUE REFACTOR EDITING
   Local substitution:
   
      - Fail: TypeImportOnDemandDeclaration.
@@ -22,7 +49,7 @@
     </in>
   </xbgf:replace>
 
-  <!--
+  <!-- ISSUE REFACTOR EDITING
   Local substitution:
      - Fail: TypeName.
       - [], ;([n(Identifier), ,([n(PackageName), t(.), n(Identifier)])])
@@ -41,7 +68,7 @@
     </in>
   </xbgf:replace>
 
-  <!--
+  <!-- ISSUE REFACTOR EDITING
   Local substitute + add + horizontal:
      - Fail: ClassInstanceCreationExpression.
       - [], ,([t(new), n(ClassType), t((), ?(n(ArgumentList)), t())])
@@ -151,32 +178,5 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>ClassInstanceCreationExpression</xbgf:horizontal>
-  
-  <!-- last bits -->
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>PackageOrTypeName</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>PackageOrTypeName</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
- 
+   
 </xbgf:sequence>

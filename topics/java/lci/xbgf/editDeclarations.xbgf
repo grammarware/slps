@@ -2,30 +2,8 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- multiple mismatches -->
-  <xbgf:replace>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>throws</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>TypeList</nonterminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>throws</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>QualifiedIdentifierList</nonterminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-  </xbgf:replace>
-  <xbgf:define>
+  <!-- ISSUE EXTEND -->
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>QualifiedIdentifierList</nonterminal>
       <bgf:expression>
@@ -50,9 +28,34 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:introduce>
 
-  <!--
+  <!-- ISSUE REFACTOR EDITING
+  multiple mismatches -->
+  <xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>throws</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>TypeList</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>throws</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>QualifiedIdentifierList</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:replace>
+
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceDeclaration.
       - [], ,([?(n(Modifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
      vs.
@@ -95,7 +98,7 @@
   </xbgf:project>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassDeclaration.
       - [], ,([?(n(Modifiers)), t(class), n(Identifier), ?(n(Super)), ?(n(Interfaces)), n(ClassBody)])
      vs.
@@ -136,7 +139,7 @@
   <xbgf:inline>Super</xbgf:inline>
   <xbgf:inline>Interfaces</xbgf:inline>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: TypeDeclaration.
       - [], ;([n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
      vs.
@@ -184,8 +187,7 @@
     </bgf:production>
   </xbgf:inject>
 
-
-  <!--
+  <!-- ISSUE EXTEND
    - Fail: FormalParameter.
       - [], ,([n(Type), n(VariableDeclaratorId)])
      vs.
@@ -214,7 +216,7 @@
     </bgf:production>
   </xbgf:inject>
   
-  <!--
+  <!-- ISSUE REFACTOR EBNF
    - Fail: SwitchBlockStatementGroup.
       - [], ,([n(SwitchLabels), n(BlockStatements)])
      vs.
@@ -224,7 +226,7 @@
   -->
   <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ImportDeclaration.
       - [], ;([n(SingleTypeImportDeclaration), n(TypeImportOnDemandDeclaration)])
      vs.
@@ -338,7 +340,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!--
+  <!--  ISSUE REFACTOR FOLDING
    - Fail: ArrayInitializer.
       - [], ,([t({), ?(n(VariableInitializers)), ?(t((,))), t(})])
      vs.
@@ -347,7 +349,7 @@
   <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassBody.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
      vs.
@@ -376,7 +378,7 @@
     </bgf:expression>
   </xbgf:massage>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceBody.
       - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
      vs.
@@ -411,7 +413,7 @@
     </nonterminal>
   </xbgf:rename>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: CompilationUnit.
       - [], ,([?(n(PackageDeclaration)), ?(n(ImportDeclarations)), ?(n(TypeDeclarations))])
      vs.
@@ -463,7 +465,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceBodyDeclaration.
       - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration)])
      vs.
@@ -474,7 +476,7 @@
   <xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
   <xbgf:inline>MethodHeader</xbgf:inline>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ModifiersOpt.
       - [], ?(n(Modifiers))
      vs.
@@ -515,7 +517,7 @@
     </bgf:expression>
   </xbgf:massage>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceBodyDeclaration.
       - [], ;([,([n(ModifiersOpt), n(Type), n(VariableDeclarators), t((;))]),
                ,([n(ModifiersOpt), n(Type), n(MethodDeclarator), ?(n(Throws)), t((;))]),
@@ -730,7 +732,7 @@
   </xbgf:add>
   <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceMemberDecl.
       - [], ;([,([n(Type), n(VariableDeclarators), t((;))]),
                ,([n(Type), n(MethodDeclarator), ?(n(Throws)), t((;))]),
@@ -749,7 +751,7 @@
   <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
   <xbgf:inline>MethodDeclarator</xbgf:inline>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceMemberDecl.
       - [], ;([,([n(Type), n(VariableDeclarator), *(,([t((,)), n(VariableDeclarator)])), t((;))]),
                ,([n(Type), n(Identifier), t((), ?(n(FormalParameterList)), t()), *(,([t([), t(])])), ?(n(Throws)), t((;))]),
@@ -1080,7 +1082,7 @@
     </in>
   </xbgf:extract>
   
-  <!--
+  <!-- ISSUE EXTEND
    - Fail: InterfaceMemberDecl.
       - [], ;([n(InterfaceMethodOrFieldDecl), ,([t(void), n(Identifier), n(VoidInterfaceMethodDeclaratorRest)])])
      vs.
@@ -1099,7 +1101,7 @@
   </xbgf:add>
   <xbgf:horizontal>InterfaceMemberDecl</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: VoidInterfaceMethodDeclaratorRest.
       - [], ,([t((), ?(n(FormalParameterList)), t()), *(,([t([), t(])])), ?(n(Throws)), t((;))])
      vs.
@@ -1137,7 +1139,7 @@
     </in>
   </xbgf:fold>
   
-  <!--
+  <!-- ISSUE REFACTOR EDITING BRUTAL
   Fixing brutally
   
    - Fail: ArrayInitializer.
@@ -1219,7 +1221,7 @@
     </in>
   </xbgf:replace>
 
-  <!--
+  <!-- ISSUE REFACTOR EDITING
   Can't really match this
   
    - Fail: InterfaceMethodOrFieldRest.
@@ -1342,7 +1344,7 @@
     </bgf:production>
   </xbgf:define>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassBodyDeclaration.
       - [], ;([n(ClassMemberDeclaration), n(StaticInitializer), n(ConstructorDeclaration)])
      vs.
@@ -1359,7 +1361,7 @@
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
-  <!--
+  <!-- ISSUE EXTEND GENERALIZE
    - Fail: ClassBodyDeclaration.
                ,([t(static), n(Block)]),
      vs.
@@ -1400,7 +1402,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassBodyDeclaration.
                ,([n(ModifiersOpt), t(void), n(Identifier), n(FormalParameters), *(,([t([), t(])])), ?(,([t(throws), n(TypeList)])), n(MethodBody)]),
      vs.
@@ -1456,7 +1458,7 @@
     </in>
   </xbgf:fold>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassBodyDeclaration.
      - [], ,([n(ModifiersOpt), n(ConstructorDeclarator), ?(,([t(throws), n(TypeList)])), n(ConstructorBody)])
      vs.
@@ -1493,7 +1495,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE REFACTOR EDITING
    - Fail: ConstructorDeclaratorRest.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(ConstructorBody)])
      vs.
@@ -1513,7 +1515,8 @@
   <xbgf:eliminate>ConstructorBody</xbgf:eliminate>
   <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
 
-  <!-- Empty class body declaration -->
+  <!-- ISSUE EXTEND
+  Empty class body declaration -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -1523,7 +1526,8 @@
     </bgf:production>
   </xbgf:add>
 
-  <!-- Inner class declaration -->
+  <!-- ISSUE EXTEND
+  Inner class declaration -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -1540,7 +1544,7 @@
     </bgf:production>
   </xbgf:add>
 
-  <!--
+  <!-- ISSUE REFACTOR EDITING
    - Fail: ClassBodyDeclaration.
       - [], ;([,([n(ModifiersOpt), n(Type), n(VariableDeclarators), t((;))]),
                ,([n(ModifiersOpt), n(Type), n(Identifier), n(FormalParameters), *(,([t([), t(])])), ?(,([t(throws), n(TypeList)])), n(MethodBody)]),
@@ -1628,7 +1632,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(MethodDeclaratorRest)])
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(VariableDeclaratorRest)])
   -->

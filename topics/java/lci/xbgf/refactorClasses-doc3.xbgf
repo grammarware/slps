@@ -68,7 +68,7 @@
   
   -->
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: TypeDeclaration.
       - [], ;([n(ClassOrInterfaceDeclaration), t((;))])
      vs.
@@ -93,7 +93,7 @@
     </in>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassBody.
       - [], ,([t({), *(n(ClassBodyDeclaration)), t(})])
      vs.
@@ -122,7 +122,8 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- modifiers -->
+  <!-- ISSUE REFACTOR FOLDING
+  modifiers -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>NormalClassDeclaration</nonterminal>
@@ -223,7 +224,7 @@
   </xbgf:strip>
   <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: NormalClassDeclaration.
       - [], ,([t(class), n(Identifier), ?(,([t(extends), n(Type)])), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
      vs.
@@ -232,7 +233,7 @@
   <xbgf:inline>Super</xbgf:inline>
   <xbgf:inline>Interfaces</xbgf:inline>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassBodyDeclaration.
       - [], ;([... ,([?(t(static)), n(Block)]), ...])
      vs.
@@ -296,7 +297,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: FormalParameters.
       - [], ,([t((), ?(n(FormalParameterDecls)), t())])
      vs.
@@ -395,7 +396,7 @@
     </bgf:production>
   </xbgf:define>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassBodyDeclaration.
       - [], ;([t((;)), ... ,([n(ModifiersOpt), n(MemberDecl)])])
      vs.
@@ -411,7 +412,7 @@
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:distribute>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
   MethodDeclarator is defined as:
      Identifier "(" [ FormalParameterList ] ")"
      MethodDeclarator "[" "]"
@@ -419,7 +420,7 @@
   <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
   <xbgf:inline>MethodDeclarator</xbgf:inline>
 
-  <!-- 
+  <!--  ISSUE REFACTOR FOLDING
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(Identifier), t((), ?(n(FormalParameterList)), t()), ?(n(Throws)), n(ConstructorBody)])
   -->
   <xbgf:replace>
@@ -462,7 +463,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--
+  <!--ISSUE REFACTOR FOLDING
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(ResultType), n(MethodDeclarator), ?(n(Throws)), n(MethodBody)])
   -->
   <xbgf:fold>
@@ -497,7 +498,7 @@
     </in>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
      vs.
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(Identifier), n(ConstructorDeclaratorRest)])
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), ;([n(Type), t(void)]), n(Identifier), n(MethodDeclaratorRest)])
@@ -625,7 +626,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(GenericMethodOrConstructorRest)])
   -->
   <xbgf:extract>
@@ -663,14 +664,14 @@
     </in>
   </xbgf:narrow>
 
-  <!--finally-->
+  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:inline>ResultType</xbgf:inline>
 
   <xbgf:vertical>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: VariableDeclaratorId.
       - [], ,([n(Identifier), *(,([t([), t(])]))])
      vs.
@@ -678,7 +679,7 @@
    -->
   <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
       - [], ,([*(n(Modifier)), n(Type), n(VariableDeclarators), t((;))])
   -->
   <xbgf:remove>
@@ -827,7 +828,7 @@
   </xbgf:add>
   <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassBodyDeclaration.
       - [], ;([... ,([*(n(Modifier)), n(MemberDecl)])])
      vs.
@@ -1004,7 +1005,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ClassOrInterfaceDeclaration.
       - [], ,([n(ModifiersOpt), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])
      vs.
@@ -1034,7 +1035,7 @@
     </bgf:production>
   </xbgf:inject>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
   Multiple cases like this one:
   
    - Fail: ClassOrInterfaceDeclaration.
@@ -1044,7 +1045,7 @@
    -->
   <xbgf:inline>ModifiersOpt</xbgf:inline>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ConstructorDeclaratorRest.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(MethodBody)])
      vs.
@@ -1062,7 +1063,7 @@
     </in>
   </xbgf:replace>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
   This is used by class definitions and interface definitions
    - Fail: TypeParameters.
       - [], ,([t(<), n(TypeParameter), *(,([t((,)), n(TypeParameter)])), t(>)])
@@ -1072,7 +1073,7 @@
   <xbgf:deyaccify>TypeParameterList</xbgf:deyaccify>
   <xbgf:inline>TypeParameterList</xbgf:inline>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: TypeParameter.
       - [], ,([n(Identifier), ?(,([t(extends), n(Bound)]))])
      vs.

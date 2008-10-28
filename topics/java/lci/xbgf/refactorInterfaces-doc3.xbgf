@@ -59,9 +59,9 @@
      [ AbstractMethodModifiers ] ResultType MethodDeclarator [ Throws ] ";"
   MethodDeclarator is defined as:
      Identifier "(" [ FormalParameterList ] ")"
-  
- 
-  
+ -->
+
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: NormalInterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
      vs.
@@ -100,7 +100,7 @@
     </in>
   </xbgf:fold>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
      - Fail: NormalInterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(n(TypeParameters)), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
      vs.
@@ -140,7 +140,7 @@
   </xbgf:inject>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
 
-  <!--
+  <!-- ISSUE REFACTOR EBNF
    - Fail: InterfaceBody.
       - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
      vs.
@@ -175,7 +175,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: InterfaceBodyDeclaration.
       - [], ;([t((;)), ,([*(n(Modifier)), n(InterfaceMemberDecl)])])
      vs.
@@ -188,7 +188,8 @@
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
-  <!-- modifiers -->
+  <!-- ISSUE REFACTOR FOLDING
+  modifiers -->
   <xbgf:designate>
     <bgf:production>
       <label>target</label>
@@ -246,7 +247,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!--
+  <!-- ISSUE REFACTOR EBNF
    - Fail: Annotations.
       - [], ,([n(Annotation), ?(n(Annotations))])
      vs.
@@ -254,7 +255,7 @@
   -->
   <xbgf:deyaccify>Annotations</xbgf:deyaccify>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: AnnotationTypeDeclaration.
       - [], ,([t(@), t(interface), n(Identifier), n(AnnotationTypeBody)])
      vs.
@@ -282,7 +283,7 @@
     </bgf:production>
   </xbgf:project>
 
-  <!--
+  <!-- ISSUE REFACTOR GENERALIZE
    This is needed for Annotation (see below)
       
   ElementValuePairs is defined as:
@@ -314,7 +315,8 @@
     </bgf:production>
   </xbgf:remove>
   <xbgf:inline>ElementValuePairs</xbgf:inline>
-  <!--
+  
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: Annotation.
       - [], ,([t(@), n(TypeName), ?(,([t((), ?(,([n(Identifier), t(=)])), n(ElementValue), t())]))])
      vs.
@@ -325,7 +327,7 @@
   <xbgf:inline>SingleElementAnnotation</xbgf:inline>
   <xbgf:inline>ElementValuePair</xbgf:inline>
 
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
   The following solution breaks semantics by disallowing
   ,([t(@), n(QualifiedIdentifier), t((), t())])
   
@@ -611,7 +613,8 @@
     </bgf:expression>
   </xbgf:massage>
   
-  <!-- ExceptionTypeList vs QualifiedIdentifierList -->
+  <!-- ISSUE REFACTOR FOLDING
+  ExceptionTypeList vs QualifiedIdentifierList -->
   <xbgf:undefine>ExceptionTypeList</xbgf:undefine>
   <xbgf:unite>
     <add>ExceptionTypeList</add>
@@ -619,13 +622,15 @@
   </xbgf:unite>
   <xbgf:inline>Throws</xbgf:inline>
 
-  <!-- ... -->
+  <!-- ISSUE REFACTOR EBNF -->
   <xbgf:deyaccify>ElementValues</xbgf:deyaccify>
+  
+  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:fold>
     <nonterminal>BracketsOpt</nonterminal>
   </xbgf:fold>
   
-  <!--
+  <!-- ISSUE REFACTOR FOLDING
    - Fail: ImportDeclaration.
       - [], ,([t(import), ?(t(static)), n(Identifier), *(,([t(.), n(Identifier)])), ?(,([t(.), t(*)])), t((;))])
      vs.

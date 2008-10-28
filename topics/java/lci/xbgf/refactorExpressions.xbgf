@@ -111,8 +111,9 @@
   CastExpression is defined as:
      "(" PrimitiveType [ Dims ] ")" UnaryExpression
      "(" ReferenceType ")" UnaryExpressionNotPlusMinus
-
+-->
   
+  <!-- ISSUE REFACTOR FOLDING BRUTAL
   Complicated surgery on CastExpression - kind of fold mod new type system
   
   p([], 'CastExpression', ','([t('('), n('BasicType'), ?(n('Dims')), t(')'), n('UnaryExpression')])),
@@ -152,7 +153,8 @@ vs
   </xbgf:define>
   <xbgf:inline>CastExpression</xbgf:inline>
 
-  <!-- Defining PrefixOp; smart extract needed -->
+  <!-- ISSUE REFACTOR EBNF
+  Defining PrefixOp; smart extract needed -->
   <xbgf:inline>PreIncrementExpression</xbgf:inline>
   <xbgf:inline>PreDecrementExpression</xbgf:inline>
   <xbgf:inline>UnaryExpressionNotPlusMinus</xbgf:inline>
@@ -166,7 +168,8 @@ vs
     </nonterminal>
   </xbgf:rename>
 
-  <!-- multiway deyaccification needed -->
+  <!-- ISSUE REFACTOR FOLDING
+  multiway deyaccification needed -->
   <xbgf:inline>PostDecrementExpression</xbgf:inline>
   <xbgf:inline>PostIncrementExpression</xbgf:inline>
   <xbgf:vertical>
@@ -392,7 +395,8 @@ vs
     </bgf:production>
   </xbgf:define>
 
-  <!-- Now to Expression2, using the expressway -->
+  <!-- ISSUE REFACTOR BRUTAL
+  Now to Expression2, using the expressway -->
   <xbgf:undefine>ConditionalOrExpression</xbgf:undefine>
   <xbgf:define>
     <bgf:production>
@@ -531,7 +535,8 @@ vs
   <xbgf:undefine>InclusiveOrExpression</xbgf:undefine>
   <xbgf:eliminate>ConditionalAndExpression</xbgf:eliminate>
 
-  <!-- And now "Expression1" -->
+  <!-- ISSUE REFACTOR FOLDING
+  And now "Expression1" -->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>Expression1Rest</nonterminal>
@@ -609,7 +614,8 @@ vs
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- last effort for Expression1-->
+  <!-- ISSUE REFACTOR FOLDING
+  last effort for Expression1-->
   <xbgf:vertical>
     <nonterminal>AssignmentExpression</nonterminal>
   </xbgf:vertical>
@@ -634,7 +640,8 @@ vs
     <nonterminal>Expression1</nonterminal>
   </xbgf:fold>
 
-  <!-- Expression -->
+  <!-- ISSUE REFACTOR 
+  Expression -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Expression</nonterminal>
@@ -662,7 +669,7 @@ vs
     </bgf:production>
   </xbgf:inject>
 
-  <!--
+  <!-- ISSUE REFACTOR 
    - Fail: StatementExpression.
       - [], n(Expression)
      vs.

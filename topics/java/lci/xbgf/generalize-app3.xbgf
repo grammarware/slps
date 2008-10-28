@@ -2,7 +2,6 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
- 
   <!-- ISSUE REFACTOR EBNF BRUTAL
    - Fail: ElementValue.
       - [], ;([n(ConditionalExpression), n(Annotation), n(ElementValueArrayInitializer)])
