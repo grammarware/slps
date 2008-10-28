@@ -152,7 +152,7 @@
       <perform>editExpressions</perform>
       <perform>refactorClasses-doc3</perform>
       <perform>refactorInterfaces-doc3</perform>
-      <perform>refactorEnumDeclarations</perform>
+      <perform>refactorEnums</perform>
       <perform>refactorDeclarations-doc3</perform>
       <perform>extend-doc3</perform>
     </branch>

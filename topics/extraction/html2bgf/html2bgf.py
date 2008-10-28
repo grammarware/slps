@@ -224,7 +224,7 @@ def mapHTMLtoTokenStream(line):
    continue
   if line.find('</i>')==0:
    if pp_mode != MODE_ITALIC:
-    print 'Style tag mismatch.'
+    print 'Not well-formed place'
     pessimistic[1]+=1
    pp_mode = MODE_DEFAULT
    pp_outer = MODE_DEFAULT
@@ -233,14 +233,14 @@ def mapHTMLtoTokenStream(line):
   if line.find('<i>')==0:
    #if pp_mode == MODE_ITALIC:
    if pp_mode != MODE_DEFAULT:
-    print 'Style tag mismatch.'
+    print 'Not well-formed place'
     pessimistic[1]+=1
    pp_mode = MODE_ITALIC
    line = line[3:]
    continue
   if line.find('</em>')==0:
    if pp_mode != MODE_ITALIC:
-    print 'Style tag mismatch.'
+    print 'Not well-formed place'
     pessimistic[1]+=1
    pp_mode = MODE_DEFAULT
    pp_outer = MODE_DEFAULT
@@ -249,7 +249,7 @@ def mapHTMLtoTokenStream(line):
   if line.find('<em>')==0:
    #if pp_mode == MODE_ITALIC:
    if pp_mode != MODE_DEFAULT:
-    print 'Style tag mismatch.'
+    print 'Not well-formed place'
     pessimistic[1]+=1
    if (pp_mode == MODE_ITALIC) and tokens and oldline.find(tokens[-1]+'<em>'+line[4:line.index('>')])>=0:
     print 'Token-breaking <em> tag endangers',
@@ -262,7 +262,7 @@ def mapHTMLtoTokenStream(line):
    continue
   if line.find('<code>')==0:
    if pp_mode == MODE_FIXED:
-    print 'Style tag mismatch.'
+    print 'Not well-formed place'
     pessimistic[1]+=1
    pp_outer = pp_mode
    pp_mode = MODE_FIXED
@@ -270,7 +270,7 @@ def mapHTMLtoTokenStream(line):
    continue
   if line.find('</code>')==0:
    if pp_mode != MODE_FIXED:
-    print 'Style tag mismatch.'
+    print 'Not well-formed place'
     pessimistic[1]+=1
    pp_mode = pp_outer
    line = line[7:]
