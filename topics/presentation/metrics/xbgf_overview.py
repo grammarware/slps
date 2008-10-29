@@ -99,6 +99,8 @@ if __name__ == "__main__":
    names.remove(x)
  sorted = targets.keys()[:]
  sorted.sort()
+ if sorted == ['doc12','doc123','jls1','jls12','jls123','jls2','jls3']:
+  sorted = ['jls1','jls2','jls3','jls12','jls123','doc12','doc123']
  print '\\begin{tabular}{l|'+('c|'*len(targets))+'|c}'
  for x in sorted:
   print '&\\textbf{'+x+'}',
