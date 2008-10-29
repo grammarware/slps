@@ -2,8 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE CORRECT 
-  in the extracted version root is undefined -->
+  <!-- in the extracted version root is undefined -->
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
@@ -28,7 +27,7 @@
     <to>Identifier</to>
   </xbgf:unite>
   
-  <!--  ISSUE CORRECT EXTRACTERROR
+  <!--  ISSUE EXTRACTERROR
   Error in markup of JLS2
      - Fail: InterfaceBody.
       - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
@@ -59,7 +58,7 @@
     </bgf:production>
   </xbgf:define>
   
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
    Error in markup of JLS2
      - Fail: ClassBody.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
@@ -90,7 +89,7 @@
     </bgf:production>
   </xbgf:define>
   
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
   Error in markup in JLS2
   
      - Fail: ConstructorBody.
@@ -127,7 +126,7 @@
     </bgf:production>
   </xbgf:define>
 
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
      - Fail: Block.
       - [], ,([t({), ?(n(BlockStatements)), t(})])
      vs.
@@ -157,7 +156,7 @@
     </bgf:production>
   </xbgf:define>
   
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
      - Fail: SwitchBlock.
       - [], ,([t({), ?(n(SwitchBlockStatementGroups)), ?(n(SwitchLabels)), t(})])
      vs.
@@ -194,7 +193,7 @@
     </bgf:production>
   </xbgf:define>
   
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
      - Fail: ConstructorBody.
       - [], ,([t({), ?(n(ExplicitConstructorInvocation)), ?(n(BlockStatements)), t(})])
      vs.
@@ -259,7 +258,7 @@
     </bgf:production>
   </xbgf:define>
   
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
   Error in PrimaryNoNewArray undetected by the extractor due to lacking definition -->
   <xbgf:replace>
     <bgf:expression>

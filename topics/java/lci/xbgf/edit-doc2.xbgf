@@ -17,7 +17,7 @@
   <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
   <xbgf:eliminate>ArgumentList</xbgf:eliminate>
 
-  <!-- ISSUE EXTEND
+  <!-- ISSUE REFACTOR GENERALIZE
    Some productions use a more general QualifiedIdentifierList instead of TypeList
   -->
   <xbgf:introduce>
@@ -46,8 +46,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-
-  <!-- ISSUE REFACTOR GENERALIZE -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>TypeList</nonterminal>
@@ -93,7 +91,7 @@
     </in>
   </xbgf:replace>
 
-  <!-- ISSUE EXTEND GENERALIZE
+  <!-- ISSUE REFACTOR BRUTAL?
    - Fail: MethodDeclaratorRest.
       - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), ;([n(MethodBody), t((;))])])
      vs.

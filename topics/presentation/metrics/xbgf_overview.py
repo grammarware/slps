@@ -3,6 +3,9 @@ import os
 import sys
 import elementtree.ElementTree as ET
 
+safexbgf = ('deyaccify', 'yaccify','chain', 'unchain', 'extract', 'fold', 'inline', 'unfold', 'distribute', 'factor', 'massage', 'designate', 'strip')
+rkeys = ('LOC','NOI','NOX','NI~','NI+','NI!','SGO','COR','NI^')
+
 names   = []
 targets = {}
 results = {}
@@ -14,6 +17,14 @@ xsdns = 'http://www.w3.org/2001/XMLSchema'
 ET._namespace_map[bgfns] = 'bgf'
 ET._namespace_map[xbgfns]='xbgf'
 ET._namespace_map[xsdns] = 'xsd'
+
+def noni(filename):
+ global xbgfns
+ cx = 0
+ xbgf = ET.parse(filename)
+ for c in safexbgf:
+  cx += len(xbgf.findall('//{'+xbgfns+'}'+c))
+ return cx
 
 def loc(filename):
  f = open(filename,'r')
@@ -63,29 +74,24 @@ if __name__ == "__main__":
  path = sys.argv[3]
  if path[-1] != '/':
   path += '/'
- results['LOC'] = {}
- results['NOI'] = {}
- results['NOX'] = {}
- results['NI~'] = {}
- results['NI!'] = {}
- results['NI+'] = {}
+ for x in rkeys:
+  results[x] = {}
  for x in names:
   results[x] = {}
   for y in targets.keys():
    results[x][y] = 0
  for x in targets.keys():
-  results['LOC'][x] = 0
-  results['NOI'][x] = 0
-  results['NOX'][x] = 0
-  results['NI~'][x] = 0
-  results['NI+'][x] = 0
-  results['NI!'][x] = 0
+  for y in rkeys:
+   results[y][x] = 0
   for y in targets[x]:
    results['LOC'][x] += loc(path+y+'.xbgf')
    results['NOI'][x] += nosi(path+y+'.xbgf','ISSUE')
    results['NI~'][x] += nosi(path+y+'.xbgf','REFACTOR')
    results['NI+'][x] += nosi(path+y+'.xbgf','EXTEND')
    results['NI!'][x] += nosi(path+y+'.xbgf','CORRECT')
+   results['NI^'][x] += nosi(path+y+'.xbgf','PERMISSIVENESS')
+   results['COR'][x] += nosi(path+y+'.xbgf','EXTRACTERROR')
+   results['SGO'][x] += noni(path+y+'.xbgf')
    xbgf = ET.parse(path+y+'.xbgf')
    results['NOX'][x] += len(xbgf.findall('/*'))
    for z in names:
@@ -107,6 +113,7 @@ if __name__ == "__main__":
  print '&\\textbf{Total}\\\\\\hline'
  report(sorted,'LOC','\\numberOfLines')
  report(sorted,'NOX','\\numberOfTransformations')
+ report(sorted,'SGO','\\numberOfRefactors')
  print '\\numberOfSteps',
  cx = 0
  for x in sorted:
@@ -114,8 +121,10 @@ if __name__ == "__main__":
   print '&',len(targets[x]),
  print '&'+`cx`+'\\\\'
  report(sorted,'NOI','\\numberOfIssues')
+ report(sorted,'COR','\\ \\ post-extraction')
  report(sorted,'NI!','\\issuesCorrect')
  report(sorted,'NI+','\\issuesExtend')
+ report(sorted,'NI^','\\issuesPermit')
  report(sorted,'NI~','\\issuesRefactor')
  print '\\hline'
  print '\\end{tabular}'

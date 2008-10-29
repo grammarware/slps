@@ -2,8 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE CORRECT 
-  in the extracted version root is undefined -->
+  <!-- in the extracted version root is undefined -->
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
@@ -221,8 +220,7 @@
   <xbgf:eliminate>VoidMethodDeclaratorRest</xbgf:eliminate>
   <xbgf:eliminate>VariableDeclaratorsRest</xbgf:eliminate>
 
-  <!-- ISSUE CORRECT SPECERROR
-  undefine lexical term -->
+  <!--   undefine lexical term -->
   <xbgf:undefine>Identifier</xbgf:undefine>
 
 </xbgf:sequence>

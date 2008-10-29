@@ -2,7 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE EXTEND GENERALIZE
+  <!-- ISSUE REFACTOR BRUTAL? GENERALIZE
   NOT semantic-preserving in any way.
   
    - Fail: MethodBody.
@@ -22,7 +22,7 @@
     </bgf:production>
   </xbgf:remove>
 
-  <!-- ISSUE EXTEND
+  <!-- ISSUE REFACTOR BRUTAL - somehow NonWildcardTypeArguments was used anyway
    - Fail: Primary.
       - [], ,([n(NonWildcardTypeArguments), ;([n(ExplicitGenericInvocationSuffix), ,([t(this), n(Arguments)])])])
      vs.

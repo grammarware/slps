@@ -45,7 +45,7 @@
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE EXTEND
+  <!-- ISSUE CORRECT
    - Fail: Primary.
       - [], ,([t(this), ?(n(Arguments))])
      vs.

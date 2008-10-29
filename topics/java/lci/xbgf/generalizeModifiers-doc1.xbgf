@@ -1,0 +1,101 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- 
+   - Fail: FieldDeclaration.
+      - [], ,([?(n(FieldModifiers)), n(Type), n(VariableDeclarators), t((;))])
+     vs.
+      - [], ,([?(n(Modifiers)), n(Type), n(VariableDeclarators), t((;))])
+   (and many similar ones)
+  -->
+  
+  <!-- ISSUE REFACTOR COMPAS -->
+  <xbgf:vertical>
+    <nonterminal>ClassModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>InterfaceModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>ConstructorModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>AbstractMethodModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>MethodModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>FieldModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>ConstantModifier</nonterminal>
+  </xbgf:vertical>
+
+  <!-- ISSUE REFACTOR GENERALIZE singular -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassModifier</from>
+      <to>Modifier</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:unite>
+    <add>InterfaceModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>ConstructorModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>AbstractMethodModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>MethodModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>FieldModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <!-- NB: was a weird name (plural) -->
+  <xbgf:unite>
+    <add>ConstantModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+
+  <!-- ISSUE REFACTOR GENERALIZE plural -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassModifiers</from>
+      <to>Modifiers</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:unite>
+    <add>ConstantModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>InterfaceModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>ConstructorModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>AbstractMethodModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>MethodModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <xbgf:unite>
+    <add>FieldModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  
+</xbgf:sequence>

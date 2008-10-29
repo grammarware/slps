@@ -2,8 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE CORRECT 
-  in the extracted version root is undefined -->
+  <!--  in the extracted version root is undefined -->
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
@@ -111,7 +110,7 @@
     <to>Identifier</to>
   </xbgf:unite>
 
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
   Bad layout makes the extractor to force line continuation:
    - Fail: NormalInterfaceDeclaration.
       - [], ,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
@@ -356,7 +355,7 @@
   </xbgf:remove>
   <xbgf:horizontal>TypeName</xbgf:horizontal>
 
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
   Extractor error:
    - Fail: ElementValueArrayInitializer.
       - [], ,([t({), ?(n(ElementValues)), ?(t((,))), t(})])
@@ -394,7 +393,7 @@
     </bgf:production>
   </xbgf:define>
   
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
   extractor's problem -->
   <xbgf:replace>
     <bgf:expression>

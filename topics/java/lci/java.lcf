@@ -126,7 +126,7 @@
       <perform>refactorClasses-doc2</perform>
       <perform>refactorInterfaces-doc2</perform>
       <perform>refactorDeclarations-doc2</perform>
-      <perform>extend-doc2</perform>
+      <perform>edit-doc2</perform>
     </branch>
   </target>
 
@@ -155,7 +155,7 @@
       <perform>refactorInterfaces-doc3</perform>
       <perform>refactorEnums</perform>
       <perform>refactorDeclarations-doc3</perform>
-      <perform>extend-doc3</perform>
+      <perform>edit-doc3</perform>
     </branch>
   </target>
 

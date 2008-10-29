@@ -2,14 +2,13 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE CORRECT
-  in the extracted version root is undefined -->
+  <!-- in the extracted version root is undefined -->
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
 
-  <!-- ISSUE CORRECT
-  not used in other versions -->
+  <!-- not used in other versions -->
+  <!-- NONISS -->
   <xbgf:eliminate>Goal</xbgf:eliminate>
 
 </xbgf:sequence>

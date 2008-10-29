@@ -2,8 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE CORRECT 
-  in the extracted version root is undefined -->
+  <!-- in the extracted version root is undefined -->
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
@@ -19,7 +18,7 @@ Annotation:
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
   
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
   The extractor can't tell if {} are terminals or BNF
   
    - Fail: Block.
@@ -47,7 +46,7 @@ Annotation:
     </bgf:production>
   </xbgf:define>
 
-  <!-- ISSUE CORRECT EXTRACTERROR
+  <!-- ISSUE EXTRACTERROR
    - Fail: AnnotationTypeBody.
       - [], *(?(n(AnnotationTypeElementDeclarations)))
      vs.
