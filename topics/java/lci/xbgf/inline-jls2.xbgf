@@ -2,7 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   
-  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:inline>ModifiersOpt</xbgf:inline>
   <xbgf:inline>BracketsOpt</xbgf:inline>
+
 </xbgf:sequence>

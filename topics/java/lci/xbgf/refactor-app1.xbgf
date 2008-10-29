@@ -2,7 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-   <!-- ISSUE REFACTOR COMPAS
+   <!-- 
    getting the choices right -->
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
@@ -14,7 +14,7 @@
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Name.
       - [], ;([n(SimpleName), n(QualifiedName)])
      vs.

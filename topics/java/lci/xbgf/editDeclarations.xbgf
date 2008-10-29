@@ -30,7 +30,7 @@
     </bgf:production>
   </xbgf:introduce>
 
-  <!-- ISSUE REFACTOR EDITING
+  <!-- ISSUE PERMISSIVENESS
   multiple mismatches -->
   <xbgf:replace>
     <bgf:expression>
@@ -55,7 +55,7 @@
     </bgf:expression>
   </xbgf:replace>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!--  
    - Fail: InterfaceDeclaration.
       - [], ,([?(n(Modifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
      vs.
@@ -71,6 +71,7 @@
       <nonterminal>ExtendsInterfaces</nonterminal>
     </in>
   </xbgf:fold>
+  <!-- BREFACTOR -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>InterfaceDeclaration</nonterminal>
@@ -98,7 +99,7 @@
   </xbgf:project>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- BREFACTOR 
    - Fail: ClassDeclaration.
       - [], ,([?(n(Modifiers)), t(class), n(Identifier), ?(n(Super)), ?(n(Interfaces)), n(ClassBody)])
      vs.
@@ -139,7 +140,7 @@
   <xbgf:inline>Super</xbgf:inline>
   <xbgf:inline>Interfaces</xbgf:inline>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: TypeDeclaration.
       - [], ;([n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
      vs.
@@ -164,6 +165,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+<!-- BREFACTOR -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -216,7 +218,7 @@
     </bgf:production>
   </xbgf:inject>
   
-  <!-- ISSUE REFACTOR EBNF
+  <!-- 
    - Fail: SwitchBlockStatementGroup.
       - [], ,([n(SwitchLabels), n(BlockStatements)])
      vs.
@@ -226,7 +228,7 @@
   -->
   <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ImportDeclaration.
       - [], ;([n(SingleTypeImportDeclaration), n(TypeImportOnDemandDeclaration)])
      vs.
@@ -340,7 +342,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!--  ISSUE REFACTOR FOLDING
+  <!--  
    - Fail: ArrayInitializer.
       - [], ,([t({), ?(n(VariableInitializers)), ?(t((,))), t(})])
      vs.
@@ -349,7 +351,7 @@
   <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ClassBody.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
      vs.
@@ -378,7 +380,7 @@
     </bgf:expression>
   </xbgf:massage>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: InterfaceBody.
       - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
      vs.
@@ -413,7 +415,7 @@
     </nonterminal>
   </xbgf:rename>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: CompilationUnit.
       - [], ,([?(n(PackageDeclaration)), ?(n(ImportDeclarations)), ?(n(TypeDeclarations))])
      vs.
@@ -465,7 +467,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: InterfaceBodyDeclaration.
       - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration)])
      vs.
@@ -476,7 +478,7 @@
   <xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
   <xbgf:inline>MethodHeader</xbgf:inline>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ModifiersOpt.
       - [], ?(n(Modifiers))
      vs.
@@ -517,7 +519,7 @@
     </bgf:expression>
   </xbgf:massage>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: InterfaceBodyDeclaration.
       - [], ;([,([n(ModifiersOpt), n(Type), n(VariableDeclarators), t((;))]),
                ,([n(ModifiersOpt), n(Type), n(MethodDeclarator), ?(n(Throws)), t((;))]),
@@ -722,6 +724,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <!-- ISSUE  EXTEND -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
@@ -732,7 +735,7 @@
   </xbgf:add>
   <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: InterfaceMemberDecl.
       - [], ;([,([n(Type), n(VariableDeclarators), t((;))]),
                ,([n(Type), n(MethodDeclarator), ?(n(Throws)), t((;))]),
@@ -751,7 +754,7 @@
   <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
   <xbgf:inline>MethodDeclarator</xbgf:inline>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: InterfaceMemberDecl.
       - [], ;([,([n(Type), n(VariableDeclarator), *(,([t((,)), n(VariableDeclarator)])), t((;))]),
                ,([n(Type), n(Identifier), t((), ?(n(FormalParameterList)), t()), *(,([t([), t(])])), ?(n(Throws)), t((;))]),
@@ -1101,7 +1104,7 @@
   </xbgf:add>
   <xbgf:horizontal>InterfaceMemberDecl</xbgf:horizontal>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: VoidInterfaceMethodDeclaratorRest.
       - [], ,([t((), ?(n(FormalParameterList)), t()), *(,([t([), t(])])), ?(n(Throws)), t((;))])
      vs.
@@ -1139,7 +1142,7 @@
     </in>
   </xbgf:fold>
   
-  <!-- ISSUE REFACTOR EDITING BRUTAL
+  <!-- BREFACTOR
   Fixing brutally
   
    - Fail: ArrayInitializer.
@@ -1221,7 +1224,7 @@
     </in>
   </xbgf:replace>
 
-  <!-- ISSUE REFACTOR EDITING
+  <!-- BREFACTOR 
   Can't really match this
   
    - Fail: InterfaceMethodOrFieldRest.
@@ -1230,6 +1233,7 @@
       - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
   -->
   <xbgf:undefine>InterfaceMethodOrFieldRest</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>InterfaceMethodOrFieldRest</nonterminal>
@@ -1252,6 +1256,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ConstantDeclaratorsRest</nonterminal>
@@ -1278,6 +1283,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>InterfaceMethodDeclaratorRest</nonterminal>
@@ -1310,6 +1316,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ConstantDeclarator</nonterminal>
@@ -1325,6 +1332,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ConstantDeclaratorRest</nonterminal>
@@ -1344,7 +1352,7 @@
     </bgf:production>
   </xbgf:define>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ClassBodyDeclaration.
       - [], ;([n(ClassMemberDeclaration), n(StaticInitializer), n(ConstructorDeclaration)])
      vs.
@@ -1361,7 +1369,7 @@
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE EXTEND GENERALIZE
+  <!-- ISSUE EXTEND
    - Fail: ClassBodyDeclaration.
                ,([t(static), n(Block)]),
      vs.
@@ -1402,7 +1410,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ClassBodyDeclaration.
                ,([n(ModifiersOpt), t(void), n(Identifier), n(FormalParameters), *(,([t([), t(])])), ?(,([t(throws), n(TypeList)])), n(MethodBody)]),
      vs.
@@ -1458,7 +1466,7 @@
     </in>
   </xbgf:fold>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ClassBodyDeclaration.
      - [], ,([n(ModifiersOpt), n(ConstructorDeclarator), ?(,([t(throws), n(TypeList)])), n(ConstructorBody)])
      vs.
@@ -1495,7 +1503,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!-- ISSUE REFACTOR EDITING
+  <!-- ISSUE PERMISSIVENESS
    - Fail: ConstructorDeclaratorRest.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(ConstructorBody)])
      vs.
@@ -1544,7 +1552,7 @@
     </bgf:production>
   </xbgf:add>
 
-  <!-- ISSUE REFACTOR EDITING
+  <!-- 
    - Fail: ClassBodyDeclaration.
       - [], ;([,([n(ModifiersOpt), n(Type), n(VariableDeclarators), t((;))]),
                ,([n(ModifiersOpt), n(Type), n(Identifier), n(FormalParameters), *(,([t([), t(])])), ?(,([t(throws), n(TypeList)])), n(MethodBody)]),
@@ -1606,6 +1614,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- BREFACTOR -->
   <xbgf:project>
     <bgf:production>
       <label>target</label>
@@ -1632,7 +1641,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(MethodDeclaratorRest)])
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(VariableDeclaratorRest)])
   -->

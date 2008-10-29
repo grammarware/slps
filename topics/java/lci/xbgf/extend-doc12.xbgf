@@ -1263,7 +1263,7 @@
     </bgf:production>
   </xbgf:inject>
 
-  <!-- ISSUE REFACTOR EBNF
+  <!-- 
      - Fail: FormalParameterList.
       - [], ;([n(FormalParameter), ,([n(FormalParameterList), t((,)), n(FormalParameter)])])
      vs.
@@ -1411,7 +1411,7 @@
     </bgf:production>
   </xbgf:introduce>
 
-  <!-- ISSUE REFACTOR
+  <!-- ISSUE PERMISSIVENESS
      - Fail: Throws.
       - [], ,([t(throws), n(ClassTypeList)])
      vs.
@@ -1582,7 +1582,7 @@
     </bgf:production>
   </xbgf:introduce>
 
-  <!-- ISSUE REFACTOR BRUTAL?
+  <!-- 
    - Fail: InterfaceType.
       - [], n(TypeName)
      vs.
@@ -1592,8 +1592,11 @@
      vs.
       - [], ,([n(TypeDeclSpecifier), ?(n(TypeArguments))])
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>InterfaceType</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:undefine>ClassType</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>InterfaceType</nonterminal>
@@ -1613,6 +1616,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ClassType</nonterminal>
@@ -1907,7 +1911,6 @@
     <selector>target3</selector>
   </xbgf:strip>
 
-
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: ClassInstanceCreationExpression.
       - [], ;([,([t(new), n(ClassOrInterfaceType), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))]),
@@ -2098,7 +2101,7 @@
   </xbgf:inject>
   <xbgf:horizontal>ClassInstanceCreationExpression</xbgf:horizontal>
 
-  <!-- ISSUE REFACTOR
+  <!-- 
      - Fail: ArrayCreationExpression.
       - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]),
                ,([t(new), n(TypeName), n(DimExprs), ?(n(Dims))]),
@@ -2139,6 +2142,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- BREFACTOR -->
   <xbgf:project>
     <bgf:production>
       <label>target1</label>
@@ -2162,6 +2166,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
+  <!-- BREFACTOR -->
   <xbgf:inject>
     <bgf:production>
       <label>target1</label>
@@ -2210,6 +2215,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- BREFACTOR -->
   <xbgf:project>
     <bgf:production>
       <label>target2</label>
@@ -2229,6 +2235,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
+  <!-- BREFACTOR -->
   <xbgf:inject>
     <bgf:production>
       <label>target2</label>

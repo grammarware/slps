@@ -17,7 +17,7 @@
   </xbgf:add>
   <xbgf:horizontal>Modifier</xbgf:horizontal>
 
-  <!-- ISSUE EXTEND 
+  <!-- ISSUE EXTEND
    - Fail: SuperSuffix.
       - [], ,([t(.), n(Identifier), ?(n(Arguments))])
      vs.
@@ -141,7 +141,6 @@
     </bgf:production>
   </xbgf:add>
   
-  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:horizontal>IdentifierSuffix</xbgf:horizontal>
 
 </xbgf:sequence>

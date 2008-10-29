@@ -2,7 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Statement.
       - [], ,([n(Identifier), t(:), n(Statement)])
       - [], n(ExpressionStatement)
@@ -45,7 +45,7 @@
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE CORRECT INCOMPATIBILITY
+  <!-- ISSUE PERMISSIVENESS
    - Fail: Statement.
       - [], ,([t(if), n(ParExpression), n(Statement), ?(,([t(else), n(Statement)]))])
      vs.
@@ -127,7 +127,7 @@
   <xbgf:eliminate>ForStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>LabeledStatementNoShortIf</xbgf:eliminate>
 
-  <!-- ISSUE EXTEND
+  <!-- ISSUE CORRECT
   The collected grammar permits the use of SwitchLabels.
   
    - Fail: Statement.
@@ -168,7 +168,7 @@
   <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
   <xbgf:inline>SwitchStatement</xbgf:inline>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: BlockStatements.
       - [], *(n(BlockStatement))
      vs.
@@ -282,7 +282,7 @@
   </xbgf:strip>
   <xbgf:horizontal>BlockStatement</xbgf:horizontal>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: LocalVariableDeclarationStatement.
       - [], ,([?(t(final)), n(Type), n(VariableDeclarators), t((;))])
      vs.
@@ -290,6 +290,6 @@
   -->
   <xbgf:inline>LocalVariableDeclaration</xbgf:inline>
   
-  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:horizontal>Statement</xbgf:horizontal>
+
 </xbgf:sequence>

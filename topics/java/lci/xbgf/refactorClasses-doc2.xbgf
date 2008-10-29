@@ -64,7 +64,7 @@
      [ MethodModifiers ] ResultType MethodDeclarator [ Throws ]
   -->
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: TypeDeclaration.
       - [], ;([n(ClassOrInterfaceDeclaration), t((;))])
      vs.
@@ -86,7 +86,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ClassOrInterfaceDeclaration.
       - [], ,([n(ModifiersOpt), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])
      vs.
@@ -94,6 +94,7 @@
       
    Later with factor/distribute this should be done better!
   -->
+  <!-- BREFACTOR -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -117,7 +118,7 @@
     </bgf:production>
   </xbgf:inject>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ClassBody.
       - [], ,([t({), *(n(ClassBodyDeclaration)), t(})])
      vs.
@@ -146,7 +147,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!--  BREFACTOR 
    - Fail: ClassDeclaration.
       - [], ,([t(class), n(Identifier), ?(,([t(extends), n(Type)])), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
      vs.
@@ -188,7 +189,7 @@
   <xbgf:inline>Interfaces</xbgf:inline>
 
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ClassBodyDeclaration.
       - [], ;([t((;)), ,([?(t(static)), n(Block)]), ,([n(ModifiersOpt), n(MemberDecl)])])
      vs.
@@ -203,8 +204,7 @@
   <xbgf:inline>ResultType</xbgf:inline>
   <xbgf:inline>MethodHeader</xbgf:inline>
 
-  <!-- ISSUE REFACTOR FOLDING
-  refactor alternatives to BNF optional -->
+  <!-- refactor alternatives to BNF optional -->
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -261,8 +261,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR FOLDING
-  next step -->
+  <!-- next step -->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>FormalParameters</nonterminal>
@@ -310,7 +309,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
   MethodDeclaratorRest is defined as:
      FormalParameters BracketsOpt [ "throws" QualifiedIdentifierList ] ( MethodBody | ";" )
      
@@ -383,6 +382,7 @@
       <nonterminal>MethodOrFieldDecl</nonterminal>
     </in>
   </xbgf:extract>
+  <!-- BREFACTOR -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>MethodOrFieldRest</nonterminal>
@@ -393,8 +393,7 @@
   </xbgf:add>
   <xbgf:horizontal>MethodOrFieldRest</xbgf:horizontal>
 
-  <!-- ISSUE REFACTOR FOLDING
-  modifiers -->
+  <!-- modifiers -->
   <xbgf:vertical>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:vertical>
@@ -407,6 +406,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- BREFACTOR -->
   <xbgf:inject>
     <bgf:production>
       <label>target</label>
@@ -427,7 +427,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!-- ISSUE REFACTOR FOLDING BRUTAL
+  <!-- BREFACTOR 
   finishing touches -->
   <xbgf:remove>
     <bgf:production>
@@ -439,7 +439,6 @@
   </xbgf:remove>
   <xbgf:eliminate>FieldDeclaration</xbgf:eliminate>
   
-  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
 
 </xbgf:sequence>

@@ -2,7 +2,6 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: ConstantDeclaration.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarator)])
@@ -81,7 +80,7 @@
   </xbgf:add>
   <xbgf:horizontal>FieldAccess</xbgf:horizontal>
 
-  <!-- ISSUE REFACTOR BRUTAL
+  <!-- 
   Resolve brutally. Is there a better way?
   
      - Fail: PrimaryNoNewArray.
@@ -89,7 +88,9 @@
      vs.
       - [], ;([n(Literal), ,([n(Type), t(.), t(class)]), ,([t(void), t(.), t(class)]), t(this), ,([n(ClassName), t(.), t(this)]), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
     -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>PrimaryNoNewArray</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>PrimaryNoNewArray</nonterminal>
@@ -169,7 +170,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-
 
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: LocalVariableDeclaration.
@@ -595,4 +595,5 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
+
 </xbgf:sequence>

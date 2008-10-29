@@ -2,14 +2,14 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
   This nonterminal is used more consistently in the collected part -->
   <xbgf:fold>
     <nonterminal>QualifiedIdentifier</nonterminal>
   </xbgf:fold>
 
 
-  <!-- ISSUE REFACTOR EBNF
+  <!-- 
    - Fail: Catches.
       - [], ,([n(CatchClause), *(n(CatchClause))])
      vs.
@@ -42,16 +42,14 @@
     </in>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR FOLDING
-       getting rid of explicit suffixes -->
+  <!-- getting rid of explicit suffixes -->
   <xbgf:inline>PrefixOp</xbgf:inline>
   <xbgf:inline>PostfixOp</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>Expression3</nonterminal>
   </xbgf:distribute>
   
-  <!-- ISSUE REFACTOR EBNF
-  pushing optionals outside -->
+  <!-- pushing optionals outside -->
   <xbgf:inline>Expression1Rest</xbgf:inline>
   <xbgf:extract>
     <bgf:production>
@@ -95,8 +93,6 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR EBNF
-  fake horizontal -->
   <xbgf:inline>MemberDecl</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -105,7 +101,6 @@
     <nonterminal>Statement</nonterminal>
   </xbgf:distribute>
 
-  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:fold>
     <nonterminal>ParExpression</nonterminal>
   </xbgf:fold>

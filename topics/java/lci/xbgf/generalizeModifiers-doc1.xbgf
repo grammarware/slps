@@ -10,7 +10,6 @@
    (and many similar ones)
   -->
   
-  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:vertical>
     <nonterminal>ClassModifier</nonterminal>
   </xbgf:vertical>
@@ -33,7 +32,7 @@
     <nonterminal>ConstantModifier</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE REFACTOR GENERALIZE singular -->
+  <!-- ISSUE PERMISSIVENESS -->
   <xbgf:rename>
     <nonterminal>
       <from>ClassModifier</from>
@@ -66,7 +65,7 @@
     <to>Modifier</to>
   </xbgf:unite>
 
-  <!-- ISSUE REFACTOR GENERALIZE plural -->
+  <!-- ISSUE PERMISSIVENESS plural -->
   <xbgf:rename>
     <nonterminal>
       <from>ClassModifiers</from>

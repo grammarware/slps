@@ -6,7 +6,7 @@
   See refactorTypes, this is its version tweaked for JLS1
   -->
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
   First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
   <xbgf:inline>IntegralType</xbgf:inline>
   <xbgf:inline>FloatingPointType</xbgf:inline>
@@ -21,7 +21,7 @@
     </nonterminal>
   </xbgf:rename>
   
-  <!-- ISSUE REFACTOR GENERALIZE
+  <!-- ISSUE PERMISSIVENESS
   Merging interfaces with classes and making lists and other things conform -->
   <xbgf:replace>
     <bgf:expression>
@@ -96,14 +96,12 @@
     </bgf:production>
   </xbgf:remove>
   
-  <!-- ISSUE REFACTOR FOLDING
-  Finishing touches -->
+  <!-- Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
   <xbgf:inline>ReferenceType</xbgf:inline>
   
-  <!-- ISSUE REFACTOR
-  solves multiple problems later -->
+  <!-- solves multiple problems later -->
   <xbgf:rename>
     <nonterminal>
       <from>Name</from>
@@ -111,7 +109,7 @@
     </nonterminal>
   </xbgf:rename>
 
-  <!-- ISSUE REFACTOR GENERALIZE
+  <!-- ISSUE PERMISSIVENESS
    - Fail: Type.
       - [], ;([n(BasicType), n(QualifiedIdentifier)])
      vs.

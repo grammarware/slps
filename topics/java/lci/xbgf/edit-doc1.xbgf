@@ -29,7 +29,7 @@
     </bgf:production>
   </xbgf:introduce>
 
-  <!-- ISSUE REFACTOR EDITING
+  <!-- BREFACTOR
   Local substitution:
   
      - Fail: TypeImportOnDemandDeclaration.
@@ -49,7 +49,7 @@
     </in>
   </xbgf:replace>
 
-  <!-- ISSUE REFACTOR EDITING
+  <!-- BREFACTOR 
   Local substitution:
      - Fail: TypeName.
       - [], ;([n(Identifier), ,([n(PackageName), t(.), n(Identifier)])])
@@ -68,7 +68,7 @@
     </in>
   </xbgf:replace>
 
-  <!-- ISSUE REFACTOR EDITING
+  <!-- BREFACTOR 
   Local substitute + add + horizontal:
      - Fail: ClassInstanceCreationExpression.
       - [], ,([t(new), n(ClassType), t((), ?(n(ArgumentList)), t())])
@@ -101,6 +101,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
+<!-- BREFACTOR -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
@@ -136,6 +137,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
+<!-- BREFACTOR -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>

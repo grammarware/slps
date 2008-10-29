@@ -55,7 +55,7 @@
      Identifier "(" [ FormalParameterList ] ")"
   -->
  
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- BREFACTOR 
    - Fail: InterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
      vs.
@@ -95,7 +95,7 @@
   </xbgf:fold>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
   
-  <!-- ISSUE REFACTOR EBNF
+  <!-- 
    - Fail: InterfaceBody.
       - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
      vs.
@@ -130,7 +130,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: InterfaceBodyDeclaration.
       - [], ;([t((;)), ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
      vs.
@@ -139,6 +139,7 @@
   <xbgf:inline>ConstantDeclaration</xbgf:inline>
   <xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
   <!-- this one already had modifiers introduced by earlier transformations -->
+  <!-- BREFACTOR -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -165,7 +166,7 @@
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- BREFACTOR 
   Serious lack of everything -->
   <xbgf:remove>
     <bgf:production>
@@ -186,7 +187,7 @@
     </bgf:production>
   </xbgf:remove>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: InterfaceBodyDeclaration.
       - [], ;([t((;)), ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
      vs.
@@ -292,10 +293,8 @@
      ClassOrInterfaceDeclaration
 -->
   
-  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
   
-  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -401,7 +400,7 @@
     </in>
   </xbgf:extract>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: InterfaceMethodOrFieldRest.
       - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
      vs.
@@ -416,7 +415,7 @@
     </bgf:production>
   </xbgf:chain>
   
-  <!-- ISSUE EXTEND
+  <!-- BREFACTOR
    - Fail: InterfaceMethodOrFieldRest.
       - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
      vs.
@@ -438,6 +437,7 @@
     </bgf:production>
   </xbgf:add>
   <xbgf:horizontal>InterfaceMethodOrFieldRest</xbgf:horizontal>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ConstantDeclaratorsRest</nonterminal>
@@ -464,6 +464,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ConstantDeclaratorRest</nonterminal>
@@ -482,6 +483,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ConstantDeclarator</nonterminal>
@@ -498,7 +500,6 @@
     </bgf:production>
   </xbgf:define>
   
-  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:inline>Throws</xbgf:inline>
 
 </xbgf:sequence>

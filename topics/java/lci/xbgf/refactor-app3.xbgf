@@ -2,8 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE REFACTOR COMPAS
-  getting the choices right -->
+  <!-- getting the choices right -->
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
@@ -17,7 +16,7 @@
     <nonterminal>InterfaceMemberDecl</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE REFACTOR EBNF
+  <!-- 
    - Fail: Annotations.
       - [], ,([n(Annotation), ?(n(Annotations))])
      vs.
@@ -27,7 +26,7 @@
   -->
   <xbgf:deyaccify>Annotations</xbgf:deyaccify>
 
-  <!-- ISSUE REFACTOR EBNF
+  <!-- 
    - Fail: Catches.
       - [], ,([n(CatchClause), *(n(CatchClause))])
      vs.
@@ -57,8 +56,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!--  ISSUE REFACTOR FOLDING
-  This stuff was used in JLS1 and JLS2 -->
+  <!--  This stuff was used in JLS1 and JLS2 -->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>BracketsOpt</nonterminal>
@@ -79,11 +77,12 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!--  ISSUE REFACTOR FOLDING BRUTAL
+  <!--  
   ','([n('Primary'), *(n('Selector')), *(n('PostfixOp'))])
   vs 
   ;([n('Primary'), n('QualifiedIdentifier'), ','([n('PostfixExpression'), n('PostfixOp')])])
   -->
+  <!-- BREFACTOR -->
   <xbgf:replace>
     <bgf:expression>
       <sequence>
@@ -110,6 +109,7 @@
       </choice>
     </bgf:expression>
   </xbgf:replace>
+  <!-- BREFACTOR -->
   <xbgf:eliminate>Selector</xbgf:eliminate>
   
 </xbgf:sequence>

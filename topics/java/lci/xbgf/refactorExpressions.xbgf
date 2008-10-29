@@ -113,7 +113,7 @@
      "(" ReferenceType ")" UnaryExpressionNotPlusMinus
 -->
   
-  <!-- ISSUE REFACTOR FOLDING BRUTAL
+  <!-- BREFACTOR 
   Complicated surgery on CastExpression - kind of fold mod new type system
   
   p([], 'CastExpression', ','([t('('), n('BasicType'), ?(n('Dims')), t(')'), n('UnaryExpression')])),
@@ -123,6 +123,7 @@ vs
 
   -->
   <xbgf:undefine>CastExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>CastExpression</nonterminal>
@@ -153,8 +154,7 @@ vs
   </xbgf:define>
   <xbgf:inline>CastExpression</xbgf:inline>
 
-  <!-- ISSUE REFACTOR EBNF
-  Defining PrefixOp; smart extract needed -->
+  <!-- Defining PrefixOp; smart extract needed -->
   <xbgf:inline>PreIncrementExpression</xbgf:inline>
   <xbgf:inline>PreDecrementExpression</xbgf:inline>
   <xbgf:inline>UnaryExpressionNotPlusMinus</xbgf:inline>
@@ -168,13 +168,12 @@ vs
     </nonterminal>
   </xbgf:rename>
 
-  <!-- ISSUE REFACTOR FOLDING
-  multiway deyaccification needed -->
   <xbgf:inline>PostDecrementExpression</xbgf:inline>
   <xbgf:inline>PostIncrementExpression</xbgf:inline>
   <xbgf:vertical>
     <nonterminal>PostfixExpression</nonterminal>
   </xbgf:vertical>
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>PostfixExpression</nonterminal>
@@ -183,6 +182,7 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>PostfixExpression</nonterminal>
@@ -200,6 +200,7 @@ vs
   </xbgf:remove>
   <xbgf:horizontal>PostfixExpression</xbgf:horizontal>
   <xbgf:deyaccify>PostfixExpression</xbgf:deyaccify>
+  <!-- BREFACTOR -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>PostfixExpression</nonterminal>
@@ -226,6 +227,7 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
+  <!-- BREFACTOR -->
   <xbgf:replace>
     <bgf:expression>
       <terminal>++</terminal>
@@ -244,6 +246,7 @@ vs
       <nonterminal>PostfixExpression</nonterminal>
     </in>
   </xbgf:replace>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>Selector</nonterminal>
@@ -320,6 +323,7 @@ vs
     </bgf:production>
   </xbgf:define>
   <xbgf:inline>PostfixExpression</xbgf:inline>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>Arguments</nonterminal>
@@ -360,6 +364,7 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>InnerCreator</nonterminal>
@@ -375,6 +380,7 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ClassCreatorRest</nonterminal>
@@ -395,9 +401,10 @@ vs
     </bgf:production>
   </xbgf:define>
 
-  <!-- ISSUE REFACTOR BRUTAL
+  <!--  BREFACTOR 
   Now to Expression2, using the expressway -->
   <xbgf:undefine>ConditionalOrExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ConditionalOrExpression</nonterminal>
@@ -423,6 +430,7 @@ vs
       <to>Expression2</to>
     </nonterminal>
   </xbgf:rename>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>Expression2Rest</nonterminal>
@@ -459,6 +467,7 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>Infixop</nonterminal>
@@ -525,18 +534,26 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:undefine>MultiplicativeExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:undefine>AdditiveExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:undefine>ShiftExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:undefine>RelationalExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:undefine>EqualityExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:undefine>AndExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:undefine>ExclusiveOrExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:undefine>InclusiveOrExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:eliminate>ConditionalAndExpression</xbgf:eliminate>
 
-  <!-- ISSUE REFACTOR FOLDING
-  And now "Expression1" -->
+  <!-- And now "Expression1" -->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>Expression1Rest</nonterminal>
@@ -614,13 +631,15 @@ vs
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR FOLDING
-  last effort for Expression1-->
+  <!-- last effort for Expression1-->
   <xbgf:vertical>
     <nonterminal>AssignmentExpression</nonterminal>
   </xbgf:vertical>
+  <!-- BREFACTOR -->
   <xbgf:undefine>LeftHandSide</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:undefine>Assignment</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>AssignmentExpression</nonterminal>
@@ -640,7 +659,7 @@ vs
     <nonterminal>Expression1</nonterminal>
   </xbgf:fold>
 
-  <!-- ISSUE REFACTOR 
+  <!-- BREFACTOR 
   Expression -->
   <xbgf:inject>
     <bgf:production>
@@ -669,13 +688,14 @@ vs
     </bgf:production>
   </xbgf:inject>
 
-  <!-- ISSUE REFACTOR 
+  <!-- BREFACTOR 
    - Fail: StatementExpression.
       - [], n(Expression)
      vs.
       - [], ;([n(Assignment), ,([t(++), n(Expression3)]), ,([t(- -), n(Expression3)]), ,([n(Primary), *(n(Selector)), *(;([t(++), t(- -)])), t(++)]), ,([n(Primary), *(n(Selector)), *(;([t(++), t(- -)])), t(- -)]), n(MethodInvocation), n(ClassInstanceCreationExpression)])
   -->
   <xbgf:undefine>StatementExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>StatementExpression</nonterminal>
@@ -684,4 +704,5 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+
 </xbgf:sequence>

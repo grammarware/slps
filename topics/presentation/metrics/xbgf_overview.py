@@ -86,12 +86,14 @@ if __name__ == "__main__":
   for y in targets[x]:
    results['LOC'][x] += loc(path+y+'.xbgf')
    results['NOI'][x] += nosi(path+y+'.xbgf','ISSUE')
-   results['NI~'][x] += nosi(path+y+'.xbgf','REFACTOR')
+   results['NI~'][x] += nosi(path+y+'.xbgf','ISSUE REFACTOR')
    results['NI+'][x] += nosi(path+y+'.xbgf','EXTEND')
    results['NI!'][x] += nosi(path+y+'.xbgf','CORRECT')
    results['NI^'][x] += nosi(path+y+'.xbgf','PERMISSIVENESS')
    results['COR'][x] += nosi(path+y+'.xbgf','EXTRACTERROR')
-   results['SGO'][x] += noni(path+y+'.xbgf')
+   results['SGO'][x] += noni(path+y+'.xbgf')+nosi(path+y+'.xbgf','BREFACTOR')
+   for z in rkeys:
+    print 'DEBUG',z,x,y,':',results[z][x]
    xbgf = ET.parse(path+y+'.xbgf')
    results['NOX'][x] += len(xbgf.findall('/*'))
    for z in names:
@@ -125,7 +127,7 @@ if __name__ == "__main__":
  report(sorted,'NI!','\\issuesCorrect')
  report(sorted,'NI+','\\issuesExtend')
  report(sorted,'NI^','\\issuesPermit')
- report(sorted,'NI~','\\issuesRefactor')
+ # report(sorted,'NI~','\\issuesRefactor')
  print '\\hline'
  print '\\end{tabular}'
  sys.exit(0)

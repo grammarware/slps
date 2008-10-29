@@ -114,8 +114,7 @@
 
   -->
 
-  <!-- ISSUE REFACTOR FOLDING
-  [Dims] vs BracketsOpt-->
+  <!-- [Dims] vs BracketsOpt-->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>B</nonterminal>
@@ -186,8 +185,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR 
-  What suits to approximate future Expression1 -->
+  <!-- What suits to approximate future Expression1 -->
   <xbgf:rename>
     <nonterminal>
       <from>ConditionalExpression</from>
@@ -195,7 +193,7 @@
     </nonterminal>
   </xbgf:rename>
 
-  <!-- ISSUE REFACTOR GENERALIZE
+  <!-- ISSUE PERMISSIVENESS
   Everything that can be united to make Expression2 -->
   <xbgf:rename>
     <nonterminal>
@@ -244,14 +242,14 @@
     <nonterminal>Expression2</nonterminal>
   </xbgf:distribute>
 
-  <!-- ISSUE REFACTOR FOLDING
-  Introducing another layering scheme: Expression3 -->
+  <!-- Introducing another layering scheme: Expression3 -->
   <xbgf:rename>
     <nonterminal>
       <from>UnaryExpression</from>
       <to>Expression3</to>
     </nonterminal>
   </xbgf:rename>
+  <!-- BREFACTOR -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>Expression2</nonterminal>
@@ -264,8 +262,7 @@
     </in>
   </xbgf:replace>
 
-  <!-- ISSUE REFACTOR 
-  Huge factoring for fishing out infix operators -->
+  <!--  Huge factoring for fishing out infix operators -->
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -657,8 +654,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!-- ISSUE REFACTOR 
-  revert of lassoc-->
+  <!-- revert of lassoc-->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>TMP</nonterminal>
@@ -674,6 +670,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <!-- BREFACTOR -->
   <xbgf:widen>
     <bgf:expression>
       <nonterminal>TMP</nonterminal>
@@ -691,8 +688,7 @@
   </xbgf:widen>
   <xbgf:inline>TMP</xbgf:inline>
 
-  <!-- ISSUE REFACTOR 
-  extracting Expression2Rest -->
+  <!--  extracting Expression2Rest -->
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -857,7 +853,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Expression.
       - [], n(AssignmentExpression)
      vs.
@@ -870,7 +866,7 @@
     </in>
   </xbgf:unfold>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Expression1.
       - [], ;([n(Expression2), ,([n(Expression2), t(?), n(Expression), t(:), n(Expression1)])])
      vs.
@@ -1001,8 +997,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!-- ISSUE REFACTOR FOLDING
-  Prefixes -->
+  <!-- Prefixes -->
   <xbgf:inline>PreIncrementExpression</xbgf:inline>
   <xbgf:inline>PreDecrementExpression</xbgf:inline>
   <xbgf:inline>UnaryExpressionNotPlusMinus</xbgf:inline>
@@ -1132,7 +1127,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  <!-- ISSUE REFACTOR FOLDING BRUTAL
+  <!-- ISSUE PERMISSIVENESS BRUTAL
  - Fail: StatementExpression.
       - [], ;([n(Assignment), ,([t(++), n(Expression3)]), ,([t(- -), n(Expression3)]), n(PostIncrementExpression), n(PostDecrementExpression), n(MethodInvocation), n(ClassInstanceCreationExpression)])
      vs.
@@ -1149,7 +1144,7 @@
     </bgf:production>
   </xbgf:define>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Expression3.
       - [], ;([,([n(PrefixOp), n(Expression3)]), n(PostfixExpression), n(CastExpression)])
      vs.
@@ -1160,7 +1155,9 @@
   <xbgf:vertical>
     <nonterminal>Expression3</nonterminal>
   </xbgf:vertical>
+  <!-- BREFACTOR -->
   <xbgf:undefine>CastExpression</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>CastExpression</nonterminal>
@@ -1191,7 +1188,7 @@
   </xbgf:define>
   <xbgf:inline>CastExpression</xbgf:inline>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Expression3.
       - [], n(PostfixExpression)
      vs.
@@ -1261,7 +1258,7 @@
     </in>
   </xbgf:extract>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Expression3/PostfixExpression.
       - [], ;([n('Primary'), n('QualifiedIdentifier'), ','([n('PostfixExpression'), n('PostfixOp')])])
      vs.
@@ -1287,7 +1284,7 @@
 
   <xbgf:inline>PostfixExpression</xbgf:inline>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Primary.
       - [], ,([n(Identifier), *(,([t(.), n(Identifier)])), ?(n(IdentifierSuffix))])
       - [], n(ParExpression)

@@ -2,10 +2,9 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE REFACTOR EBNF -->
   <xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: VariableDeclarator.
       - [], ,([n(Identifier), n(VariableDeclaratorRest)])
      vs.
@@ -99,7 +98,6 @@
     </in>
   </xbgf:unfold>
 
-  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>VariableDeclaratorRest</nonterminal>
@@ -127,7 +125,7 @@
     </bgf:production>
   </xbgf:extract>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: CompilationUnit.
       - [], ,([?(,([t(package), n(QualifiedIdentifier), t((;))])), *(n(ImportDeclaration)), *(n(TypeDeclaration))])
      vs.
@@ -179,7 +177,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ImportDeclaration.
       - [], ,([t(import), n(Identifier), *(,([t(.), n(Identifier)])), ?(,([t(.), t(*)])), t((;))])
      vs.
@@ -188,7 +186,7 @@
   <xbgf:inline>SingleTypeImportDeclaration</xbgf:inline>
   <xbgf:inline>TypeImportOnDemandDeclaration</xbgf:inline>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ImportDeclaration.
       - [], ,([t(import), n(QualifiedIdentifier), ?(,([t(.), t(*)])), t((;))])
      vs.
@@ -296,4 +294,5 @@
       </optional>
     </bgf:expression>
   </xbgf:massage>
+
 </xbgf:sequence>

@@ -2,8 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE REFACTOR COMPAS
-  prepare choices -->
+  <!-- prepare choices -->
   <xbgf:vertical>
     <nonterminal>Type</nonterminal>
   </xbgf:vertical>
@@ -14,7 +13,7 @@
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE REFACTOR
+  <!-- 
    - Fail: ClassOrInterfaceType.
       - [], ;([n(ClassType), n(InterfaceType)])
      vs.
@@ -30,6 +29,7 @@
       
       NB: The following two folds are virtually chain transformations, but performed for an existing definition.
   -->
+  <!-- BREFACTOR -->
   <xbgf:replace>
     <bgf:expression>
       <choice>
@@ -61,7 +61,7 @@
     </in>
   </xbgf:fold>
 
-  <!-- ISSUE REFACTOR GENERALIZE
+  <!-- 
   - Fail: MethodHeader.
       - [], ,([?(n(MethodModifiers)), n(ResultType), n(MethodDeclarator), ?(n(Throws))])
      vs.
@@ -83,7 +83,7 @@
     <nonterminal>MethodHeader</nonterminal>
   </xbgf:distribute>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ArrayCreationExpression.
       - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(Name), n(DimExprs), ?(n(Dims))])])
      vs.
@@ -96,7 +96,7 @@
     </in>
   </xbgf:fold>
 
-  <!-- ISSUE REFACTOR BRUTAL
+  <!-- 
    - Fail: CastExpression.
       - [], ;([,([t((), n(PrimitiveType), ?(n(Dims)), t()), n(UnaryExpression)]),
                ,([t((), n(ReferenceType), t()), n(UnaryExpressionNotPlusMinus)])])
@@ -105,6 +105,7 @@
                ,([t((), n(Expression), t()), n(UnaryExpressionNotPlusMinus)]),
                ,([t((), n(Name), n(Dims), t()), n(UnaryExpressionNotPlusMinus)])])
   -->
+  <!-- BREFACTOR -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>ReferenceType</nonterminal>
@@ -134,7 +135,7 @@
     <nonterminal>CastExpression</nonterminal>
   </xbgf:distribute>
 
-  <!-- ISSUE REFACTOR BRUTAL
+  <!-- BREFACTOR 
    - Fail: ConstantDeclaration.
       - [], ,([?(n(Modifiers)), n(Type), n(VariableDeclarator)])
      vs.
@@ -169,7 +170,7 @@
     </in>
   </xbgf:replace>
 
-  <!-- ISSUE REFACTOR
+  <!-- 
    - Fail: ArrayType.
       - [], ,([n(Type), t([), t(])])
      vs.

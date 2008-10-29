@@ -73,8 +73,7 @@
      ClassOrInterfaceType "." Identifier
   -->
 
-  <!-- ISSUE REFACTOR FOLDING
-  First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
+  <!--   First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
   <xbgf:inline>IntegralType</xbgf:inline>
   <xbgf:inline>FloatingPointType</xbgf:inline>
   <xbgf:inline>NumericType</xbgf:inline>
@@ -87,7 +86,8 @@
       <to>BasicType</to>
     </nonterminal>
   </xbgf:rename>
-  <!-- ISSUE REFACTOR
+
+  <!-- ISSUE PERMISSIVENESS
   Merging interfaces with classes and making lists and other things conform -->
   <xbgf:replace>
     <bgf:expression>
@@ -137,7 +137,8 @@
     </nonterminal>
   </xbgf:rename>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
-  <!-- ISSUE REFACTOR BRUTAL
+
+  <!-- BREFACTOR 
   Introducing brackets brutally, too hard to derive -->
   <xbgf:inject>
     <bgf:production>
@@ -157,7 +158,9 @@
   <xbgf:vertical>
     <nonterminal>ReferenceType</nonterminal>
   </xbgf:vertical>
+  <!-- BREFACTOR -->
   <xbgf:undefine>ArrayType</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ReferenceType</nonterminal>
@@ -167,6 +170,7 @@
     </bgf:production>
   </xbgf:remove>
   <xbgf:inline>TypeVariable</xbgf:inline>
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ReferenceType</nonterminal>
@@ -175,13 +179,13 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <!-- ISSUE REFACTOR FOLDING
-  Finishing touches -->
+
+  <!-- Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
   <xbgf:inline>ReferenceType</xbgf:inline>
   
-  <!-- ISSUE REFACTOR EBNF
+  <!-- 
   p([], 'TypeDeclSpecifier',
   ;([n('QualifiedIdentifier'),
     ','([n('TypeDeclSpecifier'), ?(n('TypeArguments')), n('BracketsOpt'), t('.'), n('Identifier')])])),
@@ -193,7 +197,7 @@
   -->
   <xbgf:deyaccify>TypeDeclSpecifier</xbgf:deyaccify>
   
-  <!-- ISSUE REFACTOR BRUTAL
+  <!-- BREFACTOR 
   QUICK FIX - this file needs to be rewritten anyhow -->
   <xbgf:replace>
     <bgf:expression>
@@ -221,7 +225,7 @@
     </in>
   </xbgf:replace>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Type.
       - [], n(BasicType)
       - [], ,([n(Identifier), ?(n(TypeArguments)), *(,([t(.), n(Identifier), ?(n(TypeArguments))])), n(BracketsOpt)])

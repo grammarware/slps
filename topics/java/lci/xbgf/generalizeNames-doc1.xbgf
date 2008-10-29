@@ -29,7 +29,7 @@ vs
   
   -->
   
-  <!-- ISSUE REFACTOR FOLDING -->
+  <!-- ISSUE PERMISSIVENESS -->
   <xbgf:rename>
     <nonterminal>
       <from>AmbiguousName</from>
@@ -53,17 +53,14 @@ vs
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
   
-  <!--ISSUE REFACTOR EBNF-->
   <xbgf:deyaccify>QualifiedIdentifier</xbgf:deyaccify>
 
-  <!-- ISSUE REFACTOR
-  use another name -->
+  <!-- use another name -->
   <xbgf:rename>
     <nonterminal>
       <from>QualifiedIdentifier</from>
       <to>Name</to>
     </nonterminal>
   </xbgf:rename>
-
 
 </xbgf:sequence>

@@ -15,10 +15,23 @@ elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    /bin/echo -n "Correcting: "
+    /bin/echo -n "Number of lines: "
+    wc -l $1
+    /bin/echo -n "Number of transformations: "
+    xpath $1 `cat ${SLPS}/topics/presentation/metrics/transformations.xpath` 2> /dev/null
+    /bin/echo -n "Number of unsafe optimizations: "
+    grep -c BREFACTOR $1
+    /bin/echo -n "Number of issues (1): "
+    grep -c ISSUE $1
+    /bin/echo -n "Number of issues (2): "
+    expr `grep -c EXTRACTERROR $1` + `grep -c CORRECT $1` + `grep -c EXTEND $1` + `grep -c PERMISSIVENESS $1`
+    /bin/echo -n "  post-extraction: "
+    grep -c EXTRACTERROR $1
+    /bin/echo -n "  correction: "
     grep -c CORRECT $1
-    /bin/echo -n "Extending: "
+    /bin/echo -n "  extending: "
     grep -c EXTEND $1
-    /bin/echo -n "Refactoring: "
-    grep -c REFACTOR $1
+    /bin/echo -n "  permissiveness: "
+    grep -c PERMISSIVENESS $1
 fi
+

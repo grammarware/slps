@@ -17,7 +17,7 @@
      ";" [ ClassBodyDeclarations ]
   -->
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Arguments.
       - [], ,([t((), ?(,([n(Expression), *(,([t((,)), n(Expression)]))])), t())])
      vs.
@@ -31,7 +31,7 @@
     </in>
   </xbgf:unfold>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- BREFACTOR 
   - Fail: EnumDeclaration.
       - [], ,([t(enum), n(Identifier), ?(,([t(implements), n(TypeList)])), n(EnumBody)])
      vs.
@@ -69,4 +69,5 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
+
 </xbgf:sequence>

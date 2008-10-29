@@ -2,22 +2,24 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:horizontal>Primary</xbgf:horizontal>
 
-  <!-- ISSUE REFACTOR BRUTAL?
+ <!-- BREFACTOR
   ConstructorBody is defined as:
      { [ ExplicitConstructorInvocation ] [ BlockStatements ] }
   -->
   <xbgf:undefine>ConstructorBody</xbgf:undefine>
+<!-- BREFACTOR -->
   <xbgf:unite>
     <add>ConstructorBody</add>
     <to>MethodBody</to>
   </xbgf:unite>
+<!-- BREFACTOR -->
   <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
+<!-- BREFACTOR -->
   <xbgf:eliminate>ArgumentList</xbgf:eliminate>
 
-  <!-- ISSUE REFACTOR GENERALIZE
+  <!-- ISSUE PERMISSIVENESS
    Some productions use a more general QualifiedIdentifierList instead of TypeList
   -->
   <xbgf:introduce>
@@ -91,7 +93,7 @@
     </in>
   </xbgf:replace>
 
-  <!-- ISSUE REFACTOR BRUTAL?
+  <!-- BREFACTOR
    - Fail: MethodDeclaratorRest.
       - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), ;([n(MethodBody), t((;))])])
      vs.
@@ -116,7 +118,7 @@
     </in>
   </xbgf:replace>
 
- <!-- ISSUE REFACTOR
+ <!-- BREFACTOR
    - Fail: ArrayInitializer.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
      vs.

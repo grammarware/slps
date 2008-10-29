@@ -2,8 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!--  ISSUE REFACTOR FOLDING
-  introducing parenthesized expression -->
+  <!-- introducing parenthesized expression -->
   <xbgf:extract>
     <bgf:production>
       <nonterminal>ParExpression</nonterminal>
@@ -23,7 +22,7 @@
     </bgf:production>
   </xbgf:extract>
  
-  <!--  ISSUE REFACTOR FOLDING
+  <!--
    - Fail: Primary.
       - [], ,([t(void), t(.), t(class)])
       - [], ,([n(BasicType), n(BracketsOpt), t(.), t(class)])
@@ -45,7 +44,7 @@
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE CORRECT
+  <!-- 
    - Fail: Primary.
       - [], ,([t(this), ?(n(Arguments))])
      vs.
@@ -60,6 +59,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- BREFACTOR -->
   <xbgf:inject>
     <bgf:production>
       <label>target</label>
@@ -84,7 +84,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!-- ISSUE EXTEND
+  <!-- ISSUE PERMISSIVENESS
    - Fail: Primary.
       - [], ,([n(BasicType), n(BracketsOpt), t(.), t(class)])
      vs.
@@ -131,12 +131,13 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!--  ISSUE REFACTOR EDITING
+  <!--  
    - Fail: Primary.
       - [], ,([t(new), n(Creator)])
      vs.
       - [], n(ArrayCreationExpression)
    -->
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -145,10 +146,15 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <!-- BREFACTOR -->
   <xbgf:eliminate>ArrayCreationExpression</xbgf:eliminate>
+  <!-- BREFACTOR -->
   <xbgf:eliminate>DimExprs</xbgf:eliminate>
+  <!-- BREFACTOR -->
   <xbgf:eliminate>DimExpr</xbgf:eliminate>
+  <!-- BREFACTOR -->
   <xbgf:eliminate>Dims</xbgf:eliminate>
+  <!-- BREFACTOR -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -164,6 +170,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>Creator</nonterminal>
@@ -186,6 +193,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ArrayCreatorRest</nonterminal>
@@ -246,7 +254,7 @@
     </bgf:production>
   </xbgf:define>
   
-  <!--  ISSUE REFACTOR FOLDING
+  <!--  ISSUE PERMISSIVENESS
    - Fail: ForUpdate.
       - [], ,([n(StatementExpression), n(MoreStatementExpressions)])
      vs.
@@ -278,7 +286,7 @@
   </xbgf:extract>
   <xbgf:inline>StatementExpressionList</xbgf:inline>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
   Not quite an expression, but exactly the same problem:
   
    - Fail: ArrayInitializer.
@@ -289,7 +297,7 @@
   <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
 
-  <!-- ISSUE REFACTOR BRUTAL
+  <!-- ISSUE PERMISSIVENESS
    - Fail: Primary.
       - [], ,([n(QualifiedIdentifier), ?(n(IdentifierSuffix))])
      vs.
@@ -404,7 +412,7 @@
     </bgf:production>
   </xbgf:define>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- ISSUE PERMISSIVENESS
   - Fail: Primary.
       - [], ,([t(super), n(SuperSuffix)])
      vs.
@@ -460,7 +468,7 @@
   </xbgf:add>
   <xbgf:horizontal>SuperSuffix</xbgf:horizontal>
 
-  <!-- ISSUE REFACTOR BRUTAL
+  <!-- 
    - Fail: Primary.
      vs.
       - [], n(ArrayAccess)
@@ -469,6 +477,7 @@
       - [], ,([n(Primary), n(SuperSuffix)])
       - [], n(ClassInstanceCreationExpression)
   -->
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -478,6 +487,7 @@
     </bgf:production>
   </xbgf:remove>
   <!--xbgf:eliminate>ArrayAccess</xbgf:eliminate-->
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -487,6 +497,7 @@
     </bgf:production>
   </xbgf:remove>
   <!--xbgf:eliminate>MethodInvocation</xbgf:eliminate-->
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -496,6 +507,7 @@
     </bgf:production>
   </xbgf:remove>
   <!--xbgf:eliminate>ClassInstanceCreationExpression</xbgf:eliminate-->
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -511,6 +523,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -532,6 +545,5 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-
 
 </xbgf:sequence>

@@ -61,7 +61,7 @@
      Identifier "(" [ FormalParameterList ] ")"
  -->
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- BREFACTOR 
    - Fail: NormalInterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
      vs.
@@ -100,7 +100,7 @@
     </in>
   </xbgf:fold>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- BREFACTOR 
      - Fail: NormalInterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(n(TypeParameters)), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
      vs.
@@ -140,7 +140,7 @@
   </xbgf:inject>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
 
-  <!-- ISSUE REFACTOR EBNF
+  <!-- 
    - Fail: InterfaceBody.
       - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
      vs.
@@ -175,7 +175,7 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: InterfaceBodyDeclaration.
       - [], ;([t((;)), ,([*(n(Modifier)), n(InterfaceMemberDecl)])])
      vs.
@@ -188,7 +188,7 @@
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- BREFACTOR 
   modifiers -->
   <xbgf:designate>
     <bgf:production>
@@ -227,6 +227,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- BREFACTOR -->
   <xbgf:inject>
     <bgf:production>
       <label>target</label>
@@ -247,7 +248,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!-- ISSUE REFACTOR EBNF
+  <!-- 
    - Fail: Annotations.
       - [], ,([n(Annotation), ?(n(Annotations))])
      vs.
@@ -255,7 +256,7 @@
   -->
   <xbgf:deyaccify>Annotations</xbgf:deyaccify>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- BREFACTOR 
    - Fail: AnnotationTypeDeclaration.
       - [], ,([t(@), t(interface), n(Identifier), n(AnnotationTypeBody)])
      vs.
@@ -283,7 +284,7 @@
     </bgf:production>
   </xbgf:project>
 
-  <!-- ISSUE REFACTOR GENERALIZE
+  <!-- 
    This is needed for Annotation (see below)
       
   ElementValuePairs is defined as:
@@ -296,6 +297,7 @@
   <xbgf:vertical>
     <nonterminal>ElementValuePairs</nonterminal>
   </xbgf:vertical>
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ElementValuePairs</nonterminal>
@@ -316,7 +318,7 @@
   </xbgf:remove>
   <xbgf:inline>ElementValuePairs</xbgf:inline>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Annotation.
       - [], ,([t(@), n(TypeName), ?(,([t((), ?(,([n(Identifier), t(=)])), n(ElementValue), t())]))])
      vs.
@@ -327,7 +329,7 @@
   <xbgf:inline>SingleElementAnnotation</xbgf:inline>
   <xbgf:inline>ElementValuePair</xbgf:inline>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
   The following solution breaks semantics by disallowing
   ,([t(@), n(QualifiedIdentifier), t((), t())])
   
@@ -383,6 +385,7 @@
   <xbgf:vertical>
     <nonterminal>Annotation</nonterminal>
   </xbgf:vertical>
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Annotation</nonterminal>
@@ -613,7 +616,7 @@
     </bgf:expression>
   </xbgf:massage>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- ISSUE PERMISSIVENESS
   ExceptionTypeList vs QualifiedIdentifierList -->
   <xbgf:undefine>ExceptionTypeList</xbgf:undefine>
   <xbgf:unite>
@@ -622,15 +625,13 @@
   </xbgf:unite>
   <xbgf:inline>Throws</xbgf:inline>
 
-  <!-- ISSUE REFACTOR EBNF -->
   <xbgf:deyaccify>ElementValues</xbgf:deyaccify>
   
-  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:fold>
     <nonterminal>BracketsOpt</nonterminal>
   </xbgf:fold>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: ImportDeclaration.
       - [], ,([t(import), ?(t(static)), n(Identifier), *(,([t(.), n(Identifier)])), ?(,([t(.), t(*)])), t((;))])
      vs.

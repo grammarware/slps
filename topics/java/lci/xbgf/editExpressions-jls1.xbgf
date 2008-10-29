@@ -2,7 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Primary.
       - [], n(ArrayCreationExpression)
       - [], n(PrimaryNoNewArray)
@@ -12,14 +12,13 @@
   <xbgf:inline>ArrayCreationExpression</xbgf:inline>
   <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
   
-  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:deyaccify>Dims</xbgf:deyaccify>
   <xbgf:inline>Dims</xbgf:inline>
   <xbgf:deyaccify>DimExprs</xbgf:deyaccify>
   <xbgf:inline>DimExprs</xbgf:inline>
   <xbgf:inline>DimExpr</xbgf:inline>
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
   this should be killed later -->
   <xbgf:massage>
     <bgf:expression>
@@ -62,7 +61,6 @@
     </in>
   </xbgf:fold>
 
-  <!-- ISSUE REFACTOR FOLDING-->
   <xbgf:inline>ClassInstanceCreationExpression</xbgf:inline>
   <xbgf:inline>FieldAccess</xbgf:inline>
   <xbgf:inline>MethodInvocation</xbgf:inline>
@@ -74,7 +72,7 @@
     <nonterminal>Primary</nonterminal>
   </xbgf:distribute>
   
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
   Multiple cases like this one:
   
    - Fail: Primary.
@@ -89,7 +87,7 @@
   </xbgf:fold>
 
 
-  <!-- ISSUE REFACTOR FOLDING
+  <!-- 
    - Fail: Primary.
       - [], ,([t(super), t(.), n(Identifier), n(Arguments)])
       - [], ,([t(super), t(.), n(Identifier)])
@@ -199,12 +197,11 @@
     </in>
   </xbgf:extract>
 
-  <!-- ISSUE REFACTOR COMPAS -->
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE EXTEND GENERALIZE
+  <!-- ISSUE EXTEND 
    - Fail: Primary.
       - [], t(this)
      vs.
@@ -243,7 +240,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!-- ISSUE REFACTOR BRUTAL
+  <!-- BREFACTOR 
   too hard to match:
         - [], n(ArrayAccess)
   -->
@@ -257,7 +254,7 @@
   </xbgf:remove>
   <xbgf:eliminate>ArrayAccess</xbgf:eliminate>
 
-  <!-- ISSUE EXTEND GENERALIZE
+  <!-- ISSUE EXTEND 
       - [], ,([n(QualifiedIdentifier), n(Arguments)])
      vs.
       - [], ,([n(QualifiedIdentifier), ?(n(IdentifierSuffix))])
@@ -538,7 +535,7 @@
     </bgf:production>
   </xbgf:add>
 
-  <!-- ISSUE REFACTOR BRUTAL
+  <!-- 
   implemented elsewise 
       - [], ,([n(Primary), t(.), n(Identifier), n(Arguments)])
       - [], ,([n(Primary), t(.), n(Identifier)])
@@ -583,11 +580,9 @@
     </bgf:production>
   </xbgf:remove>
 
-  <!-- ISSUE REFACTOR COMPAS
-  yes! -->
+  <!-- yes! -->
   <xbgf:horizontal>Primary</xbgf:horizontal>
   
-  <!-- ISSUE REFACTOR FOLDING -->
   <xbgf:fold>
     <nonterminal>ParExpression</nonterminal>
   </xbgf:fold>
