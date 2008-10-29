@@ -123,7 +123,7 @@ if __name__ == "__main__":
   print '&',len(targets[x]),
  print '&'+`cx`+'\\\\'
  report(sorted,'NOI','\\numberOfIssues')
- report(sorted,'COR','\\ \\ post-extraction')
+ report(sorted,'COR','\\issuesPostX')
  report(sorted,'NI!','\\issuesCorrect')
  report(sorted,'NI+','\\issuesExtend')
  report(sorted,'NI^','\\issuesPermit')
