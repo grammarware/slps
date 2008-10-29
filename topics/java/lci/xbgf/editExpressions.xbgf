@@ -146,13 +146,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <!-- BREFACTOR -->
   <xbgf:eliminate>ArrayCreationExpression</xbgf:eliminate>
-  <!-- BREFACTOR -->
   <xbgf:eliminate>DimExprs</xbgf:eliminate>
-  <!-- BREFACTOR -->
   <xbgf:eliminate>DimExpr</xbgf:eliminate>
-  <!-- BREFACTOR -->
   <xbgf:eliminate>Dims</xbgf:eliminate>
   <!-- BREFACTOR -->
   <xbgf:add>

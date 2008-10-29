@@ -3,7 +3,7 @@ import os
 import sys
 import elementtree.ElementTree as ET
 
-safexbgf = ('deyaccify', 'yaccify','chain', 'unchain', 'extract', 'fold', 'inline', 'unfold', 'distribute', 'factor', 'massage', 'designate', 'strip')
+safexbgf = ('deyaccify', 'yaccify','chain', 'unchain', 'extract', 'fold', 'inline', 'unfold', 'distribute', 'factor', 'massage', 'designate', 'strip','eliminate','introduce')
 rkeys = ('LOC','NOI','NOX','NI~','NI+','NI!','SGO','COR','NI^')
 
 names   = []

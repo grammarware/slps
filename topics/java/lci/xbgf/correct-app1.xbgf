@@ -8,7 +8,6 @@
   </xbgf:reroot>
 
   <!-- not used in other versions -->
-  <!-- NONISS -->
   <xbgf:eliminate>Goal</xbgf:eliminate>
 
 </xbgf:sequence>

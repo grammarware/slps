@@ -550,7 +550,6 @@ vs
   <xbgf:undefine>ExclusiveOrExpression</xbgf:undefine>
   <!-- BREFACTOR -->
   <xbgf:undefine>InclusiveOrExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
   <xbgf:eliminate>ConditionalAndExpression</xbgf:eliminate>
 
   <!-- And now "Expression1" -->

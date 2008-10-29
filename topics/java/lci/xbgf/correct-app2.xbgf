@@ -214,10 +214,11 @@
     </bgf:production>
   </xbgf:define>
 
-  <!-- ISSUE CORRECT SPECERROR
-  unused non-terminals -->
+  <!-- ISSUE CORRECT SPECERROR unused non-terminal -->
   <xbgf:eliminate>ArgumentsOpt</xbgf:eliminate>
+  <!-- ISSUE CORRECT SPECERROR unused non-terminal -->
   <xbgf:eliminate>VoidMethodDeclaratorRest</xbgf:eliminate>
+  <!-- ISSUE CORRECT SPECERROR unused non-terminal -->
   <xbgf:eliminate>VariableDeclaratorsRest</xbgf:eliminate>
 
   <!--   undefine lexical term -->

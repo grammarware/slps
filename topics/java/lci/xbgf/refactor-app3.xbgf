@@ -109,7 +109,6 @@
       </choice>
     </bgf:expression>
   </xbgf:replace>
-  <!-- BREFACTOR -->
   <xbgf:eliminate>Selector</xbgf:eliminate>
   
 </xbgf:sequence>

@@ -2,11 +2,8 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- BREFACTOR -->
   <xbgf:eliminate>ArrayAccess</xbgf:eliminate>
-  <!-- BREFACTOR -->
   <xbgf:eliminate>MethodInvocation</xbgf:eliminate>
-  <!-- BREFACTOR -->
   <xbgf:eliminate>ClassInstanceCreationExpression</xbgf:eliminate>
 
 </xbgf:sequence>

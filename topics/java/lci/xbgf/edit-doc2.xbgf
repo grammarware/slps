@@ -14,9 +14,7 @@
     <add>ConstructorBody</add>
     <to>MethodBody</to>
   </xbgf:unite>
-<!-- BREFACTOR -->
   <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
-<!-- BREFACTOR -->
   <xbgf:eliminate>ArgumentList</xbgf:eliminate>
 
   <!-- ISSUE PERMISSIVENESS
