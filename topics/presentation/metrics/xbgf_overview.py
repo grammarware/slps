@@ -50,10 +50,10 @@ def report(keys,key,note):
  for x in keys:
   cx += results[key][x]
   if results[key][x]:
-   print '&',results[key][x],
+   print '{',results[key][x],'}'
   else:
-   print '& ---',
- print '&'+`cx`+'\\\\'
+   print '{---}',
+ print '{'+`cx`+'}'
 
 if __name__ == "__main__":
  if len(sys.argv) != 4:
@@ -120,8 +120,8 @@ if __name__ == "__main__":
  cx = 0
  for x in sorted:
   cx += len(targets[x])
-  print '&',len(targets[x]),
- print '&'+`cx`+'\\\\'
+  print '{',len(targets[x]),'}'
+ print '{'+`cx`+'}'
  report(sorted,'NOI','\\numberOfIssues')
  report(sorted,'COR','\\issuesPostX')
  report(sorted,'NI!','\\issuesCorrect')
