@@ -92,8 +92,8 @@ if __name__ == "__main__":
    results['NI^'][x] += nosi(path+y+'.xbgf','PERMISSIVENESS')
    results['COR'][x] += nosi(path+y+'.xbgf','EXTRACTERROR')
    results['SGO'][x] += noni(path+y+'.xbgf')+nosi(path+y+'.xbgf','BREFACTOR')
-   for z in rkeys:
-    print 'DEBUG',z,x,y,':',results[z][x]
+   #for z in rkeys:
+   # print 'DEBUG',z,x,y,':',results[z][x]
    xbgf = ET.parse(path+y+'.xbgf')
    results['NOX'][x] += len(xbgf.findall('/*'))
    for z in names:
