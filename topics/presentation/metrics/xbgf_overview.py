@@ -4,7 +4,8 @@ import sys
 import elementtree.ElementTree as ET
 
 safexbgf = ('deyaccify', 'yaccify','chain', 'unchain', 'extract', 'fold', 'inline', 'unfold', 'distribute', 'factor', 'massage', 'designate', 'strip','eliminate','introduce')
-rkeys = ('LOC','NOI','NOX','NI~','NI+','NI!','SGO','COR','NI^')
+incdecxbgf = ('add','narrow','remove','unite','widen')
+rkeys = ('LOC','NOI','NOX','NI~','NI+','NI!','SGO','COR','NI^','SID','SRE')
 
 names   = []
 targets = {}
@@ -18,11 +19,11 @@ ET._namespace_map[bgfns] = 'bgf'
 ET._namespace_map[xbgfns]='xbgf'
 ET._namespace_map[xsdns] = 'xsd'
 
-def noni(filename):
+def noni(filename,arrayxbgf):
  global xbgfns
  cx = 0
  xbgf = ET.parse(filename)
- for c in safexbgf:
+ for c in arrayxbgf:
   cx += len(xbgf.findall('//{'+xbgfns+'}'+c))
  return cx
 
@@ -91,7 +92,9 @@ if __name__ == "__main__":
    results['NI!'][x] += nosi(path+y+'.xbgf','CORRECT')
    results['NI^'][x] += nosi(path+y+'.xbgf','PERMISSIVENESS')
    results['COR'][x] += nosi(path+y+'.xbgf','EXTRACTERROR')
-   results['SGO'][x] += noni(path+y+'.xbgf')+nosi(path+y+'.xbgf','BREFACTOR')
+   results['SGO'][x] += noni(path+y+'.xbgf',safexbgf)+nosi(path+y+'.xbgf','BREFACTOR')
+   results['SID'][x] += noni(path+y+'.xbgf',incdecxbgf)+nosi(path+y+'.xbgf','GENERALITY')
+   results['SRE'][x] += nosi(path+y+'.xbgf','REVISE')
    #for z in rkeys:
    # print 'DEBUG',z,x,y,':',results[z][x]
    xbgf = ET.parse(path+y+'.xbgf')
@@ -116,6 +119,8 @@ if __name__ == "__main__":
  report(sorted,'LOC','\\numberOfLines')
  report(sorted,'NOX','\\numberOfTransformations')
  report(sorted,'SGO','\\numberOfRefactors')
+ report(sorted,'SID','\\numberOfGeneralises')
+ report(sorted,'SRE','\\numberOfRevisings')
  print '\\numberOfSteps',
  cx = 0
  for x in sorted:
