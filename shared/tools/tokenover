@@ -13,7 +13,7 @@ if [ $# -ne 1 ]; then
     exit 1
 else
     /bin/echo "\begin{tabular}{l|c|c|c|}"
-    /bin/echo "Token&\textit{italic}&\texttt{fixed}&default\\\\\hline"
+    /bin/echo "&\textit{italic}&\texttt{fixed}&default\\\\\hline"
     /bin/echo -n "\\tokenAlNum&N ("
     cd ${SLPS}/topics/$1 ; make debug | grep -c "ITA ALNUM"
     /bin/echo -n ") &T ("
