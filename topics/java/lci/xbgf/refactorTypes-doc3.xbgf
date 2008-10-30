@@ -163,7 +163,6 @@
   </xbgf:vertical>
   <!-- BREFACTOR -->
   <xbgf:undefine>ArrayType</xbgf:undefine>
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ReferenceType</nonterminal>
@@ -173,7 +172,6 @@
     </bgf:production>
   </xbgf:remove>
   <xbgf:inline>TypeVariable</xbgf:inline>
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ReferenceType</nonterminal>

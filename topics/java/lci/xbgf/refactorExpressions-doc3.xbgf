@@ -670,7 +670,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <!-- GENERALITY -->
   <xbgf:widen>
     <bgf:expression>
       <nonterminal>TMP</nonterminal>

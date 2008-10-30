@@ -297,7 +297,6 @@
   <xbgf:vertical>
     <nonterminal>ElementValuePairs</nonterminal>
   </xbgf:vertical>
-  <!-- GENERALITY -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ElementValuePairs</nonterminal>
@@ -385,7 +384,6 @@
   <xbgf:vertical>
     <nonterminal>Annotation</nonterminal>
   </xbgf:vertical>
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Annotation</nonterminal>

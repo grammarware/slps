@@ -166,8 +166,7 @@
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
-  <!-- BREFACTOR 
-  Serious lack of everything -->
+  <!-- Serious lack of everything -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
@@ -480,7 +479,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-  <!-- BREFACTOR -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>InterfaceMethodOrFieldRest</nonterminal>

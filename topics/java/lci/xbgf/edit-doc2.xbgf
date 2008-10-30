@@ -9,7 +9,6 @@
      { [ ExplicitConstructorInvocation ] [ BlockStatements ] }
   -->
   <xbgf:undefine>ConstructorBody</xbgf:undefine>
-<!-- BREFACTOR -->
   <xbgf:unite>
     <add>ConstructorBody</add>
     <to>MethodBody</to>

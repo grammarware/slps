@@ -192,7 +192,6 @@
   </xbgf:vertical>
   <!-- BREFACTOR -->
   <xbgf:undefine>ArrayType</xbgf:undefine>
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ReferenceType</nonterminal>

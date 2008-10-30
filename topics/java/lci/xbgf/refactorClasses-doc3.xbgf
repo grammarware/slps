@@ -655,7 +655,6 @@
     </bgf:production>
   </xbgf:extract>
   <!-- ISSUE PERMISSIVENESS -->
-  <!-- GENERALITY -->
   <xbgf:narrow>
     <bgf:expression>
       <optional>
@@ -686,7 +685,7 @@
    -->
   <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
 
-  <!-- BREFACTOR 
+  <!--  
       - [], ,([*(n(Modifier)), n(Type), n(VariableDeclarators), t((;))])
   -->
   <xbgf:remove>
@@ -710,7 +709,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <!-- BREFACTOR -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -769,7 +767,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  <!-- BREFACTOR -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -820,7 +817,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  <!-- BREFACTOR -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>

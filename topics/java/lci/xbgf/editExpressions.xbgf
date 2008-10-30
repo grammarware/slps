@@ -138,7 +138,6 @@
      vs.
       - [], n(ArrayCreationExpression)
    -->
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -151,7 +150,6 @@
   <xbgf:eliminate>DimExprs</xbgf:eliminate>
   <xbgf:eliminate>DimExpr</xbgf:eliminate>
   <xbgf:eliminate>Dims</xbgf:eliminate>
-  <!-- BREFACTOR -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -477,7 +475,6 @@
       - [], ,([n(Primary), n(SuperSuffix)])
       - [], n(ClassInstanceCreationExpression)
   -->
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -487,7 +484,6 @@
     </bgf:production>
   </xbgf:remove>
   <!--xbgf:eliminate>ArrayAccess</xbgf:eliminate-->
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -497,7 +493,6 @@
     </bgf:production>
   </xbgf:remove>
   <!--xbgf:eliminate>MethodInvocation</xbgf:eliminate-->
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -507,7 +502,6 @@
     </bgf:production>
   </xbgf:remove>
   <!--xbgf:eliminate>ClassInstanceCreationExpression</xbgf:eliminate-->
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -523,7 +517,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>

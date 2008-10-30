@@ -382,7 +382,6 @@
       <nonterminal>MethodOrFieldDecl</nonterminal>
     </in>
   </xbgf:extract>
-  <!-- BREFACTOR -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>MethodOrFieldRest</nonterminal>
@@ -427,8 +426,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!-- BREFACTOR 
-  finishing touches -->
+  <!-- finishing touches -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>

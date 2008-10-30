@@ -241,7 +241,7 @@
     <label>target</label>
   </xbgf:strip>
 
-  <!-- BREFACTOR 
+  <!-- 
   too hard to match:
         - [], n(ArrayAccess)
   -->
@@ -308,7 +308,6 @@
 
   <!-- ISSUE EXTEND BRUTAL
   same problem -->
-  <!-- GENERALITY -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -327,7 +326,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <!-- GENERALITY -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -363,7 +361,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <!-- GENERALITY -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -546,7 +543,6 @@
       - [], ,([n(Primary), t(.), n(Identifier), n(Arguments)])
       - [], ,([n(Primary), t(.), n(Identifier)])
 -->
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -568,7 +564,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>

@@ -173,7 +173,6 @@ vs
   <xbgf:vertical>
     <nonterminal>PostfixExpression</nonterminal>
   </xbgf:vertical>
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>PostfixExpression</nonterminal>
@@ -182,7 +181,6 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>PostfixExpression</nonterminal>
@@ -638,7 +636,6 @@ vs
   <xbgf:undefine>LeftHandSide</xbgf:undefine>
   <!-- BREFACTOR -->
   <xbgf:undefine>Assignment</xbgf:undefine>
-  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>AssignmentExpression</nonterminal>
