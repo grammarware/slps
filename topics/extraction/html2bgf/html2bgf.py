@@ -307,8 +307,8 @@ def mapHTMLtoTokenStream(line):
    #pessimistic[1] += 1
    continue
   if line.find('<')==0:
-   print 'Style tag unknown: "'+line+'", skipping!'
-   pessimistic[1] += 1
+   #print 'Style tag unknown: "'+line+'", skipping!'
+   #pessimistic[1] += 1
    line = line[line.index('>')+1:]
   else:
    if line.find('<')>0:
@@ -398,8 +398,8 @@ def preprocessConstruct(fn):
      oneof = False
      if (pp_mode != MODE_ITALIC) and line.find('</em>')<0 and line.find('</i>')<0 and line.find('<code>')<0:
       pp_mode = MODE_ITALIC
-      print 'Style tag enforcing: virtual <em> when new definition of',name,'starts.'
-      pessimistic[1] += 1
+      #print 'Style tag enforcing: virtual <em> when new definition of',name,'starts.'
+      #pessimistic[1] += 1
     elif len(a)==4 and a[0]==a[2] and a[1]=='$$$$$' and a[-1]=='$$$$$':
      # new mingled definition
      if choices:
@@ -602,7 +602,7 @@ def preprocessCorrect():
       bs[i] = '"'+bs[i]+'"'
       continue
     elif bs[i] not in ('[',']','{','}','|','(',')'):
-     print 'Unclassified heuristic fix:',bs[i],'in',nt,'(weird name)'
+     print 'Nonterminal to terminal cheat heuristic fix:',bs[i],'in',nt,'(weird name)'
      pessimistic[2] += 1
      bs[i] = '"'+bs[i]+'"'
      i+=1

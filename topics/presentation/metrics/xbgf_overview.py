@@ -117,10 +117,12 @@ if __name__ == "__main__":
   print '&\\textbf{'+x+'}',
  print '&\\textbf{Total}\\\\\\hline'
  report(sorted,'LOC','\\numberOfLines')
+ print '\\hline'
  report(sorted,'NOX','\\numberOfTransformations')
  report(sorted,'SGO','\\numberOfRefactors')
  report(sorted,'SID','\\numberOfGeneralises')
  report(sorted,'SRE','\\numberOfRevisings')
+ print '\\hline'
  print '\\numberOfSteps',
  cx = 0
  for x in sorted:
