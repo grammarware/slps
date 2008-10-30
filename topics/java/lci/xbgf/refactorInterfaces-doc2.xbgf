@@ -54,7 +54,7 @@
   MethodDeclarator is defined as:
      Identifier "(" [ FormalParameterList ] ")"
   -->
- 
+
   <!-- BREFACTOR 
    - Fail: InterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
@@ -94,7 +94,7 @@
     </in>
   </xbgf:fold>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
-  
+
   <!-- 
    - Fail: InterfaceBody.
       - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
@@ -161,7 +161,7 @@
   <xbgf:distribute>
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:distribute>
-  
+
   <xbgf:vertical>
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
@@ -186,7 +186,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  
+
   <!-- 
    - Fail: InterfaceBodyDeclaration.
       - [], ;([t((;)), ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
@@ -292,9 +292,9 @@
      "void" Identifier VoidInterfaceMethodDeclaratorRest
      ClassOrInterfaceDeclaration
 -->
-  
+
   <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
-  
+
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -399,7 +399,7 @@
       <nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
     </in>
   </xbgf:extract>
-  
+
   <!-- 
    - Fail: InterfaceMethodOrFieldRest.
       - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
@@ -414,31 +414,47 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
-  
-  <!-- BREFACTOR
+
+  <!--
    - Fail: InterfaceMethodOrFieldRest.
       - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
      vs.
       - [], n(InterfaceMethodDeclaratorRest)
   -->
-  <xbgf:add>
+  <xbgf:introduce>
     <bgf:production>
-      <nonterminal>InterfaceMethodOrFieldRest</nonterminal>
+      <nonterminal>ConstantDeclaratorRest</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ConstantDeclaratorsRest</nonterminal>
+            <nonterminal>BracketsOpt</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <terminal>;</terminal>
+            <terminal>=</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>VariableInitializer</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
-  <xbgf:horizontal>InterfaceMethodOrFieldRest</xbgf:horizontal>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>ConstantDeclarator</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ConstantDeclaratorRest</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>ConstantDeclaratorsRest</nonterminal>
       <bgf:expression>
@@ -463,43 +479,25 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:introduce>
   <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:add>
     <bgf:production>
-      <nonterminal>ConstantDeclaratorRest</nonterminal>
+      <nonterminal>InterfaceMethodOrFieldRest</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
+            <nonterminal>ConstantDeclaratorsRest</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <terminal>=</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>VariableInitializer</nonterminal>
+            <terminal>;</terminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
-  <!-- BREFACTOR -->
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>ConstantDeclarator</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ConstantDeclaratorRest</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  
+  </xbgf:add>
+  <xbgf:horizontal>InterfaceMethodOrFieldRest</xbgf:horizontal>
+
   <xbgf:inline>Throws</xbgf:inline>
 
 </xbgf:sequence>

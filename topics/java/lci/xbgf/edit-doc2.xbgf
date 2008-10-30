@@ -46,6 +46,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>TypeList</nonterminal>
@@ -57,6 +58,7 @@
       <nonterminal>ConstructorDeclaratorRest</nonterminal>
     </in>
   </xbgf:replace>
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>TypeList</nonterminal>
@@ -68,6 +70,7 @@
       <nonterminal>MethodDeclaratorRest</nonterminal>
     </in>
   </xbgf:replace>
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>TypeList</nonterminal>
@@ -79,6 +82,7 @@
       <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
     </in>
   </xbgf:replace>
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>TypeList</nonterminal>
@@ -91,12 +95,13 @@
     </in>
   </xbgf:replace>
 
-  <!-- BREFACTOR
+  <!--
    - Fail: MethodDeclaratorRest.
       - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), ;([n(MethodBody), t((;))])])
      vs.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(MethodBody)])
   -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>MethodBody</nonterminal>
@@ -116,7 +121,7 @@
     </in>
   </xbgf:replace>
 
- <!-- BREFACTOR
+ <!-- ISSUE CORRECT
    - Fail: ArrayInitializer.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
      vs.
@@ -127,6 +132,7 @@
    ArrayInitializer is defined as:                          (syntax)
      "{" [ VariableInitializers [ "," ] ] "}"
   -->
+  <!-- REVISE -->
   <xbgf:replace>
     <bgf:expression>
       <sequence>
@@ -200,4 +206,5 @@
       <nonterminal>ArrayInitializer</nonterminal>
     </in>
   </xbgf:replace>
+
 </xbgf:sequence>

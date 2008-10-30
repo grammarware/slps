@@ -8,6 +8,7 @@
      vs.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators)])
   -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>VariableDeclarator</nonterminal>
@@ -177,6 +178,7 @@
      vs.
       - [], ,([?(t(final)), n(Type), n(VariableDeclarators)])
    -->
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>LocalVariableDeclaration</nonterminal>
@@ -573,6 +575,7 @@
      vs.
       - [], ,([?(t(final)), n(Type), n(VariableDeclaratorId)])
   -->
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>FormalParameter</nonterminal>

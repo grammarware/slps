@@ -82,6 +82,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>IfThenStatement</nonterminal>
@@ -121,6 +122,7 @@
     </bgf:production>
   </xbgf:inject>
   <xbgf:inline>IfThenStatement</xbgf:inline>
+  <!-- GENERALITY -->
   <xbgf:undefine>StatementNoShortIf</xbgf:undefine>
   <xbgf:eliminate>WhileStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>IfThenElseStatementNoShortIf</xbgf:eliminate>
@@ -135,6 +137,7 @@
      vs.
       - [], ,([t(switch), n(ParExpression), t({), n(SwitchBlockStatementGroups), ?(n(SwitchLabels)), t(})])
   -->
+  <!-- GENERALITY -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>SwitchStatement</nonterminal>
@@ -250,6 +253,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target</label>

@@ -32,6 +32,7 @@
 
   <!-- ISSUE PERMISSIVENESS
   multiple mismatches -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <sequence>
@@ -195,6 +196,7 @@
      vs.
       - [], ,([?(t(final)), n(Type), n(VariableDeclaratorId)])
   -->
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>FormalParameter</nonterminal>
@@ -1142,7 +1144,7 @@
     </in>
   </xbgf:fold>
   
-  <!-- BREFACTOR
+  <!-- ISSUE CORRECT
   Fixing brutally
   
    - Fail: ArrayInitializer.
@@ -1150,6 +1152,7 @@
      vs.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
   -->
+  <!-- REVISE -->
   <xbgf:replace>
     <bgf:expression>
       <sequence>
@@ -1509,6 +1512,7 @@
      vs.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(MethodBody)])
   -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>ConstructorBody</nonterminal>

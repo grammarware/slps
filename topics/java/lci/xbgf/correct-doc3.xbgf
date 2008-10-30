@@ -29,6 +29,7 @@
                       |<em>  TypeParameter
 </em></pre></blockquote>
   -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>TypeParameters</nonterminal>
@@ -47,6 +48,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>TypeParameterList</nonterminal>
@@ -81,6 +83,7 @@
         </pre></blockquote>
 
   -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>InterfaceDeclaration</nonterminal>
@@ -117,7 +120,9 @@
      vs.
       - [], ;([,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(TypeParameters))]), ,([?(n(ExtendsInterfaces)), n(InterfaceBody)])])
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>NormalInterfaceDeclaration</xbgf:undefine>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>NormalInterfaceDeclaration</nonterminal>
@@ -153,6 +158,7 @@
 
   <!-- ISSUE CORRECT SPECERROR
   Left forgotten and undefined -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ClassName</nonterminal>
@@ -362,7 +368,9 @@
      vs.
       - [], *(,([?(n(ElementValues)), ?(t((,)))]))
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>ElementValueArrayInitializer</xbgf:undefine>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ElementValueArrayInitializer</nonterminal>
@@ -395,6 +403,7 @@
   
   <!-- ISSUE EXTRACTERROR
   extractor's problem -->
+  <!-- REVISE -->
   <xbgf:replace>
     <bgf:expression>
       <terminal>ClassName</terminal>
@@ -403,4 +412,5 @@
       <nonterminal>ClassName</nonterminal>
     </bgf:expression>
   </xbgf:replace>
+
 </xbgf:sequence>

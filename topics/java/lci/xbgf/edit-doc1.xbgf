@@ -29,7 +29,7 @@
     </bgf:production>
   </xbgf:introduce>
 
-  <!-- BREFACTOR
+  <!--
   Local substitution:
   
      - Fail: TypeImportOnDemandDeclaration.
@@ -37,6 +37,7 @@
      vs.
       - [], ,([t(import), n(PackageOrTypeName), t(.), t(*), t((;))])
   -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>PackageName</nonterminal>
@@ -49,13 +50,14 @@
     </in>
   </xbgf:replace>
 
-  <!-- BREFACTOR 
+  <!-- 
   Local substitution:
      - Fail: TypeName.
       - [], ;([n(Identifier), ,([n(PackageName), t(.), n(Identifier)])])
      vs.
       - [], ;([n(Identifier), ,([n(PackageOrTypeName), t(.), n(Identifier)])])
    -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>PackageName</nonterminal>
@@ -68,7 +70,7 @@
     </in>
   </xbgf:replace>
 
-  <!-- BREFACTOR 
+  <!-- 
   Local substitute + add + horizontal:
      - Fail: ClassInstanceCreationExpression.
       - [], ,([t(new), n(ClassType), t((), ?(n(ArgumentList)), t())])
@@ -76,6 +78,7 @@
       - [], ;([,([t(new), n(ClassOrInterfaceType), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))]),
                ,([n(Primary), t(.), t(new), n(Identifier), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))])])
   -->
+  <!-- GENERALITY -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
@@ -101,7 +104,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
-<!-- BREFACTOR -->
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
@@ -137,7 +140,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-<!-- BREFACTOR -->
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>

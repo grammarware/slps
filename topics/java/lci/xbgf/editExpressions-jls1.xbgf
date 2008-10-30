@@ -216,6 +216,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target</label>
@@ -307,6 +308,7 @@
 
   <!-- ISSUE EXTEND BRUTAL
   same problem -->
+  <!-- GENERALITY -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -325,6 +327,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <!-- GENERALITY -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -360,6 +363,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <!-- GENERALITY -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -410,6 +414,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>Creator</nonterminal>
@@ -432,6 +437,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ArrayCreatorRest</nonterminal>
@@ -540,6 +546,7 @@
       - [], ,([n(Primary), t(.), n(Identifier), n(Arguments)])
       - [], ,([n(Primary), t(.), n(Identifier)])
 -->
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -561,6 +568,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>Primary</nonterminal>

@@ -188,8 +188,7 @@
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
-  <!-- BREFACTOR 
-  modifiers -->
+  <!-- modifiers -->
   <xbgf:designate>
     <bgf:production>
       <label>target</label>
@@ -199,6 +198,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- BREFACTOR -->
   <xbgf:inject>
     <bgf:production>
       <label>target</label>
@@ -297,7 +297,7 @@
   <xbgf:vertical>
     <nonterminal>ElementValuePairs</nonterminal>
   </xbgf:vertical>
-  <!-- BREFACTOR -->
+  <!-- GENERALITY -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ElementValuePairs</nonterminal>
@@ -618,6 +618,7 @@
   
   <!-- ISSUE PERMISSIVENESS
   ExceptionTypeList vs QualifiedIdentifierList -->
+  <!-- GENERALITY -->
   <xbgf:undefine>ExceptionTypeList</xbgf:undefine>
   <xbgf:unite>
     <add>ExceptionTypeList</add>

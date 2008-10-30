@@ -76,6 +76,7 @@
       - [], ,([t(switch), n(ParExpression), t({), n(SwitchBlockStatementGroups), t(})])
   -->
   <xbgf:inline>SwitchBlock</xbgf:inline>
+  <!-- GENERALITY -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>SwitchStatement</nonterminal>
@@ -140,6 +141,7 @@
      vs.
       - [], ,([t(if), n(ParExpression), n(Statement), ?(,([t(else), n(Statement)]))])
   -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>StatementNoShortIf</nonterminal>
@@ -254,6 +256,7 @@
   </xbgf:massage>
 
   <!-- Getting rid of all of them -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>StatementNoShortIf</xbgf:undefine>
   <xbgf:eliminate>ForStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>WhileStatementNoShortIf</xbgf:eliminate>
@@ -332,6 +335,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target</label>
@@ -407,6 +411,7 @@
      vs.
       - [], ;([,([n(StatementExpression), n(MoreStatementExpressions)]), ,([?(t(final)), n(Type), n(VariableDeclarators)])])
   -->
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>LocalVariableDeclaration</nonterminal>

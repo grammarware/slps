@@ -35,6 +35,7 @@
 
   <!-- ISSUE EXTEND GENERALIZE
   can we do this with widen? -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>MethodBody</nonterminal>

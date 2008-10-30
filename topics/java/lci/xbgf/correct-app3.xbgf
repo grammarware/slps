@@ -26,7 +26,9 @@ Annotation:
      vs.
       - [], ,([t({), n(BlockStatements), t(})])
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>Block</xbgf:undefine>
+  <!-- REVISE -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>Block</nonterminal>
@@ -52,7 +54,9 @@ Annotation:
      vs.
       - [], ,([t({), ?(n(AnnotationTypeElementDeclarations)), t(})])
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>AnnotationTypeBody</xbgf:undefine>
+  <!-- REVISE -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>AnnotationTypeBody</nonterminal>
@@ -83,6 +87,7 @@ Annotation:
      vs.
       - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
   -->
+  <!-- REVISE -->
   <xbgf:replace>
     <bgf:expression>
       <sequence>
@@ -111,6 +116,7 @@ Annotation:
   
   <!-- ISSUE CORRECT SPECERROR 
   lacking definition copied from JLS2 -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ForUpdate</nonterminal>
@@ -126,4 +132,5 @@ Annotation:
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+
 </xbgf:sequence>

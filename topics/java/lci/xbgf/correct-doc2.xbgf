@@ -34,7 +34,9 @@
      vs.
       - [], *(?(n(InterfaceMemberDeclarations)))
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>InterfaceBody</xbgf:undefine>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>InterfaceBody</nonterminal>
@@ -65,7 +67,9 @@
      vs.
       - [], *(?(n(ClassBodyDeclarations)))
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>ClassBody</xbgf:undefine>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ClassBody</nonterminal>
@@ -97,7 +101,9 @@
      vs.
       - [], *(,([?(n(ExplicitConstructorInvocation)), ?(n(BlockStatements))]))
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>ConstructorBody</xbgf:undefine>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ConstructorBody</nonterminal>
@@ -132,7 +138,9 @@
      vs.
       - [], *(?(n(BlockStatements)))
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>Block</xbgf:undefine>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>Block</nonterminal>
@@ -162,7 +170,9 @@
      vs.
       - [], *(,([?(n(SwitchBlockStatementGroups)), ?(n(SwitchLabels))]))
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>SwitchBlock</xbgf:undefine>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>SwitchBlock</nonterminal>
@@ -199,7 +209,9 @@
      vs.
       - [], *(,([?(n(ExplicitConstructorInvocation)), ?(n(BlockStatements))]))
   -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>ConstructorBody</xbgf:undefine>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ConstructorBody</nonterminal>
@@ -232,6 +244,7 @@
 
   <!-- ISSUE CORRECT SPECERROR
   Left forgotten and undefined -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ClassName</nonterminal>
@@ -260,6 +273,7 @@
   
   <!-- ISSUE EXTRACTERROR
   Error in PrimaryNoNewArray undetected by the extractor due to lacking definition -->
+  <!-- REVISE -->
   <xbgf:replace>
     <bgf:expression>
       <terminal>ClassName</terminal>

@@ -9,6 +9,7 @@
 
   <!-- ISSUE CORRECT SPECERROR
   They forgot to define a nonterminal with "intuitive" name - we predicted it in ISO N3977! -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ForInitOpt</nonterminal>
@@ -25,6 +26,7 @@
 
   <!-- ISSUE CORRECT SPECERROR
   They forgot to define a nonterminal with "intuitive" name - we predicted it in ISO N3977! -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ForUpdateOpt</nonterminal>
@@ -63,6 +65,7 @@
         </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
       <label>ContinueStatement</label>
@@ -112,6 +115,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
       <label>BreakStatement</label>
@@ -148,6 +152,7 @@
      "(" Expr | Type ")" Expression3
      Primary { Selector } { PostfixOp }
   -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>Expr</nonterminal>
@@ -163,6 +168,7 @@
      vs.
       - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
  -->
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
@@ -198,6 +204,7 @@
   
   <!-- ISSUE CORRECT SPECERROR
   undefined non-terminals -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ExpressionStatement</nonterminal>
@@ -222,6 +229,7 @@
   <xbgf:eliminate>VariableDeclaratorsRest</xbgf:eliminate>
 
   <!--   undefine lexical term -->
+  <!-- GENERALITY -->
   <xbgf:undefine>Identifier</xbgf:undefine>
 
 </xbgf:sequence>

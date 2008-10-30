@@ -655,6 +655,7 @@
     </bgf:production>
   </xbgf:extract>
   <!-- ISSUE PERMISSIVENESS -->
+  <!-- GENERALITY -->
   <xbgf:narrow>
     <bgf:expression>
       <optional>
@@ -1057,12 +1058,13 @@
    -->
   <xbgf:inline>ModifiersOpt</xbgf:inline>
 
-  <!-- BREFACTOR 
+  <!-- 
    - Fail: ConstructorDeclaratorRest.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(MethodBody)])
      vs.
       - [], ,([n(FormalParameters), ?(n(Throws)), n(ConstructorBody)])
   -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>ConstructorBody</nonterminal>

@@ -23,6 +23,7 @@
   
   <!-- ISSUE PERMISSIVENESS
   Merging interfaces with classes and making lists and other things conform -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>ClassType</nonterminal>
@@ -34,6 +35,7 @@
       <nonterminal>ClassTypeList</nonterminal>
     </in>
   </xbgf:replace>
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>InterfaceType</nonterminal>
@@ -45,6 +47,7 @@
       <nonterminal>InterfaceTypeList</nonterminal>
     </in>
   </xbgf:replace>
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>InterfaceType</nonterminal>
@@ -56,6 +59,7 @@
       <nonterminal>ExtendsInterfaces</nonterminal>
     </in>
   </xbgf:replace>
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>ClassType</nonterminal>
@@ -86,7 +90,9 @@
   <xbgf:vertical>
     <nonterminal>ReferenceType</nonterminal>
   </xbgf:vertical>
+  <!-- BREFACTOR -->
   <xbgf:undefine>ArrayType</xbgf:undefine>
+  <!-- BREFACTOR -->
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ReferenceType</nonterminal>
@@ -127,6 +133,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target</label>

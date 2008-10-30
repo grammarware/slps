@@ -249,7 +249,7 @@
       <to>Expression3</to>
     </nonterminal>
   </xbgf:rename>
-  <!-- BREFACTOR -->
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>Expression2</nonterminal>
@@ -670,7 +670,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <!-- BREFACTOR -->
+  <!-- GENERALITY -->
   <xbgf:widen>
     <bgf:expression>
       <nonterminal>TMP</nonterminal>
@@ -1134,7 +1134,9 @@
       - [], n(Expression)
 ???
  -->
+  <!-- BREFACTOR -->
   <xbgf:undefine>StatementExpression</xbgf:undefine>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>StatementExpression</nonterminal>

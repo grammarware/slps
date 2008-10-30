@@ -156,6 +156,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>MethodHeader</nonterminal>
@@ -281,6 +282,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>PackageDeclaration</nonterminal>
@@ -440,6 +442,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>NormalClassDeclaration</nonterminal>
@@ -788,6 +791,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>AnnotationTypeBody</nonterminal>
@@ -850,6 +854,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>EnhancedForStatement</nonterminal>
@@ -898,6 +903,7 @@
      vs.
       - [], ,([?(n(AbstractMethodModifiers)), ?(n(TypeParameters)), n(ResultType), n(MethodDeclarator), ?(n(Throws)), t((;))])
   -->
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>AbstractMethodDeclaration</nonterminal>
@@ -986,6 +992,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target2</label>
@@ -1057,6 +1064,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target3</label>
@@ -1134,6 +1142,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target4</label>
@@ -1230,6 +1239,7 @@
      vs.
       - [], ,([?(n(TypeParameters)), n(Identifier), t((), ?(n(FormalParameterList)), t())])
   -->
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ConstructorDeclarator</nonterminal>
@@ -1280,6 +1290,7 @@
       <to>FormalParameters</to>
     </nonterminal>
   </xbgf:rename>
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>FormalParameters</nonterminal>
@@ -1291,6 +1302,7 @@
       <nonterminal>MethodDeclarator</nonterminal>
     </in>
   </xbgf:replace>
+  <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>FormalParameters</nonterminal>
@@ -1304,6 +1316,7 @@
   </xbgf:replace>
   
   <!-- ISSUE EXTEND -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>FormalParameterList</nonterminal>
@@ -1329,6 +1342,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>LastFormalParameter</nonterminal>
@@ -1368,6 +1382,7 @@
      vs.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators), t((;))])
   -->
+  <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ConstantDeclaration</nonterminal>
@@ -1423,7 +1438,9 @@
       <to>ExceptionTypeList</to>
     </nonterminal>
   </xbgf:rename>
+  <!-- BREFACTOR -->
   <xbgf:undefine>ExceptionTypeList</xbgf:undefine>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ExceptionTypeList</nonterminal>
@@ -1596,7 +1613,7 @@
   <xbgf:undefine>InterfaceType</xbgf:undefine>
   <!-- BREFACTOR -->
   <xbgf:undefine>ClassType</xbgf:undefine>
-  <!-- BREFACTOR -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>InterfaceType</nonterminal>
@@ -1616,7 +1633,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  <!-- BREFACTOR -->
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ClassType</nonterminal>
@@ -1679,6 +1696,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target1</label>
@@ -1744,6 +1762,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target2</label>
@@ -1840,6 +1859,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>NonWildTypeArguments</nonterminal>
@@ -1858,6 +1878,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target3</label>
@@ -2000,6 +2021,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target1</label>
@@ -2043,6 +2065,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target2</label>
@@ -2142,7 +2165,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- BREFACTOR -->
+<!-- ??? please redo with one replace -->
+  <!-- GENERALITY -->
   <xbgf:project>
     <bgf:production>
       <label>target1</label>
@@ -2166,7 +2190,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
-  <!-- BREFACTOR -->
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target1</label>
@@ -2215,7 +2239,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- BREFACTOR -->
+  <!-- GENERALITY -->
   <xbgf:project>
     <bgf:production>
       <label>target2</label>
@@ -2235,7 +2259,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
-  <!-- BREFACTOR -->
+  <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
       <label>target2</label>
