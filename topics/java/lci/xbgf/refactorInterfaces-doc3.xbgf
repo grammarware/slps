@@ -624,7 +624,124 @@
   </xbgf:unite>
   <xbgf:inline>Throws</xbgf:inline>
 
+  <!--
+  can't match right away because one is left recursion and the other one is right
+  
+  - Fail: ElementValues.
+      - [], ,([n('ElementValue'), ?(,([t((',')), n('ElementValues')]))])
+     vs.
+      - [], ;([n('ElementValue'), ,([n('ElementValues'), t((',')), n('ElementValue')])])
+  -->
   <xbgf:deyaccify>ElementValues</xbgf:deyaccify>
+  <!-- can be yaccify after yaccify2 test case works -->
+  <!-- BREFACTOR -->
+  <xbgf:undefine>ElementValues</xbgf:undefine>
+  <!-- BREFACTOR -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ElementValues</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>ElementValue</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>ElementValue</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>,</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>ElementValues</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <!-- end of future yaccify -->
+  <xbgf:factor>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>ElementValue</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>ElementValue</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>,</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ElementValues</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>ElementValue</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>,</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>ElementValues</nonterminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+            <bgf:expression>
+              <epsilon/>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>,</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ElementValues</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>,</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ElementValues</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
   
   <xbgf:fold>
     <nonterminal>BracketsOpt</nonterminal>

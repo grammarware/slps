@@ -4,7 +4,7 @@ build:
 
 diff:
 	python ../../convergence/lci/lci.py java3.lcf architecture
-	gdts bgf/app3.fixErrors3.prepare3.allowMultipleLabels.bgf bgf/doc3.fixErrors3doc.unifyModifiers.unifyNames.deyaccify2doc.refactorTypes3.unlayerExpressions3.inlineStatements2doc.inlineExpressions3doc.refactorClassDeclarations3.refactorInterfaceDeclarations3.refactorMiscDeclarations3.breakSemantics3doc.bgf
+	gdts bgf/app3.correct.refactor.generalizeLabels.generalizeBlock.generalize.bgf bgf/doc3.correct.generalizeModifiers.generalizeNames.deyaccify.refactorTypes.refactorExpressions.inlineStatements.generalizeStatements.refactorStatements.editExpressions.refactorClasses.refactorInterfaces.refactorEnums.refactorDeclarations.edit.bgf
 
 test:
 	python ../../convergence/lci/lci.py java.lcf architecture

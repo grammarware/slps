@@ -2,26 +2,6 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- 
-  NOT semantic-preserving in any way.
-  
-   - Fail: MethodBody.
-      - [], n(Block)
-     vs.
-      - [], ;([n(Block), t((;))])
-  -->
-  <xbgf:vertical>
-    <nonterminal>MethodBody</nonterminal>
-  </xbgf:vertical>
-  <xbgf:remove>
-    <bgf:production>
-      <nonterminal>MethodBody</nonterminal>
-      <bgf:expression>
-        <terminal>;</terminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:remove>
-
   <!--  somehow NonWildcardTypeArguments was used anyway
    - Fail: Primary.
       - [], ,([n(NonWildcardTypeArguments), ;([n(ExplicitGenericInvocationSuffix), ,([t(this), n(Arguments)])])])

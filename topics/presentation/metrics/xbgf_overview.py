@@ -3,8 +3,8 @@ import os
 import sys
 import elementtree.ElementTree as ET
 
-safexbgf = ('eliminate','introduce','chain','designate','deyaccify','distribute','extract','factor','fold','horizontal','inline','massage','rename','reroot','strip','unfold','vertical','yaccify')
-incdecxbgf = ('add','narrow','remove','unite','widen')
+safexbgf = ('eliminate','introduce','chain','designate','deyaccify','distribute','extract','factor','fold','horizontal','inline','massage','rename','reroot','strip','unfold','vertical','yaccify','unchain')
+incdecxbgf = ('add','narrow','remove','unite','widen','rassoc','lassoc')
 rkeys = ('LOC','NOI','NOX','NI~','NI+','NI!','SGO','COR','NI^','SID','SRE')
 
 names   = []

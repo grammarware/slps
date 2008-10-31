@@ -133,4 +133,110 @@ Annotation:
     </bgf:production>
   </xbgf:define>
 
+  <!--   ISSUE CORRECT SPECERROR
+  - Fail: Statement.
+      - [], ;([n(Block),
+              ,([t(break), ?(n(Identifier))]),
+     vs.
+      - [], ;([n(Block),
+               ,([t(break), ?(n(Identifier)), t((;))]),
+-->
+  <!-- REVISE -->
+  <xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>break</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>break</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>;</terminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:replace>
+
+  <!--   ISSUE CORRECT SPECERROR
+         same with continue -->
+  <xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>continue</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>continue</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>;</terminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:replace>
+
+  <!-- ISSUE CORRECT 
+  forgotten comma
+  ElementValues:
+        ElementValue [ ElementValues ]
+  should be
+  ElementValues:
+        ElementValue [ "," ElementValues ]
+  -->
+  <!-- REVISE -->
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>ElementValues</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>,</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>ElementValues</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <in>
+      <nonterminal>ElementValues</nonterminal>
+    </in>
+  </xbgf:replace>
 </xbgf:sequence>

@@ -150,6 +150,8 @@
       <perform>refactorTypes-doc3</perform>
       <perform>refactorExpressions-doc3</perform>
       <perform>inlineStatements</perform>
+      <perform>generalizeStatements</perform>
+      <perform>refactorStatements-doc3</perform>
       <perform>editExpressions</perform>
       <perform>refactorClasses-doc3</perform>
       <perform>refactorInterfaces-doc3</perform>
@@ -163,7 +165,7 @@
     <name>jls12</name>
     <branch>
       <input>jls1</input>
-      <perform>refactorStatements</perform>
+      <perform>refactorStatements-jls1</perform>
       <perform>generalizeStatements</perform>
       <perform>refactorTypes-jls1</perform>
       <perform>editDeclarations</perform>
