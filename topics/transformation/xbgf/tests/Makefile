@@ -84,7 +84,8 @@ test:
 	@make widen1.quiet
 	@make widen2.quiet
 	@make widen3.quiet
-	@make yaccify.quiet
+	@make yaccify1.quiet
+	@make yaccify2.quiet
 
 rebuild:
 	make clean
