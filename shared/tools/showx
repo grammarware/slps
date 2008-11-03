@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ..
+cd ..
+LOCAL2=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 1 ]; then
+    echo "Usage: showx <XBGF-input>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    swipl -q -t "halt(1)" -f ${LOCAL2}/shared/prolog/cli/showxbgf.pro -- ${LOCAL2}/shared/xsd/xbgf.xsd ${LOCAL2}/topics/transformation/xbgf/apps/xbgf/append.xbgf $1 | grep -v Loading | grep -v XBGF
+fi

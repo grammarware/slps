@@ -1,1 +1,1 @@
-count(/*/*[not(*//nonterminal)]/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())])
+//nonterminal[not(text()=/*/*/*//nonterminal/text())]

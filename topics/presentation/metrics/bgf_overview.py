@@ -6,7 +6,8 @@ import elementtree.ElementTree as ET
 productions = "count(/*/*[local-name()='production'])"
 nonterminals = "count(/*[local-name()='grammar']/*/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())])"
 top = "count(/*/*/nonterminal[not(text()=/*/*/*//nonterminal/text()) and not(text()=../preceding-sibling::*/nonterminal/text())])"
-bottom = "count(/*/*[not(*//nonterminal)]/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())])"
+oldbottom = "count(/*/*[not(*//nonterminal)]/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())])"
+bottom = " | (echo '<set>' ; xpath '//nonterminal[not(text()=/*/*/nonterminal/text())]' 2> /dev/null; echo '</set>' )| xpath 'count(//nonterminal[not(text()=preceding-sibling::*/text())])' "
 
 names   = []
 tnames  = []
@@ -16,6 +17,13 @@ ET._namespace_map[bgfns] = 'bgf'
 
 def runxpath(filename,xpathexpr):
  os.system('xpath '+filename+' "'+xpathexpr+'" 1>TMP-res 2>/dev/null')
+ tmp = open('TMP-res','r')
+ res = tmp.readline().strip()
+ tmp.close()
+ return res
+
+def runxpath2(filename,xpathexpr):
+ os.system('cat '+filename+xpathexpr+' 1>TMP-res 2>/dev/null')
  tmp = open('TMP-res','r')
  res = tmp.readline().strip()
  tmp.close()
@@ -45,7 +53,7 @@ if __name__ == "__main__":
 \\\\\\hline\\hline
 '''
  for x in names:
-  print '\\emph{'+x+'}&'+runxpath(path+x+'.bgf',productions)+'&'+runxpath(path+x+'.bgf',nonterminals)+'&'+runxpath(path+x+'.bgf',top)+'&'+runxpath(path+x+'.bgf',bottom)+'\\\\\\hline'
+  print '\\emph{'+x+'}&'+runxpath(path+x+'.bgf',productions)+'&'+runxpath(path+x+'.bgf',nonterminals)+'&'+runxpath(path+x+'.bgf',top)+'&'+runxpath2(path+x+'.bgf',bottom)+'\\\\\\hline'
  print '\\end{tabular}'
  sys.exit(0)
 
