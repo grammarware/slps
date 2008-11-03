@@ -53,7 +53,7 @@
      ConstantModifier
      ConstantModifiers ConstantModifer
   -->
-  
+
   <!-- First the deyaccification -->
   <xbgf:deyaccify>AbstractMethodModifiers</xbgf:deyaccify>
   <xbgf:deyaccify>InterfaceModifiers</xbgf:deyaccify>
@@ -64,13 +64,27 @@
   <xbgf:deyaccify>ConstantModifiers</xbgf:deyaccify>
 
   <!-- Verticalisation to enable doubles detection -->
-  <xbgf:vertical><nonterminal>AbstractMethodModifier</nonterminal></xbgf:vertical>
-  <xbgf:vertical><nonterminal>InterfaceModifier</nonterminal></xbgf:vertical>
-  <xbgf:vertical><nonterminal>MethodModifier</nonterminal></xbgf:vertical>
-  <xbgf:vertical><nonterminal>FieldModifier</nonterminal></xbgf:vertical>
-  <xbgf:vertical><nonterminal>ConstructorModifier</nonterminal></xbgf:vertical>
-  <xbgf:vertical><nonterminal>ClassModifier</nonterminal></xbgf:vertical>
-  <xbgf:vertical><nonterminal>ConstantModifier</nonterminal></xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>AbstractMethodModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>InterfaceModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>MethodModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>FieldModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>ConstructorModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>ClassModifier</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>ConstantModifier</nonterminal>
+  </xbgf:vertical>
 
   <!-- ISSUE PERMISSIVENESS
   Now unification of singulars-->
@@ -148,5 +162,5 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  
+
 </xbgf:sequence>

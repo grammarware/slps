@@ -72,7 +72,6 @@
     <None Include="xbgf\extend-jls2.xbgf" />
     <None Include="xbgf\extendModifiers.xbgf" />
     <None Include="xbgf\generalize-app3.xbgf" />
-    <None Include="xbgf\generalize-jls1.xbgf" />
     <None Include="xbgf\generalizeBlock.xbgf" />
     <None Include="xbgf\generalizeLabels.xbgf" />
     <None Include="xbgf\generalizeModifiers-doc1.xbgf" />

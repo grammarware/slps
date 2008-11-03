@@ -72,6 +72,7 @@
       <nonterminal>ExtendsInterfaces</nonterminal>
     </in>
   </xbgf:fold>
+ <!-- TODO -->
   <!-- BREFACTOR -->
   <xbgf:project>
     <bgf:production>

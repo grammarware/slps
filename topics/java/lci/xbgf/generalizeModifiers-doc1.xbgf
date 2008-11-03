@@ -9,7 +9,7 @@
       - [], ,([?(n(Modifiers)), n(Type), n(VariableDeclarators), t((;))])
    (and many similar ones)
   -->
-  
+
   <xbgf:vertical>
     <nonterminal>ClassModifier</nonterminal>
   </xbgf:vertical>
@@ -96,5 +96,5 @@
     <add>FieldModifiers</add>
     <to>Modifiers</to>
   </xbgf:unite>
-  
+
 </xbgf:sequence>

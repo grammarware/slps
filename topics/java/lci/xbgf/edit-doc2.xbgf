@@ -4,7 +4,7 @@
 
   <xbgf:horizontal>Primary</xbgf:horizontal>
 
- <!-- BREFACTOR
+ <!-- GENERALITY?
   ConstructorBody is defined as:
      { [ ExplicitConstructorInvocation ] [ BlockStatements ] }
   -->

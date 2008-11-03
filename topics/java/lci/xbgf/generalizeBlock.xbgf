@@ -9,13 +9,15 @@
       - [], n(Block)
   -->
   <xbgf:add>
-    <bgf:production>
+    <bgf:expression>
+      <terminal>;</terminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>Block</nonterminal>
+    </bgf:expression>
+    <in>
       <nonterminal>MethodBody</nonterminal>
-      <bgf:expression>
-        <terminal>;</terminal>
-      </bgf:expression>
-    </bgf:production>
+    </in>
   </xbgf:add>
-  <xbgf:horizontal>MethodBody</xbgf:horizontal>
 
 </xbgf:sequence>

@@ -178,6 +178,7 @@ Annotation:
 
   <!--   ISSUE CORRECT SPECERROR
          same with continue -->
+  <!-- REVISE -->
   <xbgf:replace>
     <bgf:expression>
       <sequence>
