@@ -9,9 +9,11 @@ debug:
 	python ../../extraction/html2bgf/html2bgf.py parse.html doc2.bgf -v
 
 app:
+	@echo "Extracting app2" > /dev/stderr
 	python ../../extraction/html2bgf/html2bgf.py app.html app2.bgf
 
 doc:
+	@echo "Extracting doc2" > /dev/stderr
 	python ../../extraction/html2bgf/getpre.py collect.kw doc.html parse.html
 	python ../../extraction/html2bgf/html2bgf.py parse.html doc2.bgf
 
