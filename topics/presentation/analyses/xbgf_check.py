@@ -3,8 +3,12 @@ import os
 import sys
 import elementtree.ElementTree as ET
 
-safexbgf = ('eliminate','introduce','chain','designate','deyaccify','distribute','extract','factor','fold','horizontal','inline','massage','rename','reroot','strip','unfold','vertical','yaccify')
-incdecxbgf = ('add','narrow','remove','unite','widen')
+safexbgf =   ('eliminate','introduce','chain', 'designate', 'deyaccify','distribute',
+              'extract',  'factor',   'fold',  'horizontal','inline',   'massage',
+              'rename',   'reroot',   'unfold','vertical',  'yaccify',  'unchain',   'skip')
+incdecxbgf = ('add',      'narrow',   'remove','unite',     'widen',    'rassoc',    'lassoc')
+messyxbgf =  ('permute',  'dump')
+
 rkeys = ('LOC','NOI','NOX','NI~','NI+','NI!','SGO','COR','NI^','SID','SRE')
 
 names   = []
@@ -19,17 +23,24 @@ ET._namespace_map[bgfns] = 'bgf'
 ET._namespace_map[xbgfns]='xbgf'
 ET._namespace_map[xsdns] = 'xsd'
 
-def noni(filename,arrayxbgf):
+def noni(xbgf,arrayxbgf):
  global xbgfns
  cx = 0
- xbgf = ET.parse(filename)
  for c in arrayxbgf:
-  inc = len(xbgf.findall('//{'+xbgfns+'}'+c))
-  if inc:
-   #print 'Found',c
-   pass
-  cx += inc
+  cx += len(xbgf.findall('//{'+xbgfns+'}'+c))
  return cx
+ 
+def nostripunsafe(xbgf):
+ global xbgfns
+ return len(xbgf.findall('//{'+xbgfns+'}strip/terminal'))+\
+        len(xbgf.findall('//{'+xbgfns+'}strip/allTerminals'))
+
+def nostripsafe(xbgf):
+ global xbgfns
+ return len(xbgf.findall('//{'+xbgfns+'}strip/selector'))+\
+        len(xbgf.findall('//{'+xbgfns+'}strip/allSelectors'))+\
+        len(xbgf.findall('//{'+xbgfns+'}strip/label'))+\
+        len(xbgf.findall('//{'+xbgfns+'}strip/allLabels'))
 
 def loc(filename):
  f = open(filename,'r')
@@ -64,13 +75,13 @@ if __name__ == "__main__":
  if len(sys.argv) != 2:
   print 'This tool generates an overview of an XBGF script.'
   print 'Usage:'
-  print '      xi <file>'
+  print '      checkxbgf <file>'
   sys.exit(1)
  xbgf = ET.parse(sys.argv[1])
  print "%25s" % sys.argv[1].split('.')[0]+':',
- cx1 = noni(sys.argv[1],safexbgf)   + nosi(sys.argv[1],'BREFACTOR')
- cx2 = noni(sys.argv[1],incdecxbgf) + nosi(sys.argv[1],'GENERALITY')
- cx3 = nosi(sys.argv[1],'REVISE')
+ cx1 = noni(xbgf,safexbgf)   + nosi(sys.argv[1],'BREFACTOR')  + nostripsafe(xbgf)
+ cx2 = noni(xbgf,incdecxbgf) + nosi(sys.argv[1],'GENERALITY')
+ cx3 = noni(xbgf,messyxbgf)  + nosi(sys.argv[1],'REVISE')     + nostripunsafe(xbgf)
  sum = len(xbgf.findall('/*'))
  print "%3i +%3i +%3i =%4i" % (cx1,cx2,cx3,sum),
  if cx1+cx2+cx3!=sum:

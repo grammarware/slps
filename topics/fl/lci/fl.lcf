@@ -132,15 +132,6 @@
   </source>
 
   <source>
-    <name>om</name>
-    <grammar>
-      <extraction>
-        <expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
-      </extraction>
-    </grammar>
-  </source>
-
-  <source>
     <name>xsd</name>
     <grammar>
       <extraction>
@@ -161,6 +152,15 @@
     <testing>
       <set>xmlsamples</set>
     </testing>
+  </source>
+
+  <source>
+    <name>om</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
+      </extraction>
+    </grammar>
   </source>
 
   <source>

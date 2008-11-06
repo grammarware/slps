@@ -3,8 +3,12 @@ import os
 import sys
 import elementtree.ElementTree as ET
 
-safexbgf = ('eliminate','introduce','chain','designate','deyaccify','distribute','extract','factor','fold','horizontal','inline','massage','rename','reroot','strip','unfold','vertical','yaccify','unchain')
-incdecxbgf = ('add','narrow','remove','unite','widen','rassoc','lassoc')
+safexbgf =   ('eliminate','introduce','chain', 'designate', 'deyaccify','distribute',
+              'extract',  'factor',   'fold',  'horizontal','inline',   'massage',
+              'rename',   'reroot',   'unfold','vertical',  'yaccify',  'unchain',   'skip')
+incdecxbgf = ('add',      'narrow',   'remove','unite',     'widen',    'rassoc',    'lassoc')
+messyxbgf =  ('permute',  'dump')
+
 rkeys = ('LOC','NOI','NOX','NI~','NI+','NI!','SGO','COR','NI^','SID','SRE')
 
 names   = []
@@ -19,13 +23,24 @@ ET._namespace_map[bgfns] = 'bgf'
 ET._namespace_map[xbgfns]='xbgf'
 ET._namespace_map[xsdns] = 'xsd'
 
-def noni(filename,arrayxbgf):
+def noni(xbgf,arrayxbgf):
  global xbgfns
  cx = 0
- xbgf = ET.parse(filename)
  for c in arrayxbgf:
   cx += len(xbgf.findall('//{'+xbgfns+'}'+c))
  return cx
+ 
+def nostripunsafe(xbgf):
+ global xbgfns
+ return len(xbgf.findall('//{'+xbgfns+'}strip/terminal'))+\
+        len(xbgf.findall('//{'+xbgfns+'}strip/allTerminals'))
+
+def nostripsafe(xbgf):
+ global xbgfns
+ return len(xbgf.findall('//{'+xbgfns+'}strip/selector'))+\
+        len(xbgf.findall('//{'+xbgfns+'}strip/allSelectors'))+\
+        len(xbgf.findall('//{'+xbgfns+'}strip/label'))+\
+        len(xbgf.findall('//{'+xbgfns+'}strip/allLabels'))
 
 def loc(filename):
  f = open(filename,'r')
@@ -85,6 +100,7 @@ if __name__ == "__main__":
   for y in rkeys:
    results[y][x] = 0
   for y in targets[x]:
+   xbgf = ET.parse(path+y+'.xbgf')
    results['LOC'][x] += loc(path+y+'.xbgf')
    results['NOI'][x] += nosi(path+y+'.xbgf','ISSUE')
    results['NI~'][x] += nosi(path+y+'.xbgf','ISSUE REFACTOR')
@@ -92,12 +108,14 @@ if __name__ == "__main__":
    results['NI!'][x] += nosi(path+y+'.xbgf','CORRECT')
    results['NI^'][x] += nosi(path+y+'.xbgf','PERMISSIVENESS')
    results['COR'][x] += nosi(path+y+'.xbgf','EXTRACTERROR')
-   results['SGO'][x] += noni(path+y+'.xbgf',safexbgf)+nosi(path+y+'.xbgf','BREFACTOR')
-   results['SID'][x] += noni(path+y+'.xbgf',incdecxbgf)+nosi(path+y+'.xbgf','GENERALITY')
-   results['SRE'][x] += nosi(path+y+'.xbgf','REVISE')
-   #for z in rkeys:
-   # print 'DEBUG',z,x,y,':',results[z][x]
-   xbgf = ET.parse(path+y+'.xbgf')
+   results['SGO'][x] += noni(xbgf,safexbgf)+\
+                        nosi(path+y+'.xbgf','BREFACTOR')+\
+                        nostripsafe(xbgf)
+   results['SID'][x] += noni(xbgf,incdecxbgf)+\
+                        nosi(path+y+'.xbgf','GENERALITY')
+   results['SRE'][x] += noni(xbgf,messyxbgf)+\
+                        nosi(path+y+'.xbgf','REVISE')+\
+                        nostripunsafe(xbgf)
    results['NOX'][x] += len(xbgf.findall('/*'))
    for z in names:
     results[z][x] += len(xbgf.findall('/{'+xbgfns+'}'+z))

@@ -59,13 +59,16 @@
     </None>
     <None Include="fl.lcf" />
     <None Include="xbgf\defineLex.xbgf" />
-    <None Include="xbgf\downcase.xbgf" />
     <None Include="xbgf\massageXsd.xbgf" />
     <None Include="xbgf\mkSignature.xbgf" />
     <None Include="xbgf\permuteArgs.xbgf" />
     <None Include="xbgf\preferDcg.xbgf" />
     <None Include="xbgf\preferJaxb.xbgf" />
     <None Include="xbgf\removeLayers.xbgf" />
+    <None Include="xbgf\renameJaxb.xbgf" />
+    <None Include="xbgf\renameOm.xbgf" />
+    <None Include="xbgf\renameSdf.xbgf" />
+    <None Include="xbgf\renameXsd.xbgf" />
     <None Include="xbgf\reroot.xbgf" />
     <None Include="xbgf\stripTerminals.xbgf" />
     <None Include="xbgf\trimJaxb.xbgf" />

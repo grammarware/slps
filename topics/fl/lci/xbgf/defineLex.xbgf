@@ -1,6 +1,7 @@
 <xbgf:sequence 
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>name</nonterminal>
@@ -9,6 +10,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>int</nonterminal>
