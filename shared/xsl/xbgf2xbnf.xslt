@@ -32,7 +32,7 @@
     </xsl:choose>
   </xsl:template>
   
-  <!-- add, chain, define, ... -->
+  <!-- chain, define, ... -->
 
   <xsl:template match="xbgf:*">
     <xsl:value-of select="local-name()" />
@@ -42,6 +42,37 @@
     <xsl:call-template name="context">
       <xsl:with-param name="in" select="./in"/>
     </xsl:call-template>
+    <xsl:text>);
+</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="xbgf:add">
+    <xsl:value-of select="local-name()" />
+    <xsl:text>(
+ </xsl:text>
+    <xsl:choose>
+      <xsl:when test="./bgf:production">
+        <xsl:apply-templates select="./bgf:production"/>
+        <xsl:call-template name="context">
+          <xsl:with-param name="in" select="./in"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="./bgf:expression">
+        <xsl:apply-templates select="./bgf:expression[1]"/>
+        <xsl:text>,
+ </xsl:text>
+        <xsl:apply-templates select="./bgf:expression[2]"/>
+        <xsl:choose>
+          <xsl:when test="in">
+            <xsl:text>
+</xsl:text>
+            <xsl:call-template name="context">
+              <xsl:with-param name="in" select="./in"/>
+            </xsl:call-template>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:when>
+    </xsl:choose>
     <xsl:text>);
 </xsl:text>
   </xsl:template>
