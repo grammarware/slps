@@ -77,6 +77,7 @@ if __name__ == "__main__":
   print 'Usage:'
   print '      xbgfover <xbgf.xsd> <lcf> <xbgfs-path>'
   sys.exit(1)
+ lcfname = sys.argv[2].split('/')[-1].split('.')[0]
  xsd = ET.parse(sys.argv[1])
  for x in xsd.findall('/*'):
   if x.attrib.has_key('name'):
@@ -130,29 +131,31 @@ if __name__ == "__main__":
  sorted.sort()
  if sorted == ['doc12','doc123','jls1','jls12','jls123','jls2','jls3']:
   sorted = ['jls1','jls2','jls3','jls12','jls123','doc12','doc123']
+ elif sorted == ['abstract','concrete','java','limit','topdown']:
+  sorted = ['topdown','concrete','java','abstract','limit']
  print '\\begin{tabular}{l|'+('c|'*len(targets))+'|c}'
  for x in sorted:
   print '&\\textbf{'+x+'}',
  print '&\\textbf{Total}\\\\\\hline'
- report(sorted,'LOC','\\numberOfLines')
+ report(sorted,'LOC','\\'+lcfname+'NumberOfLines')
  print '\\hline'
- report(sorted,'NOX','\\numberOfTransformations')
- report(sorted,'SGO','\\numberOfRefactors')
- report(sorted,'SID','\\numberOfGeneralises')
- report(sorted,'SRE','\\numberOfRevisings')
+ report(sorted,'NOX','\\'+lcfname+'NumberOfTransformations')
+ report(sorted,'SGO','\\'+lcfname+'NumberOfRefactors')
+ report(sorted,'SID','\\'+lcfname+'NumberOfGeneralises')
+ report(sorted,'SRE','\\'+lcfname+'NumberOfRevisings')
  print '\\hline'
- print '\\numberOfSteps',
+ print '\\'+lcfname+'NumberOfSteps',
  cx = 0
  for x in sorted:
   cx += len(targets[x])
   print '{',len(targets[x]),'}'
  print '{'+`cx`+'}'
- report(sorted,'NOI','\\numberOfIssues')
- report(sorted,'COR','\\issuesPostX')
- report(sorted,'NI!','\\issuesCorrect')
- report(sorted,'NI+','\\issuesExtend')
- report(sorted,'NI^','\\issuesPermit')
- # report(sorted,'NI~','\\issuesRefactor')
+ report(sorted,'NOI','\\'+lcfname+'NumberOfIssues')
+ report(sorted,'COR','\\'+lcfname+'IssuesPostX')
+ report(sorted,'NI!','\\'+lcfname+'IssuesCorrect')
+ report(sorted,'NI+','\\'+lcfname+'IssuesExtend')
+ report(sorted,'NI^','\\'+lcfname+'IssuesPermit')
+ # report(sorted,'NI~','\\'+lcfname+'IssuesRefactor')
  print '\\hline'
  print '\\end{tabular}'
  sys.exit(0)
