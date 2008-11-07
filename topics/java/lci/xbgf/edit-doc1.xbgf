@@ -86,6 +86,9 @@
     <bgf:expression>
       <nonterminal>ClassOrInterfaceType</nonterminal>
     </bgf:expression>
+    <in>
+      <nonterminal>ClassInstanceCreationExpression</nonterminal>
+    </in>
   </xbgf:replace>
   <xbgf:add>
     <bgf:production>

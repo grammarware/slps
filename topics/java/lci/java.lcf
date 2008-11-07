@@ -113,6 +113,7 @@
     </branch>
     <branch>
       <input>doc2</input>
+      <perform>recover-doc2</perform>
       <perform>correct-doc2</perform>
       <perform>generalizeModifiers</perform>
       <perform>generalizeNames</perform>
@@ -135,6 +136,7 @@
     <name>jls3</name>
     <branch>
       <input>app3</input>
+      <perform>recover-app3</perform>
       <perform>correct-app3</perform>
       <perform>refactor-app3</perform>
       <perform>generalizeLabels</perform>
@@ -143,6 +145,7 @@
     </branch>
     <branch>
       <input>doc3</input>
+      <perform>recover-doc3</perform>
       <perform>correct-doc3</perform>
       <perform>generalizeModifiers</perform>
       <perform>generalizeNames</perform>
@@ -201,6 +204,7 @@
     </branch>
     <branch>
       <input>doc2</input>
+      <perform>recover-doc2</perform>
       <perform>correct-doc2</perform>
     </branch>
   </target>
@@ -214,6 +218,7 @@
     </branch>
     <branch>
       <input>doc3</input>
+      <perform>recover-doc3</perform>
       <perform>correct-doc3</perform>
     </branch>
   </target>

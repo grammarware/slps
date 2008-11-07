@@ -81,6 +81,9 @@
     <None Include="xbgf\generalizeStatements.xbgf" />
     <None Include="xbgf\inline-jls2.xbgf" />
     <None Include="xbgf\inlineStatements.xbgf" />
+    <None Include="xbgf\recover-app3.xbgf" />
+    <None Include="xbgf\recover-doc2.xbgf" />
+    <None Include="xbgf\recover-doc3.xbgf" />
     <None Include="xbgf\refactor-app1.xbgf" />
     <None Include="xbgf\refactor-app2.xbgf" />
     <None Include="xbgf\refactor-app3.xbgf" />
