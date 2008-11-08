@@ -1506,10 +1506,11 @@
             <terminal>?</terminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>WildcardBounds</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Opt</nonterminal>
+            <optional>
+              <bgf:expression>
+                <nonterminal>WildcardBounds</nonterminal>
+              </bgf:expression>
+            </optional>
           </bgf:expression>
         </sequence>
       </bgf:expression>

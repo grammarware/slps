@@ -286,6 +286,11 @@ def mapHTMLtoTokenStream(line):
    flags.append(True)
    line = line[14:]
    continue
+  if line.find('<sub>Opt</sub>')==0:
+   tokens.append('?????')
+   flags.append(True)
+   line = line[14:]
+   continue
   if line.find('<sub><i>opt')==0:
    tokens.append('?????')
    flags.append(True)

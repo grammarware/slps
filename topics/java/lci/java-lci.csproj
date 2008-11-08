@@ -97,7 +97,8 @@
     <None Include="xbgf\refactorExpressions.xbgf" />
     <None Include="xbgf\refactorInterfaces-doc2.xbgf" />
     <None Include="xbgf\refactorInterfaces-doc3.xbgf" />
-    <None Include="xbgf\refactorStatements.xbgf" />
+    <None Include="xbgf\refactorStatements-doc3.xbgf" />
+    <None Include="xbgf\refactorStatements-jls1.xbgf" />
     <None Include="xbgf\refactorTypes-doc2.xbgf" />
     <None Include="xbgf\refactorTypes-doc3.xbgf" />
     <None Include="xbgf\refactorTypes-jls1.xbgf" />

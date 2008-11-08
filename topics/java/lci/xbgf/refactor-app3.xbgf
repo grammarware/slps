@@ -12,9 +12,6 @@
   <xbgf:vertical>
     <nonterminal>Expression3</nonterminal>
   </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>InterfaceMemberDecl</nonterminal>
-  </xbgf:vertical>
 
   <!-- 
    - Fail: Annotations.
@@ -111,4 +108,34 @@
   </xbgf:replace>
   <xbgf:eliminate>Selector</xbgf:eliminate>
   
+  <!-- Making new nonterminal -->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>ModifiersOpt</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <nonterminal>Modifier</nonterminal>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  
+  <!-- we don't need minimised lookahead here -->
+  <xbgf:inline>InterfaceMemberDecl</xbgf:inline>
+  <xbgf:inline>InterfaceMethodOrFieldDecl</xbgf:inline>
+  <xbgf:inline>InterfaceMethodOrFieldRest</xbgf:inline>
+  <xbgf:inline>InterfaceGenericMethodDecl</xbgf:inline>
+  <xbgf:inline>InterfaceMethodDeclaratorRest</xbgf:inline>
+  <xbgf:inline>VoidInterfaceMethodDeclaratorRest</xbgf:inline>
+  <xbgf:inline>ConstantDeclaratorsRest</xbgf:inline>
+  
+  <xbgf:distribute>
+    <nonterminal>InterfaceBodyDeclaration</nonterminal>
+  </xbgf:distribute>
+<!--remove when done-->
+  <xbgf:vertical>
+    <nonterminal>InterfaceBodyDeclaration</nonterminal>
+  </xbgf:vertical>
 </xbgf:sequence>

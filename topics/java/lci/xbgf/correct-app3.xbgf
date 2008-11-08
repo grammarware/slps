@@ -178,4 +178,9 @@ Annotation:
       <nonterminal>ElementValues</nonterminal>
     </in>
   </xbgf:replace>
+
+  <!--   undefine lexical term -->
+  <!-- GENERALITY -->
+  <xbgf:undefine>Identifier</xbgf:undefine>
+
 </xbgf:sequence>

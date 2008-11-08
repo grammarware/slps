@@ -623,6 +623,7 @@
     <to>QualifiedIdentifierList</to>
   </xbgf:unite>
   <xbgf:inline>Throws</xbgf:inline>
+  <xbgf:eliminate>ExceptionType</xbgf:eliminate>
 
   <!--
   can't match right away because one is left recursion and the other one is right
@@ -756,4 +757,45 @@
   <xbgf:inline>SingleStaticImportDeclaration</xbgf:inline>
   <xbgf:inline>StaticImportOnDemandDeclaration</xbgf:inline>
   
+  <!--
+   - Fail: InterfaceBodyDeclaration.
+      - [], ;([t((;)), ,([*(n(Modifier)), n(InterfaceMemberDecl)])])
+     vs.
+      - [], t((;))
+      - [], ,([n(ModifiersOpt), n(InterfaceDeclaration)])
+      - [], ,([n(ModifiersOpt), n(ClassDeclaration)])
+      - [], ,([*(n(Modifier)), ?(n(TypeParameters)), ;([n(Type), t(void)]), n(Identifier), t((), ?(n(FormalParameterList)), t()), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
+  -->
+  <!--<xbgf:unfold>
+    <nonterminal>ModifiersOpt</nonterminal>
+    <in>
+      <nonterminal>InterfaceBodyDeclaration</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>-->
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>TypeParameters</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>TypeParameters</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:distribute>
+    <nonterminal>InterfaceBodyDeclaration</nonterminal>
+  </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>InterfaceBodyDeclaration</nonterminal>
+  </xbgf:vertical>
 </xbgf:sequence>

@@ -1045,16 +1045,6 @@
   </xbgf:inject>
 
   <!-- 
-  Multiple cases like this one:
-  
-   - Fail: ClassOrInterfaceDeclaration.
-      - [], ,([*(n(Modifier)), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])
-     vs.
-      - [], ,([n(ModifiersOpt), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])
-   -->
-  <xbgf:inline>ModifiersOpt</xbgf:inline>
-
-  <!-- 
    - Fail: ConstructorDeclaratorRest.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(MethodBody)])
      vs.
@@ -1072,6 +1062,7 @@
       <nonterminal>ConstructorDeclaratorRest</nonterminal>
     </in>
   </xbgf:replace>
+  <xbgf:eliminate>ConstructorBody</xbgf:eliminate>
 
   <!-- 
   This is used by class definitions and interface definitions

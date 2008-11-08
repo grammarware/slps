@@ -4,7 +4,7 @@ build:
 
 diff:
 	python ../../convergence/lci/lci.py java3.lcf architecture
-	gdts bgf/app3.correct.refactor.generalizeLabels.generalizeBlock.generalize.bgf bgf/doc3.correct.generalizeModifiers.generalizeNames.deyaccify.refactorTypes.refactorExpressions.inlineStatements.generalizeStatements.refactorStatements.editExpressions.refactorClasses.refactorInterfaces.refactorEnums.refactorDeclarations.edit.bgf
+	gdts bgf/wa.bgf bgf/wd.bgf
 
 test:
 	python ../../convergence/lci/lci.py java.lcf architecture
