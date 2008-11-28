@@ -3,7 +3,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   targetNamespace="http://planet-sl.org/xbgf">
-  
+
   <xsd:annotation>
     <xsd:documentation>
       BGF transformations
@@ -23,8 +23,8 @@
     </xsd:complexType>
   </xsd:element>
 
-   <xsd:group name="transformation">
-     <xsd:annotation>
+  <xsd:group name="transformation">
+    <xsd:annotation>
       <xsd:documentation>
         Here is an alphabetical list of all the XBGF transformations.
       </xsd:documentation>
@@ -66,7 +66,7 @@
       <xsd:element ref="xbgf:yaccify"/>
     </xsd:choice>
   </xsd:group>
-  
+
   <xsd:element name="add">
     <xsd:annotation>
       <xsd:documentation>
@@ -75,11 +75,11 @@
         to an existing definition. In the latter case, a given branch is
         added to a given expression, possibly restricted to a scope. The
         horizontal mode is there for convenience only because it could be
-        simulated by a sequence of extraction, vertical addition, and 
-        inlining. There are two operators that are very similar to the 
+        simulated by a sequence of extraction, vertical addition, and
+        inlining. There are two operators that are very similar to the
         (vertical) add operator: define and introduce. The define operator
         should be used when an the definition of an undefined nonterminal
-        is added. The introduce operator should be used when a fresh 
+        is added. The introduce operator should be used when a fresh
         nonterminal is to be defined.
       </xsd:documentation>
     </xsd:annotation>
@@ -102,13 +102,13 @@
   <xsd:element name="chain">
     <xsd:annotation>
       <xsd:documentation>
-        Chaining is a disciplined form of extraction. The argument 
+        Chaining is a disciplined form of extraction. The argument
         production will be part of the resulting grammar; it is a chain
         production, i.e., a production with a nonterminal as its defining
-        expression. That nonterminal is the one whose definition is to be 
-        extracted. That definition is the defining expression of the 
-        production (from the input grammar) whose defined nonterminal and 
-        label (if any) matches with the argument production.  
+        expression. That nonterminal is the one whose definition is to be
+        extracted. That definition is the defining expression of the
+        production (from the input grammar) whose defined nonterminal and
+        label (if any) matches with the argument production.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -121,7 +121,7 @@
   <xsd:element name="define">
     <xsd:annotation>
       <xsd:documentation>
-        An undefined nonterminal is resovled. The nonterminal must be in 
+        An undefined nonterminal is resovled. The nonterminal must be in
         use. The introduce operator should be used when a fresh nonterminal
         is to be defined. The add operator should be used when an existing
         definition is to be extended.
@@ -131,6 +131,7 @@
       <xsd:sequence>
         <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
       </xsd:sequence>
+      <xsd:attribute name="tag" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -189,11 +190,11 @@
     <xsd:annotation>
       <xsd:documentation>
         An unused definition (at most used within the definition itself)
-        is removed. The undefine operator should be used instead when 
+        is removed. The undefine operator should be used instead when
         the definition must be remove despite remaining uses. The
         remove operator should be used instead when only part of the
-        definition (i.e., a production of a vertical definition) is 
-        to be removed. 
+        definition (i.e., a production of a vertical definition) is
+        to be removed.
       </xsd:documentation>
     </xsd:annotation>
   </xsd:element>
@@ -201,13 +202,13 @@
   <xsd:element name="extract">
     <xsd:annotation>
       <xsd:documentation>
-        A new definition is introduced by extraction. That is, 
+        A new definition is introduced by extraction. That is,
         the argument identifies both the fresh nonterminal for the
         definition and the expression that is to be fold into the
-        nonterminal. An optional scope can limit the application 
-        of the folding part of the extraction transformation to a 
+        nonterminal. An optional scope can limit the application
+        of the folding part of the extraction transformation to a
         specific production or a specific nonterminal.
-      </xsd:documentation>      
+      </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
@@ -250,7 +251,7 @@
         of its defining expression are to be replaced by the nonterminal. A
         horizontal definition is assumed. An optional scope can limit the
         application of the folding transformation to a specific production
-        or a specific nonterminal. Regardless of the specified scope, folding 
+        or a specific nonterminal. Regardless of the specified scope, folding
         is not applied to the definition of the argument nonterminal.
       </xsd:documentation>
     </xsd:annotation>
@@ -288,13 +289,14 @@
       <xsd:choice>
         <xsd:element ref="bgf:production"/>
       </xsd:choice>
+      <xsd:attribute name="tag" type="xsd:string"/>
     </xsd:complexType>
-  </xsd:element>  
+  </xsd:element>
 
   <xsd:element name="inline" type="bgf:nonterminal">
     <xsd:annotation>
       <xsd:documentation>
-        An existing definition is eliminated by inlining. That is, 
+        An existing definition is eliminated by inlining. That is,
         the argument nonterminal identifies the definition to be
         unfolded and eliminated eventually.
       </xsd:documentation>
@@ -305,8 +307,8 @@
     <xsd:annotation>
       <xsd:documentation>
         A definition of a fresh nonterminal is added. The add operator
-        should be used instead, if the nonterminal is already defined, 
-        is to be merely extended. The define operator should be used 
+        should be used instead, if the nonterminal is already defined,
+        is to be merely extended. The define operator should be used
         instead, if the nonterminal is readily in use, but merely lacks
         a definition.
       </xsd:documentation>
@@ -328,7 +330,7 @@
         if any, assuming that the defining expression uses an equivlent,
         repeating expression form. The "l" in "lassoc" refers to the
         intended effect at the level of derivation trees: the list of
-        subtrees is to be converted into a nested binary tree in a 
+        subtrees is to be converted into a nested binary tree in a
         left-associative manner.
       </xsd:documentation>
     </xsd:annotation>
@@ -336,6 +338,7 @@
       <xsd:choice>
         <xsd:element ref="bgf:production"/>
       </xsd:choice>
+      <xsd:attribute name="tag" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -344,10 +347,10 @@
       <xsd:documentation>
         The grammar is rewritten by local transformations such that
         the language generated by the grammar (or the denotation according
-        to any other semantics for that matter) is preserved. The known 
+        to any other semantics for that matter) is preserved. The known
         rewriting rules affect the use of selectors and regular expression
         operators. There are two expression arguments: one to be matched,
-        and another one that replaces the matched expression. The scope of 
+        and another one that replaces the matched expression. The scope of
         the transformation can be limited.
       </xsd:documentation>
     </xsd:annotation>
@@ -362,17 +365,17 @@
         </xsd:element>
       </xsd:sequence>
     </xsd:complexType>
-  </xsd:element> 
+  </xsd:element>
 
   <xsd:element name="narrow">
     <xsd:annotation>
       <xsd:documentation>
         The grammar is rewritten by local transformations such that
         the language generated by the grammar (or the denotation according
-        to any other semantics for that matter) is decreased. The known 
+        to any other semantics for that matter) is decreased. The known
         rewriting rules affect the use of epsilon and regular expression
         operators. There are two expression arguments: one to be matched,
-        and another one that replaces the matched expression. The scope of 
+        and another one that replaces the matched expression. The scope of
         the transformation can be limited.
       </xsd:documentation>
     </xsd:annotation>
@@ -420,9 +423,10 @@
       <xsd:choice>
         <xsd:element ref="bgf:production"/>
       </xsd:choice>
+      <xsd:attribute name="tag" type="xsd:string"/>
     </xsd:complexType>
-  </xsd:element>  
-  
+  </xsd:element>
+
   <xsd:element name="rassoc">
     <xsd:annotation>
       <xsd:documentation>
@@ -433,7 +437,7 @@
         if any, assuming that the defining expression uses an equivlent,
         repeating expression form. The "r" in "rassoc" refers to the
         intended effect at the level of derivation trees: the list of
-        subtrees is to be converted into a nested binary tree in a 
+        subtrees is to be converted into a nested binary tree in a
         right-associative manner.
       </xsd:documentation>
     </xsd:annotation>
@@ -441,6 +445,7 @@
       <xsd:choice>
         <xsd:element ref="bgf:production"/>
       </xsd:choice>
+      <xsd:attribute name="tag" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -465,7 +470,7 @@
         Labels, nonterminals, selectors and terminals can be renamed.
         Being in line with the fundamental notion of renaming, such
         renaming must be done consistently throughout the entire grammar,
-        without introducing any clashes. There is one justifiable 
+        without introducing any clashes. There is one justifiable
         exception. That is, arguably, the scope of selectors is the
         level of production as opposed to necessarily the entire grammar.
         Hence, selectors can be renamed in such a scope, optionally.
@@ -509,14 +514,14 @@
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>
-  
+
   <xsd:element name="replace">
     <xsd:annotation>
       <xsd:documentation>
-        This operator provides a last resort to grammar editing. It 
+        This operator provides a last resort to grammar editing. It
         basically provides access to free editing without any semantically
         meaningful preconditions. There are two expression arguments:
-        one to be matched, and another one that replaces the matched 
+        one to be matched, and another one that replaces the matched
         expression. The scope of the transformation can be limited.
       </xsd:documentation>
     </xsd:annotation>
@@ -530,6 +535,7 @@
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>
+      <xsd:attribute name="tag" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -552,7 +558,7 @@
     <xsd:annotation>
       <xsd:documentation>
         Given a reflexive chain production, i.e., a production whose
-        defined nonterminal equals its body, this production is simply 
+        defined nonterminal equals its body, this production is simply
         removed.
       </xsd:documentation>
     </xsd:annotation>
@@ -575,7 +581,7 @@
         <xsd:element name="label" type="bgf:label">
           <xsd:annotation>
             <xsd:documentation>
-              Stripping a label means that a production that uses the 
+              Stripping a label means that a production that uses the
               label becomes unlabeled.
             </xsd:documentation>
           </xsd:annotation>
@@ -607,7 +613,7 @@
         <xsd:element name="terminal" type="bgf:terminal">
           <xsd:annotation>
             <xsd:documentation>
-              Stripping a terminal means that any occurrence of the 
+              Stripping a terminal means that any occurrence of the
               terminal disappears as if the terminal denoted epsilon.
             </xsd:documentation>
           </xsd:annotation>
@@ -627,7 +633,7 @@
   <xsd:element name="unchain">
     <xsd:annotation>
       <xsd:documentation>
-        Unchaining is a disciplined form of inlining. The argument 
+        Unchaining is a disciplined form of inlining. The argument
         production must occur in the input grammar, and it must be a chain
         production, i.e., a production with a nonterminal as its
         defining expression. The latter nonterminal is the one whose
@@ -636,21 +642,28 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-       <xsd:choice>
-         <xsd:element ref="bgf:production"/>
-       </xsd:choice>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="undefine" type="bgf:nonterminal">
+  <xsd:element name="undefine">
     <xsd:annotation>
       <xsd:documentation>
-        Undefine a nonterminal, i.e., remove all productions. The 
+        Undefine a nonterminal, i.e., remove all productions. The
         nonterminal must have using occurrences elsewhere than just in
         its own definition. If there are no such using occurrences, then
         the less disruptive eliminate operator is to be used.
       </xsd:documentation>
     </xsd:annotation>
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="bgf:nonterminal">
+          <xsd:attribute name="tag" type="xsd:string"/>
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="unfold">
@@ -661,7 +674,7 @@
         nonterminal are to be replaced by it defining expression where a
         horizontal definition is assumed. An optional scope can limit the
         application of the unfolding transformation to a specific production
-        or a specific nonterminal. Regardless of the specified scope, unfolding 
+        or a specific nonterminal. Regardless of the specified scope, unfolding
         is not applied to the definition of the argument nonterminal.
       </xsd:documentation>
     </xsd:annotation>
@@ -680,7 +693,7 @@
   <xsd:element name="unite">
     <xsd:annotation>
       <xsd:documentation>
-        Two nonterminals, say x and y, are merged (possibly recursively). 
+        Two nonterminals, say x and y, are merged (possibly recursively).
         That is, the definitions of x and y (i.e., their productions)
         are merged in one definition while preserving the nonterminal y
         and replacing all occurrences of x (in the definition of x and
@@ -713,10 +726,10 @@
       <xsd:documentation>
         The grammar is rewritten by local transformations such that
         the language generated by the grammar (or the denotation according
-        to any other semantics for that matter) is increased. The known 
+        to any other semantics for that matter) is increased. The known
         rewriting rules affect the use of epsilon and regular expression
         operators. There are two expression arguments: one to be matched,
-        and another one that replaces the matched expression. The scope of 
+        and another one that replaces the matched expression. The scope of
         the transformation can be limited.
       </xsd:documentation>
     </xsd:annotation>
@@ -736,11 +749,11 @@
   <xsd:element name="yaccify">
     <xsd:annotation>
       <xsd:documentation>
-        The given production is a horizontal definition of an optional 
-        or repeating nonterminal, given in BNF-only expressiveness. The 
+        The given production is a horizontal definition of an optional
+        or repeating nonterminal, given in BNF-only expressiveness. The
         defined nonterminal must be equivalently defined in EBNF-like
         expressiveness in the input grammar. One may often wish to use
-        extract to first introduce a nonterminal for the optional or 
+        extract to first introduce a nonterminal for the optional or
         repeating phrase.
       </xsd:documentation>
     </xsd:annotation>
