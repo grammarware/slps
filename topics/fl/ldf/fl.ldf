@@ -2,15 +2,131 @@
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <title>The Factorial Language</title>
+  <title>
+    <author>Ralf Laemmel</author>
+    <topic>The Factorial Language</topic>
+    <version>1.0</version>
+    <status>draft</status>
+    <date>August 2008</date>
+  </title>
+  <frontMatter>
+    <foreword>
+      <p>
+        The Factorial Language (FL) is a trivial functional language;
+        it's a toy language made up as an illustrative language for language processing.
+        It's carefully designed to be trivial
+        but still involved enough to trigger a lot of issues in language processing
+        (including issues of parsing, semantics, type checking, transformation).
+        This document provides a documentation of the FL language.
+      </p>
+    </foreword>
+    <designGoals>
+      <item>Trivial language</item>
+      <item>Illustrative for language processing</item>
+    </designGoals>
+    <scope>
+      <content>
+        <p>
+          SLPS, or Software Language Processing Suite, is a collaborative facility for
+          aid in teaching language processing techniques in universities.
+          FL is an example language in that.
+        </p>
+      </content>
+    </scope>
+    <conformance>
+      <content>
+        <p>
+          Any text that can be parsed with the FL grammar provided by this document,
+          is a correct FL program.
+        </p>
+      </content>
+    </conformance>
+    <compatibility>
+      <content>
+        <p>
+          The FL specification uses other SLPS technologies such as BGF, LDF, etc.
+        </p>
+      </content>
+    </compatibility>
+    <notation>
+      <content>
+        <p>
+          The internal grammar is stored in BGF.
+        </p>
+        <p>The pretty-printed BNF uses the following:</p>
+        <list>
+          <item>() parentheses for selecting groups,</item>
+          <item>? question sign for optional element (zero or one occurence),</item>
+          <item>* star for transitive closure (zero or more occurences),</item>
+          <item>+ plus for reflexive transitive closure (one or more occurences),</item>
+        </list>
+      </content>
+    </notation>
+    <normativeReferences>
+      <item>
+        R. Lämmel, V. Zaytsev. An Introduction to Grammar Convergence.
+        Proceedings of 7th International Conference on integrated Formal Methods (iFM 2009).
+        Springer, 2009.
+      </item>
+    </normativeReferences>
+    <definitions>
+      <term>
+        <name>program</name>
+        <definition>
+          <p>
+            FL program is a list of function definitions separated by newline characters
+          </p>
+        </definition>
+      </term>
+      <term>
+        <name>function</name>
+        <definition>
+          <p>
+            FL function is the same as a function in math: it has some input
+            parameters and returns a value
+          </p>
+        </definition>
+      </term>
+    </definitions>
+    <documentStructure>
+      <id>struct</id>
+      <title>Organization</title>
+      <content>
+        <p>The rest of the document is organized as follows...</p>
+      </content>
+    </documentStructure>
+    <whatsnew>
+      <item>No new concepts in the language, really...</item>
+    </whatsnew>
+  </frontMatter>
+  <languageOverview>
+    <term>
+      <name>function</name>
+      <definition>
+        <p>...</p>
+      </definition>
+    </term>
+  </languageOverview>
+  <tokens>
+    <id>lexical-1</id>
+    <content>
+      <p>Tokens in FL are...</p>
+    </content>
+  </tokens>
+  <core>
+    <id>syntax-1</id>
+    <title>The Only Syntax Section</title>
+    <description>
+      <content>
+        <p>Only one core section!</p>
+      </content>
+    </description>
+  </core>
+  <!--
+  <title></title>
   <author>The Software Languages Team in Koblenz</author>
   <abstract>
-    The Factorial Language (FL) is a trivial functional language;
-    it's a toy language made up as an illustrative language for language processing.
-    It's carefully designed to be trivial
-    but still involved enough to trigger a lot of issues in language processing
-    (including issues of parsing, semantics, type checking, transformation).
-    This document provides a documentation of the FL language.
+    
   </abstract>
   <content>
     <section>
@@ -130,5 +246,5 @@
         </sample>
       </content>
     </section>
-  </content>
+  </content>-->
 </ldf:document>

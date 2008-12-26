@@ -60,7 +60,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="TopSection">
+  <xsd:complexType name="StructuredSection">
     <xsd:sequence>
       <xsd:element name="id" type="xsd:ID"/>
       <xsd:element name="title" type="xsd:string"/>
@@ -71,29 +71,11 @@
         <xsd:element name="placeholder" type="ldf:generated"/>
         <xsd:group ref="ldf:normative"/>
         <xsd:group ref="ldf:informative"/>
+        <xsd:group ref="ldf:lexical"/>
         <xsd:element ref="bgf:production"/>
         <xsd:element name="relationship" type="ldf:ListOfInternalLinks"/>
         <!-- <xsd:group ref="ldf:top-section"/> -->
-        <xsd:element name="subtopic" type="ldf:TopSection"/>
-      </xsd:choice>
-    </xsd:sequence>
-  </xsd:complexType>
-
-  <xsd:complexType name="LexicalSection">
-    <xsd:sequence>
-      <xsd:element name="id" type="xsd:ID"/>
-      <xsd:element name="type" type="ldf:lexical"/>
-      <xsd:element name="title" type="xsd:string"/>
-      <xsd:sequence minOccurs="0">
-        <xsd:element name="author" type="xsd:string" maxOccurs="unbounded"/>
-      </xsd:sequence>
-      <xsd:choice maxOccurs="unbounded">
-        <xsd:element name="placeholder" type="ldf:generated"/>
-        <xsd:group ref="ldf:normative"/>
-        <xsd:group ref="ldf:informative"/>
-        <xsd:element ref="bgf:production"/>
-        <xsd:element name="relationship" type="ldf:ListOfInternalLinks"/>
-        <xsd:element name="subtopic" type="ldf:TopSection"/>
+        <xsd:element name="subtopic" type="ldf:StructuredSection"/>
       </xsd:choice>
     </xsd:sequence>
   </xsd:complexType>
@@ -108,8 +90,9 @@
       <xsd:element name="notation" type="ldf:SimpleSection"/>
       <xsd:element name="clause" type="ldf:SimpleSection"/>
       <xsd:element name="field" type="ldf:SimpleSection"/>
-      <!-- none of the above -->
+      <!-- none of the above 
       <xsd:element name="core" type="ldf:SimpleSection"/>
+      -->
     </xsd:choice>
   </xsd:group>
 
@@ -134,6 +117,25 @@
     </xsd:choice>
   </xsd:group>
 
+  <xsd:group name="lexical">
+    <xsd:annotation>
+      <xsd:documentation>
+        Sections describing lexical structure tend to be shorter, less structured inside,
+        and very limited in scope: there is usually one on whitespace, one on tokens,
+        one on literals, one on comments, etc.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="lineContinuations" type="ldf:SimpleSection"/>
+      <xsd:element name="whitespace" type="ldf:SimpleSection"/>
+      <xsd:element name="tokens" type="ldf:SimpleSection"/>
+      <xsd:element name="preprocessor" type="ldf:SimpleSection"/>
+      <xsd:element name="literals" type="ldf:SimpleSection"/>
+      <!-- none of the above -->
+      <xsd:element name="lexical" type="ldf:SimpleSection"/>
+    </xsd:choice>
+  </xsd:group>
+
   <xsd:simpleType name="status">
     <xsd:restriction base="xsd:token">
       <xsd:enumeration value="draft"/>
@@ -152,17 +154,6 @@
       <xsd:enumeration value="listofauthors"/>
       <xsd:enumeration value="listofcontents"/>
       <xsd:enumeration value="listofreferences"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-
-  <xsd:simpleType name="lexical">
-    <xsd:restriction base="xsd:token">
-      <xsd:enumeration value="lineContinuations"/>
-      <xsd:enumeration value="whitespace"/>
-      <xsd:enumeration value="tokens"/>
-      <xsd:enumeration value="preprocessor"/>
-      <xsd:enumeration value="literals"/>
-      <xsd:enumeration value="other"/>
     </xsd:restriction>
   </xsd:simpleType>
 
@@ -222,17 +213,9 @@
             </xsd:documentation>
           </xsd:annotation>
         </xsd:element>
-        <xsd:element name="lexicalSection" type="ldf:LexicalSection" maxOccurs="unbounded">
-          <xsd:annotation>
-            <xsd:documentation>
-              Sections describing lexical structure tend to be shorter, less structured inside,
-              and very limited in scope: there is usually one on whitespace, one on tokens,
-              one on literals, one on comments, etc.
-            </xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
-        <xsd:group ref="ldf:top-section" maxOccurs="unbounded"/>
-        <xsd:element name="annex" type="ldf:TopSection" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:group ref="ldf:lexical" maxOccurs="unbounded"/>
+        <xsd:element name="core" type="ldf:StructuredSection" maxOccurs="unbounded"/>
+        <xsd:element name="annex" type="ldf:StructuredSection" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -335,7 +318,7 @@
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="documentStructure" type="ldf:TopSection">
+      <xsd:element name="documentStructure" type="ldf:SimpleSection">
         <xsd:annotation>
           <xsd:documentation>
             This section informally describes how the document is organised, divided
