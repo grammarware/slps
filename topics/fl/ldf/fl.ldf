@@ -11,18 +11,25 @@
   </title>
   <frontMatter>
     <foreword>
-      <p>
-        The Factorial Language (FL) is a trivial functional language;
-        it's a toy language made up as an illustrative language for language processing.
-        It's carefully designed to be trivial
-        but still involved enough to trigger a lot of issues in language processing
-        (including issues of parsing, semantics, type checking, transformation).
-        This document provides a documentation of the FL language.
-      </p>
+      <content>
+        <p>
+          The Factorial Language (FL) is a trivial functional language;
+          it's a toy language made up as an illustrative language for language processing.
+          It's carefully designed to be trivial
+          but still involved enough to trigger a lot of issues in language processing
+          (including issues of parsing, semantics, type checking, transformation).
+          This document provides a documentation of the FL language.
+        </p>
+      </content>
     </foreword>
     <designGoals>
-      <item>Trivial language</item>
-      <item>Illustrative for language processing</item>
+      <title>Language design goals</title>
+      <content>
+        <list>
+          <item>Trivial language</item>
+          <item>Illustrative for language processing</item>
+        </list>
+      </content>
     </designGoals>
     <scope>
       <content>
@@ -63,12 +70,26 @@
       </content>
     </notation>
     <normativeReferences>
-      <item>
-        R. Lämmel, V. Zaytsev. An Introduction to Grammar Convergence.
-        Proceedings of 7th International Conference on integrated Formal Methods (iFM 2009).
-        Springer, 2009.
-      </item>
+      <title>Normative and scientific references</title>
+      <content>
+        <list>
+          <item>
+            R. Lämmel, V. Zaytsev. An Introduction to Grammar Convergence.
+            Proceedings of 7th International Conference on integrated Formal Methods (iFM 2009).
+            Springer, 2009.
+          </item>
+        </list>
+      </content>
     </normativeReferences>
+    <documentStructure>
+      <id>struct</id>
+      <title>Organization</title>
+      <content>
+        <p>The rest of the document is organized as follows...</p>
+      </content>
+    </documentStructure>
+  </frontMatter>
+  <lists>
     <definitions>
       <term>
         <name>program</name>
@@ -88,31 +109,57 @@
         </definition>
       </term>
     </definitions>
-    <documentStructure>
-      <id>struct</id>
-      <title>Organization</title>
+    <abbreviations>
+      <term>
+        <name>FL</name>
+        <definition>
+          <p>Factorial Language</p>
+        </definition>
+      </term>
+      <term>
+        <name>SLPS</name>
+        <definition>
+          <p>Software Language Processing Suite</p>
+        </definition>
+      </term>
+      <term>
+        <name>LDF</name>
+        <definition>
+          <p>Language Document Format</p>
+        </definition>
+      </term>
+      <term>
+        <name>BGF</name>
+        <definition>
+          <p>BNF-like Grammar Formalism</p>
+        </definition>
+      </term>
+      <term>
+        <name>BNF</name>
+        <definition>
+          <p>Backus Normal Form</p>
+        </definition>
+      </term>
+    </abbreviations>
+    <languageOverview>
+      <title>Language overview</title>
+      <term>
+        <name>function</name>
+        <definition>
+          <p>...</p>
+        </definition>
+      </term>
+    </languageOverview>
+  </lists>
+  <lexicalPart>
+    <tokens>
+      <id>lexical-1</id>
       <content>
-        <p>The rest of the document is organized as follows...</p>
+        <p>Tokens in FL are...</p>
       </content>
-    </documentStructure>
-    <whatsnew>
-      <item>No new concepts in the language, really...</item>
-    </whatsnew>
-  </frontMatter>
-  <languageOverview>
-    <term>
-      <name>function</name>
-      <definition>
-        <p>...</p>
-      </definition>
-    </term>
-  </languageOverview>
-  <tokens>
-    <id>lexical-1</id>
-    <content>
-      <p>Tokens in FL are...</p>
-    </content>
-  </tokens>
+    </tokens>
+  </lexicalPart>
+  
   <core>
     <id>syntax-1</id>
     <title>The Only Syntax Section</title>
