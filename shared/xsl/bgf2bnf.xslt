@@ -47,9 +47,9 @@
   </xsl:template>
   
   <xsl:template match="star">
-    <xsl:text>{ </xsl:text>
+    <xsl:text>( </xsl:text>
     <xsl:apply-templates select="./*"/>
-    <xsl:text>} </xsl:text>
+    <xsl:text>)* </xsl:text>
   </xsl:template>
   
   <xsl:template match="optional">
