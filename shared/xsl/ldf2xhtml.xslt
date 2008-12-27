@@ -53,7 +53,10 @@
           (c)
           <xsl:choose>
           <xsl:when test="title/author">
-            <xsl:value-of select="title/author"/>
+            <xsl:for-each select="title/author">
+              <xsl:value-of select="."/>
+              <xsl:text> </xsl:text>
+            </xsl:for-each>
           </xsl:when>
           <xsl:when test="title/body">
             <xsl:call-template name="uppercase">
@@ -84,7 +87,6 @@
         </xsl:for-each>
         <hr/>
  
-        <xsl:apply-templates select="/ldf:document/content"/>
       </body>
     </html>
   </xsl:template>

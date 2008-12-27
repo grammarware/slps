@@ -15,6 +15,10 @@
 
   <xsl:template match="bgf:production">
     <xsl:value-of select="./nonterminal"/>
+    <xsl:if test="./label">
+      <xsl:text>#</xsl:text>
+      <xsl:value-of select="./label"/>
+    </xsl:if>
     <xsl:text>:</xsl:text>
     <xsl:choose>
       <xsl:when test="./bgf:expression/choice">
@@ -91,7 +95,13 @@
     <xsl:value-of select="."/>
     <xsl:text> </xsl:text>
   </xsl:template>
-  
+
+  <xsl:template match="selectable">
+    <xsl:value-of select="selector"/>
+    <xsl:text>::</xsl:text>
+    <xsl:apply-templates select="bgf:expression"/>
+  </xsl:template>
+
   <xsl:template match="sequence">
     <xsl:apply-templates select="./*"/>
   </xsl:template>
