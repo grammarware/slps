@@ -1379,22 +1379,6 @@
      vs.
                ,([?(t(static)), n(Block)]),
   -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>static</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Block</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:widen>
     <bgf:expression>
       <terminal>static</terminal>
@@ -1410,9 +1394,6 @@
       <nonterminal>ClassBodyDeclaration</nonterminal>
     </in>
   </xbgf:widen>
-  <xbgf:strip>
-    <label>target</label>
-  </xbgf:strip>
 
   <!-- 
    - Fail: ClassBodyDeclaration.

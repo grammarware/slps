@@ -130,7 +130,7 @@
   <xbgf:inline>InterfaceMethodDeclaratorRest</xbgf:inline>
   <xbgf:inline>VoidInterfaceMethodDeclaratorRest</xbgf:inline>
   <xbgf:inline>ConstantDeclaratorsRest</xbgf:inline>
-  
+  <xbgf:inline>FormalParameters</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:distribute>

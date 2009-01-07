@@ -26,7 +26,7 @@ Annotation:
       - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
   -->
   <!-- REVISE -->
-  <xbgf:replace>
+  <xbgf:replace tag="revise">
     <bgf:expression>
       <sequence>
         <bgf:expression>
@@ -78,7 +78,7 @@ Annotation:
      vs.
       - [], ;([n(Block),
                ,([t(break), ?(n(Identifier)), t((;))]),
--->
+  -->
   <!-- REVISE -->
   <xbgf:replace>
     <bgf:expression>

@@ -25,9 +25,8 @@
         <xsl:value-of select="$in/nonterminal" />
       </xsl:when>
       <xsl:when test="$in/label">
-        <xsl:text> in "</xsl:text>
+        <xsl:text> in #</xsl:text>
         <xsl:value-of select="$in/label" />
-        <xsl:text>"</xsl:text>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -77,7 +76,7 @@
 </xsl:text>
   </xsl:template>
 
-  <xsl:template match="xbgf:designate">
+  <!--xsl:template match="xbgf:designate">
     <xsl:value-of select="local-name()" />
     <xsl:text>("</xsl:text>
     <xsl:value-of select="./bgf:production/label" />
@@ -86,7 +85,7 @@
     <xsl:apply-templates select="./bgf:production"/>
     <xsl:text>);
 </xsl:text>
-  </xsl:template>
+  </xsl:template-->
 
   <xsl:template match="xbgf:deyaccify|xbgf:eliminate|xbgf:horizontal|xbgf:inline|xbgf:undefine">
     <xsl:value-of select="local-name()" />
@@ -170,7 +169,15 @@
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>
     <xsl:choose>
-      <xsl:when test="label|selector|terminal">
+      <xsl:when test="label">
+        <xsl:text>#</xsl:text>
+        <xsl:value-of select="*/text()" />
+      </xsl:when>
+      <xsl:when test="selector">
+        <xsl:value-of select="*/text()" />
+        <xsl:text>::</xsl:text>
+      </xsl:when>
+      <xsl:when test="terminal">
         <xsl:value-of select="local-name(*)" />
         <xsl:text>, "</xsl:text>
         <xsl:value-of select="*/text()" />

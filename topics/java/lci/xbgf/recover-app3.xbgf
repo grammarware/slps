@@ -10,27 +10,29 @@
      vs.
       - [], ,([t({), n(BlockStatements), t(})])
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>Block</xbgf:undefine>
   <!-- REVISE -->
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>Block</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>{</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>BlockStatements</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>}</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
+  <xbgf:replace>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <nonterminal>BlockStatements</nonterminal>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>{</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>BlockStatements</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>}</terminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:replace>
 
   <!-- ISSUE EXTRACTERROR
    - Fail: AnnotationTypeBody.
