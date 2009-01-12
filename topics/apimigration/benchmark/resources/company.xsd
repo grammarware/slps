@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.company.com" xmlns="http://www.company.com"
+	elementFormDefault="qualified">
+	<xs:element name="company">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="dept" type="dept" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="dept">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="manager" type="employee" />
+			<xs:element ref="subunit" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="subunit">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="pu" type="employee" />
+				<xs:element name="du" type="dept" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="employee">
+		<xs:sequence>
+			<xs:element ref="person" />
+			<xs:element ref="salary" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="person">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string" />
+				<xs:element name="address" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="salary" type="xs:double" />
+</xs:schema>
