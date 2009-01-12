@@ -1,0 +1,97 @@
+equations
+
+[]	&rstore := create-store(),
+	&relem := extract-dataflow(&member),
+	&rstore' := declare(&rstore, graph, rel[str,str]),
+	&rstore'' := set(&rstore', graph, &relem)
+	===
+	start(Member, &member) = start(RStore, &rstore'')
+
+
+
+equations
+
+[]	extract-dataflow(&mod* &type &name (&param*) &throws? { &decl* &stmt* &catch*}) =
+		extract-dataflow-labels(&stmt*, 
+		extract-dataflow-deps(&stmt*, {}))
+
+
+equations
+
+[]	&new !:= &expr,
+	&strcon := unparse-to-string(&lname),
+	&set := extract-inputs(&expr, {}),
+	&strcon' := unparse-to-string(&expr)
+	===
+	extract-dataflow-deps(&lname = &expr;, &rel) = 
+	union(union({<&strcon, &strcon'>},product({&strcon'}, &set)), &rel)
+
+
+[]	&strcon1 := unparse-to-string(&lname),
+	&strcon2 := unparse-to-string(&new)
+	===
+	extract-dataflow-deps(&lname = &new;, &rel) = union({<&strcon1, &strcon2>}, &rel)
+
+
+[]	
+	&strcon1 := unparse-to-string(&id),
+	&set := extract-inputs(&bool, {})
+	===
+	extract-dataflow-deps(if &bool goto &id;, &rel) = 
+		union(product({&strcon1}, &set), &rel)
+
+
+[]	&strcon := unparse-to-string(&lname),
+	&set := extract-inputs(&immed*, {})
+	===
+	extract-dataflow-deps(&nonstatic &lname. &sig(&immed*);, &rel) = 
+		union(product({&strcon}, &set), &rel)
+
+
+
+equations
+
+[]	extract-inputs(&lname, &relem) = union({unparse-to-string(&lname)}, &relem)
+
+equations
+
+[]	&strcon := unparse-to-string(&id),
+	&strcon' := unparse-to-string(&lname),
+	&set := extract-inputs(&expr, {})
+	===
+	extract-dataflow-labels(&id: nop; &lname = &expr; &stmt*, &rel) = 
+		extract-dataflow-labels(nop; &lname = &expr; &stmt*, union({<&strcon', &strcon>}, &rel))
+
+[]	&strcon1 := unparse-to-string(&lname),
+	&strcon2 := unparse-to-string(&id)
+	===
+	extract-dataflow-labels(&lname = &expr; nop; goto &id; &stmt*, &rel) = 
+		extract-dataflow-labels(nop; goto &id; &stmt*, union({<&strcon2, &strcon1>}, &rel))
+
+[]	&strcon1 := unparse-to-string(&id),
+	&strcon2 := unparse-to-string(&lname)
+	===
+	extract-dataflow-labels(&id: nop; return &lname; &stmt*, &rel) = 
+		extract-dataflow-labels(nop; return &lname; &stmt*, union({<&strcon2, &strcon1>}, &rel))
+
+
+/* Link preds of goto's to the gotoed label??? 
+
+[]	&strcon1 := unparse-to-string(&lname),
+	&strcon2 := unparse-to-string(&id)
+	===
+	extract-dataflow-labels(&lname = &expr; nop; goto &id; &stmt*, &rel) = 
+		extract-dataflow-labels(nop; goto &id; &stmt*,
+			union({<&strcon2, &strcon1>}, &rel))
+
+*/
+
+[]	extract-dataflow-labels(, &rel) = &rel
+
+[default-labels]
+	extract-dataflow-labels(&stmt &stmt*, &rel) =
+		extract-dataflow-labels(&stmt*, &rel)
+
+
+
+		

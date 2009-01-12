@@ -1,0 +1,11 @@
+%%
+%% Jimple grammar
+%%
+
+module languages/jimple/syntax/Jimple
+imports
+  languages/jimple/syntax/Main
+
+hiddens
+  context-free start-symbols File Member
+

@@ -1,0 +1,18 @@
+module languages/jimple/syntax/Modifiers
+exports
+  sorts Modifier
+
+  context-free syntax
+    "abstract"     -> Modifier {cons("Abstract")}
+    "final"        -> Modifier {cons("Final")}
+    "native"       -> Modifier {cons("Native")}
+    "public"       -> Modifier {cons("Public")}
+    "protected"    -> Modifier {cons("Protected")}
+    "private"      -> Modifier {cons("Private")}
+    "static"       -> Modifier {cons("Static")}
+    "synchronized" -> Modifier {cons("Synchronized")}
+    "transient"    -> Modifier {cons("Transient")}
+    "volatile"     -> Modifier {cons("Volatile")}
+    "strictfp"     -> Modifier {cons("StrictFP")}
+    "enum"         -> Modifier {cons("Enum")}
+    "annotation"   -> Modifier {cons("Annotation")}

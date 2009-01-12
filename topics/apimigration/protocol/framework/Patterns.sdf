@@ -1,0 +1,23 @@
+module Patterns
+
+imports languages/jimple/syntax/Expressions
+        basic/IdentifierCon
+        containers/Set[Pattern] [Set[[Pattern]] => Patterns]
+
+hiddens
+context-free start-symbols
+  Patterns
+
+exports
+sorts Pattern InvokePattern Hole NewPattern Patterns
+
+context-free syntax
+  "_"                                                   -> Hole           
+  "?" IdCon                                             -> Hole           
+  NewPattern                                            -> Pattern        
+  InvokePattern                                         -> Pattern        
+  Hole ":" NewExpr                                      -> NewPattern     
+  Hole ":" Hole "." MethodSignature "(" {Hole ","}* ")" -> InvokePattern  
+  Hole "." MethodSignature "(" {Hole ","}* ")"          -> InvokePattern  
+  Hole ":" MethodSignature "(" {Hole ","}* ")"          -> InvokePattern  
+  MethodSignature "(" {Hole ","}* ")"                   -> InvokePattern  

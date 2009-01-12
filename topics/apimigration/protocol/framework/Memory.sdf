@@ -1,0 +1,30 @@
+module Memory[Variable Value]
+
+imports containers/Table[Variable Value] [Table[[Variable,Value]] => Heap]
+        basic/Integers
+
+exports
+sorts Heap Memory OID
+
+context-free syntax
+  <Integer,Heap>                 -> Memory        
+  oid(Integer)                   -> OID           
+  "unknown"                      -> OID           
+  OID                            -> Value         
+  rlookup(Memory, Value)         -> Variable      
+  lookup(Memory, Variable)       -> Value         
+  store(Memory, Variable, Value) -> Memory        
+  new(Memory, Variable)          -> <Memory,OID>  
+  empty-memory()                 -> Memory        
+
+hiddens
+imports basic/Whitespace
+
+variables
+  "&value" [0-9\']* -> Value                    
+  "&mem" [0-9\']*   -> Memory                   
+  "&heap" [0-9\']*  -> Heap                     
+  "&var" [0-9\']*   -> Variable                 
+  "&oid" [0-9\']*   -> OID                      
+  "&n" [0-9\']*     -> Integer                  
+  "&bin*" [0-9\']*  -> {<Variable,Value> ","}*  

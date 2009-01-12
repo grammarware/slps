@@ -1,0 +1,79 @@
+%%%
+ %% Jimple keywords
+ %%%
+module languages/jimple/syntax/Keywords
+exports
+  sorts Keyword
+  lexical syntax
+    "abstract"            -> Keyword
+    "boolean"             -> Keyword
+    "breakpoint"          -> Keyword
+    "byte"                -> Keyword
+    "char"                -> Keyword
+    "class"               -> Keyword
+    "double"              -> Keyword
+    "entermonitor"        -> Keyword
+    "enum"                -> Keyword
+    "exitmonitor"         -> Keyword
+    "extends"             -> Keyword
+    "final"               -> Keyword
+    "float"               -> Keyword
+    "implements"          -> Keyword
+    "instanceof"          -> Keyword
+    "int"                 -> Keyword
+    "interface"           -> Keyword
+    "lookupswitch"        -> Keyword
+    "long"                -> Keyword
+    "native"              -> Keyword
+    "null"                -> Keyword
+    "null_type"           -> Keyword
+    "private"             -> Keyword
+    "public"              -> Keyword
+    "ret"                 -> Keyword
+    "return"              -> Keyword
+    "short"               -> Keyword
+    "static"              -> Keyword
+    "synchronized"        -> Keyword
+    "throws"              -> Keyword
+    "transient"           -> Keyword
+    "unknown"             -> Keyword
+    "void"                -> Keyword
+    "volatile"            -> Keyword
+    
+  lexical restrictions
+    "abstract"
+    "annotation"  %% not a keyword
+    "boolean"
+    "breakpoint"
+    "byte"
+    "char"
+    "class"
+    "double"
+    "entermonitor"
+    "enum"
+    "exitmonitor"
+    "extends"
+    "final"
+    "float"
+    "implements"
+    "instanceof"
+    "int"
+    "interface"
+    "lookupswitch"
+    "long"
+    "native"
+    "null"
+    "null_type"
+    "private"
+    "public"
+    "ret"
+    "return"
+    "short"
+    "static"
+    "synchronized"
+    "throws"
+    "transient"
+    "unknown"
+    "void"
+    "volatile"
+    -/- [A-Za-z0-9\_\$]

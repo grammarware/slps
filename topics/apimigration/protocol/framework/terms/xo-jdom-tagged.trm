@@ -1,0 +1,1212 @@
+public class de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM extends de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.ContactsToDocument
+{
+<ContactsToDocumentUsingJDOM.java>
+
+<[args]>
+<Dependences( 2, 3 ) ( 5, 8 ) ( 3, 6 ) ( 2, 7 ) ( 6, 8 ) ( 5, 7 ) ( 4, 7 ) ( 2, 6 ) ( 3, 7 ) ( 7, 8 ) ( 6, 7 ) ( 5, 6 ) ( 2, 5 ) ( 3, 8 ) ( 3, 5 ) ( 2, 8 ) >
+    public static void main(java.lang.String[]) throws java.io.IOException
+    {
+        java.lang.String[] args;
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM temp$0;
+        java.util.List temp$1;
+        java.io.PrintStream temp$2;
+
+        args := @parameter0: java.lang.String[];
+<17>
+<Jimple Line Tag: 11>
+        temp$0 = new de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<17>
+<SECallsNative
+SEReads : 0
+SEWrites: 1
+>
+<Jimple Line Tag: 14>
+        temp$1 = <de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.util.List PERSONS>;
+<17>
+<SECallsNative
+SEReads : 2
+SEWrites: 3
+>
+<Jimple Line Tag: 18>
+        specialinvoke temp$0.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: void <init>(java.util.List)>(temp$1);
+<18>
+<SEWrites: 4
+>
+<Jimple Line Tag: 22>
+        temp$2 = <java.lang.System: java.io.PrintStream out>;
+<18>
+<SECallsNative
+SEReads : 5
+SEWrites: 6
+>
+<Jimple Line Tag: 26>
+        virtualinvoke temp$0.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: void save(java.io.OutputStream)>(temp$2);
+<18>
+<SECallsNative
+SEReads : 7
+SEWrites: 8
+>
+<Jimple Line Tag: 30>
+        return;
+<18>
+<Jimple Line Tag: 34>
+    }
+
+<[contacts]>
+<Dependences>
+    public void <init>(java.util.List)
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        java.util.List contacts;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<21>
+<Jimple Line Tag: 44>
+        contacts := @parameter0: java.util.List;
+<21>
+<Jimple Line Tag: 47>
+        specialinvoke this.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.ContactsToDocument: void <init>()>();
+<21>
+<Jimple Line Tag: 50>
+        this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: java.util.List contacts> = contacts;
+<22>
+<SEWrites: 0
+>
+<Jimple Line Tag: 53>
+        return;
+<22>
+<Jimple Line Tag: 57>
+    }
+
+<[output]>
+<Dependences( 2, 3 ) ( 0, 4 ) ( 1, 3 ) ( 0, 3 ) ( 1, 2 ) ( 0, 2 ) ( 3, 4 ) ( 1, 5 ) ( 2, 5 ) ( 0, 1 ) ( 4, 5 ) ( 2, 4 ) ( 0, 5 ) ( 3, 5 ) ( 1, 4 ) >
+    public void save(java.io.OutputStream) throws java.io.IOException
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        java.io.OutputStream output;
+        org.jdom.Document document, temp$0;
+        org.jdom.output.XMLOutputter outputter, temp$1;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<25>
+<Jimple Line Tag: 69>
+        output := @parameter0: java.io.OutputStream;
+<25>
+<Jimple Line Tag: 72>
+        temp$0 = virtualinvoke this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: org.jdom.Document makeDocument()>();
+<26>
+<SECallsNative
+SEReads : 0
+SEWrites: 1
+>
+<Jimple Line Tag: 75>
+        document = temp$0;
+<26>
+<Jimple Line Tag: 79>
+        temp$1 = new org.jdom.output.XMLOutputter;
+<27>
+<SECallsNative
+SEReads : 2
+SEWrites: 3
+>
+<Jimple Line Tag: 82>
+        specialinvoke temp$1.<org.jdom.output.XMLOutputter: void <init>()>();
+<27>
+<SECallsNative
+SEReads : 2
+SEWrites: 3
+>
+<Jimple Line Tag: 86>
+        outputter = temp$1;
+<27>
+<Jimple Line Tag: 90>
+        virtualinvoke outputter.<org.jdom.output.XMLOutputter: void output(org.jdom.Document,java.io.OutputStream)>(document, output);
+<28>
+<SECallsNative
+SEReads : 4
+SEWrites: 5
+>
+<Jimple Line Tag: 93>
+        return;
+<28>
+<Jimple Line Tag: 97>
+    }
+
+<[output]>
+<Dependences>
+    public void save14(java.io.OutputStream) throws java.io.IOException
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        java.io.OutputStream output;
+        org.jdom.Document document, temp$0;
+        org.jdom.output.XMLOutputter outputter, temp$1;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<31>
+<Jimple Line Tag: 109>
+        output := @parameter0: java.io.OutputStream;
+<31>
+<Jimple Line Tag: 112>
+        temp$0 = virtualinvoke this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: org.jdom.Document makeDocument14()>();
+<32>
+<Jimple Line Tag: 115>
+        document = temp$0;
+<32>
+<Jimple Line Tag: 118>
+        temp$1 = new org.jdom.output.XMLOutputter;
+<33>
+<Jimple Line Tag: 121>
+        specialinvoke temp$1.<org.jdom.output.XMLOutputter: void <init>()>();
+<33>
+<Jimple Line Tag: 124>
+        outputter = temp$1;
+<33>
+<Jimple Line Tag: 127>
+        virtualinvoke outputter.<org.jdom.output.XMLOutputter: void output(org.jdom.Document,java.io.OutputStream)>(document, output);
+<34>
+<Jimple Line Tag: 130>
+        return;
+<34>
+<Jimple Line Tag: 133>
+    }
+
+<[output]>
+<Dependences>
+    public void saveBottomUp(java.io.OutputStream) throws java.io.IOException
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        java.io.OutputStream output;
+        org.jdom.Document document, temp$0;
+        org.jdom.output.XMLOutputter outputter, temp$1;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<37>
+<Jimple Line Tag: 145>
+        output := @parameter0: java.io.OutputStream;
+<37>
+<Jimple Line Tag: 148>
+        temp$0 = virtualinvoke this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: org.jdom.Document makeDocumentBottomUp()>();
+<38>
+<Jimple Line Tag: 151>
+        document = temp$0;
+<38>
+<Jimple Line Tag: 154>
+        temp$1 = new org.jdom.output.XMLOutputter;
+<39>
+<Jimple Line Tag: 157>
+        specialinvoke temp$1.<org.jdom.output.XMLOutputter: void <init>()>();
+<39>
+<Jimple Line Tag: 160>
+        outputter = temp$1;
+<39>
+<Jimple Line Tag: 163>
+        virtualinvoke outputter.<org.jdom.output.XMLOutputter: void output(org.jdom.Document,java.io.OutputStream)>(document, output);
+<40>
+<Jimple Line Tag: 166>
+        return;
+<40>
+<Jimple Line Tag: 169>
+    }
+
+<[]>
+<Dependences( 2, 3 ) ( 8, 12 ) ( 11, 18 ) ( 1, 2 ) ( 1, 15 ) ( 5, 18 ) ( 7, 8 ) ( 7, 11 ) ( 9, 10 ) ( 3, 17 ) ( 5, 17 ) ( 4, 5 ) ( 2, 4 ) ( 11, 17 ) ( 9, 16 ) ( 1, 3 ) ( 7, 12 ) ( 8, 11 ) ( 4, 7 ) ( 13, 14 ) ( 4, 8 ) ( 13, 15 ) ( 5, 13 ) ( 2, 17 ) ( 9, 15 ) ( 1, 4 ) ( 1, 7 ) ( 9, 12 ) ( 8, 15 ) ( 14, 15 ) ( 2, 5 ) ( 3, 18 ) ( 1, 9 ) ( 9, 11 ) ( 13, 18 ) ( 7, 9 ) ( 2, 7 ) ( 7, 15 ) ( 1, 11 ) ( 15, 16 ) ( 1, 12 ) ( 1, 5 ) ( 2, 8 ) ( 4, 11 ) ( 2, 14 ) ( 12, 13 ) ( 15, 17 ) ( 3, 7 ) ( 11, 12 ) ( 15, 18 ) ( 5, 9 ) ( 3, 8 ) ( 3, 9 ) ( 2, 13 ) ( 4, 12 ) ( 10, 15 ) ( 12, 14 ) ( 5, 15 ) ( 3, 11 ) ( 4, 10 ) ( 2, 15 ) ( 9, 13 ) ( 2, 18 ) ( 4, 9 ) ( 2, 16 ) ( 9, 14 ) ( 14, 18 ) ( 8, 9 ) ( 5, 14 ) ( 3, 12 ) ( 3, 5 ) ( 3, 15 ) ( 5, 8 ) ( 5, 11 ) ( 9, 18 ) ( 12, 17 ) ( 2, 11 ) ( 4, 14 ) ( 2, 12 ) ( 4, 13 ) ( 12, 15 ) ( 11, 13 ) ( 2, 10 ) ( 4, 15 ) ( 5, 7 ) ( 11, 16 ) ( 3, 14 ) ( 5, 12 ) ( 9, 17 ) ( 11, 15 ) ( 12, 18 ) ( 3, 4 ) ( 3, 13 ) ( 4, 17 ) ( 11, 14 ) ( 10, 11 ) ( 4, 18 ) ( 2, 9 ) ( 4, 16 ) >
+    public org.jdom.Document makeDocument()
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        org.jdom.Document document, temp$0, temp$2;
+        org.jdom.Element root, temp$1, person, temp$7, name, temp$8, temp$10, temp$12, age, temp$13, temp$17, temp$19, temp$20;
+        java.util.List temp$3;
+        java.util.Iterator temp$4;
+        de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person p;
+        boolean temp$5;
+        java.lang.Object temp$6;
+        java.lang.String temp$9, temp$16;
+        java.io.PrintStream temp$11, temp$18;
+        java.lang.Integer temp$14;
+        int temp$15;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<44>
+<Jimple Line Tag: 189>
+        temp$0 = new org.jdom.Document;
+<45>
+<SECallsNative
+SEReads : 0
+SEWrites: 0
+>
+<Jimple Line Tag: 192>
+        specialinvoke temp$0.<org.jdom.Document: void <init>()>();
+<45>
+<SECallsNative
+SEReads : 0
+SEWrites: 1
+>
+<Jimple Line Tag: 196>
+        document = temp$0;
+<45>
+<Jimple Line Tag: 200>
+        temp$1 = new org.jdom.Element;
+<46>
+<Jimple Line Tag: 203>
+        specialinvoke temp$1.<org.jdom.Element: void <init>(java.lang.String)>("contacts");
+<46>
+<SECallsNative
+SEReads : 2
+SEWrites: 3
+>
+<Jimple Line Tag: 206>
+        root = temp$1;
+<46>
+<Jimple Line Tag: 210>
+        temp$2 = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(root);
+<46>
+<SECallsNative
+SEReads : 4
+SEWrites: 5
+>
+<Jimple Line Tag: 213>
+        document = temp$2;
+<47>
+<Jimple Line Tag: 217>
+        temp$3 = this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: java.util.List contacts>;
+<48>
+<SEReads : 6
+>
+<Jimple Line Tag: 220>
+        temp$4 = interfaceinvoke temp$3.<java.lang.Iterable: java.util.Iterator iterator()>();
+<48>
+<SECallsNative
+SEReads : 7
+SEWrites: 8
+>
+<Jimple Line Tag: 224>
+
+     label0:
+        nop;
+<48>
+<Jimple Line Tag: 230>
+        temp$5 = interfaceinvoke temp$4.<java.util.Iterator: boolean hasNext()>();
+<48>
+<SECallsNative
+SEReads : 9
+SEWrites: 5
+>
+<Jimple Line Tag: 233>
+        if temp$5 == 0 goto label1;
+<48>
+<Jimple Line Tag: 237>
+
+        temp$6 = interfaceinvoke temp$4.<java.util.Iterator: java.lang.Object next()>();
+<48>
+<SECallsNative
+SEReads : 9
+SEWrites: 5
+>
+<Jimple Line Tag: 241>
+        p = (de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person) temp$6;
+<48>
+<Jimple Line Tag: 245>
+        temp$7 = new org.jdom.Element;
+<49>
+<Jimple Line Tag: 248>
+        specialinvoke temp$7.<org.jdom.Element: void <init>(java.lang.String)>("person");
+<49>
+<SECallsNative
+SEReads : 2
+SEWrites: 3
+>
+<Jimple Line Tag: 251>
+        person = temp$7;
+<49>
+<Jimple Line Tag: 255>
+        temp$8 = new org.jdom.Element;
+<50>
+<Jimple Line Tag: 258>
+        specialinvoke temp$8.<org.jdom.Element: void <init>(java.lang.String)>("name");
+<50>
+<SECallsNative
+SEReads : 2
+SEWrites: 3
+>
+<Jimple Line Tag: 261>
+        name = temp$8;
+<50>
+<Jimple Line Tag: 265>
+        temp$9 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>();
+<50>
+<SEReads : 10
+>
+<Jimple Line Tag: 268>
+        temp$10 = virtualinvoke name.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$9);
+<50>
+<SECallsNative
+SEReads : 11
+SEWrites: 12
+>
+<Jimple Line Tag: 272>
+        name = temp$10;
+<51>
+<Jimple Line Tag: 276>
+        temp$11 = <java.lang.System: java.io.PrintStream out>;
+<51>
+<SECallsNative
+SEReads : 13
+SEWrites: 14
+>
+<Jimple Line Tag: 279>
+        virtualinvoke temp$11.<java.io.PrintStream: void println(java.lang.Object)>(name);
+<52>
+<SECallsNative
+SEReads : 9
+SEWrites: 5
+>
+<Jimple Line Tag: 283>
+        temp$12 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(name);
+<52>
+<SECallsNative
+SEReads : 15
+SEWrites: 5
+>
+<Jimple Line Tag: 287>
+        person = temp$12;
+<53>
+<Jimple Line Tag: 291>
+        temp$13 = new org.jdom.Element;
+<54>
+<Jimple Line Tag: 294>
+        specialinvoke temp$13.<org.jdom.Element: void <init>(java.lang.String)>("age");
+<54>
+<SECallsNative
+SEReads : 2
+SEWrites: 3
+>
+<Jimple Line Tag: 297>
+        age = temp$13;
+<54>
+<Jimple Line Tag: 301>
+        temp$14 = new java.lang.Integer;
+<54>
+<SECallsNative
+SEReads : 9
+SEWrites: 5
+>
+<Jimple Line Tag: 304>
+        temp$15 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>();
+<54>
+<SEReads : 16
+>
+<Jimple Line Tag: 308>
+        specialinvoke temp$14.<java.lang.Integer: void <init>(int)>(temp$15);
+<55>
+<SEWrites: 17
+>
+<Jimple Line Tag: 312>
+        temp$16 = virtualinvoke temp$14.<java.lang.Integer: java.lang.String toString()>();
+<55>
+<SECallsNative
+SEReads : 9
+SEWrites: 5
+>
+<Jimple Line Tag: 316>
+        temp$17 = virtualinvoke age.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$16);
+<55>
+<SECallsNative
+SEReads : 11
+SEWrites: 12
+>
+<Jimple Line Tag: 320>
+        age = temp$17;
+<55>
+<Jimple Line Tag: 324>
+        temp$18 = <java.lang.System: java.io.PrintStream out>;
+<55>
+<SEReads : 18
+>
+<Jimple Line Tag: 327>
+        virtualinvoke temp$18.<java.io.PrintStream: void println(java.lang.Object)>(age);
+<56>
+<SECallsNative
+SEReads : 9
+SEWrites: 5
+>
+<Jimple Line Tag: 331>
+        temp$19 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(age);
+<56>
+<SECallsNative
+SEReads : 15
+SEWrites: 5
+>
+<Jimple Line Tag: 335>
+        person = temp$19;
+<57>
+<Jimple Line Tag: 339>
+        temp$20 = virtualinvoke root.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(person);
+<57>
+<SECallsNative
+SEReads : 15
+SEWrites: 5
+>
+<Jimple Line Tag: 342>
+        root = temp$20;
+<58>
+<Jimple Line Tag: 346>
+        nop;
+<58>
+<Jimple Line Tag: 349>
+        goto label0;
+<58>
+<Jimple Line Tag: 352>
+
+     label1:
+        nop;
+<58>
+<Jimple Line Tag: 357>
+        return document;
+<60>
+<Jimple Line Tag: 360>
+    }
+
+<[]>
+<Dependences>
+    public org.jdom.Document makeDocumentTopDown()
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        org.jdom.Document document, temp$0, temp$2;
+        org.jdom.Element root, temp$1, person, temp$7, name, temp$8, temp$10, temp$11, age, temp$12, temp$16, temp$17, temp$18;
+        java.util.List temp$3;
+        java.util.Iterator temp$4;
+        de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person p;
+        boolean temp$5;
+        java.lang.Object temp$6;
+        java.lang.String temp$9, temp$15;
+        java.lang.Integer temp$13;
+        int temp$14;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<63>
+<Jimple Line Tag: 379>
+        temp$0 = new org.jdom.Document;
+<64>
+<Jimple Line Tag: 382>
+        specialinvoke temp$0.<org.jdom.Document: void <init>()>();
+<64>
+<Jimple Line Tag: 385>
+        document = temp$0;
+<64>
+<Jimple Line Tag: 388>
+        temp$1 = new org.jdom.Element;
+<65>
+<Jimple Line Tag: 391>
+        specialinvoke temp$1.<org.jdom.Element: void <init>(java.lang.String)>("contacts");
+<65>
+<Jimple Line Tag: 394>
+        root = temp$1;
+<65>
+<Jimple Line Tag: 397>
+        temp$2 = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(root);
+<65>
+<Jimple Line Tag: 400>
+        document = temp$2;
+<66>
+<Jimple Line Tag: 403>
+        temp$3 = this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: java.util.List contacts>;
+<67>
+<SEReads : 0
+>
+<Jimple Line Tag: 406>
+        temp$4 = interfaceinvoke temp$3.<java.lang.Iterable: java.util.Iterator iterator()>();
+<67>
+<Jimple Line Tag: 410>
+
+     label0:
+        nop;
+<67>
+<Jimple Line Tag: 415>
+        temp$5 = interfaceinvoke temp$4.<java.util.Iterator: boolean hasNext()>();
+<67>
+<Jimple Line Tag: 418>
+        if temp$5 == 0 goto label1;
+<67>
+<Jimple Line Tag: 421>
+
+        temp$6 = interfaceinvoke temp$4.<java.util.Iterator: java.lang.Object next()>();
+<67>
+<Jimple Line Tag: 425>
+        p = (de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person) temp$6;
+<67>
+<Jimple Line Tag: 428>
+        temp$7 = new org.jdom.Element;
+<68>
+<Jimple Line Tag: 431>
+        specialinvoke temp$7.<org.jdom.Element: void <init>(java.lang.String)>("person");
+<68>
+<Jimple Line Tag: 434>
+        person = temp$7;
+<68>
+<Jimple Line Tag: 437>
+        temp$8 = new org.jdom.Element;
+<69>
+<Jimple Line Tag: 440>
+        specialinvoke temp$8.<org.jdom.Element: void <init>(java.lang.String)>("name");
+<69>
+<Jimple Line Tag: 443>
+        name = temp$8;
+<69>
+<Jimple Line Tag: 446>
+        temp$9 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>();
+<69>
+<Jimple Line Tag: 449>
+        temp$10 = virtualinvoke name.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$9);
+<69>
+<Jimple Line Tag: 452>
+        name = temp$10;
+<70>
+<Jimple Line Tag: 455>
+        temp$11 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(name);
+<70>
+<Jimple Line Tag: 458>
+        person = temp$11;
+<71>
+<Jimple Line Tag: 461>
+        temp$12 = new org.jdom.Element;
+<72>
+<Jimple Line Tag: 464>
+        specialinvoke temp$12.<org.jdom.Element: void <init>(java.lang.String)>("age");
+<72>
+<Jimple Line Tag: 467>
+        age = temp$12;
+<72>
+<Jimple Line Tag: 470>
+        temp$13 = new java.lang.Integer;
+<72>
+<Jimple Line Tag: 473>
+        temp$14 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>();
+<72>
+<Jimple Line Tag: 476>
+        specialinvoke temp$13.<java.lang.Integer: void <init>(int)>(temp$14);
+<73>
+<Jimple Line Tag: 479>
+        temp$15 = virtualinvoke temp$13.<java.lang.Integer: java.lang.String toString()>();
+<73>
+<Jimple Line Tag: 482>
+        temp$16 = virtualinvoke age.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$15);
+<73>
+<Jimple Line Tag: 485>
+        age = temp$16;
+<73>
+<Jimple Line Tag: 488>
+        temp$17 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(age);
+<73>
+<Jimple Line Tag: 491>
+        person = temp$17;
+<74>
+<Jimple Line Tag: 494>
+        temp$18 = virtualinvoke root.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(person);
+<74>
+<Jimple Line Tag: 497>
+        root = temp$18;
+<75>
+<Jimple Line Tag: 500>
+        nop;
+<75>
+<Jimple Line Tag: 503>
+        goto label0;
+<75>
+<Jimple Line Tag: 506>
+
+     label1:
+        nop;
+<75>
+<Jimple Line Tag: 511>
+        return document;
+<77>
+<Jimple Line Tag: 514>
+    }
+
+<[]>
+<Dependences>
+    public org.jdom.Document makeDocumentBottomUp()
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        org.jdom.Element root, temp$0, name, temp$5, temp$7, age, temp$8, temp$12, person, temp$13, temp$14, temp$15, temp$16;
+        java.util.List temp$1;
+        java.util.Iterator temp$2;
+        de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person p;
+        boolean temp$3;
+        java.lang.Object temp$4;
+        java.lang.String temp$6, temp$11;
+        java.lang.Integer temp$9;
+        int temp$10;
+        org.jdom.Document document, temp$17, temp$18;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<80>
+<Jimple Line Tag: 533>
+        temp$0 = new org.jdom.Element;
+<81>
+<Jimple Line Tag: 536>
+        specialinvoke temp$0.<org.jdom.Element: void <init>(java.lang.String)>("contacts");
+<81>
+<Jimple Line Tag: 539>
+        root = temp$0;
+<81>
+<Jimple Line Tag: 542>
+        temp$1 = this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: java.util.List contacts>;
+<82>
+<SEReads : 0
+>
+<Jimple Line Tag: 545>
+        temp$2 = interfaceinvoke temp$1.<java.lang.Iterable: java.util.Iterator iterator()>();
+<82>
+<Jimple Line Tag: 549>
+
+     label0:
+        nop;
+<82>
+<Jimple Line Tag: 554>
+        temp$3 = interfaceinvoke temp$2.<java.util.Iterator: boolean hasNext()>();
+<82>
+<Jimple Line Tag: 557>
+        if temp$3 == 0 goto label1;
+<82>
+<Jimple Line Tag: 560>
+
+        temp$4 = interfaceinvoke temp$2.<java.util.Iterator: java.lang.Object next()>();
+<82>
+<Jimple Line Tag: 564>
+        p = (de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person) temp$4;
+<82>
+<Jimple Line Tag: 567>
+        temp$5 = new org.jdom.Element;
+<83>
+<Jimple Line Tag: 570>
+        specialinvoke temp$5.<org.jdom.Element: void <init>(java.lang.String)>("name");
+<83>
+<Jimple Line Tag: 573>
+        name = temp$5;
+<83>
+<Jimple Line Tag: 576>
+        temp$6 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>();
+<83>
+<Jimple Line Tag: 579>
+        temp$7 = virtualinvoke name.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$6);
+<83>
+<Jimple Line Tag: 582>
+        name = temp$7;
+<84>
+<Jimple Line Tag: 585>
+        temp$8 = new org.jdom.Element;
+<85>
+<Jimple Line Tag: 588>
+        specialinvoke temp$8.<org.jdom.Element: void <init>(java.lang.String)>("age");
+<85>
+<Jimple Line Tag: 591>
+        age = temp$8;
+<85>
+<Jimple Line Tag: 594>
+        temp$9 = new java.lang.Integer;
+<85>
+<Jimple Line Tag: 597>
+        temp$10 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>();
+<85>
+<Jimple Line Tag: 600>
+        specialinvoke temp$9.<java.lang.Integer: void <init>(int)>(temp$10);
+<86>
+<Jimple Line Tag: 603>
+        temp$11 = virtualinvoke temp$9.<java.lang.Integer: java.lang.String toString()>();
+<86>
+<Jimple Line Tag: 606>
+        temp$12 = virtualinvoke age.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$11);
+<86>
+<Jimple Line Tag: 609>
+        age = temp$12;
+<86>
+<Jimple Line Tag: 612>
+        temp$13 = new org.jdom.Element;
+<87>
+<Jimple Line Tag: 615>
+        specialinvoke temp$13.<org.jdom.Element: void <init>(java.lang.String)>("person");
+<87>
+<Jimple Line Tag: 618>
+        person = temp$13;
+<87>
+<Jimple Line Tag: 621>
+        temp$14 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(name);
+<87>
+<Jimple Line Tag: 624>
+        person = temp$14;
+<88>
+<Jimple Line Tag: 627>
+        temp$15 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(age);
+<88>
+<Jimple Line Tag: 630>
+        person = temp$15;
+<89>
+<Jimple Line Tag: 633>
+        temp$16 = virtualinvoke root.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(person);
+<89>
+<Jimple Line Tag: 636>
+        root = temp$16;
+<90>
+<Jimple Line Tag: 639>
+        nop;
+<90>
+<Jimple Line Tag: 642>
+        goto label0;
+<90>
+<Jimple Line Tag: 645>
+
+     label1:
+        nop;
+<90>
+<Jimple Line Tag: 650>
+        temp$17 = new org.jdom.Document;
+<92>
+<Jimple Line Tag: 653>
+        specialinvoke temp$17.<org.jdom.Document: void <init>()>();
+<92>
+<Jimple Line Tag: 656>
+        document = temp$17;
+<92>
+<Jimple Line Tag: 659>
+        temp$18 = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(root);
+<92>
+<Jimple Line Tag: 662>
+        document = temp$18;
+<93>
+<Jimple Line Tag: 665>
+        return document;
+<94>
+<Jimple Line Tag: 668>
+    }
+
+<[]>
+<Dependences>
+    public org.jdom.Document makeDocument14()
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        org.jdom.Document document, temp$0, temp$2;
+        org.jdom.Element root, temp$1, person, temp$8, name, temp$9, temp$11, temp$12, age, temp$13, temp$17, temp$18, temp$19;
+        java.util.Iterator iter, temp$4, temp$5;
+        java.util.List temp$3;
+        boolean temp$6;
+        de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person p;
+        java.lang.Object temp$7;
+        java.lang.String temp$10, temp$16;
+        java.lang.Integer temp$14;
+        int temp$15;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<100>
+<Jimple Line Tag: 687>
+        temp$0 = new org.jdom.Document;
+<101>
+<Jimple Line Tag: 690>
+        specialinvoke temp$0.<org.jdom.Document: void <init>()>();
+<101>
+<Jimple Line Tag: 693>
+        document = temp$0;
+<101>
+<Jimple Line Tag: 696>
+        temp$1 = new org.jdom.Element;
+<102>
+<Jimple Line Tag: 699>
+        specialinvoke temp$1.<org.jdom.Element: void <init>(java.lang.String)>("contacts");
+<102>
+<Jimple Line Tag: 702>
+        root = temp$1;
+<102>
+<Jimple Line Tag: 705>
+        temp$2 = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(root);
+<102>
+<Jimple Line Tag: 708>
+        temp$3 = this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: java.util.List contacts>;
+<104>
+<SEReads : 0
+>
+<Jimple Line Tag: 711>
+        temp$4 = interfaceinvoke temp$3.<java.util.List: java.util.Iterator iterator()>();
+<104>
+<Jimple Line Tag: 715>
+        temp$5 = (java.util.Iterator) temp$4;
+<104>
+<Jimple Line Tag: 718>
+        iter = temp$5;
+<104>
+<Jimple Line Tag: 721>
+
+     label0:
+        nop;
+<104>
+<Jimple Line Tag: 726>
+        temp$6 = interfaceinvoke iter.<java.util.Iterator: boolean hasNext()>();
+<105>
+<Jimple Line Tag: 729>
+        if temp$6 == 0 goto label2;
+<105>
+<Jimple Line Tag: 732>
+
+        goto label1;
+<105>
+<Jimple Line Tag: 736>
+
+     label1:
+        nop;
+<105>
+<Jimple Line Tag: 741>
+        temp$7 = interfaceinvoke iter.<java.util.Iterator: java.lang.Object next()>();
+<106>
+<Jimple Line Tag: 744>
+        p = (de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person) temp$7;
+<106>
+<Jimple Line Tag: 747>
+        temp$8 = new org.jdom.Element;
+<107>
+<Jimple Line Tag: 750>
+        specialinvoke temp$8.<org.jdom.Element: void <init>(java.lang.String)>("person");
+<107>
+<Jimple Line Tag: 753>
+        person = temp$8;
+<107>
+<Jimple Line Tag: 756>
+        temp$9 = new org.jdom.Element;
+<108>
+<Jimple Line Tag: 759>
+        specialinvoke temp$9.<org.jdom.Element: void <init>(java.lang.String)>("name");
+<108>
+<Jimple Line Tag: 762>
+        name = temp$9;
+<108>
+<Jimple Line Tag: 765>
+        temp$10 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>();
+<108>
+<Jimple Line Tag: 768>
+        temp$11 = virtualinvoke name.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$10);
+<108>
+<Jimple Line Tag: 771>
+        temp$12 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(name);
+<108>
+<Jimple Line Tag: 774>
+        temp$13 = new org.jdom.Element;
+<111>
+<Jimple Line Tag: 777>
+        specialinvoke temp$13.<org.jdom.Element: void <init>(java.lang.String)>("age");
+<111>
+<Jimple Line Tag: 780>
+        age = temp$13;
+<111>
+<Jimple Line Tag: 783>
+        temp$14 = new java.lang.Integer;
+<111>
+<Jimple Line Tag: 786>
+        temp$15 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>();
+<111>
+<Jimple Line Tag: 789>
+        specialinvoke temp$14.<java.lang.Integer: void <init>(int)>(temp$15);
+<112>
+<Jimple Line Tag: 792>
+        temp$16 = virtualinvoke temp$14.<java.lang.Integer: java.lang.String toString()>();
+<112>
+<Jimple Line Tag: 795>
+        temp$17 = virtualinvoke age.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$16);
+<112>
+<Jimple Line Tag: 798>
+        temp$18 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(age);
+<112>
+<Jimple Line Tag: 801>
+        temp$19 = virtualinvoke root.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(person);
+<112>
+<Jimple Line Tag: 804>
+        goto label0;
+<105>
+<Jimple Line Tag: 807>
+
+     label2:
+        nop;
+<105>
+<Jimple Line Tag: 812>
+        return document;
+<116>
+<Jimple Line Tag: 815>
+    }
+
+<[]>
+<Dependences>
+    public org.jdom.Document makeDocument_addContentsAtEnd()
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        org.jdom.Document document, temp$0, temp$2;
+        org.jdom.Element root, temp$1, person, temp$7, name, temp$8, age, temp$9, temp$11, temp$15, temp$16, temp$17, temp$18;
+        java.util.List temp$3;
+        java.util.Iterator temp$4;
+        de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person p;
+        boolean temp$5;
+        java.lang.Object temp$6;
+        java.lang.String temp$10, temp$14;
+        java.lang.Integer temp$12;
+        int temp$13;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<120>
+<Jimple Line Tag: 834>
+        temp$0 = new org.jdom.Document;
+<121>
+<Jimple Line Tag: 837>
+        specialinvoke temp$0.<org.jdom.Document: void <init>()>();
+<121>
+<Jimple Line Tag: 840>
+        document = temp$0;
+<121>
+<Jimple Line Tag: 843>
+        temp$1 = new org.jdom.Element;
+<122>
+<Jimple Line Tag: 846>
+        specialinvoke temp$1.<org.jdom.Element: void <init>(java.lang.String)>("contacts");
+<122>
+<Jimple Line Tag: 849>
+        root = temp$1;
+<122>
+<Jimple Line Tag: 852>
+        temp$2 = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(root);
+<122>
+<Jimple Line Tag: 855>
+        temp$3 = this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: java.util.List contacts>;
+<124>
+<SEReads : 0
+>
+<Jimple Line Tag: 858>
+        temp$4 = interfaceinvoke temp$3.<java.lang.Iterable: java.util.Iterator iterator()>();
+<124>
+<Jimple Line Tag: 862>
+
+     label0:
+        nop;
+<124>
+<Jimple Line Tag: 867>
+        temp$5 = interfaceinvoke temp$4.<java.util.Iterator: boolean hasNext()>();
+<124>
+<Jimple Line Tag: 870>
+        if temp$5 == 0 goto label1;
+<124>
+<Jimple Line Tag: 873>
+
+        temp$6 = interfaceinvoke temp$4.<java.util.Iterator: java.lang.Object next()>();
+<124>
+<Jimple Line Tag: 877>
+        p = (de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person) temp$6;
+<124>
+<Jimple Line Tag: 880>
+        temp$7 = new org.jdom.Element;
+<125>
+<Jimple Line Tag: 883>
+        specialinvoke temp$7.<org.jdom.Element: void <init>(java.lang.String)>("person");
+<125>
+<Jimple Line Tag: 886>
+        person = temp$7;
+<125>
+<Jimple Line Tag: 889>
+        temp$8 = new org.jdom.Element;
+<126>
+<Jimple Line Tag: 892>
+        specialinvoke temp$8.<org.jdom.Element: void <init>(java.lang.String)>("name");
+<126>
+<Jimple Line Tag: 895>
+        name = temp$8;
+<126>
+<Jimple Line Tag: 898>
+        temp$9 = new org.jdom.Element;
+<127>
+<Jimple Line Tag: 901>
+        specialinvoke temp$9.<org.jdom.Element: void <init>(java.lang.String)>("age");
+<127>
+<Jimple Line Tag: 904>
+        age = temp$9;
+<127>
+<Jimple Line Tag: 907>
+        temp$10 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>();
+<127>
+<Jimple Line Tag: 910>
+        temp$11 = virtualinvoke name.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$10);
+<127>
+<Jimple Line Tag: 913>
+        temp$12 = new java.lang.Integer;
+<127>
+<Jimple Line Tag: 916>
+        temp$13 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>();
+<127>
+<Jimple Line Tag: 919>
+        specialinvoke temp$12.<java.lang.Integer: void <init>(int)>(temp$13);
+<130>
+<Jimple Line Tag: 922>
+        temp$14 = virtualinvoke temp$12.<java.lang.Integer: java.lang.String toString()>();
+<130>
+<Jimple Line Tag: 925>
+        temp$15 = virtualinvoke age.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$14);
+<130>
+<Jimple Line Tag: 928>
+        temp$16 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(name);
+<130>
+<Jimple Line Tag: 931>
+        temp$17 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(age);
+<130>
+<Jimple Line Tag: 934>
+        temp$18 = virtualinvoke root.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(person);
+<130>
+<Jimple Line Tag: 937>
+        nop;
+<130>
+<Jimple Line Tag: 940>
+        goto label0;
+<130>
+<Jimple Line Tag: 943>
+
+     label1:
+        nop;
+<130>
+<Jimple Line Tag: 948>
+        return document;
+<137>
+<Jimple Line Tag: 951>
+    }
+
+<[]>
+<Dependences>
+    public org.jdom.Document makeDocument_newDocumentAtEnd()
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        org.jdom.Element root, temp$0, person, temp$5, name, temp$6, age, temp$7, temp$9, temp$13, temp$14, temp$15, temp$16;
+        java.util.List temp$1;
+        java.util.Iterator temp$2;
+        de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person p;
+        boolean temp$3;
+        java.lang.Object temp$4;
+        java.lang.String temp$8, temp$12;
+        java.lang.Integer temp$10;
+        int temp$11;
+        org.jdom.Document document, temp$17, temp$18;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+<157>
+<Jimple Line Tag: 970>
+        temp$0 = new org.jdom.Element;
+<158>
+<Jimple Line Tag: 973>
+        specialinvoke temp$0.<org.jdom.Element: void <init>(java.lang.String)>("contacts");
+<158>
+<Jimple Line Tag: 976>
+        root = temp$0;
+<158>
+<Jimple Line Tag: 979>
+        temp$1 = this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: java.util.List contacts>;
+<159>
+<SEReads : 0
+>
+<Jimple Line Tag: 982>
+        temp$2 = interfaceinvoke temp$1.<java.lang.Iterable: java.util.Iterator iterator()>();
+<159>
+<Jimple Line Tag: 986>
+
+     label0:
+        nop;
+<159>
+<Jimple Line Tag: 991>
+        temp$3 = interfaceinvoke temp$2.<java.util.Iterator: boolean hasNext()>();
+<159>
+<Jimple Line Tag: 994>
+        if temp$3 == 0 goto label1;
+<159>
+<Jimple Line Tag: 997>
+
+        temp$4 = interfaceinvoke temp$2.<java.util.Iterator: java.lang.Object next()>();
+<159>
+<Jimple Line Tag: 1001>
+        p = (de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person) temp$4;
+<159>
+<Jimple Line Tag: 1004>
+        temp$5 = new org.jdom.Element;
+<160>
+<Jimple Line Tag: 1007>
+        specialinvoke temp$5.<org.jdom.Element: void <init>(java.lang.String)>("person");
+<160>
+<Jimple Line Tag: 1010>
+        person = temp$5;
+<160>
+<Jimple Line Tag: 1013>
+        temp$6 = new org.jdom.Element;
+<161>
+<Jimple Line Tag: 1016>
+        specialinvoke temp$6.<org.jdom.Element: void <init>(java.lang.String)>("name");
+<161>
+<Jimple Line Tag: 1019>
+        name = temp$6;
+<161>
+<Jimple Line Tag: 1022>
+        temp$7 = new org.jdom.Element;
+<162>
+<Jimple Line Tag: 1025>
+        specialinvoke temp$7.<org.jdom.Element: void <init>(java.lang.String)>("age");
+<162>
+<Jimple Line Tag: 1028>
+        age = temp$7;
+<162>
+<Jimple Line Tag: 1031>
+        temp$8 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>();
+<162>
+<Jimple Line Tag: 1034>
+        temp$9 = virtualinvoke name.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$8);
+<162>
+<Jimple Line Tag: 1037>
+        temp$10 = new java.lang.Integer;
+<162>
+<Jimple Line Tag: 1040>
+        temp$11 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>();
+<162>
+<Jimple Line Tag: 1043>
+        specialinvoke temp$10.<java.lang.Integer: void <init>(int)>(temp$11);
+<165>
+<Jimple Line Tag: 1046>
+        temp$12 = virtualinvoke temp$10.<java.lang.Integer: java.lang.String toString()>();
+<165>
+<Jimple Line Tag: 1049>
+        temp$13 = virtualinvoke age.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$12);
+<165>
+<Jimple Line Tag: 1052>
+        temp$14 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(name);
+<165>
+<Jimple Line Tag: 1055>
+        temp$15 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(age);
+<165>
+<Jimple Line Tag: 1058>
+        temp$16 = virtualinvoke root.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(person);
+<165>
+<Jimple Line Tag: 1061>
+        nop;
+<165>
+<Jimple Line Tag: 1064>
+        goto label0;
+<165>
+<Jimple Line Tag: 1067>
+
+     label1:
+        nop;
+<165>
+<Jimple Line Tag: 1072>
+        temp$17 = new org.jdom.Document;
+<172>
+<Jimple Line Tag: 1075>
+        specialinvoke temp$17.<org.jdom.Document: void <init>()>();
+<172>
+<Jimple Line Tag: 1078>
+        document = temp$17;
+<172>
+<Jimple Line Tag: 1081>
+        temp$18 = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(root);
+<172>
+<Jimple Line Tag: 1084>
+        return document;
+<174>
+<Jimple Line Tag: 1087>
+    }
+}
+
+

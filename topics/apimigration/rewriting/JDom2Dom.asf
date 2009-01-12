@@ -1,0 +1,119 @@
+equations
+
+
+/*
+ * This is a very naive JDOM2DOM converter...
+ * Issues: 
+ * - reaching assignments restrictions: no reassignments of doc etc.
+ * - cflowbelow intead of searching through stmt*
+ * - inlined expressions (e.g. new Element("a").addContent(...))
+ * - expressions like doc = doc.addContent()
+ * - (shadowing of various variables in inner scopes.)
+ *
+ * Restrictions:
+ * - No reassignments of variables at all: CHECK for this:
+ * - annotating with memory at that point
+ * - TODO: check for single assignments
+ */
+
+[]	
+	<&stm*1, &doc> := find-doc-constructor(&stm*), 
+	<&stm*2, &root> := find-add-content-to(&stm*1, &doc),
+	<&stm*3, &str> := find-tag-constructor(&stm*2, &root),
+	no-assignments(&stm*3, &doc) == true,
+	no-assignments(&stm*3, &root) == true
+	===
+	jdom2dom(&stm*) =
+		Document &doc = DocumentBuilderFactory
+				.newInstance()
+				.newDocumentBuilder()
+				.getDOMImplementation()
+				.createDocument(null, &str, null);
+		Element &root = &doc.getDocumentElement();
+jdom2dom(&stm*3, &doc)
+		
+[]	jdom2dom(Element &elt = new Element(&str); &stm*, &doc) =
+		Element &elt = &doc.createElement(&str); 
+jdom2dom(&stm*, &doc)
+
+[]	jdom2dom(&elt1.addContent(&elt2); &stm*, &doc) =
+		&elt1.appendChild(&elt2);
+jdom2dom(&stm*, &doc)
+
+
+[]	jdom2dom(&elt.setText(&expr); &stm*, &doc) =
+		&elt.setTextContent(&expr);
+		//&elt.appendChild(&doc.createTextNode(&expr));
+jdom2dom(&stm*, &doc)
+
+
+[]	jdom2dom(for (&formal: &expr) { &stm* } &stm*', &doc) = 
+		for (&formal: &expr) { 
+			jdom2dom(&stm*, &doc) 
+		}
+jdom2dom(&stm*', &doc)
+
+
+[]	jdom2dom(, &doc) = 
+
+[default-jdom2dom]
+	jdom2dom(&stm &stm*, &doc) = 
+		&stm 
+jdom2dom(&stm*, &doc)
+
+
+
+/*
+ * Helper function for dealing with non-local knowledge
+ */
+
+equations
+
+[]	no-assignments(&stm*, &id) = no-assignments(&stm*, true, &id)
+
+[]	no-assignments(&id, &bool, &id) = false
+
+
+equations
+
+[]	find-add-content-to(&doc.addContent(&root); &stm*, &doc) =
+		<&stm*, &root>
+
+[]	find-add-content-to(&doc = &doc.addContent(&root); &stm*, &doc) =
+		<&stm*, &root>
+
+[default-find-add]
+	<&stm*', &root> := find-add-content-to(&stm*, &doc)
+	===
+	find-add-content-to(&stm &stm*, &doc) = <
+&stm 
+&stm*'
+, &root>
+
+equations
+
+[]	find-tag-constructor(Element &root = new Element(&str); &stm*, &root) =
+		<&stm*, &str>
+
+[default-find-tag]
+	<&stm*', &str> := find-tag-constructor(&stm*, &root)
+	===
+	find-tag-constructor(&stm &stm*, &root) = <
+&stm 
+&stm*'
+, &str>
+	
+
+equations
+
+[]	find-doc-constructor(Document &doc = new Document(); &stm*) =
+		<&stm*, &doc>
+
+[default-find-doc]
+	<&stm*', &doc> := find-doc-constructor(&stm*)
+	===
+	find-doc-constructor(&stm &stm*) = <
+&stm 
+&stm*'
+, &doc>
+

@@ -1,0 +1,64 @@
+module ZipTrace
+
+imports ExtractTrace
+        %% For the substitution function
+
+        Trace2Term
+%% For bitrace syntax
+
+
+hiddens
+context-free start-symbols
+  Stmt*
+
+exports
+context-free syntax
+  zip(program:Stmt*, bitrace:Stmt*) -> Stmt*                                             
+  traced(Stmt)                      -> Boolean                                           
+  equal-modulo-unknowns(Stmt, Stmt) -> Boolean                                           
+  normalize-unknowns(Stmt)          -> Stmt      {traversal(bottom-up, trafo, continue)} 
+  normalize-unknowns(LocalName)     -> LocalName {traversal(bottom-up, trafo, continue)} 
+  untrace(Stmt*, Heap)              -> Stmt*                                             
+  untrace-stmt(Stmt, Heap)          -> Stmt      {traversal(bottom-up, trafo, continue)} 
+  untrace-stmt(LocalName, Heap)     -> LocalName {traversal(bottom-up, trafo, continue)} 
+
+hiddens
+variables
+  "&value" [0-9\']*       -> Value             
+  "&patterns" [0-9\']*    -> Patterns          
+  "&pattern" [0-9\']*     -> Pattern           
+  "&pattern*" [0-9\']*    -> {Pattern ","}*    
+  "&pattern+" [0-9\']*    -> {Pattern ","}+    
+  "&hole" [0-9\']*        -> Hole              
+  "&hole*" [0-9\']*       -> {Hole ","}*       
+  "&hole+" [0-9\']*       -> {Hole ","}+       
+  "&idcon" [0-9\']*       -> IdCon             
+  "&mem" [0-9\']*         -> Memory            
+  "&heap" [0-9\']*        -> Heap              
+  "&fieldref" [0-9\']*    -> FieldRef          
+  "&type" [0-9\']*        -> Type              
+  "&nonvoidtype" [0-9\']* -> NonVoidType       
+  "&atid" [0-9\']*        -> AtIdentifier      
+  "&btype" [0-9\']*       -> BaseType          
+  "&n" [0-9\']*           -> Integer           
+  "&natcon" [0-9\']*      -> NatCon            
+  "&oid" [0-9\']*         -> OID               
+  "&var" [0-9\']*         -> Variable          
+  "&idlex" [0-9\']*       -> IdentifierLex     
+  "&id" [0-9\']*          -> Identifier        
+  "&stmt" [0-9\']*        -> Stmt              
+  "&stmt*" [0-9\']*       -> Stmt*             
+  "&stmt+" [0-9\']*       -> Stmt+             
+  "&expr" [0-9\']*        -> Expr              
+  "&name" [0-9\']*        -> Name              
+  "&lname" [0-9\']*       -> LocalName         
+  "&label" [0-9\']*       -> LabelName         
+  "&atid" [0-9\']*        -> AtIdentifier      
+  "&immed" [0-9\']*       -> Immediate         
+  "&invoke" [0-9\']*      -> InvokeExpr        
+  "&nonstatic" [0-9\']*   -> NonStaticInvoke   
+  "&sig" [0-9\']*         -> MethodSignature   
+  "&immed*" [0-9\']*      -> {Immediate ","}*  
+  "&const" [0-9\']*       -> Constant          
+  "&bool" [0-9\']*        -> BoolExpr          
+  "&new" [0-9\']*         -> NewExpr           

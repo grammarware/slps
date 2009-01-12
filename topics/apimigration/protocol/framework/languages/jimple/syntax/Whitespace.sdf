@@ -1,0 +1,49 @@
+%%%
+ %% Jimple whitespace and comments
+ %%%
+module languages/jimple/syntax/Whitespace
+exports
+  lexical syntax
+
+    [\ \9\13\12\10] -> LAYOUT
+    LineComment     -> LAYOUT {category("Comment")}
+    LongComment     -> LAYOUT {category("Comment")}
+
+  context-free restrictions
+    LAYOUT? -/- [\ \9\13\12\10]   %% for whitespace
+    LAYOUT? -/- [\/].[\/]         %% for EOL comments
+    LAYOUT? -/- [\/].[\*]         %% for block comments
+
+  %%%
+   %% End of line comments
+   %%%
+  sorts LineComment LineTerminator EOLCommentChars
+  lexical syntax
+
+    "//" EOLCommentChars LineTerminator -> LineComment
+
+    [\r]      -> LineTerminator
+    [\n][\r]? -> LineTerminator
+    ~[\10\13] -> EOLCommentChars  
+
+  lexical restrictions
+    EOLCommentChars   -/- ~[\10\13]
+
+  %%%
+   %% Block comments
+   %%%
+  sorts LongComment CommentPart BlockCommentChars AsteriskChar
+  lexical syntax
+
+    "/*" CommentPart* "*/"  -> LongComment
+  
+    AsteriskChar            -> CommentPart
+    BlockCommentChars       -> CommentPart
+
+    "*"                     -> AsteriskChar  
+    ~[\*\\]+                -> BlockCommentChars 
+  
+  lexical restrictions
+    "/*"         -/- [\/]
+    AsteriskChar -/- [\/]
+    BlockCommentChars -/- ~[\*\\]

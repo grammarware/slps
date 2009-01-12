@@ -1,0 +1,25 @@
+equations
+
+
+[]	new(<&n, &heap>, &var) = <store(<&n + 1, &heap>, &var, &oid), &oid>
+	when
+		&oid := oid(&n)
+
+
+[]	store(<&n, &heap>, &var, &value) = <&n, store(&heap, &var, &value)>
+
+[]	lookup(<&n, &heap>, &var) = unknown
+	when
+		lookup(&heap, &var) == not-in-table
+
+[default-lookup]	
+	lookup(<&n, &heap>, &var) = lookup(&heap, &var)
+
+[]	empty-memory() = <0, new-table>
+
+[]	rlookup(<&n, [<&var, &value>, &bin*]>, &value) = &var
+
+[]	rlookup(<&n, [<&var, &value'>, &bin*]>, &value) = rlookup(<&n, [&bin*]>, &value)
+	when
+		&value != &value'
+

@@ -1,0 +1,15 @@
+staticinvoke <javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilderFactory newInstance()>();
+interfaceinvoke _G 1096.<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>();
+interfaceinvoke _G 1100.<javax.xml.parsers.DocumentBuilder: org.w3c.dom.DOMImplementation getDOMImplementation()>();
+oid(0) = virtualinvoke _G 1107.<org.w3c.dom.DOMImplementation: org.w3c.dom.Document createDocument(java.lang.String,java.lang.String,org.w3c.dom.DocumentType)>(_G 1121, _G 1124, _G 1127);
+oid(1) = virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Element getDocumentElement()>();
+oid(3) = virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>(_G 998);
+oid(4) = virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>(_G 890);
+virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Text createTextNode(java.lang.String)>(_G 560);
+oid(4) = virtualinvoke oid(4).<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(_G 547);
+oid(3) = virtualinvoke oid(3).<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(oid(4));
+oid(6) = virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>(_G 823);
+virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Text createTextNode(java.lang.String)>(_G 739);
+oid(6) = virtualinvoke oid(6).<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(_G 726);
+oid(3) = virtualinvoke oid(3).<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(oid(6));
+oid(1) = virtualinvoke oid(1).<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(oid(3));

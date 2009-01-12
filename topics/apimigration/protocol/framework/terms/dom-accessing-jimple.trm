@@ -1,0 +1,171 @@
+filefocus2trace(public class de.uni_koblenz.using_xml_apis.dom.AccessingSalariesUsingDOM extends java.lang.Object
+{
+    private org.w3c.dom.Document document;
+
+    public void <init>(java.lang.String) throws org.xml.sax.SAXException, java.io.IOException, javax.xml.parsers.ParserConfigurationException
+    {
+        de.uni_koblenz.using_xml_apis.dom.AccessingSalariesUsingDOM this;
+        java.lang.String filename;
+        javax.xml.parsers.DocumentBuilderFactory factory, temp$0;
+        javax.xml.parsers.DocumentBuilder temp$1;
+        java.io.File temp$2;
+        org.w3c.dom.Document temp$3;
+
+        this := @this: de.uni_koblenz.using_xml_apis.dom.AccessingSalariesUsingDOM;
+        filename := @parameter0: java.lang.String;
+        specialinvoke this.<java.lang.Object: void <init>()>();
+        temp$0 = staticinvoke <javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilderFactory newInstance()>();
+        factory = temp$0;
+        virtualinvoke factory.<javax.xml.parsers.DocumentBuilderFactory: void setValidating(boolean)>(0);
+        temp$1 = virtualinvoke factory.<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>();
+        temp$2 = new java.io.File;
+        specialinvoke temp$2.<java.io.File: void <init>(java.lang.String)>(filename);
+        temp$3 = virtualinvoke temp$1.<javax.xml.parsers.DocumentBuilder: org.w3c.dom.Document parse(java.io.File)>(temp$2);
+        this.<de.uni_koblenz.using_xml_apis.dom.AccessingSalariesUsingDOM: org.w3c.dom.Document document> = temp$3;
+        return;
+    }
+
+    public double sum()
+    {
+        de.uni_koblenz.using_xml_apis.dom.AccessingSalariesUsingDOM this;
+        java.lang.String xpath, temp$5;
+        double total, temp$4, temp$6, temp$7;
+        org.w3c.dom.NodeList nodelist, temp$1;
+        org.w3c.dom.Document temp$0;
+        int i, temp$2, temp$8, temp$9;
+        org.w3c.dom.Element elem;
+        org.w3c.dom.Node temp$3;
+        javax.xml.transform.TransformerException e;
+        java.lang.RuntimeException temp$10;
+
+        this := @this: de.uni_koblenz.using_xml_apis.dom.AccessingSalariesUsingDOM;
+        xpath = "//salary";
+        total = 0.0;
+
+     label0:
+        nop;
+        temp$0 = this.<de.uni_koblenz.using_xml_apis.dom.AccessingSalariesUsingDOM: org.w3c.dom.Document document>;
+        temp$1 = staticinvoke <org.apache.xpath.XPathAPI: org.w3c.dom.NodeList selectNodeList(org.w3c.dom.Node,java.lang.String)>(temp$0, xpath);
+        nodelist = temp$1;
+        i = 0;
+
+     label1:
+        nop;
+        temp$2 = interfaceinvoke nodelist.<org.w3c.dom.NodeList: int getLength()>();
+        if i < temp$2 goto label2;
+
+        goto label3;
+
+     label2:
+        nop;
+        temp$3 = interfaceinvoke nodelist.<org.w3c.dom.NodeList: org.w3c.dom.Node item(int)>(i);
+        elem = (org.w3c.dom.Element) temp$3;
+        temp$4 = total;
+        temp$5 = interfaceinvoke elem.<org.w3c.dom.Element: java.lang.String getTextContent()>();
+        temp$6 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>(temp$5);
+        temp$7 = temp$4 + temp$6;
+        total = temp$7;
+        nop;
+        temp$8 = i;
+        temp$9 = temp$8 + 1;
+        i = temp$9;
+        goto label1;
+
+     label3:
+        nop;
+        goto label5;
+
+     label4:
+        nop;
+        e := @caughtexception;
+        virtualinvoke e.<javax.xml.transform.TransformerException: void printStackTrace()>();
+        temp$10 = new java.lang.RuntimeException;
+        specialinvoke temp$10.<java.lang.RuntimeException: void <init>(java.lang.String)>("transformer exception");
+        throw temp$10;
+
+     label5:
+        nop;
+        return total;
+
+        catch javax.xml.transform.TransformerException from label0 to label4 with label4;
+    }
+
+    public void raise(double)
+    {
+        de.uni_koblenz.using_xml_apis.dom.AccessingSalariesUsingDOM this;
+        double amount, temp$5, temp$6, temp$7;
+        java.lang.String query, temp$4, temp$8;
+        org.w3c.dom.NodeList nodelist, temp$1;
+        org.w3c.dom.Document temp$0;
+        int i, temp$2, temp$9, temp$10;
+        org.w3c.dom.Element elem;
+        org.w3c.dom.Node temp$3;
+        java.lang.Double salary;
+        javax.xml.transform.TransformerException e;
+        java.lang.RuntimeException temp$11;
+
+        this := @this: de.uni_koblenz.using_xml_apis.dom.AccessingSalariesUsingDOM;
+        amount := @parameter0: double;
+
+     label0:
+        nop;
+        query = "//salary";
+        temp$0 = this.<de.uni_koblenz.using_xml_apis.dom.AccessingSalariesUsingDOM: org.w3c.dom.Document document>;
+        temp$1 = staticinvoke <org.apache.xpath.XPathAPI: org.w3c.dom.NodeList selectNodeList(org.w3c.dom.Node,java.lang.String)>(temp$0, query);
+        nodelist = temp$1;
+        i = 0;
+
+     label1:
+        nop;
+        temp$2 = interfaceinvoke nodelist.<org.w3c.dom.NodeList: int getLength()>();
+        if i < temp$2 goto label2;
+
+        goto label3;
+
+     label2:
+        nop;
+        temp$3 = interfaceinvoke nodelist.<org.w3c.dom.NodeList: org.w3c.dom.Node item(int)>(i);
+        elem = (org.w3c.dom.Element) temp$3;
+        temp$4 = interfaceinvoke elem.<org.w3c.dom.Element: java.lang.String getTextContent()>();
+        temp$5 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>(temp$4);
+        temp$6 = temp$5;
+        temp$7 = temp$6 + amount;
+        salary = staticinvoke <java.lang.Double: java.lang.Double valueOf(double)>(temp$7);
+        temp$8 = virtualinvoke salary.<java.lang.Double: java.lang.String toString()>();
+        interfaceinvoke elem.<org.w3c.dom.Element: void setTextContent(java.lang.String)>(temp$8);
+        nop;
+        temp$9 = i;
+        temp$10 = temp$9 + 1;
+        i = temp$10;
+        goto label1;
+
+     label3:
+        nop;
+        goto label5;
+
+     label4:
+        nop;
+        e := @caughtexception;
+        virtualinvoke e.<javax.xml.transform.TransformerException: void printStackTrace()>();
+        temp$11 = new java.lang.RuntimeException;
+        specialinvoke temp$11.<java.lang.RuntimeException: void <init>(java.lang.String)>("transformer exception");
+        throw temp$11;
+
+     label5:
+        nop;
+        return;
+
+        catch javax.xml.transform.TransformerException from label0 to label4 with label4;
+    }
+}
+
+,
+public double sum(),
+
+
+{
+ ?nodelist: <org.apache.xpath.XPathAPI: org.w3c.dom.NodeList selectNodeList(org.w3c.dom.Node,java.lang.String)>(?doc, ?xpath),
+ ?length: ?nodelist.<org.w3c.dom.NodeList: int getLength()>(),
+ ?node: ?nodelist.<org.w3c.dom.NodeList: org.w3c.dom.Node item(int)>(?i),
+ ?content: ?node.<org.w3c.dom.Element: java.lang.String getTextContent()>()
+})

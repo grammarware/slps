@@ -1,0 +1,48 @@
+module JDom2Dom
+
+
+
+imports Java-15
+	basic/Booleans
+	basic/IdentifierCon
+	containers/Table[IdCon Id][Table[[IdCon,Id]] => Env]
+
+hiddens
+context-free start-symbols BlockStm*
+
+exports
+sorts Env
+context-free syntax
+	find-add-content-to(BlockStm*, Id) -> <BlockStm*, Id>
+	find-tag-constructor(BlockStm*, Id) -> <BlockStm*, StringLiteral>
+	find-doc-constructor(BlockStm*) -> <BlockStm*, Id>
+
+	no-assignments(BlockStm*, Id) -> Boolean
+
+	no-assignments(BlockStm*, Boolean, Id) -> Boolean {traversal(bottom-up, break, accu)}
+	no-assignments(LHS, Boolean, Id) -> Boolean {traversal(bottom-up, break, accu)}
+
+
+	jdom2dom(BlockStm*) -> BlockStm*
+	jdom2dom(BlockStm*, doc:Id) -> BlockStm*
+
+hiddens
+variables
+	"&bool"[0-9\']* -> Boolean
+	"&str"[0-9\']* -> StringLiteral
+	"&env"[0-9\']* -> Env
+	"&id"[0-9\']* -> Id
+	"&doc"[0-9\']* -> Id
+	"&elt"[0-9\']* -> Id
+	"&root"[0-9\']* -> Id
+	"&idcon"[0-9\']* -> IdCon
+	"&sstm"[0-9\']* -> Stm
+	"&stm"[0-9\']* -> BlockStm
+	"&stm*"[0-9\']* -> BlockStm*
+	"&stm+"[0-9\']* -> BlockStm+
+	"&expr"[0-9\']* -> Expr
+	"&expr*"[0-9\']* -> {Expr ","}*
+	"&expr+"[0-9\']* -> {Expr ","}+
+	"&formal"[0-9\']* -> FormalParam
+
+

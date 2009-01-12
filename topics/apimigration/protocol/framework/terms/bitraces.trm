@@ -1,0 +1,57 @@
+term2trace(
+
+[ ([new(oid(0), 'org.jdom.Document'), special(_G311,
+'<org.jdom.Document: void <init>()>', [oid(0)])], [static(_G1030,
+'<javax.xml.parsers.DocumentBuilderFactory:
+javax.xml.parsers.DocumentBuilderFactory newInstance()>', []),
+interface(_G1034, '<javax.xml.parsers.DocumentBuilderFactory:
+javax.xml.parsers.DocumentBuilder newDocumentBuilder()>', [_G1030]),
+interface(_G1041, '<javax.xml.parsers.DocumentBuilder:
+org.w3c.dom.DOMImplementation getDOMImplementation()>', [_G1034]),
+virtual(oid(0), '<org.w3c.dom.DOMImplementation: org.w3c.dom.Document
+createDocument(java.lang.String,java.lang.String,org.w3c.dom.DocumentType)>',
+[_G1041, _G1055, _G1058, _G1061])]), ([new(oid(1),
+'org.jdom.Element'), special(_G348, '<org.jdom.Element: void
+<init>(java.lang.String)>', [oid(1), "contacts"])], [virtual(oid(1),
+'<org.w3c.dom.Document: org.w3c.dom.Element getDocumentElement()>',
+[oid(0)])]), ([virtual(oid(0), '<org.jdom.Document: org.jdom.Document
+addContent(org.jdom.Content)>', [oid(0), oid(1)])], []), ([new(oid(3),
+'org.jdom.Element'), special(_G441, '<org.jdom.Element: void
+<init>(java.lang.String)>', [oid(3), "person"])], [virtual(oid(3),
+'<org.w3c.dom.Document: org.w3c.dom.Element
+createElement(java.lang.String)>', [oid(0), _G989])]),
+([virtual(oid(1), '<org.jdom.Element: org.jdom.Element
+addContent(org.jdom.Content)>', [oid(1), oid(3)])], [virtual(oid(1),
+'<org.w3c.dom.Element: org.w3c.dom.Node
+appendChild(org.w3c.dom.Node)>', [oid(1), oid(3)])]), ([new(oid(4),
+'org.jdom.Element'), special(_G502, '<org.jdom.Element: void
+<init>(java.lang.String)>', [oid(4), "name"])], [virtual(oid(4),
+'<org.w3c.dom.Document: org.w3c.dom.Element
+createElement(java.lang.String)>', [oid(0), _G899])]),
+([virtual(oid(3), '<org.jdom.Element: org.jdom.Element
+addContent(org.jdom.Content)>', [oid(3), oid(4)])], [virtual(oid(3),
+'<org.w3c.dom.Element: org.w3c.dom.Node
+appendChild(org.w3c.dom.Node)>', [oid(3), oid(4)])]), ([new(oid(6),
+'org.jdom.Element'), special(_G693, '<org.jdom.Element: void
+<init>(java.lang.String)>', [oid(6), "age"])], [virtual(oid(6),
+'<org.w3c.dom.Document: org.w3c.dom.Element
+createElement(java.lang.String)>', [oid(0), _G859])]),
+([virtual(oid(3), '<org.jdom.Element: org.jdom.Element
+addContent(org.jdom.Content)>', [oid(3), oid(6)])], [virtual(oid(3),
+'<org.w3c.dom.Element: org.w3c.dom.Node
+appendChild(org.w3c.dom.Node)>', [oid(3), oid(6)])]),
+([virtual(oid(6), '<org.jdom.Element: org.jdom.Element
+setText(java.lang.String)>', [oid(6), _G746])], [virtual(_G762,
+'<org.w3c.dom.Document: org.w3c.dom.Text
+createTextNode(java.lang.String)>', [oid(0), _G775]), virtual(oid(6),
+'<org.w3c.dom.Element: org.w3c.dom.Node
+appendChild(org.w3c.dom.Node)>', [oid(6), _G762])]), ([virtual(oid(4),
+'<org.jdom.Element: org.jdom.Element setText(java.lang.String)>',
+[oid(4), _G555])], [virtual(_G571, '<org.w3c.dom.Document:
+org.w3c.dom.Text createTextNode(java.lang.String)>', [oid(0), _G584]),
+virtual(oid(4), '<org.w3c.dom.Element: org.w3c.dom.Node
+appendChild(org.w3c.dom.Node)>', [oid(4), _G571])])]
+
+
+
+)

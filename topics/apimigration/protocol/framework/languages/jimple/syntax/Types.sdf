@@ -1,0 +1,44 @@
+%%%
+ %% Jimple Types
+ %%%
+module languages/jimple/syntax/Types
+imports
+  languages/jimple/syntax/Names
+  
+exports
+  sorts BaseTypeNoName
+  context-free syntax
+
+    "boolean"              -> BaseTypeNoName {cons("BooleanType")}
+    "byte"                 -> BaseTypeNoName {cons("ByteType")}
+    "char"                 -> BaseTypeNoName {cons("CharType")}
+    "short"                -> BaseTypeNoName {cons("ShortType")}
+    "int"                  -> BaseTypeNoName {cons("IntType")}
+    "long"                 -> BaseTypeNoName {cons("LongType")}
+    "float"                -> BaseTypeNoName {cons("FloatType")}
+    "double"               -> BaseTypeNoName {cons("DoubleType")}
+    "null_type"            -> BaseTypeNoName {cons("NullType")}
+
+  sorts NonVoidType
+  context-free syntax
+
+    BaseTypeNoName      -> NonVoidType
+    QuotedName          -> NonVoidType {cons("QuotedName")}
+    Identifier          -> NonVoidType {cons("Identifier")}
+    FullIdentifier      -> NonVoidType {cons("FullIdentifier")}
+    NonVoidType "[" "]" -> NonVoidType {cons("Brackets")}
+
+  sorts Type
+  context-free syntax
+    "void"                 -> Type {cons("VoidType")}
+    NonVoidType            -> Type
+
+  sorts JimpleType
+  context-free syntax
+    "unknown"              -> JimpleType {cons("UnknownType")}
+    NonVoidType            -> JimpleType
+
+  sorts BaseType
+  context-free syntax
+    BaseTypeNoName         -> BaseType
+    ClassName              -> BaseType

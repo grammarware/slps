@@ -1,0 +1,217 @@
+public class de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM extends de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.ContactsToDocument
+{
+
+    public static void main(java.lang.String[]) throws java.io.IOException
+    {
+        java.lang.String[] args;
+        de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM temp$0;
+        java.util.List temp$1;
+        java.io.PrintStream temp$2;
+
+        args := @parameter0: java.lang.String[];
+        temp$0 = new de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM;
+        temp$1 = <de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.util.List PERSONS>;
+        specialinvoke temp$0.<de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM: void <init>(java.util.List)>(temp$1);
+        temp$2 = <java.lang.System: java.io.PrintStream out>;
+        virtualinvoke temp$0.<de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM: void save(java.io.OutputStream)>(temp$2);
+        return;
+    }
+
+    public void <init>(java.util.List)
+    {
+        de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM this;
+        java.util.List contacts;
+
+        this := @this: de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM;
+        contacts := @parameter0: java.util.List;
+        specialinvoke this.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.ContactsToDocument: void <init>()>();
+        this.<de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM: java.util.List contacts> = contacts;
+        return;
+    }
+
+    public void save(java.io.OutputStream) throws java.io.IOException
+    {
+        de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM this;
+        java.io.OutputStream output;
+        org.w3c.dom.Document document, temp$0;
+        org.apache.xml.serialize.OutputFormat format, temp$1;
+        org.apache.xml.serialize.XMLSerializer serializer, temp$2;
+
+        this := @this: de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM;
+        output := @parameter0: java.io.OutputStream;
+        temp$0 = virtualinvoke this.<de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM: org.w3c.dom.Document makeDocument()>();
+        document = temp$0;
+        temp$1 = new org.apache.xml.serialize.OutputFormat;
+        specialinvoke temp$1.<org.apache.xml.serialize.OutputFormat: void <init>(org.w3c.dom.Document)>(document);
+        format = temp$1;
+        temp$2 = new org.apache.xml.serialize.XMLSerializer;
+        specialinvoke temp$2.<org.apache.xml.serialize.XMLSerializer: void <init>(java.io.OutputStream,org.apache.xml.serialize.OutputFormat)>(output, format);
+        serializer = temp$2;
+        virtualinvoke serializer.<org.apache.xml.serialize.XMLSerializer: void serialize(org.w3c.dom.Document)>(document);
+        return;
+    }
+
+    public org.w3c.dom.Document makeDocument()
+    {
+        de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM this;
+        javax.xml.parsers.DocumentBuilder b, temp$1;
+        javax.xml.parsers.DocumentBuilderFactory f, temp$0;
+        javax.xml.parsers.ParserConfigurationException e;
+        java.lang.RuntimeException temp$2;
+        org.w3c.dom.Document doc, temp$4;
+        org.w3c.dom.DOMImplementation temp$3;
+        org.w3c.dom.Element root, temp$5, px, temp$10, namex, temp$11, agex, temp$13;
+        java.util.List temp$6;
+        java.util.Iterator temp$7;
+        de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person p;
+        boolean temp$8;
+        java.lang.Object temp$9;
+        java.lang.String temp$12, temp$15;
+        int temp$14;
+        org.w3c.dom.Node temp$16, temp$17, temp$18;
+
+        this := @this: de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM;
+
+     label0:
+        nop;
+        temp$0 = staticinvoke <javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilderFactory newInstance()>();
+        f = temp$0;
+        temp$1 = virtualinvoke f.<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>();
+        b = temp$1;
+        goto label2;
+
+     label1:
+        nop;
+        e := @caughtexception;
+        virtualinvoke e.<javax.xml.parsers.ParserConfigurationException: void printStackTrace()>();
+        temp$2 = new java.lang.RuntimeException;
+        specialinvoke temp$2.<java.lang.RuntimeException: void <init>(java.lang.String)>("parser configuration exception");
+        throw temp$2;
+
+     label2:
+        nop;
+        temp$3 = virtualinvoke b.<javax.xml.parsers.DocumentBuilder: org.w3c.dom.DOMImplementation getDOMImplementation()>();
+        temp$4 = interfaceinvoke temp$3.<org.w3c.dom.DOMImplementation: org.w3c.dom.Document createDocument(java.lang.String,java.lang.String,org.w3c.dom.DocumentType)>(null, "contacts", null);
+        doc = temp$4;
+        temp$5 = interfaceinvoke doc.<org.w3c.dom.Document: org.w3c.dom.Element getDocumentElement()>();
+        root = temp$5;
+        temp$6 = this.<de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM: java.util.List contacts>;
+        temp$7 = interfaceinvoke temp$6.<java.lang.Iterable: java.util.Iterator iterator()>();
+
+     label3:
+        nop;
+        temp$8 = interfaceinvoke temp$7.<java.util.Iterator: boolean hasNext()>();
+        if temp$8 == 0 goto label4;
+
+        temp$9 = interfaceinvoke temp$7.<java.util.Iterator: java.lang.Object next()>();
+        p = (de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person) temp$9;
+        temp$10 = interfaceinvoke doc.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("person");
+        px = temp$10;
+        temp$11 = interfaceinvoke doc.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("name");
+        namex = temp$11;
+        temp$12 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>();
+        interfaceinvoke namex.<org.w3c.dom.Element: void setTextContent(java.lang.String)>(temp$12);
+        temp$13 = interfaceinvoke doc.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("age");
+        agex = temp$13;
+        temp$14 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>();
+        temp$15 = staticinvoke <java.lang.Integer: java.lang.String toString(int)>(temp$14);
+        interfaceinvoke agex.<org.w3c.dom.Element: void setTextContent(java.lang.String)>(temp$15);
+        temp$16 = interfaceinvoke px.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(namex);
+        temp$17 = interfaceinvoke px.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(agex);
+        temp$18 = interfaceinvoke root.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(px);
+        nop;
+        goto label3;
+
+     label4:
+        nop;
+        return doc;
+
+        catch javax.xml.parsers.ParserConfigurationException from label0 to label1 with label1;
+    }
+
+    public org.w3c.dom.Document makeDocument_AppendingLater()
+    {
+        de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM this;
+        org.w3c.dom.Document document, temp$3;
+        javax.xml.parsers.DocumentBuilderFactory documentBuilderFactory, temp$0;
+        javax.xml.parsers.DocumentBuilder documentBuilder, temp$1;
+        org.w3c.dom.DOMImplementation temp$2;
+        javax.xml.parsers.ParserConfigurationException e;
+        java.lang.RuntimeException temp$4;
+        org.w3c.dom.Element root, temp$5, elt, temp$10, nameElt, temp$11, ageElt, temp$14;
+        java.util.List temp$6;
+        java.util.Iterator temp$7;
+        de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person p;
+        boolean temp$8;
+        java.lang.Object temp$9;
+        org.w3c.dom.Node name, age, temp$19, temp$20, temp$21, temp$22, temp$23;
+        java.lang.String temp$12, temp$17;
+        org.w3c.dom.Text temp$13, temp$18;
+        java.lang.Integer temp$15;
+        int temp$16;
+
+        this := @this: de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM;
+
+     label0:
+        nop;
+        temp$0 = staticinvoke <javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilderFactory newInstance()>();
+        documentBuilderFactory = temp$0;
+        temp$1 = virtualinvoke documentBuilderFactory.<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>();
+        documentBuilder = temp$1;
+        temp$2 = virtualinvoke documentBuilder.<javax.xml.parsers.DocumentBuilder: org.w3c.dom.DOMImplementation getDOMImplementation()>();
+        temp$3 = interfaceinvoke temp$2.<org.w3c.dom.DOMImplementation: org.w3c.dom.Document createDocument(java.lang.String,java.lang.String,org.w3c.dom.DocumentType)>(null, "contacts", null);
+        document = temp$3;
+        goto label2;
+
+     label1:
+        nop;
+        e := @caughtexception;
+        virtualinvoke e.<javax.xml.parsers.ParserConfigurationException: void printStackTrace()>();
+        temp$4 = new java.lang.RuntimeException;
+        specialinvoke temp$4.<java.lang.RuntimeException: void <init>(java.lang.String)>("parser configuration exception");
+        throw temp$4;
+
+     label2:
+        nop;
+        temp$5 = interfaceinvoke document.<org.w3c.dom.Document: org.w3c.dom.Element getDocumentElement()>();
+        root = temp$5;
+        temp$6 = this.<de.uni_koblenz.using_xml_apis.dom.ContactsToDocumentUsingDOM: java.util.List contacts>;
+        temp$7 = interfaceinvoke temp$6.<java.lang.Iterable: java.util.Iterator iterator()>();
+
+     label3:
+        nop;
+        temp$8 = interfaceinvoke temp$7.<java.util.Iterator: boolean hasNext()>();
+        if temp$8 == 0 goto label4;
+
+        temp$9 = interfaceinvoke temp$7.<java.util.Iterator: java.lang.Object next()>();
+        p = (de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person) temp$9;
+        temp$10 = interfaceinvoke document.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("person");
+        elt = temp$10;
+        temp$11 = interfaceinvoke document.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("name");
+        nameElt = temp$11;
+        temp$12 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>();
+        temp$13 = interfaceinvoke document.<org.w3c.dom.Document: org.w3c.dom.Text createTextNode(java.lang.String)>(temp$12);
+        name = temp$13;
+        temp$14 = interfaceinvoke document.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("age");
+        ageElt = temp$14;
+        temp$15 = new java.lang.Integer;
+        temp$16 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>();
+        specialinvoke temp$15.<java.lang.Integer: void <init>(int)>(temp$16);
+        temp$17 = virtualinvoke temp$15.<java.lang.Integer: java.lang.String toString()>();
+        temp$18 = interfaceinvoke document.<org.w3c.dom.Document: org.w3c.dom.Text createTextNode(java.lang.String)>(temp$17);
+        age = temp$18;
+        temp$19 = interfaceinvoke root.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(elt);
+        temp$20 = interfaceinvoke elt.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(nameElt);
+        temp$21 = interfaceinvoke elt.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(ageElt);
+        temp$22 = interfaceinvoke nameElt.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(name);
+        temp$23 = interfaceinvoke ageElt.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(age);
+        nop;
+        goto label3;
+
+     label4:
+        nop;
+        return document;
+
+        catch javax.xml.parsers.ParserConfigurationException from label0 to label1 with label1;
+    }
+}

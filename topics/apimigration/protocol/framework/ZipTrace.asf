@@ -1,0 +1,65 @@
+equations
+
+[default-list1]	
+	zip(&heap @ &stmt0 &stmt*1, <&stmt', &stmt*'> &stmt*2) = untrace(&stmt*', &heap) 
+zip(&stmt*1, &stmt*2)
+	when
+		traced(&stmt0) == true,
+		&stmt := substitute(&stmt0, &heap),
+		normalize-unknowns(&stmt) == normalize-unknowns(&stmt')
+
+/* When two consecutive statements are migrated... */
+[list2]	zip(&heap1 @ &stmt1 &heap2 @ &stmt2 &stmt*1, <&stmt' &stmt'', &stmt*'> &stmt*2) = untrace(&stmt*', &heap2) 
+zip(&stmt*1, &stmt*2)
+	when
+		traced(&stmt1) == true,
+		traced(&stmt2) == true,
+		&stmt3 := substitute(&stmt1, &heap1),
+		&stmt4 := substitute(&stmt2, &heap2),
+		normalize-unknowns(&stmt3) == normalize-unknowns(&stmt'),
+		normalize-unknowns(&stmt4) == normalize-unknowns(&stmt'')
+
+[nil]	zip(, &stmt*) = 
+
+[normal]	zip(&stmt &stmt*, &stmt*') =  &stmt
+zip(&stmt*, &stmt*')
+	when
+		&heap @ &stmt' !:= &stmt
+
+
+[default-zip]
+	zip(&heap @ &stmt &stmt*, &stmt*') = &stmt
+zip(&stmt*, &stmt*')
+
+
+equations
+
+[]	normalize-unknowns(_G&natcon) = _
+
+[]	normalize-unknowns(&lname) = _
+	when
+		&oid !:= &lname
+
+
+equations
+
+[]	untrace(, &heap) =
+
+[]	untrace(&stmt &stmt*, &heap) = untrace-stmt(&stmt, &heap) untrace(&stmt*, &heap)
+
+equations
+
+[]	untrace-stmt(&oid, &heap) = rlookup(<0, &heap>, &oid)
+
+equations
+
+[]	traced(&lname = &invoke;) = true
+
+[]	traced(&invoke;) = true
+
+[]	traced(&lname = &new;) = true
+
+[default-traced]
+	traced(&stmt) = false
+
+

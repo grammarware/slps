@@ -1,0 +1,126 @@
+%%%
+ %% Jimple Expressions
+ %%%
+module languages/jimple/syntax/Expressions
+imports
+  languages/jimple/syntax/Lexical
+  languages/jimple/syntax/Names
+  languages/jimple/syntax/Types
+  
+exports
+  sorts Expr
+  context-free syntax
+
+    NewExpr                            -> Expr
+    "(" NonVoidType ")" Immediate      -> Expr {cons("CastExpr")}
+    Immediate "instanceof" NonVoidType -> Expr {cons("InstanceOfExpr")}
+    InvokeExpr                         -> Expr
+    Reference                          -> Expr
+    Immediate                          -> Expr
+    UnopExpr                           -> Expr
+    BinopExpr                          -> Expr
+
+  sorts NewExpr ArrayDescriptor FixedArrayDescriptor
+  context-free syntax
+  
+    "new" BaseType                                      -> NewExpr {cons("NewExpr")}
+    "newarray" "(" NonVoidType ")" FixedArrayDescriptor -> NewExpr {cons("NewArrayExpr")}
+    "newmultiarray" "(" BaseType ")" ArrayDescriptor+   -> NewExpr {cons("NewMultiArrayExpr")}
+
+    "[" Immediate? "]" -> ArrayDescriptor      {cons("ArrayDescriptor")}
+    "[" Immediate  "]" -> FixedArrayDescriptor {cons("FixedArrayDescriptor")}
+
+  sorts Variable
+  context-free syntax
+
+    Reference -> Variable
+    LocalName -> Variable
+
+  sorts InvokeExpr NonStaticInvoke
+  context-free syntax
+  
+    NonStaticInvoke LocalName "." MethodSignature "(" { Immediate ","}* ")" -> InvokeExpr {cons("InvokeExpr")}
+    "staticinvoke" MethodSignature "(" { Immediate ","}* ")" -> InvokeExpr {cons("StaticInvokeExpr")}
+  
+    %% invokes an instance initialization method, a private method of this or
+    %% a superclass method of this.
+    "specialinvoke"   -> NonStaticInvoke {cons("SpecialInvoke")}
+
+    %% invokes an instance method of an object
+    "virtualinvoke"   -> NonStaticInvoke {cons("VirtualInvoke")}
+
+    %% invokes a method that is implemented by an interface.
+    "interfaceinvoke" -> NonStaticInvoke {cons("InterfaceInvoke")}
+  
+  sorts BoolExpr
+  context-free syntax
+
+    UnopExpr  -> BoolExpr
+    BinopExpr -> BoolExpr
+  
+  sorts UnopExpr
+  context-free syntax
+
+    "lengthof" Immediate          -> UnopExpr {cons("LengthExpr")}
+    "neg" Immediate               -> UnopExpr {cons("NegExpr")}
+
+  sorts BinopExpr
+  context-free syntax
+
+    Immediate "&" Immediate    -> BinopExpr {cons("AndExpr")}
+    Immediate "|" Immediate    -> BinopExpr {cons("OrExpr")}
+    Immediate "^" Immediate    -> BinopExpr {cons("XorExpr")}
+    Immediate "%" Immediate    -> BinopExpr {cons("RemExpr")}
+    Immediate "cmp" Immediate  -> BinopExpr {cons("CmpExpr")}
+    Immediate "cmpg" Immediate -> BinopExpr {cons("CmpgExpr")}
+    Immediate "cmpl" Immediate -> BinopExpr {cons("CmplExpr")}
+    Immediate "==" Immediate   -> BinopExpr {cons("EqExpr")}
+    Immediate "!=" Immediate   -> BinopExpr {cons("NeExpr")}
+    Immediate ">" Immediate    -> BinopExpr {cons("GtExpr")}
+    Immediate ">=" Immediate   -> BinopExpr {cons("GeExpr")}
+    Immediate "<" Immediate    -> BinopExpr {cons("LtExpr")}
+    Immediate "<=" Immediate   -> BinopExpr {cons("LeExpr")}
+    Immediate "<<" Immediate   -> BinopExpr {cons("ShlExpr")}
+    Immediate ">>" Immediate   -> BinopExpr {cons("ShrExpr")}
+    Immediate ">>>" Immediate  -> BinopExpr {cons("UshrExpr")}
+    Immediate "+" Immediate    -> BinopExpr {cons("AddExpr")}
+    Immediate "-" Immediate    -> BinopExpr {cons("SubExpr")}
+    Immediate "*" Immediate    -> BinopExpr {cons("MulExpr")}
+    Immediate "/" Immediate    -> BinopExpr {cons("DivExpr")}
+  
+  sorts MethodSignature FieldSignature
+  context-free syntax
+
+    "<" ClassName ":" Type Name "(" { NonVoidType ","}* ")" ">" -> MethodSignature {cons("MethodSignature")}
+    "<" ClassName ":" Type Name ">" -> FieldSignature {cons("FieldSignature")}
+
+  %%%
+   %% References
+   %%%
+  sorts Reference ArrayRef FieldRef
+  context-free syntax
+
+    ArrayRef -> Reference
+    FieldRef -> Reference
+
+    Identifier FixedArrayDescriptor -> ArrayRef {cons("ArrayRef")}
+    LocalName "." FieldSignature    -> FieldRef {cons("InstanceFieldRef")}
+    FieldSignature                  -> FieldRef {cons("StaticFieldRef")}
+
+  sorts Immediate
+  context-free syntax
+
+    LocalName -> Immediate
+    Constant  -> Immediate
+
+  sorts Constant Constant1
+  context-free syntax
+
+    Constant1 -> Constant {cons("Constant")}
+
+    FullIntegerConstant    -> Constant1 {cons("Integer")}
+    FullFloatConstant      -> Constant1 {cons("Float")}
+    StringConstant         -> Constant1 {cons("String")}
+    "class" StringConstant -> Constant1 {cons("Class")}
+    "null"                 -> Constant1 {cons("Null")}
+  

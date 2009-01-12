@@ -1,0 +1,84 @@
+% -*- Prolog -*-
+
+% TODO: modified the DOM source code wrt this grammar: the
+% appendChilds are in outermost positions now.
+
+%% Grammar:
+
+build(Doc)
+-->
+	createDocument(Doc),
+	obtainRoot(Doc, Root),
+	children(Doc, Children),
+	appendChildren(Root, Children).
+
+children(Doc, [Child|Children]) 
+-->
+	child(Doc, Child),
+	children(Doc, Children).
+
+
+children(Doc, [Child|Children]) 
+-->
+	child(Doc, Child),
+	setTextContent(Child),
+	children(Doc, Children).
+
+children(_Doc, [])
+--> [].
+
+
+%% NOTE: could be in arbitrary order.
+appendChildren(Elt, [Child|Children]) 
+-->
+	appendChild(Elt, Child),
+	appendChildren(Elt, Children).
+
+appendChildren(_Elt, []) --> [].
+
+
+
+child(Doc, Child) 
+-->
+	createTextNode(Doc, Child).
+
+child(Doc, Child)
+-->
+	createElt(Doc, Child),
+	children(Doc, Children),
+	appendChildren(Child, Children).
+
+
+%% NonTerminals
+createDocument(Doc) 
+-->
+	find(static(Factory, '<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilderFactory newInstance()>', [])),
+	find(virtual(Builder, '<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>', [Factory])), 
+	find(virtual(DomImpl, '<javax.xml.parsers.DocumentBuilder: org.w3c.dom.DOMImplementation getDOMImplementation()>', [Builder])), 
+	find(interface(Doc, '<org.w3c.dom.DOMImplementation: org.w3c.dom.Document createDocument(java.lang.String,java.lang.String,org.w3c.dom.DocumentType)>', 
+	[DomImpl, _, _, _])).
+
+obtainRoot(Doc, Root) 
+-->
+	find(interface(Root, '<org.w3c.dom.Document: org.w3c.dom.Element getDocumentElement()>', [Doc])).
+
+createElt(Doc, Elt) 
+-->
+	find(interface(Elt, '<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>', [Doc, _String])).
+
+createTextNode(Doc, Node)
+-->
+	find(interface(Node, '<org.w3c.dom.Document: org.w3c.dom.Text createTextNode(java.lang.String)>', [Doc, _String])).
+
+
+appendChild(Element, Node) 
+-->
+	find(interface(Element, '<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>', [Element, Node])).
+
+setTextContent(Element)
+-->
+	find(interface(_, '<org.w3c.dom.Element: void setTextContent(java.lang.String)>', [Element, _])).
+
+
+
+

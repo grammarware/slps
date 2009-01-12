@@ -1,0 +1,18 @@
+jdom2dom(
+		Element root = new Element("contacts");
+		for (Person p: contacts) {
+			Element person = new Element("person");
+			Element name = new Element("name");
+			name.setText(p.getName());
+			System.out.println(name);
+			person.addContent(name);
+			Element age = new Element("age");
+			age.setText(new Integer(p.getAge()).toString());
+			System.out.println(age);
+			person.addContent(age);
+			root.addContent(person);
+		}
+		Document document = new Document();
+		document.addContent(root);
+		return document;
+)

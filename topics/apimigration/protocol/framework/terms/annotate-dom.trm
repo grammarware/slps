@@ -1,0 +1,51 @@
+
+annotate(
+[
+new(oid(1)), 
+(44, label('label0')), 
+(45, static(oid(2), '<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilderFactory newInstance()>', [])), 
+(47, call(oid(3), '<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>', [oid(2)])), 
+(48, call(oid(4), '<javax.xml.parsers.DocumentBuilder: org.w3c.dom.DOMImplementation getDOMImplementation()>', [oid(3)])), 
+(48, call(oid(5), '<org.w3c.dom.DOMImplementation: org.w3c.dom.Document createDocument(java.lang.String,java.lang.String,org.w3c.dom.DocumentType)>', [oid(4), 'null', '"contacts"', 'null'])), 
+(49, goto('label2')), 
+(46, label('label1')), 
+(46, new(oid(6))), 
+(50, call(void, '<javax.xml.parsers.ParserConfigurationException: void printStackTrace()>', [oid(6)])), 
+(51, new(oid(7), 'java.lang.RuntimeException')), 
+(52, call(void, '<java.lang.RuntimeException: void <init>(java.lang.String)>', [oid(7), '"parser configuration exception"'])), 
+(52, label('label2')), 
+(50, call(oid(8), '<org.w3c.dom.Document: org.w3c.dom.Element getDocumentElement()>', [oid(5)])), 
+(54, field(oid(9))), 
+(55, call(oid(10), '<java.lang.Iterable: java.util.Iterator iterator()>', [oid(9)])), 
+(55, label('label3')), 
+(55, call(oid(11), '<java.util.Iterator: boolean hasNext()>', [oid(10)])), 
+(55, cond-goto('label4', [oid(11)])), 
+(55, call(oid(12), '<java.util.Iterator: java.lang.Object next()>', [oid(10)])), 
+(55, call(oid(13), '<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>', [oid(5), '"person"'])), 
+(56, call(oid(14), '<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>', [oid(5), '"name"'])), 
+(57, call(oid(15), '<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>', [oid(12)])), 
+(58, call(oid(16), '<org.w3c.dom.Document: org.w3c.dom.Text createTextNode(java.lang.String)>', [oid(5), oid(15)])), 
+(58, call(oid(17), '<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>', [oid(14), oid(16)])), 
+(58, call(oid(18), '<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>', [oid(5), '"age"'])), 
+(61, new(oid(19), 'java.lang.Integer')), 
+(62, call(oid(20), '<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>', [oid(12)])), 
+(62, call(void, '<java.lang.Integer: void <init>(int)>', [oid(19), oid(20)])), 
+(62, call(oid(21), '<java.lang.Integer: java.lang.String toString()>', [oid(19)])), 
+(62, call(oid(22), '<org.w3c.dom.Document: org.w3c.dom.Text createTextNode(java.lang.String)>', [oid(5), oid(21)])), 
+(62, call(oid(23), '<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>', [oid(18), oid(22)])), 
+(62, call(oid(24), '<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>', [oid(13), oid(14)])), 
+(62, call(oid(25), '<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>', [oid(13), oid(18)])), 
+(62, call(oid(26), '<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>', [oid(8), oid(13)])), 
+(62, goto('label3')), 
+(62, label('label4')), 
+(62, return(oid(5)))
+]
+
+,
+
+dom,
+
+{
+?impl.<org.w3c.dom.DOMImplementation: org.w3c.dom.Document createDocument(java.lang.String,java.lang.String,org.w3c.dom.DocumentType)>(_,_,_)
+
+})

@@ -1,0 +1,6 @@
+trace2term([
+oid(0): <org.apache.xpath.XPathAPI: org.w3c.dom.NodeList selectNodeList(org.w3c.dom.Node,java.lang.String)>(unknown, unknown), 
+oid(1): oid(0).<org.w3c.dom.NodeList: int getLength()>(), 
+oid(2): oid(0).<org.w3c.dom.NodeList: org.w3c.dom.Node item(int)>(unknown), 
+oid(3): oid(2).<org.w3c.dom.Element: java.lang.String getTextContent()>()
+])

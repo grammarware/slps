@@ -1,0 +1,19 @@
+trace2term(
+[
+44 :: oid(0): new org.jdom.Document, 
+45 :: oid(0).<org.jdom.Document: void <init>()>(), 
+45 :: oid(1): new org.jdom.Element, 
+46 :: oid(1).<org.jdom.Element: void <init>(java.lang.String)>(_), 
+46 :: oid(0): oid(0).<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(oid(1)), 
+48 :: oid(2): new org.jdom.Element, 
+49 :: oid(2).<org.jdom.Element: void <init>(java.lang.String)>(_), 
+49 :: oid(3): new org.jdom.Element, 
+50 :: oid(3).<org.jdom.Element: void <init>(java.lang.String)>(_), 
+50 :: oid(3): oid(3).<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(_), 
+52 :: oid(2): oid(2).<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(oid(3)), 
+53 :: oid(4): new org.jdom.Element, 
+54 :: oid(4).<org.jdom.Element: void <init>(java.lang.String)>(_), 
+55 :: oid(4): oid(4).<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(_), 
+56 :: oid(2): oid(2).<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(oid(4)), 
+57 :: oid(1): oid(1).<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(oid(2))
+])

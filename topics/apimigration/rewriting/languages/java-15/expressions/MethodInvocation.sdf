@@ -1,0 +1,19 @@
+%%%
+ %% Section 15.12: Method Invocation Expressions
+ %%
+ %% @author  Martin Bravenboer <martin@cs.uu.nl>
+ %%%
+module languages/java-15/expressions/MethodInvocation
+imports
+  languages/java-15/expressions/Main
+
+exports
+  sorts MethodId
+  context-free syntax
+    MethodId "(" {Expr ","}* ")" -> Expr {cons("Invoke")}
+
+                                MethodName -> MethodId {cons("Method"), prefer}
+                     Expr "." TypeArgs? Id -> MethodId {cons("MethodExpr")}
+                  "super" "." TypeArgs? Id -> MethodId {cons("SuperMethod")}
+    ClassName "." "super" "." TypeArgs? Id -> MethodId {cons("QSuperMethod")}
+                 TypeName "." TypeArgs  Id -> MethodId {cons("GenericStaticMethod"), prefer}

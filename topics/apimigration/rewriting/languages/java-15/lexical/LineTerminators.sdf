@@ -1,0 +1,13 @@
+%%%
+ %% Section 3.4: Line Terminators
+ %%
+ %% @author Martin Bravenboer <martin@cs.uu.nl>
+ %%%
+module languages/java-15/lexical/LineTerminators
+exports
+  sorts
+    LineTerminator
+
+  lexical syntax
+    [\r]          -> LineTerminator
+    [\n][\r]?     -> LineTerminator

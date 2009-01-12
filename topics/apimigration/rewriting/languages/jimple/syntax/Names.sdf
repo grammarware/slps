@@ -1,0 +1,23 @@
+%%
+%% Jimple grammar
+%%
+
+module languages/jimple/syntax/Names
+imports
+  languages/jimple/syntax/Names
+  languages/jimple/syntax/Lexical
+  
+exports
+  sorts ClassName Name
+  context-free syntax
+
+    QuotedName         -> ClassName {cons("Quoted")}
+    Identifier         -> ClassName {cons("Identifier")}
+    FullIdentifier     -> ClassName {cons("FullIdentifier")}
+
+    QuotedName         -> Name
+    Identifier         -> Name
+
+  sorts LocalName
+  context-free syntax
+    Name -> LocalName {cons("Local")}

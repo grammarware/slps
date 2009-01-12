@@ -1,0 +1,11 @@
+{
+        ?x: new org.jdom.Document,
+        ?x: new org.jdom.Element,
+
+        ?x.<org.jdom.Document: void <init>()>(),
+        ?x.<org.jdom.Element: void <init>(java.lang.String)>(_),
+
+        ?x: ?x.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(?root),
+        ?x: ?x.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(?content),
+        ?x: ?x.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(_)
+}

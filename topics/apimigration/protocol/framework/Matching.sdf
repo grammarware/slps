@@ -1,0 +1,73 @@
+module Matching
+
+imports Patterns
+        Memory[LocalName Value]
+        basic/Booleans
+        languages/jimple/syntax/Statements
+        containers/Table[IdCon Value] [Table[[IdCon,Value]] => Substitution]
+
+hiddens
+context-free start-symbols
+  <<Boolean,Substitution>,Memory>
+
+exports
+sorts Patterns Substitution MatchFirstResult Value
+
+context-free syntax
+  Constant                                                        -> Value                            
+  match-first-pattern(Stmt, Patterns, Memory)                     -> MatchFirstResult                 
+  <Pattern,Memory>                                                -> MatchFirstResult                 
+  "no-match"                                                      -> MatchFirstResult                 
+  match(Stmt, Pattern, Memory)                                    -> <<Boolean,Substitution>,Memory>  
+  match-args({Immediate ","}*, {Hole ","}*, Memory)               -> <Boolean,Substitution>           
+  match-args({Immediate ","}*, {Hole ","}*, Memory, Substitution) -> <Boolean,Substitution>           
+  match-arg(Immediate, Hole, Memory, Substitution)                -> <Boolean,Substitution>           
+
+context-free syntax
+  Value                              -> Hole                                            
+  apply-subst(Pattern, Substitution) -> Pattern {traversal(bottom-up, continue, trafo)} 
+  apply-subst(Hole, Substitution)    -> Hole    {traversal(bottom-up, continue, trafo)} 
+
+hiddens
+variables
+  "&pattern" [0-9\']*     -> Pattern           
+  "&pattern*" [0-9\']*    -> {Pattern ","}*    
+  "&pattern+" [0-9\']*    -> {Pattern ","}+    
+  "&hole" [0-9\']*        -> Hole              
+  "&hole*" [0-9\']*       -> {Hole ","}*       
+  "&hole+" [0-9\']*       -> {Hole ","}+       
+  "&subst" [0-9\']*       -> Substitution      
+  "&idcon" [0-9\']*       -> IdCon             
+  "&boolean" [0-9\']*     -> Boolean           
+  "&mem" [0-9\']*         -> Memory            
+  "&heap" [0-9\']*        -> Heap              
+  "&value" [0-9\']*       -> Value             
+  "&fieldref" [0-9\']*    -> FieldRef          
+  "&type" [0-9\']*        -> Type              
+  "&nonvoidtype" [0-9\']* -> NonVoidType       
+  "&atid" [0-9\']*        -> AtIdentifier      
+  "&btype" [0-9\']*       -> BaseType          
+  "&n" [0-9\']*           -> Integer           
+  "&natcon" [0-9\']*      -> NatCon            
+  "&oid" [0-9\']*         -> OID               
+  "&var" [0-9\']*         -> Variable          
+  "&idlex" [0-9\']*       -> IdentifierLex     
+  "&id" [0-9\']*          -> Identifier        
+  "&stmt" [0-9\']*        -> Stmt              
+  "&stmt*" [0-9\']*       -> Stmt*             
+  "&stmt+" [0-9\']*       -> Stmt+             
+  "&expr" [0-9\']*        -> Expr              
+  "&mod*" [0-9\']*        -> Modifier*         
+  "&type" [0-9\']*        -> Type              
+  "&name" [0-9\']*        -> Name              
+  "&lname" [0-9\']*       -> LocalName         
+  "&label" [0-9\']*       -> LabelName         
+  "&atid" [0-9\']*        -> AtIdentifier      
+  "&immed" [0-9\']*       -> Immediate         
+  "&invoke" [0-9\']*      -> InvokeExpr        
+  "&nonstatic" [0-9\']*   -> NonStaticInvoke   
+  "&sig" [0-9\']*         -> MethodSignature   
+  "&immed*" [0-9\']*      -> {Immediate ","}*  
+  "&const" [0-9\']*       -> Constant          
+  "&bool" [0-9\']*        -> BoolExpr          
+  "&new" [0-9\']*         -> NewExpr           

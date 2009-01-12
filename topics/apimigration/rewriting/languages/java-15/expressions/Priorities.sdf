@@ -1,0 +1,112 @@
+module languages/java-15/expressions/Priorities
+imports
+  languages/java-15/lexical/Identifiers
+  languages/java-15/expressions/Main
+
+exports
+
+  %% Casts are Unary Expressions
+  context-free priorities
+
+  %% <copy>
+    Expr "." "new" TypeArgs? Id TypeArgs? "(" {Expr ","}* ")" ClassBody? -> Expr
+  > {
+      Expr ArraySubscript -> ArrayAccess
+      Expr "." Id -> FieldAccess
+      Expr "." TypeArgs? Id -> MethodId
+    }
+  > {right:
+      Expr "++" -> Expr
+      Expr "--" -> Expr
+    }
+  %% </copy>
+
+  > { "(" PrimType ")" Expr -> Expr    
+      "(" RefType  ")" Expr -> Expr
+    }
+
+  %% ( PrimType ) UnaryExpression
+  context-free priorities
+    "(" PrimType ")" Expr -> Expr
+    %% <copy>
+  > {left:
+      Expr "*" Expr -> Expr
+      Expr "/" Expr -> Expr
+      Expr "%" Expr -> Expr
+    } 
+
+
+  %% ( ReferenceType ) UnaryExpressionNotPlusMinus
+  context-free priorities
+    "(" RefType ")" Expr -> Expr 
+  > {
+      "++" Expr -> Expr
+      "--" Expr -> Expr
+      "+"  Expr -> Expr
+      "-"  Expr -> Expr
+    }
+
+  context-free priorities
+    Expr "." "new" TypeArgs? Id TypeArgs? "(" {Expr ","}* ")" ClassBody? -> Expr
+  > {
+      Expr ArraySubscript -> ArrayAccess
+      Expr "." Id -> FieldAccess
+      Expr "." TypeArgs? Id -> MethodId
+    }
+  > {right:
+      Expr "++" -> Expr
+      Expr "--" -> Expr
+    }
+  > {
+      "++" Expr -> Expr
+      "--" Expr -> Expr
+      "+"  Expr -> Expr
+      "-"  Expr -> Expr
+      "~"  Expr -> Expr
+      "!"  Expr -> Expr
+    }
+  > {left:
+      Expr "*" Expr -> Expr
+      Expr "/" Expr -> Expr
+      Expr "%" Expr -> Expr
+    } 
+  > {left:
+      Expr "+" Expr -> Expr
+      Expr "-" Expr -> Expr
+    }
+  > {left:
+      Expr "<<"  Expr -> Expr
+      Expr ">>"  Expr -> Expr
+      Expr ">>>" Expr -> Expr
+    }
+  > {left:
+      Expr "instanceof" RefType -> Expr
+      Expr "<"   Expr -> Expr
+      Expr ">"   Expr -> Expr
+      Expr "<="  Expr -> Expr
+      Expr ">="  Expr -> Expr
+    }
+  > {left:
+      Expr "=="  Expr -> Expr
+      Expr "!="  Expr -> Expr
+    }
+  >   Expr "&"   Expr -> Expr
+  >   Expr "^"   Expr -> Expr
+  >   Expr "|"   Expr -> Expr
+  >   Expr "&&"  Expr -> Expr
+  >   Expr "||"  Expr -> Expr
+  >   Expr CondMid Expr -> Expr
+  > {right:
+      LHS "="    Expr -> Expr
+      LHS "*="   Expr -> Expr
+      LHS "/="   Expr -> Expr
+      LHS "%="   Expr -> Expr
+      LHS "+="   Expr -> Expr
+      LHS "-="   Expr -> Expr
+      LHS "<<="  Expr -> Expr
+      LHS ">>="  Expr -> Expr
+      LHS ">>>=" Expr -> Expr
+      LHS "&="   Expr -> Expr
+      LHS "^="   Expr -> Expr
+      LHS "|="   Expr -> Expr
+    }

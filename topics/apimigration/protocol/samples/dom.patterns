@@ -1,0 +1,11 @@
+{
+        ?factory: <javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilderFactory newInstance()>(),
+        ?builder: ?factory.<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>(),
+        ?domimpl: ?builder.<javax.xml.parsers.DocumentBuilder: org.w3c.dom.DOMImplementation getDOMImplementation()>(),
+        ?doc: ?domimpl.<org.w3c.dom.DOMImplementation: org.w3c.dom.Document createDocument(java.lang.String,java.lang.String,org.w3c.dom.DocumentType)>(_, _, _),
+        ?root: ?doc.<org.w3c.dom.Document: org.w3c.dom.Element getDocumentElement()>(),
+        ?elt: ?doc.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>(_),
+        ?node: ?doc.<org.w3c.dom.Document: org.w3c.dom.Text createTextNode(java.lang.String)>(_),
+        ?elt: ?elt.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(?node),
+        ?elt.<org.w3c.dom.Element: void setTextContent(java.lang.String)>(_)
+}

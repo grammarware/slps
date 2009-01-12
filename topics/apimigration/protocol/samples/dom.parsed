@@ -1,0 +1,16 @@
+static(oid(0), '<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilderFactory newInstance()>', [])
+virtual(oid(1), '<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>', [oid(0)])
+virtual(oid(2), '<javax.xml.parsers.DocumentBuilder: org.w3c.dom.DOMImplementation getDOMImplementation()>', [oid(1)])
+interface(oid(3), '<org.w3c.dom.DOMImplementation: org.w3c.dom.Document createDocument(java.lang.String,java.lang.String,org.w3c.dom.DocumentType)>', [oid(2), null, "contacts", null])
+interface(oid(4), '<org.w3c.dom.Document: org.w3c.dom.Element getDocumentElement()>', [oid(3)])
+interface(oid(6), '<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>', [oid(3), "person"])
+interface(oid(7), '<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>', [oid(3), "name"])
+interface(_G149, '<org.w3c.dom.Element: void setTextContent(java.lang.String)>', [oid(7), _G146])
+interface(oid(8), '<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>', [oid(3), "age"])
+interface(_G185, '<org.w3c.dom.Element: void setTextContent(java.lang.String)>', [oid(8), _G182])
+interface(oid(6), '<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>', [oid(6), oid(7)])
+interface(oid(6), '<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>', [oid(6), oid(8)])
+interface(oid(4), '<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>', [oid(4), oid(6)])
+
+
+Doc = oid(3)

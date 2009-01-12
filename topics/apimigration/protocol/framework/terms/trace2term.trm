@@ -1,0 +1,18 @@
+trace2term(
+oid(0) = new org.jdom.Document; 
+specialinvoke oid(0).<org.jdom.Document: void <init>()>(); 
+oid(1) = new org.jdom.Element; 
+specialinvoke oid(1).<org.jdom.Element: void <init>(java.lang.String)>("contacts"); 
+oid(0) = virtualinvoke oid(0).<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(oid(1)); 
+oid(3) = new org.jdom.Element; 
+specialinvoke oid(3).<org.jdom.Element: void <init>(java.lang.String)>("person"); 
+oid(4) = new org.jdom.Element; 
+specialinvoke oid(4).<org.jdom.Element: void <init>(java.lang.String)>("name"); 
+oid(4) = virtualinvoke oid(4).<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$9); 
+oid(3) = virtualinvoke oid(3).<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(oid(4)); 
+oid(5) = new org.jdom.Element; 
+specialinvoke oid(5).<org.jdom.Element: void <init>(java.lang.String)>("age"); 
+oid(5) = virtualinvoke oid(5).<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$15); 
+oid(3) = virtualinvoke oid(3).<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(oid(5)); 
+oid(1) = virtualinvoke oid(1).<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(oid(3));
+, [])

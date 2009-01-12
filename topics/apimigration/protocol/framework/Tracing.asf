@@ -1,0 +1,27 @@
+equations
+
+[]	/* The jimple file */
+	parse-tree(&bytes1, &file, &bytes2, &natcon1) := parse-file(&strcon2),
+
+	/* The patterns */
+	parse-tree(&bytes3, &patterns, &bytes4, &natcon2) := parse-file(&strcon3)
+	===
+	annotate(&strcon1, &strcon2, &strcon3) = annotate-method(&file, , &strcon1, &patterns)
+
+
+equations
+
+[]	/* The jimple file */
+	parse-tree(&bytes1, &file, &bytes2, &natcon1) := parse-file(&strcon2),
+
+	/* The patterns */
+	parse-tree(&bytes3, &patterns, &bytes4, &natcon2) := parse-file(&strcon3)
+	===
+	trace(&strcon1, &strcon2, &strcon3) = trace2term(extract(annotate-method(&file, , &strcon1, &patterns)))
+
+equations
+
+[]	annotate-method(&mod* &type &name(&param*) { &decl* &stmt* &catch* }, , &strcon, &patterns) =
+		annotate(&stmt*, &patterns)
+	when
+		unparse-to-string(&name) == &strcon

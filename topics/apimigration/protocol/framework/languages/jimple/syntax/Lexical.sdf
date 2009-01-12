@@ -1,0 +1,99 @@
+%%
+%% Jimple grammar
+%%
+module languages/jimple/syntax/Lexical
+imports
+  languages/jimple/syntax/Keywords
+  
+exports
+
+  sorts DecimalDigit DecimalNonZero DecimalConstant
+  lexical syntax
+    [0-9] -> DecimalDigit
+    [1-9] -> DecimalNonZero
+    DecimalDigit+ -> DecimalConstant
+
+  sorts HexDigit HexConstant
+  lexical syntax
+    DecimalDigit | [a-f] | [A-F]  -> HexDigit
+    "0" ( "x" | "X" ) HexDigit -> HexConstant
+
+  sorts OctalDigit OctalConstant
+  lexical syntax
+    [0-7] -> OctalDigit
+    "0" OctalDigit+ -> OctalConstant
+
+  sorts EscapableChar EscapeChar EscapeCode
+  lexical syntax
+    "\\" | "'" | " " | "." | "#" | "\"" | "n" | "t" | "r" | "b" | "f" -> EscapableChar
+  
+    "u" HexDigit HexDigit HexDigit HexDigit -> EscapeCode
+    "\\" EscapableChar -> EscapeChar
+    "\\" EscapeCode    -> EscapeChar
+
+  sorts AlphaChar SimpleIdChar FirstIdChar QuotableChar StringChar 
+  lexical syntax
+    [a-zA-Z] -> AlphaChar
+    [a-zA-Z0-9\_\$] -> SimpleIdChar
+    [a-zA-Z\_\$] -> FirstIdChar
+    ~[\13\10\'] -> QuotableChar
+    EscapeChar | [\0-\33] | [\35-\91] | [\93-\127] -> StringChar
+
+  sorts Identifier FullIdentifier QuotedName IdentifierCharSeq IdentifierLex FullIdentifierLex QuotedNameLex
+  context-free syntax
+    IdentifierLex     -> Identifier     %% {cons("Id")}
+    FullIdentifierLex -> FullIdentifier %% {cons("Id")}
+    QuotedNameLex     -> QuotedName     {cons("Quoted")}
+
+  %%%
+   %% AtIdentifiers can only be used in IdentityStmt. The weird colon in the
+   %% first two cases is there because those are always followed by a 
+   %% type in the IdentityStmt. No idea why the colon is not part of the
+   %% IdentityStmt production.
+   %%
+  sorts AtIdentifier
+  lexical syntax
+
+    "@parameter" DecimalConstant ":" -> AtIdentifier {cons("ParameterRef")}
+    "@this" ":"                            -> AtIdentifier {cons("ThisRef")}
+    "@caughtexception"                     -> AtIdentifier {cons("CaughtExceptionRef")}
+
+  lexical syntax
+    (IdentifierCharSeq ".")+ IdentifierCharSeq -> FullIdentifierLex
+    "'" QuotableChar+ "'"-> QuotedNameLex
+
+
+  %%%
+   %% Identifier
+   %%%
+  lexical syntax
+    (FirstIdChar | EscapeChar) (SimpleIdChar | EscapeChar)* -> IdentifierCharSeq
+    Keyword -> IdentifierCharSeq {reject}
+  
+    IdentifierCharSeq -> IdentifierLex
+    "<clinit>" -> IdentifierLex
+    "<init>" -> IdentifierLex
+
+  lexical restrictions
+    IdentifierCharSeq -/- [a-zA-Z0-9\_\$\\]
+
+  sorts BoolConstant IntegerConstant FloatConstant StringConstant 
+        FloatSuffix Exponent FullIntegerConstant FullFloatConstant
+  lexical syntax
+    "true" -> BoolConstant
+    "false" -> BoolConstant
+
+    "-"? IntegerConstant -> FullIntegerConstant
+    "-"? FloatConstant -> FullFloatConstant
+
+    (DecimalConstant | HexConstant | OctalConstant) "L"? -> IntegerConstant  
+    DecimalConstant "." DecimalConstant Exponent? FloatSuffix? -> FloatConstant
+
+    "#" "-"? "Infinity" FloatSuffix? -> FloatConstant
+    "#" "NaN" FloatSuffix? -> FloatConstant
+  
+    "f" | "F" -> FloatSuffix
+  
+    ("e" | "E") ("+" | "-")? DecimalConstant -> Exponent 
+
+    "\"" StringChar* "\"" -> StringConstant

@@ -1,0 +1,40 @@
+
+Scripts:
+
+$ annotate.sh <methodname> <jimplefile> <apipatterns>
+
+Annotate the statements of a method in a Jimple file using the given
+API patterns with symbolic memory.
+
+$ trace.sh <methodname> <jimplefile> <apipatterns>
+
+Produce a symbolic execution trace of the specified method using the
+given API patterns. The result is a prolog trace term which can be
+parsed using parse-trace.sh.
+
+$ parse-trace.sh <grammar> <trace>
+
+Parse a trace (produced by trace.sh) using the specified prolog DCG
+grammar. This grammar should have a top-level start-symbol build(Doc)
+where Doc will be the "parsed" XML document. NB: this is currently
+specific for the O-to-X scenario in the context of JDOM and DOM.
+
+$ cat <prolog-trace-output> | ./term2trace.sh
+
+Convert a prolog trace term back to a trace consisting of Jimple
+statements. This also works for trace mappings.
+
+$ xo-jdom2dom.sh <trace>
+
+Produce a trace mapping from JDOM traces to DOM traces (in prolog
+syntax). Input is prolog trace term output by trace.sh.
+
+
+$ migrate.sh <filewithannotatedstatements> <filewithtracemappingstatements>
+
+Migrate annotated Jimple statements (from annotate.sh) using the given
+(prolog) trace mapping. Output is a list of migrated Jimple
+statements.
+
+
+

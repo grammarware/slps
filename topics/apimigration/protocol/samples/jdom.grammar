@@ -1,0 +1,60 @@
+% -*- Prolog -*-
+
+build(Doc)
+-->
+	newDocument(Doc),
+	newElement(Root),
+	addContentToDoc(Doc, Root),
+	content(Root).
+
+
+content(Element) 
+-->
+	setText(Element),
+	content(Element).
+
+content(Element) 
+-->
+	newElement(Child),
+	content(Child),
+	addContent(Element, Child),
+	content(Element).
+
+content(_Element) --> [].
+
+
+
+%% NonTerminals
+
+newDocument(Doc) 
+-->
+	find(new(Doc, 'org.jdom.Document')),
+	find(special(_, '<org.jdom.Document: void <init>()>', [Doc])).
+
+
+newElement(Elt) 
+-->
+	find(new(Elt, 'org.jdom.Element')),
+	find(special(_, '<org.jdom.Element: void <init>(java.lang.String)>',[Elt|_])).
+
+
+addContent(Element, Child) 
+-->
+	find(virtual(Element, '<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>', [Element, Child])).
+
+
+setText(Element) 
+-->
+	find(virtual(Element, '<org.jdom.Element: org.jdom.Element setText(java.lang.String)>', [Element, _])).
+
+addContentToDoc(Doc, Content) 
+-->
+	find(virtual(Doc, '<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>', [Doc,Content])).
+
+
+
+
+
+
+
+

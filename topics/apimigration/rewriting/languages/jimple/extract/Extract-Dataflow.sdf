@@ -1,0 +1,69 @@
+module languages/jimple/extract/Extract-Dataflow
+
+imports languages/jimple/syntax/Jimple
+	containers/Sets-and-Relations
+	utilities/Parsing[Variable]
+	utilities/Parsing[Expr]
+	%%utilities/Parsing[Identifier]
+	%%utilities/Parsing[AtIdentifier]
+	%%utilities/Parsing[Immediate]
+	utilities/RStores
+	basic/Strings
+
+hiddens
+context-free start-symbols RElem RStore Member
+
+exports
+
+
+context-free syntax
+	extract-dataflow(Member) -> RElem
+
+	extract-dataflow-deps(Stmt*, RElem) -> RElem {traversal(bottom-up, accu, continue)}
+	extract-dataflow-deps(Stmt, RElem)  -> RElem {traversal(bottom-up, accu, continue)}
+
+	extract-inputs(BoolExpr, RElem) -> RElem {traversal(bottom-up, accu, continue)}
+	extract-inputs(Expr, RElem) -> RElem {traversal(bottom-up, accu, continue)}
+	extract-inputs(LocalName, RElem) -> RElem {traversal(bottom-up, accu, continue)}
+	extract-inputs({Immediate ","}*, RElem) -> RElem {traversal(bottom-up, accu, continue)}
+	
+
+
+	
+	extract-dataflow-labels(Stmt*, RElem) -> RElem 
+
+hiddens
+variables
+	"&var"[0-9\']* -> Variable
+	"&idlex"[0-9\']* -> IdentifierLex
+	"&id"[0-9\']* -> Identifier
+	"&stmt"[0-9\']* -> Stmt
+	"&stmt*"[0-9\']* -> Stmt*
+	"&stmt+"[0-9\']* -> Stmt+
+	"&strcon"[0-9\']* -> StrCon
+	"&rel"[0-9\']* -> RElem
+	"&set"[0-9\']* -> RElem
+	"&relem"[0-9\']* -> RElem
+	"&expr"[0-9\']* -> Expr
+	"&decl*"[0-9\']* -> Declaration*
+	"&mod*"[0-9\']* -> Modifier*
+	"&type"[0-9\']* -> Type
+	"&name"[0-9\']* -> Name
+	"&lname"[0-9\']* -> LocalName
+	"&param*"[0-9\']* -> {Parameter ","}*
+	"&throws?"[0-9\']* -> ThrowsClause?
+	"&catch*"[0-9\']* -> CatchClause*
+	"&atid"[0-9\']* -> AtIdentifier
+	"&immed"[0-9\']* -> Immediate
+	"&rstore"[0-9\']* -> RStore
+	"&member"[0-9\']* -> Member
+	"&invoke"[0-9\']* -> InvokeExpr
+	"&nonstatic"[0-9\']* -> NonStaticInvoke 
+	"&sig"[0-9\']* -> MethodSignature
+	"&immed*"[0-9\']* -> {Immediate ","}*
+	"&bool"[0-9\']* -> BoolExpr
+	"&new"[0-9\']* -> NewExpr
+	
+
+
+

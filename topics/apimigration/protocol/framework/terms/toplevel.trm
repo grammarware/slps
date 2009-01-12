@@ -1,0 +1,1 @@
+trace("makeDocument", "examples/xo/jdom.jimple", "examples/jdom.patterns")

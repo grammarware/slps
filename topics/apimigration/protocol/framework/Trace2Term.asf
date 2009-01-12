@@ -1,0 +1,113 @@
+equations
+
+[]	trace(&stmt*) = trace2term(extract(&stmt*))
+
+equations
+
+[]	term2trace([]) = 
+
+[]	term2trace([&term, &term*]) = term2stat(&term)
+term2trace([&term*])
+
+equations
+
+[]	term2stat((&term1, &term2)) = <term2trace(&term1),
+term2trace(&term2)>
+
+[]	term2stat(new(&oid, '&btype')) = &oid = new &btype;
+
+[]	term2stat(&idcon(&oid, '&sig', &term)) = &oid = idcon2calltype(&idcon) &lname.&sig(&immed*);
+	when
+		&lname, &immed* := term2parameters(&term)
+
+[]	term2stat(&idcon(_, '&sig', &term)) = idcon2calltype(&idcon) &lname.&sig(&immed*);
+	when
+		&lname, &immed* := term2parameters(&term)
+
+[]	term2stat(&idcon(_G &natcon, '&sig', &term)) = idcon2calltype(&idcon) &lname.&sig(&immed*);
+	when
+		&lname, &immed* := term2parameters(&term)
+
+[]	term2stat(static(&oid, '&sig', &term)) = &oid = staticinvoke &sig(&immed*);
+	when
+		&immed* := term2parameters(&term)
+
+[]	term2stat(static(_, '&sig', &term)) = staticinvoke &sig(&immed*);
+	when
+		&immed* := term2parameters(&term)
+
+[]	term2stat(static(_G &natcon, '&sig', &term)) = staticinvoke &sig(&immed*);
+	when
+		&immed* := term2parameters(&term)
+
+equations
+
+[]	term2parameters([]) = 
+
+[]	term2parameters([&const, &term*]) = &const, term2parameters([&term*])
+
+[]	term2parameters([&oid, &term*]) = &oid, term2parameters([&term*])
+
+[]	term2parameters([_, &term*]) = _, term2parameters([&term*])
+
+[]	term2parameters([_G &natcon, &term*]) = _G &natcon, term2parameters([&term*])
+
+
+equations
+
+[]	trace2term(&stmt*) = trace2term(&stmt*, [])
+
+[]	trace2term(&stmt, [&term*]) = [&term*,
+stat2term(&stmt)
+]
+
+equations
+
+[]	stat2term(<&stmt*1, &stmt*2>) = (trace2term(&stmt*1, []),
+trace2term(&stmt*2, []))
+
+[]	stat2term(&oid = new &btype;) = new(&oid, '&btype')
+
+[]	stat2term(&oid = &invoke;) = &idcon(&oid, signature(&invoke, []), parameters(&invoke, []))
+	when
+		&idcon() := calltype(&invoke, _)
+
+
+[]	stat2term(&oid = &invoke;) = static(&oid, signature(&invoke, []), parameters(&invoke, []))
+	when
+		staticinvoke &sig(&immed*) := &invoke
+
+
+[]	stat2term(&invoke;) = &idcon(_, signature(&invoke, []), parameters(&invoke, []))
+	when
+		&idcon() := calltype(&invoke, _)
+
+[]	stat2term(&invoke;) = static(_, signature(&invoke, []), parameters(&invoke, []))
+	when
+		staticinvoke &sig(&immed*) := &invoke
+
+equations
+
+[]	signature(&sig, &term) = '&sig'
+
+equations
+
+[]	parameters(&oid, [&term*]) = [&term*, &oid]
+
+[default-params]	
+	parameters(&lname, [&term*]) = [&term*, _]
+
+[]	parameters(&const, [&term*]) = [&term*, &const]
+
+equations
+
+[]	calltype(virtualinvoke, &term) = virtual()
+[]	calltype(specialinvoke, &term) = special()
+[]	calltype(interfaceinvoke, &term) = interface()
+
+
+equations
+
+[]	idcon2calltype(virtual) = virtualinvoke
+[]	idcon2calltype(special) = specialinvoke
+[]	idcon2calltype(interface) = interfaceinvoke

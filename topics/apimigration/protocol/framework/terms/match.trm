@@ -1,0 +1,10 @@
+match(
+
+temp$2 = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(root);,
+
+?x: ?x.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(?root)
+
+,
+
+<2, [<root, oid(1)>, <document, oid(0)>]>
+)

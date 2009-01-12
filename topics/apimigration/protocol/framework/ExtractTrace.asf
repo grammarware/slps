@@ -1,0 +1,32 @@
+equations
+
+[invoke1]	extract(&heap @ &stmt &stmt*) = substitute(&stmt, &heap) 
+extract(&stmt*)
+	when
+		&lname = &invoke; := &stmt
+
+[invoke2]	extract(&heap @ &stmt &stmt*) = substitute(&stmt, &heap) 
+extract(&stmt*)
+	when
+		&invoke; := &stmt
+
+[newexpr]	extract(&heap @ &stmt &stmt*) = substitute(&stmt, &heap) 
+extract(&stmt*)
+	when
+		&lname = &new; := &stmt
+
+
+
+[base-case]
+	extract() = 
+
+[default-extract]
+	extract(&stmt &stmt*) = extract(&stmt*)
+
+equations
+
+
+[]	substitute(&lname, &heap) = &oid
+	when
+		&oid := lookup(&heap, &lname)
+

@@ -1,0 +1,55 @@
+equations
+
+[]	annotate(&stmt*, &patterns) = annotate(&stmt*, &patterns, empty-memory())
+
+equations
+
+[]	annotate(&lname1 = &lname2; &stmt*, &patterns, &mem) = heap(&mem') @
+	&lname1 = &lname2; 
+annotate(&stmt*, &patterns, &mem')
+	when
+		&mem' := store(&mem, &lname1, lookup(&mem, &lname2))
+
+[]	annotate(&lname1 = &const; &stmt*, &patterns, &mem) = heap(&mem') @ 
+	&lname1 = &const; 
+annotate(&stmt*, &patterns, &mem')
+	when
+		&mem' := store(&mem, &lname1, &const)
+
+[]	annotate(&lname1 = (&nonvoidtype)&lname2; &stmt*, &patterns, &mem) = heap(&mem') @ 
+	&lname1 = (&nonvoidtype)&lname2;
+annotate(&stmt*, &patterns, &mem')
+	when
+		&mem' := store(&mem, &lname1, lookup(&mem, &lname2))
+
+[]	annotate(&lname = &fieldref; &stmt*, &patterns, &mem) = heap(&mem') @ 
+	&lname = &fieldref; 
+annotate(&stmt*, &patterns, &mem')
+	when
+		<&mem', &oid> := new(&mem, &lname)
+
+[]	annotate(&stmt &stmt*, &patterns, &mem) = heap(&mem') @ 
+	&stmt
+annotate(&stmt*, &patterns, &mem')
+	when
+		<&pattern, &mem'> := match-first-pattern(&stmt, &patterns, &mem)
+
+/* Create new oids for non matched assignments. NO: it leads to much noise in the extracted trace.
+
+[]	annotate(&lname = &invoke; &stmt*, &patterns, &mem) = heap(&mem') @ &lname = &invoke;
+annotate(&stmt*, &patterns, &mem')
+	when
+		match-first-pattern(&lname = &invoke;, &patterns, &mem) == no-match,
+		<&mem', &oid> := new(&mem, &lname)
+*/
+
+[base-case]
+	annotate(, &patterns, &mem) = 
+
+[default-annotate]
+	annotate(&stmt &stmt*, &patterns, &mem) = &stmt
+annotate(&stmt*, &patterns, &mem)
+
+equations
+
+[]	heap(<&n, &heap>) = &heap

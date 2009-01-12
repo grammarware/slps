@@ -1,0 +1,31 @@
+%%%
+ %% Section 9.7: Annotations
+ %%
+ %% @author  Martin Bravenboer <martin@cs.uu.nl>
+ %%%
+module languages/java-15/interfaces/Annotations
+imports
+  languages/java-15/lexical/Identifiers
+  languages/java-15/names/Main
+  languages/java-15/expressions/Main
+
+exports
+  sorts
+    Anno
+    ElemVal
+    ElemValPair
+
+  context-free syntax
+    "@" TypeName "(" {ElemValPair ","}* ")" -> Anno {cons("Anno")}
+    "@" TypeName "(" ElemVal ")"            -> Anno {cons("SingleElemAnno")}
+    "@" TypeName                            -> Anno {cons("MarkerAnno")}
+
+  context-free syntax  
+    Id "=" ElemVal -> ElemValPair {cons("ElemValPair")}
+
+    %% Expr is too general: assignments are not allowed.
+    Expr -> ElemVal
+    Anno -> ElemVal
+
+    "{" {ElemVal ","}* ","? "}" -> ElemVal {cons("ElemValArrayInit")}
+

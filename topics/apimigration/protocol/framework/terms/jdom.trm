@@ -1,0 +1,66 @@
+trace(
+public org.jdom.Document makeDocument()
+    {
+        de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM this;
+        org.jdom.Document document, temp$0, temp$2;
+        org.jdom.Element root, temp$1, person, temp$7, name, temp$8, temp$10, temp$11, age, temp$12, temp$16, temp$17, temp$18;
+        java.util.List temp$3;
+        java.util.Iterator temp$4;
+        de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person p;
+        boolean temp$5;
+        java.lang.Object temp$6;
+        java.lang.String temp$9, temp$15;
+        java.lang.Integer temp$13;
+        int temp$14;
+
+        this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+        temp$0 = new org.jdom.Document;
+        specialinvoke temp$0.<org.jdom.Document: void <init>()>();
+        document = temp$0;
+        temp$1 = new org.jdom.Element;
+        specialinvoke temp$1.<org.jdom.Element: void <init>(java.lang.String)>("contacts");
+        root = temp$1;
+        temp$2 = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(root);
+        document = temp$2;
+        temp$3 = this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: java.util.List contacts>;
+        temp$4 = interfaceinvoke temp$3.<java.lang.Iterable: java.util.Iterator iterator()>();
+
+     label0:
+        nop;
+        temp$5 = interfaceinvoke temp$4.<java.util.Iterator: boolean hasNext()>();
+        if temp$5 == 0 goto label1;
+
+        temp$6 = interfaceinvoke temp$4.<java.util.Iterator: java.lang.Object next()>();
+        p = (de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person) temp$6;
+        temp$7 = new org.jdom.Element;
+        specialinvoke temp$7.<org.jdom.Element: void <init>(java.lang.String)>("person");
+        person = temp$7;
+        temp$8 = new org.jdom.Element;
+        specialinvoke temp$8.<org.jdom.Element: void <init>(java.lang.String)>("name");
+        name = temp$8;
+        temp$9 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>();
+        temp$10 = virtualinvoke name.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$9);
+        name = temp$10;
+        temp$11 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(name);
+        person = temp$11;
+        temp$12 = new org.jdom.Element;
+        specialinvoke temp$12.<org.jdom.Element: void <init>(java.lang.String)>("age");
+        age = temp$12;
+        temp$13 = new java.lang.Integer;
+        temp$14 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>();
+        specialinvoke temp$13.<java.lang.Integer: void <init>(int)>(temp$14);
+        temp$15 = virtualinvoke temp$13.<java.lang.Integer: java.lang.String toString()>();
+        temp$16 = virtualinvoke age.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$15);
+        age = temp$16;
+        temp$17 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(age);
+        person = temp$17;
+        temp$18 = virtualinvoke root.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(person);
+        root = temp$18;
+        nop;
+        goto label0;
+
+     label1:
+        nop;
+        return document;
+    }
+)

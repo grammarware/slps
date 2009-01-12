@@ -1,0 +1,231 @@
+equations
+
+[]	match-first-pattern(&stmt, {}, &mem) = no-match
+
+[]	match-first-pattern(&stmt, {&pattern, &pattern*}, &mem) = <apply-subst(&pattern, &subst), &mem'>
+	when
+		<<true, &subst>, &mem'> := match(&stmt, &pattern, &mem)
+
+[default-match-first-pattern]
+	match-first-pattern(&stmt, {&pattern, &pattern*}, &mem) = 
+		match-first-pattern(&stmt, {&pattern*}, &mem)
+
+equations
+
+[]	apply-subst(? &idcon, &subst) = &value
+	when
+		&value := lookup(&subst, &idcon),
+		&value != not-in-table
+
+equations
+
+/*
+ * New Expressions
+ */
+
+[]	match(&lname = &new;, _: &new, &mem) = <<true, new-table>, &mem'>
+	when
+		<&mem', &oid> := new(&mem, &lname)
+
+[]	match(&lname = &new;, ? &idcon : &new, &mem) = <<true, store(new-table, &idcon, &oid)>, &mem'>
+	when
+		<&mem', &oid> := new(&mem, &lname)
+
+
+
+/* 
+ * Static void method calls 
+ */
+
+[]	match(staticinvoke &sig(&immed*);, &sig(&hole*), &mem) = <match-args(&immed*, &hole*, &mem), &mem>
+
+/* 
+ * Static non void method calls 
+ */
+
+[]	match(&lname = staticinvoke &sig(&immed*);, ? &idcon : &sig(&hole*), &mem) = <<true, &subst>, &mem'>
+	when
+		<true, &subst> := match-args(&immed*, &hole*, &mem),
+		
+		/* Check if matching arguments results in a binding for &idcon */
+		&value := lookup(&subst, &idcon), 	
+		&value != not-in-table, 		
+
+		/* if so: &lname should get the same &oid. */
+		&mem' := store(&mem, &lname, &value) 
+
+
+[]	match(&lname = staticinvoke &sig(&immed*);, ? &idcon : &sig(&hole*), &mem) = <<true, &subst'>, &mem'>
+	when
+		<true, &subst> := match-args(&immed*, &hole*, &mem),
+		
+		/* Check if matching arguments results in a binding for &idcon */
+		lookup(&subst, &idcon) == not-in-table,	
+
+		/* if not so: &lname should get a new &oid. */
+		<&mem', &oid> := new(&mem, &lname),
+
+		/* And add it to the substitution (a formality). */
+		&subst' := store(&subst, &idcon, &oid)
+
+
+/* If the resulting oid is ignored with _ we create a new object id for &lname */
+[]	match(&lname = staticinvoke &sig(&immed*);, _ : &sig(&hole*), &mem) = <<true, &subst>, &mem'>
+	when
+		<true, &subst> := match-args(&immed*, &hole*, &mem),
+		<&mem', &oid> := new(&mem, &lname) 
+
+
+/*
+ * Non Static void calls (or nonvoid but result ignored)
+ * (we prepend the receiver argument lists)
+ */
+
+[]	match(&nonstatic &lname.&sig(&immed*);, &hole . &sig(&hole*), &mem) = <<true, &subst>, &mem>
+	when
+		<true, &subst> := match-args(&lname, &immed*, &hole, &hole*, &mem)		
+
+[]	match(&nonstatic &lname.&sig(&immed*);, _: &hole . &sig(&hole*), &mem) = <<true, &subst>, &mem>
+	when
+		<true, &subst> := match-args(&lname, &immed*, &hole, &hole*, &mem)		
+
+[]	match(&nonstatic &lname.&sig(&immed*);, ?&idcon : &hole . &sig(&hole*), &mem) = <<true, &subst>, &mem>
+	when
+		<true, &subst> := match-args(&lname, &immed*, &hole, &hole*, &mem),
+
+		/* Check if matching arguments results in a binding for &idcon */
+		&value := lookup(&subst, &idcon), 	
+		&value != not-in-table  /* This means it's already in the substitution */ 		
+
+/* Otherwise (wrt previous case): we do not know what &idcon will bind to... */
+[]	match(&nonstatic &lname.&sig(&immed*);, ?&idcon : &hole . &sig(&hole*), &mem) = <<true, &subst'>, &mem>
+	when
+		<true, &subst> := match-args(&lname, &immed*, &hole, &hole*, &mem),
+
+		/* Check if matching arguments results in a binding for &idcon */
+		&value := lookup(&subst, &idcon), 
+		&value == not-in-table,
+		&subst' := store(&subst, &idcon, unknown)
+
+
+
+/* 
+ * Non static non-void calls (idem)
+ */
+
+
+/* If the result is ignored, we generate a new oid for lname1 */
+[]	match(&lname1 = &nonstatic &lname2.&sig(&immed*);, _ : &hole.&sig(&hole*), &mem) = <<true, &subst>, &mem'>
+	when
+		<true, &subst> := match-args(&lname2, &immed*, &hole, &hole*, &mem),
+		<&mem', &oid> := new(&mem, &lname1)
+
+/* Otherwise, we check if &idcon is already bound by the arguments, we bind &lname1 to the same oid. */
+[]	match(&lname1 = &nonstatic &lname2.&sig(&immed*);, ? &idcon : &hole.&sig(&hole*), &mem) = <<true, &subst>, &mem'>
+	when
+		<true, &subst> := match-args(&lname2, &immed*, &hole, &hole*, &mem),
+
+		/* Check if matching arguments results in a binding for &idcon */
+		&value := lookup(&subst, &idcon), 	
+		&value != not-in-table, 		
+
+		/* if so: &lname1 should get the same &oid. */
+		&mem' := store(&mem, &lname1, &value) 
+
+/* If it is not already bound, we create a new oid for lname1, and bind idcon to the same oid in the subst. */
+[]	match(&lname1 = &nonstatic &lname2.&sig(&immed*);, ? &idcon : &hole.&sig(&hole*), &mem) = <<true, &subst'>, &mem'>
+	when
+		<true, &subst> := match-args(&lname2, &immed*, &hole, &hole*, &mem),
+		lookup(&subst, &idcon) == not-in-table,
+		<&mem', &oid> := new(&mem, &lname1),
+		&subst' := store(&subst, &idcon, &oid)
+
+[default-match]
+	match(&stmt, &pattern, &mem) = <<false, []>, &mem>
+
+
+/*********
+ * TESTS *
+ *********/
+
+tests
+
+[result-becomes-receiver]	
+	match(
+  temp = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(root);,
+  ?x: ?x.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(?root), 
+<2, [<root, oid(1)>, <document, oid(0)>]>) == 
+<<true, [<root,oid(1)>,<x,oid(0)>]>, <2, [<temp,oid(0)>,<root, oid(1)>, <document, oid(0)>]>>
+
+[non-linearity-in-receiver-and-arg]	
+	match(
+  temp = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(document);,
+  _: ?x.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(?x), 
+<1, [<document, oid(0)>]>) 
+== 
+<<true, [<x,oid(0)>]>, <2, [<temp, oid(1)>, <document, oid(0)>]>>
+
+
+equations
+
+/* Convenience */
+
+[]	match-args(&immed*, &hole*, &mem) = match-args(&immed*, &hole*, &mem, new-table) 
+
+/* The real stuff */
+
+[]	match-args(, , &mem, &subst) = <true, &subst>
+
+[]	match-args(&immed, &immed*, &hole, &hole*, &mem, &subst) = match-args(&immed*, &hole*, &mem, &subst')
+	when
+		<true, &subst'> := match-arg(&immed, &hole, &mem, &subst)
+
+[default-match-args]
+	match-args(&immed*, &hole*, &mem, &subst) = <false, &subst>
+
+tests
+
+[]	<true, [<x, oid(1)>]> == match-args(a, b, ?x, ?x, &mem, new-table)
+	when
+		&mem := store(store(empty-memory(), a, oid(1)), b, oid(1))
+
+[]	<false, [<x, oid(1)>]> == match-args(a, b, ?x, ?x, &mem, new-table)
+	when
+		&mem := store(store(empty-memory(), a, oid(1)), b, oid(2))
+
+
+equations
+
+[]	match-arg(&immed, _, &mem, &subst) = <true, &subst>
+
+/* Bind the pattern variable to the object id in  memory for lname if n id is not bound already */
+[]	match-arg(&lname, ? &idcon, &mem, &subst) = <true, store(&subst, &idcon, lookup(&mem, &lname))>
+	when
+		lookup(&subst, &idcon) == not-in-table
+
+
+/* Otherwise do equality check on values. */
+[]	match-arg(&lname, ? &idcon, &mem, &subst) = <true, &subst>
+	when
+		&value := lookup(&subst, &idcon),
+		&value != not-in-table,
+		lookup(&mem, &lname) == &value
+
+
+
+/* Do something with constants */
+[]	match-arg(&const, ?&idcon, &mem, &subst) = <true, store(&subst, &idcon, &const)>
+
+
+[default-match-arg]
+	match-arg(&immed, &hole, &mem, &subst) = <false, &subst>
+
+tests
+
+[]	match-arg($temp, _, empty-memory(), new-table) == <true, new-table>
+
+[]	match-arg($temp, ?x, store(empty-memory(), $temp, oid(1)) , new-table) == <true, [<x, oid(1)>]>
+
+
+
+

@@ -1,0 +1,57 @@
+%%%
+ %% Jimple statements
+ %%%
+module languages/jimple/syntax/Statements
+imports
+  languages/jimple/syntax/Expressions
+  languages/jimple/syntax/Modifiers
+  languages/jimple/syntax/Whitespace
+  languages/jimple/syntax/Keywords
+  languages/jimple/syntax/Lexical
+  languages/jimple/syntax/Types
+  languages/jimple/syntax/Names
+
+exports
+  sorts Stmt GotoStmt LabelName
+  context-free syntax
+
+    LabelName ":"                          -> Stmt {cons("LabelStmt")}
+    Identifier                             -> LabelName
+
+    "if" BoolExpr GotoStmt                 -> Stmt {cons("IfStmt")}
+    "goto" LabelName ";"                   -> GotoStmt {cons("GotoStmt")}
+    GotoStmt                               -> Stmt
+
+    "breakpoint" ";"                       -> Stmt {cons("BreakpointStmt")}
+
+    "entermonitor" Immediate ";"           -> Stmt {cons("EnterMonitorStmt")}
+    "exitmonitor" Immediate ";"            -> Stmt {cons("ExitMonitorStmt")}
+
+    LocalName ":=" AtIdentifier Type ";"   -> Stmt {cons("IdentityStmtType")}
+    LocalName ":=" AtIdentifier ";"        -> Stmt {cons("IdentityStmtNoType")}
+    Variable "=" Expr ";"                  -> Stmt {cons("AssignStmt")}
+
+    "nop" ";"                              -> Stmt {cons("NopStmt")}
+    "ret" Immediate? ";"                   -> Stmt {cons("RetStmt")}
+    "return" Immediate ";"                 -> Stmt {cons("ReturnStmt")}
+    "return" ";"                           -> Stmt {cons("ReturnVoidStmt")}
+    "throw" Immediate ";"                  -> Stmt {cons("ThrowStmt")}
+
+    %%%
+     %% A method invocation with a void return type.
+     %% Other method invocations are in the rhs of an assignment.
+     %%%
+    InvokeExpr ";" -> Stmt {cons("InvokeStmt")}
+
+  %%%
+   %% Switch Statements
+   %%%
+  sorts CaseStmt CaseLabel
+  context-free syntax
+
+    "tableswitch" "(" Immediate ")" "{" CaseStmt+ "}" ";"  -> Stmt {cons("TableSwitchStmt")}
+    "lookupswitch" "(" Immediate ")" "{" CaseStmt+ "}" ";" -> Stmt {cons("LookupSwitchStmt")}
+
+    CaseLabel ":" GotoStmt     -> CaseStmt {cons("Case")}
+    "case" FullIntegerConstant -> CaseLabel {cons("CaseFragment")}
+    "default"                  -> CaseLabel {cons("Default")}

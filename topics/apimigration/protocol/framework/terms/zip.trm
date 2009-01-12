@@ -1,0 +1,121 @@
+zip(
+
+this := @this: de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM;
+[<temp$0,oid(0)>] @ 
+	temp$0 = new org.jdom.Document;
+[<temp$0,oid(0)>] @ 
+	specialinvoke temp$0.<org.jdom.Document: void <init>()>();
+[<document,oid(0)>,<temp$0,oid(0)>] @
+	document = temp$0; 
+[<temp$1,oid(1)>,<document,oid(0)>,<temp$0,oid(0)>] @ 
+	temp$1 = new org.jdom.Element;
+[<temp$1,oid(1)>,<document,oid(0)>,<temp$0,oid(0)>] @ 
+	specialinvoke temp$1.<org.jdom.Element: void <init>(java.lang.String)>("contacts");
+[<root,oid(1)>,<temp$1,oid(1)>,<document,oid(0)>,<temp$0,oid(0)>] @
+	root = temp$1; 
+[<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<document,oid(0)>,<temp$0,oid(0)>] @ 
+	temp$2 = virtualinvoke document.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(root);
+[<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @
+	document = temp$2; 
+[<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$3 = this.<de.uni_koblenz.using_xml_apis.jdom.ContactsToDocumentUsingJDOM: java.util.List contacts>; 
+temp$4 = interfaceinvoke temp$3.<java.lang.Iterable: java.util.Iterator iterator()>();
+label0:
+nop;
+temp$5 = interfaceinvoke temp$4.<java.util.Iterator: boolean hasNext()>();
+if temp$5 == 0 goto label1;
+temp$6 = interfaceinvoke temp$4.<java.util.Iterator: java.lang.Object next()>();
+[<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	p = (de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person)temp$6;
+[<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$7 = new org.jdom.Element;
+[<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	specialinvoke temp$7.<org.jdom.Element: void <init>(java.lang.String)>("person");
+[<person,oid(3)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @
+	person = temp$7; 
+[<temp$8,oid(4)>,<person,oid(3)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$8 = new org.jdom.Element;
+[<temp$8,oid(4)>,<person,oid(3)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	specialinvoke temp$8.<org.jdom.Element: void <init>(java.lang.String)>("name");
+[<name,oid(4)>,<temp$8,oid(4)>,<person,oid(3)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @
+	name = temp$8; 
+temp$9 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>();
+[<temp$10,oid(4)>,<name,oid(4)>,<temp$8,oid(4)>,<person,oid(3)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$10 = virtualinvoke name.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$9);
+[<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<person,oid(3)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @
+	name = temp$10; 
+[<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<person,oid(3)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$11 = <java.lang.System: java.io.PrintStream out>; 
+virtualinvoke temp$11.<java.io.PrintStream: void println(java.lang.Object)>(name);
+[<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<person,oid(3)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$12 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(name);
+[<person,oid(3)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @
+	person = temp$12; 
+[<temp$13,oid(6)>,<person,oid(3)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$13 = new org.jdom.Element;
+[<temp$13,oid(6)>,<person,oid(3)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	specialinvoke temp$13.<org.jdom.Element: void <init>(java.lang.String)>("age");
+[<age,oid(6)>,<temp$13,oid(6)>,<person,oid(3)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @
+	age = temp$13; 
+temp$14 = new java.lang.Integer;
+temp$15 = virtualinvoke p.<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>();
+specialinvoke temp$14.<java.lang.Integer: void <init>(int)>(temp$15);
+temp$16 = virtualinvoke temp$14.<java.lang.Integer: java.lang.String toString()>();
+[<temp$17,oid(6)>,<age,oid(6)>,<temp$13,oid(6)>,<person,oid(3)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$17 = virtualinvoke age.<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(temp$16);
+[<age,oid(6)>,<temp$17,oid(6)>,<temp$13,oid(6)>,<person,oid(3)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @
+	age = temp$17; 
+[<temp$18,oid(7)>,<age,oid(6)>,<temp$17,oid(6)>,<temp$13,oid(6)>,<person,oid(3)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$18 = <java.lang.System: java.io.PrintStream out>; 
+virtualinvoke temp$18.<java.io.PrintStream: void println(java.lang.Object)>(age);
+[<temp$19,oid(3)>,<temp$18,oid(7)>,<age,oid(6)>,<temp$17,oid(6)>,<temp$13,oid(6)>,<person,oid(3)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$19 = virtualinvoke person.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(age);
+[<person,oid(3)>,<temp$19,oid(3)>,<temp$18,oid(7)>,<age,oid(6)>,<temp$17,oid(6)>,<temp$13,oid(6)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @
+	person = temp$19; 
+[<temp$20,oid(1)>,<person,oid(3)>,<temp$19,oid(3)>,<temp$18,oid(7)>,<age,oid(6)>,<temp$17,oid(6)>,<temp$13,oid(6)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<root,oid(1)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @ 
+	temp$20 = virtualinvoke root.<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(person);
+[<root,oid(1)>,<temp$20,oid(1)>,<person,oid(3)>,<temp$19,oid(3)>,<temp$18,oid(7)>,<age,oid(6)>,<temp$17,oid(6)>,<temp$13,oid(6)>,<temp$12,oid(3)>,<temp$11,oid(5)>,<name,oid(4)>,<temp$10,oid(4)>,<temp$8,oid(4)>,<temp$7,oid(3)>,<p,unknown>,<temp$3,oid(2)>,<document,oid(0)>,<temp$2,oid(0)>,<temp$1,oid(1)>,<temp$0,oid(0)>] @
+	root = temp$20; 
+nop;
+goto label0;
+label1:
+nop;
+return document;
+
+,
+
+<oid(0) = new org.jdom.Document;
+specialinvoke oid(0).<org.jdom.Document: void <init>()>();,
+staticinvoke <javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilderFactory newInstance()>();
+interfaceinvoke _G 1096.<javax.xml.parsers.DocumentBuilderFactory: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>();
+interfaceinvoke _G 1100.<javax.xml.parsers.DocumentBuilder: org.w3c.dom.DOMImplementation getDOMImplementation()>();
+oid(0) = virtualinvoke _G 1107.<org.w3c.dom.DOMImplementation: org.w3c.dom.Document createDocument(java.lang.String,java.lang.String,org.w3c.dom.DocumentType)>(_G 1121, _G 1124, _G 1127);>
+<oid(1) = new org.jdom.Element;
+specialinvoke oid(1).<org.jdom.Element: void <init>(java.lang.String)>("contacts");,
+oid(1) = virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Element getDocumentElement()>();>
+<oid(0) = virtualinvoke oid(0).<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(oid(1));,
+>
+<oid(3) = new org.jdom.Element;
+specialinvoke oid(3).<org.jdom.Element: void <init>(java.lang.String)>("person");,
+oid(3) = virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>(_G 998);>
+<oid(4) = new org.jdom.Element;
+specialinvoke oid(4).<org.jdom.Element: void <init>(java.lang.String)>("name");,
+oid(4) = virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>(_G 890);>
+<oid(4) = virtualinvoke oid(4).<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(_G 531);,
+virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Text createTextNode(java.lang.String)>(_G 560);
+oid(4) = virtualinvoke oid(4).<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(_G 547);>
+<oid(3) = virtualinvoke oid(3).<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(oid(4));,
+oid(3) = virtualinvoke oid(3).<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(oid(4));>
+<oid(6) = new org.jdom.Element;
+specialinvoke oid(6).<org.jdom.Element: void <init>(java.lang.String)>("age");,
+oid(6) = virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>(_G 823);>
+<oid(6) = virtualinvoke oid(6).<org.jdom.Element: org.jdom.Element setText(java.lang.String)>(_G 710);,
+virtualinvoke oid(0).<org.w3c.dom.Document: org.w3c.dom.Text createTextNode(java.lang.String)>(_G 739);
+oid(6) = virtualinvoke oid(6).<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(_G 726);>
+<oid(3) = virtualinvoke oid(3).<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(oid(6));,
+oid(3) = virtualinvoke oid(3).<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(oid(6));>
+<oid(1) = virtualinvoke oid(1).<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>(oid(3));,
+oid(1) = virtualinvoke oid(1).<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(oid(3));>
+
+
+)

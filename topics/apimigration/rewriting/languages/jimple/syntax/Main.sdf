@@ -1,0 +1,47 @@
+%%
+%% Jimple grammar
+%%
+module languages/jimple/syntax/Main
+imports
+  languages/jimple/syntax/Expressions
+  languages/jimple/syntax/Lexical
+  languages/jimple/syntax/Modifiers
+  languages/jimple/syntax/Names
+  languages/jimple/syntax/Types
+  languages/jimple/syntax/Statements
+  languages/jimple/syntax/Whitespace
+
+exports
+  sorts File
+  context-free syntax
+    Modifier* FileType ClassName ExtendsClause? ImplementsClause? FileBody -> File {cons("File")}
+
+  sorts FileType FileBody ExtendsClause ImplementsClause
+  context-free syntax
+    "class"                                 -> FileType {cons("Class")}
+    "interface"                             -> FileType {cons("Interface")}
+
+    "extends"    ClassName                  -> ExtendsClause    {cons("Extends")}
+    "implements" {ClassName ","}+           -> ImplementsClause {cons("Implements")}
+
+    "{" Member* "}"                         -> FileBody {cons("FileBody")}
+
+  sorts Member Parameter ThrowsClause
+  context-free syntax
+    Modifier* Type Name ";"                 -> Member {cons("Field")}
+    Modifier* Type Name "(" {Parameter ","}* ")" ThrowsClause? MethodBody -> Member {cons("Method")}
+
+    NonVoidType -> Parameter
+    "throws" {ClassName ","}+               -> ThrowsClause {cons("Throws")}
+
+  sorts MethodBody CatchClause
+  context-free syntax
+    ";"                                     -> MethodBody {cons("Empty")}
+    "{" Declaration* Stmt* CatchClause* "}" -> MethodBody {cons("Body")}
+
+    "catch" ClassName "from" LabelName "to" LabelName "with" LabelName ";" -> CatchClause {cons("Trap")}
+
+  sorts Declaration
+  context-free syntax
+    JimpleType {LocalName ","}+ ";"         -> Declaration {cons("Decl")}
+

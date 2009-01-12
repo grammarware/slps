@@ -1,0 +1,7 @@
+module JavaCompilationUnit-15
+imports
+  languages/java-15/Main
+
+exports
+  context-free start-symbols
+    CompilationUnit

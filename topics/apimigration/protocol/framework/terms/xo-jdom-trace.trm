@@ -1,0 +1,13 @@
+annotate(
+[new(oid(1)), new(oid(2), 'org.jdom.Document'), call(void, '<org.jdom.Document: void <init>()>', [oid(2)]), new(oid(3), 'org.jdom.Element'), call(void, '<org.jdom.Element: void <init>(java.lang.String)>', [oid(3), '"contacts"']), call(oid(4), '<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>', [oid(2), oid(3)]), field(oid(5)), call(oid(6), '<java.lang.Iterable: java.util.Iterator iterator()>', [oid(5)]), label('label0'), call(oid(7), '<java.util.Iterator: boolean hasNext()>', [oid(6)]), cond-goto('label1', [oid(7)]), call(oid(8), '<java.util.Iterator: java.lang.Object next()>', [oid(6)]), new(oid(9), 'org.jdom.Element'), call(void, '<org.jdom.Element: void <init>(java.lang.String)>', [oid(9), '"person"']), new(oid(10), 'org.jdom.Element'), call(void, '<org.jdom.Element: void <init>(java.lang.String)>', [oid(10), '"name"']), call(oid(11), '<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: java.lang.String getName()>', [oid(8)]), call(oid(12), '<org.jdom.Element: org.jdom.Element setText(java.lang.String)>', [oid(10), oid(11)]), field(oid(13)), call(void, '<java.io.PrintStream: void println(java.lang.Object)>', [oid(13), oid(12)]), call(oid(14), '<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>', [oid(9), oid(12)]), new(oid(15), 'org.jdom.Element'), call(void, '<org.jdom.Element: void <init>(java.lang.String)>', [oid(15), '"age"']), new(oid(16), 'java.lang.Integer'), call(oid(17), '<de.uni_koblenz.using_xml_apis.scenarios.xo_mapping.Person: int getAge()>', [oid(8)]), call(void, '<java.lang.Integer: void <init>(int)>', [oid(16), oid(17)]), call(oid(18), '<java.lang.Integer: java.lang.String toString()>', [oid(16)]), call(oid(19), '<org.jdom.Element: org.jdom.Element setText(java.lang.String)>', [oid(15), oid(18)]), field(oid(20)), call(void, '<java.io.PrintStream: void println(java.lang.Object)>', [oid(20), oid(19)]), call(oid(21), '<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>', [oid(14), oid(19)]), call(oid(22), '<org.jdom.Element: org.jdom.Element addContent(org.jdom.Content)>', [oid(3), oid(21)]), goto('label0'), label('label1'), return(oid(4))]
+,
+
+jdom,
+{
+	new org.jdom.Document,
+	new org.jdom.Element,
+	?doc.<org.jdom.Document: org.jdom.Document addContent(org.jdom.Content)>(?elt)
+
+}
+
+)
