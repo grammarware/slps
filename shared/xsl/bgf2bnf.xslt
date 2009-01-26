@@ -14,11 +14,12 @@
   </xsl:template>
 
   <xsl:template match="bgf:production">
-    <xsl:value-of select="./nonterminal"/>
     <xsl:if test="./label">
-      <xsl:text>#</xsl:text>
+      <xsl:text>[</xsl:text>
       <xsl:value-of select="./label"/>
+      <xsl:text>] </xsl:text>
     </xsl:if>
+    <xsl:value-of select="./nonterminal"/>
     <xsl:text>:</xsl:text>
     <xsl:choose>
       <xsl:when test="./bgf:expression/choice">
@@ -27,6 +28,13 @@
         </xsl:text>
           <xsl:apply-templates select="."/>
         </xsl:for-each>
+        <xsl:text>
+</xsl:text>
+      </xsl:when>
+      <xsl:when test="./bgf:expression/sequence">
+        <xsl:text>
+        </xsl:text>
+        <xsl:apply-templates select="./bgf:expression/sequence/*"/>
         <xsl:text>
 </xsl:text>
       </xsl:when>
@@ -57,9 +65,8 @@
   </xsl:template>
   
   <xsl:template match="optional">
-    <xsl:text>[ </xsl:text>
     <xsl:apply-templates select="./*"/>
-    <xsl:text>] </xsl:text>
+    <xsl:text>? </xsl:text>
   </xsl:template>
   
   <xsl:template match="terminal">
@@ -103,7 +110,9 @@
   </xsl:template>
 
   <xsl:template match="sequence">
+    <xsl:text>( </xsl:text>
     <xsl:apply-templates select="./*"/>
+    <xsl:text>)</xsl:text>
   </xsl:template>
 
   <!-- top level choices - one per line -->

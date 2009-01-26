@@ -25,8 +25,9 @@
         <xsl:value-of select="$in/nonterminal" />
       </xsl:when>
       <xsl:when test="$in/label">
-        <xsl:text> in #</xsl:text>
+        <xsl:text> in [</xsl:text>
         <xsl:value-of select="$in/label" />
+        <xsl:text>]</xsl:text>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -170,8 +171,9 @@
     <xsl:text>(</xsl:text>
     <xsl:choose>
       <xsl:when test="label">
-        <xsl:text>#</xsl:text>
+        <xsl:text>[</xsl:text>
         <xsl:value-of select="*/text()" />
+        <xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:when test="selector">
         <xsl:value-of select="*/text()" />
