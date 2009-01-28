@@ -32,6 +32,7 @@
         <xsd:complexType>
           <xsd:sequence>
             <xsd:element name="text" type="xsd:string"/>
+            <xsd:element name="linktext" type="xsd:string" minOccurs="0"/>
             <xsd:element name="reference" type="xsd:IDREF"/>
           </xsd:sequence>
         </xsd:complexType>
@@ -67,7 +68,7 @@
 
   <xsd:complexType name="StructuredSection">
     <xsd:sequence>
-      <xsd:element name="id" type="xsd:ID"/>
+      <xsd:element name="id" type="xsd:ID" minOccurs="0"/>
       <xsd:element name="title" type="xsd:string"/>
       <xsd:sequence minOccurs="0">
         <xsd:element name="author" type="xsd:string" maxOccurs="unbounded"/>
@@ -76,7 +77,6 @@
         <xsd:element name="placeholder" type="ldf:generated"/>
         <xsd:group ref="ldf:normative"/>
         <xsd:group ref="ldf:informative"/>
-        <xsd:group ref="ldf:lexical"/>
         <xsd:element ref="bgf:production"/>
         <xsd:element name="relationship" type="ldf:ListOfInternalLinks"/>
         <!-- <xsd:group ref="ldf:top-section"/> -->
@@ -108,7 +108,7 @@
     </xsd:choice>
   </xsd:group>
 
-  <xsd:group name="lexical">
+  <xsd:group name="lexicalGroup">
     <xsd:annotation>
       <xsd:documentation>
         Sections describing lexical structure tend to be shorter, less structured inside,
@@ -192,10 +192,11 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="title" type="ldf:title"/>
+        <xsd:element name="title" type="ldf:titlePage"/>
         <xsd:element name="placeholder" type="ldf:generated" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element name="frontMatter" type="ldf:frontMatter"/>
         <xsd:element name="lists" type="ldf:frontLists"/>
+        
         <xsd:element name="lexicalPart" type="ldf:lexical"/>
         
         <xsd:element name="core" type="ldf:StructuredSection" maxOccurs="unbounded"/>
@@ -204,7 +205,7 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:complexType name="title">
+  <xsd:complexType name="titlePage">
     <xsd:sequence>
       <xsd:choice>
         <xsd:sequence>
@@ -371,7 +372,7 @@
 
   <xsd:complexType name="lexical">
     <xsd:sequence>
-      <xsd:group ref="ldf:lexical" maxOccurs="unbounded"/>
+      <xsd:group ref="ldf:lexicalGroup" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
 
