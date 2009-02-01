@@ -496,16 +496,16 @@ reroot(_,(_,T1),(_,T1)).
 
 
 %
-% p([l(skip)], f, n(p))
+% p([l(abridge)], f, n(p))
 %
-% Skip a production
+% Skip a reflexive chain production
 %
 
-skip(P,(_,T1),(_,T2))
+abridge(P,(_,T1),(_,T2))
  :-
-    transform(try(xbgf2:skip_rule(P)),T1,T2).
+    transform(try(xbgf2:abridge_rule(P)),T1,T2).
 
-skip_rule(P,n(P,T),T).
+abridge_rule(P,n(P,T),T).
 
 
 %

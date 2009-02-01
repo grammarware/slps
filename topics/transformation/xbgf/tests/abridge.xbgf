@@ -1,7 +1,7 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:skip>
+  <xbgf:abridge>
     <bgf:production>
       <label>bracket</label>
       <nonterminal>expr</nonterminal>
@@ -9,5 +9,5 @@
         <nonterminal>expr</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:skip>
+  </xbgf:abridge>
 </xbgf:sequence>

@@ -55,7 +55,7 @@
       <xsd:element ref="xbgf:rename"/>
       <xsd:element ref="xbgf:replace"/>
       <xsd:element ref="xbgf:reroot"/>
-      <xsd:element ref="xbgf:skip"/>
+      <xsd:element ref="xbgf:abridge"/>
       <xsd:element ref="xbgf:strip"/>
       <xsd:element ref="xbgf:unchain"/>
       <xsd:element ref="xbgf:undefine"/>
@@ -554,7 +554,7 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="skip">
+  <xsd:element name="abridge">
     <xsd:annotation>
       <xsd:documentation>
         Given a reflexive chain production, i.e., a production whose

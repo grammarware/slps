@@ -972,16 +972,16 @@ narrow_rules(';'(L),X) :- length(L,2),member(X,L),member(true,L).
 
 
 %
-% p([l(skip)], f, n(p))
+% p([l(abridge)], f, n(p))
 %
-% Skip a production
+% Skip a reflexive chain production
 %
 
-skip(P1,g(Rs,Ps1),g(Rs,Ps2))
+abridge(P1,g(Rs,Ps1),g(Rs,Ps2))
  :- 
     require(
       P1 = p(_,N,n(N)),
-      'Production ~q is not skippable.',
+      'Production ~q cannot be abridged.',
       [P1]),
     require(
       append(Ps1a,[P1|Ps1b],Ps1),

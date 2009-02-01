@@ -226,9 +226,9 @@ xml2xbgf(T,sequence(Ts2))
     !,
     maplist(once(xml2xbgf),Ts1,Ts2).
 
-xml2xbgf(T,skip(P2))
+xml2xbgf(T,abridge(P2))
  :-
-    self(name(xbgf:skip),T),
+    self(name(xbgf:abridge),T),
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 

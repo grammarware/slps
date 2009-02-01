@@ -30,12 +30,12 @@
   <xbgf:strip>
     <allTerminals/>
   </xbgf:strip>
-  <xbgf:skip>
+  <xbgf:abridge>
     <bgf:production>
       <nonterminal>expr</nonterminal>
       <bgf:expression>
         <nonterminal>expr</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:skip>
+  </xbgf:abridge>
 </xbgf:sequence>

@@ -65,7 +65,7 @@ test:
 	@make replace4.quiet
 	@make replace5.quiet
 	@make reroot.quiet
-	@make skip.quiet
+	@make abridge.quiet
 	@make strip1.quiet
 	@make strip2.quiet
 	@make strip3.quiet
