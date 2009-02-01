@@ -4,6 +4,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <title>
     <author>Ralf Laemmel</author>
+    <author>Vadim Zaytsev</author>
     <topic>The Factorial Language</topic>
     <version>1.0</version>
     <status>draft</status>
@@ -11,6 +12,7 @@
   </title>
   <frontMatter>
     <foreword>
+      <author>Ralf Laemmel</author>
       <content>
         <p>
           The Factorial Language (FL) is a trivial functional language;
@@ -24,6 +26,7 @@
     </foreword>
     <designGoals>
       <title>Language design goals</title>
+      <author>Vadim Zaytsev</author>
       <content>
         <list>
           <item>Trivial language</item>
@@ -169,6 +172,7 @@
       </content>
     </description>
   </core>
+  
   <!--
   <title></title>
   <author>The Software Languages Team in Koblenz</author>
