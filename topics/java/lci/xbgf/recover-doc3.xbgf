@@ -26,6 +26,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <xbgf:vertical>
+    <nonterminal>InterfaceDeclaration</nonterminal>
+  </xbgf:vertical>
 
   <!-- ISSUE EXTRACTERROR
   Bad layout makes the extractor to force line continuation:

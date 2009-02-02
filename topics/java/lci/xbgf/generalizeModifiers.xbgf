@@ -55,36 +55,20 @@
   -->
 
   <!-- First the deyaccification -->
+  <xbgf:horizontal>AbstractMethodModifiers</xbgf:horizontal>
   <xbgf:deyaccify>AbstractMethodModifiers</xbgf:deyaccify>
+  <xbgf:horizontal>InterfaceModifiers</xbgf:horizontal>
   <xbgf:deyaccify>InterfaceModifiers</xbgf:deyaccify>
+  <xbgf:horizontal>MethodModifiers</xbgf:horizontal>
   <xbgf:deyaccify>MethodModifiers</xbgf:deyaccify>
+  <xbgf:horizontal>FieldModifiers</xbgf:horizontal>
   <xbgf:deyaccify>FieldModifiers</xbgf:deyaccify>
+  <xbgf:horizontal>ConstructorModifiers</xbgf:horizontal>
   <xbgf:deyaccify>ConstructorModifiers</xbgf:deyaccify>
+  <xbgf:horizontal>ClassModifiers</xbgf:horizontal>
   <xbgf:deyaccify>ClassModifiers</xbgf:deyaccify>
+  <xbgf:horizontal>ConstantModifiers</xbgf:horizontal>
   <xbgf:deyaccify>ConstantModifiers</xbgf:deyaccify>
-
-  <!-- Verticalisation to enable doubles detection -->
-  <xbgf:vertical>
-    <nonterminal>AbstractMethodModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>InterfaceModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>MethodModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>FieldModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>ConstructorModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>ClassModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>ConstantModifier</nonterminal>
-  </xbgf:vertical>
 
   <!-- ISSUE PERMISSIVENESS
   Now unification of singulars-->
@@ -118,7 +102,6 @@
     <add>ConstantModifier</add>
     <to>Modifier</to>
   </xbgf:unite>
-  <xbgf:horizontal>Modifier</xbgf:horizontal>
 
   <!-- Getting rid of plurals altogether -->
   <xbgf:inline>AbstractMethodModifiers</xbgf:inline>

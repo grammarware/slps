@@ -74,8 +74,11 @@
   -->
 
   <!--   First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
+  <xbgf:horizontal>IntegralType</xbgf:horizontal>
   <xbgf:inline>IntegralType</xbgf:inline>
+  <xbgf:horizontal>FloatingPointType</xbgf:horizontal>
   <xbgf:inline>FloatingPointType</xbgf:inline>
+  <xbgf:horizontal>NumericType</xbgf:horizontal>
   <xbgf:inline>NumericType</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>PrimitiveType</nonterminal>
@@ -139,6 +142,7 @@
       <to>TypeList</to>
     </nonterminal>
   </xbgf:rename>
+  <xbgf:horizontal>TypeList</xbgf:horizontal>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
 
   <!-- BREFACTOR 
@@ -158,9 +162,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  <xbgf:vertical>
-    <nonterminal>ReferenceType</nonterminal>
-  </xbgf:vertical>
   <!-- BREFACTOR -->
   <xbgf:undefine>ArrayType</xbgf:undefine>
   <xbgf:remove>
@@ -196,6 +197,7 @@
   p([], 'Type', ','([n('Identifier'), ?(n('TypeArguments')), *(','([t('.'), n('Identifier'), ?(n('TypeArguments'))])), n('BracketsOpt')])),
   p([], 'Type', n('BasicType')),
   -->
+  <xbgf:horizontal>TypeDeclSpecifier</xbgf:horizontal>
   <xbgf:deyaccify>TypeDeclSpecifier</xbgf:deyaccify>
   
   <!-- BREFACTOR 
@@ -239,5 +241,10 @@
       <nonterminal>Type</nonterminal>
     </in>
   </xbgf:unfold>
+  
+  <!-- finishing touch -->
+  <xbgf:vertical>
+    <nonterminal>BasicType</nonterminal>
+  </xbgf:vertical>
   
 </xbgf:sequence>

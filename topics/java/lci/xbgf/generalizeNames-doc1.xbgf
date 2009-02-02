@@ -52,7 +52,7 @@ vs
     <add>ExpressionName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
-  
+  <xbgf:horizontal>QualifiedIdentifier</xbgf:horizontal>
   <xbgf:deyaccify>QualifiedIdentifier</xbgf:deyaccify>
 
   <!-- use another name -->

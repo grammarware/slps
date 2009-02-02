@@ -2,18 +2,6 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-   <!-- 
-   getting the choices right -->
-  <xbgf:vertical>
-    <nonterminal>Primary</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Modifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Statement</nonterminal>
-  </xbgf:vertical>
-
   <!-- 
    - Fail: Name.
       - [], ;([n(SimpleName), n(QualifiedName)])
@@ -22,6 +10,7 @@
   -->
   <xbgf:inline>SimpleName</xbgf:inline>
   <xbgf:inline>QualifiedName</xbgf:inline>
+  <xbgf:horizontal>Name</xbgf:horizontal>
   <xbgf:deyaccify>Name</xbgf:deyaccify>
 
 </xbgf:sequence>

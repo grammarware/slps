@@ -70,6 +70,10 @@
      vs.
       - [], ;([n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
   -->
+  <xbgf:horizontal>TypeDeclaration</xbgf:horizontal>
+  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
+  <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
+  <xbgf:horizontal>InterfaceMemberDeclaration</xbgf:horizontal>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -85,6 +89,12 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:vertical>
+    <nonterminal>TypeDeclaration</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>InterfaceMemberDeclaration</nonterminal>
+  </xbgf:vertical>
 
   <!-- 
    - Fail: ClassOrInterfaceDeclaration.
@@ -124,6 +134,7 @@
      vs.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
   -->
+  <xbgf:horizontal>ClassBodyDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>ClassBodyDeclarations</xbgf:deyaccify>
   <xbgf:inline>ClassBodyDeclarations</xbgf:inline>
   <xbgf:massage>
@@ -201,6 +212,7 @@
   <xbgf:inline>ConstructorDeclaration</xbgf:inline>
   <xbgf:inline>MethodDeclaration</xbgf:inline>
   <xbgf:inline>ConstructorDeclarator</xbgf:inline>
+  <xbgf:horizontal>ResultType</xbgf:horizontal>
   <xbgf:inline>ResultType</xbgf:inline>
   <xbgf:inline>MethodHeader</xbgf:inline>
 
@@ -284,6 +296,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:horizontal>FormalParameterList</xbgf:horizontal>
   <xbgf:deyaccify>FormalParameterList</xbgf:deyaccify>
   <xbgf:inline>FormalParameterList</xbgf:inline>
   <xbgf:extract>
@@ -317,6 +330,7 @@
    ','([n('ModifiersOpt'), t(void), n('Identifier'), n('FormalParameters'), ?(','([t(throws), n('TypeList')])), n('MethodBody')])),
 
   -->
+  <xbgf:horizontal>MethodDeclarator</xbgf:horizontal>
   <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>BracketsOpt</nonterminal>
@@ -353,6 +367,7 @@
   <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:distribute>
+  <xbgf:vertical><nonterminal>ClassBodyDeclaration</nonterminal></xbgf:vertical>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>MethodOrFieldDecl</nonterminal>
@@ -390,12 +405,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>MethodOrFieldRest</xbgf:horizontal>
 
   <!-- modifiers -->
-  <xbgf:vertical>
-    <nonterminal>ClassBodyDeclaration</nonterminal>
-  </xbgf:vertical>
   <xbgf:designate>
     <bgf:production>
       <label>target</label>
@@ -437,6 +448,4 @@
   </xbgf:remove>
   <xbgf:eliminate>FieldDeclaration</xbgf:eliminate>
   
-  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
-
 </xbgf:sequence>

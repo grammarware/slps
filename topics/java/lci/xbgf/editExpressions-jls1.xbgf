@@ -9,11 +9,15 @@
      vs.
       - [], ;([,([t((), n(Expression), t())]), ,([t(this), ?(n(Arguments))]), ,([t(super), n(SuperSuffix)]), n(Literal), ,([t(new), n(Creator)]), ,([n(QualifiedIdentifier), ?(n(IdentifierSuffix))]), ,([n(BasicType), n(BracketsOpt), t(.), t(class)]), ,([t(void), t(.), t(class)])])
   -->
+  <xbgf:horizontal>ArrayCreationExpression</xbgf:horizontal>
   <xbgf:inline>ArrayCreationExpression</xbgf:inline>
+  <xbgf:horizontal>PrimaryNoNewArray</xbgf:horizontal>
   <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
-  
+
+  <xbgf:horizontal>Dims</xbgf:horizontal>
   <xbgf:deyaccify>Dims</xbgf:deyaccify>
   <xbgf:inline>Dims</xbgf:inline>
+  <xbgf:horizontal>DimExprs</xbgf:horizontal>
   <xbgf:deyaccify>DimExprs</xbgf:deyaccify>
   <xbgf:inline>DimExprs</xbgf:inline>
   <xbgf:inline>DimExpr</xbgf:inline>
@@ -62,7 +66,9 @@
   </xbgf:fold>
 
   <xbgf:inline>ClassInstanceCreationExpression</xbgf:inline>
+  <xbgf:horizontal>FieldAccess</xbgf:horizontal>
   <xbgf:inline>FieldAccess</xbgf:inline>
+  <xbgf:horizontal>MethodInvocation</xbgf:horizontal>
   <xbgf:inline>MethodInvocation</xbgf:inline>
   <!--  
   <xbgf:inline>ArrayAccess</xbgf:inline>
@@ -80,6 +86,7 @@
      vs.
        - [], ,([t(new), n(QualifiedIdentifier), n(Arguments)])
  -->
+  <xbgf:horizontal>ArgumentList</xbgf:horizontal>
   <xbgf:deyaccify>ArgumentList</xbgf:deyaccify>
   <xbgf:inline>ArgumentList</xbgf:inline>
   <xbgf:fold>
@@ -583,9 +590,6 @@
     </bgf:production>
   </xbgf:remove>
 
-  <!-- yes! -->
-  <xbgf:horizontal>Primary</xbgf:horizontal>
-  
   <xbgf:fold>
     <nonterminal>ParExpression</nonterminal>
   </xbgf:fold>

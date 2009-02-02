@@ -23,11 +23,13 @@
      vs.
       - [], ;([n(StatementWithoutTrailingSubstatement), n(LabeledStatement), n(IfThenStatement), n(IfThenElseStatement), n(WhileStatement), n(ForStatement)])
   -->
+  <xbgf:horizontal>StatementWithoutTrailingSubstatement</xbgf:horizontal>
   <xbgf:inline>StatementWithoutTrailingSubstatement</xbgf:inline>
   <xbgf:inline>LabeledStatement</xbgf:inline>
   <xbgf:inline>IfThenElseStatement</xbgf:inline>
   <xbgf:inline>WhileStatement</xbgf:inline>
   <xbgf:inline>ForStatement</xbgf:inline>
+  <xbgf:horizontal>TryStatement</xbgf:horizontal>
   <xbgf:inline>TryStatement</xbgf:inline>
   <xbgf:inline>ThrowStatement</xbgf:inline>
   <xbgf:inline>SynchronizedStatement</xbgf:inline>
@@ -168,6 +170,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
+  <xbgf:horizontal>SwitchLabels</xbgf:horizontal>
   <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
   <xbgf:inline>SwitchStatement</xbgf:inline>
 
@@ -225,9 +228,6 @@
      vs.
       - [], ;([n(LocalVariableDeclarationStatement), n(ClassDeclaration), n(Statement)])
   -->
-  <xbgf:vertical>
-    <nonterminal>BlockStatement</nonterminal>
-  </xbgf:vertical>
   <xbgf:remove>
     <bgf:production>
       <nonterminal>BlockStatement</nonterminal>
@@ -284,7 +284,6 @@
   <xbgf:strip>
     <label>target</label>
   </xbgf:strip>
-  <xbgf:horizontal>BlockStatement</xbgf:horizontal>
   
   <!-- 
    - Fail: LocalVariableDeclarationStatement.
@@ -294,6 +293,4 @@
   -->
   <xbgf:inline>LocalVariableDeclaration</xbgf:inline>
   
-  <xbgf:horizontal>Statement</xbgf:horizontal>
-
 </xbgf:sequence>

@@ -23,6 +23,7 @@
      vs.
       - [], ,([t((), ?(n(ArgumentList)), t())])
   -->
+  <xbgf:horizontal>ArgumentList</xbgf:horizontal>
   <xbgf:deyaccify>ArgumentList</xbgf:deyaccify>
   <xbgf:unfold>
     <nonterminal>ArgumentList</nonterminal>

@@ -49,18 +49,19 @@ vs
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
   <xbgf:unite>
-    <add>ExpressionName</add>
+    <add>PackageOrTypeName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
   <xbgf:unite>
-    <add>PackageOrTypeName</add>
+    <add>ExpressionName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
   <xbgf:unite>
     <add>ClassName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
-  
+
+  <xbgf:horizontal>QualifiedIdentifier</xbgf:horizontal>
   <xbgf:deyaccify>QualifiedIdentifier</xbgf:deyaccify>
   
 </xbgf:sequence>

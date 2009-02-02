@@ -43,9 +43,6 @@
 
   <!-- ISSUE CORRECT SPECERROR
   let's complete some of the statements with a trailing semicolon-->
-  <xbgf:vertical>
-    <nonterminal>Statement</nonterminal>
-  </xbgf:vertical>
   <xbgf:designate>
     <bgf:production>
       <label>ContinueStatement</label>
@@ -142,7 +139,6 @@
   <xbgf:strip>
     <label>BreakStatement</label>
   </xbgf:strip>
-  <xbgf:horizontal>Statement</xbgf:horizontal>
 
   <!-- ISSUE CORRECT SPECERROR
   Expression is referenced as Expr:

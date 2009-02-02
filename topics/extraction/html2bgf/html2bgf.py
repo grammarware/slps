@@ -9,8 +9,6 @@ pp_mode = MODE_DEFAULT
 pp_outer = pp_mode
 verbose = False
 totalerrors = 0
-# pp_mode == MODE_ITALIC
-# pp_mode == MODE_FIXED
 
 pessimistic = [False,0,0]
 prods = {}
@@ -110,6 +108,9 @@ def serialiseExpression(seq):
 
 def serialiseX(name,choices):
  return '<bgf:production><nonterminal>'+name+'</nonterminal>'+traverse(choices)+'</bgf:production>'
+
+def serialiseY(name,choice):
+ return '<bgf:production><nonterminal>'+name+'</nonterminal>'+serialiseExpression(choice)+'</bgf:production>'
 
 def traverse(c):
  if len(c)==1:
@@ -460,6 +461,15 @@ def printGrammar(fn):
  ext.write('</bgf:grammar>')
  ext.close()
 
+def printGrammarVertical(fn):
+ ext = open(fn,'w')
+ ext.write('<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">')
+ for nt in prods.keys():
+  for vertprod in prods[nt]:
+   ext.write(serialiseY(nt,vertprod))
+ ext.write('</bgf:grammar>')
+ ext.close()
+
 def breakWords(nt,s):
  # transforms terminals like "aaa.bbb" to "aaa" "." "bbb"
  word = s[1:-1]
@@ -799,7 +809,7 @@ if __name__ == "__main__":
   preprocessCorrect()
   killDuplicates()
   print 'Writing the extracted grammar...'
-  printGrammar(sys.argv[2])
+  printGrammarVertical(sys.argv[2])
   if pessimistic[2]:
    print 'Total of',pessimistic[2]+pessimistic[1],'problems encountered and coped with.'
  else:

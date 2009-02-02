@@ -2,17 +2,6 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- getting the choices right -->
-  <xbgf:vertical>
-    <nonterminal>Primary</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>IdentifierSuffix</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Expression3</nonterminal>
-  </xbgf:vertical>
-
   <!-- 
    - Fail: Annotations.
       - [], ,([n(Annotation), ?(n(Annotations))])
@@ -123,8 +112,10 @@
   </xbgf:extract>
   
   <!-- we don't need minimised lookahead here -->
+  <xbgf:horizontal>InterfaceMemberDecl</xbgf:horizontal>
   <xbgf:inline>InterfaceMemberDecl</xbgf:inline>
   <xbgf:inline>InterfaceMethodOrFieldDecl</xbgf:inline>
+  <xbgf:horizontal>InterfaceMethodOrFieldRest</xbgf:horizontal>
   <xbgf:inline>InterfaceMethodOrFieldRest</xbgf:inline>
   <xbgf:inline>InterfaceGenericMethodDecl</xbgf:inline>
   <xbgf:inline>InterfaceMethodDeclaratorRest</xbgf:inline>

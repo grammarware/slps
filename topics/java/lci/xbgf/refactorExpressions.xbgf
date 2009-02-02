@@ -157,6 +157,7 @@ vs
   <!-- Defining PrefixOp; smart extract needed -->
   <xbgf:inline>PreIncrementExpression</xbgf:inline>
   <xbgf:inline>PreDecrementExpression</xbgf:inline>
+  <xbgf:horizontal>UnaryExpressionNotPlusMinus</xbgf:horizontal>
   <xbgf:inline>UnaryExpressionNotPlusMinus</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>UnaryExpression</nonterminal>
@@ -170,9 +171,6 @@ vs
 
   <xbgf:inline>PostDecrementExpression</xbgf:inline>
   <xbgf:inline>PostIncrementExpression</xbgf:inline>
-  <xbgf:vertical>
-    <nonterminal>PostfixExpression</nonterminal>
-  </xbgf:vertical>
   <xbgf:remove>
     <bgf:production>
       <nonterminal>PostfixExpression</nonterminal>
@@ -321,6 +319,9 @@ vs
     </bgf:production>
   </xbgf:define>
   <xbgf:inline>PostfixExpression</xbgf:inline>
+  <xbgf:vertical>
+    <nonterminal>Selector</nonterminal>
+  </xbgf:vertical>
   <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
@@ -465,6 +466,9 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <xbgf:vertical>
+    <nonterminal>Expression2Rest</nonterminal>
+  </xbgf:vertical>
   <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>
@@ -532,6 +536,9 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <xbgf:vertical>
+    <nonterminal>Infixop</nonterminal>
+  </xbgf:vertical>
   <!-- BREFACTOR -->
   <xbgf:undefine>MultiplicativeExpression</xbgf:undefine>
   <!-- BREFACTOR -->
@@ -572,6 +579,7 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:horizontal>ConditionalExpression</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -629,9 +637,6 @@ vs
   </xbgf:massage>
 
   <!-- last effort for Expression1-->
-  <xbgf:vertical>
-    <nonterminal>AssignmentExpression</nonterminal>
-  </xbgf:vertical>
   <!-- BREFACTOR -->
   <xbgf:undefine>LeftHandSide</xbgf:undefine>
   <!-- BREFACTOR -->
@@ -700,5 +705,9 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+
+  <xbgf:vertical>
+    <nonterminal>Expression3</nonterminal>
+  </xbgf:vertical>
 
 </xbgf:sequence>

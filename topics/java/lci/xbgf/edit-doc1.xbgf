@@ -28,6 +28,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <xbgf:vertical>
+    <nonterminal>PackageOrTypeName</nonterminal>
+  </xbgf:vertical>
 
   <!--
   Local substitution:
@@ -270,5 +273,8 @@
       </optional>
     </bgf:expression>
   </xbgf:massage>
+  <xbgf:vertical>
+    <nonterminal>ClassInstanceCreationExpression</nonterminal>
+  </xbgf:vertical>
   
 </xbgf:sequence>

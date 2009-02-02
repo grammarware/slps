@@ -15,7 +15,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>Modifier</xbgf:horizontal>
 
   <!-- ISSUE EXTEND
    - Fail: SuperSuffix.
@@ -31,7 +30,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>SuperSuffix</xbgf:horizontal>
 
   <!-- ISSUE EXTEND GENERALIZE
   can we do this with widen? -->
@@ -142,6 +140,4 @@
     </bgf:production>
   </xbgf:add>
   
-  <xbgf:horizontal>IdentifierSuffix</xbgf:horizontal>
-
 </xbgf:sequence>

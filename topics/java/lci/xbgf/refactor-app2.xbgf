@@ -8,7 +8,6 @@
     <nonterminal>QualifiedIdentifier</nonterminal>
   </xbgf:fold>
 
-
   <!-- 
    - Fail: Catches.
       - [], ,([n(CatchClause), *(n(CatchClause))])
@@ -43,11 +42,16 @@
   </xbgf:massage>
 
   <!-- getting rid of explicit suffixes -->
+  <xbgf:horizontal>PrefixOp</xbgf:horizontal>
   <xbgf:inline>PrefixOp</xbgf:inline>
+  <xbgf:horizontal>PostfixOp</xbgf:horizontal>
   <xbgf:inline>PostfixOp</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>Expression3</nonterminal>
   </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>Expression3</nonterminal>
+  </xbgf:vertical>
   
   <!-- pushing optionals outside -->
   <xbgf:inline>Expression1Rest</xbgf:inline>
@@ -93,16 +97,24 @@
     </bgf:expression>
   </xbgf:massage>
 
+  <xbgf:horizontal>MemberDecl</xbgf:horizontal>
   <xbgf:inline>MemberDecl</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>ClassBodyDeclaration</nonterminal>
+  </xbgf:vertical>
   <xbgf:distribute>
     <nonterminal>Statement</nonterminal>
   </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:vertical>
 
   <xbgf:fold>
     <nonterminal>ParExpression</nonterminal>
   </xbgf:fold>
+
 
 </xbgf:sequence>

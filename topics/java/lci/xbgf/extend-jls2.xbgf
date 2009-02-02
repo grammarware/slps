@@ -84,9 +84,6 @@
 
   <!-- ISSUE EXTEND
   annotated declarations -->
-  <xbgf:vertical>
-    <nonterminal>ForInit</nonterminal>
-  </xbgf:vertical>
   <xbgf:chain>
     <bgf:production>
       <nonterminal>InterfaceDeclaration</nonterminal>

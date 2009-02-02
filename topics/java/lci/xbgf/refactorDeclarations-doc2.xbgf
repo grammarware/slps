@@ -2,6 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
+  <xbgf:horizontal>VariableDeclarators</xbgf:horizontal>
   <xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify>
   
   <!-- 
@@ -10,7 +11,9 @@
      vs.
       - [], ;([n(VariableDeclaratorId), ,([n(VariableDeclaratorId), t(=), n(VariableInitializer)])])
   -->
+  <xbgf:horizontal>VariableDeclaratorId</xbgf:horizontal>
   <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
+  <xbgf:horizontal>VariableDeclarator</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -135,6 +138,7 @@
       - [], ,([?(n(PackageDeclaration)), ?(n(ImportDeclarations)), ?(n(TypeDeclarations))])
   -->
   <xbgf:inline>PackageDeclaration</xbgf:inline>
+  <xbgf:horizontal>ImportDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>ImportDeclarations</xbgf:deyaccify>
   <xbgf:inline>ImportDeclarations</xbgf:inline>
   <xbgf:massage>
@@ -157,6 +161,7 @@
       </star>
     </bgf:expression>
   </xbgf:massage>
+  <xbgf:horizontal>TypeDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>TypeDeclarations</xbgf:deyaccify>
   <xbgf:inline>TypeDeclarations</xbgf:inline>
   <xbgf:massage>
@@ -196,6 +201,7 @@
       - [], ;([,([t(import), n(QualifiedIdentifier), t((;))]),
                ,([t(import), n(QualifiedIdentifier), t(.), t(*), t((;))])])
   -->
+  <xbgf:horizontal>ImportDeclaration</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>

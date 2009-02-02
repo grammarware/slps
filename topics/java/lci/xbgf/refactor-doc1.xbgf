@@ -2,17 +2,6 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- prepare choices -->
-  <xbgf:vertical>
-    <nonterminal>Type</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Primary</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>Statement</nonterminal>
-  </xbgf:vertical>
-
   <!-- 
    - Fail: ClassOrInterfaceType.
       - [], ;([n(ClassType), n(InterfaceType)])
@@ -29,6 +18,7 @@
       
       NB: The following two folds are virtually chain transformations, but performed for an existing definition.
   -->
+  <xbgf:horizontal>ClassOrInterfaceType</xbgf:horizontal>
   <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>
@@ -78,10 +68,14 @@
       <nonterminal>AbstractMethodDeclaration</nonterminal>
     </in>
   </xbgf:fold>
+  <xbgf:horizontal>ResultType</xbgf:horizontal>
   <xbgf:inline>ResultType</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>MethodHeader</nonterminal>
   </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>MethodHeader</nonterminal>
+  </xbgf:vertical>
 
   <!-- 
    - Fail: ArrayCreationExpression.
@@ -134,6 +128,9 @@
   <xbgf:distribute>
     <nonterminal>CastExpression</nonterminal>
   </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>CastExpression</nonterminal>
+  </xbgf:vertical>
 
   <!-- BREFACTOR 
    - Fail: ConstantDeclaration.
@@ -183,12 +180,19 @@
       <nonterminal>ArrayType</nonterminal>
     </in>
   </xbgf:unfold>
+  <xbgf:vertical>
+    <nonterminal>Type</nonterminal>
+  </xbgf:vertical>
+  <xbgf:horizontal>ReferenceType</xbgf:horizontal>
   <xbgf:unfold>
     <nonterminal>ReferenceType</nonterminal>
     <in>
       <nonterminal>ArrayType</nonterminal>
     </in>
   </xbgf:unfold>
+  <xbgf:vertical>
+    <nonterminal>ReferenceType</nonterminal>
+  </xbgf:vertical>
   <xbgf:unfold>
     <nonterminal>ClassOrInterfaceType</nonterminal>
     <in>
@@ -198,5 +202,8 @@
   <xbgf:distribute>
     <nonterminal>ArrayType</nonterminal>
   </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>ArrayType</nonterminal>
+  </xbgf:vertical>
 
 </xbgf:sequence>

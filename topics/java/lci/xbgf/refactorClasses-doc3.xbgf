@@ -74,6 +74,7 @@
      vs.
       - [], ;([n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
   -->
+  <xbgf:horizontal>TypeDeclaration</xbgf:horizontal>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -92,6 +93,9 @@
       <nonterminal>TypeDeclaration</nonterminal>
     </in>
   </xbgf:extract>
+  <xbgf:vertical>
+    <nonterminal>TypeDeclaration</nonterminal>
+  </xbgf:vertical>
 
   <!-- 
    - Fail: ClassBody.
@@ -99,6 +103,7 @@
      vs.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
   -->
+  <xbgf:horizontal>ClassBodyDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>ClassBodyDeclarations</xbgf:deyaccify>
   <xbgf:inline>ClassBodyDeclarations</xbgf:inline>
   <xbgf:massage>
@@ -163,9 +168,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
-  <xbgf:vertical>
-    <nonterminal>ClassMemberDeclaration</nonterminal>
-  </xbgf:vertical>
   <xbgf:designate>
     <bgf:production>
       <label>target</label>
@@ -243,6 +245,7 @@
   -->
   <xbgf:inline>InstanceInitializer</xbgf:inline>
   <xbgf:inline>StaticInitializer</xbgf:inline>
+  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -298,7 +301,7 @@
       </optional>
     </bgf:expression>
   </xbgf:massage>
-
+ 
   <!-- 
    - Fail: FormalParameters.
       - [], ,([t((), ?(n(FormalParameterDecls)), t())])
@@ -365,42 +368,43 @@
     <bgf:production>
       <nonterminal>FormalParameterDeclsRest</nonterminal>
       <bgf:expression>
-        <choice>
+        <sequence>
           <bgf:expression>
-            <sequence>
+            <nonterminal>VariableDeclaratorId</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
               <bgf:expression>
-                <nonterminal>VariableDeclaratorId</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <optional>
+                <sequence>
                   <bgf:expression>
-                    <sequence>
-                      <bgf:expression>
-                        <terminal>,</terminal>
-                      </bgf:expression>
-                      <bgf:expression>
-                        <nonterminal>FormalParameterDecls</nonterminal>
-                      </bgf:expression>
-                    </sequence>
+                    <terminal>,</terminal>
                   </bgf:expression>
-                </optional>
+                  <bgf:expression>
+                    <nonterminal>FormalParameterDecls</nonterminal>
+                  </bgf:expression>
+                </sequence>
               </bgf:expression>
-            </sequence>
+            </optional>
           </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>...</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>VariableDeclaratorId</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
+        </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>FormalParameterDeclsRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>...</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>VariableDeclaratorId</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
 
   <!-- 
    - Fail: ClassBodyDeclaration.
@@ -417,12 +421,14 @@
   <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:distribute>
+ 
 
   <!-- 
   MethodDeclarator is defined as:
      Identifier "(" [ FormalParameterList ] ")"
      MethodDeclarator "[" "]"
   -->
+  <xbgf:horizontal>MethodDeclarator</xbgf:horizontal>
   <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
   <xbgf:inline>MethodDeclarator</xbgf:inline>
 
@@ -631,6 +637,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:vertical>
+    <nonterminal>GenericMethodOrConstructorRest</nonterminal>
+  </xbgf:vertical>
 
   <!-- 
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(GenericMethodOrConstructorRest)])
@@ -671,6 +680,7 @@
     </in>
   </xbgf:narrow>
 
+  <xbgf:horizontal>ResultType</xbgf:horizontal>
   <xbgf:inline>ResultType</xbgf:inline>
 
   <xbgf:vertical>
@@ -683,6 +693,7 @@
      vs.
       - [], ;([n(Identifier), ,([n(VariableDeclaratorId), t([), t(])])])
    -->
+  <xbgf:horizontal>VariableDeclaratorId</xbgf:horizontal>
   <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
 
   <!--  
@@ -806,17 +817,18 @@
     <bgf:production>
       <nonterminal>MethodOrFieldRest</nonterminal>
       <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>VariableDeclaratorRest</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>MethodDeclaratorRest</nonterminal>
-          </bgf:expression>
-        </choice>
+        <nonterminal>VariableDeclaratorRest</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>MethodOrFieldRest</nonterminal>
+      <bgf:expression>
+        <nonterminal>MethodDeclaratorRest</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -835,7 +847,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
 
   <!-- 
    - Fail: ClassBodyDeclaration.
@@ -848,6 +859,7 @@
       - [], ,([*(n(Modifier)), n(ClassDeclaration)])
       - [], ,([*(n(Modifier)), n(GenericMethodOrConstructorDecl)])
   -->
+  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -1013,7 +1025,13 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-
+  <xbgf:vertical>
+    <nonterminal>MemberDecl</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>ClassBodyDeclaration</nonterminal>
+  </xbgf:vertical>
+  
   <!-- BREFACTOR 
    - Fail: ClassOrInterfaceDeclaration.
       - [], ,([n(ModifiersOpt), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])
@@ -1071,6 +1089,7 @@
      vs.
       - [], ,([t(<), n(TypeParameterList), t(>)])
   -->
+  <xbgf:horizontal>TypeParameterList</xbgf:horizontal>
   <xbgf:deyaccify>TypeParameterList</xbgf:deyaccify>
   <xbgf:inline>TypeParameterList</xbgf:inline>
 
@@ -1091,6 +1110,7 @@
   AdditionalBound is defined as:
      "&amp;" InterfaceType
   -->
+  <xbgf:horizontal>AdditionalBoundList</xbgf:horizontal>
   <xbgf:deyaccify>AdditionalBoundList</xbgf:deyaccify>
   <xbgf:inline>AdditionalBoundList</xbgf:inline>
   <xbgf:massage>

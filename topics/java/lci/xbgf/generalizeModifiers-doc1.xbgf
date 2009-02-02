@@ -10,28 +10,6 @@
    (and many similar ones)
   -->
 
-  <xbgf:vertical>
-    <nonterminal>ClassModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>InterfaceModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>ConstructorModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>AbstractMethodModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>MethodModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>FieldModifier</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>ConstantModifier</nonterminal>
-  </xbgf:vertical>
-
   <!-- ISSUE PERMISSIVENESS -->
   <xbgf:rename>
     <nonterminal>

@@ -34,6 +34,7 @@
      vs.
       - [], *(n(SwitchBlockStatementGroup))
   -->
+  <xbgf:horizontal>SwitchBlockStatementGroups</xbgf:horizontal>
   <xbgf:deyaccify>SwitchBlockStatementGroups</xbgf:deyaccify>
   <xbgf:inline>SwitchBlockStatementGroups</xbgf:inline>
   <xbgf:massage>
@@ -118,6 +119,7 @@
   <xbgf:inline>IfThenStatement</xbgf:inline>
   <xbgf:inline>IfThenElseStatement</xbgf:inline>
   <xbgf:inline>LabeledStatement</xbgf:inline>
+  <xbgf:horizontal>StatementWithoutTrailingSubstatement</xbgf:horizontal>
   <xbgf:inline>StatementWithoutTrailingSubstatement</xbgf:inline>
   <xbgf:horizontal>Statement</xbgf:horizontal>
   <xbgf:inline>EmptyStatement</xbgf:inline>
@@ -128,6 +130,7 @@
   <xbgf:inline>ReturnStatement</xbgf:inline>
   <xbgf:inline>SynchronizedStatement</xbgf:inline>
   <xbgf:inline>ThrowStatement</xbgf:inline>
+  <xbgf:horizontal>TryStatement</xbgf:horizontal>
   <xbgf:inline>TryStatement</xbgf:inline>
   <xbgf:inline>Finally</xbgf:inline>
   <xbgf:distribute>
@@ -254,6 +257,9 @@
       </optional>
     </bgf:expression>
   </xbgf:massage>
+  <xbgf:vertical>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:vertical>
 
   <!-- Getting rid of all of them -->
   <!-- BREFACTOR -->
@@ -274,6 +280,7 @@
       - [], ,([t({), n(BlockStatements), t(})])
    ...
   -->
+  <xbgf:horizontal>BlockStatements</xbgf:horizontal>
   <xbgf:deyaccify>BlockStatements</xbgf:deyaccify>
   <xbgf:inline>BlockStatements</xbgf:inline>
   <xbgf:massage>
@@ -315,9 +322,6 @@
      vs.
       - [], ;([n(LocalVariableDeclarationStatement), n(ClassOrInterfaceDeclaration), ,([?(,([n(Identifier), t(:)])), n(Statement)])])
   -->
-  <xbgf:vertical>
-    <nonterminal>BlockStatement</nonterminal>
-  </xbgf:vertical>
   <xbgf:add>
     <bgf:production>
       <nonterminal>BlockStatement</nonterminal>
@@ -366,7 +370,6 @@
   <xbgf:strip>
     <label>target</label>
   </xbgf:strip>
-  <xbgf:horizontal>BlockStatement</xbgf:horizontal>
 
   <!-- 
    - Fail: ForUpdate.
@@ -383,6 +386,7 @@
    vs
     p([], 'MoreStatementExpressions', *(','([t((',')), n('StatementExpression')]))),
   -->
+  <xbgf:horizontal>StatementExpressionList</xbgf:horizontal>
   <xbgf:deyaccify>StatementExpressionList</xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
@@ -442,6 +446,7 @@
      vs.
       - [], +n(CatchClause)
   -->
+  <xbgf:horizontal>Catches</xbgf:horizontal>
   <xbgf:deyaccify>Catches</xbgf:deyaccify>
 
   <!-- 
@@ -450,6 +455,7 @@
      vs.
       - [], ,([n(VariableDeclarator), *(,([t((,)), n(VariableDeclarator)]))])
   -->
+  <xbgf:horizontal>VariableDeclarators</xbgf:horizontal>
   <xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify>
 
   <!-- 
@@ -458,6 +464,7 @@
      vs.
       - [], ,([n(Identifier), n(BracketsOpt)])
   -->
+  <xbgf:horizontal>VariableDeclaratorId</xbgf:horizontal>
   <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
@@ -488,6 +495,7 @@
    with
      p([], 'VariableDeclaratorRest', ','([n('BracketsOpt'), ?(','([t(=), n('VariableInitializer')]))])),
   -->
+  <xbgf:horizontal>VariableDeclarator</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>

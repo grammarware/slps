@@ -55,6 +55,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <xbgf:vertical>
+    <nonterminal>ClassName</nonterminal>
+  </xbgf:vertical>
   
   <!-- ISSUE CORRECT SPECERROR
    - Fail: ConstructorDeclarator.
@@ -77,6 +80,7 @@
      ','([t('('), n('ReferenceType'), t(')'), n('UnaryExpressionNotPlusMinus')]),
      ','([t('('), n('PrimitiveType'), ?(n('Dims')), t(')'), n('UnaryExpression')])])),
   -->
+  <xbgf:horizontal>CastExpression</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -199,5 +203,8 @@
       </optional>
     </bgf:expression>
   </xbgf:massage>
+  <xbgf:vertical>
+    <nonterminal>CastExpression</nonterminal>
+  </xbgf:vertical>
  
 </xbgf:sequence>

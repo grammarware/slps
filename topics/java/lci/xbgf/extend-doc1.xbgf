@@ -31,30 +31,28 @@
     <bgf:production>
       <nonterminal>ClassName</nonterminal>
       <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>AmbiguousName</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
+        <nonterminal>Identifier</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-  <xbgf:vertical>
-    <nonterminal>FieldAccess</nonterminal>
-  </xbgf:vertical>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>ClassName</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>AmbiguousName</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
   <xbgf:add>
     <bgf:production>
       <nonterminal>FieldAccess</nonterminal>
@@ -79,7 +77,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>FieldAccess</xbgf:horizontal>
 
   <!-- 
   Resolve brutally. Is there a better way?
@@ -171,6 +168,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <xbgf:vertical>
+    <nonterminal>PrimaryNoNewArray</nonterminal>
+  </xbgf:vertical>
 
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: LocalVariableDeclaration.
@@ -208,9 +208,6 @@
      vs.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(synchronized), t(native), t(strictfp)])
    -->
-  <xbgf:vertical>
-    <nonterminal>MethodModifier</nonterminal>
-  </xbgf:vertical>
   <xbgf:add>
     <bgf:production>
       <nonterminal>MethodModifier</nonterminal>
@@ -219,7 +216,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>MethodModifier</xbgf:horizontal>
 
   <!-- ISSUE EXTEND 
      - Fail: ClassBodyDeclaration.
@@ -227,9 +223,6 @@
      vs.
       - [], ;([n(ClassMemberDeclaration), n(InstanceInitializer), n(StaticInitializer), n(ConstructorDeclaration)])
    -->
-  <xbgf:vertical>
-    <nonterminal>ClassBodyDeclaration</nonterminal>
-  </xbgf:vertical>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>InstanceInitializer</nonterminal>
@@ -246,7 +239,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
 
   <!-- ISSUE EXTEND 
      - Fail: ClassMemberDeclaration.
@@ -254,9 +246,6 @@
      vs.
       - [], ;([n(FieldDeclaration), n(MethodDeclaration), n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
   -->
-  <xbgf:vertical>
-    <nonterminal>ClassMemberDeclaration</nonterminal>
-  </xbgf:vertical>
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassMemberDeclaration</nonterminal>
@@ -281,7 +270,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
 
   <!-- ISSUE EXTEND 
      - Fail: InterfaceMemberDeclaration.
@@ -289,9 +277,6 @@
      vs.
       - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration), n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
   -->
-  <xbgf:vertical>
-    <nonterminal>InterfaceMemberDeclaration</nonterminal>
-  </xbgf:vertical>
   <xbgf:add>
     <bgf:production>
       <nonterminal>InterfaceMemberDeclaration</nonterminal>
@@ -316,7 +301,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>InterfaceMemberDeclaration</xbgf:horizontal>
 
   <!-- ISSUE EXTEND 
      - Fail: BlockStatement.
@@ -324,9 +308,6 @@
      vs.
       - [], ;([n(LocalVariableDeclarationStatement), n(ClassDeclaration), n(Statement)])
    -->
-  <xbgf:vertical>
-    <nonterminal>BlockStatement</nonterminal>
-  </xbgf:vertical>
   <xbgf:add>
     <bgf:production>
       <nonterminal>BlockStatement</nonterminal>
@@ -335,7 +316,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>BlockStatement</xbgf:horizontal>
 
   <!-- ISSUE EXTEND 
      - Fail: ClassModifier.
@@ -343,9 +323,6 @@
      vs.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(strictfp)])
   -->
-  <xbgf:vertical>
-    <nonterminal>ClassModifier</nonterminal>
-  </xbgf:vertical>
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassModifier</nonterminal>
@@ -378,7 +355,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>ClassModifier</xbgf:horizontal>
 
   <!-- ISSUE EXTEND 
      - Fail: ExplicitConstructorInvocation.
@@ -386,9 +362,6 @@
      vs.
       - [], ;([,([t(this), t((), ?(n(ArgumentList)), t()), t((;))]), ,([t(super), t((), ?(n(ArgumentList)), t()), t((;))]), ,([n(Primary), t(.), t(super), t((), ?(n(ArgumentList)), t()), t((;))])])
   -->
-  <xbgf:vertical>
-    <nonterminal>ExplicitConstructorInvocation</nonterminal>
-  </xbgf:vertical>
   <xbgf:add>
     <bgf:production>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
@@ -423,7 +396,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>ExplicitConstructorInvocation</xbgf:horizontal>
 
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: MethodInvocation.
@@ -431,9 +403,6 @@
      vs.
       - [], ;([,([n(MethodName), t((), ?(n(ArgumentList)), t())]), ,([n(Primary), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([n(ClassName), t(.), t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())])])
   -->
-  <xbgf:vertical>
-    <nonterminal>MethodInvocation</nonterminal>
-  </xbgf:vertical>
   <xbgf:add>
     <bgf:production>
       <nonterminal>MethodInvocation</nonterminal>
@@ -471,7 +440,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>MethodInvocation</xbgf:horizontal>
 
   <!-- ISSUE EXTEND 
      - Fail: InterfaceModifier.
@@ -479,9 +447,6 @@
      vs.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(strictfp)])
   -->
-  <xbgf:vertical>
-    <nonterminal>InterfaceModifier</nonterminal>
-  </xbgf:vertical>
   <xbgf:add>
     <bgf:production>
       <nonterminal>InterfaceModifier</nonterminal>
@@ -514,7 +479,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>InterfaceModifier</xbgf:horizontal>
 
   <!-- ISSUE EXTEND 
      - Fail: ArrayCreationExpression.
@@ -522,9 +486,6 @@
      vs.
       - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(TypeName), n(DimExprs), ?(n(Dims))]), ,([t(new), n(PrimitiveType), n(Dims), n(ArrayInitializer)]), ,([t(new), n(TypeName), n(Dims), n(ArrayInitializer)])])
   -->
-  <xbgf:vertical>
-    <nonterminal>ArrayCreationExpression</nonterminal>
-  </xbgf:vertical>
   <xbgf:add>
     <bgf:production>
       <nonterminal>ArrayCreationExpression</nonterminal>
@@ -567,7 +528,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:horizontal>ArrayCreationExpression</xbgf:horizontal>
 
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: FormalParameter.

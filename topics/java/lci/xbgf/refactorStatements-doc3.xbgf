@@ -1,7 +1,8 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-
+  
+  <xbgf:horizontal>AssertStatement</xbgf:horizontal>
   <xbgf:inline>AssertStatement</xbgf:inline>
   <xbgf:inline>BasicForStatement</xbgf:inline>
   <xbgf:inline>EnhancedForStatement</xbgf:inline>
@@ -14,6 +15,7 @@
                ;([,([t(assert), n(Expression), t((;))]),
                   ,([t(assert), n(Expression), t(:), n(Expression), t((;))])]),
 -->
+  <xbgf:horizontal>Statement</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -432,5 +434,11 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:vertical>
+    <nonterminal>ForControl</nonterminal>
+  </xbgf:vertical>
 
+  <xbgf:vertical>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:vertical>
 </xbgf:sequence>

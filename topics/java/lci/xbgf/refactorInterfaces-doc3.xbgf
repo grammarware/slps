@@ -92,6 +92,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
+  <xbgf:horizontal>ExtendsInterfaces</xbgf:horizontal>
   <xbgf:deyaccify>ExtendsInterfaces</xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>TypeList</nonterminal>
@@ -146,6 +147,7 @@
      vs.
       - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
   -->
+  <xbgf:horizontal>InterfaceMemberDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>InterfaceMemberDeclarations</xbgf:deyaccify>
   <xbgf:inline>InterfaceMemberDeclarations</xbgf:inline>
   <xbgf:rename>
@@ -183,10 +185,6 @@
   -->
   <xbgf:inline>ConstantDeclaration</xbgf:inline>
   <xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
-
-  <xbgf:vertical>
-    <nonterminal>InterfaceBodyDeclaration</nonterminal>
-  </xbgf:vertical>
 
   <!-- modifiers -->
   <xbgf:designate>
@@ -254,6 +252,7 @@
      vs.
       - [], ;([n(Annotation), ,([n(Annotations), n(Annotation)])])
   -->
+  <xbgf:horizontal>Annotations</xbgf:horizontal>
   <xbgf:deyaccify>Annotations</xbgf:deyaccify>
 
   <!-- BREFACTOR 
@@ -294,9 +293,6 @@
   so we effectively "narrow" it (by executing remove instead of deyaccify/narrow)
   (also because narrow(*(L),true) doesn't work)
   -->
-  <xbgf:vertical>
-    <nonterminal>ElementValuePairs</nonterminal>
-  </xbgf:vertical>
   <xbgf:remove>
     <bgf:production>
       <nonterminal>ElementValuePairs</nonterminal>
@@ -633,6 +629,7 @@
      vs.
       - [], ;([n('ElementValue'), ,([n('ElementValues'), t((',')), n('ElementValue')])])
   -->
+  <xbgf:horizontal>ElementValues</xbgf:horizontal>
   <xbgf:deyaccify>ElementValues</xbgf:deyaccify>
   <!-- can be yaccify after yaccify2 test case works -->
   <!-- BREFACTOR -->

@@ -130,6 +130,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:horizontal>Dims</xbgf:horizontal>
   <xbgf:deyaccify>Dims</xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
@@ -238,9 +239,6 @@
     <to>Expression2</to>
   </xbgf:unite>
   <xbgf:horizontal>Expression2</xbgf:horizontal>
-  <xbgf:distribute>
-    <nonterminal>Expression2</nonterminal>
-  </xbgf:distribute>
 
   <!-- Introducing another layering scheme: Expression3 -->
   <xbgf:rename>
@@ -262,6 +260,7 @@
     </in>
   </xbgf:replace>
 
+  <xbgf:horizontal>Expression3</xbgf:horizontal>
   <!--  Huge factoring for fishing out infix operators -->
   <xbgf:factor>
     <bgf:expression>
@@ -653,6 +652,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:vertical>
+    <nonterminal>InfixOp</nonterminal>
+  </xbgf:vertical>
 
   <!-- revert of lassoc-->
   <xbgf:extract>
@@ -796,6 +798,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:vertical>
+    <nonterminal>Expression2Rest</nonterminal>
+  </xbgf:vertical>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -858,6 +863,7 @@
      vs.
       - [], ,([n(Expression1), ?(,([n(AssignmentOperator), n(Expression1)]))])
   -->
+  <xbgf:horizontal>AssignmentExpression</xbgf:horizontal>
   <xbgf:unfold>
     <nonterminal>AssignmentExpression</nonterminal>
     <in>
@@ -871,6 +877,7 @@
      vs.
       - [], ,([n(Expression2), ?(n(Expression1Rest))])
   -->
+  <xbgf:horizontal>Expression1</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -999,6 +1006,7 @@
   <!-- Prefixes -->
   <xbgf:inline>PreIncrementExpression</xbgf:inline>
   <xbgf:inline>PreDecrementExpression</xbgf:inline>
+  <xbgf:horizontal>UnaryExpressionNotPlusMinus</xbgf:horizontal>
   <xbgf:inline>UnaryExpressionNotPlusMinus</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>Expression3</nonterminal>
@@ -1125,6 +1133,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:vertical>
+    <nonterminal>PrefixOp</nonterminal>
+  </xbgf:vertical>
 
   <!-- ISSUE PERMISSIVENESS BRUTAL
  - Fail: StatementExpression.
@@ -1197,6 +1208,7 @@
   -->
   <xbgf:inline>PostIncrementExpression</xbgf:inline>
   <xbgf:inline>PostDecrementExpression</xbgf:inline>
+  <xbgf:horizontal>PostfixExpression</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -1258,6 +1270,9 @@
       <nonterminal>PostfixExpression</nonterminal>
     </in>
   </xbgf:extract>
+  <xbgf:vertical>
+    <nonterminal>PostfixOp</nonterminal>
+  </xbgf:vertical>
 
   <!-- 
    - Fail: Expression3/PostfixExpression.
@@ -1505,4 +1520,8 @@
       <nonterminal>Expression</nonterminal>
     </in>
   </xbgf:widen>
+  
+  <!-- should be a part of inlineStatements, actually, but needed only for doc3 -->
+  <xbgf:horizontal>ForStatement</xbgf:horizontal>
+
 </xbgf:sequence>
