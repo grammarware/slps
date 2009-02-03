@@ -570,6 +570,14 @@
           <bgf:expression>
             <nonterminal>x</nonterminal>
           </bgf:expression>
+	   <bgf:expression>
+	      <selectable>
+		<selector>tag</selector>
+		<bgf:expression>
+		  <value>string</value>
+		</bgf:expression>
+	      </selectable>
+	    </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
@@ -590,6 +598,14 @@
           <bgf:expression>
             <nonterminal>l</nonterminal>
           </bgf:expression>
+	   <bgf:expression>
+	      <selectable>
+		<selector>tag</selector>
+		<bgf:expression>
+		  <value>string</value>
+		</bgf:expression>
+	      </selectable>
+	    </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
@@ -610,6 +626,14 @@
           <bgf:expression>
             <nonterminal>n</nonterminal>
           </bgf:expression>
+	   <bgf:expression>
+	      <selectable>
+		<selector>tag</selector>
+		<bgf:expression>
+		  <value>string</value>
+		</bgf:expression>
+	      </selectable>
+	    </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
