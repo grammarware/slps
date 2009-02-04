@@ -78,6 +78,13 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
+        <xsd:element name="marked">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="bgf:expression" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
         <xsd:element name="choice">
           <xsd:complexType>
             <xsd:sequence>

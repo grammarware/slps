@@ -51,13 +51,19 @@
   <xsl:template match="bgf:expression">
     <xsl:apply-templates select="./*"/>
   </xsl:template>
-  
+
+  <xsl:template match="marked">
+    <xsl:text><![CDATA[<]]> </xsl:text>
+    <xsl:apply-templates select="./*"/>
+    <xsl:text><![CDATA[>]]> </xsl:text>
+  </xsl:template>
+
   <xsl:template match="plus">
     <xsl:text>( </xsl:text>
     <xsl:apply-templates select="./*"/>
     <xsl:text>)+ </xsl:text>
   </xsl:template>
-  
+
   <xsl:template match="star">
     <xsl:text>( </xsl:text>
     <xsl:apply-templates select="./*"/>

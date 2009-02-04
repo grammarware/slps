@@ -58,6 +58,7 @@
       <xsd:element ref="xbgf:reroot"/>
       <xsd:element ref="xbgf:abridge"/>
       <xsd:element ref="xbgf:strip"/>
+      <xsd:element ref="xbgf:terminalize"/>
       <xsd:element ref="xbgf:unchain"/>
       <xsd:element ref="xbgf:undefine"/>
       <xsd:element ref="xbgf:unfold"/>
@@ -648,6 +649,23 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="terminalize">
+    <xsd:annotation>
+      <xsd:documentation>
+        Terminalizing means enriching an existing production by inserting
+        terminals in marked spaces.
+      </xsd:documentation>
+      <xsd:documentation>
+        Terminalize breaks concrete, but not abstract, semantics.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+  
   <xsd:element name="unchain">
     <xsd:annotation>
       <xsd:documentation>
