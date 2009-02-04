@@ -122,7 +122,7 @@
   <xsd:element name="define">
     <xsd:annotation>
       <xsd:documentation>
-        An undefined nonterminal is resovled. The nonterminal must be in
+        An undefined nonterminal is resolved. The nonterminal must be in
         use. The introduce operator should be used when a fresh nonterminal
         is to be defined. The add operator should be used when an existing
         definition is to be extended.

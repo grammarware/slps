@@ -432,7 +432,7 @@ def preprocessConstruct(fn):
     elif cont and choices:
      # line continuation
      if countspaces(oldline)>countspaces(line):
-      print 'RR: Line continuation enforced while parsing',name,'- indentation went from',countspaces(oldline),'to 0'
+      print 'Line continuation enforced while parsing',name,'- indentation went from',countspaces(oldline),'to 0'
       pessimistic[1] += 1
      for i in range(0,len(a)):
       choices[-1][0].append(a[i])
