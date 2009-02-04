@@ -132,7 +132,7 @@ def expanduni(where,rep):
 
 def extractall(path):
  for bgf in extractor.keys():
-  run = extractor[bgf]+' '+path+'bgf/'+bgf+'.bgf 1> '+bgf+'.data 2> /dev/null'
+  run = extractor[bgf]+' '+path+'bgf/'+bgf+'.bgf -v 1> '+bgf+'.data 2> /dev/null'
   if os.system(run):
    print '[FAIL] Extraction of',bgf+'.bgf failed:'
    print run

@@ -10,7 +10,7 @@ pp_outer = pp_mode
 verbose = False
 totalerrors = 0
 
-pessimistic = [False,0,0]
+pessimistic = [False,0,0,0]
 prods = {}
 
 def serialise(name,choices):
@@ -21,7 +21,7 @@ def mapsymbol(symb):
   return '<bgf:expression><terminal>'+symb[1:-1]+'</terminal></bgf:expression>'
  elif symb=='|':
   # if there is a bar here, it's not a BNF bar!
-  print 'Metasymbol to terminal heuristic fix:',symb,'(atypical choice)'
+  print 'RR: Metasymbol to terminal heuristic fix:',symb,'(atypical choice)'
   pessimistic[2] += 1
   return '<bgf:expression><terminal>'+symb+'</terminal></bgf:expression>'
  else:
@@ -143,11 +143,17 @@ def addProduction(name,choices,oneof):
      else:
       print 'UNK',
      if choices[s][0][i].isalnum():
-      print 'ALNUM'
+      print 'NONW ALNUM'
+      if choices[s][1][i] == MODE_DEFAULT:
+       pessimistic[3] += 1
      elif choices[s][0][i] == '|':
-      print 'BNBAR'
+      print 'NONW BNBAR'
+      if choices[s][1][i] == MODE_DEFAULT:
+       pessimistic[3] += 1
      elif choices[s][0][i] in ('[',']','{','}','(',')','?????'):
-      print 'METAS'
+      print 'NONW METAS'
+      if choices[s][1][i] == MODE_DEFAULT:
+       pessimistic[3] += 1
      else:
       print 'WEIRD'
     if choices[s][1][i] == MODE_FIXED:
@@ -426,7 +432,7 @@ def preprocessConstruct(fn):
     elif cont and choices:
      # line continuation
      if countspaces(oldline)>countspaces(line):
-      print 'Line continuation enforced while parsing',name,'- indentation went from',countspaces(oldline),'to 0'
+      print 'RR: Line continuation enforced while parsing',name,'- indentation went from',countspaces(oldline),'to 0'
       pessimistic[1] += 1
      for i in range(0,len(a)):
       choices[-1][0].append(a[i])
@@ -484,7 +490,7 @@ def breakWords(nt,s):
    res.append(letter)
   f=letter.isalpha()
  if len(res)>1:
-  print 'Decompose symbols heuristic fix:',s,'in',nt,'(1 to',`len(res)`+')'
+  print 'RR: Decompose symbols heuristic fix:',s,'in',nt,'(1 to',`len(res)`+')'
   pessimistic[2] += 1
  return res
 
@@ -502,7 +508,7 @@ def preprocessCorrect():
      bs[i]='":"'
     if bs[i] in ('?????','opt','"opt"'):
      if bs[i]!='?????':
-      print 'Optional nonterminal heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
+      print 'RR: Optional nonterminal heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
       pessimistic[2] += 1
      # Change to classic EBNF
      if i>0:
@@ -514,7 +520,7 @@ def preprocessCorrect():
      bs = newbs
      continue
     if bs[i].rfind('opt')!=-1 and bs[i].rfind('opt')==len(bs[i])-3:
-     print 'Optional nonterminal heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
+     print 'RR: Optional nonterminal heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
      pessimistic[2] += 1
      newbs = bs[:i]
      if bs[i]!='opt':
@@ -524,7 +530,7 @@ def preprocessCorrect():
      bs = newbs
      continue
     if bs[i]=='|' and len(bs)==1:
-     print 'Metasymbol to terminal heuristic fix:',bs[i],'in',nt,'(atomic bar)'
+     print 'RR: Metasymbol to terminal heuristic fix:',bs[i],'in',nt,'(atomic bar)'
      pessimistic[2] += 1
      bs[i]='"|"'
      i+=1
@@ -540,10 +546,10 @@ def preprocessCorrect():
      bs = newbs
      i -= 2
      pessimistic[2] += 1
-     print 'Structural heuristic fix in',nt,'(group introduced)'
+     print 'RR: Structural heuristic fix in',nt,'(group introduced)'
      continue
     #if bs[i]=='"|"' and len(bs)>1: # and nt.find('OrExpression')<0:
-    # print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
+    # print 'RR: Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(suspicious context)'
     # pessimistic[2] += 1
     # bs[i] = '|'
     # continue
@@ -554,7 +560,7 @@ def preprocessCorrect():
      else:
       quote = False
       word = bs[i]
-     print 'Decompose symbols heuristic fix:',bs[i],'in',nt,
+     print 'RR: Decompose symbols heuristic fix:',bs[i],'in',nt,
      if word[0]=='.' or word[-1]=='.':
       print '(1 to 2)'
      else:
@@ -590,13 +596,13 @@ def preprocessCorrect():
      continue
     if bs[i][0]=='"':
      if bs[i][1].isupper() and bs[i][1:-1] in prods.keys():
-      print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+      print 'RR: Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
       pessimistic[2] += 1
       bs[i]=bs[i][1:-1]
       i+=1
       continue
      if bs[i]=='"opt"':
-      print 'Optional nonterminal heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
+      print 'RR: Optional nonterminal heuristic fix:',bs[i],'in',nt,'(opt replaced by BNF optional)'
       pessimistic[2] += 1
       bs[i]='?????'
       continue
@@ -612,12 +618,12 @@ def preprocessCorrect():
      continue
     if bs[i].isalnum():
      if bs[i][0].islower() and (bs[i] not in prods.keys()):
-      print 'Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(no definition)'
+      print 'RR: Nonterminal to terminal heuristic fix:',bs[i],'in',nt,'(no definition)'
       pessimistic[2] += 1
       bs[i] = '"'+bs[i]+'"'
       continue
     elif bs[i] not in ('[',']','{','}','|','(',')'):
-     print 'Nonterminal to terminal cheat heuristic fix:',bs[i],'in',nt,'(weird name)'
+     print 'RR: Nonterminal to terminal cheat heuristic fix:',bs[i],'in',nt,'(weird name)'
      pessimistic[2] += 1
      bs[i] = '"'+bs[i]+'"'
      i+=1
@@ -626,7 +632,7 @@ def preprocessCorrect():
      # bracketing problem
      bs[i-1]='"["'
      bs[i]='"]"'
-     print 'Metasymbol to terminal heuristic fix in',nt,'(empty optional group)'
+     print 'RR: Metasymbol to terminal heuristic fix in',nt,'(empty optional group)'
      pessimistic[2] += 1
      i+=1
      continue
@@ -634,7 +640,7 @@ def preprocessCorrect():
      # bracketing problem
      bs[i-1]='"{"'
      bs[i]='"}"'
-     print 'Metasymbol to terminal heuristic fix in',nt,'(empty starred group)'
+     print 'RR: Metasymbol to terminal heuristic fix in',nt,'(empty starred group)'
      pessimistic[2] += 1
      i+=1
      continue
@@ -650,7 +656,7 @@ def preprocessCorrect():
      if '|' not in bs[left:i]:
       bs[left]='"("'
       bs[i]='")"'
-      print 'Metasymbol to terminal heuristic fix in',nt,'(useless group)'
+      print 'RR: Metasymbol to terminal heuristic fix in',nt,'(useless group)'
       pessimistic[2] += 1
       i+=1
       continue
@@ -675,13 +681,13 @@ def glueSymbols():
       test = bs[i][1]+bs[i+1]
      if test.isalnum():
       if test in prods.keys():
-       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'RR: Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = test
        bs[i+1]=''
-       print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+       print 'RR: Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
        pessimistic[2] += 2
       elif not (bs[i+1][0].isupper() or bs[i+1] in prods.keys()):
-       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'RR: Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = '"'+test+'"'
        bs[i+1]=''
        pessimistic[2] += 1
@@ -694,13 +700,13 @@ def glueSymbols():
       test = bs[i][0]+bs[i+1]
      if test.isalnum():
       if test in prods.keys():
-       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'RR: Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = test
        bs[i+1]=''
-       print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+       print 'RR: Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
        pessimistic[2] += 2
       elif not (bs[i+1][0].isupper() or bs[i+1] in prods.keys()):
-       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'RR: Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        pessimistic[2] += 1
        bs[i] = '"'+test+'"'
        bs[i+1]=''
@@ -716,13 +722,13 @@ def glueSymbols():
       test = bs[i-1]+bs[i][1]
      if test.isalnum():
       if test in prods.keys():
-       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'RR: Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = test
        bs[i-1]=''
-       print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+       print 'RR: Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
        pessimistic[2] += 2
       elif bs[i-1] not in prods.keys():
-       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'RR: Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        pessimistic[2] += 1
        bs[i]='"'+test+'"'
        bs[i-1]=''
@@ -735,13 +741,13 @@ def glueSymbols():
       test = bs[i-1]+bs[i][0]
      if test.isalnum():
       if test in prods.keys():
-       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'RR: Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        bs[i] = test
        bs[i-1]=''
-       print 'Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
+       print 'RR: Terminal to nonterminal heuristic fix:',bs[i],'in',nt,'(familiar name)'
        pessimistic[2] += 2
       elif bs[i-1] not in prods.keys():
-       print 'Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
+       print 'RR: Sibling symbols heuristic fix:','"'+test+'"','in',nt,'(2 to 1)'
        pessimistic[2] += 1
        bs[i]='"'+test+'"'
        bs[i-1]=''
@@ -767,7 +773,7 @@ def fixBracketPair(nt,arr,left,right):
  if cx==0:
   return arr
  else:
-  print 'Structural heuristic fix in',nt,
+  print 'RR: Structural heuristic fix in',nt,
   pessimistic[2] += 1
   #print arr,'->'
   arr.reverse()
@@ -811,7 +817,7 @@ if __name__ == "__main__":
   print 'Writing the extracted grammar...'
   printGrammarVertical(sys.argv[2])
   if pessimistic[2]:
-   print 'Total of',pessimistic[2]+pessimistic[1],'problems encountered and coped with.'
+   print 'Total of',pessimistic[3]+pessimistic[2]+pessimistic[1],'problems encountered and coped with.'
  else:
   print 'Usage:'
   print ' ',sys.argv[0],'''<input> <output> [<options>]

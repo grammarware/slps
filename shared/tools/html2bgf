@@ -11,14 +11,14 @@ if [ $# -lt 2 ]; then
     echo "This tool extracts a BGF from Java Language Specification or a similarly typeset HTML"
     echo "Usage:"
     echo "        html2bgf [<keywords-list>] <input-hypertext-document> <output-bgf>"
-    echo "   or:  html2bgf [<keywords-list>] <input-hypertext-document> <output-bnf> -bnf"
+    echo "   or:  html2bgf [<keywords-list>] <input-hypertext-document> <output-bnf> -v"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 elif [ $# -eq 2 ]; then
     python ${SLPS}/topics/extraction/html2bgf/html2bgf.py $1 $2
-elif [ "$3" == "-bnf" ]; then
+elif [ "$3" == "-v" ]; then
     python ${SLPS}/topics/extraction/html2bgf/html2bgf.py $1 $2 $3
 else
     python ${SLPS}/topics/extraction/html2bgf/getpre.py $1 $2 $2.fixed
