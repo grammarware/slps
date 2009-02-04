@@ -1250,10 +1250,9 @@
       - [], ;([,([n(VariableDeclaratorRest), *(,([t((,)), n(Identifier), n(VariableDeclaratorRest)])), t((;))]), ,([n(FormalParameters), *(,([t([), t(])])), ?(,([t(throws), n(TypeList)])), t((;))])])
      vs.
       - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
+ 
   -->
-  <xbgf:undefine>InterfaceMethodOrFieldRest</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>InterfaceMethodOrFieldRest</nonterminal>
       <bgf:expression>
@@ -1274,7 +1273,7 @@
         </choice>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   <xbgf:vertical>
     <nonterminal>InterfaceMethodOrFieldRest</nonterminal>
   </xbgf:vertical>

@@ -633,9 +633,7 @@
   <xbgf:deyaccify>ElementValues</xbgf:deyaccify>
   <!-- can be yaccify after yaccify2 test case works -->
   <!-- BREFACTOR -->
-  <xbgf:undefine>ElementValues</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>ElementValues</nonterminal>
       <bgf:expression>
@@ -659,7 +657,7 @@
         </choice>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   <!-- end of future yaccify -->
   <xbgf:factor>
     <bgf:expression>

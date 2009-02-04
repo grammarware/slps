@@ -309,9 +309,7 @@
       - [], ;([n(FormalParameter), ,([n(FormalParameters), t((,)), n(FormalParameter)])])
   -->
   <!-- BREFACTOR -->
-  <xbgf:undefine>FormalParameters</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>FormalParameters</nonterminal>
       <bgf:expression>
@@ -332,7 +330,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
+  <!-- TODO: perhaps an introduce? -->
   <!-- BREFACTOR -->
   <xbgf:define>
     <bgf:production>

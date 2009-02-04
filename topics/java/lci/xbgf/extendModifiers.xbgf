@@ -29,8 +29,6 @@
         <nonterminal>ElementValuePair</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
     <bgf:production>
       <nonterminal>ElementValuePairs</nonterminal>
       <bgf:expression>
@@ -47,7 +45,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+  </xbgf:introduce>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>ElementValueArrayInitializer</nonterminal>
@@ -151,39 +149,37 @@
         <nonterminal>NormalAnnotation</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
     <bgf:production>
       <nonterminal>Annotation</nonterminal>
       <bgf:expression>
         <nonterminal>MarkerAnnotation</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
-  <xbgf:add>
     <bgf:production>
       <nonterminal>Annotation</nonterminal>
       <bgf:expression>
         <nonterminal>SingleElementAnnotation</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+  </xbgf:introduce>
   <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ElementValue</nonterminal>
       <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>ConditionalExpression</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Annotation</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ElementValueArrayInitializer</nonterminal>
-          </bgf:expression>
-        </choice>
+        <nonterminal>ConditionalExpression</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>ElementValue</nonterminal>
+      <bgf:expression>
+        <nonterminal>Annotation</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>ElementValue</nonterminal>
+      <bgf:expression>
+        <nonterminal>ElementValueArrayInitializer</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
@@ -192,33 +188,26 @@
     <bgf:production>
       <nonterminal>ElementValues</nonterminal>
       <bgf:expression>
-        <choice>
+        <nonterminal>ElementValue</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>ElementValues</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ElementValues</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>,</terminal>
+          </bgf:expression>
           <bgf:expression>
             <nonterminal>ElementValue</nonterminal>
           </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>ElementValues</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>,</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>ElementValue</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
+        </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  <xbgf:vertical>
-    <nonterminal>ElementValue</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>ElementValues</nonterminal>
-  </xbgf:vertical>
 
   <!-- 
      - Fail: ConstantModifiers.

@@ -60,15 +60,13 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
     <bgf:production>
       <nonterminal>AdditionalBoundList</nonterminal>
       <bgf:expression>
         <nonterminal>AdditionalBound</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+  </xbgf:introduce>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>TypeBound</nonterminal>
@@ -117,9 +115,7 @@
         <nonterminal>TypeParameter</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
-    <bgf:production>
+     <bgf:production>
       <nonterminal>TypeParameterList</nonterminal>
       <bgf:expression>
         <sequence>
@@ -135,7 +131,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+ </xbgf:introduce>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>TypeParameters</nonterminal>
@@ -215,8 +211,6 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
     <bgf:production>
       <nonterminal>AssertStatement</nonterminal>
       <bgf:expression>
@@ -239,7 +233,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+  </xbgf:introduce>
   <xbgf:add>
     <bgf:production>
       <nonterminal>StatementWithoutTrailingSubstatement</nonterminal>
@@ -262,8 +256,6 @@
         <nonterminal>Annotation</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
     <bgf:production>
       <nonterminal>Annotations</nonterminal>
       <bgf:expression>
@@ -277,7 +269,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+  </xbgf:introduce>
   <!-- GENERALITY -->
   <xbgf:inject>
     <bgf:production>
@@ -554,9 +546,7 @@
         <nonterminal>EnumConstant</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
-    <bgf:production>
+     <bgf:production>
       <nonterminal>EnumConstants</nonterminal>
       <bgf:expression>
         <sequence>
@@ -572,7 +562,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+ </xbgf:introduce>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>EnumBody</nonterminal>
@@ -701,75 +691,84 @@
     <bgf:production>
       <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
       <bgf:expression>
-        <choice>
+        <sequence>
           <bgf:expression>
-            <sequence>
+            <optional>
               <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>AbstractMethodModifiers</nonterminal>
-                  </bgf:expression>
-                </optional>
+                <nonterminal>AbstractMethodModifiers</nonterminal>
               </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Type</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>(</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>)</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>DefaultValue</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>;</terminal>
-              </bgf:expression>
-            </sequence>
+            </optional>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>ConstantDeclaration</nonterminal>
+            <nonterminal>Type</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>ClassDeclaration</nonterminal>
+            <nonterminal>Identifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>InterfaceDeclaration</nonterminal>
+            <terminal>(</terminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>EnumDeclaration</nonterminal>
+            <terminal>)</terminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>AnnotationTypeDeclaration</nonterminal>
+            <optional>
+              <bgf:expression>
+                <nonterminal>DefaultValue</nonterminal>
+              </bgf:expression>
+            </optional>
           </bgf:expression>
           <bgf:expression>
             <terminal>;</terminal>
           </bgf:expression>
-        </choice>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>ConstantDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>InterfaceDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>EnumDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+      <bgf:expression>
+        <nonterminal>AnnotationTypeDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+      <bgf:expression>
+        <terminal>;</terminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-  <xbgf:vertical>
-    <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
-  </xbgf:vertical>
-  <xbgf:introduce>
+   <xbgf:introduce>
     <bgf:production>
       <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
       <bgf:expression>
         <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
-    <bgf:production>
+     <bgf:production>
       <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
       <bgf:expression>
         <sequence>
@@ -782,7 +781,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+ </xbgf:introduce>
   <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
@@ -1407,16 +1406,14 @@
         <nonterminal>ClassType</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
     <bgf:production>
       <nonterminal>ExceptionType</nonterminal>
       <bgf:expression>
         <nonterminal>TypeVariable</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
-  
+  </xbgf:introduce>
+    
   <!-- ISSUE PERMISSIVENESS
      - Fail: Throws.
       - [], ,([t(throws), n(ClassTypeList)])
@@ -1429,10 +1426,8 @@
       <to>ExceptionTypeList</to>
     </nonterminal>
   </xbgf:rename>
-  <!-- BREFACTOR -->
-  <xbgf:undefine>ExceptionTypeList</xbgf:undefine>
   <!-- GENERALITY -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>ExceptionTypeList</nonterminal>
       <bgf:expression>
@@ -1456,7 +1451,7 @@
         </choice>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   <xbgf:vertical>
     <nonterminal>ExceptionTypeList</nonterminal>
   </xbgf:vertical>
@@ -1476,9 +1471,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
-    <bgf:production>
+      <bgf:production>
       <nonterminal>WildcardBounds</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1491,7 +1484,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+</xbgf:introduce>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>Wildcard</nonterminal>
@@ -1518,15 +1511,13 @@
         <nonterminal>ReferenceType</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
-    <bgf:production>
+      <bgf:production>
       <nonterminal>ActualTypeArgument</nonterminal>
       <bgf:expression>
         <nonterminal>Wildcard</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+</xbgf:introduce>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>ActualTypeArgumentList</nonterminal>
@@ -1534,9 +1525,7 @@
         <nonterminal>ActualTypeArgument</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
-    <bgf:production>
+     <bgf:production>
       <nonterminal>ActualTypeArgumentList</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1552,8 +1541,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
-  <xbgf:introduce>
+ </xbgf:introduce>
+   <xbgf:introduce>
     <bgf:production>
       <nonterminal>TypeArguments</nonterminal>
       <bgf:expression>
@@ -1578,9 +1567,7 @@
         <nonterminal>TypeName</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
-    <bgf:production>
+     <bgf:production>
       <nonterminal>TypeDeclSpecifier</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1596,8 +1583,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
-
+ </xbgf:introduce>
+ 
   <!-- 
    - Fail: InterfaceType.
       - [], n(TypeName)
@@ -1608,12 +1595,8 @@
      vs.
       - [], ,([n(TypeDeclSpecifier), ?(n(TypeArguments))])
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>InterfaceType</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:undefine>ClassType</xbgf:undefine>
   <!-- GENERALITY -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>InterfaceType</nonterminal>
       <bgf:expression>
@@ -1631,9 +1614,9 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   <!-- GENERALITY -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>ClassType</nonterminal>
       <bgf:expression>
@@ -1651,7 +1634,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
 
   <!-- ISSUE EXTEND 
      - Fail: ExplicitConstructorInvocation.
@@ -1837,8 +1820,6 @@
         <nonterminal>ReferenceType</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
     <bgf:production>
       <nonterminal>ReferenceTypeList</nonterminal>
       <bgf:expression>
@@ -1855,7 +1836,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+</xbgf:introduce>
+
   <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>

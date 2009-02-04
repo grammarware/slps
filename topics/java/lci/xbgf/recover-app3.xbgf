@@ -40,10 +40,8 @@
      vs.
       - [], ,([t({), ?(n(AnnotationTypeElementDeclarations)), t(})])
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>AnnotationTypeBody</xbgf:undefine>
   <!-- REVISE -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>AnnotationTypeBody</nonterminal>
       <bgf:expression>
@@ -64,6 +62,6 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
 
 </xbgf:sequence>

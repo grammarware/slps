@@ -33,6 +33,7 @@
       <xsd:element ref="xbgf:add"/>
       <xsd:element ref="xbgf:chain"/>
       <xsd:element ref="xbgf:define"/>
+      <xsd:element ref="xbgf:redefine"/>
       <xsd:element ref="xbgf:designate"/>
       <xsd:element ref="xbgf:deyaccify"/>
       <xsd:element ref="xbgf:distribute"/>
@@ -125,6 +126,23 @@
         use. The introduce operator should be used when a fresh nonterminal
         is to be defined. The add operator should be used when an existing
         definition is to be extended.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="tag" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="redefine">
+    <xsd:annotation>
+      <xsd:documentation>
+	      A replace variant that works on production level. When this
+        transformation is executed, all current productions for the
+        nonterminal are dropped, and all the given ones are added
+        to the grammar.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>

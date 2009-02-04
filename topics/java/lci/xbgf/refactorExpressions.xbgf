@@ -122,9 +122,7 @@ vs
   p([], 'CastExpression', ','([t('('), ;([n('Expression'), n('Type')]), t(')'), n('UnaryExpression')])),
 
   -->
-  <xbgf:undefine>CastExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>CastExpression</nonterminal>
       <bgf:expression>
@@ -151,7 +149,7 @@ vs
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   <xbgf:inline>CastExpression</xbgf:inline>
 
   <!-- Defining PrefixOp; smart extract needed -->
@@ -402,9 +400,7 @@ vs
 
   <!--  BREFACTOR 
   Now to Expression2, using the expressway -->
-  <xbgf:undefine>ConditionalOrExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>ConditionalOrExpression</nonterminal>
       <bgf:expression>
@@ -422,7 +418,7 @@ vs
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   <xbgf:rename>
     <nonterminal>
       <from>ConditionalOrExpression</from>
@@ -695,16 +691,14 @@ vs
      vs.
       - [], ;([n(Assignment), ,([t(++), n(Expression3)]), ,([t(- -), n(Expression3)]), ,([n(Primary), *(n(Selector)), *(;([t(++), t(- -)])), t(++)]), ,([n(Primary), *(n(Selector)), *(;([t(++), t(- -)])), t(- -)]), n(MethodInvocation), n(ClassInstanceCreationExpression)])
   -->
-  <xbgf:undefine>StatementExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>StatementExpression</nonterminal>
       <bgf:expression>
         <nonterminal>Expression</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
 
   <xbgf:vertical>
     <nonterminal>Expression3</nonterminal>

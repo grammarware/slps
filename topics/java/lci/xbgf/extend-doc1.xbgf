@@ -34,8 +34,6 @@
         <nonterminal>Identifier</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:add>
     <bgf:production>
       <nonterminal>ClassName</nonterminal>
       <bgf:expression>
@@ -52,7 +50,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+  </xbgf:introduce>
   <xbgf:add>
     <bgf:production>
       <nonterminal>FieldAccess</nonterminal>
@@ -87,9 +85,7 @@
       - [], ;([n(Literal), ,([n(Type), t(.), t(class)]), ,([t(void), t(.), t(class)]), t(this), ,([n(ClassName), t(.), t(this)]), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
     -->
   <!-- BREFACTOR -->
-  <xbgf:undefine>PrimaryNoNewArray</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>PrimaryNoNewArray</nonterminal>
       <bgf:expression>
@@ -167,7 +163,7 @@
         </choice>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   <xbgf:vertical>
     <nonterminal>PrimaryNoNewArray</nonterminal>
   </xbgf:vertical>

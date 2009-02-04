@@ -276,6 +276,12 @@ xml2xbgf(T,undefine(N))
     self(name(xbgf:undefine),T),
     content(T,N).
 
+xml2xbgf(T,redefine(Ps2))
+ :-
+    self(name(xbgf:redefine),T),
+    children(name(bgf:production),T,Ps1),
+    maplist(xmlToP,Ps1,Ps2).
+
 xml2xbgf(T,G)
  :-
     self(name(xbgf:unfold),T),

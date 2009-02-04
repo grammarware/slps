@@ -9,10 +9,8 @@
      vs.
       - [], *(?(n(InterfaceMemberDeclarations)))
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>InterfaceBody</xbgf:undefine>
   <!-- REVISE -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>InterfaceBody</nonterminal>
       <bgf:expression>
@@ -33,7 +31,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   
   <!-- ISSUE EXTRACTERROR
    Error in markup of JLS2
@@ -42,10 +40,8 @@
      vs.
       - [], *(?(n(ClassBodyDeclarations)))
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>ClassBody</xbgf:undefine>
   <!-- REVISE -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>ClassBody</nonterminal>
       <bgf:expression>
@@ -66,7 +62,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   
   <!-- ISSUE EXTRACTERROR
   Error in markup in JLS2
@@ -76,10 +72,8 @@
      vs.
       - [], *(,([?(n(ExplicitConstructorInvocation)), ?(n(BlockStatements))]))
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>ConstructorBody</xbgf:undefine>
   <!-- REVISE -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>ConstructorBody</nonterminal>
       <bgf:expression>
@@ -105,7 +99,7 @@
         </star>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
 
   <!-- ISSUE EXTRACTERROR
      - Fail: Block.
@@ -113,10 +107,8 @@
      vs.
       - [], *(?(n(BlockStatements)))
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>Block</xbgf:undefine>
   <!-- REVISE -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>Block</nonterminal>
       <bgf:expression>
@@ -137,7 +129,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   
   <!-- ISSUE EXTRACTERROR
      - Fail: SwitchBlock.
@@ -145,10 +137,8 @@
      vs.
       - [], *(,([?(n(SwitchBlockStatementGroups)), ?(n(SwitchLabels))]))
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>SwitchBlock</xbgf:undefine>
   <!-- REVISE -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>SwitchBlock</nonterminal>
       <bgf:expression>
@@ -176,7 +166,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   
   <!-- ISSUE EXTRACTERROR
      - Fail: ConstructorBody.
@@ -184,10 +174,8 @@
      vs.
       - [], *(,([?(n(ExplicitConstructorInvocation)), ?(n(BlockStatements))]))
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>ConstructorBody</xbgf:undefine>
   <!-- REVISE -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>ConstructorBody</nonterminal>
       <bgf:expression>
@@ -215,7 +203,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   
   <!-- ISSUE EXTRACTERROR
   Error in PrimaryNoNewArray undetected by the extractor due to lacking definition -->

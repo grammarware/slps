@@ -37,10 +37,8 @@
      vs.
       - [], ;([,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(TypeParameters))]), ,([?(n(ExtendsInterfaces)), n(InterfaceBody)])])
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>NormalInterfaceDeclaration</xbgf:undefine>
   <!-- REVISE -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>NormalInterfaceDeclaration</nonterminal>
       <bgf:expression>
@@ -71,7 +69,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   
   <!-- ISSUE EXTRACTERROR
   Extractor error:
@@ -80,10 +78,8 @@
      vs.
       - [], *(,([?(n(ElementValues)), ?(t((,)))]))
   -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>ElementValueArrayInitializer</xbgf:undefine>
   <!-- REVISE -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>ElementValueArrayInitializer</nonterminal>
       <bgf:expression>
@@ -111,7 +107,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   
   <!-- ISSUE EXTRACTERROR
   extractor's problem -->

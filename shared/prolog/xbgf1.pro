@@ -107,6 +107,18 @@ ps2n(Ps1,N)
       []),
     !.
 
+%
+% p([l(redefine)], f, +n(p))
+%
+% Undefine a nonterminal and define a new one with the same name
+%
+
+redefine(Ps1,G1,G2)
+ :-
+    ps2n(Ps1,N),
+    undefine(N,G1,G3),
+    define(Ps1,G3,G2).
+
 
 %
 % p([l(designate)], f, n(p))

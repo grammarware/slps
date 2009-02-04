@@ -7,30 +7,26 @@
     <bgf:production>
       <nonterminal>PackageOrTypeName</nonterminal>
       <bgf:expression>
-        <choice>
+        <nonterminal>Identifier</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>PackageOrTypeName</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>PackageOrTypeName</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
           <bgf:expression>
             <nonterminal>Identifier</nonterminal>
           </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>PackageOrTypeName</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
+        </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-  <xbgf:vertical>
-    <nonterminal>PackageOrTypeName</nonterminal>
-  </xbgf:vertical>
 
   <!--
   Local substitution:

@@ -1144,17 +1144,15 @@
       - [], n(Expression)
 ???
  -->
-  <!-- BREFACTOR -->
-  <xbgf:undefine>StatementExpression</xbgf:undefine>
   <!-- GENERALITY -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>StatementExpression</nonterminal>
       <bgf:expression>
         <nonterminal>Expression</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
 
   <!-- 
    - Fail: Expression3.
@@ -1168,9 +1166,7 @@
     <nonterminal>Expression3</nonterminal>
   </xbgf:vertical>
   <!-- BREFACTOR -->
-  <xbgf:undefine>CastExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>CastExpression</nonterminal>
       <bgf:expression>
@@ -1197,7 +1193,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   <xbgf:inline>CastExpression</xbgf:inline>
 
   <!-- 
@@ -1330,9 +1326,7 @@
   after test case deyaccify8 starts working
   -->
   <!-- BREFACTOR -->
-  <xbgf:undefine>Assignment</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
       <nonterminal>Assignment</nonterminal>
       <bgf:expression>
@@ -1357,7 +1351,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   <xbgf:inline>Assignment</xbgf:inline>
   <!-- GENERALITY -->
   <xbgf:replace>
