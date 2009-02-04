@@ -92,7 +92,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
-  <xbgf:horizontal>ExtendsInterfaces</xbgf:horizontal>
   <xbgf:deyaccify>ExtendsInterfaces</xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>TypeList</nonterminal>
@@ -147,7 +146,6 @@
      vs.
       - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
   -->
-  <xbgf:horizontal>InterfaceMemberDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>InterfaceMemberDeclarations</xbgf:deyaccify>
   <xbgf:inline>InterfaceMemberDeclarations</xbgf:inline>
   <xbgf:rename>
@@ -252,7 +250,6 @@
      vs.
       - [], ;([n(Annotation), ,([n(Annotations), n(Annotation)])])
   -->
-  <xbgf:horizontal>Annotations</xbgf:horizontal>
   <xbgf:deyaccify>Annotations</xbgf:deyaccify>
 
   <!-- BREFACTOR 
@@ -629,9 +626,8 @@
      vs.
       - [], ;([n('ElementValue'), ,([n('ElementValues'), t((',')), n('ElementValue')])])
   -->
-  <xbgf:horizontal>ElementValues</xbgf:horizontal>
   <xbgf:deyaccify>ElementValues</xbgf:deyaccify>
-  <!-- can be yaccify after yaccify2 test case works -->
+  <!-- TODO: can be yaccify after yaccify2 test case works -->
   <!-- BREFACTOR -->
   <xbgf:redefine>
     <bgf:production>

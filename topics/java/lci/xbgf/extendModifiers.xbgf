@@ -215,7 +215,6 @@
      vs.
       - [], ;([n(ConstantModifier), ,([n(ConstantModifier), n(ConstantModifers)])])
   -->
-  <xbgf:horizontal>ConstantModifiers</xbgf:horizontal>
   <xbgf:deyaccify>ConstantModifiers</xbgf:deyaccify>
   <xbgf:yaccify>
     <bgf:production>

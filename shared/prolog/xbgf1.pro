@@ -147,7 +147,89 @@ designate(P1,g(Rs,Ps1),g(Rs,Ps2))
 % Use EBNF-based regular expression operator instead of BNF encoding
 %
 
-deyaccify(N,g(Rs,Ps1),g(Rs,Ps2))
+deyaccify(N,g(Rs,Ps1),g(Rs,Ps3))
+ :-
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    require(
+       ( length(Ps2, Len), Len > 1 ),
+       'Nonterminal ~q must be defined vertically for deyaccification to work.',
+       [N]),
+    Ps2 = [P1,P2],
+    require(
+      once(xbgf1:newdeyaccify_rules(N,P1,P2,P3)),
+      'Nonterminal ~q is not deyaccifiable: ~q and ~q',
+      [N,P1,P2]),
+    append(Ps2a,[P3|Ps2b],Ps3).
+
+% N: Nab|x -> N: x(ab)*
+newdeyaccify_rules(N,P1,P2,P3)
+ :-
+    P1 = p(As,N,','([n(N)|Xs1])),
+    P2 = p(As,N,Xs2),
+    normalizeG(','(Xs1),Xs3),
+    normalizeG(','([Xs2]),Xs4),
+   (
+        eqX(Xs3,Xs4),!,
+        P3 = p(As,N,+(','(Xs1)))
+    ;
+        P3 = p(As,N,','([Xs2,*(','(Xs1))]))
+    ).
+% N: abN|x -> N: (ab)*x
+newdeyaccify_rules(N,P1,P2,P3)
+ :-
+    P1 = p(As,N,','(Xs1)),
+    tailless(Xs1,[],Xs2),
+    tailof(Xs1,n(N)),
+    P2 = p(As,N,Xs3),
+    normalizeG(','(Xs2),Xs4),
+    normalizeG(','([Xs3]),Xs5),
+    (
+        eqX(Xs4,Xs5),!,
+        P3 = p(As,N,+(','(Xs2)))
+    ;
+        P3 = p(As,N,','([*(','(Xs2)),Xs3]))
+    ).
+%%%%%%
+% N: Nab|x -> N: x(ab)*
+newdeyaccify_rules(N,P1,P2,P3)
+ :-
+    P2 = p(As,N,','([n(N)|Xs1])),
+    P1 = p(As,N,Xs2),
+    normalizeG(','(Xs1),Xs3),
+    normalizeG(','([Xs2]),Xs4),
+    (
+        eqX(Xs3,Xs4),!,
+        P3 = p(As,N,+(','(Xs1)))
+    ;
+        P3 = p(As,N,','([Xs2,*(','(Xs1))]))
+    ).
+% N: abN|x -> N: (ab)*x
+newdeyaccify_rules(N,P1,P2,P3)
+ :-
+    P2 = p(As,N,','(Xs1)),
+    tailless(Xs1,[],Xs2),
+    tailof(Xs1,n(N)),
+    P1 = p(As,N,Xs3),
+    normalizeG(','(Xs2),Xs4),
+    normalizeG(','([Xs3]),Xs5),
+    (
+        eqX(Xs4,Xs5),!,
+        P3 = p(As,N,+(','(Xs2)))
+    ;
+        P3 = p(As,N,','([*(','(Xs2)),Xs3]))
+    ).
+
+% Needed -> prelude.pro
+% Not needed -> throw away
+tailof([X],X).
+tailof([_|T],X) :- tailof(T,X).
+tailless([_],L1,L1).
+tailless([H|T],L1,L3)
+ :-
+   concat([L1,[H]],L2),
+   tailless(T,L2,L3).
+
+olddeyaccify(N,g(Rs,Ps1),g(Rs,Ps2))
  :-
     splitN1(Ps1,N,P1,Ps2a,Ps2b),
     P1 = p(As,N,X1),    

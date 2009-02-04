@@ -142,7 +142,6 @@
       <to>TypeList</to>
     </nonterminal>
   </xbgf:rename>
-  <xbgf:horizontal>TypeList</xbgf:horizontal>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
 
   <!-- BREFACTOR 
@@ -197,7 +196,6 @@
   p([], 'Type', ','([n('Identifier'), ?(n('TypeArguments')), *(','([t('.'), n('Identifier'), ?(n('TypeArguments'))])), n('BracketsOpt')])),
   p([], 'Type', n('BasicType')),
   -->
-  <xbgf:horizontal>TypeDeclSpecifier</xbgf:horizontal>
   <xbgf:deyaccify>TypeDeclSpecifier</xbgf:deyaccify>
   
   <!-- BREFACTOR 

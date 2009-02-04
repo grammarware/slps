@@ -261,7 +261,6 @@
      vs.
       - [], ;([n(StatementExpressionList), ,([?(t(final)), n(Type), n(VariableDeclarators)])])
   -->
-  <xbgf:horizontal>StatementExpressionList</xbgf:horizontal>
   <xbgf:deyaccify>StatementExpressionList</xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
@@ -292,7 +291,6 @@
      vs.
       - [], ,([t({), ?(n(VariableInitializers)), ?(t((,))), t(})])
   -->
-  <xbgf:horizontal>VariableInitializers</xbgf:horizontal>
   <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
 

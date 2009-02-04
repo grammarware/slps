@@ -154,7 +154,6 @@
       <to>TypeList</to>
     </nonterminal>
   </xbgf:rename>
-  <xbgf:horizontal>TypeList</xbgf:horizontal>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
   
   <!-- BREFACTOR 

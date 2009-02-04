@@ -103,7 +103,6 @@
      vs.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
   -->
-  <xbgf:horizontal>ClassBodyDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>ClassBodyDeclarations</xbgf:deyaccify>
   <xbgf:inline>ClassBodyDeclarations</xbgf:inline>
   <xbgf:massage>
@@ -427,7 +426,6 @@
      Identifier "(" [ FormalParameterList ] ")"
      MethodDeclarator "[" "]"
   -->
-  <xbgf:horizontal>MethodDeclarator</xbgf:horizontal>
   <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
   <xbgf:inline>MethodDeclarator</xbgf:inline>
 
@@ -692,7 +690,6 @@
      vs.
       - [], ;([n(Identifier), ,([n(VariableDeclaratorId), t([), t(])])])
    -->
-  <xbgf:horizontal>VariableDeclaratorId</xbgf:horizontal>
   <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
 
   <!--  
@@ -1088,7 +1085,6 @@
      vs.
       - [], ,([t(<), n(TypeParameterList), t(>)])
   -->
-  <xbgf:horizontal>TypeParameterList</xbgf:horizontal>
   <xbgf:deyaccify>TypeParameterList</xbgf:deyaccify>
   <xbgf:inline>TypeParameterList</xbgf:inline>
 
@@ -1109,7 +1105,6 @@
   AdditionalBound is defined as:
      "&amp;" InterfaceType
   -->
-  <xbgf:horizontal>AdditionalBoundList</xbgf:horizontal>
   <xbgf:deyaccify>AdditionalBoundList</xbgf:deyaccify>
   <xbgf:inline>AdditionalBoundList</xbgf:inline>
   <xbgf:massage>

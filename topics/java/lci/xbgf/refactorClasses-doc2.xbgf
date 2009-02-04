@@ -134,7 +134,6 @@
      vs.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
   -->
-  <xbgf:horizontal>ClassBodyDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>ClassBodyDeclarations</xbgf:deyaccify>
   <xbgf:inline>ClassBodyDeclarations</xbgf:inline>
   <xbgf:massage>
@@ -296,7 +295,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <xbgf:horizontal>FormalParameterList</xbgf:horizontal>
   <xbgf:deyaccify>FormalParameterList</xbgf:deyaccify>
   <xbgf:inline>FormalParameterList</xbgf:inline>
   <xbgf:extract>
@@ -330,7 +328,6 @@
    ','([n('ModifiersOpt'), t(void), n('Identifier'), n('FormalParameters'), ?(','([t(throws), n('TypeList')])), n('MethodBody')])),
 
   -->
-  <xbgf:horizontal>MethodDeclarator</xbgf:horizontal>
   <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>BracketsOpt</nonterminal>

@@ -192,7 +192,6 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  <xbgf:horizontal>PostfixExpression</xbgf:horizontal>
   <xbgf:deyaccify>PostfixExpression</xbgf:deyaccify>
   <!-- BREFACTOR -->
   <xbgf:inject>

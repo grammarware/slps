@@ -65,7 +65,6 @@
  with
    p([], 'ExtendsInterfaces', ;([','([t(extends), n('InterfaceType')]), ','([n('ExtendsInterfaces'), t((',')), n('InterfaceType')])]))
  -->
-  <xbgf:horizontal>ExtendsInterfaces</xbgf:horizontal>
   <xbgf:deyaccify>ExtendsInterfaces</xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>TypeList</nonterminal>
@@ -234,7 +233,6 @@
   with
     p([], 'SwitchLabels', ;([n('SwitchLabel'), ','([n('SwitchLabels'), n('SwitchLabel')])])),
   -->
-  <xbgf:horizontal>SwitchLabels</xbgf:horizontal>
   <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
   
   <!-- 
@@ -358,7 +356,6 @@
      vs.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
   -->
-  <xbgf:horizontal>VariableInitializers</xbgf:horizontal>
   <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
   
@@ -368,7 +365,6 @@
      vs.
       - [], ,([t({), *(n(ClassBodyDeclaration)), t(})])
   -->
-  <xbgf:horizontal>ClassBodyDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>ClassBodyDeclarations</xbgf:deyaccify>
   <xbgf:inline>ClassBodyDeclarations</xbgf:inline>
   <xbgf:massage>
@@ -398,7 +394,6 @@
      vs.
       - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
   -->
-  <xbgf:horizontal>InterfaceMemberDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>InterfaceMemberDeclarations</xbgf:deyaccify>
   <xbgf:inline>InterfaceMemberDeclarations</xbgf:inline>
   <xbgf:massage>
@@ -434,9 +429,7 @@
      vs.
       - [], ,([?(,([t(package), n(QualifiedIdentifier), t((;))])), *(n(ImportDeclaration)), *(n(TypeDeclaration))])
   -->
-  <xbgf:horizontal>ImportDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>ImportDeclarations</xbgf:deyaccify>
-  <xbgf:horizontal>TypeDeclarations</xbgf:horizontal>
   <xbgf:deyaccify>TypeDeclarations</xbgf:deyaccify>
   <xbgf:inline>ImportDeclarations</xbgf:inline>
   <xbgf:inline>TypeDeclarations</xbgf:inline>
@@ -512,7 +505,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <xbgf:horizontal>Modifiers</xbgf:horizontal>
   <xbgf:deyaccify>Modifiers</xbgf:deyaccify>
   <xbgf:inline>Modifiers</xbgf:inline>
   <xbgf:massage>
@@ -768,7 +760,6 @@
       <nonterminal>InterfaceMemberDecl</nonterminal>
     </in>
   </xbgf:unfold>
-  <xbgf:horizontal>MethodDeclarator</xbgf:horizontal>
   <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
   <xbgf:inline>MethodDeclarator</xbgf:inline>
   
@@ -1127,7 +1118,6 @@
      vs.
       - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
   -->
-  <xbgf:horizontal>FormalParameterList</xbgf:horizontal>
   <xbgf:deyaccify>FormalParameterList</xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>

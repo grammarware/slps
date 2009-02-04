@@ -14,10 +14,8 @@
   <xbgf:horizontal>PrimaryNoNewArray</xbgf:horizontal>
   <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
 
-  <xbgf:horizontal>Dims</xbgf:horizontal>
   <xbgf:deyaccify>Dims</xbgf:deyaccify>
   <xbgf:inline>Dims</xbgf:inline>
-  <xbgf:horizontal>DimExprs</xbgf:horizontal>
   <xbgf:deyaccify>DimExprs</xbgf:deyaccify>
   <xbgf:inline>DimExprs</xbgf:inline>
   <xbgf:inline>DimExpr</xbgf:inline>
@@ -86,7 +84,6 @@
      vs.
        - [], ,([t(new), n(QualifiedIdentifier), n(Arguments)])
  -->
-  <xbgf:horizontal>ArgumentList</xbgf:horizontal>
   <xbgf:deyaccify>ArgumentList</xbgf:deyaccify>
   <xbgf:inline>ArgumentList</xbgf:inline>
   <xbgf:fold>

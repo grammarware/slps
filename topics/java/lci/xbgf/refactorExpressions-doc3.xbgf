@@ -130,7 +130,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <xbgf:horizontal>Dims</xbgf:horizontal>
   <xbgf:deyaccify>Dims</xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
@@ -1291,6 +1290,9 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <xbgf:vertical>
+    <nonterminal>PostfixExpression</nonterminal>
+  </xbgf:vertical>
   <xbgf:deyaccify>PostfixExpression</xbgf:deyaccify>
   <xbgf:inline>TMP</xbgf:inline>
 

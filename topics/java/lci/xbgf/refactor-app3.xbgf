@@ -7,9 +7,35 @@
       - [], ,([n(Annotation), ?(n(Annotations))])
      vs.
       - [], ;([n(Annotation), ,([n(Annotations), n(Annotation)])])
-      
-  Later this should become just deyaccify
   -->
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>Annotations</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>Annotations</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <in>
+      <nonterminal>Annotations</nonterminal>
+    </in>
+  </xbgf:massage>
+  <xbgf:distribute>
+    <nonterminal>Annotations</nonterminal>
+  </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>Annotations</nonterminal>
+  </xbgf:vertical>
   <xbgf:deyaccify>Annotations</xbgf:deyaccify>
 
   <!-- 
