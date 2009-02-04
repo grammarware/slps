@@ -151,9 +151,13 @@ if __name__ == "__main__":
   o_kwd=[]
   tok = open(sys.argv[2],'r')
   for x in tok.readlines():
-   a,b=x.strip().split(':')
-   o_txt.append(a)
-   o_kwd.append(b)
+   if x.find('----')>-1:
+    o_txt.append('----')
+    o_kwd.append('----')
+   else:
+    a,b=x.strip().split(':')
+    o_txt.append(a)
+    o_kwd.append(b)
   tok.close()
   extractall(localpath)
   texwrite(tbl,'\\begin{tabular}{l'+('|c'*len(extractor))+'||c}\n')
@@ -163,6 +167,9 @@ if __name__ == "__main__":
    texwrite(tbl,'&\\textbf{'+src+'}')
   texwrite(tbl,'&\\textbf{Total}\\\\\\hline\\hline')
   for i in range(0,len(o_txt)):
+   if o_txt[i]=='----':
+    texwrite(tbl,'\\hline')
+    continue
    texwrite(tbl,o_txt[i])
    total = 'expr 0'
    for src in sorted:
