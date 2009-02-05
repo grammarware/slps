@@ -10,6 +10,17 @@
             <nonterminal>b</nonterminal>
           </bgf:expression>
           <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+              <bgf:expression>
+                <nonterminal>d</nonterminal>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+	  </marked>
+          </bgf:expression>
+          <bgf:expression>
             <nonterminal>c</nonterminal>
           </bgf:expression>
         </sequence>

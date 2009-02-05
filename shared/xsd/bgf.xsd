@@ -81,7 +81,7 @@
         <xsd:element name="marked">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element ref="bgf:expression" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="bgf:expression"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>

@@ -154,80 +154,48 @@ deyaccify(N,g(Rs,Ps1),g(Rs,Ps3))
        ( length(Ps2, Len), Len > 1 ),
        'Nonterminal ~q must be defined vertically for deyaccification to work.',
        [N]),
-    Ps2 = [P1,P2],
     require(
-      once(xbgf1:newdeyaccify_rules(N,P1,P2,P3)),
-      'Nonterminal ~q is not deyaccifiable: ~q and ~q',
-      [N,P1,P2]),
+      once(xbgf1:newdeyaccify_rules(N,Ps2,P3)),
+      'Nonterminal ~q is not deyaccifiable: ~q',
+      [N,Ps2]),
     append(Ps2a,[P3|Ps2b],Ps3).
 
-% N: Nab|x -> N: x(ab)*
-newdeyaccify_rules(N,P1,P2,P3)
+% (N: N x; N: y) -------> N: y x*
+% (N: N x; N: x) -------> N: x+
+newdeyaccify_rules(N,P12,P3)
  :-
-    P1 = p(As,N,','([n(N)|Xs1])),
-    P2 = p(As,N,Xs2),
-    normalizeG(','(Xs1),Xs3),
-    normalizeG(','([Xs2]),Xs4),
+    length(P12,2),
+    member(P1,P12),
+    member(P2,P12),
+    \+ P1 == P2,
+    P1 = p(_,N,','([n(N)|Xs])),
+    P2 = p(_,N,Y),
+    normalizeG(','(Xs),X),
    (
-        eqX(Xs3,Xs4),!,
-        P3 = p(As,N,+(','(Xs1)))
+        eqX(X,Y),!,
+        P3 = p([],N,+(X))
     ;
-        P3 = p(As,N,','([Xs2,*(','(Xs1))]))
-    ).
-% N: abN|x -> N: (ab)*x
-newdeyaccify_rules(N,P1,P2,P3)
- :-
-    P1 = p(As,N,','(Xs1)),
-    tailless(Xs1,[],Xs2),
-    tailof(Xs1,n(N)),
-    P2 = p(As,N,Xs3),
-    normalizeG(','(Xs2),Xs4),
-    normalizeG(','([Xs3]),Xs5),
-    (
-        eqX(Xs4,Xs5),!,
-        P3 = p(As,N,+(','(Xs2)))
-    ;
-        P3 = p(As,N,','([*(','(Xs2)),Xs3]))
-    ).
-%%%%%%
-% N: Nab|x -> N: x(ab)*
-newdeyaccify_rules(N,P1,P2,P3)
- :-
-    P2 = p(As,N,','([n(N)|Xs1])),
-    P1 = p(As,N,Xs2),
-    normalizeG(','(Xs1),Xs3),
-    normalizeG(','([Xs2]),Xs4),
-    (
-        eqX(Xs3,Xs4),!,
-        P3 = p(As,N,+(','(Xs1)))
-    ;
-        P3 = p(As,N,','([Xs2,*(','(Xs1))]))
-    ).
-% N: abN|x -> N: (ab)*x
-newdeyaccify_rules(N,P1,P2,P3)
- :-
-    P2 = p(As,N,','(Xs1)),
-    tailless(Xs1,[],Xs2),
-    tailof(Xs1,n(N)),
-    P1 = p(As,N,Xs3),
-    normalizeG(','(Xs2),Xs4),
-    normalizeG(','([Xs3]),Xs5),
-    (
-        eqX(Xs4,Xs5),!,
-        P3 = p(As,N,+(','(Xs2)))
-    ;
-        P3 = p(As,N,','([*(','(Xs2)),Xs3]))
+        P3 = p([],N,','([Y,*(X)]))
     ).
 
-% Needed -> prelude.pro
-% Not needed -> throw away
-tailof([X],X).
-tailof([_|T],X) :- tailof(T,X).
-tailless([_],L1,L1).
-tailless([H|T],L1,L3)
+% (N: x N; N: y) -------> N: x* y
+% (N: x N; N: x) -------> N: x+
+newdeyaccify_rules(N,P12,P3)
  :-
-   concat([L1,[H]],L2),
-   tailless(T,L2,L3).
+    length(P12,2),
+    member(P1,P12),
+    member(P2,P12),
+    \+ P1 == P2,
+    P1 = p(_,N,','(Zs)),
+    P2 = p(_,N,Y),
+    append(Xs,[n(N)],Zs),
+    normalizeG(','(Xs),X),
+    (
+        eqX(X,Y),!,
+        P3 = p([],N,+(X))
+    ;
+        P3 = p([],N,','([*(X),Y]))
+    ).
 
 olddeyaccify(N,g(Rs,Ps1),g(Rs,Ps2))
  :-
@@ -581,21 +549,12 @@ id(G,G).
 % Inverse of apply projection to the body of a production
 %
 
-inject(P1,g(Rs,Ps1),g(Rs,Ps5))
+inject(P1,g(Rs,Ps1),g(Rs,Ps2))
  :- 
-    P1 = p(As1,N1,X1),
-    require(
-      X1 = ','(Xs1),
-      'Projection requires a sequence instead of ~q.',
-      [X1]),
-    findP(Ps1,As1,N1,P2,Ps2a,Ps2b),
-    P2 = p(As1,N1,X2),
-    ( X2 = ','(Xs2) -> true; Xs2 = [X2] ),
-    require(
-      xbgf1:projectXs(Xs2,Xs1),
-      'Phrases ~q must be of a subsequence of ~q.',
-      [X2,X1]),
-    append(Ps2a,[P1|Ps2b],Ps5).
+    project(P1,P2),
+    findP(Ps1,P2,Ps1a,Ps1b),
+    unmark(P1,P3),
+    append(Ps1a,[P3|Ps1b],Ps2).
 
 
 %
@@ -784,35 +743,35 @@ permuteXs([X|Xs1],Xs2)
 % Apply projection to the body of a production
 %
 
-project(P1,g(Rs,Ps1),g(Rs,Ps5))
+project(P1,g(Rs,Ps1),g(Rs,Ps2))
  :- 
-    P1 = p(As1,N1,X1),
-    ( X1 = ','(Xs1) -> true; Xs1 = [X1] ),
-    findP(Ps1,As1,N1,P2,Ps2a,Ps2b),
-    P2 = p(As1,N1,X2),
+    unmark(P1,P2),
+    findP(Ps1,P2,Ps1a,Ps1b),
+    project(P1,P3),
+    append(Ps1a,[P3|Ps1b],Ps2).
+
+project(X,Z) 
+ :-
+    transform(try(xbgf1:project_rule),X,Y),
+    normalizeG(Y,Z),
     require(
-      X2 = ','(Xs2),
-      'Projection requires a sequence instead of ~q.',
-      [X2]),
+      \+ X == Z,
+      '~q must contain markers.',
+      [X]).
+
+project_rule({_},true).
+
+
+unmark(X,Z)
+ :-
+    transform(try(xbgf1:unmark_rule),X,Y),
+    normalizeG(Y,Z),
     require(
-      xbgf1:projectXs(Xs1,Xs2),
-      'Phrases ~q must be of a subsequence of ~q.',
-      [X1,X2]),
-    append(Ps2a,[P1|Ps2b],Ps5).
+      \+ X == Z,
+      '~q must contain markers.',
+      [X]).
 
-projectXs([],_)
- :-
-    !.
-
-projectXs([X|Xs1],[X|Xs2])
- :-
-    !,
-    projectXs(Xs1,Xs2).
-
-projectXs(Xs1,[_|Xs2])
- :-
-    !,
-    projectXs(Xs1,Xs2).
+unmark_rule({X},X).
 
 
 %
@@ -1088,7 +1047,6 @@ abridge(P1,g(Rs,Ps1),g(Rs,Ps2))
 %
 % Strip all terminals within a given nonterminal's definition
 %
-
 unterminalize(N,g(Rs,Ps1),g(Rs,Ps2))
  :- 
     usedNs(Ps1,Uses1),
@@ -1383,7 +1341,7 @@ yaccify(P1,P2,g(Rs,Ps1),g(Rs,Ps3))
     splitN1(Ps1,N,P3,Ps2a,Ps2b),
     P3 = p(As,N,_),
     require(
-      xbgf1:newdeyaccify_rules(N,P1,P2,P3),
+      xbgf1:newdeyaccify_rules(N,[P1,P2],P3),
       '~q and ~q not suitable as yaccification of ~q.',
       [P1,P2,P3]),
     append(Ps2a,[P1,P2|Ps2b],Ps3).

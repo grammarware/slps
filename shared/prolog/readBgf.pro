@@ -95,6 +95,14 @@ xmlToX(X1,','(Xs2))
     maplist(xmlToExpression,Xs1,Xs2),
     !.
 
+xmlToX(X1,{X3}) 
+ :-
+    self(name(marked),X1),
+    !,
+    child(element,X1,X2),
+    xmlToExpression(X2,X3),
+    !.
+
 xmlToX(X1,';'(Xs2)) 
  :-
     self(name(choice),X1),

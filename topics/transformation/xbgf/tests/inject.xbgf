@@ -10,11 +10,15 @@
             <nonterminal>b</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <star>
+            <marked>
+              <bgf:expression>
+                <star>
               <bgf:expression>
                 <nonterminal>d</nonterminal>
               </bgf:expression>
             </star>
+          </bgf:expression>
+	  </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>c</nonterminal>
