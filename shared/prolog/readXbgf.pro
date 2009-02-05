@@ -37,21 +37,46 @@ xml2xbgf(T,define(Ps2))
     children(name(bgf:production),T,Ps1),
     maplist(xmlToP,Ps1,Ps2).
 
-xml2xbgf(T,designate(P2))
+xml2xbgf(T,label(P2))
  :-
-    self(name(xbgf:designate),T),
+    self(name(xbgf:label),T),
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
+
+xml2xbgf(T,unlabel(L))
+ :-
+    self(name(xbgf:label),T),
+    child(name(label),T,T1),
+    content(T1,L).
 
 xml2xbgf(T,deyaccify(N))
  :-
     self(name(xbgf:deyaccify),T),
     content(T,N).
 
-xml2xbgf(T,unterminalize(N))
+xml2xbgf(T,abstractize(P2))
  :-
-    self(name(xbgf:unterminalize),T),
-    content(T,N).
+    self(name(xbgf:abstractize),T),
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
+xml2xbgf(T,concretize(P2))
+ :-
+    self(name(xbgf:concretize),T),
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
+xml2xbgf(T,anonymize(P2))
+ :-
+    self(name(xbgf:anonymize),T),
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
+xml2xbgf(T,deanonymize(P2))
+ :-
+    self(name(xbgf:deanonymize),T),
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
 
 xml2xbgf(T,distributeL(L))
  :-

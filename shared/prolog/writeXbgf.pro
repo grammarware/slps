@@ -31,3 +31,13 @@ xbgf2xml(renameS([],S1,S2),Xml)
     e(to,[],[S2],Xml2),
     e(selector,[],[Xml1,Xml2],Xml3),
     e(xbgf:rename,[],[Xml3],Xml).
+
+xbgf2xml(anonymize(P1),Xml)
+ :-
+    pToXml(P1,P2),
+    e(xbgf:anonymize,[],[P2],Xml).
+
+xbgf2xml(abstractize(P1),Xml)
+ :-
+    pToXml(P1,P2),
+    e(xbgf:abstractize,[],[P2],Xml).

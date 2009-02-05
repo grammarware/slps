@@ -31,12 +31,15 @@
     </xsd:annotation>
     <xsd:choice>
       <xsd:element ref="xbgf:add"/>
+      <xsd:element ref="xbgf:anonymize"/>
       <xsd:element ref="xbgf:chain"/>
+      <xsd:element ref="xbgf:deanonymize"/>
       <xsd:element ref="xbgf:define"/>
       <xsd:element ref="xbgf:downgrade"/>
       <xsd:element ref="xbgf:upgrade"/>
       <xsd:element ref="xbgf:redefine"/>
-      <xsd:element ref="xbgf:designate"/>
+      <xsd:element ref="xbgf:label"/>
+      <xsd:element ref="xbgf:unlabel"/>
       <xsd:element ref="xbgf:deyaccify"/>
       <xsd:element ref="xbgf:distribute"/>
       <xsd:element ref="xbgf:dump"/>
@@ -60,12 +63,12 @@
       <xsd:element ref="xbgf:reroot"/>
       <xsd:element ref="xbgf:abridge"/>
       <xsd:element ref="xbgf:strip"/>
-      <xsd:element ref="xbgf:terminalize"/>
+      <xsd:element ref="xbgf:concretize"/>
       <xsd:element ref="xbgf:unchain"/>
       <xsd:element ref="xbgf:undefine"/>
       <xsd:element ref="xbgf:unfold"/>
       <xsd:element ref="xbgf:unite"/>
-      <xsd:element ref="xbgf:unterminalize"/>
+      <xsd:element ref="xbgf:abstractize"/>
       <xsd:element ref="xbgf:vertical"/>
       <xsd:element ref="xbgf:widen"/>
       <xsd:element ref="xbgf:yaccify"/>
@@ -157,7 +160,7 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="designate">
+  <xsd:element name="label">
     <xsd:annotation>
       <xsd:documentation>
         An unlabeled production is labeled. The argument production is
@@ -167,6 +170,19 @@
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element ref="bgf:production"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="unlabel">
+    <xsd:annotation>
+      <xsd:documentation>
+	TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="label" type="bgf:label"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -652,7 +668,7 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="terminalize">
+  <xsd:element name="concretize">
     <xsd:annotation>
       <xsd:documentation>
         Terminalizing means enriching an existing production by inserting
@@ -747,14 +763,43 @@
     </xsd:complexType>
   </xsd:element>
   
-  <xsd:element name="unterminalize" type="bgf:nonterminal">
+  <xsd:element name="abstractize">
     <xsd:annotation>
       <xsd:documentation>
-        Various details of productions can be required to be stripped.
-        This transformation strips all terminal symbols
-        within a given nonterminal's definition.
+        TBD
       </xsd:documentation>
     </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="anonymize">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="deanonymize">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production"/>
+      </xsd:sequence>
+    </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="vertical">

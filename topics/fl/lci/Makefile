@@ -13,10 +13,19 @@ check:
 	ls -1  bgf/*.bgf  | xargs -n1 ${validator} bgf
 
 generate:
+	make generate-case
+
+generate-case:
 	${tools}/casexbgf 3 bgf/jaxb.trimJaxb.bgf xbgf/renameJaxb.xbgf	
 	${tools}/casexbgf 3 bgf/om.trimOm.bgf xbgf/renameOm.xbgf	
 	${tools}/casexbgf 3 bgf/sdf.bgf xbgf/renameSdf.xbgf	
 	${tools}/casexbgf 3 bgf/xsd.trimXsd.bgf xbgf/renameXsd.xbgf	
+
+generate-stript:
+	${tools}/striptxbgf bgf/concrete.bgf xbgf/stript.xbgf	
+
+generate-strips:
+	${tools}/stripsxbgf bgf/abstract.bgf xbgf/strips.xbgf	
 
 clean:
 	rm -f *~
