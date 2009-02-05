@@ -4,21 +4,20 @@
   <bgf:production>
     <nonterminal>decs</nonterminal>
     <bgf:expression>
-      <choice>
+      <nonterminal>dec</nonterminal>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
+    <nonterminal>decs</nonterminal>
+    <bgf:expression>
+      <sequence>
         <bgf:expression>
           <nonterminal>dec</nonterminal>
         </bgf:expression>
         <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <nonterminal>dec</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>decs</nonterminal>
-            </bgf:expression>
-          </sequence>
+          <nonterminal>decs</nonterminal>
         </bgf:expression>
-      </choice>
+      </sequence>
     </bgf:expression>
   </bgf:production>
 </bgf:grammar>

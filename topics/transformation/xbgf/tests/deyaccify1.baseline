@@ -5,9 +5,9 @@
     <nonterminal>decs</nonterminal>
     <xns1:expression>
       <plus>
-	<xns1:expression>
-	  <nonterminal>dec</nonterminal>
-	</xns1:expression>
+        <xns1:expression>
+          <nonterminal>dec</nonterminal>
+        </xns1:expression>
       </plus>
     </xns1:expression>
   </xns1:production>
