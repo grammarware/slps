@@ -71,7 +71,6 @@ test:
 	@make strip3.quiet
 	@make strip4.quiet
 	@make strip5.quiet
-	@make strip6.quiet
 	@make unchain.quiet
 	@make undefine.quiet
 	@make unfold1.quiet
@@ -79,6 +78,7 @@ test:
 	@make unfold3.quiet
 	@make unfold4.quiet
 	@make unite.quiet
+	@make unterminalize.quiet
 	@make vertical1.quiet
 	@make vertical2.quiet
 	@make widen1.quiet

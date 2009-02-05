@@ -220,21 +220,20 @@
     <bgf:production>
       <nonterminal>ConstantModifiers</nonterminal>
       <bgf:expression>
-        <choice>
+        <nonterminal>ConstantModifier</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>ConstantModifiers</nonterminal>
+      <bgf:expression>
+        <sequence>
           <bgf:expression>
             <nonterminal>ConstantModifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>ConstantModifier</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>ConstantModifiers</nonterminal>
-              </bgf:expression>
-            </sequence>
+            <nonterminal>ConstantModifiers</nonterminal>
           </bgf:expression>
-        </choice>
+        </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:yaccify>

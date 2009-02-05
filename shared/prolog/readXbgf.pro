@@ -48,6 +48,11 @@ xml2xbgf(T,deyaccify(N))
     self(name(xbgf:deyaccify),T),
     content(T,N).
 
+xml2xbgf(T,unterminalize(N))
+ :-
+    self(name(xbgf:unterminalize),T),
+    content(T,N).
+
 xml2xbgf(T,distributeL(L))
  :-
     self(name(xbgf:distribute),T),
@@ -309,11 +314,12 @@ xml2xbgf(T,verticalN(N))
     child(name(nonterminal),T,T1),
     content(T1,N).
 
-xml2xbgf(T,yaccify(P2))
+xml2xbgf(T,yaccify(P1,P2))
  :-
     self(name(xbgf:yaccify),T),
-    child(name(bgf:production),T,P1),
-    xmlToP(P1,P2).
+    children(name(bgf:production),T,[P3,P4]),
+    xmlToP(P3,P1),
+    xmlToP(P4,P2).
 
 xml2xbgf(T,G)
  :-

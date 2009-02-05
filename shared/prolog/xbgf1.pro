@@ -1083,6 +1083,22 @@ abridge(P1,g(Rs,Ps1),g(Rs,Ps2))
       [P1]),
     append(Ps1a,Ps1b,Ps2).
 
+%
+% p([l(unterminalize)], f, n(p))
+%
+% Strip all terminals within a given nonterminal's definition
+%
+
+unterminalize(N,g(Rs,Ps1),g(Rs,Ps2))
+ :- 
+    usedNs(Ps1,Uses1),
+    require(
+      member(N,Uses1),
+      'Nonterminal ~q must be used.',
+      [N]),
+    splitN(Ps1,N,Ps0,Ps2a,Ps2b),
+    transform(try(xbgf1:stripTs_rule),g(Rs,Ps0),g(Rs,Ps3)),
+    concat([Ps2a,Ps3,Ps2b],Ps2).
 
 %
 % p([l(stripL)], f, n(l))
@@ -1360,13 +1376,14 @@ widen(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
 % Expand EBNF-based regular expression operator via BNF encoding
 %
 
-yaccify(P1,g(Rs,Ps1),g(Rs,Ps2))
+yaccify(P1,P2,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    P1 = p(As,N,X1),
-    splitN1(Ps1,N,P2,Ps2a,Ps2b),
-    P2 = p(As,N,X2),
+    P1 = p(As,N,_),	
+    P2 = p(As,N,_),
+    splitN1(Ps1,N,P3,Ps2a,Ps2b),
+    P3 = p(As,N,_),
     require(
-      xbgf1:deyaccify_rules(N,X1,X2),
-      '~q and ~q not suitable for yaccification.',
-      [X1,X2]),
-    append(Ps2a,[P1|Ps2b],Ps2).
+      xbgf1:newdeyaccify_rules(N,P1,P2,P3),
+      '~q and ~q not suitable as yaccification of ~q.',
+      [P1,P2,P3]),
+    append(Ps2a,[P1,P2|Ps2b],Ps3).

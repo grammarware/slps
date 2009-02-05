@@ -63,6 +63,7 @@
       <xsd:element ref="xbgf:undefine"/>
       <xsd:element ref="xbgf:unfold"/>
       <xsd:element ref="xbgf:unite"/>
+      <xsd:element ref="xbgf:unterminalize"/>
       <xsd:element ref="xbgf:vertical"/>
       <xsd:element ref="xbgf:widen"/>
       <xsd:element ref="xbgf:yaccify"/>
@@ -743,6 +744,16 @@
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
+  
+  <xsd:element name="unterminalize" type="bgf:nonterminal">
+    <xsd:annotation>
+      <xsd:documentation>
+        Various details of productions can be required to be stripped.
+        This transformation strips all terminal symbols
+        within a given nonterminal's definition.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
 
   <xsd:element name="vertical">
     <xsd:annotation>
@@ -795,6 +806,7 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
+        <xsd:element ref="bgf:production"/>
         <xsd:element ref="bgf:production"/>
       </xsd:sequence>
     </xsd:complexType>
