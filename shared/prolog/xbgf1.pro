@@ -1345,3 +1345,45 @@ yaccify(P1,P2,g(Rs,Ps1),g(Rs,Ps3))
       '~q and ~q not suitable as yaccification of ~q.',
       [P1,P2,P3]),
     append(Ps2a,[P1,P2|Ps2b],Ps3).
+
+
+downgrade(P1,P2,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    require(
+      collect(xbgf1:collectMarked_rule,P1,[n(N)]),
+      '~q does not have a single nonterminal marked.',
+      [P1]),
+    require(
+      P2 = p(_,N,X),
+      '~q and ~q do not agree on nonterminal.',
+      [P1,P2]),
+    unmark(P1,P3),
+    findP(Ps1,P3,Ps1a,Ps1b),
+    findP(Ps1,P2,_,_),
+    replaceMarker(X,P1,P4),
+    append(Ps1a,[P4|Ps1b],Ps2).
+        
+collectMarked_rule({X},[X]).
+
+replaceMarker(Z,X,Y) 
+ :-
+    stoptd(xbgf1:replaceMarker_rule(Z),X,Y).
+
+replaceMarker_rule(Z,{_},Z).
+
+upgrade(P1,P2,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    require(
+      collect(xbgf1:collectMarked_rule,P1,[n(N)]),
+      '~q does not have a single nonterminal marked.',
+      [P1]),
+    require(
+      P2 = p(_,N,X),
+      '~q and ~q do not agree on nonterminal.',
+      [P1,P2]),
+    replaceMarker(X,P1,P3),
+    normalizeG(P3,P4),
+    findP(Ps1,P4,Ps1a,Ps1b),
+    findP(Ps1,P2,_,_),
+    unmark(P1,P5),
+    append(Ps1a,[P5|Ps1b],Ps2).

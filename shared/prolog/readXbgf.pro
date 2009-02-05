@@ -65,6 +65,13 @@ xml2xbgf(T,distributeN(N))
     child(name(nonterminal),T,T1),
     content(T1,N).
 
+xml2xbgf(T,downgrade(P1,P2))
+ :-
+    self(name(xbgf:downgrade),T),
+    children(name(bgf:production),T,[P3,P4]),
+    xmlToP(P3,P1),
+    xmlToP(P4,P2).
+
 xml2xbgf(T,dump)
  :-
     self(name(xbgf:dump),T).
@@ -301,6 +308,13 @@ xml2xbgf(T,unite(N1,N2))
     child(name(to),T,To),
     content(Add,N1),
     content(To,N2).
+
+xml2xbgf(T,upgrade(P1,P2))
+ :-
+    self(name(xbgf:upgrade),T),
+    children(name(bgf:production),T,[P3,P4]),
+    xmlToP(P3,P1),
+    xmlToP(P4,P2).
 
 xml2xbgf(T,verticalL(L))
  :-

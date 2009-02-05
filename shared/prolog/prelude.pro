@@ -168,6 +168,7 @@ not(_,_,_).
 collect(G,X,L2)
  :-
     ( apply(G,[X,L1]) -> true; L1 = [] ),
+    !,
     X =.. [_|Xs],
     maplist(collect(G),Xs,Ys),
     concat([L1|Ys],L2).

@@ -1,16 +1,17 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:downgrade>
+  <xbgf:upgrade>
     <bgf:production>
       <nonterminal>a</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>d</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>e</nonterminal>
+            <marked>
+              <bgf:expression>
+                <nonterminal>b</nonterminal>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>c</nonterminal>
@@ -31,5 +32,5 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:downgrade>
+  </xbgf:upgrade>
 </xbgf:sequence>
