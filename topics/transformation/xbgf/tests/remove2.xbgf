@@ -1,7 +1,7 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:add>
+  <xbgf:remove>
     <bgf:production>
       <nonterminal>expr</nonterminal>
       <bgf:expression>
@@ -30,5 +30,5 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:add>
+  </xbgf:remove>
 </xbgf:sequence>

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo -----------  IN: ----------
+../../../../shared/tools/bgf2bnf `basename $1 .xbgf`.bgf || exit -1
+echo -----------  DO: ----------
+../../../../shared/tools/xbgf2xbnf `basename $1 .xbgf`.xbgf || exit -1
+echo ----------- OUT: ----------
+../../../../shared/tools/bgf2bnf `basename $1 .xbgf`.baseline || exit -1

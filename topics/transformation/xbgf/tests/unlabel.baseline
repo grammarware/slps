@@ -14,10 +14,12 @@
     </bgf:expression>
   </bgf:production>
   <bgf:production>
-    <label>binary</label>
     <nonterminal>expr</nonterminal>
     <bgf:expression>
       <sequence>
+        <bgf:expression>
+          <terminal>(</terminal>
+        </bgf:expression>
         <bgf:expression>
           <nonterminal>expr</nonterminal>
         </bgf:expression>
@@ -31,6 +33,9 @@
         </bgf:expression>
         <bgf:expression>
           <nonterminal>expr</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>)</terminal>
         </bgf:expression>
       </sequence>
     </bgf:expression>
@@ -52,12 +57,6 @@
           <nonterminal>expr</nonterminal>
         </bgf:expression>
       </sequence>
-    </bgf:expression>
-  </bgf:production>
-  <bgf:production>
-    <nonterminal>nonexpr</nonterminal>
-    <bgf:expression>
-      <terminal>test</terminal>
     </bgf:expression>
   </bgf:production>
 </bgf:grammar>

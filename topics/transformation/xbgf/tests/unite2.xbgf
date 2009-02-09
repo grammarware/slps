@@ -1,7 +1,8 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:strip>
-    <selector>value</selector>
-  </xbgf:strip>
+  <xbgf:unite>
+    <add>B</add>
+    <to>A</to>
+  </xbgf:unite>
 </xbgf:sequence>

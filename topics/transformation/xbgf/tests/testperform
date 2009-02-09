@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo [Test XBGF] `basename $1 .xbgf`
+rm -f `basename $1 .xbgf`.log
+touch `basename $1 .xbgf`.log
+../../../../shared/tools/checkxml bgf `basename $1 .xbgf`.bgf || exit -1
+../../../../shared/tools/checkxml xbgf `basename $1 .xbgf`.xbgf || exit -1
+../../../../shared/tools/xbgf `basename $1 .xbgf`.xbgf `basename $1 .xbgf`.bgf `basename $1 .xbgf`.out || exit -1
+../../../../shared/tools/gdt `basename $1 .xbgf`.out `basename $1 .xbgf`.baseline || exit -1

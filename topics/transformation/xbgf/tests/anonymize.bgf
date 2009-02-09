@@ -58,10 +58,4 @@
       </sequence>
     </bgf:expression>
   </bgf:production>
-  <bgf:production>
-    <nonterminal>nonexpr</nonterminal>
-    <bgf:expression>
-      <terminal>test</terminal>
-    </bgf:expression>
-  </bgf:production>
 </bgf:grammar>
