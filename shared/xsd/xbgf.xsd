@@ -36,9 +36,11 @@
       <xsd:element ref="xbgf:deanonymize"/>
       <xsd:element ref="xbgf:define"/>
       <xsd:element ref="xbgf:downgrade"/>
+      <xsd:element ref="xbgf:disappear"/>
+      <xsd:element ref="xbgf:appear"/>
       <xsd:element ref="xbgf:upgrade"/>
       <xsd:element ref="xbgf:redefine"/>
-      <xsd:element ref="xbgf:label"/>
+      <xsd:element ref="xbgf:designate"/>
       <xsd:element ref="xbgf:unlabel"/>
       <xsd:element ref="xbgf:deyaccify"/>
       <xsd:element ref="xbgf:distribute"/>
@@ -160,7 +162,7 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="label">
+  <xsd:element name="designate">
     <xsd:annotation>
       <xsd:documentation>
         An unlabeled production is labeled. The argument production is
@@ -209,7 +211,10 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-      <xsd:group ref="xbgf:scope"/>
+      <xsd:choice>
+        <xsd:group ref="xbgf:scope"/>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
     </xsd:complexType>
   </xsd:element>
 
@@ -790,6 +795,32 @@
   </xsd:element>
 
   <xsd:element name="deanonymize">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="appear">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="disappear">
     <xsd:annotation>
       <xsd:documentation>
         TBD

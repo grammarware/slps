@@ -35,11 +35,19 @@ transformG(Xbgf,G1,G4)
 % Add a branch to a choice (in a scope).
 %
 
-addV(P,g(Rs,Ps1),g(Rs,Ps3))
+addV(P1,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    P = p(_,N,_),
+    P1 = p(_,N,_),
     splitN(Ps1,N,Ps2,Ps2a,Ps2b),
-    concat([Ps2a,Ps2,[P],Ps2b],Ps3),
+    projectChoices(P1,P2),
+    (
+    	P1 == P2,!,
+        concat([Ps2a,Ps2,[P1],Ps2b],Ps3)
+    ;
+        Ps2 == [P2],
+    	unmark(P1,P4),
+        concat([Ps2a,[P4],Ps2b],Ps3)
+    ),
     !.
 
 addH(X1,X2,g(Rs,Ps1),g(Rs,Ps3))
@@ -53,6 +61,14 @@ addHinL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
 addHinN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
  :-
     replaceN(X2,';'([X2,X1]),N,g(Rs,Ps1),g(Rs,Ps3)).
+
+projectChoices(X,Z) 
+ :-
+    transform(try(xbgf1:projectChoices_rule),X,Y),
+    normalizeG(Y,Z).
+
+projectChoices_rule(';'([X,{_}]),X).
+projectChoices_rule(';'([{_},X]),X).
 
 
 %
@@ -736,6 +752,69 @@ permuteXs([X|Xs1],Xs2)
     permuteXs(Xs1,Xs3),
     !.
 
+%
+% p([l(anonymize)], f, n(p))
+%
+% Add selectors to an existing production.
+%  Reverse of deanonymize
+%
+
+anonymize(P1,g(Rs,Ps1),g(Rs,Ps3))
+ :- 
+    P1 = p(_,N,_),
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    member(P2,Ps2),
+    stripSs(g(Rs,[P1]),g(Rs,[P1ns])),
+    stripSs(g(Rs,[P2]),g(Rs,[P2ns])),
+    require(
+      P1ns == P2ns,
+      '~q is not an anonymized version of ~q.',
+      [P1,P2]),
+    append(Ps2a,[P1|Ps2b],Ps3).
+
+%
+% p([l(abstractize)], f, n(p))
+%
+% Remove marked terminals from the right hand side of a production.
+%  Reverse of concretize
+%
+
+abstractize(P1,g(Rs,Ps1),g(Rs,Ps2))
+ :- 
+    unmark(P1,P2),
+    findP(Ps1,P2,Ps1a,Ps1b),
+    project(P1,P3),
+    transform(try(xbgf1:stripTs_rule),g(Rs,[P2]),g(Rs,[P2nt])),
+    transform(try(xbgf1:stripTs_rule),g(Rs,[P3]),g(Rs,[P3nt])),
+    normalizeG(P2nt,P4),
+    normalizeG(P3nt,P5),
+    require(
+      P4 == P5,
+      'Abstractize only works with marked terminals, use project instead.',
+      []),
+    append(Ps1a,[P3|Ps1b],Ps2).
+
+%
+% p([l(concretize)], f, n(p))
+%
+% Add marked terminals to the right hand side of a production.
+%  Reverse of abstractize
+%
+
+concretize(P1,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    project(P1,P2),
+    findP(Ps1,P2,Ps1a,Ps1b),
+    unmark(P1,P3),
+    transform(try(xbgf1:stripTs_rule),g(Rs,[P2]),g(Rs,[P2nt])),
+    transform(try(xbgf1:stripTs_rule),g(Rs,[P3]),g(Rs,[P3nt])),
+    normalizeG(P2nt,P4),
+    normalizeG(P3nt,P5),
+    require(
+      P4 == P5,
+      'Concretize only works with marked terminals, use inject instead.',
+      []),
+    append(Ps1a,[P3|Ps1b],Ps2).
 
 %
 % p([l(project)], f, n(p))
@@ -1295,7 +1374,6 @@ vertical_x(N,X,p([],N,X))
  :-
     \+ X = s(_,_).
 
-
 %
 % p([l(widen)], f, (n(x),n(x)))
 % p([l(widenN)], f, (n(x),n(x),n(n)))
@@ -1336,16 +1414,15 @@ widen(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
 
 yaccify(P1,P2,g(Rs,Ps1),g(Rs,Ps3))
  :-
-    P1 = p(As,N,_),	
-    P2 = p(As,N,_),
+    P1 = p(_,N,_),	
+    P2 = p(_,N,_),
     splitN1(Ps1,N,P3,Ps2a,Ps2b),
-    P3 = p(As,N,_),
+    P3 = p(_,N,_),
     require(
       xbgf1:newdeyaccify_rules(N,[P1,P2],P3),
       '~q and ~q not suitable as yaccification of ~q.',
       [P1,P2,P3]),
     append(Ps2a,[P1,P2|Ps2b],Ps3).
-
 
 downgrade(P1,P2,g(Rs,Ps1),g(Rs,Ps2))
  :-

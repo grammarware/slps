@@ -37,15 +37,15 @@ xml2xbgf(T,define(Ps2))
     children(name(bgf:production),T,Ps1),
     maplist(xmlToP,Ps1,Ps2).
 
-xml2xbgf(T,label(P2))
+xml2xbgf(T,designate(P2))
  :-
-    self(name(xbgf:label),T),
+    self(name(xbgf:designate),T),
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,unlabel(L))
  :-
-    self(name(xbgf:label),T),
+    self(name(xbgf:unlabel),T),
     child(name(label),T,T1),
     content(T1,L).
 
