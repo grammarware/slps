@@ -14,10 +14,10 @@
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <terminal>a</terminal>
+            <nonterminal>N</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>N</nonterminal>
+            <terminal>a</terminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>

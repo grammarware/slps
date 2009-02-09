@@ -11,7 +11,7 @@
     <bgf:expression>
       <sequence>
         <bgf:expression>
-          <terminal>a</terminal>
+          <terminal>b</terminal>
         </bgf:expression>
         <bgf:expression>
           <nonterminal>N</nonterminal>
