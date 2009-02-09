@@ -2,17 +2,17 @@
   <bgf:production>
     <nonterminal>a</nonterminal>
     <bgf:expression>
-      <sequence>
+      <star>
         <bgf:expression>
           <nonterminal>b</nonterminal>
         </bgf:expression>
-        <bgf:expression>
-          <nonterminal>c</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>d</nonterminal>
-        </bgf:expression>
-      </sequence>
+      </star>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
+    <nonterminal>b</nonterminal>
+    <bgf:expression>
+      <nonterminal>a</nonterminal>
     </bgf:expression>
   </bgf:production>
 </bgf:grammar>

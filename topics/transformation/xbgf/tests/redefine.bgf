@@ -4,15 +4,21 @@
     <bgf:expression>
       <sequence>
         <bgf:expression>
+          <terminal>{</terminal>
+        </bgf:expression>
+        <bgf:expression>
           <nonterminal>b</nonterminal>
         </bgf:expression>
         <bgf:expression>
-          <nonterminal>c</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>d</nonterminal>
+          <terminal>}</terminal>
         </bgf:expression>
       </sequence>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
+    <nonterminal>b</nonterminal>
+    <bgf:expression>
+      <nonterminal>a</nonterminal>
     </bgf:expression>
   </bgf:production>
 </bgf:grammar>

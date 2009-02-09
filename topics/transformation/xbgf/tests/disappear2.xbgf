@@ -1,7 +1,7 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:project>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>a</nonterminal>
       <bgf:expression>
@@ -12,15 +12,19 @@
           <bgf:expression>
             <marked>
               <bgf:expression>
-                <nonterminal>c</nonterminal>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>d</nonterminal>
+                  </bgf:expression>
+                </star>
               </bgf:expression>
             </marked>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>d</nonterminal>
+            <nonterminal>c</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
 </xbgf:sequence>

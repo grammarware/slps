@@ -9,9 +9,6 @@
         <bgf:expression>
           <nonterminal>c</nonterminal>
         </bgf:expression>
-        <bgf:expression>
-          <nonterminal>d</nonterminal>
-        </bgf:expression>
       </sequence>
     </bgf:expression>
   </bgf:production>

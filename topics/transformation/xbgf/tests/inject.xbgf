@@ -12,16 +12,12 @@
           <bgf:expression>
             <marked>
               <bgf:expression>
-                <star>
-              <bgf:expression>
-                <nonterminal>d</nonterminal>
+                <nonterminal>c</nonterminal>
               </bgf:expression>
-            </star>
-          </bgf:expression>
-	  </marked>
+            </marked>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>c</nonterminal>
+            <nonterminal>d</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>

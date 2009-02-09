@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
   <bgf:production>
     <nonterminal>a</nonterminal>
@@ -7,10 +8,11 @@
           <nonterminal>b</nonterminal>
         </bgf:expression>
         <bgf:expression>
-          <nonterminal>c</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>d</nonterminal>
+          <optional>
+            <bgf:expression>
+              <nonterminal>c</nonterminal>
+            </bgf:expression>
+          </optional>
         </bgf:expression>
       </sequence>
     </bgf:expression>

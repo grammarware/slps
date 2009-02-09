@@ -16,6 +16,16 @@
             </bgf:expression>
           </choice>
         </bgf:expression>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <nonterminal>e</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>f</nonterminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
       </sequence>
     </bgf:expression>
   </bgf:production>
