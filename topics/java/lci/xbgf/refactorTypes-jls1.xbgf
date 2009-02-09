@@ -5,7 +5,7 @@
   <!--
   See refactorTypes, this is its version tweaked for JLS1
   -->
-  
+
   <!-- 
   First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
   <xbgf:horizontal>IntegralType</xbgf:horizontal>
@@ -26,7 +26,7 @@
   <xbgf:vertical>
     <nonterminal>BasicType</nonterminal>
   </xbgf:vertical>
-  
+
   <!-- ISSUE PERMISSIVENESS
   Merging interfaces with classes and making lists and other things conform -->
   <!-- GENERALITY -->
@@ -92,7 +92,7 @@
     </nonterminal>
   </xbgf:rename>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
-  
+
   <!-- BREFACTOR -->
   <xbgf:undefine>ArrayType</xbgf:undefine>
   <xbgf:remove>
@@ -103,12 +103,12 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  
+
   <!-- Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
   <xbgf:inline>ReferenceType</xbgf:inline>
-  
+
   <!-- solves multiple problems later -->
   <xbgf:rename>
     <nonterminal>
@@ -132,8 +132,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target</label>
       <nonterminal>Type</nonterminal>
@@ -143,14 +142,35 @@
             <nonterminal>QualifiedIdentifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <sequence>
+                      <bgf:expression>
+                        <terminal>[</terminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <terminal>]</terminal>
+                      </bgf:expression>
+                    </sequence>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:fold>
+    <nonterminal>BracketsOpt</nonterminal>
+    <in>
+      <label>target</label>
+    </in>
+  </xbgf:fold>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
 
 </xbgf:sequence>

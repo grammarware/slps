@@ -89,7 +89,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
- <xbgf:introduce>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>TypeParameter</nonterminal>
       <bgf:expression>
@@ -115,7 +115,7 @@
         <nonterminal>TypeParameter</nonterminal>
       </bgf:expression>
     </bgf:production>
-     <bgf:production>
+    <bgf:production>
       <nonterminal>TypeParameterList</nonterminal>
       <bgf:expression>
         <sequence>
@@ -131,7 +131,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
- </xbgf:introduce>
+  </xbgf:introduce>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>TypeParameters</nonterminal>
@@ -150,8 +150,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>MethodHeader</nonterminal>
       <bgf:expression>
@@ -164,11 +163,15 @@
             </optional>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>TypeParameters</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>TypeParameters</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>ResultType</nonterminal>
@@ -186,7 +189,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
 
   <!-- ISSUE EXTEND 
      - Fail: StatementWithoutTrailingSubstatement.
@@ -270,18 +273,21 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>PackageDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>Annotations</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Annotations</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <terminal>package</terminal>
@@ -295,7 +301,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
 
   <!-- ISSUE EXTEND 
      - Fail: SwitchLabel.
@@ -330,7 +336,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  
+
   <!-- ISSUE EXTEND 
      - Fail: ImportDeclaration.
       - [], ;([n(SingleTypeImportDeclaration), n(TypeImportOnDemandDeclaration)])
@@ -422,8 +428,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>NormalClassDeclaration</nonterminal>
       <bgf:expression>
@@ -442,11 +447,15 @@
             <nonterminal>Identifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>TypeParameters</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>TypeParameters</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <optional>
@@ -468,7 +477,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>Arguments</nonterminal>
@@ -546,7 +555,7 @@
         <nonterminal>EnumConstant</nonterminal>
       </bgf:expression>
     </bgf:production>
-     <bgf:production>
+    <bgf:production>
       <nonterminal>EnumConstants</nonterminal>
       <bgf:expression>
         <sequence>
@@ -562,7 +571,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
- </xbgf:introduce>
+  </xbgf:introduce>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>EnumBody</nonterminal>
@@ -761,14 +770,14 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-   <xbgf:introduce>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
       <bgf:expression>
         <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
       </bgf:expression>
     </bgf:production>
-     <bgf:production>
+    <bgf:production>
       <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
       <bgf:expression>
         <sequence>
@@ -781,7 +790,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
- </xbgf:introduce>
+  </xbgf:introduce>
   <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
@@ -892,8 +901,7 @@
      vs.
       - [], ,([?(n(AbstractMethodModifiers)), ?(n(TypeParameters)), n(ResultType), n(MethodDeclarator), ?(n(Throws)), t((;))])
   -->
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>AbstractMethodDeclaration</nonterminal>
       <bgf:expression>
@@ -906,11 +914,15 @@
             </optional>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>TypeParameters</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>TypeParameters</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>ResultType</nonterminal>
@@ -931,7 +943,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
 
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: MethodInvocation.
@@ -978,8 +990,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target2</label>
       <nonterminal>MethodInvocation</nonterminal>
@@ -992,11 +1003,15 @@
             <terminal>.</terminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>NonWildTypeArguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>NonWildTypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Identifier</nonterminal>
@@ -1017,7 +1032,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
   <xbgf:designate>
     <bgf:production>
       <label>target3</label>
@@ -1050,8 +1065,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target3</label>
       <nonterminal>MethodInvocation</nonterminal>
@@ -1064,11 +1078,15 @@
             <terminal>.</terminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>NonWildTypeArguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>NonWildTypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Identifier</nonterminal>
@@ -1089,7 +1107,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
   <xbgf:designate>
     <bgf:production>
       <label>target4</label>
@@ -1128,8 +1146,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target4</label>
       <nonterminal>MethodInvocation</nonterminal>
@@ -1148,11 +1165,15 @@
             <terminal>.</terminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>NonWildTypeArguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>NonWildTypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Identifier</nonterminal>
@@ -1173,7 +1194,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
   <xbgf:add>
     <bgf:production>
       <nonterminal>MethodInvocation</nonterminal>
@@ -1208,15 +1229,15 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:strip>
+  <xbgf:unlabel>
     <label>target2</label>
-  </xbgf:strip>
-  <xbgf:strip>
+  </xbgf:unlabel>
+  <xbgf:unlabel>
     <label>target3</label>
-  </xbgf:strip>
-  <xbgf:strip>
+  </xbgf:unlabel>
+  <xbgf:unlabel>
     <label>target4</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
 
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: ConstructorDeclarator.
@@ -1224,18 +1245,21 @@
      vs.
       - [], ,([?(n(TypeParameters)), n(Identifier), t((), ?(n(FormalParameterList)), t())])
   -->
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>ConstructorDeclarator</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>TypeParameters</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>TypeParameters</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Identifier</nonterminal>
@@ -1256,7 +1280,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
 
   <!-- 
      - Fail: FormalParameterList.
@@ -1299,7 +1323,7 @@
       <nonterminal>ConstructorDeclarator</nonterminal>
     </in>
   </xbgf:replace>
-  
+
   <!-- ISSUE EXTEND -->
   <!-- GENERALITY -->
   <xbgf:define>
@@ -1391,7 +1415,11 @@
             <nonterminal>VariableDeclarators</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <terminal>;</terminal>
+            <marked>
+              <bgf:expression>
+                <terminal>;</terminal>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
@@ -1413,7 +1441,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-    
+
   <!-- ISSUE PERMISSIVENESS
      - Fail: Throws.
       - [], ,([t(throws), n(ClassTypeList)])
@@ -1471,7 +1499,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-      <bgf:production>
+    <bgf:production>
       <nonterminal>WildcardBounds</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1484,7 +1512,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-</xbgf:introduce>
+  </xbgf:introduce>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>Wildcard</nonterminal>
@@ -1511,13 +1539,13 @@
         <nonterminal>ReferenceType</nonterminal>
       </bgf:expression>
     </bgf:production>
-      <bgf:production>
+    <bgf:production>
       <nonterminal>ActualTypeArgument</nonterminal>
       <bgf:expression>
         <nonterminal>Wildcard</nonterminal>
       </bgf:expression>
     </bgf:production>
-</xbgf:introduce>
+  </xbgf:introduce>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>ActualTypeArgumentList</nonterminal>
@@ -1525,7 +1553,7 @@
         <nonterminal>ActualTypeArgument</nonterminal>
       </bgf:expression>
     </bgf:production>
-     <bgf:production>
+    <bgf:production>
       <nonterminal>ActualTypeArgumentList</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1541,8 +1569,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
- </xbgf:introduce>
-   <xbgf:introduce>
+  </xbgf:introduce>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>TypeArguments</nonterminal>
       <bgf:expression>
@@ -1567,7 +1595,7 @@
         <nonterminal>TypeName</nonterminal>
       </bgf:expression>
     </bgf:production>
-     <bgf:production>
+    <bgf:production>
       <nonterminal>TypeDeclSpecifier</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1583,8 +1611,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
- </xbgf:introduce>
- 
+  </xbgf:introduce>
+
   <!-- 
    - Fail: InterfaceType.
       - [], n(TypeName)
@@ -1675,19 +1703,22 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target1</label>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>NonWildTypeArguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>NonWildTypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <terminal>this</terminal>
@@ -1711,7 +1742,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
   <xbgf:designate>
     <bgf:production>
       <label>target2</label>
@@ -1741,19 +1772,22 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target2</label>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>NonWildTypeArguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>NonWildTypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <terminal>super</terminal>
@@ -1777,7 +1811,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
   <xbgf:designate>
     <bgf:production>
       <label>target3</label>
@@ -1836,7 +1870,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-</xbgf:introduce>
+  </xbgf:introduce>
 
   <!-- GENERALITY -->
   <xbgf:define>
@@ -1857,8 +1891,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target3</label>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
@@ -1871,11 +1904,15 @@
             <terminal>.</terminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>NonWildTypeArguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>NonWildTypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <terminal>super</terminal>
@@ -1899,16 +1936,16 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target1</label>
-  </xbgf:strip>
-  <xbgf:strip>
+  </xbgf:unlabel>
+  <xbgf:unlabel>
     <label>target2</label>
-  </xbgf:strip>
-  <xbgf:strip>
+  </xbgf:unlabel>
+  <xbgf:unlabel>
     <label>target3</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
 
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: ClassInstanceCreationExpression.
@@ -1996,8 +2033,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target1</label>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
@@ -2007,11 +2043,15 @@
             <terminal>new</terminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>TypeArguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>TypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>ClassOrInterfaceType</nonterminal>
@@ -2039,9 +2079,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  </xbgf:appear>
+  <xbgf:appear>
     <bgf:production>
       <label>target2</label>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
@@ -2057,11 +2096,68 @@
             <terminal>new</terminal>
           </bgf:expression>
           <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>TypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
             <optional>
               <bgf:expression>
-                <nonterminal>TypeArguments</nonterminal>
+                <nonterminal>ArgumentList</nonterminal>
               </bgf:expression>
             </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ClassBody</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:appear>
+  <xbgf:appear>
+    <bgf:production>
+      <label>target2</label>
+      <nonterminal>ClassInstanceCreationExpression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Primary</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>new</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>TypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Identifier</nonterminal>
@@ -2096,14 +2192,14 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target1</label>
-  </xbgf:strip>
-  <xbgf:strip>
+  </xbgf:unlabel>
+  <xbgf:unlabel>
     <label>target2</label>
-  </xbgf:strip>
-  
+  </xbgf:unlabel>
+
   <!-- 
      - Fail: ArrayCreationExpression.
       - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]),
@@ -2116,154 +2212,17 @@
                ,([t(new), n(PrimitiveType), n(Dims), n(ArrayInitializer)]),
                ,([t(new), n(ClassOrInterfaceType), n(Dims), n(ArrayInitializer)])])
   -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>target1</label>
-      <nonterminal>ArrayCreationExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>TypeName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>DimExprs</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>Dims</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-<!-- ??? please redo with one replace -->
   <!-- GENERALITY -->
-  <xbgf:project>
-    <bgf:production>
-      <label>target1</label>
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>TypeName</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>ClassOrInterfaceType</nonterminal>
+    </bgf:expression>
+    <in>
       <nonterminal>ArrayCreationExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>DimExprs</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>Dims</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:project>
-  <!-- GENERALITY -->
-  <xbgf:inject>
-    <bgf:production>
-      <label>target1</label>
-      <nonterminal>ArrayCreationExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ClassOrInterfaceType</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>DimExprs</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>Dims</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:inject>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target2</label>
-      <nonterminal>ArrayCreationExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>TypeName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Dims</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ArrayInitializer</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:project>
-    <bgf:production>
-      <label>target2</label>
-      <nonterminal>ArrayCreationExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Dims</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ArrayInitializer</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:project>
-  <!-- GENERALITY -->
-  <xbgf:inject>
-    <bgf:production>
-      <label>target2</label>
-      <nonterminal>ArrayCreationExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ClassOrInterfaceType</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Dims</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ArrayInitializer</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
-    <label>target1</label>
-  </xbgf:strip>
-  <xbgf:strip>
-    <label>target2</label>
-  </xbgf:strip>
+    </in>
+  </xbgf:replace>
 
 </xbgf:sequence>

@@ -193,8 +193,7 @@ vs
     </bgf:production>
   </xbgf:remove>
   <xbgf:deyaccify>PostfixExpression</xbgf:deyaccify>
-  <!-- BREFACTOR -->
-  <xbgf:inject>
+  <xbgf:add>
     <bgf:production>
       <nonterminal>PostfixExpression</nonterminal>
       <bgf:expression>
@@ -205,42 +204,286 @@ vs
           <bgf:expression>
             <star>
               <bgf:expression>
-                <nonterminal>Selector</nonterminal>
-              </bgf:expression>
-            </star>
-          </bgf:expression>
-          <bgf:expression>
-            <star>
-              <bgf:expression>
-                <terminal>++</terminal>
+                <choice>
+                  <bgf:expression>
+                    <terminal>++</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <terminal>--</terminal>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                </choice>
               </bgf:expression>
             </star>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <!-- BREFACTOR -->
-  <xbgf:replace>
-    <bgf:expression>
-      <terminal>++</terminal>
-    </bgf:expression>
-    <bgf:expression>
-      <choice>
-        <bgf:expression>
-          <terminal>++</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <terminal>--</terminal>
-        </bgf:expression>
-      </choice>
-    </bgf:expression>
-    <in>
+  </xbgf:add>
+  <xbgf:appear>
+    <bgf:production>
       <nonterminal>PostfixExpression</nonterminal>
-    </in>
-  </xbgf:replace>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Primary</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <choice>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>.</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <nonterminal>Identifier</nonterminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <optional>
+                              <bgf:expression>
+                                <sequence>
+                                  <bgf:expression>
+                                    <terminal>(</terminal>
+                                  </bgf:expression>
+                                  <bgf:expression>
+                                    <optional>
+                                      <bgf:expression>
+                                        <sequence>
+                                          <bgf:expression>
+                                            <nonterminal>Expression</nonterminal>
+                                          </bgf:expression>
+                                          <bgf:expression>
+                                            <star>
+                                              <bgf:expression>
+                                                <sequence>
+                                                  <bgf:expression>
+                                                    <terminal>,</terminal>
+                                                  </bgf:expression>
+                                                  <bgf:expression>
+                                                    <nonterminal>Expression</nonterminal>
+                                                  </bgf:expression>
+                                                </sequence>
+                                              </bgf:expression>
+                                            </star>
+                                          </bgf:expression>
+                                        </sequence>
+                                      </bgf:expression>
+                                    </optional>
+                                  </bgf:expression>
+                                  <bgf:expression>
+                                    <terminal>)</terminal>
+                                  </bgf:expression>
+                                </sequence>
+                              </bgf:expression>
+                            </optional>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>.</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <terminal>this</terminal>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>.</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <terminal>super</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <nonterminal>SuperSuffix</nonterminal>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>.</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <terminal>new</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <sequence>
+                              <bgf:expression>
+                                <nonterminal>Identifier</nonterminal>
+                              </bgf:expression>
+                              <bgf:expression>
+                                <sequence>
+                                  <bgf:expression>
+                                    <sequence>
+                                      <bgf:expression>
+                                        <terminal>(</terminal>
+                                      </bgf:expression>
+                                      <bgf:expression>
+                                        <optional>
+                                          <bgf:expression>
+                                            <sequence>
+                                              <bgf:expression>
+                                                <nonterminal>Expression</nonterminal>
+                                              </bgf:expression>
+                                              <bgf:expression>
+                                                <star>
+                                                  <bgf:expression>
+                                                    <sequence>
+                                                      <bgf:expression>
+                                                        <terminal>,</terminal>
+                                                      </bgf:expression>
+                                                      <bgf:expression>
+                                                        <nonterminal>Expression</nonterminal>
+                                                      </bgf:expression>
+                                                    </sequence>
+                                                  </bgf:expression>
+                                                </star>
+                                              </bgf:expression>
+                                            </sequence>
+                                          </bgf:expression>
+                                        </optional>
+                                      </bgf:expression>
+                                      <bgf:expression>
+                                        <terminal>)</terminal>
+                                      </bgf:expression>
+                                    </sequence>
+                                  </bgf:expression>
+                                  <bgf:expression>
+                                    <optional>
+                                      <bgf:expression>
+                                        <nonterminal>ClassBody</nonterminal>
+                                      </bgf:expression>
+                                    </optional>
+                                  </bgf:expression>
+                                </sequence>
+                              </bgf:expression>
+                            </sequence>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>[</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <nonterminal>Expression</nonterminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <terminal>]</terminal>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                    </choice>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <choice>
+                  <bgf:expression>
+                    <terminal>++</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>--</terminal>
+                  </bgf:expression>
+                </choice>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:appear>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>Arguments</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <nonterminal>Expression</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <star>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>,</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <nonterminal>Expression</nonterminal>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                    </star>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>ClassCreatorRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Arguments</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ClassBody</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>InnerCreator</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ClassCreatorRest</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  <xbgf:extract>
     <bgf:production>
       <nonterminal>Selector</nonterminal>
       <bgf:expression>
@@ -314,88 +557,11 @@ vs
         </choice>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:extract>
   <xbgf:inline>PostfixExpression</xbgf:inline>
   <xbgf:vertical>
     <nonterminal>Selector</nonterminal>
   </xbgf:vertical>
-  <!-- BREFACTOR -->
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>Arguments</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <nonterminal>Expression</nonterminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <star>
-                      <bgf:expression>
-                        <sequence>
-                          <bgf:expression>
-                            <terminal>,</terminal>
-                          </bgf:expression>
-                          <bgf:expression>
-                            <nonterminal>Expression</nonterminal>
-                          </bgf:expression>
-                        </sequence>
-                      </bgf:expression>
-                    </star>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <!-- BREFACTOR -->
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>InnerCreator</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ClassCreatorRest</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <!-- BREFACTOR -->
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>ClassCreatorRest</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Arguments</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ClassBody</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
 
   <!--  BREFACTOR 
   Now to Expression2, using the expressway -->
@@ -655,9 +821,8 @@ vs
     <nonterminal>Expression1</nonterminal>
   </xbgf:fold>
 
-  <!-- BREFACTOR 
-  Expression -->
-  <xbgf:inject>
+  <!-- Expression -->
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>Expression</nonterminal>
       <bgf:expression>
@@ -666,23 +831,27 @@ vs
             <nonterminal>Expression1</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <sequence>
+                <optional>
                   <bgf:expression>
-                    <nonterminal>AssignmentOperator</nonterminal>
+                    <sequence>
+                      <bgf:expression>
+                        <nonterminal>AssignmentOperator</nonterminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <nonterminal>Expression1</nonterminal>
+                      </bgf:expression>
+                    </sequence>
                   </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Expression1</nonterminal>
-                  </bgf:expression>
-                </sequence>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
 
   <!-- BREFACTOR 
    - Fail: StatementExpression.

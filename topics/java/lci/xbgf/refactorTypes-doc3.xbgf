@@ -155,7 +155,11 @@
             <nonterminal>ClassType</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <nonterminal>BracketsOpt</nonterminal>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>

@@ -80,15 +80,19 @@
             </optional>
           </bgf:expression>
           <bgf:expression>
-            <terminal>;</terminal>
+            <marked>
+              <bgf:expression>
+                <terminal>;</terminal>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  <xbgf:strip>
+  <xbgf:unlabel>
     <label>ContinueStatement</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
   
   <!-- ISSUE CORRECT SPECERROR
   Same for BreakStatement -->
@@ -130,15 +134,19 @@
             </optional>
           </bgf:expression>
           <bgf:expression>
-            <terminal>;</terminal>
+            <marked>
+              <bgf:expression>
+                <terminal>;</terminal>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  <xbgf:strip>
+  <xbgf:unlabel>
     <label>BreakStatement</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
 
   <!-- ISSUE CORRECT SPECERROR
   Expression is referenced as Expr:
@@ -164,8 +172,7 @@
      vs.
       - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
  -->
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
       <bgf:expression>
@@ -174,7 +181,22 @@
             <nonterminal>FormalParameters</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <sequence>
+                      <bgf:expression>
+                        <terminal>[</terminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <terminal>]</terminal>
+                      </bgf:expression>
+                    </sequence>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <optional>
@@ -196,7 +218,13 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
+  <xbgf:fold>
+    <nonterminal>BracketsOpt</nonterminal>
+    <in>
+      <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
+    </in>
+  </xbgf:fold>
   
   <!-- ISSUE CORRECT SPECERROR
   undefined non-terminals -->

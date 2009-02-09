@@ -156,9 +156,8 @@
   </xbgf:rename>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
   
-  <!-- BREFACTOR 
-  Introducing brackets brutally, too hard to derive -->
-  <xbgf:inject>
+  <!-- Introducing brackets brutally, too hard to derive -->
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassOrInterfaceType</nonterminal>
       <bgf:expression>
@@ -167,14 +166,28 @@
             <nonterminal>ClassType</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>BracketsOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <sequence>
+                      <bgf:expression>
+                        <terminal>[</terminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <terminal>]</terminal>
+                      </bgf:expression>
+                    </sequence>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  </xbgf:appear>
+  <xbgf:extract>
     <bgf:production>
       <nonterminal>BracketsOpt</nonterminal>
       <bgf:expression>
@@ -192,7 +205,8 @@
         </star>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:extract>
+  
   <!-- BREFACTOR -->
   <xbgf:undefine>ArrayType</xbgf:undefine>
   <xbgf:remove>
@@ -203,10 +217,11 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
-  
+
   <!-- Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
   <xbgf:inline>ReferenceType</xbgf:inline>
+
 
 </xbgf:sequence>

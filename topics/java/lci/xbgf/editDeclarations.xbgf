@@ -72,13 +72,22 @@
       <nonterminal>ExtendsInterfaces</nonterminal>
     </in>
   </xbgf:fold>
- <!-- TODO -->
-  <!-- BREFACTOR -->
-  <xbgf:project>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>InterfaceDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Modifiers</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
           <bgf:expression>
             <terminal>interface</terminal>
           </bgf:expression>
@@ -98,20 +107,31 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
-  
-  <!-- BREFACTOR 
+
+  <!-- 
    - Fail: ClassDeclaration.
       - [], ,([?(n(Modifiers)), t(class), n(Identifier), ?(n(Super)), ?(n(Interfaces)), n(ClassBody)])
      vs.
       - [], ,([t(class), n(Identifier), ?(,([t(extends), n(Type)])), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
   -->
-  <xbgf:project>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>ClassDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Modifiers</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
           <bgf:expression>
             <terminal>class</terminal>
           </bgf:expression>
@@ -138,7 +158,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
   <xbgf:inline>Super</xbgf:inline>
   <xbgf:inline>Interfaces</xbgf:inline>
 
@@ -171,14 +191,21 @@
   <xbgf:vertical>
     <nonterminal>TypeDeclaration</nonterminal>
   </xbgf:vertical>
-<!-- BREFACTOR -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Modifiers</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <choice>
@@ -193,7 +220,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
 
   <!-- ISSUE EXTEND
    - Fail: FormalParameter.
@@ -201,18 +228,21 @@
      vs.
       - [], ,([?(t(final)), n(Type), n(VariableDeclaratorId)])
   -->
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>FormalParameter</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <terminal>final</terminal>
+                <optional>
+                  <bgf:expression>
+                    <terminal>final</terminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Type</nonterminal>
@@ -223,8 +253,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  
+  </xbgf:appear>
+
   <!-- 
    - Fail: SwitchBlockStatementGroup.
       - [], ,([n(SwitchLabels), n(BlockStatements)])
@@ -234,7 +264,7 @@
     p([], 'SwitchLabels', ;([n('SwitchLabel'), ','([n('SwitchLabels'), n('SwitchLabel')])])),
   -->
   <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
-  
+
   <!-- 
    - Fail: ImportDeclaration.
       - [], ;([n(SingleTypeImportDeclaration), n(TypeImportOnDemandDeclaration)])
@@ -358,7 +388,7 @@
   -->
   <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
-  
+
   <!-- 
    - Fail: ClassBody.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
@@ -387,7 +417,7 @@
       </star>
     </bgf:expression>
   </xbgf:massage>
-  
+
   <!-- 
    - Fail: InterfaceBody.
       - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
@@ -422,7 +452,7 @@
       <to>InterfaceBodyDeclaration</to>
     </nonterminal>
   </xbgf:rename>
-  
+
   <!-- 
    - Fail: CompilationUnit.
       - [], ,([?(n(PackageDeclaration)), ?(n(ImportDeclarations)), ?(n(TypeDeclarations))])
@@ -527,7 +557,7 @@
       </star>
     </bgf:expression>
   </xbgf:massage>
-  
+
   <!-- 
    - Fail: InterfaceBodyDeclaration.
       - [], ;([,([n(ModifiersOpt), n(Type), n(VariableDeclarators), t((;))]),
@@ -743,7 +773,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  
+
   <!-- 
    - Fail: InterfaceMemberDecl.
       - [], ;([,([n(Type), n(VariableDeclarators), t((;))]),
@@ -762,7 +792,7 @@
   </xbgf:unfold>
   <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
   <xbgf:inline>MethodDeclarator</xbgf:inline>
-  
+
   <!-- 
    - Fail: InterfaceMemberDecl.
       - [], ;([,([n(Type), n(VariableDeclarator), *(,([t((,)), n(VariableDeclarator)])), t((;))]),
@@ -1093,7 +1123,7 @@
       <nonterminal>InterfaceMemberDecl</nonterminal>
     </in>
   </xbgf:extract>
-  
+
   <!-- ISSUE EXTEND
    - Fail: InterfaceMemberDecl.
       - [], ;([n(InterfaceMethodOrFieldDecl), ,([t(void), n(Identifier), n(VoidInterfaceMethodDeclaratorRest)])])
@@ -1149,7 +1179,7 @@
       <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
     </in>
   </xbgf:fold>
-  
+
   <!-- ISSUE CORRECT
   Fixing brutally
   
@@ -1608,7 +1638,53 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- BREFACTOR -->
+  <xbgf:disappear>
+    <bgf:production>
+      <label>target</label>
+      <nonterminal>ClassBodyDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ModifiersOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>VariableDeclaratorRest</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <sequence>
+                      <bgf:expression>
+                        <terminal>,</terminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <nonterminal>Identifier</nonterminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <nonterminal>VariableDeclaratorRest</nonterminal>
+                      </bgf:expression>
+                    </sequence>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:disappear>
+  <!-- REVISE -->
   <xbgf:project>
     <bgf:production>
       <label>target</label>
@@ -1627,13 +1703,20 @@
           <bgf:expression>
             <nonterminal>VariableDeclaratorRest</nonterminal>
           </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <terminal>;</terminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
-  <xbgf:strip>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
 
   <!-- 
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(MethodDeclaratorRest)])

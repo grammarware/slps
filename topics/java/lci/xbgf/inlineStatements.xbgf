@@ -106,18 +106,22 @@
             <nonterminal>Statement</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <sequence>
+                <optional>
                   <bgf:expression>
-                    <terminal>else</terminal>
+                    <sequence>
+                      <bgf:expression>
+                        <terminal>else</terminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <nonterminal>Statement</nonterminal>
+                      </bgf:expression>
+                    </sequence>
                   </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Statement</nonterminal>
-                  </bgf:expression>
-                </sequence>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
@@ -139,8 +143,7 @@
      vs.
       - [], ,([t(switch), n(ParExpression), t({), n(SwitchBlockStatementGroups), ?(n(SwitchLabels)), t(})])
   -->
-  <!-- GENERALITY -->
-  <xbgf:project>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>SwitchStatement</nonterminal>
       <bgf:expression>
@@ -164,12 +167,23 @@
             <nonterminal>SwitchBlockStatementGroups</nonterminal>
           </bgf:expression>
           <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>SwitchLabels</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
             <terminal>}</terminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
   <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
   <xbgf:inline>SwitchStatement</xbgf:inline>
 
@@ -252,26 +266,29 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target</label>
       <nonterminal>BlockStatement</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <sequence>
+                <optional>
                   <bgf:expression>
-                    <nonterminal>Identifier</nonterminal>
+                    <sequence>
+                      <bgf:expression>
+                        <nonterminal>Identifier</nonterminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <terminal>:</terminal>
+                      </bgf:expression>
+                    </sequence>
                   </bgf:expression>
-                  <bgf:expression>
-                    <terminal>:</terminal>
-                  </bgf:expression>
-                </sequence>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Statement</nonterminal>
@@ -279,10 +296,10 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
   
   <!-- 
    - Fail: LocalVariableDeclarationStatement.

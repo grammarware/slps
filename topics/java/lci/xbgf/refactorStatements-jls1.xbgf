@@ -76,8 +76,7 @@
       - [], ,([t(switch), n(ParExpression), t({), n(SwitchBlockStatementGroups), t(})])
   -->
   <xbgf:inline>SwitchBlock</xbgf:inline>
-  <!-- GENERALITY -->
-  <xbgf:project>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>SwitchStatement</nonterminal>
       <bgf:expression>
@@ -95,12 +94,23 @@
             <nonterminal>SwitchBlockStatementGroups</nonterminal>
           </bgf:expression>
           <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>SwitchLabels</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
             <terminal>}</terminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
 
   <!-- 
    - Fail: Statement.
@@ -337,26 +347,29 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target</label>
       <nonterminal>BlockStatement</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <sequence>
+                <optional>
                   <bgf:expression>
-                    <nonterminal>Identifier</nonterminal>
+                    <sequence>
+                      <bgf:expression>
+                        <nonterminal>Identifier</nonterminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <terminal>:</terminal>
+                      </bgf:expression>
+                    </sequence>
                   </bgf:expression>
-                  <bgf:expression>
-                    <terminal>:</terminal>
-                  </bgf:expression>
-                </sequence>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Statement</nonterminal>
@@ -364,10 +377,10 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
 
   <!-- 
    - Fail: ForUpdate.
@@ -412,18 +425,21 @@
      vs.
       - [], ;([,([n(StatementExpression), n(MoreStatementExpressions)]), ,([?(t(final)), n(Type), n(VariableDeclarators)])])
   -->
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>LocalVariableDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <terminal>final</terminal>
+                <optional>
+                  <bgf:expression>
+                    <terminal>final</terminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Type</nonterminal>
@@ -434,7 +450,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
   <xbgf:inline>LocalVariableDeclaration</xbgf:inline>
 
   <!-- 

@@ -61,8 +61,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target</label>
       <nonterminal>Primary</nonterminal>
@@ -72,19 +71,23 @@
             <terminal>this</terminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>Arguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Arguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
 
   <!-- ISSUE PERMISSIVENESS
    - Fail: Primary.
@@ -130,9 +133,9 @@
       <label>target</label>
     </in>
   </xbgf:replace>
-  <xbgf:strip>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
 
   <!--  
    - Fail: Primary.
@@ -549,8 +552,7 @@
       <nonterminal>Primary</nonterminal>
     </in>
   </xbgf:extract>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>SuperSuffix</nonterminal>
       <bgf:expression>
@@ -562,16 +564,20 @@
             <nonterminal>Identifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>Arguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Arguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
   <xbgf:add>
     <bgf:production>
       <nonterminal>SuperSuffix</nonterminal>

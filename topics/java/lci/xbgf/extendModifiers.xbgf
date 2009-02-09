@@ -237,9 +237,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:yaccify>
-  <xbgf:vertical>
-    <nonterminal>ConstantModifiers</nonterminal>
-  </xbgf:vertical>
 
   <!-- ISSUE EXTEND
     - Fail: FieldModifier.

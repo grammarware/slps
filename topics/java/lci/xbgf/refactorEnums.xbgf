@@ -31,17 +31,34 @@
     </in>
   </xbgf:unfold>
   
-  <!-- BREFACTOR 
+  <!-- 
   - Fail: EnumDeclaration.
       - [], ,([t(enum), n(Identifier), ?(,([t(implements), n(TypeList)])), n(EnumBody)])
      vs.
       - [], ,([*(n(Modifier)), t(enum), n(Identifier), ?(,([t(implements), n(TypeList)])), n(EnumBody)])
   -->
-  <xbgf:project>
+  <xbgf:unfold>
+    <nonterminal>ModifiersOpt</nonterminal>
+    <in>
+      <nonterminal>EnumDeclaration</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>EnumDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
           <bgf:expression>
             <terminal>enum</terminal>
           </bgf:expression>
@@ -68,6 +85,6 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
 
 </xbgf:sequence>

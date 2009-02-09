@@ -61,17 +61,34 @@
      Identifier "(" [ FormalParameterList ] ")"
  -->
 
-  <!-- BREFACTOR 
+  <!--  
    - Fail: NormalInterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
      vs.
       - [], ,([n(ModifiersOpt), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
   -->
-  <xbgf:project>
+  <xbgf:unfold>
+    <nonterminal>ModifiersOpt</nonterminal>
+    <in>
+      <nonterminal>NormalInterfaceDeclaration</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>NormalInterfaceDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
           <bgf:expression>
             <terminal>interface</terminal>
           </bgf:expression>
@@ -91,7 +108,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
   <xbgf:deyaccify>ExtendsInterfaces</xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>TypeList</nonterminal>
@@ -100,13 +117,13 @@
     </in>
   </xbgf:fold>
 
-  <!-- BREFACTOR 
+  <!-- 
      - Fail: NormalInterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(n(TypeParameters)), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
      vs.
       - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
 -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>NormalInterfaceDeclaration</nonterminal>
       <bgf:expression>
@@ -118,11 +135,15 @@
             <nonterminal>Identifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>TypeParameters</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>TypeParameters</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <optional>
@@ -137,7 +158,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
   <xbgf:inline>ExtendsInterfaces</xbgf:inline>
 
   <!-- 
@@ -194,15 +215,22 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- BREFACTOR -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target</label>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>ClassDeclaration</nonterminal>
@@ -210,10 +238,10 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
   <xbgf:designate>
     <bgf:production>
       <label>target</label>
@@ -223,15 +251,22 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- BREFACTOR -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target</label>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>InterfaceDeclaration</nonterminal>
@@ -239,10 +274,13 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
+  <xbgf:fold>
+    <nonterminal>ModifiersOpt</nonterminal>
+  </xbgf:fold>
 
   <!-- 
    - Fail: Annotations.
@@ -252,17 +290,34 @@
   -->
   <xbgf:deyaccify>Annotations</xbgf:deyaccify>
 
-  <!-- BREFACTOR 
+  <!-- 
    - Fail: AnnotationTypeDeclaration.
       - [], ,([t(@), t(interface), n(Identifier), n(AnnotationTypeBody)])
      vs.
       - [], ,([*(n(Modifier)), t(@), t(interface), n(Identifier), n(AnnotationTypeBody)])
   -->
-  <xbgf:project>
+  <xbgf:unfold>
+    <nonterminal>ModifiersOpt</nonterminal>
+    <in>
+      <nonterminal>AnnotationTypeDeclaration</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>AnnotationTypeDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
           <bgf:expression>
             <terminal>@</terminal>
           </bgf:expression>
@@ -278,7 +333,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
 
   <!-- 
    This is needed for Annotation (see below)

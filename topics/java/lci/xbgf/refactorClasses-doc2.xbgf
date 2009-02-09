@@ -104,14 +104,21 @@
       
    Later with factor/distribute this should be done better!
   -->
-  <!-- BREFACTOR -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <choice>
@@ -126,7 +133,13 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
+  <xbgf:fold>
+    <nonterminal>ModifiersOpt</nonterminal>
+    <in>
+      <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+    </in>
+  </xbgf:fold>
 
   <!-- 
    - Fail: ClassBody.
@@ -157,17 +170,34 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!--  BREFACTOR 
+  <!--   
    - Fail: ClassDeclaration.
       - [], ,([t(class), n(Identifier), ?(,([t(extends), n(Type)])), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
      vs.
       - [], ,([n(ModifiersOpt), t(class), n(Identifier), ?(n(Super)), ?(n(Interfaces)), n(ClassBody)])
   -->
-  <xbgf:project>
+  <xbgf:unfold>
+    <nonterminal>ModifiersOpt</nonterminal>
+    <in>
+      <nonterminal>ClassDeclaration</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>ClassDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
           <bgf:expression>
             <terminal>class</terminal>
           </bgf:expression>
@@ -194,7 +224,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
   <xbgf:inline>Super</xbgf:inline>
   <xbgf:inline>Interfaces</xbgf:inline>
 
@@ -413,15 +443,22 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- BREFACTOR -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target</label>
       <nonterminal>ClassBodyDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -429,10 +466,13 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
+  <xbgf:fold>
+    <nonterminal>ModifiersOpt</nonterminal>
+  </xbgf:fold>
 
   <!-- finishing touches -->
   <xbgf:remove>

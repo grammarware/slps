@@ -55,17 +55,34 @@
      Identifier "(" [ FormalParameterList ] ")"
   -->
 
-  <!-- BREFACTOR 
+  <!--  
    - Fail: InterfaceDeclaration.
       - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
      vs.
       - [], ,([n(ModifiersOpt), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
   -->
-  <xbgf:project>
+  <xbgf:unfold>
+    <nonterminal>ModifiersOpt</nonterminal>
+    <in>
+      <nonterminal>InterfaceDeclaration</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>InterfaceDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
           <bgf:expression>
             <terminal>interface</terminal>
           </bgf:expression>
@@ -85,7 +102,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
   <xbgf:deyaccify>ExtendsInterfaces</xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>TypeList</nonterminal>

@@ -75,7 +75,7 @@
   <xbgf:distribute>
     <nonterminal>Primary</nonterminal>
   </xbgf:distribute>
-  
+
   <!-- 
   Multiple cases like this one:
   
@@ -220,8 +220,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target</label>
       <nonterminal>Primary</nonterminal>
@@ -231,19 +230,23 @@
             <terminal>this</terminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>Arguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Arguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
 
   <!-- 
   too hard to match:
@@ -306,9 +309,9 @@
       <label>target</label>
     </in>
   </xbgf:widen>
-  <xbgf:strip>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
 
   <!-- ISSUE EXTEND BRUTAL
   same problem -->

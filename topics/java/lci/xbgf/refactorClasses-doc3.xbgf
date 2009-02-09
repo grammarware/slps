@@ -126,13 +126,29 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- BREFACTOR 
-  modifiers -->
-  <xbgf:project>
+  <!-- modifiers -->
+  <xbgf:unfold>
+    <nonterminal>ModifiersOpt</nonterminal>
+    <in>
+      <nonterminal>NormalClassDeclaration</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>NormalClassDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
           <bgf:expression>
             <terminal>class</terminal>
           </bgf:expression>
@@ -166,7 +182,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:project>
+  </xbgf:disappear>
   <xbgf:designate>
     <bgf:production>
       <label>target</label>
@@ -176,15 +192,22 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- BREFACTOR -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target</label>
       <nonterminal>ClassMemberDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>ClassDeclaration</nonterminal>
@@ -192,10 +215,10 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
   <xbgf:designate>
     <bgf:production>
       <label>target</label>
@@ -205,15 +228,22 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <!-- BREFACTOR -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <label>target</label>
       <nonterminal>ClassMemberDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>InterfaceDeclaration</nonterminal>
@@ -221,11 +251,17 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
-  <xbgf:strip>
+  </xbgf:appear>
+  <xbgf:unlabel>
     <label>target</label>
-  </xbgf:strip>
+  </xbgf:unlabel>
   <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
+  <xbgf:fold>
+    <nonterminal>ModifiersOpt</nonterminal>
+    <in>
+      <nonterminal>ClassMemberDeclaration</nonterminal>
+    </in>
+  </xbgf:fold>
 
   <!-- 
    - Fail: NormalClassDeclaration.
@@ -1028,20 +1064,28 @@
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:vertical>
   
-  <!-- BREFACTOR 
+  <!-- 
    - Fail: ClassOrInterfaceDeclaration.
       - [], ,([n(ModifiersOpt), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])
      vs.
       - [], ;([n(ClassDeclaration), n(InterfaceDeclaration)])
       
   -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <nonterminal>Modifier</nonterminal>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <choice>
@@ -1056,7 +1100,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
 
   <!-- 
    - Fail: ConstructorDeclaratorRest.
@@ -1135,4 +1179,10 @@
      vs.
       - [], ,([n(Identifier), ?(,([t(extends), n(TypeDeclSpecifier), ?(n(TypeArguments)), n(BracketsOpt), *(,([t(&), n(TypeDeclSpecifier), ?(n(TypeArguments))]))]))])
 -->
+  
+  
+  <!-- to fix the remaining appears -->
+  <xbgf:fold>
+    <nonterminal>ModifiersOpt</nonterminal>
+  </xbgf:fold>
 </xbgf:sequence>

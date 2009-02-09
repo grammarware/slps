@@ -174,18 +174,21 @@
      vs.
       - [], ,([?(t(final)), n(Type), n(VariableDeclarators)])
    -->
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>LocalVariableDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <terminal>final</terminal>
+                <optional>
+                  <bgf:expression>
+                    <terminal>final</terminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Type</nonterminal>
@@ -196,7 +199,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
 
   <!-- ISSUE EXTEND 
      - Fail: MethodModifier.
@@ -531,18 +534,21 @@
      vs.
       - [], ,([?(t(final)), n(Type), n(VariableDeclaratorId)])
   -->
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>FormalParameter</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <terminal>final</terminal>
+                <optional>
+                  <bgf:expression>
+                    <terminal>final</terminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
           <bgf:expression>
             <nonterminal>Type</nonterminal>
@@ -553,6 +559,6 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
 
 </xbgf:sequence>
