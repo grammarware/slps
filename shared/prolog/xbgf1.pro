@@ -156,6 +156,16 @@ designate(P1,g(Rs,Ps1),g(Rs,Ps2))
       [P2]),
     append(Ps1a,[P1|Ps1b],Ps2).
 
+%
+% p([l(unlabel)], f, n(p))
+%
+% Strips the label from a production
+%
+
+unlabel(L,G1,G2)
+ :-
+    stripL(L,G1,G2).
+
 
 %
 % p([l(deyaccify)], f, n(n))
@@ -571,6 +581,24 @@ inject(P1,g(Rs,Ps1),g(Rs,Ps2))
     findP(Ps1,P2,Ps1a,Ps1b),
     unmark(P1,P3),
     append(Ps1a,[P3|Ps1b],Ps2).
+    
+%
+% p([l(appear)], f, n(p))
+%
+% Insert an optional symbol
+%
+
+appear(P1,g(Rs,Ps1),g(Rs,Ps2))
+ :- 
+    require(
+      (collect(xbgf1:collectMarked_rule,P1,[?(_)]);
+       collect(xbgf1:collectMarked_rule,P1,[*(_)])),
+      '~q does not have an optional part marked.',
+      [P1]),
+    project(P1,P2),
+    findP(Ps1,P2,Ps1a,Ps1b),
+    unmark(P1,P3),
+    append(Ps1a,[P3|Ps1b],Ps2).
 
 
 %
@@ -821,6 +849,24 @@ concretize(P1,g(Rs,Ps1),g(Rs,Ps2))
       P4 == P5,
       'Concretize only works with marked terminals, use inject instead.',
       []),
+    append(Ps1a,[P3|Ps1b],Ps2).
+
+%
+% p([l(disappear)], f, n(p))
+%
+% Make an optional symbol disappear
+%
+
+disappear(P1,g(Rs,Ps1),g(Rs,Ps2))
+ :- 
+    require(
+      (collect(xbgf1:collectMarked_rule,P1,[?(_)]);
+       collect(xbgf1:collectMarked_rule,P1,[*(_)])),
+      '~q does not have an optional part marked.',
+      [P1]),
+    unmark(P1,P2),
+    findP(Ps1,P2,Ps1a,Ps1b),
+    project(P1,P3),
     append(Ps1a,[P3|Ps1b],Ps2).
 
 %

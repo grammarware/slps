@@ -43,6 +43,18 @@ xml2xbgf(T,designate(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
+xml2xbgf(T,appear(P2))
+ :-
+    self(name(xbgf:appear),T),
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
+xml2xbgf(T,disappear(P2))
+ :-
+    self(name(xbgf:disappear),T),
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
 xml2xbgf(T,unlabel(L))
  :-
     self(name(xbgf:unlabel),T),

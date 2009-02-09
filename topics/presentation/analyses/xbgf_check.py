@@ -3,10 +3,16 @@ import os
 import sys
 import elementtree.ElementTree as ET
 
-safexbgf =   ('eliminate','introduce','chain', 'designate', 'deyaccify','distribute',
-              'extract',  'factor',   'fold',  'horizontal','inline',   'massage',
-              'rename',   'reroot',   'unfold','vertical',  'yaccify',  'unchain',   'skip')
-incdecxbgf = ('add',      'narrow',   'remove','unite',     'widen',    'rassoc',    'lassoc')
+safexbgf = ('abridge','detour','anonymize','deanonymize','unlabel','designate',
+            'deyaccify','yaccify','eliminate','introduce','inline','extract',
+            'unfold','fold','horizontal','vertical','distribute','factor',
+            'massage','chain','unchain','skip','reroot','rename')
+#safexbgf =   ('eliminate','introduce','chain', 'designate', 'deyaccify','distribute',
+#              'extract',  'factor',   'fold',  'horizontal','inline',   'massage',
+#              'rename',   'reroot',   'unfold','vertical',  'yaccify',  'unchain',   'skip')
+incdecxbgf = ('remove','add','disappear','appear','narrow','widen',
+              'downgrade','upgrade','rassoc','lassoc','unite')
+#incdecxbgf = ('add',      'narrow',   'remove','unite',     'widen',    'rassoc',    'lassoc')
 messyxbgf =  ('permute',  'dump')
 
 rkeys = ('LOC','NOI','NOX','NI~','NI+','NI!','SGO','COR','NI^','SID','SRE')
