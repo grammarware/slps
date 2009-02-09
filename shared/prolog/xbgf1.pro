@@ -755,7 +755,7 @@ permuteXs([X|Xs1],Xs2)
 %
 % p([l(anonymize)], f, n(p))
 %
-% Add selectors to an existing production.
+% Removes selectors from an existing production.
 %  Reverse of deanonymize
 %
 
@@ -771,6 +771,13 @@ anonymize(P1,g(Rs,Ps1),g(Rs,Ps3))
       '~q is not an anonymized version of ~q.',
       [P1,P2]),
     append(Ps2a,[P1|Ps2b],Ps3).
+    
+%
+% p([l(deanonymize)], f, n(p))
+%
+% Add selectors to an existing production.
+%  Reverse of anonymize
+%
 
 %
 % p([l(abstractize)], f, n(p))
