@@ -141,10 +141,19 @@ def expanduni(where,rep):
 def quote(a):
  return '"'+a+'"'
 
-def stripSelector(lbl):
+def stripSelector1(lbl):
  l = lbl[:]
  if l.find('-')>0:
   l = l.split('-')[0]
+ return l
+
+def stripSelector2(lbl):
+ l=''
+ for x in lbl:
+  if x.islower() or x=='.':
+   l+=x
+  else:
+   break
  return l
 
 def addarc(fromnode,tonode,q,labelnode):
@@ -161,10 +170,10 @@ def makegraph():
     name  = src[0]
     qname = src[0]
     for i in range(1,len(src)-1):
-     qname += '_'+stripSelector(src[i])
-     addarc(name,qname,name,stripSelector(src[i]))
+     qname += '_'+stripSelector1(src[i])
+     addarc(name,qname,name,stripSelector1(src[i]))
      name = qname
-    addarc(name,x,qname,stripSelector(src[-1]))
+    addarc(name,x,qname,stripSelector1(src[-1]))
  # make a simplified one
  for x in targets.keys():
   for src in targets[x][0]:
@@ -332,23 +341,23 @@ def preparebgf(cut):
   ontheroll = True
   for a in cut[1:]:
    if ontheroll:
-    run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector(a)+'.bgf'
+    run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
     logwrite(run)
     if os.system(run+shutup):
      problem = True
      print '[FAIL]',
      failedarc.append([curname,a])
      failednode.append(cut[0]+"'"*(curname.count('.')+1))
-     failedaction.append(postfix2prefix(curname+'.'+stripSelector(a)))
+     failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
      ontheroll = False
     else:
      print '[PASS]',
-    print 'Applied',a+'.xbgf','to',stripSelector(curname)+'.bgf'
+    print 'Applied',a+'.xbgf','to',curname+'.bgf'
    else:
     failedarc.append([curname,a])
     failednode.append(cut[0]+"'"*(curname.count('.')+1))
-    failedaction.append(postfix2prefix(curname+'.'+stripSelector(a)))
-   curname += '.'+stripSelector(a)
+    failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
+   curname += '.'+stripSelector2(a)
  name = postfix2prefix('.'.join(cut))
  if name in failedaction:
   print '[FAIL]',

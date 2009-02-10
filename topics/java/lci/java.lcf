@@ -117,7 +117,7 @@
       <perform>correct-doc2</perform>
       <perform>generalizeModifiers</perform>
       <perform>generalizeNames</perform>
-      <perform>deyaccify-doc2</perform>
+      <perform>deyaccifyStatements</perform>
       <perform>refactorTypes-doc2</perform>
       <perform>refactorExpressions</perform>
       <perform>inlineStatements</perform>
@@ -131,7 +131,6 @@
     </branch>
   </target>
 
-  <!---->
   <target>
     <name>jls3</name>
     <branch>
@@ -149,7 +148,7 @@
       <perform>correct-doc3</perform>
       <perform>generalizeModifiers</perform>
       <perform>generalizeNames</perform>
-      <perform>deyaccify-doc2</perform>
+      <perform>deyaccifyStatements</perform>
       <perform>refactorTypes-doc3</perform>
       <perform>refactorExpressions-doc3</perform>
       <perform>inlineStatements</perform>
@@ -180,14 +179,15 @@
       <input>jls2</input>
     </branch>
   </target>
-<!---->
+  
   <target>
     <name>jls123</name>
     <branch>
       <input>jls12</input>
       <perform>rename-jls2</perform>
-      <perform>inline-jls2</perform>
-      <perform>extend-jls2</perform>
+      <perform>extendDeclarations</perform>
+      <perform>extendExpressions</perform>
+      <perform>extendStatements</perform>
     </branch>
     <branch>
       <input>jls3</input>

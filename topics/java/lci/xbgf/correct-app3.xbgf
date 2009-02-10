@@ -26,31 +26,28 @@ Annotation:
       - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
   -->
   <!-- REVISE -->
-  <xbgf:replace tag="revise">
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <nonterminal>Expression3</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <terminal>instanceof</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>Type</nonterminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>instanceof</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>Type</nonterminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-  </xbgf:replace>
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>Expression2Rest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Expression3</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>instanceof</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
 
   <!-- ISSUE CORRECT SPECERROR 
   lacking definition copied from JLS2 with proper renaming -->

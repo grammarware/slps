@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -6,6 +7,13 @@
     <nonterminal>
       <from>Infixop</from>
       <to>InfixOp</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  <xbgf:rename>
+    <nonterminal>
+      <from>MoreStatementExpressions</from>
+      <to>Expressions</to>
     </nonterminal>
   </xbgf:rename>
 

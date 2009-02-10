@@ -256,4 +256,34 @@
   <!-- GENERALITY -->
   <xbgf:undefine>Identifier</xbgf:undefine>
 
+  <!-- ISSUE CORRECT SPECERROR
+  Real error in JLS2:
+   - Fail: Expression2Rest.
+      - [], ;([,([t(instanceof), n(Type)]), *(,([n(InfixOp), n(Expression3)]))])
+     vs.
+      - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
+  -->
+  <!-- REVISE -->
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>Expression2Rest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Expression3</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>instanceof</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
 </xbgf:sequence>
