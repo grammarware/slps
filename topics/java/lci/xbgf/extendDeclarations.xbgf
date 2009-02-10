@@ -568,7 +568,7 @@
 -->
   <xbgf:inline>FormalParameters</xbgf:inline>
 
-  <!--
+  <!-- ISSUE EXTEND
    - Fail: NormalClassDeclaration.
       - [], ,([t(class), n(Identifier),                       ?(,([t(extends), n(Type)])), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
      vs.
@@ -1376,7 +1376,7 @@
     </in>
   </xbgf:fold>
 
-  <!-- ISSUE EXTEND? 
+  <!-- ISSUE PERMISSIVENESS
    - Fail: FormalParameterDecls.
       - [], ,([n(FormalParameter), *(,([t((,)), n(FormalParameter)]))])
      vs.
@@ -1452,7 +1452,8 @@
     </bgf:production>
   </xbgf:redefine>
 
-  <!-- (LocalVariableDeclaration as ForInit -> is a part of ForVarControl)
+  <!-- ISSUE PERMISSIVENESS
+  (LocalVariableDeclaration as ForInit -> is a part of ForVarControl)
    - Fail: ForInit.
       - [], ,([?(t(final)), n(Type), n(VariableDeclarators)])
   -->

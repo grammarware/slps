@@ -64,7 +64,7 @@
     </bgf:production>
   </xbgf:redefine>
 
-  <!-- ISSUE CORRECT EXTRACTERROR ({} parsed as iteration)
+  <!-- ISSUE EXTRACTERROR ({} parsed as iteration)
 ArrayInitializer:
         { [VariableInitializer {, VariableInitializer} [,]] }
   -->
@@ -117,7 +117,7 @@ ArrayInitializer:
     </bgf:production>
   </xbgf:redefine>
 
-  <!-- ISSUE CORRECT EXTRACTERROR  (lacking colon)
+  <!-- ISSUE EXTRACTERROR  (lacking colon)
 ForControl:
         ForVarControl
         ForInit;   [Expression]   ; [ForUpdate]

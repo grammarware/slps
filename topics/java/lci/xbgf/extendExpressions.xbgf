@@ -3,7 +3,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!--
+  <!-- ISSUE EXTEND
    - Fail: Creator.
       - [], ,([n(QualifiedIdentifier), ;([n(ArrayCreatorRest), n(ClassCreatorRest)])])
      vs.
@@ -399,7 +399,7 @@ CreatedName:
     <nonterminal>Expression3</nonterminal>
   </xbgf:vertical>
   
-  <!--
+  <!-- ISSUE PERMISSIVENESS
   - Fail: Expression3.
       - [], ,([n(Primary), *(n(Selector)), *(n(PostfixOp))])
      vs.
