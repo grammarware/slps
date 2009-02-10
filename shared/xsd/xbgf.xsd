@@ -109,6 +109,19 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="appear">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="chain">
     <xsd:annotation>
       <xsd:documentation>
@@ -119,6 +132,19 @@
         extracted. That definition is the defining expression of the
         production (from the input grammar) whose defined nonterminal and
         label (if any) matches with the argument production.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="deanonymize">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -145,20 +171,30 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="redefine">
+  <xsd:element name="disappear">
     <xsd:annotation>
       <xsd:documentation>
-	      A replace variant that works on production level. When this
-        transformation is executed, all current productions for the
-        nonterminal are dropped, and all the given ones are added
-        to the grammar.
+        TBD
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+        <xsd:element ref="bgf:production"/>
       </xsd:sequence>
-      <xsd:attribute name="tag" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="downgrade">
+    <xsd:annotation>
+      <xsd:documentation>
+        To be explained later.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production"/>
+        <xsd:element ref="bgf:production"/>
+      </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
 
@@ -179,7 +215,7 @@
   <xsd:element name="unlabel">
     <xsd:annotation>
       <xsd:documentation>
-	TBD
+        TBD
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -492,6 +528,23 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="redefine">
+    <xsd:annotation>
+      <xsd:documentation>
+        A replace variant that works on production level. When this
+        transformation is executed, all current productions for the
+        nonterminal are dropped, and all the given ones are added
+        to the grammar.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="tag" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="remove">
     <xsd:annotation>
       <xsd:documentation>
@@ -689,7 +742,7 @@
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>
-  
+
   <xsd:element name="unchain">
     <xsd:annotation>
       <xsd:documentation>
@@ -767,7 +820,7 @@
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
-  
+
   <xsd:element name="abstractize">
     <xsd:annotation>
       <xsd:documentation>
@@ -782,45 +835,6 @@
   </xsd:element>
 
   <xsd:element name="anonymize">
-    <xsd:annotation>
-      <xsd:documentation>
-        TBD
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element ref="bgf:production"/>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="deanonymize">
-    <xsd:annotation>
-      <xsd:documentation>
-        TBD
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element ref="bgf:production"/>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="appear">
-    <xsd:annotation>
-      <xsd:documentation>
-        TBD
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element ref="bgf:production"/>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-  
-  <xsd:element name="disappear">
     <xsd:annotation>
       <xsd:documentation>
         TBD
@@ -890,20 +904,6 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="downgrade">
-    <xsd:annotation>
-      <xsd:documentation>
-        To be explained later.
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element ref="bgf:production"/>
-        <xsd:element ref="bgf:production"/>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-  
   <xsd:element name="upgrade">
     <xsd:annotation>
       <xsd:documentation>
