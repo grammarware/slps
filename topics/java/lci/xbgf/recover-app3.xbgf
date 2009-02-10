@@ -64,4 +64,106 @@
     </bgf:production>
   </xbgf:redefine>
 
+  <!-- ISSUE CORRECT EXTRACTERROR ({} parsed as iteration)
+ArrayInitializer:
+        { [VariableInitializer {, VariableInitializer} [,]] }
+  -->
+  <!-- REVISE -->
+  <xbgf:redefine>
+    <bgf:production>
+      <nonterminal>ArrayInitializer</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <nonterminal>VariableInitializer</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <star>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>,</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <nonterminal>VariableInitializer</nonterminal>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                    </star>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <optional>
+                      <bgf:expression>
+                        <terminal>,</terminal>
+                      </bgf:expression>
+                    </optional>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:redefine>
+
+  <!-- ISSUE CORRECT EXTRACTERROR  (lacking colon)
+ForControl:
+        ForVarControl
+        ForInit;   [Expression]   ; [ForUpdate]
+
+ForVarControl
+        [</em><code>final</code><em>] [Annotations] Type Identifier ForVarControlRest
+
+being parsed as 
+ForControl:
+        ForVarControl
+ForControl:
+        ForInit ";" Expression ? ";" ForUpdate ?
+ForControl:
+        "final" ? Annotations ? Type Identifier ForVarControlRest
+  -->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>ForVarControl</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <terminal>final</terminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Annotations</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ForVarControlRest</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+
 </xbgf:sequence>

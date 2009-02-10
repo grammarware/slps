@@ -24,12 +24,7 @@
       - [], ,([t((), ?(n(ArgumentList)), t())])
   -->
   <xbgf:deyaccify>ArgumentList</xbgf:deyaccify>
-  <xbgf:unfold>
-    <nonterminal>ArgumentList</nonterminal>
-    <in>
-      <nonterminal>Arguments</nonterminal>
-    </in>
-  </xbgf:unfold>
+  <xbgf:inline>ArgumentList</xbgf:inline>
   
   <!-- 
   - Fail: EnumDeclaration.

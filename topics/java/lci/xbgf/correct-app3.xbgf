@@ -17,7 +17,7 @@ Annotation:
     <add>TypeName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
-  
+
   <!-- ISSUE CORRECT SPECERROR
   Real error in JLS3:
    - Fail: Expression2Rest.
@@ -51,9 +51,9 @@ Annotation:
       </sequence>
     </bgf:expression>
   </xbgf:replace>
-  
+
   <!-- ISSUE CORRECT SPECERROR 
-  lacking definition copied from JLS2 -->
+  lacking definition copied from JLS2 with proper renaming -->
   <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>
@@ -64,12 +64,16 @@ Annotation:
             <nonterminal>StatementExpression</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>MoreStatementExpressions</nonterminal>
+            <nonterminal>Expressions</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <xbgf:unite>
+    <add>MoreStatementExpressions</add>
+    <to>Expressions</to>
+  </xbgf:unite>
 
   <!--   ISSUE CORRECT SPECERROR
   - Fail: Statement.
@@ -183,4 +187,89 @@ Annotation:
   <!-- GENERALITY -->
   <xbgf:undefine>Identifier</xbgf:undefine>
 
+  <!-- ISSUE CORRECT SPECERROR -->
+  <!-- not right because VariableDeclarator starts with Identifier:
+  
+AnnotationTypeElementRest:
+        Type Identifier AnnotationMethodOrConstantRest ";"
+AnnotationMethodOrConstantRest:
+        AnnotationMethodRest
+AnnotationMethodOrConstantRest:
+        AnnotationConstantRest
+AnnotationMethodRest:
+        "(" ")" DefaultValue ?
+AnnotationConstantRest:
+        VariableDeclarators
+  -->
+  <!-- REVISE -->
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>AnnotationTypeElementRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>AnnotationMethodOrConstantRest</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
+  <!-- REVISE -->
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>AnnotationMethodOrConstantRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>AnnotationMethodRest</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+
+  <!-- ISSUE CORRECT SPECERROR - forgotten definition -->
+  <!-- GENERALITY -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>FormalParameter</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <terminal>final</terminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>VariableDeclaratorId</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
 </xbgf:sequence>

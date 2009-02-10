@@ -155,7 +155,7 @@
       <perform>inlineStatements</perform>
       <perform>generalizeStatements</perform>
       <perform>refactorStatements-doc3</perform>
-      <perform>editExpressions</perform>
+      <perform>editExpressions-doc3</perform>
       <perform>refactorClasses-doc3</perform>
       <perform>refactorInterfaces-doc3</perform>
       <perform>refactorEnums</perform>

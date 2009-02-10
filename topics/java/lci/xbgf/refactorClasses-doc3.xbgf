@@ -343,32 +343,54 @@
      vs.
       - [], ;([n(FormalParameter), ,([n(FormalParameters), t((,)), n(FormalParameter)])])
   -->
-  <!-- BREFACTOR -->
-  <xbgf:redefine>
+  <xbgf:introduce>
     <bgf:production>
-      <nonterminal>FormalParameters</nonterminal>
+      <nonterminal>FormalParameterDeclsRest</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <terminal>(</terminal>
+            <nonterminal>VariableDeclaratorId</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <optional>
               <bgf:expression>
-                <nonterminal>FormalParameterDecls</nonterminal>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <optional>
+                      <bgf:expression>
+                        <sequence>
+                          <bgf:expression>
+                            <terminal>final</terminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <optional>
+                              <bgf:expression>
+                                <nonterminal>Annotations</nonterminal>
+                              </bgf:expression>
+                            </optional>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <nonterminal>Type</nonterminal>
+                          </bgf:expression>
+                          <bgf:expression>
+                            <nonterminal>FormalParameterDeclsRest</nonterminal>
+                          </bgf:expression>
+                        </sequence>
+                      </bgf:expression>
+                    </optional>
+                  </bgf:expression>
+                </sequence>
               </bgf:expression>
             </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:redefine>
-  <!-- TODO: perhaps an introduce? -->
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  </xbgf:introduce>
+  <xbgf:extract>
     <bgf:production>
       <nonterminal>FormalParameterDecls</nonterminal>
       <bgf:expression>
@@ -396,34 +418,30 @@
         </optional>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:extract>
   <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:redefine>
     <bgf:production>
-      <nonterminal>FormalParameterDeclsRest</nonterminal>
+      <nonterminal>FormalParameters</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>VariableDeclaratorId</nonterminal>
+            <terminal>(</terminal>
           </bgf:expression>
           <bgf:expression>
             <optional>
               <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>,</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>FormalParameterDecls</nonterminal>
-                  </bgf:expression>
-                </sequence>
+                <nonterminal>FormalParameterDecls</nonterminal>
               </bgf:expression>
             </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:redefine>
   <xbgf:add>
     <bgf:production>
       <nonterminal>FormalParameterDeclsRest</nonterminal>
@@ -752,6 +770,32 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:remove>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>QualifiedIdentifierList</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>QualifiedIdentifier</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
   <xbgf:add>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -1121,6 +1165,9 @@
     </in>
   </xbgf:replace>
   <xbgf:eliminate>ConstructorBody</xbgf:eliminate>
+  <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
+  <xbgf:eliminate>NonWildTypeArguments</xbgf:eliminate>
+  <xbgf:eliminate>ReferenceTypeList</xbgf:eliminate>
 
   <!-- 
   This is used by class definitions and interface definitions
@@ -1131,55 +1178,6 @@
   -->
   <xbgf:deyaccify>TypeParameterList</xbgf:deyaccify>
   <xbgf:inline>TypeParameterList</xbgf:inline>
-
-  <!-- 
-   - Fail: TypeParameter.
-      - [], ,([n(Identifier), ?(,([t(extends), n(Bound)]))])
-     vs.
-      - [], ,([n(Identifier), ?(n(TypeBound))])
-      
-  Bound is defined as:
-     Type { "&amp;" Type }
-
-  TypeBound is defined as:
-     "extends" ClassOrInterfaceType [ AdditionalBoundList ]
-  AdditionalBoundList is defined as:
-     AdditionalBound AdditionalBoundList
-     AdditionalBound
-  AdditionalBound is defined as:
-     "&amp;" InterfaceType
-  -->
-  <xbgf:deyaccify>AdditionalBoundList</xbgf:deyaccify>
-  <xbgf:inline>AdditionalBoundList</xbgf:inline>
-  <xbgf:massage>
-    <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <plus>
-            <bgf:expression>
-              <nonterminal>AdditionalBound</nonterminal>
-            </bgf:expression>
-          </plus>
-        </bgf:expression>
-      </optional>
-    </bgf:expression>
-    <bgf:expression>
-      <star>
-        <bgf:expression>
-          <nonterminal>AdditionalBound</nonterminal>
-        </bgf:expression>
-      </star>
-    </bgf:expression>
-  </xbgf:massage>
-  <xbgf:inline>AdditionalBound</xbgf:inline>
-  <xbgf:inline>TypeBound</xbgf:inline>
-  <!-- WTF??? -->
-  <!--   - Fail: TypeParameter.
-      - [], ,([n(Identifier), ?(,([t(extends), n(Bound)]))])
-     vs.
-      - [], ,([n(Identifier), ?(,([t(extends), n(TypeDeclSpecifier), ?(n(TypeArguments)), n(BracketsOpt), *(,([t(&), n(TypeDeclSpecifier), ?(n(TypeArguments))]))]))])
--->
-  
   
   <!-- to fix the remaining appears -->
   <xbgf:fold>

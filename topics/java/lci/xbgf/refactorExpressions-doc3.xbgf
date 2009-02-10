@@ -131,18 +131,6 @@
     </bgf:production>
   </xbgf:extract>
   <xbgf:deyaccify>Dims</xbgf:deyaccify>
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>BracketsOpt</nonterminal>
-      <bgf:expression>
-        <optional>
-          <bgf:expression>
-            <nonterminal>Dims</nonterminal>
-          </bgf:expression>
-        </optional>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
   <xbgf:unfold>
     <nonterminal>Dims</nonterminal>
     <in>
@@ -1519,5 +1507,5 @@
   
   <!-- should be a part of inlineStatements, actually, but needed only for doc3 -->
   <xbgf:horizontal>ForStatement</xbgf:horizontal>
-
+  
 </xbgf:sequence>

@@ -21,7 +21,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
- 
+
   <!--
    - Fail: Primary.
       - [], ,([t(void), t(.), t(class)])
@@ -155,46 +155,7 @@
   <xbgf:eliminate>DimExprs</xbgf:eliminate>
   <xbgf:eliminate>DimExpr</xbgf:eliminate>
   <xbgf:eliminate>Dims</xbgf:eliminate>
-  <xbgf:add>
-    <bgf:production>
-      <nonterminal>Primary</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Creator</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>
-  <!-- BREFACTOR -->
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>Creator</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>QualifiedIdentifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <choice>
-              <bgf:expression>
-                <nonterminal>ArrayCreatorRest</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>ClassCreatorRest</nonterminal>
-              </bgf:expression>
-            </choice>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <!-- BREFACTOR -->
-  <xbgf:define>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>ArrayCreatorRest</nonterminal>
       <bgf:expression>
@@ -252,7 +213,44 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>Creator</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <choice>
+              <bgf:expression>
+                <nonterminal>ArrayCreatorRest</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>ClassCreatorRest</nonterminal>
+              </bgf:expression>
+            </choice>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:add>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>new</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Creator</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:add>
   
   <!--  ISSUE PERMISSIVENESS
    - Fail: ForUpdate.
