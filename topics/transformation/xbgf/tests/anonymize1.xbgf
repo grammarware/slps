@@ -3,26 +3,40 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   <xbgf:anonymize>
-    <bgf:production>
-      <nonterminal>A</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <selectable>
-              <selector>first</selector>
-              <bgf:expression>
-                <terminal>a</terminal>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>a</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>a</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:anonymize>
+  <bgf:production>
+    <nonterminal>A</nonterminal>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <selectable>
+            <selector>first</selector>
+            <bgf:expression>
+              <terminal>a</terminal>
+            </bgf:expression>
+          </selectable>
+        </bgf:expression>
+        <bgf:expression><marked>
+        <bgf:expression>
+          <selectable>
+            <selector>second</selector>
+            <bgf:expression>
+              <terminal>a</terminal>
+            </bgf:expression>
+          </selectable>
+        </bgf:expression>
+        </marked></bgf:expression>
+        <bgf:expression><marked>
+        <bgf:expression>
+          <selectable>
+            <selector>third</selector>
+            <bgf:expression>
+              <terminal>a</terminal>
+            </bgf:expression>
+          </selectable>
+        </bgf:expression>
+        </marked></bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </bgf:production>
+</xbgf:anonymize>
 </xbgf:sequence>

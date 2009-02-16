@@ -7,14 +7,14 @@
       <nonterminal>expr</nonterminal>
       <bgf:expression>
         <sequence>
-          <bgf:expression>
+          <bgf:expression><marked><bgf:expression>
             <selectable>
               <selector>op</selector>
               <bgf:expression>
                 <nonterminal>unary_op</nonterminal>
               </bgf:expression>
             </selectable>
-          </bgf:expression>
+          </bgf:expression></marked></bgf:expression>
           <bgf:expression>
             <nonterminal>expr</nonterminal>
           </bgf:expression>

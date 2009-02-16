@@ -13,20 +13,10 @@
           </selectable>
         </bgf:expression>
         <bgf:expression>
-          <selectable>
-            <selector>second</selector>
-            <bgf:expression>
-              <terminal>a</terminal>
-            </bgf:expression>
-          </selectable>
+          <terminal>a</terminal>
         </bgf:expression>
         <bgf:expression>
-          <selectable>
-            <selector>third</selector>
-            <bgf:expression>
-              <terminal>a</terminal>
-            </bgf:expression>
-          </selectable>
+          <terminal>a</terminal>
         </bgf:expression>
       </sequence>
     </bgf:expression>
