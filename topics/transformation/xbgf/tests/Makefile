@@ -8,6 +8,9 @@ testfull:
 	make build
 	ls -1 *.xbgf | xargs -n1 ./testperformfull
 
+complete:
+	@ls -1 *.xbgf | xargs -n1 ./quiettest
+
 rebuild:
 	make clean
 	@cd ../apps/xbgf; make rebuild

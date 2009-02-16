@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<xns1:grammar xmlns:xns1="http://planet-sl.org/bgf">
-  <xns1:production>
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  <bgf:production>
     <nonterminal>expr</nonterminal>
-    <xns1:expression>
+    <bgf:expression>
       <nonterminal>int</nonterminal>
-    </xns1:expression>
-  </xns1:production>
-  <xns1:production>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
     <nonterminal>expr</nonterminal>
-    <xns1:expression>
+    <bgf:expression>
       <nonterminal>id</nonterminal>
-    </xns1:expression>
-  </xns1:production>
-</xns1:grammar>
+    </bgf:expression>
+  </bgf:production>
+</bgf:grammar>

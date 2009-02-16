@@ -1,40 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   <xbgf:distribute>
-    <bgf:production>
-      <nonterminal>a</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>b</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <choice>
-              <bgf:expression>
-                <nonterminal>c</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>d</nonterminal>
-              </bgf:expression>
-            </choice>
-          </bgf:expression>
-          <bgf:expression>
-            <marked>
-              <bgf:expression>
-                <choice>
-                  <bgf:expression>
-                    <nonterminal>e</nonterminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>f</nonterminal>
-                  </bgf:expression>
-                </choice>
-              </bgf:expression>
-            </marked>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <label>bcd</label>
   </xbgf:distribute>
 </xbgf:sequence>

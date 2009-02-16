@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  <bgf:production>
+    <nonterminal>X</nonterminal>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>a</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>b</terminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </bgf:production>
+</bgf:grammar>

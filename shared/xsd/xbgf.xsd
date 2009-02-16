@@ -30,51 +30,60 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>
-      <xsd:element ref="xbgf:add"/>
-      <xsd:element ref="xbgf:anonymize"/>
+      <!-- folding and unfolding -->
+      <xsd:element ref="xbgf:extract"/>
+      <xsd:element ref="xbgf:inline"/>
+      <xsd:element ref="xbgf:fold"/>
+      <xsd:element ref="xbgf:unfold"/>
+      <xsd:element ref="xbgf:abridge"/>
+      <xsd:element ref="xbgf:detour"/>
       <xsd:element ref="xbgf:chain"/>
+      <xsd:element ref="xbgf:unchain"/>
+      <!-- other general refactorings -->
+      <xsd:element ref="xbgf:massage"/>
+      <xsd:element ref="xbgf:factor"/>
+      <xsd:element ref="xbgf:distribute"/>
+      <xsd:element ref="xbgf:yaccify"/>
+      <xsd:element ref="xbgf:deyaccify"/>
+      <xsd:element ref="xbgf:import"/>
+      <xsd:element ref="xbgf:introduce"/>
+      <xsd:element ref="xbgf:eliminate"/>
+      <xsd:element ref="xbgf:vertical"/>
+      <xsd:element ref="xbgf:horizontal"/>
+      <xsd:element ref="xbgf:rassoc"/>
+      <xsd:element ref="xbgf:lassoc"/>
+      <!-- labels, selectors and other decorative stuff -->
+      <xsd:element ref="xbgf:anonymize"/>
       <xsd:element ref="xbgf:deanonymize"/>
-      <xsd:element ref="xbgf:define"/>
-      <xsd:element ref="xbgf:downgrade"/>
-      <xsd:element ref="xbgf:disappear"/>
-      <xsd:element ref="xbgf:appear"/>
-      <xsd:element ref="xbgf:upgrade"/>
-      <xsd:element ref="xbgf:redefine"/>
       <xsd:element ref="xbgf:designate"/>
       <xsd:element ref="xbgf:unlabel"/>
-      <xsd:element ref="xbgf:deyaccify"/>
-      <xsd:element ref="xbgf:distribute"/>
-      <xsd:element ref="xbgf:dump"/>
-      <xsd:element ref="xbgf:eliminate"/>
-      <xsd:element ref="xbgf:extract"/>
-      <xsd:element ref="xbgf:factor"/>
-      <xsd:element ref="xbgf:fold"/>
-      <xsd:element ref="xbgf:horizontal"/>
-      <xsd:element ref="xbgf:inject"/>
-      <xsd:element ref="xbgf:inline"/>
-      <xsd:element ref="xbgf:introduce"/>
-      <xsd:element ref="xbgf:import"/>
-      <xsd:element ref="xbgf:lassoc"/>
-      <xsd:element ref="xbgf:massage"/>
-      <xsd:element ref="xbgf:narrow"/>
-      <xsd:element ref="xbgf:permute"/>
-      <xsd:element ref="xbgf:project"/>
-      <xsd:element ref="xbgf:rassoc"/>
-      <xsd:element ref="xbgf:remove"/>
-      <xsd:element ref="xbgf:rename"/>
-      <xsd:element ref="xbgf:replace"/>
       <xsd:element ref="xbgf:reroot"/>
-      <xsd:element ref="xbgf:abridge"/>
-      <xsd:element ref="xbgf:strip"/>
-      <xsd:element ref="xbgf:concretize"/>
-      <xsd:element ref="xbgf:unchain"/>
-      <xsd:element ref="xbgf:undefine"/>
-      <xsd:element ref="xbgf:unfold"/>
-      <xsd:element ref="xbgf:unite"/>
-      <xsd:element ref="xbgf:abstractize"/>
-      <xsd:element ref="xbgf:vertical"/>
+      <!-- semantics increasing (grammar lengthening) transformations -->
+      <xsd:element ref="xbgf:add"/>
+      <xsd:element ref="xbgf:appear"/>
       <xsd:element ref="xbgf:widen"/>
-      <xsd:element ref="xbgf:yaccify"/>
+      <xsd:element ref="xbgf:upgrade"/>
+      <xsd:element ref="xbgf:unite"/>
+      <!-- semantics decreasing (grammar shortening) transformations -->
+      <xsd:element ref="xbgf:remove"/>
+      <xsd:element ref="xbgf:disappear"/>
+      <xsd:element ref="xbgf:narrow"/>
+      <xsd:element ref="xbgf:downgrade"/>
+      <!-- transformations that only preserve abstract semantics -->
+      <xsd:element ref="xbgf:abstractize"/>
+      <xsd:element ref="xbgf:concretize"/>
+      <xsd:element ref="xbgf:permute"/>
+      <!-- semantics revising transformations -->
+      <xsd:element ref="xbgf:define"/>
+      <xsd:element ref="xbgf:undefine"/>
+      <xsd:element ref="xbgf:redefine"/>
+      <xsd:element ref="xbgf:inject"/>
+      <xsd:element ref="xbgf:project"/>
+      <xsd:element ref="xbgf:replace"/>
+      <!-- the rest -->
+      <xsd:element ref="xbgf:dump"/>
+      <xsd:element ref="xbgf:rename"/>
+      <xsd:element ref="xbgf:strip"/>
     </xsd:choice>
   </xsd:group>
 
@@ -117,7 +126,7 @@
   <xsd:element name="appear">
     <xsd:annotation>
       <xsd:documentation>
-        TBD
+        As inject, but only allows for nillable elements (optional, star) to appear.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -149,7 +158,8 @@
   <xsd:element name="deanonymize">
     <xsd:annotation>
       <xsd:documentation>
-        TBD
+        Adding a selector to the existing production.
+        Selectors must be introduced one at a time, and the one being introduced needs to be marked.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -179,7 +189,7 @@
   <xsd:element name="disappear">
     <xsd:annotation>
       <xsd:documentation>
-        TBD
+        As project, but only allows for nillable elements (optional, star) to disappear.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -192,7 +202,10 @@
   <xsd:element name="downgrade">
     <xsd:annotation>
       <xsd:documentation>
-        To be explained later.
+        Replaces a nonterminal with one of its definitions.
+        The first parameter is the scope production with one of the nonterminals marked.
+        The second parameter is one of that nonterminal's definitions,
+        which right hand side will be used for replacement.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -220,7 +233,7 @@
   <xsd:element name="unlabel">
     <xsd:annotation>
       <xsd:documentation>
-        TBD
+        Strips an existing production from a label.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -407,7 +420,9 @@
   <xsd:element name="import">
     <xsd:annotation>
       <xsd:documentation>
-        T.B.D.
+        Allows to import another grammar: the nonterminals within it can
+        refer to one another, but none of the existing productions are allowed
+        to refer to them before this transformation takes place.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -697,6 +712,19 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="detour">
+    <xsd:annotation>
+      <xsd:documentation>
+        Introduce a reflexive chain production.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="strip">
     <xsd:annotation>
       <xsd:documentation>
@@ -761,8 +789,7 @@
   <xsd:element name="concretize">
     <xsd:annotation>
       <xsd:documentation>
-        Terminalizing means enriching an existing production by inserting
-        terminals in marked spaces.
+        As inject, but works only with terminals.
       </xsd:documentation>
       <xsd:documentation>
         Terminalize breaks concrete, but not abstract, semantics.
@@ -856,7 +883,7 @@
   <xsd:element name="abstractize">
     <xsd:annotation>
       <xsd:documentation>
-        TBD
+        As project, but works only with terminals.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -869,7 +896,7 @@
   <xsd:element name="anonymize">
     <xsd:annotation>
       <xsd:documentation>
-        TBD
+        Removes one (marked) selector from an existing definition.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -938,7 +965,10 @@
   <xsd:element name="upgrade">
     <xsd:annotation>
       <xsd:documentation>
-        To be explained later.
+        Replaces an expression by a nonterminal that can be evaluated to it.
+        The first parameter is the scope production with an expression marked.
+        The second parameter is one of that nonterminal's definitions,
+        which right hand side equals that expression.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>

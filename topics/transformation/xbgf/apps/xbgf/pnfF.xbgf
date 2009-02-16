@@ -35,43 +35,116 @@
       <optional>
         <bgf:expression>
           <nonterminal>scope</nonterminal>
-        </bgf:expression>  
+        </bgf:expression>
       </optional>
-    </bgf:expression>  
+    </bgf:expression>
     <bgf:expression>
       <choice>
         <bgf:expression>
           <epsilon/>
-        </bgf:expression>  
+        </bgf:expression>
         <bgf:expression>
           <nonterminal>scope</nonterminal>
-        </bgf:expression>  
+        </bgf:expression>
       </choice>
-    </bgf:expression>  
+    </bgf:expression>
   </xbgf:massage>
 
   <xbgf:inline>scope</xbgf:inline>
 
-  <xbgf:massage>
-    <bgf:expression>
-      <nonterminal>p</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <selectable>
-        <selector>addV</selector>
-        <bgf:expression>
-          <nonterminal>p</nonterminal>
-        </bgf:expression>
-      </selectable>
-    </bgf:expression>
-    <in>
-      <label>add</label>
-    </in>
-  </xbgf:massage>
 
-  <xbgf:distribute>
-    <label>add</label>
-  </xbgf:distribute>
+  <xbgf:anonymize>
+    <bgf:production>
+      <label>add</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <selectable>
+                  <selector>vertical</selector>
+                  <bgf:expression>
+                    <nonterminal>p</nonterminal>
+                  </bgf:expression>
+                </selectable>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <selectable>
+              <selector>horizontal</selector>
+              <bgf:expression>
+                <nonterminal>p</nonterminal>
+              </bgf:expression>
+            </selectable>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:anonymize>
+
+  <xbgf:deanonymize>
+    <bgf:production>
+      <label>add</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <selectable>
+                  <selector>addV</selector>
+                  <bgf:expression>
+                    <nonterminal>p</nonterminal>
+                  </bgf:expression>
+                </selectable>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <selectable>
+              <selector>horizontal</selector>
+              <bgf:expression>
+                <nonterminal>p</nonterminal>
+              </bgf:expression>
+            </selectable>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:deanonymize>
+
+  <xbgf:anonymize>
+    <bgf:production>
+      <label>add</label>
+      <nonterminal>f</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <selectable>
+              <selector>addV</selector>
+              <bgf:expression>
+                <nonterminal>p</nonterminal>
+              </bgf:expression>
+            </selectable>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <selectable>
+                  <selector>horizontal</selector>
+                  <bgf:expression>
+                    <nonterminal>p</nonterminal>
+                  </bgf:expression>
+                </selectable>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:anonymize>
 
   <xbgf:vertical>
     <label>add</label>
@@ -82,54 +155,7 @@
       <label>addH</label>
       <nonterminal>f</nonterminal>
       <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>x</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>x</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-
-  <xbgf:designate>
-    <bgf:production>
-      <label>addHinL</label>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>x</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>x</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>l</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-
-  <xbgf:designate>
-    <bgf:production>
-      <label>addHinN</label>
-      <nonterminal>f</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>x</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>x</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>n</nonterminal>
-          </bgf:expression>
-        </sequence>
+        <nonterminal>p</nonterminal>
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
@@ -194,7 +220,7 @@
     <bgf:production>
       <label>extractL</label>
       <nonterminal>f</nonterminal>
-      <bgf:expression> 
+      <bgf:expression>
         <sequence>
           <bgf:expression>
             <nonterminal>p</nonterminal>
@@ -253,7 +279,7 @@
     <bgf:production>
       <label>factorL</label>
       <nonterminal>f</nonterminal>
-      <bgf:expression> 
+      <bgf:expression>
         <sequence>
           <bgf:expression>
             <nonterminal>x</nonterminal>
@@ -311,7 +337,7 @@
     <bgf:production>
       <label>foldL</label>
       <nonterminal>f</nonterminal>
-      <bgf:expression> 
+      <bgf:expression>
         <sequence>
           <bgf:expression>
             <nonterminal>n</nonterminal>
@@ -370,7 +396,7 @@
     <bgf:production>
       <label>massageL</label>
       <nonterminal>f</nonterminal>
-      <bgf:expression> 
+      <bgf:expression>
         <sequence>
           <bgf:expression>
             <nonterminal>x</nonterminal>
@@ -435,7 +461,7 @@
     <bgf:production>
       <label>narrowL</label>
       <nonterminal>f</nonterminal>
-      <bgf:expression> 
+      <bgf:expression>
         <sequence>
           <bgf:expression>
             <nonterminal>x</nonterminal>
@@ -481,12 +507,12 @@
       <nonterminal>f</nonterminal>
       <bgf:expression>
         <sequence>
-  	  <bgf:expression>
+          <bgf:expression>
             <nonterminal>l</nonterminal>
-	  </bgf:expression>
-	  <bgf:expression>
+          </bgf:expression>
+          <bgf:expression>
             <nonterminal>l</nonterminal>
-	  </bgf:expression>
+          </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
@@ -498,12 +524,12 @@
       <nonterminal>f</nonterminal>
       <bgf:expression>
         <sequence>
-	  <bgf:expression>
+          <bgf:expression>
             <nonterminal>n</nonterminal>
-	  </bgf:expression>
-	  <bgf:expression>
+          </bgf:expression>
+          <bgf:expression>
             <nonterminal>n</nonterminal>
-	  </bgf:expression>
+          </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
@@ -515,19 +541,19 @@
       <nonterminal>f</nonterminal>
       <bgf:expression>
         <sequence>
-	  <bgf:expression>
-	    <optional>
-	      <bgf:expression>
-	        <nonterminal>l</nonterminal>
-	      </bgf:expression>
-	    </optional>
- 	  </bgf:expression>
- 	  <bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>l</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
             <nonterminal>s</nonterminal>
- 	  </bgf:expression>
-	  <bgf:expression>
+          </bgf:expression>
+          <bgf:expression>
             <nonterminal>s</nonterminal>
-	  </bgf:expression>
+          </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
@@ -539,12 +565,12 @@
       <nonterminal>f</nonterminal>
       <bgf:expression>
         <sequence>
-	  <bgf:expression>
+          <bgf:expression>
             <nonterminal>t</nonterminal>
-	  </bgf:expression>
-	  <bgf:expression>
+          </bgf:expression>
+          <bgf:expression>
             <nonterminal>t</nonterminal>
- 	  </bgf:expression>
+          </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
@@ -570,14 +596,14 @@
           <bgf:expression>
             <nonterminal>x</nonterminal>
           </bgf:expression>
-	   <bgf:expression>
-	      <selectable>
-		<selector>tag</selector>
-		<bgf:expression>
-		  <value>string</value>
-		</bgf:expression>
-	      </selectable>
-	    </bgf:expression>
+          <bgf:expression>
+            <selectable>
+              <selector>tag</selector>
+              <bgf:expression>
+                <value>string</value>
+              </bgf:expression>
+            </selectable>
+          </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
@@ -587,7 +613,7 @@
     <bgf:production>
       <label>replaceL</label>
       <nonterminal>f</nonterminal>
-      <bgf:expression> 
+      <bgf:expression>
         <sequence>
           <bgf:expression>
             <nonterminal>x</nonterminal>
@@ -598,14 +624,14 @@
           <bgf:expression>
             <nonterminal>l</nonterminal>
           </bgf:expression>
-	   <bgf:expression>
-	      <selectable>
-		<selector>tag</selector>
-		<bgf:expression>
-		  <value>string</value>
-		</bgf:expression>
-	      </selectable>
-	    </bgf:expression>
+          <bgf:expression>
+            <selectable>
+              <selector>tag</selector>
+              <bgf:expression>
+                <value>string</value>
+              </bgf:expression>
+            </selectable>
+          </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
@@ -626,14 +652,14 @@
           <bgf:expression>
             <nonterminal>n</nonterminal>
           </bgf:expression>
-	   <bgf:expression>
-	      <selectable>
-		<selector>tag</selector>
-		<bgf:expression>
-		  <value>string</value>
-		</bgf:expression>
-	      </selectable>
-	    </bgf:expression>
+          <bgf:expression>
+            <selectable>
+              <selector>tag</selector>
+              <bgf:expression>
+                <value>string</value>
+              </bgf:expression>
+            </selectable>
+          </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
@@ -740,7 +766,7 @@
     <bgf:production>
       <label>unfoldL</label>
       <nonterminal>f</nonterminal>
-      <bgf:expression> 
+      <bgf:expression>
         <sequence>
           <bgf:expression>
             <nonterminal>n</nonterminal>
@@ -837,7 +863,7 @@
     <bgf:production>
       <label>widenL</label>
       <nonterminal>f</nonterminal>
-      <bgf:expression> 
+      <bgf:expression>
         <sequence>
           <bgf:expression>
             <nonterminal>x</nonterminal>

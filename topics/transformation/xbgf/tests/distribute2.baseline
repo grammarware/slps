@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
   <bgf:production>
+    <label>bcd</label>
     <nonterminal>a</nonterminal>
     <bgf:expression>
       <choice>
@@ -9,17 +11,7 @@
               <nonterminal>b</nonterminal>
             </bgf:expression>
             <bgf:expression>
-              <choice>
-                <bgf:expression>
-                  <nonterminal>c</nonterminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>d</nonterminal>
-                </bgf:expression>
-              </choice>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>e</nonterminal>
+              <nonterminal>c</nonterminal>
             </bgf:expression>
           </sequence>
         </bgf:expression>
@@ -29,21 +21,32 @@
               <nonterminal>b</nonterminal>
             </bgf:expression>
             <bgf:expression>
-              <choice>
-                <bgf:expression>
-                  <nonterminal>c</nonterminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>d</nonterminal>
-                </bgf:expression>
-              </choice>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>f</nonterminal>
+              <nonterminal>d</nonterminal>
             </bgf:expression>
           </sequence>
         </bgf:expression>
       </choice>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
+    <label>efg</label>
+    <nonterminal>a</nonterminal>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>e</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <nonterminal>f</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>g</nonterminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </sequence>
     </bgf:expression>
   </bgf:production>
 </bgf:grammar>
