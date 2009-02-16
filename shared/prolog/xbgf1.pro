@@ -743,6 +743,7 @@ massage_rules(+(*(X)),*(X)).
 massage_rules(+(?(X)),*(X)).
 massage_rules(?(X),';'(L)) :- length(L,2),member(X,L),member(true,L).
 massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(true,L).
+massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(?(X),L).
 massage_rules(+(X),','([X,*(X)])).
 massage_rules(','([X,*(','([Y,X]))]),','([*(','([X,Y])),X])).
 massage_rules(','([X,+(','([Y,X]))]),','([+(','([X,Y])),X])).
@@ -808,6 +809,18 @@ anonymize(P1,g(Rs,Ps1),g(Rs,Ps3))
 % Add selectors to an existing production.
 %  Reverse of anonymize
 %
+deanonymize(P1,g(Rs,Ps1),g(Rs,Ps3))
+ :- 
+    P1 = p(_,N,_),
+    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
+    member(P2,Ps2),
+    stripSs(g(Rs,[P1]),g(Rs,[P1ns])),
+    stripSs(g(Rs,[P2]),g(Rs,[P2ns])),
+    require(
+      P1ns == P2ns,
+      '~q is not an anonymized version of ~q.',
+      [P2,P1]),
+    append(Ps2a,[P1|Ps2b],Ps3).
 
 %
 % p([l(abstractize)], f, n(p))
