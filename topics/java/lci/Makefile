@@ -2,10 +2,6 @@ validator = ../../../shared/tools/checkxml
 
 build:
 
-diff:
-	python ../../convergence/lci/lci.py java3.lcf architecture
-	gdts bgf/wa.bgf bgf/wd.bgf
-
 test:
 	python ../../convergence/lci/lci.py java.lcf architecture
 
