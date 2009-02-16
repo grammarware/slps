@@ -610,10 +610,13 @@ massage(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
 massage_bothways(X1,X2) :- massage_rules(X1,X2), !.
 massage_bothways(X1,X2) :- massage_rules(X2,X1), !.
 
+% Deprecated
 massage_rules(s(_,X),X).
+
 massage_rules(?(s(S,X)),s(S,?(X))).
 massage_rules(*(s(S,X)),s(S,*(X))).
 massage_rules(+(s(S,X)),s(S,+(X))).
+
 massage_rules(?(+(X)),*(X)).
 massage_rules(?(*(X)),*(X)).
 massage_rules(?(?(X)),?(X)).
