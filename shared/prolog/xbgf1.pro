@@ -27,49 +27,25 @@ transformG(Xbgf,G1,G4)
 
 %
 % p([l(addV)], f, n(p))
-% p([l(addH)], f, (n(x),n(x)))
-% p([l(addHinL)], f, (n(x),n(x),n(l)))
-% p([l(addHinN)], f, (n(x),n(x),n(n)))
+% p([l(addH)], f, n(p))
 %
 % Add a production to an existing definition.
-% Add a branch to a choice (in a scope).
+% Add a branch to a choice in a production.
 %
 
 addV(P1,g(Rs,Ps1),g(Rs,Ps3))
  :-
     P1 = p(_,N,_),
     splitN(Ps1,N,Ps2,Ps2a,Ps2b),
-    projectChoices(P1,P2),
-    (
-    	P1 == P2,!,
-        concat([Ps2a,Ps2,[P1],Ps2b],Ps3)
-    ;
-        Ps2 == [P2],
-    	unmark(P1,P4),
-        concat([Ps2a,[P4],Ps2b],Ps3)
-    ),
-    !.
+    concat([Ps2a,Ps2,[P1],Ps2b],Ps3).
 
-addH(X1,X2,g(Rs,Ps1),g(Rs,Ps3))
+addH(P1,g(Rs,Ps1),g(Rs,Ps2))
  :-
-    replace(X2,';'([X2,X1]),Ps1,[],[],Ps3).
-
-addHinL(X1,X2,L,g(Rs,Ps1),g(Rs,Ps3))
- :-
-    replaceL(X2,';'([X2,X1]),L,g(Rs,Ps1),g(Rs,Ps3)).
-
-addHinN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
- :-
-    replaceN(X2,';'([X2,X1]),N,g(Rs,Ps1),g(Rs,Ps3)).
-
-projectChoices(X,Z) 
- :-
-    transform(try(xbgf1:projectChoices_rule),X,Y),
-    normalizeG(Y,Z).
-
-projectChoices_rule(';'([X,{_}]),X).
-projectChoices_rule(';'([{_},X]),X).
-
+    unmark(P1,P1u),
+    removeH(P1,P1r),
+    findP(Ps1,P1r,Ps1a,Ps1b),
+    append(Ps1a,[P1u|Ps1b],Ps2).
+    
 
 %
 % p([l(chain)], f, n(p))
@@ -181,14 +157,14 @@ deyaccify(N,g(Rs,Ps1),g(Rs,Ps3))
        'Nonterminal ~q must be defined vertically for deyaccification to work.',
        [N]),
     require(
-      once(xbgf1:newdeyaccify_rules(N,Ps2,P3)),
+      once(xbgf1:deyaccify_rules(N,Ps2,P3)),
       'Nonterminal ~q is not deyaccifiable: ~q',
       [N,Ps2]),
     append(Ps2a,[P3|Ps2b],Ps3).
 
 % (N: N x; N: y) -------> N: y x*
 % (N: N x; N: x) -------> N: x+
-newdeyaccify_rules(N,P12,P3)
+deyaccify_rules(N,P12,P3)
  :-
     length(P12,2),
     member(P1,P12),
@@ -199,14 +175,14 @@ newdeyaccify_rules(N,P12,P3)
     normalizeG(','(Xs),X),
    (
         eqX(X,Y),!,
-        P3 = p([],N,+(X))
+        normalizeG(p([],N,+(X)),P3)
     ;
-        P3 = p([],N,','([Y,*(X)]))
+        normalizeG(p([],N,','([Y,*(X)])),P3)
     ).
 
 % (N: x N; N: y) -------> N: x* y
 % (N: x N; N: x) -------> N: x+
-newdeyaccify_rules(N,P12,P3)
+deyaccify_rules(N,P12,P3)
  :-
     length(P12,2),
     member(P1,P12),
@@ -222,123 +198,6 @@ newdeyaccify_rules(N,P12,P3)
     ;
         P3 = p([],N,','([*(X),Y]))
     ).
-
-olddeyaccify(N,g(Rs,Ps1),g(Rs,Ps2))
- :-
-    splitN1(Ps1,N,P1,Ps2a,Ps2b),
-    P1 = p(As,N,X1),    
-    P2 = p(As,N,X2),
-    require(
-      once(xbgf1:deyaccify_rules(N,X1,X2)),
-      'Nonterminal ~q of shape ~q is not deyaccifiable.',
-      [N,X1]),
-    append(Ps2a,[P2|Ps2b],Ps2).
-
-
-%
-% (X3 ; (n(N1) , X3)) --> +(X3)
-% Both sequential orders of second alternative are covered by one clause.
-%
-
-deyaccify_rules(N1,X1,X2) 
- :-
-    X1 = ';'(Xs1),
-    length(Xs1,2),
-    member(X3,Xs1),
-    member(X4,Xs1),
-    \+ X3 == X4,
-    X4 = ','(Xs2),
-    length(Xs2,2),
-    member(X3,Xs2),
-    member(X5,Xs2),
-    X5 = n(N1),
-    \+ X3 == X5,
-    X2 = +(X3).
-
-
-%
-% (','(Xs3) ; (n(N1) , ','(Xs3))) --> +(','(Xs3))
-% Both sequential orders of second alternative are covered by two separate clauses.
-%
-
-deyaccify_rules(N1,X1,X2) 
- :-
-    X1 = ';'(Xs1),
-    length(Xs1,2),
-    member(X3,Xs1),
-    member(X4,Xs1),
-    \+ X3 == X4,
-    X3 = ','(Xs3),
-    X4 = ','([n(N1)|Xs3]),
-    X2 = +(','(Xs3)).
-
-deyaccify_rules(N1,X1,X2) 
- :-
-    X1 = ';'(Xs1),
-    length(Xs1,2),
-    member(X3,Xs1),
-    member(X4,Xs1),
-    \+ X3 == X4,
-    X3 = ','(Xs3),
-    X4 = ','(Xs4),
-    append(Xs3,[n(N1)],Xs4),
-    X2 = +(','(Xs3)).
-
-
-%
-% (true ; (n(N1) , n(N2))) --> *(n(N2))
-% Both sequential orders of second alternative are covered by one clause.
-%
-
-deyaccify_rules(N1,X1,X2) 
- :-
-    X1 = ';'(Xs1),
-    length(Xs1,2),
-    member(true,Xs1),
-    member(','(Xs2),Xs1),
-    length(Xs2,2),
-    member(n(N2),Xs2),
-    member(n(N1),Xs2),
-    X2 = *(n(N2)),
-    \+ N1 == N2.
-
-
-%
-% (true ; n(N2)) --> ?(n(N2))
-%
-
-deyaccify_rules(_,X1,X2) 
- :-
-    X1 = ';'(Xs1),
-    length(Xs1,2),
-    member(true,Xs1),
-    member(n(N2),Xs1),
-    X2 = ?(n(N2)).
-
-
-%
-% (X3 ; (n(N1) , X4)) --> (X3 , *(X4))
-%
-
-deyaccify_rules(N1,X1,X2) 
- :-
-    X1 = ';'(Xs1),
-    length(Xs1,2),
-    member(X3,Xs1),
-    member(X4,Xs1),
-    \+ X3 == X4,
-    X4 = ','([n(N1)|Xs2]),
-    X2 = ','([X3,*(','(Xs2))]).
-
-
-%
-% (X3, ?(n(N1))) --> +(X3)
-%
-
-deyaccify_rules(N1,X1,X2) 
- :-
-    X1 = ','([X3,?(n(N1))]),
-    X2 = +(X3).
 
 
 %
@@ -658,6 +517,29 @@ new(Ps1,N,G1,G2)
     append(Ps2,Ps1,Ps3),
     G2 = g(Rs,Ps3).
 
+%
+% p([l(import)], f, +n(p))
+%
+% T.B.D.
+%
+
+import(Ps0,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    definedNs(Ps0,Defs0),
+    definedNs(Ps1,Defs1),
+    usedNs(Ps1,Uses1),
+    intersection(Defs0,Defs1,Defs01),
+    intersection(Defs0,Uses1,DU01),
+    require(
+      Defs01 = [],
+      'Import clashes with existing definitions ~q.',
+      [Defs01]),
+    require(
+      DU01 = [],
+      'Import clashes with existing uses ~q.',
+      [DU01]),
+    append(Ps1,Ps0,Ps2).
+
 
 %
 % p([l(lassoc)], f, n(p))
@@ -747,6 +629,13 @@ massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(?(X),L).
 massage_rules(+(X),','([X,*(X)])).
 massage_rules(','([X,*(','([Y,X]))]),','([*(','([X,Y])),X])).
 massage_rules(','([X,+(','([Y,X]))]),','([+(','([X,Y])),X])).
+massage_rules(?(X),X) :- optional_anyway(X).
+
+optional_anyway(true).
+optional_anyway(?(_)).
+optional_anyway(*(_)).
+optional_anyway(';'(Xs)) :- member(X,Xs), optional_anyway(X).
+optional_anyway(','(Xs)) :- maplist(xbgf1:optional_anyway,Xs).
 
 
 %
@@ -790,18 +679,23 @@ permuteXs([X|Xs1],Xs2)
 %  Reverse of deanonymize
 %
 
-anonymize(P1,g(Rs,Ps1),g(Rs,Ps3))
+anonymize(P1,g(Rs,Ps1),g(Rs,Ps2))
  :- 
-    P1 = p(_,N,_),
-    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
-    member(P2,Ps2),
-    stripSs(g(Rs,[P1]),g(Rs,[P1ns])),
-    stripSs(g(Rs,[P2]),g(Rs,[P2ns])),
+    unmark(P1,P1u),
+    anonymize(P1,P1a),
+    findP(Ps1,P1u,Ps1a,Ps1b),
+    append(Ps1a,[P1a|Ps1b],Ps2).
+
+anonymize(X,Z) 
+ :-
+    transform(try(xbgf1:anonymize_rule),X,Y),
+    normalizeG(Y,Z),
     require(
-      P1ns == P2ns,
-      '~q is not an anonymized version of ~q.',
-      [P1,P2]),
-    append(Ps2a,[P1|Ps2b],Ps3).
+      \+ X == Z,
+      '~q must contain markers.',
+      [X]).
+
+anonymize_rule({s(_,X)},X) :- !.
     
 %
 % p([l(deanonymize)], f, n(p))
@@ -809,18 +703,14 @@ anonymize(P1,g(Rs,Ps1),g(Rs,Ps3))
 % Add selectors to an existing production.
 %  Reverse of anonymize
 %
-deanonymize(P1,g(Rs,Ps1),g(Rs,Ps3))
+
+deanonymize(P1,g(Rs,Ps1),g(Rs,Ps2))
  :- 
-    P1 = p(_,N,_),
-    splitN(Ps1,N,Ps2,Ps2a,Ps2b),
-    member(P2,Ps2),
-    stripSs(g(Rs,[P1]),g(Rs,[P1ns])),
-    stripSs(g(Rs,[P2]),g(Rs,[P2ns])),
-    require(
-      P1ns == P2ns,
-      '~q is not an anonymized version of ~q.',
-      [P2,P1]),
-    append(Ps2a,[P1|Ps2b],Ps3).
+    unmark(P1,P1u),
+    anonymize(P1,P1a),
+    findP(Ps1,P1a,Ps1a,Ps1b),
+    append(Ps1a,[P1u|Ps1b],Ps2).
+
 
 %
 % p([l(abstractize)], f, n(p))
@@ -933,21 +823,38 @@ rassoc(P1,G1,G2)
 
 
 %
-% p([l(remove)], f, n(p))
+% p([l(removeV)], f, n(p))
+% p([l(removeH)], f, n(p))
 %
-% Remove a production
+% Remove a production (vertical mode).
+% Remove a branch of a choice (horizontal mode).
 %
 
-remove(P,g(Rs,Ps1),g(Rs,Ps2))
- :- 
-    findP(Ps1,P,Ps1a,Ps1b),
-    P = p(_,N,_),
-    append(Ps1a,Ps1b,Ps2),
-    definedNs(Ps2,Ns),
+removeV(P1,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    findP(Ps1,P1,Ps1a,Ps1b),
+    append(Ps1a,Ps1b,Ps2).
+
+removeH(P1,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    unmark(P1,P1u),
+    removeH(P1,P1r),
+    findP(Ps1,P1u,Ps1a,Ps1b),
+    append(Ps1a,[P1r|Ps1b],Ps2).
+
+removeH(X,Z) 
+ :-
+    transform(try(xbgf1:removeH_rules),X,Y),
+    normalizeG(Y,Z),
     require(
-      member(N,Ns),
-      'Nonrterminal ~q must remain defined.',
-      [N]).   
+      \+ X == Z,
+      '~q must contain markers.',
+      [X]).
+
+removeH_rules(';'(Xs1),';'(Xs2))
+ :-
+    append(Xs1a,[{_}|Xs1b],Xs1),
+    append(Xs1a,Xs1b,Xs2).
 
 
 %
@@ -1475,19 +1382,19 @@ widen(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
 
 
 %
-% p([l(yaccify)], f, n(p))
+% p([l(yaccify)], f, *(n(p)))
 %
 % Expand EBNF-based regular expression operator via BNF encoding
 %
 
-yaccify(P1,P2,g(Rs,Ps1),g(Rs,Ps3))
+yaccify(Ps0,g(Rs,Ps1),g(Rs,Ps3))
  :-
+    Ps0 = [P1,P2],
     P1 = p(_,N,_),	
     P2 = p(_,N,_),
     splitN1(Ps1,N,P3,Ps2a,Ps2b),
-    P3 = p(_,N,_),
     require(
-      xbgf1:newdeyaccify_rules(N,[P1,P2],P3),
+      xbgf1:deyaccify_rules(N,[P1,P2],P3),
       '~q and ~q not suitable as yaccification of ~q.',
       [P1,P2,P3]),
     append(Ps2a,[P1,P2|Ps2b],Ps3).

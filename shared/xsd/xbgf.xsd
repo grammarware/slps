@@ -53,6 +53,7 @@
       <xsd:element ref="xbgf:inject"/>
       <xsd:element ref="xbgf:inline"/>
       <xsd:element ref="xbgf:introduce"/>
+      <xsd:element ref="xbgf:import"/>
       <xsd:element ref="xbgf:lassoc"/>
       <xsd:element ref="xbgf:massage"/>
       <xsd:element ref="xbgf:narrow"/>
@@ -83,7 +84,7 @@
         Nonterminal definitions can be extended ("added to") vertically
         and horizontally. In the former case, a given production is added
         to an existing definition. In the latter case, a given branch is
-        added to a given expression, possibly restricted to a scope. The
+        added to a given expression. The
         horizontal mode is there for convenience only because it could be
         simulated by a sequence of extraction, vertical addition, and
         inlining. There are two operators that are very similar to the
@@ -95,16 +96,20 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:choice>
-        <xsd:element ref="bgf:production"/>
-        <xsd:sequence>
-          <xsd:element ref="bgf:expression"/>
-          <xsd:element ref="bgf:expression"/>
-          <xsd:element name="in" minOccurs="0">
-            <xsd:complexType>
-              <xsd:group ref="xbgf:scope"/>
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:sequence>
+        <xsd:element name="vertical">
+          <xsd:complexType>
+            <xsd:sequence>
+             <xsd:element ref="bgf:production"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="horizontal">
+          <xsd:complexType>
+            <xsd:sequence>
+             <xsd:element ref="bgf:production"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>
@@ -399,6 +404,19 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="import">
+    <xsd:annotation>
+      <xsd:documentation>
+        T.B.D.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="lassoc">
     <xsd:annotation>
       <xsd:documentation>
@@ -551,12 +569,26 @@
         Productions can be removed from existing, vertical definitions.
         The remaining definition must not become empty, i.e., undefined.
         There is the undefine operator that can be applied in that case.
+        There is also a horizontal mode of removing branches from choices.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element ref="bgf:production"/>
-      </xsd:sequence>
+      <xsd:choice>
+        <xsd:element name="vertical">
+          <xsd:complexType>
+            <xsd:sequence>
+             <xsd:element ref="bgf:production"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="horizontal">
+          <xsd:complexType>
+            <xsd:sequence>
+             <xsd:element ref="bgf:production"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:choice>
     </xsd:complexType>
   </xsd:element>
 
@@ -898,8 +930,7 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element ref="bgf:production"/>
-        <xsd:element ref="bgf:production"/>
+        <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

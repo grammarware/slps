@@ -14,16 +14,16 @@ sxmlns(xbgf,'http://planet-sl.org/xbgf').
 xml2xbgf(T,addV(P2))
  :-
     self(name(xbgf:add),T),
-    child(name(bgf:production),T,P1),
+    child(name(vertical),T,T1),
+    child(name(bgf:production),T1,P1),
     xmlToP(P1,P2).
 
-xml2xbgf(T,G)
+xml2xbgf(T,addH(P2))
  :-
     self(name(xbgf:add),T),
-    children(name(bgf:expression),T,[T1,T2]),
-    xmlToExpression(T1,X1),
-    xmlToExpression(T2,X2),
-    inScope2xbgf(addH,addHinL,addHinN,[X1,X2],T,G).
+    child(name(horizontal),T,T1),
+    child(name(bgf:production),T1,P1),
+    xmlToP(P1,P2).
 
 xml2xbgf(T,chain(P2))
  :-
@@ -172,6 +172,12 @@ xml2xbgf(T,introduce(Ps2))
     children(name(bgf:production),T,Ps1),
     maplist(xmlToP,Ps1,Ps2).
 
+xml2xbgf(T,import(Ps2))
+ :-
+    self(name(xbgf:import),T),
+    children(name(bgf:production),T,Ps1),
+    maplist(xmlToP,Ps1,Ps2).
+
 xml2xbgf(T,lassoc(P2))
  :-
     self(name(xbgf:lassoc),T),
@@ -212,10 +218,18 @@ xml2xbgf(T,rassoc(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
-xml2xbgf(T,remove(P2))
+xml2xbgf(T,removeV(P2))
  :-
     self(name(xbgf:remove),T),
-    child(name(bgf:production),T,P1),
+    child(name(vertical),T,T1),
+    child(name(bgf:production),T1,P1),
+    xmlToP(P1,P2).
+
+xml2xbgf(T,removeH(P2))
+ :-
+    self(name(xbgf:remove),T),
+    child(name(horizontal),T,T1),
+    child(name(bgf:production),T1,P1),
     xmlToP(P1,P2).
 
 xml2xbgf(T,F3)
@@ -365,12 +379,11 @@ xml2xbgf(T,verticalN(N))
     child(name(nonterminal),T,T1),
     content(T1,N).
 
-xml2xbgf(T,yaccify(P1,P2))
+xml2xbgf(T,yaccify(Ps2))
  :-
     self(name(xbgf:yaccify),T),
-    children(name(bgf:production),T,[P3,P4]),
-    xmlToP(P3,P1),
-    xmlToP(P4,P2).
+    children(name(bgf:production),T,Ps1),
+    maplist(xmlToP,Ps1,Ps2).
 
 xml2xbgf(T,G)
  :-

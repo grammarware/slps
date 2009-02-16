@@ -194,11 +194,12 @@ splitL(Ps1,L,P1,Ps2a,Ps2b)
 
 % Normalization
 
-normalizeG(Z1,Z3)
+normalizeG(Z1,Z4)
  :-
     normalizeG_grouping(Z1,Z2),
     normalizeG_algebraically(Z2,Z3),
-    !.
+    !,
+    Z3 = Z4.
 
 
 % All productions for a nonterminal are held contiguously.
