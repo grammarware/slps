@@ -2,7 +2,7 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:add>
+  <xbgf:add><horizontal>
     <bgf:production>
       <nonterminal>N</nonterminal>
       <bgf:expression>
@@ -22,6 +22,6 @@
           </bgf:expression>
         </choice>
       </bgf:expression>
-    </bgf:production>
+    </bgf:production></horizontal>
   </xbgf:add>
 </xbgf:sequence>
