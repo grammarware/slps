@@ -183,18 +183,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>ClassMemberDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>ClassDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target</label>
       <nonterminal>ClassMemberDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
@@ -216,21 +206,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:unlabel>
-    <label>target</label>
-  </xbgf:unlabel>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>ClassMemberDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>InterfaceDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target</label>
       <nonterminal>ClassMemberDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
@@ -252,9 +229,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:unlabel>
-    <label>target</label>
-  </xbgf:unlabel>
   <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
   <xbgf:fold>
     <nonterminal>ModifiersOpt</nonterminal>

@@ -1596,51 +1596,8 @@
       <nonterminal>ClassBodyDeclaration</nonterminal>
     </in>
   </xbgf:unfold>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Type</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>VariableDeclaratorRest</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <star>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>,</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Identifier</nonterminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>VariableDeclaratorRest</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </star>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:disappear>
     <bgf:production>
-      <label>target</label>
       <nonterminal>ClassBodyDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1687,7 +1644,6 @@
   <!-- REVISE -->
   <xbgf:project>
     <bgf:production>
-      <label>target</label>
       <nonterminal>ClassBodyDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1714,9 +1670,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
-  <xbgf:unlabel>
-    <label>target</label>
-  </xbgf:unlabel>
 
   <!-- 
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(MethodDeclaratorRest)])

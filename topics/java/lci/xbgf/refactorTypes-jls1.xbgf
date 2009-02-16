@@ -123,18 +123,8 @@
      vs.
       - [], ;([,([n(QualifiedIdentifier), n(BracketsOpt)]), n(BasicType)])
   -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>Type</nonterminal>
-      <bgf:expression>
-        <nonterminal>QualifiedIdentifier</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target</label>
       <nonterminal>Type</nonterminal>
       <bgf:expression>
         <sequence>
@@ -166,11 +156,8 @@
   <xbgf:fold>
     <nonterminal>BracketsOpt</nonterminal>
     <in>
-      <label>target</label>
+      <nonterminal>Type</nonterminal>
     </in>
   </xbgf:fold>
-  <xbgf:unlabel>
-    <label>target</label>
-  </xbgf:unlabel>
 
 </xbgf:sequence>

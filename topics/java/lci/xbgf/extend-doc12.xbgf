@@ -958,41 +958,8 @@
                ,([n(ClassName), t(.), t(super), t(.), ?(n(NonWildTypeArguments)), n(Identifier), t((), ?(n(ArgumentList)), t())]),
                ,([n(TypeName), t(.), n(NonWildTypeArguments), n(Identifier), t((), ?(n(ArgumentList)), t())])])
   -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>target2</label>
-      <nonterminal>MethodInvocation</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Primary</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target2</label>
       <nonterminal>MethodInvocation</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1033,41 +1000,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target3</label>
-      <nonterminal>MethodInvocation</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>super</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target3</label>
       <nonterminal>MethodInvocation</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1108,47 +1042,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target4</label>
-      <nonterminal>MethodInvocation</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ClassName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>super</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target4</label>
       <nonterminal>MethodInvocation</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1229,15 +1124,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:unlabel>
-    <label>target2</label>
-  </xbgf:unlabel>
-  <xbgf:unlabel>
-    <label>target3</label>
-  </xbgf:unlabel>
-  <xbgf:unlabel>
-    <label>target4</label>
-  </xbgf:unlabel>
 
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: ConstructorDeclarator.
@@ -1674,38 +1560,8 @@
                ,([?(n(NonWildTypeArguments)), t(super), t((), ?(n(ArgumentList)), t()), t((;))]),
                ,([n(Primary), t(.), ?(n(NonWildTypeArguments)), t(super), t((), ?(n(ArgumentList)), t()), t((;))])])
   -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>target1</label>
-      <nonterminal>ExplicitConstructorInvocation</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>this</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target1</label>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1743,38 +1599,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target2</label>
-      <nonterminal>ExplicitConstructorInvocation</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>super</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target2</label>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1812,41 +1638,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target3</label>
-      <nonterminal>ExplicitConstructorInvocation</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Primary</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>super</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>ReferenceTypeList</nonterminal>
@@ -1893,7 +1684,6 @@
   </xbgf:define>
   <xbgf:appear>
     <bgf:production>
-      <label>target3</label>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
       <bgf:expression>
         <sequence>
@@ -1937,15 +1727,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:unlabel>
-    <label>target1</label>
-  </xbgf:unlabel>
-  <xbgf:unlabel>
-    <label>target2</label>
-  </xbgf:unlabel>
-  <xbgf:unlabel>
-    <label>target3</label>
-  </xbgf:unlabel>
 
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: ClassInstanceCreationExpression.
@@ -1955,87 +1736,8 @@
       - [], ;([,([t(new), ?(n(TypeArguments)), n(ClassOrInterfaceType), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))]),
                ,([n(Primary), t(.), t(new), ?(n(TypeArguments)), n(Identifier), ?(n(TypeArguments)), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))])])
   -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>target1</label>
-      <nonterminal>ClassInstanceCreationExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ClassOrInterfaceType</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ClassBody</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target2</label>
-      <nonterminal>ClassInstanceCreationExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Primary</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ClassBody</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target1</label>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
       <bgf:expression>
         <sequence>
@@ -2082,7 +1784,6 @@
   </xbgf:appear>
   <xbgf:appear>
     <bgf:production>
-      <label>target2</label>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
       <bgf:expression>
         <sequence>
@@ -2135,7 +1836,6 @@
   </xbgf:appear>
   <xbgf:appear>
     <bgf:production>
-      <label>target2</label>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
       <bgf:expression>
         <sequence>
@@ -2193,12 +1893,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:unlabel>
-    <label>target1</label>
-  </xbgf:unlabel>
-  <xbgf:unlabel>
-    <label>target2</label>
-  </xbgf:unlabel>
 
   <!-- 
      - Fail: ArrayCreationExpression.

@@ -338,18 +338,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:add>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>BlockStatement</nonterminal>
-      <bgf:expression>
-        <nonterminal>Statement</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target</label>
       <nonterminal>BlockStatement</nonterminal>
       <bgf:expression>
         <sequence>
@@ -378,9 +368,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:unlabel>
-    <label>target</label>
-  </xbgf:unlabel>
 
   <!-- 
    - Fail: ForUpdate.

@@ -122,7 +122,7 @@
       <perform>refactorExpressions</perform>
       <perform>inlineStatements</perform>
       <perform>generalizeStatements</perform>
-      <perform>editExpressions</perform>
+      <perform>editExpressions-doc2</perform>
       <perform>eliminate-doc2</perform>
       <perform>refactorClasses-doc2</perform>
       <perform>refactorInterfaces-doc2</perform>

@@ -205,50 +205,7 @@
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
 
-  <!-- ISSUE EXTEND 
-   - Fail: Primary.
-      - [], t(this)
-     vs.
-      - [], ,([t(this), ?(n(Arguments))])
-  -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>Primary</nonterminal>
-      <bgf:expression>
-        <terminal>this</terminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:appear>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>Primary</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>this</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <marked>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>Arguments</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-            </marked>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:appear>
-  <xbgf:unlabel>
-    <label>target</label>
-  </xbgf:unlabel>
-
-  <!-- 
+ <!-- 
   too hard to match:
         - [], n(ArrayAccess)
   -->
@@ -267,22 +224,6 @@
      vs.
       - [], ,([n(QualifiedIdentifier), ?(n(IdentifierSuffix))])
   -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>Primary</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>QualifiedIdentifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Arguments</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>IdentifierSuffix</nonterminal>
@@ -291,7 +232,7 @@
       </bgf:expression>
     </bgf:production>
     <in>
-      <label>target</label>
+      <nonterminal>Primary</nonterminal>
     </in>
   </xbgf:extract>
   <xbgf:widen>
@@ -306,12 +247,9 @@
       </optional>
     </bgf:expression>
     <in>
-      <label>target</label>
+      <nonterminal>Primary</nonterminal>
     </in>
   </xbgf:widen>
-  <xbgf:unlabel>
-    <label>target</label>
-  </xbgf:unlabel>
 
   <!-- ISSUE EXTEND BRUTAL
   same problem -->
@@ -327,7 +265,11 @@
             <nonterminal>QualifiedIdentifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>Arguments</nonterminal>
+            <optional>
+              <bgf:expression>
+                <nonterminal>IdentifierSuffix</nonterminal>
+              </bgf:expression>
+            </optional>
           </bgf:expression>
         </sequence>
       </bgf:expression>
@@ -565,7 +507,11 @@
             <nonterminal>Identifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>Arguments</nonterminal>
+            <optional>
+              <bgf:expression>
+                <nonterminal>IdentifierSuffix</nonterminal>
+              </bgf:expression>
+            </optional>
           </bgf:expression>
         </sequence>
       </bgf:expression>
@@ -593,5 +539,35 @@
   <xbgf:fold>
     <nonterminal>ParExpression</nonterminal>
   </xbgf:fold>
+
+  <!-- ISSUE EXTEND 
+   - Fail: Primary.
+      - [], t(this)
+     vs.
+      - [], ,([t(this), ?(n(Arguments))])
+  -->
+  <xbgf:appear>
+    <bgf:production>
+      <nonterminal>Primary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>this</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Arguments</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:appear>
 
 </xbgf:sequence>

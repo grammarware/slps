@@ -434,18 +434,8 @@
   </xbgf:add>
 
   <!-- modifiers -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target</label>
       <nonterminal>ClassBodyDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
@@ -467,9 +457,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:unlabel>
-    <label>target</label>
-  </xbgf:unlabel>
   <xbgf:fold>
     <nonterminal>ModifiersOpt</nonterminal>
   </xbgf:fold>

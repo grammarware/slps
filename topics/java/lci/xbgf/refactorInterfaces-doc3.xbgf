@@ -206,18 +206,8 @@
   <xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
 
   <!-- modifiers -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>InterfaceBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>ClassDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target</label>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
@@ -239,21 +229,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:unlabel>
-    <label>target</label>
-  </xbgf:unlabel>
-  <xbgf:designate>
-    <bgf:production>
-      <label>target</label>
-      <nonterminal>InterfaceBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>InterfaceDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <xbgf:appear>
     <bgf:production>
-      <label>target</label>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
       <bgf:expression>
         <sequence>
@@ -275,9 +252,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:unlabel>
-    <label>target</label>
-  </xbgf:unlabel>
   <xbgf:fold>
     <nonterminal>ModifiersOpt</nonterminal>
   </xbgf:fold>

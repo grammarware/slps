@@ -43,29 +43,9 @@
 
   <!-- ISSUE CORRECT SPECERROR
   let's complete some of the statements with a trailing semicolon-->
-  <xbgf:designate>
-    <bgf:production>
-      <label>ContinueStatement</label>
-      <nonterminal>Statement</nonterminal>        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <terminal>continue</terminal>
-            </bgf:expression>
-            <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <nonterminal>Identifier</nonterminal>
-                </bgf:expression>
-              </optional>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
-      <label>ContinueStatement</label>
       <nonterminal>Statement</nonterminal>
       <bgf:expression>
         <sequence>
@@ -90,36 +70,12 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  <xbgf:unlabel>
-    <label>ContinueStatement</label>
-  </xbgf:unlabel>
   
   <!-- ISSUE CORRECT SPECERROR
   Same for BreakStatement -->
-  <xbgf:designate>
-    <bgf:production>
-      <label>BreakStatement</label>
-      <nonterminal>Statement</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>break</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
   <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
-      <label>BreakStatement</label>
       <nonterminal>Statement</nonterminal>
       <bgf:expression>
         <sequence>
@@ -144,9 +100,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  <xbgf:unlabel>
-    <label>BreakStatement</label>
-  </xbgf:unlabel>
 
   <!-- ISSUE CORRECT SPECERROR
   Expression is referenced as Expr:
