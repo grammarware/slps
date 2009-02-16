@@ -9,7 +9,7 @@ LOCAL2=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 1 ]; then
-    echo "Usage: showbgf <XBGF-input>"
+    echo "Usage: showbgf <BGF-input>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
