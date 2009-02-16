@@ -202,33 +202,35 @@ CreatedName:
     </in>
   </xbgf:unfold>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>Primary</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>NonWildcardTypeArguments</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <choice>
-              <bgf:expression>
-                <nonterminal>ExplicitGenericInvocationSuffix</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>this</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Arguments</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </choice>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>Primary</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>NonWildcardTypeArguments</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <choice>
+                <bgf:expression>
+                  <nonterminal>ExplicitGenericInvocationSuffix</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <terminal>this</terminal>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <nonterminal>Arguments</nonterminal>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </choice>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   
   <!--
@@ -436,55 +438,39 @@ CreatedName:
     </bgf:production>
   </xbgf:disappear>
   <xbgf:eliminate>Selector</xbgf:eliminate>
-  <!-- TODO: once add3 test case works, redo with add
+  <!-- TODO: once add3 test case works, redo with add -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>Expression3</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <choice>
-              <bgf:expression>
-                <marked>
-                  <bgf:expression>
-                    <nonterminal>QualifiedIdentifier</nonterminal>
-                  </bgf:expression>
-                </marked>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Primary</nonterminal>
-              </bgf:expression>
-            </choice>
-          </bgf:expression>
-          <bgf:expression>
-            <star>
-              <bgf:expression>
-                <nonterminal>PostfixOp</nonterminal>
-              </bgf:expression>
-            </star>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:add>-->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>Primary</nonterminal>
-    </bgf:expression><bgf:expression>
-    <choice>
-      <bgf:expression>
-        <nonterminal>QualifiedIdentifier</nonterminal>
-      </bgf:expression>
-      <bgf:expression>
-        <nonterminal>Primary</nonterminal>
-      </bgf:expression>
-    </choice>
-    </bgf:expression>
-    <in>
-      <nonterminal>Expression3</nonterminal>
-    </in>
-  </xbgf:replace>
+    <horizontal>
+      <bgf:production>
+        <nonterminal>Expression3</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <choice>
+                <bgf:expression>
+                  <marked>
+                    <bgf:expression>
+                      <nonterminal>QualifiedIdentifier</nonterminal>
+                    </bgf:expression>
+                  </marked>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>Primary</nonterminal>
+                </bgf:expression>
+              </choice>
+            </bgf:expression>
+            <bgf:expression>
+              <star>
+                <bgf:expression>
+                  <nonterminal>PostfixOp</nonterminal>
+                </bgf:expression>
+              </star>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </horizontal>
+  </xbgf:add>
 
   <!--
    - Fail: Expression3.

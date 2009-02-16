@@ -264,23 +264,23 @@
         </bgf:expression>
       </choice>
     </bgf:expression>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <choice>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>static</terminal>
-              </bgf:expression>
-            </choice>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Block</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <epsilon/>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>static</terminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Block</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
   </xbgf:factor>
   <xbgf:massage>
     <bgf:expression>
@@ -394,7 +394,9 @@
   <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:distribute>
-  <xbgf:vertical><nonterminal>ClassBodyDeclaration</nonterminal></xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>ClassBodyDeclaration</nonterminal>
+  </xbgf:vertical>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>MethodOrFieldDecl</nonterminal>
@@ -425,12 +427,14 @@
     </in>
   </xbgf:extract>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>MethodOrFieldRest</nonterminal>
-      <bgf:expression>
-        <nonterminal>VariableDeclaratorRest</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>MethodOrFieldRest</nonterminal>
+        <bgf:expression>
+          <nonterminal>VariableDeclaratorRest</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- modifiers -->
@@ -463,13 +467,15 @@
 
   <!-- finishing touches -->
   <xbgf:remove>
-    <bgf:production>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>FieldDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassBodyDeclaration</nonterminal>
+        <bgf:expression>
+          <nonterminal>FieldDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:remove>
   <xbgf:eliminate>FieldDeclaration</xbgf:eliminate>
-  
+
 </xbgf:sequence>

@@ -146,7 +146,7 @@
 
   <!-- BREFACTOR 
   Introducing brackets brutally, too hard to derive -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassOrInterfaceType</nonterminal>
       <bgf:expression>
@@ -157,32 +157,60 @@
           <bgf:expression>
             <marked>
               <bgf:expression>
-                <nonterminal>BracketsOpt</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Dims</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
             </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
+
+  <!--
+   - Fail: Type.
+      - [], ,([n(Identifier), ?(n(TypeArguments)), *(,([t(.), n(Identifier), ?(n(TypeArguments))])), n(BracketsOpt)])
+     vs.
+      - [], ,([n(QualifiedIdentifier), *(,([?(n(TypeArguments)), n(BracketsOpt), t(.), n(Identifier)])), ?(n(TypeArguments)), n(BracketsOpt)])
+  -->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>BracketsOpt</nonterminal>
+      <bgf:expression>
+        <optional>
+          <bgf:expression>
+            <nonterminal>Dims</nonterminal>
+          </bgf:expression>
+        </optional>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+
   <!-- BREFACTOR -->
   <xbgf:undefine>ArrayType</xbgf:undefine>
   <xbgf:remove>
-    <bgf:production>
-      <nonterminal>ReferenceType</nonterminal>
-      <bgf:expression>
-        <nonterminal>ArrayType</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ReferenceType</nonterminal>
+        <bgf:expression>
+          <nonterminal>ArrayType</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:remove>
   <xbgf:inline>TypeVariable</xbgf:inline>
   <xbgf:remove>
-    <bgf:production>
-      <nonterminal>ReferenceType</nonterminal>
-      <bgf:expression>
-        <nonterminal>Identifier</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ReferenceType</nonterminal>
+        <bgf:expression>
+          <nonterminal>Identifier</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:remove>
 
   <!-- Finishing touches -->
@@ -202,33 +230,48 @@
   -->
   <xbgf:deyaccify>TypeDeclSpecifier</xbgf:deyaccify>
 
-  <!-- BREFACTOR 
-  QUICK FIX - this file needs to be rewritten anyhow -->
-  <xbgf:replace>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <nonterminal>TypeDeclSpecifier</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <optional>
-            <bgf:expression>
-              <nonterminal>TypeArguments</nonterminal>
-            </bgf:expression>
-          </optional>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>BracketsOpt</nonterminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>Type</nonterminal>
-    </bgf:expression>
-    <in>
+  <xbgf:upgrade>
+    <bgf:production>
       <nonterminal>RelationalExpression</nonterminal>
-    </in>
-  </xbgf:replace>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>RelationalExpression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>instanceof</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Type</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>TypeDeclSpecifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>TypeArguments</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
 
   <!-- 
    - Fail: Type.
@@ -437,25 +480,7 @@ TypeArgument:
     </in>
   </xbgf:replace>
 
-  <!--
-   - Fail: Type.
-      - [], ,([n(Identifier), ?(n(TypeArguments)), *(,([t(.), n(Identifier), ?(n(TypeArguments))])), n(BracketsOpt)])
-     vs.
-      - [], ,([n(QualifiedIdentifier), *(,([?(n(TypeArguments)), n(BracketsOpt), t(.), n(Identifier)])), ?(n(TypeArguments)), n(BracketsOpt)])
-  -->
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>BracketsOpt</nonterminal>
-      <bgf:expression>
-        <optional>
-          <bgf:expression>
-            <nonterminal>Dims</nonterminal>
-          </bgf:expression>
-        </optional>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
-  <!-- ...the story of BracketsOpt is continued in refactorExpressions-doc3 -->
+   <!-- ...the story of BracketsOpt is continued in refactorExpressions-doc3 -->
   <xbgf:unfold>
     <nonterminal>BracketsOpt</nonterminal>
     <in>

@@ -17,12 +17,14 @@
     </bgf:production>
   </xbgf:introduce>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ReferenceType</nonterminal>
-      <bgf:expression>
-        <nonterminal>TypeVariable</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ReferenceType</nonterminal>
+        <bgf:expression>
+          <nonterminal>TypeVariable</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND GENERALIZE
@@ -238,12 +240,14 @@
     </bgf:production>
   </xbgf:introduce>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>StatementWithoutTrailingSubstatement</nonterminal>
-      <bgf:expression>
-        <nonterminal>AssertStatement</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>StatementWithoutTrailingSubstatement</nonterminal>
+        <bgf:expression>
+          <nonterminal>AssertStatement</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND GENERALIZE
@@ -319,22 +323,24 @@
     </bgf:production>
   </xbgf:introduce>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>SwitchLabel</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>case</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>EnumConstantName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>:</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>SwitchLabel</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>case</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>EnumConstantName</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>:</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -371,12 +377,14 @@
     </bgf:production>
   </xbgf:introduce>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ImportDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>SingleStaticImportDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ImportDeclaration</nonterminal>
+        <bgf:expression>
+          <nonterminal>SingleStaticImportDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:introduce>
     <bgf:production>
@@ -406,12 +414,14 @@
     </bgf:production>
   </xbgf:introduce>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ImportDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>StaticImportOnDemandDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ImportDeclaration</nonterminal>
+        <bgf:expression>
+          <nonterminal>StaticImportOnDemandDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -639,12 +649,14 @@
     </bgf:production>
   </xbgf:introduce>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>EnumDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassDeclaration</nonterminal>
+        <bgf:expression>
+          <nonterminal>EnumDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
@@ -823,12 +835,14 @@
     </bgf:production>
   </xbgf:chain>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>AnnotationTypeDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceDeclaration</nonterminal>
+        <bgf:expression>
+          <nonterminal>AnnotationTypeDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -846,12 +860,14 @@
     </bgf:production>
   </xbgf:chain>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ForStatement</nonterminal>
-      <bgf:expression>
-        <nonterminal>EnhancedForStatement</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ForStatement</nonterminal>
+        <bgf:expression>
+          <nonterminal>EnhancedForStatement</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <!-- GENERALITY -->
   <xbgf:define>
@@ -1091,38 +1107,40 @@
     </bgf:production>
   </xbgf:appear>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>MethodInvocation</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>TypeName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>NonWildTypeArguments</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>MethodInvocation</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>TypeName</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>NonWildTypeArguments</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>ArgumentList</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND GENERALIZE
@@ -1250,29 +1268,31 @@
     </bgf:production>
   </xbgf:define>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>LastFormalParameter</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>VariableModifiers</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Type</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <terminal>...</terminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>VariableDeclaratorId</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>LastFormalParameter</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>VariableModifiers</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Type</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <terminal>...</terminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>VariableDeclaratorId</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 

@@ -452,12 +452,14 @@
   <xbgf:deyaccify>VariableModifiers</xbgf:deyaccify>
   <xbgf:inline>VariableModifiers</xbgf:inline>
   <xbgf:remove>
-    <bgf:production>
-      <nonterminal>VariableModifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>Annotation</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>VariableModifier</nonterminal>
+        <bgf:expression>
+          <nonterminal>Annotation</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:remove>
   <xbgf:inline>VariableModifier</xbgf:inline>
   <xbgf:narrow>

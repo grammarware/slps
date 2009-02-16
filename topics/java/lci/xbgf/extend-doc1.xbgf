@@ -52,28 +52,30 @@
     </bgf:production>
   </xbgf:introduce>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>FieldAccess</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ClassName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>super</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>FieldAccess</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>ClassName</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>super</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- 
@@ -208,12 +210,14 @@
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(synchronized), t(native), t(strictfp)])
    -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>MethodModifier</nonterminal>
-      <bgf:expression>
-        <terminal>strictfp</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>MethodModifier</nonterminal>
+        <bgf:expression>
+          <terminal>strictfp</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -231,12 +235,14 @@
     </bgf:production>
   </xbgf:introduce>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>InstanceInitializer</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassBodyDeclaration</nonterminal>
+        <bgf:expression>
+          <nonterminal>InstanceInitializer</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -246,28 +252,34 @@
       - [], ;([n(FieldDeclaration), n(MethodDeclaration), n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassMemberDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>ClassDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassMemberDeclaration</nonterminal>
+        <bgf:expression>
+          <nonterminal>ClassDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassMemberDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>InterfaceDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassMemberDeclaration</nonterminal>
+        <bgf:expression>
+          <nonterminal>InterfaceDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassMemberDeclaration</nonterminal>
-      <bgf:expression>
-        <terminal>;</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassMemberDeclaration</nonterminal>
+        <bgf:expression>
+          <terminal>;</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -277,28 +289,34 @@
       - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration), n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceMemberDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>ClassDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceMemberDeclaration</nonterminal>
+        <bgf:expression>
+          <nonterminal>ClassDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceMemberDeclaration</nonterminal>
-      <bgf:expression>
-        <nonterminal>InterfaceDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceMemberDeclaration</nonterminal>
+        <bgf:expression>
+          <nonterminal>InterfaceDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceMemberDeclaration</nonterminal>
-      <bgf:expression>
-        <terminal>;</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceMemberDeclaration</nonterminal>
+        <bgf:expression>
+          <terminal>;</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -308,12 +326,14 @@
       - [], ;([n(LocalVariableDeclarationStatement), n(ClassDeclaration), n(Statement)])
    -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>BlockStatement</nonterminal>
-      <bgf:expression>
-        <nonterminal>ClassDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>BlockStatement</nonterminal>
+        <bgf:expression>
+          <nonterminal>ClassDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -323,36 +343,44 @@
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(strictfp)])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassModifier</nonterminal>
-      <bgf:expression>
-        <terminal>protected</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassModifier</nonterminal>
+        <bgf:expression>
+          <terminal>protected</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassModifier</nonterminal>
-      <bgf:expression>
-        <terminal>private</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassModifier</nonterminal>
+        <bgf:expression>
+          <terminal>private</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassModifier</nonterminal>
-      <bgf:expression>
-        <terminal>static</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassModifier</nonterminal>
+        <bgf:expression>
+          <terminal>static</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassModifier</nonterminal>
-      <bgf:expression>
-        <terminal>strictfp</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassModifier</nonterminal>
+        <bgf:expression>
+          <terminal>strictfp</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -362,38 +390,40 @@
       - [], ;([,([t(this), t((), ?(n(ArgumentList)), t()), t((;))]), ,([t(super), t((), ?(n(ArgumentList)), t()), t((;))]), ,([n(Primary), t(.), t(super), t((), ?(n(ArgumentList)), t()), t((;))])])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ExplicitConstructorInvocation</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Primary</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>super</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ExplicitConstructorInvocation</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Primary</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>super</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>ArgumentList</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>;</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND GENERALIZE
@@ -403,41 +433,43 @@
       - [], ;([,([n(MethodName), t((), ?(n(ArgumentList)), t())]), ,([n(Primary), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([n(ClassName), t(.), t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())])])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>MethodInvocation</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ClassName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>super</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>ArgumentList</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>MethodInvocation</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>ClassName</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>super</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>ArgumentList</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -447,36 +479,44 @@
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(strictfp)])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceModifier</nonterminal>
-      <bgf:expression>
-        <terminal>protected</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceModifier</nonterminal>
+        <bgf:expression>
+          <terminal>protected</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceModifier</nonterminal>
-      <bgf:expression>
-        <terminal>private</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceModifier</nonterminal>
+        <bgf:expression>
+          <terminal>private</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceModifier</nonterminal>
-      <bgf:expression>
-        <terminal>static</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceModifier</nonterminal>
+        <bgf:expression>
+          <terminal>static</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceModifier</nonterminal>
-      <bgf:expression>
-        <terminal>strictfp</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceModifier</nonterminal>
+        <bgf:expression>
+          <terminal>strictfp</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND 
@@ -486,46 +526,50 @@
       - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(TypeName), n(DimExprs), ?(n(Dims))]), ,([t(new), n(PrimitiveType), n(Dims), n(ArrayInitializer)]), ,([t(new), n(TypeName), n(Dims), n(ArrayInitializer)])])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ArrayCreationExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>PrimitiveType</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Dims</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ArrayInitializer</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ArrayCreationExpression</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>new</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>PrimitiveType</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ArrayInitializer</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ArrayCreationExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>new</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>TypeName</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Dims</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ArrayInitializer</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ArrayCreationExpression</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>new</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>TypeName</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ArrayInitializer</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND GENERALIZE

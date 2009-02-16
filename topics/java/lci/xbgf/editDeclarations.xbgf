@@ -766,12 +766,14 @@
   </xbgf:extract>
   <!-- ISSUE  EXTEND -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <terminal>;</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceBodyDeclaration</nonterminal>
+        <bgf:expression>
+          <terminal>;</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- 
@@ -1134,12 +1136,14 @@
     <nonterminal>InterfaceMemberDecl</nonterminal>
   </xbgf:vertical>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceMemberDecl</nonterminal>
-      <bgf:expression>
-        <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceMemberDecl</nonterminal>
+        <bgf:expression>
+          <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- 
@@ -1550,30 +1554,34 @@
   <!-- ISSUE EXTEND
   Empty class body declaration -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <terminal>;</terminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassBodyDeclaration</nonterminal>
+        <bgf:expression>
+          <terminal>;</terminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
   Inner class declaration -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ModifiersOpt</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassBodyDeclaration</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>ModifiersOpt</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- 

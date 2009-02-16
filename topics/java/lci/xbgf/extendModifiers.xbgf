@@ -245,12 +245,14 @@
       - [], ;([n(Annotation), t(public), t(protected), t(private), t(static), t(final), t(transient), t((volatile))])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>FieldModifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>Annotation</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>FieldModifier</nonterminal>
+        <bgf:expression>
+          <nonterminal>Annotation</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
@@ -260,12 +262,14 @@
       - [], ;([n(Annotation), t(public), t(protected), t(private), t(abstract), t(static), t(strictfp)])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>InterfaceModifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>Annotation</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>InterfaceModifier</nonterminal>
+        <bgf:expression>
+          <nonterminal>Annotation</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
@@ -275,12 +279,14 @@
       - [], ;([n(Annotation), t(public), t(abstract)])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>AbstractMethodModifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>Annotation</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>AbstractMethodModifier</nonterminal>
+        <bgf:expression>
+          <nonterminal>Annotation</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
@@ -290,12 +296,14 @@
       - [], ;([n(Annotation), t(public), t(static), t(final)])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ConstantModifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>Annotation</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ConstantModifier</nonterminal>
+        <bgf:expression>
+          <nonterminal>Annotation</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
@@ -305,12 +313,14 @@
       - [], ;([n(Annotation), t(public), t(protected), t(private), t(abstract), t(static), t(final), t(synchronized), t(native), t(strictfp)])
    -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>MethodModifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>Annotation</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>MethodModifier</nonterminal>
+        <bgf:expression>
+          <nonterminal>Annotation</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
@@ -320,12 +330,14 @@
       - [], ;([n(Annotation), t(public), t(protected), t(private), t(abstract), t(static), t(final), t(strictfp)])
    -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ClassModifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>Annotation</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ClassModifier</nonterminal>
+        <bgf:expression>
+          <nonterminal>Annotation</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
@@ -359,19 +371,21 @@
     </bgf:production>
   </xbgf:chain>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>VariableModifiers</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>VariableModifiers</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>VariableModifier</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>VariableModifiers</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>VariableModifiers</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>VariableModifier</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
@@ -381,12 +395,14 @@
       - [], ;([n(Annotation), t(public), t(protected), t(private)])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ConstructorModifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>Annotation</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ConstructorModifier</nonterminal>
+        <bgf:expression>
+          <nonterminal>Annotation</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
@@ -411,12 +427,14 @@
     </in>
   </xbgf:narrow>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>VariableModifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>Annotation</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>VariableModifier</nonterminal>
+        <bgf:expression>
+          <nonterminal>Annotation</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
 </xbgf:sequence>

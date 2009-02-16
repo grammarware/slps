@@ -331,12 +331,14 @@
       - [], ;([n(LocalVariableDeclarationStatement), n(ClassOrInterfaceDeclaration), ,([?(,([n(Identifier), t(:)])), n(Statement)])])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>BlockStatement</nonterminal>
-      <bgf:expression>
-        <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>BlockStatement</nonterminal>
+        <bgf:expression>
+          <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:appear>
     <bgf:production>

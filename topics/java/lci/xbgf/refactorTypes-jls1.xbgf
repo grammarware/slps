@@ -96,12 +96,14 @@
   <!-- BREFACTOR -->
   <xbgf:undefine>ArrayType</xbgf:undefine>
   <xbgf:remove>
-    <bgf:production>
-      <nonterminal>ReferenceType</nonterminal>
-      <bgf:expression>
-        <nonterminal>ArrayType</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ReferenceType</nonterminal>
+        <bgf:expression>
+          <nonterminal>ArrayType</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:remove>
 
   <!-- Finishing touches -->

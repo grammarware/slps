@@ -8,33 +8,35 @@
      vs.
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>Primary</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>NonWildcardTypeArguments</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <choice>
-              <bgf:expression>
-                <nonterminal>ExplicitGenericInvocationSuffix</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>this</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Arguments</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </choice>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>Primary</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>NonWildcardTypeArguments</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <choice>
+                <bgf:expression>
+                  <nonterminal>ExplicitGenericInvocationSuffix</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <terminal>this</terminal>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <nonterminal>Arguments</nonterminal>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </choice>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- finishing touches -->

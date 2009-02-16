@@ -1,7 +1,7 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  
+
   <!-- 
    - Fail: Statement.
       - [], ,([n(Identifier), t(:), n(Statement)])
@@ -55,37 +55,38 @@
       - [], ,([t(if), n(ParExpression), n(Statement)])
   -->
   <xbgf:remove>
-    <bgf:production>
-      <nonterminal>Statement</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>if</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>(</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Expression</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>)</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>StatementNoShortIf</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>else</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Statement</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>Statement</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>if</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Expression</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>StatementNoShortIf</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>else</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Statement</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:remove>
-  <!-- GENERALITY -->
-  <xbgf:inject>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>IfThenStatement</nonterminal>
       <bgf:expression>
@@ -126,7 +127,7 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:inject>
+  </xbgf:appear>
   <xbgf:inline>IfThenStatement</xbgf:inline>
   <!-- GENERALITY -->
   <xbgf:undefine>StatementNoShortIf</xbgf:undefine>
@@ -232,7 +233,7 @@
       </star>
     </bgf:expression>
   </xbgf:massage>
-  
+
   <!-- ISSUE CORRECT BRUTAL?
   The collected grammar does not allow interface declarations and labelled statements inside blocks.
   
@@ -242,20 +243,24 @@
       - [], ;([n(LocalVariableDeclarationStatement), n(ClassDeclaration), n(Statement)])
   -->
   <xbgf:remove>
-    <bgf:production>
-      <nonterminal>BlockStatement</nonterminal>
-      <bgf:expression>
-        <nonterminal>ClassDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>BlockStatement</nonterminal>
+        <bgf:expression>
+          <nonterminal>ClassDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:remove>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>BlockStatement</nonterminal>
-      <bgf:expression>
-        <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>BlockStatement</nonterminal>
+        <bgf:expression>
+          <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
   <xbgf:appear>
     <bgf:production>
@@ -287,7 +292,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  
+
   <!-- 
    - Fail: LocalVariableDeclarationStatement.
       - [], ,([?(t(final)), n(Type), n(VariableDeclarators), t((;))])
@@ -295,5 +300,5 @@
       - [], ,([n(LocalVariableDeclaration), t((;))])
   -->
   <xbgf:inline>LocalVariableDeclaration</xbgf:inline>
-  
+
 </xbgf:sequence>

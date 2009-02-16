@@ -112,7 +112,7 @@
      "(" PrimitiveType [ Dims ] ")" UnaryExpression
      "(" ReferenceType ")" UnaryExpressionNotPlusMinus
 -->
-  
+
   <!-- BREFACTOR 
   Complicated surgery on CastExpression - kind of fold mod new type system
   
@@ -170,58 +170,64 @@ vs
   <xbgf:inline>PostDecrementExpression</xbgf:inline>
   <xbgf:inline>PostIncrementExpression</xbgf:inline>
   <xbgf:remove>
-    <bgf:production>
-      <nonterminal>PostfixExpression</nonterminal>
-      <bgf:expression>
-        <nonterminal>QualifiedIdentifier</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>PostfixExpression</nonterminal>
+        <bgf:expression>
+          <nonterminal>QualifiedIdentifier</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:remove>
   <xbgf:remove>
-    <bgf:production>
-      <nonterminal>PostfixExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>PostfixExpression</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>--</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>PostfixExpression</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>PostfixExpression</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>--</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:remove>
   <xbgf:deyaccify>PostfixExpression</xbgf:deyaccify>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>PostfixExpression</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>Primary</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <star>
-              <bgf:expression>
-                <choice>
+    <horizontal>
+      <bgf:production>
+        <nonterminal>PostfixExpression</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Primary</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <star>
+                <bgf:expression>
+                  <choice>
+                     <bgf:expression>
+                      <marked>
+                        <bgf:expression>
+                          <terminal>--</terminal>
+                        </bgf:expression>
+                      </marked>
+                    </bgf:expression>
                   <bgf:expression>
-                    <terminal>++</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <marked>
-                      <bgf:expression>
-                        <terminal>--</terminal>
-                      </bgf:expression>
-                    </marked>
-                  </bgf:expression>
-                </choice>
-              </bgf:expression>
-            </star>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+                      <terminal>++</terminal>
+                    </bgf:expression>
+                   </choice>
+                </bgf:expression>
+              </star>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </horizontal>
   </xbgf:add>
   <xbgf:appear>
     <bgf:production>
@@ -824,12 +830,14 @@ vs
   <!-- BREFACTOR -->
   <xbgf:undefine>Assignment</xbgf:undefine>
   <xbgf:remove>
-    <bgf:production>
-      <nonterminal>AssignmentExpression</nonterminal>
-      <bgf:expression>
-        <nonterminal>Assignment</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>AssignmentExpression</nonterminal>
+        <bgf:expression>
+          <nonterminal>Assignment</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:remove>
   <xbgf:inline>ConditionalExpression</xbgf:inline>
   <xbgf:rename>

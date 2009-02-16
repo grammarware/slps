@@ -188,12 +188,14 @@
     </bgf:production>
   </xbgf:introduce>
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>ForControl</nonterminal>
-      <bgf:expression>
-        <nonterminal>ForVarControl</nonterminal>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ForControl</nonterminal>
+        <bgf:expression>
+          <nonterminal>ForVarControl</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 
   <!-- ISSUE EXTEND
@@ -294,35 +296,37 @@
       - [], ,([t(assert), n(Expression), ?(,([t(:), n(Expression)])), t((;))])
   -->
   <xbgf:add>
-    <bgf:production>
-      <nonterminal>Statement</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>assert</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Expression</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>:</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Expression</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
+    <vertical>
+      <bgf:production>
+        <nonterminal>Statement</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>assert</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Expression</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <terminal>:</terminal>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <nonterminal>Expression</nonterminal>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>;</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
   </xbgf:add>
 </xbgf:sequence>
