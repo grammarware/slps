@@ -438,7 +438,7 @@ CreatedName:
     </bgf:production>
   </xbgf:disappear>
   <xbgf:eliminate>Selector</xbgf:eliminate>
-  <!-- TODO: once add3 test case works, redo with add -->
+  
   <xbgf:add>
     <horizontal>
       <bgf:production>

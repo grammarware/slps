@@ -36,18 +36,21 @@
      vs.
       - [], ,([t(import), n(PackageOrTypeName), t(.), t(*), t((;))])
   -->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>PackageName</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>PackageOrTypeName</nonterminal>
-    </bgf:expression>
+  <xbgf:deyaccify>PackageName</xbgf:deyaccify>
+  <xbgf:deyaccify>PackageOrTypeName</xbgf:deyaccify>
+  <xbgf:unfold>
+    <nonterminal>PackageName</nonterminal>
     <in>
       <nonterminal>TypeImportOnDemandDeclaration</nonterminal>
     </in>
-  </xbgf:replace>
+  </xbgf:unfold>
+  <xbgf:fold>
+    <nonterminal>PackageOrTypeName</nonterminal>
+    <in>
+      <nonterminal>TypeImportOnDemandDeclaration</nonterminal>
+    </in>
+  </xbgf:fold>
+  
 
   <!-- 
   Local substitution:
@@ -56,18 +59,18 @@
      vs.
       - [], ;([n(Identifier), ,([n(PackageOrTypeName), t(.), n(Identifier)])])
    -->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>PackageName</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>PackageOrTypeName</nonterminal>
-    </bgf:expression>
+  <xbgf:unfold>
+    <nonterminal>PackageName</nonterminal>
     <in>
       <nonterminal>TypeName</nonterminal>
     </in>
-  </xbgf:replace>
+  </xbgf:unfold>
+  <xbgf:fold>
+    <nonterminal>PackageOrTypeName</nonterminal>
+    <in>
+      <nonterminal>TypeName</nonterminal>
+    </in>
+  </xbgf:fold>
 
   <!-- 
   Local substitute + add + horizontal:

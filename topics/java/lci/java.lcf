@@ -206,6 +206,7 @@
       <input>doc2</input>
       <perform>recover-doc2</perform>
       <perform>correct-doc2</perform>
+      <perform>refactorPackageNames</perform>
     </branch>
   </target>
 
@@ -220,6 +221,7 @@
       <input>doc3</input>
       <perform>recover-doc3</perform>
       <perform>correct-doc3</perform>
+      <perform>refactorPackageNames</perform>
     </branch>
   </target>
 

@@ -1,0 +1,8 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <xbgf:deyaccify>PackageName</xbgf:deyaccify>
+  <xbgf:deyaccify>PackageOrTypeName</xbgf:deyaccify>
+
+</xbgf:sequence>

@@ -81,76 +81,62 @@ Annotation:
                ,([t(break), ?(n(Identifier)), t((;))]),
   -->
   <!-- REVISE -->
-  <xbgf:replace>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>break</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <optional>
-            <bgf:expression>
-              <nonterminal>Identifier</nonterminal>
-            </bgf:expression>
-          </optional>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>break</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <optional>
-            <bgf:expression>
-              <nonterminal>Identifier</nonterminal>
-            </bgf:expression>
-          </optional>
-        </bgf:expression>
-        <bgf:expression>
-          <terminal>;</terminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-  </xbgf:replace>
-
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>Statement</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>break</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <terminal>;</terminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
+  
   <!--   ISSUE CORRECT SPECERROR
          same with continue -->
   <!-- REVISE -->
-  <xbgf:replace>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>continue</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <optional>
-            <bgf:expression>
-              <nonterminal>Identifier</nonterminal>
-            </bgf:expression>
-          </optional>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>continue</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <optional>
-            <bgf:expression>
-              <nonterminal>Identifier</nonterminal>
-            </bgf:expression>
-          </optional>
-        </bgf:expression>
-        <bgf:expression>
-          <terminal>;</terminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-  </xbgf:replace>
+  <xbgf:inject>
+    <bgf:production>
+      <nonterminal>Statement</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>continue</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <terminal>;</terminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:inject>
 
   <!-- ISSUE CORRECT 
   forgotten comma
@@ -161,24 +147,36 @@ Annotation:
         ElementValue [ "," ElementValues ]
   -->
   <!-- REVISE -->
-  <xbgf:replace>
-    <bgf:expression>
+  <xbgf:concretize>
+    <bgf:production>
       <nonterminal>ElementValues</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>,</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>ElementValues</nonterminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-    <in>
-      <nonterminal>ElementValues</nonterminal>
-    </in>
-  </xbgf:replace>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ElementValue</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <terminal>,</terminal>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>ElementValues</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:concretize>
 
   <!--   undefine lexical term -->
   <!-- GENERALITY -->
