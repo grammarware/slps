@@ -37,8 +37,11 @@
   <xsl:template match="xbgf:*">
     <xsl:value-of select="local-name()" />
     <xsl:text>(
- </xsl:text>
-    <xsl:apply-templates select="./bgf:production"/>
+</xsl:text>
+    <xsl:for-each select="./bgf:production">
+      <xsl:text> </xsl:text>
+      <xsl:apply-templates select="."/>
+    </xsl:for-each>
     <xsl:call-template name="context">
       <xsl:with-param name="in" select="./in"/>
     </xsl:call-template>
@@ -47,46 +50,21 @@
   </xsl:template>
 
   <xsl:template match="xbgf:add">
-    <xsl:value-of select="local-name()" />
-    <xsl:text>(
- </xsl:text>
     <xsl:choose>
-      <xsl:when test="./bgf:production">
-        <xsl:apply-templates select="./bgf:production"/>
-        <xsl:call-template name="context">
-          <xsl:with-param name="in" select="./in"/>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:when test="./bgf:expression">
-        <xsl:apply-templates select="./bgf:expression[1]"/>
-        <xsl:text>,
+      <xsl:when test="./vertical">
+        <xsl:text>addV(
  </xsl:text>
-        <xsl:apply-templates select="./bgf:expression[2]"/>
-        <xsl:choose>
-          <xsl:when test="in">
-            <xsl:text>
-</xsl:text>
-            <xsl:call-template name="context">
-              <xsl:with-param name="in" select="./in"/>
-            </xsl:call-template>
-          </xsl:when>
-        </xsl:choose>
+        <xsl:apply-templates select="./vertical/bgf:production"/>
+      </xsl:when>
+      <xsl:when test="./horizontal">
+        <xsl:text>addH(
+ </xsl:text>
+        <xsl:apply-templates select="./horizontal/bgf:production"/>
       </xsl:when>
     </xsl:choose>
     <xsl:text>);
 </xsl:text>
   </xsl:template>
-
-  <!--xsl:template match="xbgf:designate">
-    <xsl:value-of select="local-name()" />
-    <xsl:text>("</xsl:text>
-    <xsl:value-of select="./bgf:production/label" />
-    <xsl:text>",
- </xsl:text>
-    <xsl:apply-templates select="./bgf:production"/>
-    <xsl:text>);
-</xsl:text>
-  </xsl:template-->
 
   <xsl:template match="xbgf:deyaccify|xbgf:eliminate|xbgf:horizontal|xbgf:inline|xbgf:undefine">
     <xsl:value-of select="local-name()" />
@@ -133,8 +111,6 @@
     <xsl:value-of select="./nonterminal"/>
     <xsl:choose>
       <xsl:when test="in">
-        <xsl:text>
-</xsl:text>
         <xsl:call-template name="context">
           <xsl:with-param name="in" select="./in"/>
         </xsl:call-template>

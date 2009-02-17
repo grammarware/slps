@@ -59,20 +59,45 @@
   </xsl:template>
 
   <xsl:template match="plus">
-    <xsl:text>( </xsl:text>
-    <xsl:apply-templates select="./*"/>
-    <xsl:text>)+ </xsl:text>
+    <xsl:choose>
+      <xsl:when test="./bgf:expression/sequence">
+        <xsl:text>( </xsl:text>
+        <xsl:apply-templates select="./bgf:expression/sequence/*"/>
+        <xsl:text>)+ </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="./*"/>
+        <xsl:text>+ </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="star">
-    <xsl:text>( </xsl:text>
-    <xsl:apply-templates select="./*"/>
-    <xsl:text>)* </xsl:text>
+    <xsl:choose>
+      <xsl:when test="./bgf:expression/sequence">
+        <xsl:text>( </xsl:text>
+        <xsl:apply-templates select="./bgf:expression/sequence/*"/>
+        <xsl:text>)* </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="./*"/>
+        <xsl:text>* </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="optional">
-    <xsl:apply-templates select="./*"/>
-    <xsl:text>? </xsl:text>
+    <xsl:choose>
+      <xsl:when test="./bgf:expression/sequence">
+        <xsl:text>( </xsl:text>
+        <xsl:apply-templates select="./bgf:expression/sequence/*"/>
+        <xsl:text>)? </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="./*"/>
+        <xsl:text>? </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="terminal">
@@ -118,7 +143,7 @@
   <xsl:template match="sequence">
     <xsl:text>( </xsl:text>
     <xsl:apply-templates select="./*"/>
-    <xsl:text>)</xsl:text>
+    <xsl:text>) </xsl:text>
   </xsl:template>
 
   <!-- top level choices - one per line -->
@@ -144,7 +169,7 @@
     <xsl:text>) </xsl:text>
   </xsl:template>
 
-
+  
   <xsl:template name="car">
     <xsl:param name="expr"/>
     <xsl:text>
