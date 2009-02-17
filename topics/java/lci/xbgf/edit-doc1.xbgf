@@ -80,18 +80,44 @@
       - [], ;([,([t(new), n(ClassOrInterfaceType), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))]),
                ,([n(Primary), t(.), t(new), n(Identifier), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))])])
   -->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>ClassType</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>ClassOrInterfaceType</nonterminal>
-    </bgf:expression>
-    <in>
+  <xbgf:upgrade>
+    <bgf:production>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
-    </in>
-  </xbgf:replace>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>new</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>ClassOrInterfaceType</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ArgumentList</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>ClassOrInterfaceType</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
   <xbgf:add>
     <vertical>
       <bgf:production>
