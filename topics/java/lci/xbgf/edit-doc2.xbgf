@@ -2,7 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
- <!-- GENERALITY?
+  <!-- GENERALITY?
   ConstructorBody is defined as:
      { [ ExplicitConstructorInvocation ] [ BlockStatements ] }
   -->
@@ -43,7 +43,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-  
+
   <!-- Let's deal with ConstructorDeclaratorRest first -->
   <xbgf:unfold>
     <nonterminal>TypeList</nonterminal>
@@ -180,7 +180,7 @@
       <nonterminal>ConstructorDeclaratorRest</nonterminal>
     </in>
   </xbgf:unfold>
-   <xbgf:disappear>
+  <xbgf:disappear>
     <bgf:production>
       <nonterminal>ConstructorDeclaratorRest</nonterminal>
       <bgf:expression>
@@ -195,9 +195,9 @@
                   <bgf:expression>
                     <terminal>throws</terminal>
                   </bgf:expression>
-                    <bgf:expression>
-                      <nonterminal>QualifiedIdentifier</nonterminal>
-                    </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>QualifiedIdentifier</nonterminal>
+                  </bgf:expression>
                   <bgf:expression>
                     <marked>
                       <bgf:expression>
@@ -316,7 +316,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  
+
   <!-- Now let's deal with MethodDeclaratorRest -->
   <xbgf:unfold>
     <nonterminal>TypeList</nonterminal>
@@ -623,7 +623,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
- 
+
   <!-- Now let's deal with VoidInterfaceMethodDeclaratorRest -->
   <xbgf:unfold>
     <nonterminal>TypeList</nonterminal>
@@ -930,7 +930,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  
+
   <!-- Now let's deal with InterfaceMethodDeclaratorRest -->
   <xbgf:unfold>
     <nonterminal>TypeList</nonterminal>
@@ -1237,12 +1237,12 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  
+
   <!-- Have been expanded in all kinds of -DeclaratorRest's -->
   <xbgf:fold>
     <nonterminal>BracketsOpt</nonterminal>
   </xbgf:fold>
-<xbgf:fold>
+  <xbgf:fold>
     <nonterminal>QualifiedIdentifierList</nonterminal>
   </xbgf:fold>
 
@@ -1298,19 +1298,18 @@
     </horizontal>
   </xbgf:add>
 
- <!-- ISSUE CORRECT
+  <!-- ISSUE CORRECT
    - Fail: ArrayInitializer.
-      - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
-     vs.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)]))])), ?(t((,))), t(})])
-      
+     vs.
+      - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
+
    ArrayInitializer is defined as:                          (collected)
      "{" [ VariableInitializers ] [ "," ] "}"
    ArrayInitializer is defined as:                          (syntax)
      "{" [ VariableInitializers [ "," ] ] "}"
   -->
-  <!-- REVISE -->
-  <xbgf:replace>
+  <xbgf:massage>
     <bgf:expression>
       <sequence>
         <bgf:expression>
@@ -1352,6 +1351,48 @@
         <bgf:expression>
           <sequence>
             <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <nonterminal>VariableInitializer</nonterminal>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <star>
+                        <bgf:expression>
+                          <sequence>
+                            <bgf:expression>
+                              <terminal>,</terminal>
+                            </bgf:expression>
+                            <bgf:expression>
+                              <nonterminal>VariableInitializer</nonterminal>
+                            </bgf:expression>
+                          </sequence>
+                        </bgf:expression>
+                      </star>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <terminal>,</terminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:narrow>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
               <nonterminal>VariableInitializer</nonterminal>
             </bgf:expression>
             <bgf:expression>
@@ -1368,20 +1409,31 @@
                 </bgf:expression>
               </star>
             </bgf:expression>
-            <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <terminal>,</terminal>
-                </bgf:expression>
-              </optional>
-            </bgf:expression>
           </sequence>
         </bgf:expression>
       </optional>
     </bgf:expression>
-    <in>
-      <nonterminal>ArrayInitializer</nonterminal>
-    </in>
-  </xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>VariableInitializer</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>,</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>VariableInitializer</nonterminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:narrow>
 
 </xbgf:sequence>

@@ -8,18 +8,38 @@
      vs.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators)])
   -->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>VariableDeclarator</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>VariableDeclarators</nonterminal>
-    </bgf:expression>
-    <in>
+  <xbgf:upgrade>
+    <bgf:production>
       <nonterminal>ConstantDeclaration</nonterminal>
-    </in>
-  </xbgf:replace>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ConstantModifiers</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>VariableDeclarators</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>VariableDeclarators</nonterminal>
+      <bgf:expression>
+        <nonterminal>VariableDeclarator</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
 
   <!-- ISSUE EXTEND 
     - Fail: FieldAccess.

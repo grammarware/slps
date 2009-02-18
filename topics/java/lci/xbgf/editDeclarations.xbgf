@@ -32,30 +32,225 @@
 
   <!-- ISSUE PERMISSIVENESS
   multiple mismatches -->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>throws</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>TypeList</nonterminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>throws</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>QualifiedIdentifierList</nonterminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-  </xbgf:replace>
-
+  <xbgf:unfold>
+    <nonterminal>TypeList</nonterminal>
+    <in>
+      <nonterminal>Throws</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:downgrade>
+    <bgf:production>
+      <nonterminal>Throws</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>throws</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Type</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Type</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:downgrade>
+  <xbgf:downgrade>
+    <bgf:production>
+      <nonterminal>Throws</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>throws</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <nonterminal>Type</nonterminal>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:downgrade>
+  <xbgf:unfold>
+    <nonterminal>BracketsOpt</nonterminal>
+    <in>
+      <nonterminal>Throws</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:disappear>
+    <bgf:production>
+      <nonterminal>Throws</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>throws</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>[</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>]</terminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>QualifiedIdentifier</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <star>
+                          <bgf:expression>
+                            <sequence>
+                              <bgf:expression>
+                                <terminal>[</terminal>
+                              </bgf:expression>
+                              <bgf:expression>
+                                <terminal>]</terminal>
+                              </bgf:expression>
+                            </sequence>
+                          </bgf:expression>
+                        </star>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:disappear>
+  <xbgf:disappear>
+    <bgf:production>
+      <nonterminal>Throws</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>throws</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <sequence>
+                      <bgf:expression>
+                        <terminal>[</terminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <terminal>]</terminal>
+                      </bgf:expression>
+                    </sequence>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>QualifiedIdentifier</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:disappear>
+  <xbgf:fold>
+    <nonterminal>QualifiedIdentifierList</nonterminal>
+  </xbgf:fold>
+  
   <!--  
    - Fail: InterfaceDeclaration.
       - [], ,([?(n(Modifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
@@ -1192,8 +1387,7 @@
      vs.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
   -->
-  <!-- REVISE -->
-  <xbgf:replace>
+  <xbgf:massage>
     <bgf:expression>
       <sequence>
         <bgf:expression>
@@ -1235,6 +1429,48 @@
         <bgf:expression>
           <sequence>
             <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <nonterminal>VariableInitializer</nonterminal>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <star>
+                        <bgf:expression>
+                          <sequence>
+                            <bgf:expression>
+                              <terminal>,</terminal>
+                            </bgf:expression>
+                            <bgf:expression>
+                              <nonterminal>VariableInitializer</nonterminal>
+                            </bgf:expression>
+                          </sequence>
+                        </bgf:expression>
+                      </star>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <terminal>,</terminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:narrow>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
               <nonterminal>VariableInitializer</nonterminal>
             </bgf:expression>
             <bgf:expression>
@@ -1251,21 +1487,32 @@
                 </bgf:expression>
               </star>
             </bgf:expression>
-            <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <terminal>,</terminal>
-                </bgf:expression>
-              </optional>
-            </bgf:expression>
           </sequence>
         </bgf:expression>
       </optional>
     </bgf:expression>
-    <in>
-      <nonterminal>ArrayInitializer</nonterminal>
-    </in>
-  </xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>VariableInitializer</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>,</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>VariableInitializer</nonterminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:narrow>
 
   <!-- BREFACTOR 
   Can't really match this
@@ -1535,22 +1782,68 @@
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(ConstructorBody)])
      vs.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(MethodBody)])
+ConstructorBody:
+        "{" ExplicitConstructorInvocation ? BlockStatements "}"
+MethodBody:
+        Block
+MethodBody:
+        ";"
+Block:
+        "{" BlockStatements "}"
   -->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
+  <xbgf:disappear>
+    <bgf:production>
       <nonterminal>ConstructorBody</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>MethodBody</nonterminal>
-    </bgf:expression>
-    <in>
-      <nonterminal>ConstructorDeclaratorRest</nonterminal>
-    </in>
-  </xbgf:replace>
-  <xbgf:eliminate>ConstructorBody</xbgf:eliminate>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>ExplicitConstructorInvocation</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BlockStatements</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:disappear>
   <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
-
+  <xbgf:fold>
+    <nonterminal>Block</nonterminal>
+  </xbgf:fold>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>ConstructorBody</nonterminal>
+      <bgf:expression>
+        <marked>
+          <bgf:expression>
+            <nonterminal>MethodBody</nonterminal>
+          </bgf:expression>
+        </marked>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>MethodBody</nonterminal>
+      <bgf:expression>
+        <nonterminal>Block</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <xbgf:inline>ConstructorBody</xbgf:inline>
+  
   <!-- ISSUE EXTEND
   Empty class body declaration -->
   <xbgf:add>

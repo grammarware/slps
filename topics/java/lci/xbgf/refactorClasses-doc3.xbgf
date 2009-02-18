@@ -1132,28 +1132,74 @@
     </bgf:production>
   </xbgf:appear>
 
-  <!-- 
+  <!-- ISSUE PERMISSIVENESS
    - Fail: ConstructorDeclaratorRest.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), n(MethodBody)])
      vs.
       - [], ,([n(FormalParameters), ?(n(Throws)), n(ConstructorBody)])
+ConstructorBody:
+        "{" ExplicitConstructorInvocation ? BlockStatements "}"
+MethodBody:
+        Block
+MethodBody:
+        ";"
+Block:
+        "{" BlockStatements "}"
   -->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
+  <xbgf:disappear>
+    <bgf:production>
       <nonterminal>ConstructorBody</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>MethodBody</nonterminal>
-    </bgf:expression>
-    <in>
-      <nonterminal>ConstructorDeclaratorRest</nonterminal>
-    </in>
-  </xbgf:replace>
-  <xbgf:eliminate>ConstructorBody</xbgf:eliminate>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>ExplicitConstructorInvocation</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BlockStatements</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:disappear>
   <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
   <xbgf:eliminate>NonWildTypeArguments</xbgf:eliminate>
   <xbgf:eliminate>ReferenceTypeList</xbgf:eliminate>
+  <xbgf:fold>
+    <nonterminal>Block</nonterminal>
+  </xbgf:fold>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>ConstructorBody</nonterminal>
+      <bgf:expression>
+        <marked>
+          <bgf:expression>
+            <nonterminal>MethodBody</nonterminal>
+          </bgf:expression>
+        </marked>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>MethodBody</nonterminal>
+      <bgf:expression>
+        <nonterminal>Block</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <xbgf:inline>ConstructorBody</xbgf:inline>
 
   <!-- 
   This is used by class definitions and interface definitions

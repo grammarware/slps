@@ -94,7 +94,7 @@
   vs 
   ;([n('Primary'), n('QualifiedIdentifier'), ','([n('PostfixExpression'), n('PostfixOp')])])
   -->
-  <!-- BREFACTOR -->
+  <!-- REVISE -->
   <xbgf:replace>
     <bgf:expression>
       <sequence>

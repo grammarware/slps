@@ -27,56 +27,224 @@
     <nonterminal>BasicType</nonterminal>
   </xbgf:vertical>
 
+  <xbgf:remove>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ReferenceType</nonterminal>
+        <bgf:expression>
+          <nonterminal>ArrayType</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:remove>
+  <xbgf:eliminate>ArrayType</xbgf:eliminate>
+  <xbgf:inline>ReferenceType</xbgf:inline>
+
   <!-- ISSUE PERMISSIVENESS
   Merging interfaces with classes and making lists and other things conform -->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>ClassType</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>Type</nonterminal>
-    </bgf:expression>
+  <!-- NOT like in doc2 & doc3, much simpler !!!
+   *Type:
+        ClassOrInterfaceType
+  -->
+  <!-- ClassTypeList -->
+  <xbgf:unfold>
+    <nonterminal>ClassType</nonterminal>
     <in>
       <nonterminal>ClassTypeList</nonterminal>
     </in>
-  </xbgf:replace>
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>InterfaceType</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
+  </xbgf:unfold>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>ClassTypeList</nonterminal>
+      <bgf:expression>
+        <marked>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+        </marked>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
       <nonterminal>Type</nonterminal>
-    </bgf:expression>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>ClassTypeList</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ClassTypeList</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>,</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Type</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <!--InterfaceTypeList-->
+  <xbgf:unfold>
+    <nonterminal>InterfaceType</nonterminal>
     <in>
       <nonterminal>InterfaceTypeList</nonterminal>
     </in>
-  </xbgf:replace>
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>InterfaceType</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
+  </xbgf:unfold>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>InterfaceTypeList</nonterminal>
+      <bgf:expression>
+        <marked>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+        </marked>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
       <nonterminal>Type</nonterminal>
-    </bgf:expression>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>InterfaceTypeList</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>InterfaceTypeList</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>,</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Type</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <!--ExtendsInterfaces-->
+  <xbgf:unfold>
+    <nonterminal>InterfaceType</nonterminal>
     <in>
       <nonterminal>ExtendsInterfaces</nonterminal>
     </in>
-  </xbgf:replace>
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>ClassType</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
+  </xbgf:unfold>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>ExtendsInterfaces</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>extends</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Type</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
       <nonterminal>Type</nonterminal>
-    </bgf:expression>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>ExtendsInterfaces</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ExtendsInterfaces</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>,</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Type</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <!--Super-->
+  <xbgf:unfold>
+    <nonterminal>ClassType</nonterminal>
     <in>
       <nonterminal>Super</nonterminal>
     </in>
-  </xbgf:replace>
+  </xbgf:unfold>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>Super</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>extends</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Type</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+
   <xbgf:unite>
     <add>InterfaceType</add>
     <to>ClassType</to>
@@ -93,23 +261,9 @@
   </xbgf:rename>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
 
-  <!-- BREFACTOR -->
-  <xbgf:undefine>ArrayType</xbgf:undefine>
-  <xbgf:remove>
-    <vertical>
-      <bgf:production>
-        <nonterminal>ReferenceType</nonterminal>
-        <bgf:expression>
-          <nonterminal>ArrayType</nonterminal>
-        </bgf:expression>
-      </bgf:production>
-    </vertical>
-  </xbgf:remove>
-
   <!-- Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
-  <xbgf:inline>ReferenceType</xbgf:inline>
 
   <!-- solves multiple problems later -->
   <xbgf:rename>
