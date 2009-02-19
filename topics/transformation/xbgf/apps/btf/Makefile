@@ -13,11 +13,12 @@ append.xbgf:
 		rename.xbgf \
 		reroot.xbgf \
 		normalize.xbgf
-#		strip.xbgf
 
 ${final}: append.xbgf
 	${tools}/xsd2bgf ${xsd}/btf.xsd btf0.bgf
-	${tools}/xbgf append.xbgf btf0.bgf btf1.bgf
+	${tools}/xbgf append.xbgf btf0.bgf btf0s.bgf
+	${tools}/stripsxbgf btf0s.bgf strip.xbgf
+	${tools}/xbgf strip.xbgf btf0s.bgf btf1.bgf
 
 rebuild:
 	make clean
