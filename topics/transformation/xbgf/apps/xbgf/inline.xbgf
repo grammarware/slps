@@ -1,0 +1,13 @@
+<xbgf:sequence
+    xmlns:bgf="http://planet-sl.org/bgf"
+    xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:inline>foldingtransformation</xbgf:inline>
+  <xbgf:inline>refactoringtransformation</xbgf:inline>
+  <xbgf:inline>increasingtransformation</xbgf:inline>
+  <xbgf:inline>decreasingtransformation</xbgf:inline>
+  <xbgf:inline>concreterevisingtransformation</xbgf:inline>
+  <xbgf:inline>abstractrevisingtransformation</xbgf:inline>
+  <xbgf:distribute>
+    <nonterminal>transformation</nonterminal>
+  </xbgf:distribute>
+</xbgf:sequence>

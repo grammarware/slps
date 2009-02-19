@@ -28,15 +28,16 @@ def noi(filename):
  return c
 
 def report(keys,key,note):
- print note,
+ s = note.replace('xbgf:','')
  cx = 0
  for x in keys:
   cx += results[key][x]
   if results[key][x]:
-   print '&',results[key][x],
+   s += '&'+`results[key][x]`
   else:
-   print '& ---',
- print '&'+`cx`+'\\\\'
+   s += '& ---'
+ if cx:
+  print s+'&'+`cx`+'\\\\'
 
 if __name__ == "__main__":
  if len(sys.argv) != 4:
@@ -45,9 +46,14 @@ if __name__ == "__main__":
   print '      xbgfover <xbgf.xsd> <lcf> <xbgfs-path>'
   sys.exit(1)
  xsd = ET.parse(sys.argv[1])
- for x in xsd.findall('/*'):
-  if x.attrib.has_key('name'):
-   names.append(x.attrib['name'])
+ gn = 0
+ for x in xsd.findall('/xsd:group/xsd:choice'.replace('xsd:','{'+xsdns+'}')):
+  names.append([])
+  for y in x.findall('xsd:element'.replace('xsd:','{'+xsdns+'}')):
+   if y.attrib.has_key('ref'):
+    names[gn].append(y.attrib['ref'])
+  gn += 1
+ names.remove([])
  lcf = ET.parse(sys.argv[2])
  for x in lcf.findall('/target'):
   name = x.findtext('name')
@@ -61,9 +67,10 @@ if __name__ == "__main__":
  results['NOI'] = {}
  results['NOX'] = {}
  for x in names:
-  results[x] = {}
-  for y in targets.keys():
-   results[x][y] = 0
+  for y in x:
+   results[y] = {}
+   for z in targets.keys():
+    results[y][z] = 0
  for x in targets.keys():
   results['LOC'][x] = 0
   results['NOI'][x] = 0
@@ -74,15 +81,16 @@ if __name__ == "__main__":
    xbgf = ET.parse(path+y+'.xbgf')
    results['NOX'][x] += len(xbgf.findall('/*'))
    for z in names:
-    results[z][x] += len(xbgf.findall('/{'+xbgfns+'}'+z))
- for x in names[:]:
-  used = False
-  for y in targets.keys():
-   if results[x][y]:
-    used = True
-  if not used:
-   print '%%',x,'not used in any XBGF script'
-   names.remove(x)
+    for q in z:
+     results[q][x] += len(xbgf.findall(q.replace('xbgf:','{'+xbgfns+'}')))
+ for x in names:
+  for y in x:
+   used = False
+   for z in targets.keys():
+    if results[y][z]:
+     used = True
+   if not used:
+    print '%%',y,'not used in any XBGF script'
  sorted = targets.keys()[:]
  sorted.sort()
  print '\\begin{tabular}{l|'+('c|'*len(targets))+'|c}'
@@ -90,8 +98,9 @@ if __name__ == "__main__":
   print '&\\textbf{'+x+'}',
  print '&\\textbf{Total}\\\\\\hline'
  for x in names:
-  report(sorted,x,'\\xbgfNumber{'+x+'}')
- print '\\hline'
+  for y in x:
+   report(sorted,y,'\\xbgfNumber{'+y+'}')
+  print '\\hline'
  print '\\end{tabular}'
  sys.exit(0)
 

@@ -10,6 +10,7 @@ append.xbgf:
 	${tools}/appendxbgf append.xbgf \
 		../bgf/normalize.xbgf \
 		../bgf/rename.xbgf \
+		inline.xbgf \
 		rename.xbgf \
 		reroot.xbgf \
 		unchainF.xbgf \

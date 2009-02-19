@@ -30,16 +30,53 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>
-      <!-- folding and unfolding -->
-      <xsd:element ref="xbgf:extract"/>
+      <xsd:group ref="xbgf:foldingtransformation"/>
+      <xsd:group ref="xbgf:refactoringtransformation"/>
+      <xsd:group ref="xbgf:increasingtransformation"/>
+      <xsd:group ref="xbgf:decreasingtransformation"/>
+      <xsd:group ref="xbgf:concreterevisingtransformation"/>
+      <xsd:group ref="xbgf:abstractrevisingtransformation"/>
+      <!-- labels, selectors and other decorative stuff -->
+      <xsd:element ref="xbgf:anonymize"/>
+      <xsd:element ref="xbgf:deanonymize"/>
+      <xsd:element ref="xbgf:designate"/>
+      <xsd:element ref="xbgf:unlabel"/>
+      <xsd:element ref="xbgf:reroot"/>
+      <!-- debug -->
+      <xsd:element ref="xbgf:dump"/>
+      <!-- unclear -->
+      <xsd:element ref="xbgf:rename"/>
+      <!-- deprecated -->
+      <xsd:element ref="xbgf:strip"/>
+    </xsd:choice>
+  </xsd:group>
+
+  <xsd:group name="foldingtransformation">
+    <xsd:annotation>
+      <xsd:documentation>
+        Here is a list of the XBGF transformations that perform
+        folding and unfolding activities.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
       <xsd:element ref="xbgf:inline"/>
-      <xsd:element ref="xbgf:fold"/>
+      <xsd:element ref="xbgf:extract"/>
       <xsd:element ref="xbgf:unfold"/>
+      <xsd:element ref="xbgf:fold"/>
       <xsd:element ref="xbgf:abridge"/>
       <xsd:element ref="xbgf:detour"/>
-      <xsd:element ref="xbgf:chain"/>
       <xsd:element ref="xbgf:unchain"/>
-      <!-- other general refactorings -->
+      <xsd:element ref="xbgf:chain"/>
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="refactoringtransformation">
+    <xsd:annotation>
+      <xsd:documentation>
+        Here is a list of the XBGF transformations that perform
+        other provably semantic-preserving refactorings
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
       <xsd:element ref="xbgf:massage"/>
       <xsd:element ref="xbgf:factor"/>
       <xsd:element ref="xbgf:distribute"/>
@@ -52,38 +89,65 @@
       <xsd:element ref="xbgf:horizontal"/>
       <xsd:element ref="xbgf:rassoc"/>
       <xsd:element ref="xbgf:lassoc"/>
-      <!-- labels, selectors and other decorative stuff -->
-      <xsd:element ref="xbgf:anonymize"/>
-      <xsd:element ref="xbgf:deanonymize"/>
-      <xsd:element ref="xbgf:designate"/>
-      <xsd:element ref="xbgf:unlabel"/>
-      <xsd:element ref="xbgf:reroot"/>
-      <!-- semantics increasing (grammar lengthening) transformations -->
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="increasingtransformation">
+    <xsd:annotation>
+      <xsd:documentation>
+        Here is a list of the XBGF transformations that
+        lenghten the grammar (increase semantics).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
       <xsd:element ref="xbgf:add"/>
       <xsd:element ref="xbgf:appear"/>
       <xsd:element ref="xbgf:widen"/>
       <xsd:element ref="xbgf:upgrade"/>
       <xsd:element ref="xbgf:unite"/>
-      <!-- semantics decreasing (grammar shortening) transformations -->
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="decreasingtransformation">
+    <xsd:annotation>
+      <xsd:documentation>
+        Here is a list of the XBGF transformations that
+        shorten the grammar (decrease semantics).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
       <xsd:element ref="xbgf:remove"/>
       <xsd:element ref="xbgf:disappear"/>
       <xsd:element ref="xbgf:narrow"/>
       <xsd:element ref="xbgf:downgrade"/>
-      <!-- transformations that only preserve abstract semantics -->
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="concreterevisingtransformation">
+    <xsd:annotation>
+      <xsd:documentation>
+        Here is a list of the XBGF transformations that
+        preserve abstract semantics, but do not preserve
+        (break) concrete semantics.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
       <xsd:element ref="xbgf:abstractize"/>
       <xsd:element ref="xbgf:concretize"/>
       <xsd:element ref="xbgf:permute"/>
-      <!-- semantics revising transformations -->
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="abstractrevisingtransformation">
+    <xsd:annotation>
+      <xsd:documentation>
+        Here is a list of the XBGF transformations that
+        revise semantics, both abstract and concrete.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
       <xsd:element ref="xbgf:define"/>
       <xsd:element ref="xbgf:undefine"/>
       <xsd:element ref="xbgf:redefine"/>
       <xsd:element ref="xbgf:inject"/>
       <xsd:element ref="xbgf:project"/>
       <xsd:element ref="xbgf:replace"/>
-      <!-- the rest -->
-      <xsd:element ref="xbgf:dump"/>
-      <xsd:element ref="xbgf:rename"/>
-      <xsd:element ref="xbgf:strip"/>
     </xsd:choice>
   </xsd:group>
 
