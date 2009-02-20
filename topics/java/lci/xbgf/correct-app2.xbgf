@@ -43,7 +43,6 @@
 
   <!-- ISSUE CORRECT SPECERROR
   let's complete some of the statements with a trailing semicolon-->
-  <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -73,7 +72,6 @@
   
   <!-- ISSUE CORRECT SPECERROR
   Same for BreakStatement -->
-  <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -216,7 +214,6 @@
      vs.
       - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
   -->
-  <!-- REVISE -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>Expression2Rest</nonterminal>

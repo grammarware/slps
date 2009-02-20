@@ -2,7 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- ISSUE EXTEND GENERALIZE
+  <!-- ISSUE PERMISSIVENESS
      - Fail: ConstantDeclaration.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarator)])
      vs.
@@ -99,98 +99,88 @@
   </xbgf:add>
 
   <!-- 
-  Resolve brutally. Is there a better way?
-  
      - Fail: PrimaryNoNewArray.
-      - [], ;([n(Literal), t(this), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
+      - [], ;([  n(Literal),
+                 t(this),
+              ,([t((), n(Expression), t())]),
+                 n(ClassInstanceCreationExpression),
+                 n(FieldAccess),
+                 n(MethodInvocation),
+                 n(ArrayAccess)])
      vs.
-      - [], ;([n(Literal), ,([n(Type), t(.), t(class)]), ,([t(void), t(.), t(class)]), t(this), ,([n(ClassName), t(.), t(this)]), ,([t((), n(Expression), t())]), n(ClassInstanceCreationExpression), n(FieldAccess), n(MethodInvocation), n(ArrayAccess)])
+      - [], ;([  n(Literal),
+              ,([n(Type), t(.), t(class)]),
+              ,([t(void), t(.), t(class)]),
+                 t(this),
+              ,([n(ClassName), t(.), t(this)]),
+              ,([t((), n(Expression), t())]),
+                 n(ClassInstanceCreationExpression),
+                 n(FieldAccess),
+                 n(MethodInvocation),
+                 n(ArrayAccess)])
     -->
-  <!-- BREFACTOR -->
-  <xbgf:redefine>
-    <bgf:production>
-      <nonterminal>PrimaryNoNewArray</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>Literal</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>Type</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>class</terminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>void</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>class</terminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>this</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>ClassName</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>this</terminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>(</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Expression</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>)</terminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ClassInstanceCreationExpression</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>FieldAccess</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>MethodInvocation</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ArrayAccess</nonterminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:redefine>
-  <xbgf:vertical>
-    <nonterminal>PrimaryNoNewArray</nonterminal>
-  </xbgf:vertical>
+  <xbgf:add>
+    <vertical>
+      <bgf:production>
+        <nonterminal>PrimaryNoNewArray</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Type</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>class</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
+  <xbgf:add>
+    <vertical>
+      <bgf:production>
+        <nonterminal>PrimaryNoNewArray</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>void</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>class</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
+  <xbgf:add>
+    <vertical>
+      <bgf:production>
+        <nonterminal>PrimaryNoNewArray</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>ClassName</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>this</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
 
-  <!-- ISSUE EXTEND GENERALIZE
+  <!-- ISSUE EXTEND
      - Fail: LocalVariableDeclaration.
       - [], ,([n(Type), n(VariableDeclarators)])
      vs.
@@ -446,7 +436,7 @@
     </vertical>
   </xbgf:add>
 
-  <!-- ISSUE EXTEND GENERALIZE
+  <!-- ISSUE EXTEND
      - Fail: MethodInvocation.
       - [], ;([,([n(MethodName), t((), ?(n(ArgumentList)), t())]), ,([n(Primary), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())])])
      vs.
@@ -592,7 +582,7 @@
     </vertical>
   </xbgf:add>
 
-  <!-- ISSUE EXTEND GENERALIZE
+  <!-- ISSUE EXTEND
      - Fail: FormalParameter.
       - [], ,([n(Type), n(VariableDeclaratorId)])
      vs.

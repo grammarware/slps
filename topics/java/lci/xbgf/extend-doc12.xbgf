@@ -27,7 +27,7 @@
     </vertical>
   </xbgf:add>
 
-  <!-- ISSUE EXTEND GENERALIZE
+  <!-- ISSUE EXTEND
      - Fail: MethodHeader.
       - [], ,([?(n(MethodModifiers)), n(ResultType), n(MethodDeclarator), ?(n(Throws))])
      vs.
@@ -665,7 +665,7 @@
      vs.
       - [], ;([n(NormalInterfaceDeclaration), n(AnnotationTypeDeclaration)])
   -->
-  <xbgf:introduce>
+  <xbgf:import>
     <bgf:production>
       <nonterminal>DefaultValue</nonterminal>
       <bgf:expression>
@@ -679,8 +679,6 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:introduce>
     <bgf:production>
       <nonterminal>AnnotationTypeDeclaration</nonterminal>
       <bgf:expression>
@@ -707,8 +705,6 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:introduce>
     <bgf:production>
       <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
       <bgf:expression>
@@ -781,8 +777,6 @@
         <terminal>;</terminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <xbgf:introduce>
     <bgf:production>
       <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
       <bgf:expression>
@@ -802,9 +796,6 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:introduce>
-  <!-- GENERALITY -->
-  <xbgf:define>
     <bgf:production>
       <nonterminal>AnnotationTypeBody</nonterminal>
       <bgf:expression>
@@ -825,7 +816,8 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:import>
+  
   <xbgf:chain>
     <bgf:production>
       <nonterminal>InterfaceDeclaration</nonterminal>
@@ -851,26 +843,7 @@
      vs.
       - [], ;([n(BasicForStatement), n(EnhancedForStatement)])
   -->
-  <xbgf:chain>
-    <bgf:production>
-      <nonterminal>ForStatement</nonterminal>
-      <bgf:expression>
-        <nonterminal>BasicForStatement</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:chain>
-  <xbgf:add>
-    <vertical>
-      <bgf:production>
-        <nonterminal>ForStatement</nonterminal>
-        <bgf:expression>
-          <nonterminal>EnhancedForStatement</nonterminal>
-        </bgf:expression>
-      </bgf:production>
-    </vertical>
-  </xbgf:add>
-  <!-- GENERALITY -->
-  <xbgf:define>
+  <xbgf:introduce>
     <bgf:production>
       <nonterminal>EnhancedForStatement</nonterminal>
       <bgf:expression>
@@ -909,7 +882,25 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:introduce>
+  <xbgf:chain>
+    <bgf:production>
+      <nonterminal>ForStatement</nonterminal>
+      <bgf:expression>
+        <nonterminal>BasicForStatement</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:chain>
+  <xbgf:add>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ForStatement</nonterminal>
+        <bgf:expression>
+          <nonterminal>EnhancedForStatement</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
 
   <!-- ISSUE EXTEND GENERALIZE
      - Fail: AbstractMethodDeclaration.
@@ -974,6 +965,48 @@
                ,([n(ClassName), t(.), t(super), t(.), ?(n(NonWildTypeArguments)), n(Identifier), t((), ?(n(ArgumentList)), t())]),
                ,([n(TypeName), t(.), n(NonWildTypeArguments), n(Identifier), t((), ?(n(ArgumentList)), t())])])
   -->
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>ReferenceTypeList</nonterminal>
+      <bgf:expression>
+        <nonterminal>ReferenceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>ReferenceTypeList</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ReferenceTypeList</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>,</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ReferenceType</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  <xbgf:introduce>
+    <bgf:production>
+      <nonterminal>NonWildTypeArguments</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>&lt;</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ReferenceTypeList</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>&gt;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
   <xbgf:appear>
     <bgf:production>
       <nonterminal>MethodInvocation</nonterminal>
@@ -1186,7 +1219,7 @@
     </bgf:production>
   </xbgf:appear>
 
-  <!-- 
+  <!-- ISSUE EXTEND
      - Fail: FormalParameterList.
       - [], ;([n(FormalParameter), ,([n(FormalParameterList), t((,)), n(FormalParameter)])])
      vs.
@@ -1203,40 +1236,26 @@
       <to>FormalParameters</to>
     </nonterminal>
   </xbgf:rename>
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>FormalParameters</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>FormalParameterList</nonterminal>
-    </bgf:expression>
+  <xbgf:horizontal>FormalParameters</xbgf:horizontal>
+  <xbgf:unfold>
+    <nonterminal>FormalParameters</nonterminal>
     <in>
       <nonterminal>MethodDeclarator</nonterminal>
     </in>
-  </xbgf:replace>
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>FormalParameters</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>FormalParameterList</nonterminal>
-    </bgf:expression>
+  </xbgf:unfold>
+  <xbgf:unfold>
+    <nonterminal>FormalParameters</nonterminal>
     <in>
       <nonterminal>ConstructorDeclarator</nonterminal>
     </in>
-  </xbgf:replace>
-
-  <!-- ISSUE EXTEND -->
-  <!-- GENERALITY -->
-  <xbgf:define>
+  </xbgf:unfold>
+  <xbgf:extract>
     <bgf:production>
       <nonterminal>FormalParameterList</nonterminal>
       <bgf:expression>
         <choice>
           <bgf:expression>
-            <nonterminal>LastFormalParameter</nonterminal>
+            <nonterminal>FormalParameter</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <sequence>
@@ -1247,26 +1266,37 @@
                 <terminal>,</terminal>
               </bgf:expression>
               <bgf:expression>
-                <nonterminal>LastFormalParameter</nonterminal>
+                <nonterminal>FormalParameter</nonterminal>
               </bgf:expression>
             </sequence>
           </bgf:expression>
         </choice>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+  </xbgf:extract>
+  <xbgf:unfold>
+    <nonterminal>FormalParameterList</nonterminal>
+    <in>
+      <nonterminal>FormalParameters</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:vertical>
+    <nonterminal>FormalParameters</nonterminal>
+  </xbgf:vertical>
   <xbgf:vertical>
     <nonterminal>FormalParameterList</nonterminal>
   </xbgf:vertical>
-  <!-- GENERALITY -->
-  <xbgf:define>
+  <xbgf:extract>
     <bgf:production>
       <nonterminal>LastFormalParameter</nonterminal>
       <bgf:expression>
         <nonterminal>FormalParameter</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:define>
+    <in>
+      <nonterminal>FormalParameterList</nonterminal>
+    </in>
+  </xbgf:extract>
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -1301,7 +1331,6 @@
      vs.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators), t((;))])
   -->
-  <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ConstantDeclaration</nonterminal>
@@ -1348,7 +1377,7 @@
     </bgf:production>
   </xbgf:introduce>
 
-  <!-- ISSUE PERMISSIVENESS
+  <!-- ISSUE EXTEND
      - Fail: Throws.
       - [], ,([t(throws), n(ClassTypeList)])
      vs.
@@ -1360,36 +1389,130 @@
       <to>ExceptionTypeList</to>
     </nonterminal>
   </xbgf:rename>
-  <!-- GENERALITY -->
-  <xbgf:redefine>
+  <xbgf:upgrade>
     <bgf:production>
       <nonterminal>ExceptionTypeList</nonterminal>
       <bgf:expression>
-        <choice>
+        <marked>
           <bgf:expression>
             <nonterminal>ExceptionType</nonterminal>
           </bgf:expression>
+        </marked>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>ExceptionType</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>ExceptionTypeList</nonterminal>
+      <bgf:expression>
+        <sequence>
           <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>ExceptionTypeList</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>,</terminal>
-              </bgf:expression>
+            <nonterminal>ExceptionTypeList</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>,</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
               <bgf:expression>
                 <nonterminal>ExceptionType</nonterminal>
               </bgf:expression>
-            </sequence>
+            </marked>
           </bgf:expression>
-        </choice>
+        </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:redefine>
-  <xbgf:vertical>
-    <nonterminal>ExceptionTypeList</nonterminal>
-  </xbgf:vertical>
+    <bgf:production>
+      <nonterminal>ExceptionType</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
 
+  <!-- 
+   - Fail: ArrayCreationExpression.
+      - [], ,([t(new), n(TypeName), n(Dims), n(ArrayInitializer)])
+      - [], ,([t(new), n(TypeName), n(DimExprs), ?(n(Dims))])
+     vs.
+      - [], ,([t(new), n(ClassOrInterfaceType), n(Dims), n(ArrayInitializer)])
+      - [], ,([t(new), n(ClassOrInterfaceType), n(DimExprs), ?(n(Dims))])
+  -->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>SurgeryOnTypeName</nonterminal>
+      <bgf:expression>
+        <nonterminal>TypeName</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <in>
+      <nonterminal>ArrayCreationExpression</nonterminal>
+    </in>
+  </xbgf:extract>
+  <xbgf:massage>
+    <bgf:expression>
+      <nonterminal>TypeName</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <selectable>
+            <selector>ClassType</selector>
+            <bgf:expression>
+              <nonterminal>TypeName</nonterminal>
+            </bgf:expression>
+          </selectable>
+        </bgf:expression>
+        <bgf:expression>
+          <selectable>
+            <selector>InterfaceType</selector>
+            <bgf:expression>
+              <nonterminal>TypeName</nonterminal>
+            </bgf:expression>
+          </selectable>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <in>
+      <nonterminal>SurgeryOnTypeName</nonterminal>
+    </in>
+  </xbgf:massage>
+  <xbgf:vertical>
+    <nonterminal>SurgeryOnTypeName</nonterminal>
+  </xbgf:vertical>
+  <xbgf:fold>
+    <nonterminal>ClassType</nonterminal>
+    <in>
+      <label>ClassType</label>
+    </in>
+  </xbgf:fold>
+  <xbgf:unlabel>
+    <label>ClassType</label>
+  </xbgf:unlabel>  <xbgf:fold>
+    <nonterminal>InterfaceType</nonterminal>
+    <in>
+      <label>InterfaceType</label>
+    </in>
+  </xbgf:fold>
+  <xbgf:unlabel>
+    <label>InterfaceType</label>
+  </xbgf:unlabel>
+  <xbgf:horizontal>ClassOrInterfaceType</xbgf:horizontal>
+  <xbgf:horizontal>SurgeryOnTypeName</xbgf:horizontal>
+  <xbgf:fold>
+    <nonterminal>ClassOrInterfaceType</nonterminal>
+  </xbgf:fold>
+  <xbgf:inline>SurgeryOnTypeName</xbgf:inline>
+  <xbgf:vertical>
+    <nonterminal>ClassOrInterfaceType</nonterminal>
+  </xbgf:vertical>
+  
   <!-- ISSUE EXTEND -->
   <xbgf:introduce>
     <bgf:production>
@@ -1494,32 +1617,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-  <xbgf:introduce>
-    <bgf:production>
-      <nonterminal>TypeDeclSpecifier</nonterminal>
-      <bgf:expression>
-        <nonterminal>TypeName</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-    <bgf:production>
-      <nonterminal>TypeDeclSpecifier</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ClassOrInterfaceType</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:introduce>
 
-  <!-- 
+  <!-- (still the same issue!)
    - Fail: InterfaceType.
       - [], n(TypeName)
      vs.
@@ -1529,28 +1628,44 @@
      vs.
       - [], ,([n(TypeDeclSpecifier), ?(n(TypeArguments))])
   -->
-  <!-- GENERALITY -->
-  <xbgf:redefine>
+  <xbgf:extract>
     <bgf:production>
-      <nonterminal>InterfaceType</nonterminal>
+      <nonterminal>TypeDeclSpecifier</nonterminal>
       <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>TypeDeclSpecifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <nonterminal>TypeArguments</nonterminal>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-        </sequence>
+        <nonterminal>TypeName</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:redefine>
-  <!-- GENERALITY -->
-  <xbgf:redefine>
+    <in>
+      <nonterminal>ClassType</nonterminal>
+    </in>
+  </xbgf:extract>
+  <xbgf:fold>
+    <nonterminal>TypeDeclSpecifier</nonterminal>
+    <in>
+      <nonterminal>InterfaceType</nonterminal>
+    </in>
+  </xbgf:fold>
+  <xbgf:add>
+    <vertical>
+      <bgf:production>
+        <nonterminal>TypeDeclSpecifier</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>ClassOrInterfaceType</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
+  <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassType</nonterminal>
       <bgf:expression>
@@ -1559,17 +1674,44 @@
             <nonterminal>TypeDeclSpecifier</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <nonterminal>TypeArguments</nonterminal>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>TypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:redefine>
-
+  </xbgf:appear>
+  <xbgf:appear>
+    <bgf:production>
+      <nonterminal>InterfaceType</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>TypeDeclSpecifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>TypeArguments</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:appear>
+ 
   <!-- ISSUE EXTEND 
      - Fail: ExplicitConstructorInvocation.
       - [], ;([,([t(this), t((), ?(n(ArgumentList)), t()), t((;))]),
@@ -1658,50 +1800,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:introduce>
-    <bgf:production>
-      <nonterminal>ReferenceTypeList</nonterminal>
-      <bgf:expression>
-        <nonterminal>ReferenceType</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-    <bgf:production>
-      <nonterminal>ReferenceTypeList</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>ReferenceTypeList</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>,</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ReferenceType</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:introduce>
-
-  <!-- GENERALITY -->
-  <xbgf:define>
-    <bgf:production>
-      <nonterminal>NonWildTypeArguments</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>&lt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ReferenceTypeList</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&gt;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
@@ -1913,30 +2011,5 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-
-  <!-- 
-     - Fail: ArrayCreationExpression.
-      - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]),
-               ,([t(new), n(TypeName), n(DimExprs), ?(n(Dims))]),
-               ,([t(new), n(PrimitiveType), n(Dims), n(ArrayInitializer)]),
-               ,([t(new), n(TypeName), n(Dims), n(ArrayInitializer)])])
-     vs.
-      - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]),
-               ,([t(new), n(ClassOrInterfaceType), n(DimExprs), ?(n(Dims))]),
-               ,([t(new), n(PrimitiveType), n(Dims), n(ArrayInitializer)]),
-               ,([t(new), n(ClassOrInterfaceType), n(Dims), n(ArrayInitializer)])])
-  -->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>TypeName</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>ClassOrInterfaceType</nonterminal>
-    </bgf:expression>
-    <in>
-      <nonterminal>ArrayCreationExpression</nonterminal>
-    </in>
-  </xbgf:replace>
-
+ 
 </xbgf:sequence>

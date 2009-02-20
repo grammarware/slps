@@ -1942,7 +1942,6 @@ Block:
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  <!-- REVISE -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>ClassBodyDeclaration</nonterminal>

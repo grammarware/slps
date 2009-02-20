@@ -25,7 +25,6 @@ Annotation:
      vs.
       - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
   -->
-  <!-- REVISE -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>Expression2Rest</nonterminal>
@@ -80,7 +79,6 @@ Annotation:
       - [], ;([n(Block),
                ,([t(break), ?(n(Identifier)), t((;))]),
   -->
-  <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -110,7 +108,6 @@ Annotation:
   
   <!--   ISSUE CORRECT SPECERROR
          same with continue -->
-  <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -146,7 +143,6 @@ Annotation:
   ElementValues:
         ElementValue [ "," ElementValues ]
   -->
-  <!-- REVISE -->
   <xbgf:concretize>
     <bgf:production>
       <nonterminal>ElementValues</nonterminal>
@@ -196,7 +192,6 @@ AnnotationMethodRest:
 AnnotationConstantRest:
         VariableDeclarators
   -->
-  <!-- REVISE -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>AnnotationTypeElementRest</nonterminal>
@@ -222,7 +217,6 @@ AnnotationConstantRest:
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
-  <!-- REVISE -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>AnnotationMethodOrConstantRest</nonterminal>
