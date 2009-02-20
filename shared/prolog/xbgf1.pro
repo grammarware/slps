@@ -633,6 +633,7 @@ massage_rules(+(X),','([X,*(X)])).
 massage_rules(','([X,*(','([Y,X]))]),','([*(','([X,Y])),X])).
 massage_rules(','([X,+(','([Y,X]))]),','([+(','([X,Y])),X])).
 massage_rules(?(X),X) :- optional_anyway(X).
+massage_rules(';'([X,Y]),N) :- equal_anyway(N,X),equal_anyway(N,Y).
 
 optional_anyway(true).
 optional_anyway(?(_)).
@@ -640,6 +641,9 @@ optional_anyway(*(_)).
 optional_anyway(';'(Xs)) :- member(X,Xs), optional_anyway(X).
 optional_anyway(','(Xs)) :- maplist(xbgf1:optional_anyway,Xs).
 
+equal_anyway(X,X).
+equal_anyway(X,Y) :- massage_rules(X,Y).
+equal_anyway(X,Y) :- massage_rules(Y,X).
 
 %
 % p([l(permute)], f, n(p))
