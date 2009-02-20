@@ -1,0 +1,19 @@
+#!/bin/sh
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -lt 1 ]; then
+    echo "This tool plots a nonterminal dependency graph for a BGF."
+    echo "Usage: plotbgf <input-bgf-document> [<ignore-nonterminal> ...]"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+python ${SLPS}/topics/presentation/analyses/bgf_dependency.py $* >`basename $1 .bgf`.dot
+dot -Tpdf `basename $1 .bgf`.dot -o `basename $1 .bgf`.pdf
+rm -f `basename $1 .bgf`.dot
