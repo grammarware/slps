@@ -186,6 +186,10 @@
       <input>jls12</input>
       <perform>rename-jls2</perform>
       <perform>extendDeclarations</perform>
+      <perform>extendWithAnnotations</perform>
+      <perform>extendClassDeclarations</perform>
+      <perform>extendInterfaceDeclarations</perform>
+      <perform>extendWithTypeArguments</perform>
       <perform>extendExpressions</perform>
       <perform>extendStatements</perform>
     </branch>

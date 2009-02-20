@@ -2,6 +2,36 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
+  <!-- ISSUE PERMISSIVENESS
+  (LocalVariableDeclaration as ForInit -> is a part of ForVarControl)
+   - Fail: ForInit.
+      - [], ,([?(t(final)), n(Type), n(VariableDeclarators)])
+  -->
+  <xbgf:remove>
+    <vertical>
+      <bgf:production>
+        <nonterminal>ForInit</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <terminal>final</terminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Type</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>VariableDeclarators</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:remove>
+  
   <!-- 
    - Fail: Statement.
       - [], ,([t(for), t((), ?(n(ForInit)), t((;)), ?(n(Expression)), t((;)), ?(n(ForUpdate)), t()), n(Statement)])

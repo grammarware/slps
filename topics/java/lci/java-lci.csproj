@@ -70,10 +70,14 @@
     <None Include="xbgf\extend-doc1.xbgf" />
     <None Include="xbgf\extend-doc12.xbgf" />
     <None Include="xbgf\extend-jls1.xbgf" />
+    <None Include="xbgf\extendClassDeclarations.xbgf" />
     <None Include="xbgf\extendDeclarations.xbgf" />
     <None Include="xbgf\extendExpressions.xbgf" />
+    <None Include="xbgf\extendInterfaceDeclarations.xbgf" />
     <None Include="xbgf\extendModifiers.xbgf" />
     <None Include="xbgf\extendStatements.xbgf" />
+    <None Include="xbgf\extendWithAnnotations.xbgf" />
+    <None Include="xbgf\extendWithTypeArguments.xbgf" />
     <None Include="xbgf\generalize-app3.xbgf" />
     <None Include="xbgf\generalizeBlock.xbgf" />
     <None Include="xbgf\generalizeLabels.xbgf" />
