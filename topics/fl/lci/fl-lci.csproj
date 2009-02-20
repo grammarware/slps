@@ -70,6 +70,8 @@
     <None Include="xbgf\renameSdf.xbgf" />
     <None Include="xbgf\renameXsd.xbgf" />
     <None Include="xbgf\reroot.xbgf" />
+    <None Include="xbgf\stripNewline.xbgf" />
+    <None Include="xbgf\stripSelectors.xbgf" />
     <None Include="xbgf\stripTerminals.xbgf" />
     <None Include="xbgf\trimJaxb.xbgf" />
     <None Include="xbgf\trimOm.xbgf" />

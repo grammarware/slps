@@ -11,6 +11,7 @@ shutup = ' 1> /dev/null 2> /dev/null'
 orderedsrc = []
 shortcuts = {}
 actions = []
+autoactions = {}
 testsets = {}
 tester = {}
 extractor = {}
@@ -25,6 +26,7 @@ graph_small = []
 log = None
 tools = {}
 treetools = {}
+automethods = {}
 almostfailed = []
 failednode = []
 failedarc  = []
@@ -54,6 +56,11 @@ def readxmlconfig (cfg):
  for xmlnode in config.findall('//target/branch/perform'):
   if xmlnode.text not in actions:
    actions.append(xmlnode.text)
+ # automated actions
+ for xmlnode in config.findall('//target/branch/automated'):
+  if xmlnode.findtext('result') not in actions:
+   actions.append(xmlnode.findtext('result'))
+   autoactions[xmlnode.findtext('result')]=xmlnode.findtext('method')
  # testset
  for xmlnode in config.findall('//testset'):
   testsets[xmlnode.findtext('name')]=expandxml(xmlnode.findall('command')[0],{})
@@ -79,14 +86,20 @@ def readxmlconfig (cfg):
   targets[name]= [[],'']
   for br in xmlnode.findall('branch'):
    branch = [br.findtext('input')]
-   for p in br.findall('perform'):
-    branch.append(p.text)
+   for p in br.findall('*'):
+    if p.tag == 'perform':
+     branch.append(p.text)
+    elif p.tag == 'automated':
+     branch.append(p.findtext('result'))
    targets[name][0].append(branch)
  # tools
  for xmlnode in config.findall('//tool'):
   tools[xmlnode.findtext('name')] = expandxml(xmlnode.findall('grammar')[0],{})
   if xmlnode.findall('tree'):
    treetools[xmlnode.findtext('name')] = expandxml(xmlnode.findall('tree')[0],{})
+ # methods
+ for xmlnode in config.findall('//generator'):
+  automethods[xmlnode.findtext('name')] = expandxml(xmlnode.findall('command')[0],{})
 
  print 'Read',
  if shortcuts:
@@ -94,7 +107,12 @@ def readxmlconfig (cfg):
  if tools or treetools:
   print `len(tools)`+'+'+`len(treetools)`,'tools,',
  if actions:
-  print len(actions),'actions,',
+  if autoactions:
+   print len(actions),'actions ('+`len(autoactions)`,'automated)',
+  else:
+   print len(actions),'actions,',
+ if automethods:
+  print len(automethods),'automation methods,',
  if targets:
   print len(targets),'targets,',
  if testsets:
@@ -341,18 +359,44 @@ def preparebgf(cut):
   ontheroll = True
   for a in cut[1:]:
    if ontheroll:
-    run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
-    logwrite(run)
-    if os.system(run+shutup):
-     problem = True
-     print '[FAIL]',
-     failedarc.append([curname,a])
-     failednode.append(cut[0]+"'"*(curname.count('.')+1))
-     failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
-     ontheroll = False
+    if a in autoactions.keys():
+     #print 'Automated action',a,'spotted!
+     run = automethods[autoactions[a]]+' bgf/'+curname+'.bgf xbgf/'+a+'.xbgf'
+     logwrite(run)
+     if os.system(run+shutup):
+      problem = True
+      print '[FAIL]',
+      ontheroll = False
+     else:
+      print '[PASS]',
+     print 'Generated',a+'.xbgf','from',curname+'.bgf'
+     if ontheroll:
+      run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
+      logwrite(run)
+      if os.system(run+shutup):
+       problem = True
+       print '[FAIL]',
+       failedarc.append([curname,a])
+       failednode.append(cut[0]+"'"*(curname.count('.')+1))
+       failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
+       ontheroll = False
+      else:
+       print '[PASS]',
+      print 'Applied generated',a+'.xbgf','to',curname+'.bgf'
     else:
-     print '[PASS]',
-    print 'Applied',a+'.xbgf','to',curname+'.bgf'
+    #??? 
+     run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
+     logwrite(run)
+     if os.system(run+shutup):
+      problem = True
+      print '[FAIL]',
+      failedarc.append([curname,a])
+      failednode.append(cut[0]+"'"*(curname.count('.')+1))
+      failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
+      ontheroll = False
+     else:
+      print '[PASS]',
+     print 'Applied',a+'.xbgf','to',curname+'.bgf'
    else:
     failedarc.append([curname,a])
     failednode.append(cut[0]+"'"*(curname.count('.')+1))
@@ -458,7 +502,7 @@ def chainXBTF(testcase,steps,t):
   run = treetools['validation']+' '+re
   if os.system(run+shutup):
    problem = True
-   print '- NOT valid',
+   print '- NOT valid'
   else:
    print '- valid'
  else:
@@ -567,10 +611,16 @@ def checkconsistency():
  # all actions can be found
  try:
   for a in actions:
-   open('xbgf/'+a+'.xbgf','r').close()
+   if a not in autoactions.keys():
+    open('xbgf/'+a+'.xbgf','r').close()
  except IOError, e:
   print '[FAIL] Undefined action used: need',e.filename
   #sysexit(8)
+ # all automated actions can be found
+ for a in autoactions.keys():
+  if autoactions[a] not in automethods.keys():
+   print '[FAIL] Automation method',autoactions[a],'not found (automated action',a+')'
+   sysexit(18)
 
 if __name__ == "__main__":
  print 'Language Covergence Infrastructure v1.12'
