@@ -34,7 +34,10 @@
       <xsl:when test="./bgf:expression/sequence">
         <xsl:text>
         </xsl:text>
-        <xsl:apply-templates select="./bgf:expression/sequence/*"/>
+        <xsl:for-each select="./bgf:expression/sequence/*">
+          <xsl:apply-templates select="."/>
+          <xsl:text> </xsl:text>
+        </xsl:for-each>
         <xsl:text>
 </xsl:text>
       </xsl:when>
@@ -53,85 +56,57 @@
   </xsl:template>
 
   <xsl:template match="marked">
-    <xsl:text><![CDATA[<]]> </xsl:text>
+    <xsl:text><![CDATA[<]]></xsl:text>
     <xsl:apply-templates select="./*"/>
-    <xsl:text><![CDATA[>]]> </xsl:text>
+    <xsl:text><![CDATA[>]]></xsl:text>
   </xsl:template>
 
   <xsl:template match="plus">
-    <xsl:choose>
-      <xsl:when test="./bgf:expression/sequence">
-        <xsl:text>( </xsl:text>
-        <xsl:apply-templates select="./bgf:expression/sequence/*"/>
-        <xsl:text>)+ </xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="./*"/>
-        <xsl:text>+ </xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:apply-templates select="./*"/>
+    <xsl:text>+</xsl:text>
   </xsl:template>
 
   <xsl:template match="star">
-    <xsl:choose>
-      <xsl:when test="./bgf:expression/sequence">
-        <xsl:text>( </xsl:text>
-        <xsl:apply-templates select="./bgf:expression/sequence/*"/>
-        <xsl:text>)* </xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="./*"/>
-        <xsl:text>* </xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:apply-templates select="./*"/>
+    <xsl:text>*</xsl:text>
   </xsl:template>
-  
+
   <xsl:template match="optional">
-    <xsl:choose>
-      <xsl:when test="./bgf:expression/sequence">
-        <xsl:text>( </xsl:text>
-        <xsl:apply-templates select="./bgf:expression/sequence/*"/>
-        <xsl:text>)? </xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="./*"/>
-        <xsl:text>? </xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:apply-templates select="./*"/>
+    <xsl:text>?</xsl:text>
   </xsl:template>
   
   <xsl:template match="terminal">
     <xsl:text>"</xsl:text>
     <xsl:value-of select="."/>
-    <xsl:text>" </xsl:text>
+    <xsl:text>"</xsl:text>
   </xsl:template>
   
   <xsl:template match="value">
     <xsl:choose>
       <xsl:when test=". = 'string'">
-        <xsl:text>STRING </xsl:text>
+        <xsl:text>STRING</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text>INT </xsl:text>
+        <xsl:text>INT</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
   <xsl:template match="epsilon">
-    <xsl:text>EPSILON </xsl:text>
+    <xsl:text>EPSILON</xsl:text>
   </xsl:template>
 
   <xsl:template match="empty">
-    <xsl:text>EMPTY </xsl:text>
+    <xsl:text>EMPTY</xsl:text>
   </xsl:template>
 
   <xsl:template match="any">
-    <xsl:text>ANY </xsl:text>
+    <xsl:text>ANY</xsl:text>
   </xsl:template>
 
   <xsl:template match="nonterminal">
     <xsl:value-of select="."/>
-    <xsl:text> </xsl:text>
   </xsl:template>
 
   <xsl:template match="selectable">
@@ -142,8 +117,11 @@
 
   <xsl:template match="sequence">
     <xsl:text>( </xsl:text>
-    <xsl:apply-templates select="./*"/>
-    <xsl:text>) </xsl:text>
+    <xsl:for-each select="./*">
+      <xsl:apply-templates select="."/>
+      <xsl:text> </xsl:text>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
   </xsl:template>
 
   <!-- top level choices - one per line -->
@@ -166,7 +144,7 @@
       <xsl:text>| </xsl:text>
       <xsl:apply-templates select="./*"/>
     </xsl:for-each>
-    <xsl:text>) </xsl:text>
+    <xsl:text>)</xsl:text>
   </xsl:template>
 
   
