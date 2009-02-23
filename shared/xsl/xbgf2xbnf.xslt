@@ -66,6 +66,23 @@
 </xsl:text>
   </xsl:template>
 
+  <xsl:template match="xbgf:remove">
+    <xsl:choose>
+      <xsl:when test="./vertical">
+        <xsl:text>removeV(
+ </xsl:text>
+        <xsl:apply-templates select="./vertical/bgf:production"/>
+      </xsl:when>
+      <xsl:when test="./horizontal">
+        <xsl:text>removeH(
+ </xsl:text>
+        <xsl:apply-templates select="./horizontal/bgf:production"/>
+      </xsl:when>
+    </xsl:choose>
+    <xsl:text>);
+</xsl:text>
+  </xsl:template>
+
   <xsl:template match="xbgf:deyaccify|xbgf:eliminate|xbgf:horizontal|xbgf:inline|xbgf:undefine">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>
