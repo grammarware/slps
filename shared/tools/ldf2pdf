@@ -15,8 +15,11 @@ elif [ ! -r $1 ]; then
     exit 1
 else
     sh ${SLPS}/shared/tools/ldf2html $1 $1.html
+    sh ${SLPS}/shared/tools/ldf2tex  $1 $1.tex
     xsltproc ${SLPS}/shared/xsl/xhtml2fo.xslt $1.html > $1.fo
-    ${SLPS}/download/fop/fop -q $1.fo $2
-    rm -f $1.html $1.fo
+    ${SLPS}/download/fop/fop -q $1.fo $2.html.pdf
+    pdflatex -interaction=batchmode $1
+    mv $1.pdf $2.tex.pdf
+    rm -f $1.html $1.fo $1.tex $1.aux $1.log $1.toc
 fi
 

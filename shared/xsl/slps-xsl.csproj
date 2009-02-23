@@ -46,6 +46,7 @@
     <Content Include="ldf2ldf_lift.xslt" />
     <Content Include="ldf2ldf_ns.xslt" />
     <Content Include="ldf2ldf_tail.xslt" />
+    <Content Include="ldf2tex.xslt" />
     <Content Include="ldf2xhtml.xslt" />
     <Content Include="xbgf2xbnf.xslt" />
     <Content Include="xhtml2fo.xslt" />
