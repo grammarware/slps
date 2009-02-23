@@ -83,11 +83,8 @@
             <xsl:with-param name="section" select="."/>
           </xsl:call-template>
         </xsl:for-each>
-        <xsl:for-each select="core">
-          <xsl:call-template name="process-structured-section">
-            <xsl:with-param name="section" select="."/>
-          </xsl:call-template>
-        </xsl:for-each>
+        <hr/>
+        <xsl:apply-templates select="core"/>
         <hr/>
  
       </body>
@@ -195,46 +192,84 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template name="process-structured-section">
-    <xsl:param name="section"/>
-    <h3 xmlns="http://www.w3.org/1999/xhtml">
+  <xsl:template match="core">
+    <xsl:element name="h3" xmlns="http://www.w3.org/1999/xhtml">
       <xsl:choose>
-        <xsl:when test="$section/title">
-          <xsl:value-of select="$section/title"/>
+        <xsl:when test="title">
+          <xsl:value-of select="title"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:call-template name="capitalise">
-            <xsl:with-param name="section" select="$section"/>
+            <xsl:with-param name="section" select="."/>
           </xsl:call-template>
         </xsl:otherwise>
       </xsl:choose>
-    </h3>
-    <xsl:for-each select="$section/*">
+    </xsl:element>
+    <xsl:for-each select="*">
       <xsl:choose>
         <xsl:when test="local-name() = 'id'">
           <a xmlns="http://www.w3.org/1999/xhtml">
             <xsl:attribute name = "name">
-              <xsl:value-of select="$section/id"/>
+              <xsl:value-of select="id"/>
             </xsl:attribute>
           </a>
         </xsl:when>
         <xsl:when test="local-name() = 'title'"></xsl:when>
         <xsl:when test="local-name() = 'author'"></xsl:when>
         <xsl:when test="local-name() = 'production'">
-        	 <pre xmlns="http://www.w3.org/1999/xhtml">
-	            <xsl:apply-templates select="."/>
-	         </pre>
+          <pre xmlns="http://www.w3.org/1999/xhtml">
+            <xsl:apply-templates select="."/>
+          </pre>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="."/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+  <xsl:template match="subtopic">
+    <xsl:element name="h4" xmlns="http://www.w3.org/1999/xhtml">
+      <xsl:choose>
+        <xsl:when test="title">
+          <xsl:value-of select="title"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="capitalise">
+            <xsl:with-param name="section" select="."/>
+          </xsl:call-template>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:element>
+    <xsl:for-each select="*">
+      <xsl:choose>
+        <xsl:when test="local-name() = 'id'">
+          <a xmlns="http://www.w3.org/1999/xhtml">
+            <xsl:attribute name = "name">
+              <xsl:value-of select="id"/>
+            </xsl:attribute>
+          </a>
+        </xsl:when>
+        <xsl:when test="local-name() = 'title'"></xsl:when>
+        <xsl:when test="local-name() = 'author'"></xsl:when>
+        <xsl:when test="local-name() = 'production'">
+          <pre xmlns="http://www.w3.org/1999/xhtml">
+            <xsl:apply-templates select="."/>
+          </pre>
+        </xsl:when>
+        <xsl:when test="local-name() = 'subtopic'">
+          <h5 xmlns="http://www.w3.org/1999/xhtml">ERROR!</h5>
+          <xsl:apply-templates select="."/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:call-template name="process-section">
             <xsl:with-param name="section" select="."/>
-            <xsl:with-param name="level" select="'h4'"/>
+            <xsl:with-param name="level" select="'h5'"/>
           </xsl:call-template>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
-  
+
   <xsl:template name="capitalise">
     <xsl:param name="section"/>
     <xsl:value-of select="concat(translate(substring(local-name($section),1,1), 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'), substring(local-name($section),2))"/>

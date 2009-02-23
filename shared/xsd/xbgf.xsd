@@ -6,10 +6,10 @@
 
   <xsd:annotation>
   <xsd:documentation>
-    BGF transformations
+    BGF transformation operator suite
   </xsd:documentation>
   <xsd:documentation>
-    This section describes the transformational suite for BGF and all the details about it.
+    This chapter describes the transformational suite for BGF and all the details about it.
   </xsd:documentation>
   </xsd:annotation>
 
@@ -39,15 +39,12 @@
       <xsd:group ref="xbgf:decreasingtransformation"/>
       <xsd:group ref="xbgf:concreterevisingtransformation"/>
       <xsd:group ref="xbgf:abstractrevisingtransformation"/>
-      <!-- labels, selectors and other decorative stuff -->
-      <xsd:element ref="xbgf:anonymize"/>
-      <xsd:element ref="xbgf:deanonymize"/>
-      <xsd:element ref="xbgf:designate"/>
-      <xsd:element ref="xbgf:unlabel"/>
+      <xsd:group ref="xbgf:decorativetransformation"/>
+      <!-- status unclear -->
       <xsd:element ref="xbgf:reroot"/>
       <!-- debug -->
       <xsd:element ref="xbgf:dump"/>
-      <!-- unclear -->
+      <!-- semantics unclear -->
       <xsd:element ref="xbgf:rename"/>
       <!-- deprecated -->
       <xsd:element ref="xbgf:strip"/>
@@ -62,10 +59,10 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>
-      <xsd:element ref="xbgf:inline"/>
-      <xsd:element ref="xbgf:extract"/>
       <xsd:element ref="xbgf:unfold"/>
       <xsd:element ref="xbgf:fold"/>
+      <xsd:element ref="xbgf:inline"/>
+      <xsd:element ref="xbgf:extract"/>
       <xsd:element ref="xbgf:abridge"/>
       <xsd:element ref="xbgf:detour"/>
       <xsd:element ref="xbgf:unchain"/>
@@ -83,11 +80,11 @@
       <xsd:element ref="xbgf:massage"/>
       <xsd:element ref="xbgf:factor"/>
       <xsd:element ref="xbgf:distribute"/>
-      <xsd:element ref="xbgf:yaccify"/>
       <xsd:element ref="xbgf:deyaccify"/>
-      <xsd:element ref="xbgf:import"/>
-      <xsd:element ref="xbgf:introduce"/>
+      <xsd:element ref="xbgf:yaccify"/>
       <xsd:element ref="xbgf:eliminate"/>
+      <xsd:element ref="xbgf:introduce"/>
+      <xsd:element ref="xbgf:import"/>
       <xsd:element ref="xbgf:vertical"/>
       <xsd:element ref="xbgf:horizontal"/>
       <xsd:element ref="xbgf:rassoc"/>
@@ -153,6 +150,20 @@
       <xsd:element ref="xbgf:replace"/>
     </xsd:choice>
   </xsd:group>
+  <xsd:group name="decorativetransformation">
+    <xsd:annotation>
+      <xsd:documentation>
+        Here is a list of the XBGF transformations that perform
+        decorative tasks like adding or removing labels and selectors.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element ref="xbgf:designate"/>
+      <xsd:element ref="xbgf:unlabel"/>
+      <xsd:element ref="xbgf:anonymize"/>
+      <xsd:element ref="xbgf:deanonymize"/>
+    </xsd:choice>
+  </xsd:group>
 
   <xsd:element name="add">
     <xsd:annotation>
@@ -193,7 +204,9 @@
   <xsd:element name="appear">
     <xsd:annotation>
       <xsd:documentation>
-        As inject, but only allows for nillable elements (optional, star) to appear.
+        An appear transformation takes a production as an input. Inside that production,
+        one subexpression should be marked. The marked expression must be nillable, i.e.,
+        reducible to an empty sequence.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -206,7 +219,8 @@
   <xsd:element name="chain">
     <xsd:annotation>
       <xsd:documentation>
-        Chaining is a disciplined form of extraction. The argument
+        Just like unchain is a specific form of inline,
+        chaining is a disciplined form of extraction. The argument
         production will be part of the resulting grammar; it is a chain
         production, i.e., a production with a nonterminal as its defining
         expression. That nonterminal is the one whose definition is to be
@@ -366,12 +380,21 @@
   <xsd:element name="extract">
     <xsd:annotation>
       <xsd:documentation>
-        A new definition is introduced by extraction. That is,
-        the argument identifies both the fresh nonterminal for the
-        definition and the expression that is to be fold into the
-        nonterminal. An optional scope can limit the application
+        A new definition is introduced by extraction. The argument provided for this transformation
+        is a production that identifies both the fresh nonterminal to be introduced and the
+        expression that is used both as a pattern for folding and as a right hand side of
+        the added definition.
+        An optional scope can limit the application
         of the folding part of the extraction transformation to a
         specific production or a specific nonterminal.
+      </xsd:documentation>
+      <xsd:documentation>
+        If the nonterminal defined by the argument production is
+        already mentioned (i.e., defined or referenced) in the current
+        grammar, the transformation refuses to work and reports an
+        error. This usually signals an error in the language engineer's
+        logic because the existing traces of a possibly similar nonterminal
+        conflict with the definition that is being introduced.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -410,13 +433,20 @@
   <xsd:element name="fold">
     <xsd:annotation>
       <xsd:documentation>
-        Folding is extraction without its introduction part.
-        The given nonterminal is to be used in folding, i.e., the occurrences
-        of its defining expression are to be replaced by the nonterminal. A
-        horizontal definition is assumed. An optional scope can limit the
-        application of the folding transformation to a specific production
-        or a specific nonterminal. Regardless of the specified scope, folding
-        is not applied to the definition of the argument nonterminal.
+        Folding replaces every expression that matches with the right hand
+        side of the given nonterminal's definition with the nonterminal
+        itself. As with unfold, fold works on the scope of the grammar,
+        but its impact can be limited to one labelled production or to
+        all the productions belonging to one nonterminal. Regardless
+        of the specified scope, folding is not applied to the definition
+        of the argument nonterminal.
+      </xsd:documentation>
+      <xsd:documentation>
+        Since this transformation strives to preserve the language, it needs
+        a horisontal definition to work. When only one of several existing
+        definitions is used for folding, it actually increases the semantics
+        of the language after transformation---the corresponding XBGF command
+        is called upgrade.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -460,9 +490,12 @@
   <xsd:element name="inline" type="bgf:nonterminal">
     <xsd:annotation>
       <xsd:documentation>
-        An existing definition is eliminated by inlining. That is,
-        the argument nonterminal identifies the definition to be
-        unfolded and eliminated eventually.
+        When this transformation is performed, an existing definition is eliminated by inlining.
+        This means that the argument nonterminal identifies the (horisontal) definition
+        that is to be unfolded and stripped away from the grammar.
+      </xsd:documentation>
+      <xsd:documentation>
+        The impact of inline is that of a pair of unfold and eliminate.
       </xsd:documentation>
     </xsd:annotation>
   </xsd:element>
@@ -517,7 +550,6 @@
       <xsd:choice>
         <xsd:element ref="bgf:production"/>
       </xsd:choice>
-      <xsd:attribute name="tag" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -528,13 +560,13 @@
         the language generated by the grammar (or the denotation according
         to any other semantics for that matter) is preserved. The known
         rewriting rules affect the use of selectors and regular expression
-        operators.
+        operators: e.g., any symbol will always generate the same set of strings
+        that the same symbol wrapped in a selector.
       </xsd:documentation>
       <xsd:documentation>
         There are two expression arguments: one to be matched,
         and another one that replaces the matched expression.
         One of them must be in a "massage relation" to the other.
-        The massage relation is defined as follows:
       </xsd:documentation>
       <xsd:documentation>
         The scope of
@@ -632,7 +664,6 @@
       <xsd:choice>
         <xsd:element ref="bgf:production"/>
       </xsd:choice>
-      <xsd:attribute name="tag" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -777,7 +808,8 @@
       <xsd:documentation>
         Given a reflexive chain production, i.e., a production whose
         defined nonterminal equals its body, this production is simply
-        removed.
+        removed from the grammar, even if it contains some potentially
+        valuable information (like labels and selectors).
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -790,7 +822,7 @@
   <xsd:element name="detour">
     <xsd:annotation>
       <xsd:documentation>
-        Introduce a reflexive chain production.
+        A reverse of abridge that can introduce a reflexive chain production.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -887,6 +919,13 @@
         definition is to be inlined; it must not have any occurrences
         except in the chain production at hand.
       </xsd:documentation>
+      <xsd:documentation>
+        The unchain transformation does not increase the expressivity nor
+        the power of the transformational language: technically, it is
+        nothing more than an inline with a precondition. However, this
+        particular precondition seems useful and not uncommon when dealing
+        with layered grammars.
+      </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
       <xsd:choice>
@@ -916,13 +955,18 @@
   <xsd:element name="unfold">
     <xsd:annotation>
       <xsd:documentation>
-        Unfolding is inlining without its elimination part.
-        The given nonterminal is to be unfolded, i.e., the occurrences of the
-        nonterminal are to be replaced by it defining expression where a
-        horizontal definition is assumed. An optional scope can limit the
-        application of the unfolding transformation to a specific production
-        or a specific nonterminal. Regardless of the specified scope, unfolding
-        is not applied to the definition of the argument nonterminal.
+        The most basic unfolding transformation searches for all the instances
+        of the given nonterminal usage and replaces such occurrences with the
+        defining expression of that nonterminal. By default the scope of the
+        transformation is the full grammar, but it can be limited to all the
+        definitions of one nonterminal or to one labelled definition. Regardless
+        of the specified scope, unfolding is not applied to the definition
+        of the argument nonterminal.
+      </xsd:documentation>
+      <xsd:documentation>
+        The definition that is being unfolded is assumed to be horisontal
+        (see the section on refactorings for more information about horisontal
+        and vertical definitions).
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>

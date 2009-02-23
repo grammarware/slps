@@ -35,6 +35,9 @@
     </xsd:annotation>
     <xsd:choice>
       <xsd:element ref="xldf:insert"/>
+      <xsd:element ref="xldf:move"/>
+      <xsd:element ref="xldf:rename"/>
+      <xsd:element ref="xldf:where"/>
     </xsd:choice>
   </xsd:group>
 
@@ -58,6 +61,55 @@
            </xsd:complexType>
          </xsd:element>
        </xsd:choice>
+       <xsd:element name="content" type="ldf:SimpleText"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="move">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="section" type="xsd:string"/>         <!-- IDREF -->
+        <xsd:element name="inside" type="xsd:string"/>         <!-- IDREF -->
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="rename">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="from">
+          <xsd:complexType>
+            <xsd:choice>
+              <xsd:element name="id" type="xsd:string"/>
+              <xsd:element name="title" type="xsd:string"/>
+            </xsd:choice>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="to" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="append">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+       <xsd:element name="where" type="xsd:string"/>			<!-- IDREF -->
        <xsd:element name="content" type="ldf:SimpleText"/>
       </xsd:sequence>
     </xsd:complexType>
