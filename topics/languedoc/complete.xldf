@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf"
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <xldf:insert>
+    <after>
+      <p>
+	There are two expression arguments: one to be matched, and another one that 
+	replaces the matched expression. One of them must be in a "massage relation" to 
+	the other. The massage relation is defined as follows:
+	      </p>
+    </after>
+    <content>
+      <formula>(x+)? = x*</formula>
+      <formula>(x*)? = x*</formula>
+      <formula>(x?)? = x?</formula>
+      <formula>(x*)* = x*</formula>
+      <formula>(x+)* = x*</formula>
+      <formula>(x?)* = x*</formula>
+      <formula>(x+)+ = x+</formula>
+      <formula>(x*)+ = x*</formula>
+      <formula>(x?)+ = x*</formula>
+      <p>The following formulae are more complicated examples of masssage:</p>
+      <formula>x|e   = x?</formula>
+      <formula>x|x = x</formula>
+      <formula>x+|e  = x*</formula>
+      <formula>x+|x? = x*</formula>
+      <formula>x x* = x+</formula>
+      <formula>x (yx)* = (xy)* x</formula>
+      <formula>x (yx)+ = (xy)+ x</formula>
+      <p>Another rule that is harder to express is when</p>
+      <formula>x? = x</formula>
+      <p>in the cases when x is optional anyway, i.e. it is one of the following:</p>
+      <formula>e|...</formula>
+      <formula>y?</formula>
+      <formula>y*</formula>
+      <formula>y|...</formula>
+      <formula>y z ...</formula>
+      <p>where y and z are also recursively optional anyway.</p>
+    </content>
+  </xldf:insert>
+  
+</xldf:sequence>
+
+    <!-- <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"
+	          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	          xsi:schemaLocation="http://www.w3.org/1998/Math/MathML
+	            http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd">
+	<mrow>
+	<mrow><mfenced><msup><mi>x</mi><mo>+</mo></msup><mfenced><mo>?</mo></mrow>
+	<mo>=</mo>
+	<msup><mi>x</mi><mo>*</mo></msup>
+	</mrow>
+	</mml:math>-->

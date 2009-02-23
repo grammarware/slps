@@ -48,12 +48,19 @@
 
   <xsd:complexType name="SimpleText">
     <xsd:sequence>
-      <xsd:choice maxOccurs="unbounded">
-        <xsd:element name="p" type="xsd:string"/>
-        <xsd:element name="list" type="ldf:SimpleList"/>
-      </xsd:choice>
+      <xsd:group ref="ldf:insideSimpleText" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
+
+  <xsd:group name="insideSimpleText">
+    <xsd:choice>
+      <xsd:element name="p" type="xsd:string"/>
+      <xsd:element name="list" type="ldf:SimpleList"/>
+      <xsd:element name="formula" type="xsd:string"/>
+      <!-- 	later redo with MathML -->
+      <!--<xsd:element ref="mml:math"/>-->
+    </xsd:choice>  
+  </xsd:group>
 
   <xsd:complexType name="SimpleSection">
     <xsd:sequence>
@@ -129,6 +136,7 @@
 
   <xsd:simpleType name="status">
     <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="unknown"/>
       <xsd:enumeration value="draft"/>
       <xsd:enumeration value="committee draft"/>
       <xsd:enumeration value="recommendation"/>
@@ -170,7 +178,9 @@
   <!-- info -->
   <xsd:annotation>
     <xsd:documentation>
-      Language Document Format.
+      Language Document Format
+    </xsd:documentation>
+    <xsd:documentation>
       This is basically a metamodel for language documents or documentations.
 
       Sample program tags:
@@ -192,12 +202,12 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="title" type="ldf:titlePage"/>
+        <xsd:element name="titlePage" type="ldf:titlePage"/>
         <xsd:element name="placeholder" type="ldf:generated" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element name="frontMatter" type="ldf:frontMatter"/>
-        <xsd:element name="lists" type="ldf:frontLists"/>
+        <xsd:element name="lists" type="ldf:frontLists" minOccurs="0"/>
         
-        <xsd:element name="lexicalPart" type="ldf:lexical"/>
+        <xsd:element name="lexicalPart" type="ldf:lexical" minOccurs="0"/>
         
         <xsd:element name="core" type="ldf:StructuredSection" maxOccurs="unbounded"/>
         <xsd:element name="annex" type="ldf:StructuredSection" minOccurs="0" maxOccurs="unbounded"/>

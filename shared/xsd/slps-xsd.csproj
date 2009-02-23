@@ -44,5 +44,6 @@
     <None Include="ldf.xsd" />
     <None Include="ldx.xsd" />
     <None Include="xbgf.xsd" />
+    <None Include="xldf.xsd" />
   </ItemGroup>
 </Project>

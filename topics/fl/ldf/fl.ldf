@@ -2,14 +2,14 @@
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <title>
+  <titlePage>
     <author>Ralf Laemmel</author>
     <author>Vadim Zaytsev</author>
     <topic>The Factorial Language</topic>
     <version>1.0</version>
     <status>draft</status>
     <date>August 2008</date>
-  </title>
+  </titlePage>
   <frontMatter>
     <foreword>
       <author>Ralf Laemmel</author>
