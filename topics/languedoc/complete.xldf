@@ -4,11 +4,274 @@
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
+  <xldf:add-section>
+    <front>
+      <designGoals>
+        <author>Vadim Zaytsev</author>
+        <content>
+          <p>
+            XBGF operator suite was developed mainly for grammar convergence
+            activities. 
+          </p>
+        </content>
+      </designGoals>
+    </front>
+  </xldf:add-section>
+
+  <xldf:add-section>
+    <front>
+      <notation>
+        <id>notation-section</id>
+        <author>Vadim Zaytsev</author>
+        <content>
+          <p>
+            All BGFs and XBGFs are presented in a unified pretty-printed way.
+          </p>
+          <!-- redo later with a placeholder for xsd2bgf bgf.xsd -->
+          <bgf:production>
+            <nonterminal>grammar</nonterminal>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <star>
+                    <bgf:expression>
+                      <selectable>
+                        <selector>root</selector>
+                        <bgf:expression>
+                          <nonterminal>nonterminal</nonterminal>
+                        </bgf:expression>
+                      </selectable>
+                    </bgf:expression>
+                  </star>
+                </bgf:expression>
+                <bgf:expression>
+                  <star>
+                    <bgf:expression>
+                      <nonterminal>production</nonterminal>
+                    </bgf:expression>
+                  </star>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </bgf:production>
+          <bgf:production>
+            <nonterminal>production</nonterminal>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <optional>
+                    <bgf:expression>
+                      <selectable>
+                        <selector>label</selector>
+                        <bgf:expression>
+                          <nonterminal>label</nonterminal>
+                        </bgf:expression>
+                      </selectable>
+                    </bgf:expression>
+                  </optional>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>nonterminal</selector>
+                    <bgf:expression>
+                      <nonterminal>nonterminal</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>expression</nonterminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </bgf:production>
+          <bgf:production>
+            <nonterminal>expression</nonterminal>
+            <bgf:expression>
+              <choice>
+                <bgf:expression>
+                  <selectable>
+                    <selector>epsilon</selector>
+                    <bgf:expression>
+                      <epsilon/>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>empty</selector>
+                    <bgf:expression>
+                      <epsilon/>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>value</selector>
+                    <bgf:expression>
+                      <nonterminal>value</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>any</selector>
+                    <bgf:expression>
+                      <epsilon/>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>terminal</selector>
+                    <bgf:expression>
+                      <nonterminal>terminal</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>nonterminal</selector>
+                    <bgf:expression>
+                      <nonterminal>nonterminal</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>selectable</selector>
+                    <bgf:expression>
+                      <sequence>
+                        <bgf:expression>
+                          <selectable>
+                            <selector>selector</selector>
+                            <bgf:expression>
+                              <nonterminal>selector</nonterminal>
+                            </bgf:expression>
+                          </selectable>
+                        </bgf:expression>
+                        <bgf:expression>
+                          <nonterminal>expression</nonterminal>
+                        </bgf:expression>
+                      </sequence>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>sequence</selector>
+                    <bgf:expression>
+                      <plus>
+                        <bgf:expression>
+                          <nonterminal>expression</nonterminal>
+                        </bgf:expression>
+                      </plus>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>marked</selector>
+                    <bgf:expression>
+                      <nonterminal>expression</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>choice</selector>
+                    <bgf:expression>
+                      <plus>
+                        <bgf:expression>
+                          <nonterminal>expression</nonterminal>
+                        </bgf:expression>
+                      </plus>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>optional</selector>
+                    <bgf:expression>
+                      <nonterminal>expression</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>plus</selector>
+                    <bgf:expression>
+                      <nonterminal>expression</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>star</selector>
+                    <bgf:expression>
+                      <nonterminal>expression</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </choice>
+            </bgf:expression>
+          </bgf:production>
+          <bgf:production>
+            <nonterminal>value</nonterminal>
+            <bgf:expression>
+              <choice>
+                <bgf:expression>
+                  <selectable>
+                    <selector>int</selector>
+                    <bgf:expression>
+                      <epsilon/>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <selectable>
+                    <selector>string</selector>
+                    <bgf:expression>
+                      <epsilon/>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </choice>
+            </bgf:expression>
+          </bgf:production>
+          <bgf:production>
+            <nonterminal>label</nonterminal>
+            <bgf:expression>
+              <value>string</value>
+            </bgf:expression>
+          </bgf:production>
+          <bgf:production>
+            <nonterminal>nonterminal</nonterminal>
+            <bgf:expression>
+              <value>string</value>
+            </bgf:expression>
+          </bgf:production>
+          <bgf:production>
+            <nonterminal>selector</nonterminal>
+            <bgf:expression>
+              <value>string</value>
+            </bgf:expression>
+          </bgf:production>
+          <bgf:production>
+            <nonterminal>terminal</nonterminal>
+            <bgf:expression>
+              <value>string</value>
+            </bgf:expression>
+          </bgf:production>
+        </content>
+      </notation>
+    </front>
+  </xldf:add-section>
+  
   <xldf:insert>
     <after>
       <p>
         There are two expression arguments: one to be matched, and another one that
-        replaces the matched expression. One of them must be in a "massage relation" to
+        replaces the matched expression. One of them must be in a `massage relation' to
         the other.
       </p>
     </after>
@@ -261,7 +524,7 @@
     <from>
       <title>concreterevisingtransformation</title>
     </from>
-    <to>Semantics revising transformations that preserve abstract semantics</to>
+    <to>Refactorings in term-oriented semantics</to>
   </xldf:rename>
   <xldf:move>
     <section>element-abstractize</section>
@@ -281,7 +544,7 @@
     <from>
       <title>abstractrevisingtransformation</title>
     </from>
-    <to>Stronger semantics revising transformations</to>
+    <to>Semantics revising transformations</to>
   </xldf:rename>
   <xldf:move>
     <section>element-define</section>

@@ -83,7 +83,9 @@ def main(xsdfile,bgffile,ldffile):
   for p in nt.findall('./{%s}annotation/{%s}documentation' % (xsdns,xsdns)):
    pel = ET.SubElement(el,'p')
    pel.text = p.text
-  section.append(grammar[nt.attrib['name']])
+  # Need to decide whether to put productions inside description subsections
+  #section.append(grammar[nt.attrib['name']])
+  el.append(grammar[nt.attrib['name']])
   # print grammar[nt.attrib['name']]
 
  ET.ElementTree(dtree).write(ldffile)

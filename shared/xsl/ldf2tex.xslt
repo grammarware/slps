@@ -15,8 +15,10 @@
 
   <xsl:template match="/ldf:document">
     <xsl:text>
-      \documentclass{article}
-      \begin{document}
+\documentclass{article}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\begin{document}
     </xsl:text>
     <!-- title -->
     <xsl:text>\title{</xsl:text>
@@ -61,6 +63,9 @@
     <!-- placeholder: not implemented -->
     <!-- frontMatter -->
     <xsl:for-each select="frontMatter/*">
+      <xsl:call-template name="sectionize">
+        <xsl:with-param name="target" select="."/>
+      </xsl:call-template>
       <xsl:call-template name="process-SimpleSection">
         <xsl:with-param name="section" select="."/>
       </xsl:call-template>
@@ -73,6 +78,9 @@
     </xsl:for-each>
     <!-- lexicalPart -->
     <xsl:for-each select="lexicalPart/*">
+      <xsl:call-template name="sectionize">
+        <xsl:with-param name="target" select="."/>
+      </xsl:call-template>
       <xsl:call-template name="process-SimpleSection">
         <xsl:with-param name="section" select="."/>
       </xsl:call-template>
@@ -114,7 +122,7 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:call-template name="process-text">
-            <xsl:with-param name="content" select="definition"/>
+            <xsl:with-param name="text" select="definition"/>
           </xsl:call-template>
         </xsl:otherwise>
       </xsl:choose>
@@ -127,89 +135,30 @@
     <xsl:value-of select="."/>
     <xsl:text>$$</xsl:text>
   </xsl:template>
-  
-    <xsl:template name="process-text">
-    <xsl:param name="content"/>
-    <xsl:for-each select="$content/node()">
-      <xsl:choose>
-        <xsl:when test="local-name() = 'p'">
-          <!-- essentially a copy-of, but with a namespace-->
-          <p xmlns="http://www.w3.org/1999/xhtml">
-            <xsl:value-of select="."/>
-          </p>
-        </xsl:when>
-        <xsl:when test="local-name() = 'list'">
-          <ul xmlns="http://www.w3.org/1999/xhtml">
-            <xsl:for-each select="item">
-              <li>
-                <xsl:value-of select="."/>
-              </li>
-            </xsl:for-each>
-          </ul>
-        </xsl:when>
-        <xsl:when test="local-name() = 'formula'">
-          <center xmlns="http://www.w3.org/1999/xhtml">
-            <em>
-              <xsl:value-of select="."/>
-            </em>
-          </center>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:template>
 
-  <xsl:template name="process-SimpleSection">
-    <xsl:param name="section"/>
-    <xsl:if test="$section/id">
-      <xsl:text>\label{</xsl:text>
-      <xsl:attribute name = "name">
-        <xsl:value-of select="$section/id"/>
-      </xsl:attribute>
-      <xsl:text>}</xsl:text>
-    </xsl:if>
-    <xsl:text>\section{</xsl:text>
-    <xsl:choose>
-      <xsl:when test="$section/title">
-        <xsl:value-of select="$section/title"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="capitalise">
-          <xsl:with-param name="section" select="$section"/>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:text>}</xsl:text>
-    <xsl:call-template name="process-text">
-      <xsl:with-param name="content" select="$section/content"/>
-    </xsl:call-template>
-  </xsl:template>
-
-  <xsl:template match="core">
-    <xsl:text>\section{</xsl:text>
-    <xsl:choose>
-      <xsl:when test="title">
-        <xsl:value-of select="title"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="capitalise">
-          <xsl:with-param name="section" select="."/>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:text>}</xsl:text>
-    <xsl:for-each select="*">
+  <xsl:template name="process-text">
+    <xsl:param name="text"/>
+    <xsl:for-each select="$text/node()">
       <xsl:choose>
         <xsl:when test="local-name() = 'id'">
           <xsl:text>\label{</xsl:text>
           <xsl:value-of select="."/>
           <xsl:text>}</xsl:text>
         </xsl:when>
-        <xsl:when test="local-name() = 'title'"></xsl:when>
-        <xsl:when test="local-name() = 'author'"></xsl:when>
+        <xsl:when test="local-name() = 'title'"/>
+        <xsl:when test="local-name() = 'author'"/>
+        <xsl:when test="local-name() = 'p'">
+          <xsl:value-of select="."/>
+        </xsl:when>
+        <xsl:when test="local-name() = 'list'">
+          <xsl:apply-templates select="."/>
+        </xsl:when>
+        <xsl:when test="local-name() = 'formula'">
+          <xsl:apply-templates select="."/>
+        </xsl:when>
         <xsl:when test="local-name() = 'production'">
           <xsl:text>
-	        \begin{verbatim}
-	      </xsl:text>
+	        \begin{verbatim}</xsl:text>
           <xsl:apply-templates select="."/>
           <xsl:text>\end{verbatim}
 	
@@ -222,38 +171,127 @@
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template match="subtopic">
-    <xsl:text>\subsection{</xsl:text>
+  <xsl:template name="sectionize">
+    <xsl:param name="target"/>
+    <xsl:text>\section{</xsl:text>
     <xsl:choose>
-      <xsl:when test="title">
-        <xsl:value-of select="title"/>
+      <xsl:when test="$target/title">
+        <xsl:value-of select="$target/title"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="capitalise">
-          <xsl:with-param name="section" select="."/>
+          <xsl:with-param name="section" select="$target"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>}</xsl:text>
-    <xsl:for-each select="*">
+  </xsl:template>
+  <xsl:template name="subsectionize">
+    <xsl:param name="target"/>
+    <xsl:text>\subsection{</xsl:text>
+    <xsl:choose>
+      <xsl:when test="$target/title">
+        <xsl:value-of select="$target/title"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="capitalise">
+          <xsl:with-param name="section" select="$target"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+  <xsl:template name="subsubsectionize">
+    <xsl:param name="target"/>
+    <xsl:text>\subsubsection{</xsl:text>
+    <xsl:choose>
+      <xsl:when test="$target/title">
+        <xsl:value-of select="$target/title"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="capitalise">
+          <xsl:with-param name="section" select="$target"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <xsl:template name="process-SimpleSection">
+    <xsl:param name="section"/>
+    <xsl:for-each select="$section/*">
       <xsl:choose>
+      <xsl:when test="local-name() = 'id'">
+        <xsl:text>\label{</xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:when test="local-name() = 'title'"/>
+      <xsl:when test="local-name() = 'author'"/>
+      <xsl:when test="local-name() = 'production'">
+        <xsl:text>
+	        \begin{verbatim}</xsl:text>
+        <xsl:apply-templates select="."/>
+        <xsl:text>\end{verbatim}
+	
+	      </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="process-text">
+          <xsl:with-param name="text" select="."/>
+        </xsl:call-template>
+      </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="process-StructuredSection">
+    <xsl:param name="section"/>
+      <xsl:for-each select="$section/*">
+      <xsl:choose>
+        <xsl:when test="local-name() = 'subtopic'">
+          <xsl:call-template name="subsectionize">
+            <xsl:with-param name="target" select="."/>
+          </xsl:call-template>
+          <xsl:call-template name="process-StructuredSection">
+            <xsl:with-param name="section" select="."/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:when test="local-name() = 'author'"/>
+        <xsl:when test="local-name() = 'title'"/>
         <xsl:when test="local-name() = 'id'">
           <xsl:text>\label{</xsl:text>
-            <xsl:value-of select="."/>
+          <xsl:value-of select="."/>
           <xsl:text>}</xsl:text>
         </xsl:when>
-        <xsl:when test="local-name() = 'title'"></xsl:when>
-        <xsl:when test="local-name() = 'author'"></xsl:when>
-        <xsl:when test="local-name() = 'production'">
-          <xsl:text>\begin{verbatim}</xsl:text>
-          <xsl:apply-templates select="."/>
-          <xsl:text>\end{verbatim}</xsl:text>
-        </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates select="."/>
+          <xsl:choose>
+            <xsl:when test="local-name($section) = 'subtopic'">
+              <xsl:call-template name="subsubsectionize">
+            <xsl:with-param name="target" select="."/>
+          </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:call-template name="subsectionize">
+                <xsl:with-param name="target" select="."/>
+              </xsl:call-template>
+            </xsl:otherwise>
+          </xsl:choose>
+           <xsl:call-template name="process-SimpleSection">
+            <xsl:with-param name="section" select="."/>
+          </xsl:call-template>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="core">
+    <xsl:call-template name="sectionize">
+      <xsl:with-param name="target" select="."/>
+    </xsl:call-template>
+    <xsl:call-template name="process-StructuredSection">
+      <xsl:with-param name="section" select="."/>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template name="capitalise">
@@ -279,174 +317,7 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
-    </p>  
+    </p>
   </xsl:template>
-
-  <xsl:template match="grammar">
-    <blockquote xmlns="http://www.w3.org/1999/xhtml" class="frame">
-      <p class="note">
-        <small>
-          <a>
-            <xsl:attribute name = "href">
-              <xsl:value-of select="./@language"/>
-            </xsl:attribute>
-            Grammar productions
-            <xsl:if test="./@version">
-              (ver. <xsl:value-of select="./@version"/>)
-            </xsl:if>
-          </a>
-        </small>
-      </p>
-      <xsl:apply-templates select="./bgf:*"/>
-    </blockquote>
-  </xsl:template>
-
-  <xsl:template match="sample">
-    <xsl:call-template name="treatsamples">
-      <xsl:with-param name="s" select="."/>
-    </xsl:call-template>
-  </xsl:template>
-
-  <xsl:template match="runnable">
-    <xsl:call-template name="treatrunnables">
-      <xsl:with-param name="e" select="."/>
-    </xsl:call-template>
-  </xsl:template>
-
-  <xsl:template name="getname">
-    <xsl:param name="title"/>
-    <xsl:choose>
-      <xsl:when test="$title/author">
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="uppercase">
-          <xsl:with-param name="string" select="$title/body"/>
-        </xsl:call-template>
-        <xsl:value-of select="$title/number"/>
-        <xsl:text>: </xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:value-of select="$title/topic"/>
-    <xsl:text> </xsl:text>
-    <xsl:choose>
-      <xsl:when test="$title/edition">
-        <xsl:value-of select="$title/edition"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$title/version"/>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:if test="$title/status != 'unknown'">
-    <xsl:text> (</xsl:text>
-    <xsl:value-of select="$title/status"/>
-    <xsl:text>)</xsl:text>
-    </xsl:if>
-  </xsl:template>
-
-  <xsl:template name="treatsamples">
-    <xsl:param name="s"/>
-    <xsl:if test="$s/@id">
-      <a xmlns="http://www.w3.org/1999/xhtml">
-        <xsl:attribute name = "name">
-          <xsl:value-of select="$s/@id"/>
-        </xsl:attribute>
-      </a>
-    </xsl:if>
-    <blockquote xmlns="http://www.w3.org/1999/xhtml" class="frame">
-      <p class="note">
-        <small>
-          <a>
-            <xsl:attribute name = "href">
-              <xsl:value-of select="$s/@language"/>
-            </xsl:attribute>
-            Source code sample
-            <xsl:if test="$s/@version">
-              (ver. <xsl:value-of select="$s/@version"/>)
-            </xsl:if>
-          </a>
-        </small>
-      </p>
-      <br/>
-      <pre>
-        <xsl:value-of select="$s"/>
-      </pre>
-    </blockquote>
-  </xsl:template>
-
-  <xsl:template name="treatrunnables">
-    <xsl:param name="e"/>
-    <blockquote xmlns="http://www.w3.org/1999/xhtml" class="frame">
-      <p class="note">
-        <small>
-          <a>
-            <xsl:attribute name = "href">
-              <xsl:value-of select="$e/@language"/>
-            </xsl:attribute>
-            Sample execution
-            <xsl:if test="$e/@version">
-              (ver. <xsl:value-of select="$e/@version"/>)
-            </xsl:if>
-          </a>
-        </small>
-      </p>
-      <br/>
-      <code>
-        <strong>
-          <a>
-            <xsl:attribute name = "href">#<xsl:value-of select="$e/context"/>
-            </xsl:attribute>
-            <xsl:value-of select="$e/main"/>
-          </a>
-        </strong>
-        <xsl:apply-templates select="$e/argument"/>
-      </code>
-      <br/>
-      <p class="note">
-        <small>
-          (Should return <xsl:value-of select="$e/yields"/>)
-        </small>
-      </p>
-    </blockquote>
-  </xsl:template>
-
-  <xsl:template match="argument" xml:space="preserve">
-    <strong xmlns="http://www.w3.org/1999/xhtml">
-      <xsl:value-of select="."/>
-    </strong>
-  </xsl:template>
-
-  <xsl:template match="section">
-    <h3 xmlns="http://www.w3.org/1999/xhtml">
-      <xsl:value-of select="./title"/>
-    </h3>
-    <xsl:apply-templates select="./content"/>
-  </xsl:template>
-
-  <!-- END OF LDF, START OF BGF -->
-  
-  <xsl:template name="car">
-    <xsl:param name="expr"/>
-    <xsl:apply-templates select="$expr/*"/>
-  </xsl:template>
-
-  <xsl:template name="cdr">
-    <xsl:param name="expr"/>
-    <br xmlns="http://www.w3.org/1999/xhtml"/>
-    | <xsl:apply-templates select="$expr/*"/>
-  </xsl:template>
-  
-  <!-- END OF BGF, START OF LDX -->
-  
-  <xsl:template match="ldx:reference">
-    <code xmlns="http://www.w3.org/1999/xhtml">
-      <a>
-        <xsl:attribute name = "href">
-          #<xsl:value-of select="."/>
-        </xsl:attribute>
-        <xsl:value-of select="."/>
-      </a>
-    </code>
-  </xsl:template>
-
 
 </xsl:stylesheet>

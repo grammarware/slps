@@ -37,7 +37,8 @@
       <xsd:element ref="xldf:insert"/>
       <xsd:element ref="xldf:move"/>
       <xsd:element ref="xldf:rename"/>
-      <xsd:element ref="xldf:where"/>
+      <xsd:element ref="xldf:append"/>
+      <xsd:element ref="xldf:add-section"/>
     </xsd:choice>
   </xsd:group>
 
@@ -66,6 +67,22 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="add-section">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element name="front" type="ldf:frontMatter"/>
+        <xsd:element name="list" type="ldf:frontLists"/>
+        <xsd:element name="lexical" type="ldf:lexical"/>
+        <xsd:element name="core" type="ldf:StructuredSection"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="move">
     <xsd:annotation>
       <xsd:documentation>
@@ -75,7 +92,7 @@
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="section" type="xsd:string"/>         <!-- IDREF -->
-        <xsd:element name="inside" type="xsd:string"/>         <!-- IDREF -->
+        <xsd:element name="inside" type="xsd:string"/>         	<!-- IDREF -->
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

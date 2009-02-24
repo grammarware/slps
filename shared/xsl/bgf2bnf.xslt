@@ -141,7 +141,7 @@
     <xsl:text>( </xsl:text>
     <xsl:apply-templates select="./bgf:expression[1]/*"/>
     <xsl:for-each select="./bgf:expression[position()>1]">
-      <xsl:text>| </xsl:text>
+      <xsl:text> | </xsl:text>
       <xsl:apply-templates select="./*"/>
     </xsl:for-each>
     <xsl:text>)</xsl:text>
