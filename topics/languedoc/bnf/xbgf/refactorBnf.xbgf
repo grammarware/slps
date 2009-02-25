@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <xbgf:massage>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>symbol</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>symbol</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <plus>
+        <bgf:expression>
+          <nonterminal>symbol</nonterminal>
+        </bgf:expression>
+      </plus>
+    </bgf:expression>
+  </xbgf:massage>
+
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>right-hand-side</nonterminal>
+      <bgf:expression>
+        <plus>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>symbol</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </plus>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <label>sequence</label>
+      <nonterminal>symbol</nonterminal>
+      <bgf:expression>
+        <plus>
+          <bgf:expression>
+            <nonterminal>symbol</nonterminal>
+          </bgf:expression>
+        </plus>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>right-hand-side</nonterminal>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>symbol</nonterminal>
+              </bgf:expression>
+            </marked>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <label>choice</label>
+      <nonterminal>symbol</nonterminal>
+      <bgf:expression>
+        <plus>
+          <bgf:expression>
+            <nonterminal>symbol</nonterminal>
+          </bgf:expression>
+        </plus>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+
+  <xbgf:inline>right-hand-side</xbgf:inline>
+</xbgf:sequence>

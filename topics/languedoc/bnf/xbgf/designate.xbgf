@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>value</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <terminal>STRING</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>INT</terminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  
+  <xbgf:vertical>
+    <nonterminal>symbol</nonterminal>
+  </xbgf:vertical>
+  <xbgf:vertical>
+    <nonterminal>value</nonterminal>
+  </xbgf:vertical>
+  
+  <xbgf:designate>
+    <bgf:production>
+      <label>epsilon</label>
+      <nonterminal>symbol</nonterminal>
+      <bgf:expression>
+        <terminal>EPSILON</terminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:designate>
+    <bgf:production>
+      <label>empty</label>
+      <nonterminal>symbol</nonterminal>
+      <bgf:expression>
+        <terminal>EMPTY</terminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:designate>
+    <bgf:production>
+      <label>any</label>
+      <nonterminal>symbol</nonterminal>
+      <bgf:expression>
+        <terminal>ANY</terminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:designate>
+    <bgf:production>
+      <label>string</label>
+      <nonterminal>value</nonterminal>
+      <bgf:expression>
+        <terminal>STRING</terminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:designate>
+    <bgf:production>
+      <label>int</label>
+      <nonterminal>value</nonterminal>
+      <bgf:expression>
+        <terminal>INT</terminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+  <xbgf:designate>
+    <bgf:production>
+      <label>value</label>
+      <nonterminal>symbol</nonterminal>
+      <bgf:expression>
+        <nonterminal>value</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:designate>
+
+
+</xbgf:sequence>

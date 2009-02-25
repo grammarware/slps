@@ -116,7 +116,7 @@
     </xsd:choice>
   </xsd:group>
 
-  <xsd:group name="lexicalGroup">
+  <xsd:group name="lexical">
     <xsd:annotation>
       <xsd:documentation>
         Sections describing lexical structure tend to be shorter, less structured inside,
@@ -208,13 +208,24 @@
         <xsd:element name="frontMatter">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:group ref="ldf:front-simple-sections" maxOccurs="unbounded"/>
-          </xsd:sequence>
+              <xsd:group ref="ldf:front-simple-section" maxOccurs="unbounded"/>
+            </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
-        <xsd:element name="lists" type="ldf:frontLists" minOccurs="0"/>
-        
-        <xsd:element name="lexicalPart" type="ldf:lexical" minOccurs="0"/>
+        <xsd:element name="lists" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:group ref="ldf:front-list" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="lexicalPart" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:group ref="ldf:lexical" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
         
         <xsd:element name="core" type="ldf:StructuredSection" maxOccurs="unbounded"/>
         <xsd:element name="annex" type="ldf:StructuredSection" minOccurs="0" maxOccurs="unbounded"/>
@@ -244,7 +255,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:group name="front-simple-sections">
+  <xsd:group name="front-simple-section">
     <xsd:choice>
       <xsd:element name="foreword" type="ldf:SimpleSection">
         <xsd:annotation>
@@ -353,46 +364,37 @@
     </xsd:choice>
   </xsd:group>
 
-  <xsd:complexType name="frontLists">
-    <xsd:sequence minOccurs="0">
-      <xsd:choice maxOccurs="unbounded">
-        <xsd:element name="definitions" type="ldf:ListOfTerms">
-          <xsd:annotation>
-            <xsd:documentation>
-              This is a list of definitions for all basic terms needed to understand the document,
-              but not especially introduced in it. Typical examples include explaining what is
-              a "program", what is a "namespace", what is a "library", what is "behaviour".
-            </xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
-        <xsd:element name="abbreviations" type="ldf:ListOfTerms">
-          <xsd:annotation>
-            <xsd:documentation>
-              Acronyms like IEEE, ISO or like CLI, BCL are frequently defined here in a separate definition list.
-            </xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
-        <xsd:element name="languageOverview" type="ldf:ListOfTerms">
-          <xsd:annotation>
-            <xsd:documentation>
-              Such an informal introduction to the language is not present in all standards.
-              However, some specifications contain a not claimed to be complete list of
-              language concepts with their definitions and perhaps even some examples.
-            </xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
-      </xsd:choice>
-    </xsd:sequence>
-  </xsd:complexType>
+  <xsd:group name="front-list">
+    <xsd:choice>
+      <xsd:element name="definitions" type="ldf:ListOfTerms">
+        <xsd:annotation>
+          <xsd:documentation>
+            This is a list of definitions for all basic terms needed to understand the document,
+            but not especially introduced in it. Typical examples include explaining what is
+            a "program", what is a "namespace", what is a "library", what is "behaviour".
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="abbreviations" type="ldf:ListOfTerms">
+        <xsd:annotation>
+          <xsd:documentation>
+            Acronyms like IEEE, ISO or like CLI, BCL are frequently defined here in a separate definition list.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="languageOverview" type="ldf:ListOfTerms">
+        <xsd:annotation>
+          <xsd:documentation>
+            Such an informal introduction to the language is not present in all standards.
+            However, some specifications contain a not claimed to be complete list of
+            language concepts with their definitions and perhaps even some examples.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:choice>
+  </xsd:group>
 
-  <xsd:complexType name="lexical">
-    <xsd:sequence>
-      <xsd:group ref="ldf:lexicalGroup" maxOccurs="unbounded"/>
-    </xsd:sequence>
-  </xsd:complexType>
-
-
-  <!--xsd:complexType name="contentType">
+    <!--xsd:complexType name="contentType">
     <xsd:annotation>
       <xsd:documentation>
         A sections content is a list of different kinds of portions.

@@ -179,9 +179,33 @@
         <xsl:value-of select="$target/title"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="capitalise">
-          <xsl:with-param name="section" select="$target"/>
-        </xsl:call-template>
+        <xsl:choose>
+          <!-- can be replaced with a unified CamelCase2Whitespace -->
+          <xsl:when test="local-name() = 'lineContinuations'">
+            <xsl:text>Line continuations</xsl:text>
+          </xsl:when>
+          <xsl:when test="local-name() = 'designGoals'">
+            <xsl:text>Design goals</xsl:text>
+          </xsl:when>
+          <xsl:when test="local-name() = 'normativeReferences'">
+            <xsl:text>Normative references</xsl:text>
+          </xsl:when>
+          <xsl:when test="local-name() = 'documentStructure'">
+            <xsl:text>Document structure</xsl:text>
+          </xsl:when>
+          <xsl:when test="local-name() = 'whatsnew'">
+            <xsl:text>What's new</xsl:text>
+          </xsl:when>
+          <xsl:when test="local-name() = 'languageOverview'">
+            <xsl:text>Language overview</xsl:text>
+          </xsl:when>
+          <!-- end of CamelCase2Whitespace -->
+          <xsl:otherwise>
+            <xsl:call-template name="capitalise">
+              <xsl:with-param name="section" select="$target"/>
+            </xsl:call-template>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>}</xsl:text>
@@ -221,26 +245,26 @@
     <xsl:param name="section"/>
     <xsl:for-each select="$section/*">
       <xsl:choose>
-      <xsl:when test="local-name() = 'id'">
-        <xsl:text>\label{</xsl:text>
-        <xsl:value-of select="."/>
-        <xsl:text>}</xsl:text>
-      </xsl:when>
-      <xsl:when test="local-name() = 'title'"/>
-      <xsl:when test="local-name() = 'author'"/>
-      <xsl:when test="local-name() = 'production'">
-        <xsl:text>
+        <xsl:when test="local-name() = 'id'">
+          <xsl:text>\label{</xsl:text>
+          <xsl:value-of select="."/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="local-name() = 'title'"/>
+        <xsl:when test="local-name() = 'author'"/>
+        <xsl:when test="local-name() = 'production'">
+          <xsl:text>
 	        \begin{verbatim}</xsl:text>
-        <xsl:apply-templates select="."/>
-        <xsl:text>\end{verbatim}
+          <xsl:apply-templates select="."/>
+          <xsl:text>\end{verbatim}
 	
 	      </xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="process-text">
-          <xsl:with-param name="text" select="."/>
-        </xsl:call-template>
-      </xsl:otherwise>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="process-text">
+            <xsl:with-param name="text" select="."/>
+          </xsl:call-template>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>

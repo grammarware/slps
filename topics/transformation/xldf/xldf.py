@@ -83,7 +83,12 @@ def xldf_append(cmd,tree):
  else:
   print '[XLDF] append(',cmd.findtext('where'),',',
   for p in cmd.findall('content/*'):
-   found[-1][-1].append(p)
+   #print found[-1].tag,found[-1][-1].tag
+   if found[-1][-1].tag != 'content':
+    found[-1].append(p)
+    #found[-1].append(ET.Element('content',{}))
+   else:
+    found[-1][-1].append(p)
    print p.tag,
   print ')'
  return
@@ -133,24 +138,45 @@ def xldf_rename(cmd,tree):
 
 def xldf_add_section(cmd,tree):
  success = False
- for s in cmd.findall('front/*'):
+ s = cmd.findall('*')[0]
+ if s.tag in ('foreword','designGoals','scope','conformance','compliance','compatibility','notation','normativeReferences','documentStructure','whatsnew'):
   tree.findall('//frontMatter')[0].append(s)
-  print '[XLDF] add-section to front'
+  print '[XLDF] add-section to front matter'
   success = True
- for s in cmd.findall('list/*'):
+ elif s.tag in ('definitions','abbreviations','languageOverview'):
   tree.findall('//lists')[0].append(s)
-  print '[XLDF] add-section to front'
+  print '[XLDF] add-section to lists'
   success = True
- for s in cmd.findall('lexical/*'):
+ elif s.tag in ('lineContinuations','whitespace','tokens','preprocessor','literals','lexical'):
   tree.findall('//lexicalPart')[0].append(s)
-  print '[XLDF] add-section to front'
+  print '[XLDF] add-section to lexical part'
   success = True
- for s in cmd.findall('core'):
+ elif s.tag == 'core':
   tree.getroot().append(s)
-  print '[XLDF] add-section to front'
+  print '[XLDF] add-section to the core'
   success = True
  if not success:
   print '[----] add-section failed'
+ return
+
+def xldf_import(cmd,tree):
+ try:
+  gtree = ET.parse(cmd.findtext('file'))
+ except IOError,e:
+  print '[----] xldf:import failed: file',cmd.findtext('file'),'not found'
+  return
+ found = findnode(tree,cmd.findtext('target'))
+ if not found:
+  print '[----] xldf:import failed: target id',cmd.findtext('where'),'not found'
+ else:
+  cx = 0
+  for p in gtree.findall('{'+bgfns+'}production'):
+   found[-1].append(p)
+   cx += 1
+  if cx:
+   print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file'),')','-',cx,'productions'
+  else:
+   print '[----] xldf:import failed: no productions found in',cmd.findtext('file')
  return
 
 def main(xldffile,inldffile,outldffile):
@@ -162,6 +188,8 @@ def main(xldffile,inldffile,outldffile):
   cmdname = cmd.tag.replace('{'+xldfns+'}','')
   if cmdname == 'insert':
    xldf_insert(cmd,ltree)
+  elif cmdname == 'import':
+   xldf_import(cmd,ltree)
   elif cmdname == 'move':
    xldf_move(cmd,ltree)
   elif cmdname == 'rename':

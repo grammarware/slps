@@ -16,7 +16,9 @@ xbgf:
 
 tex:
 	../../shared/tools/xsd2bgf ../../shared/xsd/xbgf.xsd xbgf.bgf
-	../../shared/tools/xbgf beautify.xbgf xbgf.bgf xbgf_1.bgf
+	../../shared/tools/xsd2bgf ../../shared/xsd/bgf.xsd   bgf.bgf
+	../../shared/tools/xbgf beautify_xbgf.xbgf xbgf.bgf xbgf_1.bgf
+	../../shared/tools/xbgf beautify_bgf.xbgf   bgf.bgf bgf_pretty.bgf
 	../../topics/extraction/xsd2ldf/ldfgen.py ../../shared/xsd/xbgf.xsd xbgf_1.bgf xbgf.ldf
 	python ../../topics/transformation/xldf/xldf.py complete.xldf xbgf.ldf xbgf_1.ldf
 	xsltproc ../../shared/xsl/ldf2tex.xslt xbgf_1.ldf > xbgf.tex
@@ -25,6 +27,6 @@ tex:
 
 clean:
 	rm -f xbgf*.bgf xbgf*.ldf xbgf.html xbgf.fo xbgf.pdf
-	rm -f ldf*.bgf ldf*.ldf ldf.fo ldf.pdf
+	rm -f bgf*.bgf ldf*.bgf ldf*.ldf ldf.fo ldf.pdf
 	rm -f *.aux *.log *.toc *.tex
 

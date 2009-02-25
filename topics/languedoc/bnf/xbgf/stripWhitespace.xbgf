@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <xbgf:project>
+    <bgf:production>
+      <nonterminal>right-hand-side</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>NEWLINE</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <plus>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <nonterminal>INDENT</nonterminal>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <plus>
+                      <bgf:expression>
+                        <nonterminal>symbol</nonterminal>
+                      </bgf:expression>
+                    </plus>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <nonterminal>NEWLINE</nonterminal>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </plus>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>NEWLINE</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:project>
+
+</xbgf:sequence>
