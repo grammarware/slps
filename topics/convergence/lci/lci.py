@@ -108,11 +108,11 @@ def readxmlconfig (cfg):
   print `len(tools)`+'+'+`len(treetools)`,'tools,',
  if actions:
   if autoactions:
-   print len(actions),'actions ('+`len(autoactions)`,'automated)',
+   print len(actions),'actions ('+`len(autoactions)`,'automated),',
   else:
    print len(actions),'actions,',
  if automethods:
-  print len(automethods),'automation methods,',
+  print len(automethods),'generators,',
  if targets:
   print len(targets),'targets,',
  if testsets:
@@ -623,7 +623,7 @@ def checkconsistency():
    sysexit(18)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.12'
+ print 'Language Covergence Infrastructure v1.13'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])
