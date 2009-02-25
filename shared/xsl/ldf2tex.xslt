@@ -114,18 +114,13 @@
     <xsl:text>\begin{description}</xsl:text>
     <xsl:for-each select="$list/term">
       <xsl:text>\item[</xsl:text>
-      <xsl:value-of select="name"/>
+      <xsl:call-template name="capitaliseString">
+        <xsl:with-param name="string" select="name"/>
+      </xsl:call-template>
       <xsl:text>] </xsl:text>
-      <xsl:choose>
-        <xsl:when test="count(definition/p) = 1 and count(definition/list) = 0">
-          <xsl:value-of select="definition/p"/>
-        </xsl:when>
-        <xsl:otherwise>
           <xsl:call-template name="process-text">
             <xsl:with-param name="text" select="definition"/>
           </xsl:call-template>
-        </xsl:otherwise>
-      </xsl:choose>
     </xsl:for-each>
     <xsl:text>\end{description}</xsl:text>
   </xsl:template>
@@ -201,7 +196,7 @@
           </xsl:when>
           <!-- end of CamelCase2Whitespace -->
           <xsl:otherwise>
-            <xsl:call-template name="capitalise">
+            <xsl:call-template name="capitaliseLocalName">
               <xsl:with-param name="section" select="$target"/>
             </xsl:call-template>
           </xsl:otherwise>
@@ -218,7 +213,7 @@
         <xsl:value-of select="$target/title"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="capitalise">
+        <xsl:call-template name="capitaliseLocalName">
           <xsl:with-param name="section" select="$target"/>
         </xsl:call-template>
       </xsl:otherwise>
@@ -233,7 +228,7 @@
         <xsl:value-of select="$target/title"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="capitalise">
+        <xsl:call-template name="capitaliseLocalName">
           <xsl:with-param name="section" select="$target"/>
         </xsl:call-template>
       </xsl:otherwise>
@@ -318,14 +313,30 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template name="capitalise">
+  <xsl:template name="capitaliseLocalName">
     <xsl:param name="section"/>
-    <xsl:value-of select="concat(translate(substring(local-name($section),1,1), 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'), substring(local-name($section),2))"/>
+    <xsl:call-template name="capitaliseString">
+      <xsl:with-param name="string" select="local-name($section)"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="capitaliseString">
+    <xsl:param name="string"/>
+    <xsl:value-of select="concat(translate(substring($string,1,1), 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'), substring($string,2))"/>
   </xsl:template>
 
   <xsl:template name="uppercase">
     <xsl:param name="string"/>
     <xsl:value-of select="translate($string, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
+  </xsl:template>
+
+  <xsl:template match="sample">
+      <xsl:text>
+	        \begin{verbatim}</xsl:text>
+      <xsl:value-of select="."/>
+      <xsl:text>\end{verbatim}
+	
+	      </xsl:text>
   </xsl:template>
 
   <!--xsl:value-of select="."/-->

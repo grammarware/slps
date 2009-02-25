@@ -138,14 +138,28 @@
   </xsl:template>
 
   <xsl:template match="xbgf:rename">
-    <xsl:value-of select="local-name()" />
-    <xsl:text>(</xsl:text>
-    <xsl:value-of select="local-name(*)" />
-    <xsl:text>
- </xsl:text>
+    <xsl:choose>
+      <xsl:when test="local-name(*) = 'label'">
+        <xsl:text>renameL(</xsl:text>
+      </xsl:when>
+      <xsl:when test="local-name(*) = 'nonterminal'">
+        <xsl:text>renameN(</xsl:text>
+      </xsl:when>
+      <xsl:when test="local-name(*) = 'selector'">
+        <xsl:text>renameS(</xsl:text>
+      </xsl:when>
+      <xsl:when test="local-name(*) = 'terminal'">
+        <xsl:text>renameT(</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="local-name()" />
+        <xsl:text>-</xsl:text>
+        <xsl:value-of select="local-name(*)" />
+        <xsl:text>(</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:apply-templates select="./*/*[1]"/>
-    <xsl:text>,
- </xsl:text>
+    <xsl:text>, </xsl:text>
     <xsl:apply-templates select="./*/*[2]"/>
     <xsl:text>);
 </xsl:text>
