@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf"
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <!-- compose a section on abstract revising transformations -->
+  <xldf:rename>
+    <from>
+      <title>concreterevisingtransformation</title>
+    </from>
+    <to>Refactorings in term-oriented semantics</to>
+  </xldf:rename>
+  <xldf:place>
+    <section>element-abstractize</section>
+    <inside>group-concreterevisingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-concretize</section>
+    <inside>group-concreterevisingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-permute</section>
+    <inside>group-concreterevisingtransformation</inside>
+  </xldf:place>
+
+  <!-- compose a section on concrete revising transformations -->
+  <xldf:rename>
+    <from>
+      <title>abstractrevisingtransformation</title>
+    </from>
+    <to>Semantics revising transformations</to>
+  </xldf:rename>
+  <xldf:place>
+    <section>element-define</section>
+    <inside>group-abstractrevisingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-undefine</section>
+    <inside>group-abstractrevisingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-redefine</section>
+    <inside>group-abstractrevisingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-inject</section>
+    <inside>group-abstractrevisingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-project</section>
+    <inside>group-abstractrevisingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-replace</section>
+    <inside>group-abstractrevisingtransformation</inside>
+  </xldf:place>
+
+</xldf:sequence>

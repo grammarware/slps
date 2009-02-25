@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf"
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <!-- compose a section on refactoring transformations -->
+  <xldf:rename>
+    <from>
+      <title>refactoringtransformation</title>
+    </from>
+    <to>Other refactoring transformations</to>
+  </xldf:rename>
+  <xldf:place>
+    <section>element-massage</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  
+  <xldf:insert>
+    <after>
+      <p>
+        There are two expression arguments: one to be matched, and another one that
+        replaces the matched expression. One of them must be in a `massage relation' to
+        the other.
+      </p>
+    </after>
+    <content>
+      <p>The massage relation is defined as follows:</p>
+      <formula>(x^+)? = x^\star</formula>
+      <formula>(x^\star)? = x^\star</formula>
+      <formula>(x?)? = x?</formula>
+      <formula>(x^\star)^\star = x^\star</formula>
+      <formula>(x^+)^\star = x^\star</formula>
+      <formula>(x?)^\star = x^\star</formula>
+      <formula>(x^+)^+ = x^+</formula>
+      <formula>(x^\star)^+ = x^\star</formula>
+      <formula>(x?)^+ = x^\star</formula>
+      <p>The following formulae are more complicated examples of masssage:</p>
+      <formula>x|\varepsilon   = x?</formula>
+      <formula>x|x = x</formula>
+      <formula>x^+|\varepsilon  = x^\star</formula>
+      <formula>x^+|x? = x^\star</formula>
+      <formula>x x^\star = x^+</formula>
+      <formula>x (yx)^\star = (xy)^\star x</formula>
+      <formula>x (yx)^+ = (xy)^+ x</formula>
+      <p>Another rule that is harder to express is when</p>
+      <formula>x? = x</formula>
+      <p>in the cases when x is optional anyway, i.e. it is one of the following:</p>
+      <formula>\varepsilon|...</formula>
+      <formula>y?</formula>
+      <formula>y^\star</formula>
+      <formula>y|...</formula>
+      <formula>y z ...</formula>
+      <p>where y and z are also recursively optional anyway.</p>
+    </content>
+  </xldf:insert>
+
+  <xldf:place>
+    <section>element-factor</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-distribute</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-deyaccify</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-yaccify</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-eliminate</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-introduce</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-import</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-vertical</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-horizontal</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-rassoc</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-lassoc</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+
+</xldf:sequence>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf"
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <!-- compose a section on increasing transformations -->
+  <xldf:rename>
+    <from>
+      <title>increasingtransformation</title>
+    </from>
+    <to>Grammar lengthening transformations</to>
+  </xldf:rename>
+  <xldf:place>
+    <section>element-add</section>
+    <inside>group-increasingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-appear</section>
+    <inside>group-increasingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-widen</section>
+    <inside>group-increasingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-upgrade</section>
+    <inside>group-increasingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-unite</section>
+    <inside>group-increasingtransformation</inside>
+  </xldf:place>
+
+</xldf:sequence>

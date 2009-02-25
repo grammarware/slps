@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf"
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <!-- compose a section on folding transformations -->
+  <xldf:rename>
+    <from>
+      <title>foldingtransformation</title>
+    </from>
+    <to>Folding and unfolding transformations</to>
+  </xldf:rename>
+  <xldf:place>
+    <section>element-unfold</section>
+    <inside>group-foldingtransformation</inside>
+  </xldf:place>
+  <xldf:insert>
+    <before>
+      <p>
+        The definition that is being unfolded is assumed to be horisontal
+        (see the section on refactorings for more information about horisontal
+        and vertical definitions).
+      </p>
+    </before>
+    <content>
+      <p>
+        Almost all the unfold transformations used in Java Language Specification
+        case are restricted in scope by a nonterminal. The reason for such statistics
+        is that when the language engineer wants to give up the nonterminal, he uses
+        the inline transformations. On the other hand, unfold usually happens as a
+        part of sequences with fold, downgrade, disappear, deyaccify, distribute,
+        etc.---in which case it is only natural to try to limit the impact of every
+        step.
+      </p>
+    </content>
+  </xldf:insert>
+  <xldf:place>
+    <section>element-fold</section>
+    <inside>group-foldingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-inline</section>
+    <inside>group-foldingtransformation</inside>
+  </xldf:place>
+  <xldf:append>
+    <where>element-inline</where>
+    <content>
+      <p>
+        The inline transformation is by far the most used in Java Language Specification
+        case. One of the reasons is what we call layering: in particular expressions
+        and statements are introduced in the $G_j^R$ with a set of related nonterminals:
+        LabeledStatement, IfThenElseStatement, WhileStatement, ForStatement, etc, and
+        CastExpression, PreIncrementExpression, PreDecrementExpression, PostfixExpression, etc.
+        $G_j^I$ takes another approach, just listing all the alternatives in the productions
+        for Statement and Expression. In order to converge these two variants, a lot of inline
+        transformations are needed. This can also be apparent from the statistics table,
+        that demonstrates that targets that converge only `readable' grammars require up to
+        ten inline transformations each, while each target that takes both readable and
+        implementable grammars in, contains 70--100 inline transformations in convergence path.
+      </p>
+    </content>
+  </xldf:append>
+  <xldf:place>
+    <section>element-extract</section>
+    <inside>group-foldingtransformation</inside>
+  </xldf:place>
+  <xldf:append>
+    <where>element-extract</where>
+    <content>
+      <p>
+        As seen from the experience gained from Java Language Specification case,
+        it is highly unusual for extract to have limited scope. However, sometimes
+        a limited impact is desired in order to avoid excessive subsequent unfoldings
+        when the convergence requests for having several nonterminals with similar
+        definitions.
+      </p>
+    </content>
+  </xldf:append>
+  <xldf:place>
+    <section>element-abridge</section>
+    <inside>group-foldingtransformation</inside>
+  </xldf:place>
+  <xldf:append>
+    <where>element-abridge</where>
+    <content>
+      <p>
+        Reflexive chain productions are rarely encountered explicitly, so it calls for more clear explanation.
+        However, after a series of transformations one can arrive at the point of having such
+        a production and, quite naturally, wanting to get rid of it. An example of a transformation
+        sequence that yields a reflexive chain production can be a step from concrete syntax definition
+        to abstract syntax definition. Concrete syntax usually needs explicit bracketing constructions for
+        recursive composition, and after stripping away terminals and merging layers, these bracketing
+        constructions become reflexive chain productions. The Factorial Language case has shown the need
+        for it.
+      </p>
+    </content>
+  </xldf:append>
+  <xldf:place>
+    <section>element-detour</section>
+    <inside>group-foldingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-unchain</section>
+    <inside>group-foldingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-chain</section>
+    <inside>group-foldingtransformation</inside>
+  </xldf:place>
+
+</xldf:sequence>

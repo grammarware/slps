@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf"
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <!-- compose a section on decreasing transformations -->
+  <xldf:rename>
+    <from>
+      <title>decreasingtransformation</title>
+    </from>
+    <to>Grammar shortening transformations</to>
+  </xldf:rename>
+  <xldf:place>
+    <section>element-remove</section>
+    <inside>group-decreasingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-disappear</section>
+    <inside>group-decreasingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-narrow</section>
+    <inside>group-decreasingtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-downgrade</section>
+    <inside>group-decreasingtransformation</inside>
+  </xldf:place>
+
+</xldf:sequence>

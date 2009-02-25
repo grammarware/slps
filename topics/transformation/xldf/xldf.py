@@ -93,21 +93,33 @@ def xldf_append(cmd,tree):
   print ')'
  return
 
-def xldf_move(cmd,tree):
+def xldf_place(cmd,tree):
  #found = tree.findall('//core[id="'+cmd.findtext('./section')+'"]')
  found = findnode(tree,cmd.findtext('section'))
  if not found:
-  print '[----] xldf:move failed: source node not found!'
+  print '[----] xldf:place failed: source node not found!'
   return
  #found2 = tree.findall('//core[id="'+cmd.findtext('./inside')+'"]')
  found2 = findnode(tree,cmd.findtext('inside'))
  if not found2:
-  print '[----] xldf:move failed: target node not found!'
+  print '[----] xldf:place failed: target node not found!'
   return
- found.tag = 'subtopic'
- found2.append(found)
- tree.getroot().remove(found)
- print '[XLDF] move('+cmd.findtext('section')+',',cmd.findtext('inside')+')'
+ if found2.tag=='core':
+  found.tag = 'subtopic'
+  found2.append(found)
+  tree.getroot().remove(found)
+  print '[XLDF] place('+cmd.findtext('section')+',',cmd.findtext('inside')+')'
+ elif found2.tag in ('definitions','abbreviations','languageOverview'):
+  el = ET.SubElement(found2,'term')
+  el2 = ET.SubElement(el,'name')
+  el2.text = found.findtext('title')
+  el2 = ET.SubElement(el,'definition')
+  for el in found.findall('.//content/*'):
+   el2.append(el)
+  tree.getroot().remove(found)
+  print '[XLDF] place('+cmd.findtext('section')+',',cmd.findtext('inside')+')'
+ else:
+  print '[----] xldf:place failed: don''t know how to place subsections in',found2.tag
  return
 
 def xldf_rename(cmd,tree):
@@ -144,7 +156,14 @@ def xldf_add_section(cmd,tree):
   print '[XLDF] add-section to front matter'
   success = True
  elif s.tag in ('definitions','abbreviations','languageOverview'):
-  tree.findall('//lists')[0].append(s)
+  if tree.findall('//lists'):
+   tree.findall('//lists')[0].append(s)
+  else:
+   el = ET.Element('lists',{})
+   el.append(s)
+   for i in range(0,len(tree.findall('*'))):
+    if tree.getroot()[i].tag=='frontMatter':
+     tree.getroot().insert(i+1,el)
   print '[XLDF] add-section to lists'
   success = True
  elif s.tag in ('lineContinuations','whitespace','tokens','preprocessor','literals','lexical'):
@@ -159,7 +178,7 @@ def xldf_add_section(cmd,tree):
   print '[----] add-section failed'
  return
 
-def xldf_import(cmd,tree):
+def xldf_import_grammar(cmd,tree):
  try:
   gtree = ET.parse(cmd.findtext('file'))
  except IOError,e:
@@ -179,6 +198,22 @@ def xldf_import(cmd,tree):
    print '[----] xldf:import failed: no productions found in',cmd.findtext('file')
  return
 
+def xldf_import_sample(cmd,tree):
+ try:
+  sample = open(cmd.findtext('file'),'r')
+ except IOError,e:
+  print '[----] xldf:import failed: file',cmd.findtext('file'),'not found'
+  return
+ found = findnode(tree,cmd.findtext('target'))
+ if not found:
+  print '[----] xldf:import failed: target id',cmd.findtext('where'),'not found'
+ else:
+  el = ET.Element('sample',{})
+  el.text = ''.join(sample.readlines())
+  found[-1].append(el)
+  print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file'),')'
+ return
+
 def main(xldffile,inldffile,outldffile):
  grammar={}
  xtree = ET.parse(xldffile)
@@ -188,10 +223,12 @@ def main(xldffile,inldffile,outldffile):
   cmdname = cmd.tag.replace('{'+xldfns+'}','')
   if cmdname == 'insert':
    xldf_insert(cmd,ltree)
-  elif cmdname == 'import':
-   xldf_import(cmd,ltree)
-  elif cmdname == 'move':
-   xldf_move(cmd,ltree)
+  elif cmdname == 'import-grammar':
+   xldf_import_grammar(cmd,ltree)
+  elif cmdname == 'import-sample':
+   xldf_import_sample(cmd,ltree)
+  elif cmdname == 'place':
+   xldf_place(cmd,ltree)
   elif cmdname == 'rename':
    xldf_rename(cmd,ltree)
   elif cmdname == 'append':

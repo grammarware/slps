@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf"
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <!-- compose a section on decorative transformations -->
+  <xldf:rename>
+    <from>
+      <title>decorativetransformation</title>
+    </from>
+    <to>Decorative transformations</to>
+  </xldf:rename>
+  <xldf:place>
+    <section>element-designate</section>
+    <inside>group-decorativetransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-unlabel</section>
+    <inside>group-decorativetransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-anonymize</section>
+    <inside>group-decorativetransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-deanonymize</section>
+    <inside>group-decorativetransformation</inside>
+  </xldf:place>
+
+</xldf:sequence>

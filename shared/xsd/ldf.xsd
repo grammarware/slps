@@ -57,6 +57,7 @@
       <xsd:element name="p" type="xsd:string"/>
       <xsd:element name="list" type="ldf:SimpleList"/>
       <xsd:element name="formula" type="xsd:string"/>
+      <xsd:element name="sample" type="xsd:string"/>
       <xsd:element ref="bgf:production"/>
       <!-- 	later redo with MathML -->
       <!--<xsd:element ref="mml:math"/>-->

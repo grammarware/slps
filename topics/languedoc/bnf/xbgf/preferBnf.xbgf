@@ -35,16 +35,8 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  <xbgf:rename>
-    <nonterminal>
-      <from>expression</from>
-      <to>symbol</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:inline>label</xbgf:inline>
-  <xbgf:inline>terminal</xbgf:inline>
-  <xbgf:inline>nonterminal</xbgf:inline>
-  <xbgf:inline>selector</xbgf:inline>
+  <xbgf:reroot/>
+
   <xbgf:narrow>
     <bgf:expression>
       <star>
@@ -62,6 +54,17 @@
     </bgf:expression>
   </xbgf:narrow>
 
+  <xbgf:rename>
+    <nonterminal>
+      <from>expression</from>
+      <to>symbol</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:inline>label</xbgf:inline>
+  <xbgf:inline>terminal</xbgf:inline>
+  <xbgf:inline>nonterminal</xbgf:inline>
+  <xbgf:inline>selector</xbgf:inline>
+
   <xbgf:vertical>
     <nonterminal>symbol</nonterminal>
   </xbgf:vertical>
@@ -69,5 +72,4 @@
     <nonterminal>value</nonterminal>
   </xbgf:vertical>
 
-  <xbgf:reroot/>
 </xbgf:sequence>

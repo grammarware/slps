@@ -35,8 +35,9 @@
     </xsd:annotation>
     <xsd:choice>
       <xsd:element ref="xldf:insert"/>
-      <xsd:element ref="xldf:import"/>
-      <xsd:element ref="xldf:move"/>
+      <xsd:element ref="xldf:import-grammar"/>
+      <xsd:element ref="xldf:import-sample"/>
+      <xsd:element ref="xldf:place"/>
       <xsd:element ref="xldf:rename"/>
       <xsd:element ref="xldf:append"/>
       <xsd:element ref="xldf:add-section"/>
@@ -84,7 +85,7 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="move">
+  <xsd:element name="place">
     <xsd:annotation>
       <xsd:documentation>
         TBD
@@ -133,16 +134,30 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="import">
+  <xsd:element name="import-grammar">
     <xsd:annotation>
       <xsd:documentation>
-        Deprecated
+        TBD
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="target" type="xsd:string"/> <!-- IDREF -->
-        <xsd:element name="file" type="xsd:string"/> <!-- IDREF -->
+        <xsd:element name="target" type="xsd:string"/>        <!-- IDREF -->
+        <xsd:element name="file" type="xsd:string"/>          <!-- IDREF -->
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="import-sample">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="target" type="xsd:string"/>        <!-- IDREF -->
+        <xsd:element name="file" type="xsd:string"/>          <!-- IDREF -->
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
