@@ -27,6 +27,9 @@ rebuild:
 	make build
 
 samples:
+	cp ../transformation/xbgf/tests/distribute1.bgf distribute_before.bgf
+	cp ../transformation/xbgf/tests/distribute1.baseline distribute_after.bgf
+	../../shared/tools/xbgf2xbnf ../transformation/xbgf/tests/distribute1.xbgf distribute.xbnf
 	../../shared/tools/xbgf2xbnf bnf/xbgf/designate.xbgf designate.xbnf
 	../../shared/tools/xbgf2xbnf bnf/xbgf/preferBnf.xbgf preferBnf.xbnf
 	../../shared/tools/xbgf2xbnf bnf/xbgf/refactorBnf.xbgf refactorBnf.xbnf

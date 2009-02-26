@@ -50,6 +50,17 @@
     <file>bnf.bgf</file>
   </xldf:import-grammar>
 
+  <xldf:append>
+    <where>notation-section</where>
+    <content>
+      <p>
+        Any XBGF command is pretty-printed as the name of the transformation
+        and all the parameters (productions, expressions, etc) in brackets,
+        followed by a semicolon.
+      </p>
+    </content>
+  </xldf:append>
+
   <!-- compatibility section is about converging BGF and BNF -->
   <xldf:add-section>
     <compatibility>
@@ -147,7 +158,7 @@
         and top-level sequences differently in BNF to make them more appealing
         to the eye by avoiding unnecessary parenthesizing. The very specific
         upgrade command is run twice here to fold first the sequence and then
-        the choice. After that, the grammars fully converge.
+        the choice.
       </p>
     </content>
   </xldf:append>
@@ -156,6 +167,17 @@
     <target>compatibility-section</target>
     <file>refactorBnf.xbnf</file>
   </xldf:import-sample>
+
+  <xldf:append>
+    <where>compatibility-section</where>
+    <content>
+      <p>
+        After that, the grammars fully converge. The conclusion is that BNF language
+        plus empty grammars plus root elements is the same as BGF language plus
+        indentation rules plus layout rules plus terminal symbols.
+      </p>
+    </content>
+  </xldf:append>
 
   <!-- list of definitions -->
   <xldf:add-section>

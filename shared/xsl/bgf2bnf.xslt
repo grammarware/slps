@@ -144,7 +144,7 @@
       <xsl:text> | </xsl:text>
       <xsl:apply-templates select="./*"/>
     </xsl:for-each>
-    <xsl:text>)</xsl:text>
+    <xsl:text> )</xsl:text>
   </xsl:template>
 
   

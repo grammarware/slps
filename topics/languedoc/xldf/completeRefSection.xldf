@@ -56,17 +56,149 @@
   </xldf:insert>
 
   <xldf:place>
-    <section>element-factor</section>
-    <inside>group-refactoringtransformation</inside>
-  </xldf:place>
-  <xldf:place>
     <section>element-distribute</section>
     <inside>group-refactoringtransformation</inside>
   </xldf:place>
   <xldf:place>
+    <section>element-factor</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:append>
+    <where>element-factor</where>
+    <content>
+      <p>For example,</p>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-factor</target>
+    <file>distribute_before.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>element-factor</where>
+    <content>
+      <p>After using this transformation:</p>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>element-factor</target>
+    <file>distribute.xbnf</file>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>element-factor</where>
+    <content>
+      <p>Will look like this:</p>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-factor</target>
+    <file>distribute_after.bgf</file>
+  </xldf:import-grammar>
+  <xldf:place>
     <section>element-deyaccify</section>
     <inside>group-refactoringtransformation</inside>
   </xldf:place>
+  <xldf:append>
+    <where>element-deyaccify</where>
+    <content>
+      <p>
+        Deyaccification uses several general patterns. Left recursion like this:
+      </p>
+      <bgf:production>
+        <nonterminal>N</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>N</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>x</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+      <bgf:production>
+        <nonterminal>N</nonterminal>
+        <bgf:expression>
+          <nonterminal>y</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+      <p>
+        Becomes:
+      </p>
+      <bgf:production>
+        <nonterminal>N</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>y</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <star>
+                <bgf:expression>
+                  <nonterminal>x</nonterminal>
+                </bgf:expression>
+              </star>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+      <p>
+        Right recursion like this:
+      </p>
+      <bgf:production>
+        <nonterminal>N</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>x</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>N</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+      <bgf:production>
+        <nonterminal>N</nonterminal>
+        <bgf:expression>
+          <nonterminal>y</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+      <p>
+        Becomes:
+      </p>
+      <bgf:production>
+        <nonterminal>N</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <star>
+                <bgf:expression>
+                  <nonterminal>x</nonterminal>
+                </bgf:expression>
+              </star>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>y</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+      <p>
+        In either case, it is checked if x and y are the same. If they are, the result is more concise:
+      </p>
+      <bgf:production>
+        <nonterminal>N</nonterminal>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <nonterminal>x</nonterminal>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
+      </bgf:production>
+    </content>
+  </xldf:append>
   <xldf:place>
     <section>element-yaccify</section>
     <inside>group-refactoringtransformation</inside>

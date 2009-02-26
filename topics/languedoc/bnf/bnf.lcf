@@ -43,13 +43,7 @@
       <expand>tools</expand>/striptxbgf
     </command>
   </generator>
-  <generator>
-    <name>strips</name>
-    <command>
-      <expand>tools</expand>/stripsxbgf
-    </command>
-  </generator>
-
+ 
   <source>
     <name>bgf</name>
     <grammar>

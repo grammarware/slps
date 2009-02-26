@@ -44,7 +44,7 @@ def xldf_insert(cmd,tree):
    for el in cmd.findall('content/*'):
     if cx:
      if ctag==el.tag:
-	  cx += 1
+      cx += 1
      else:
       if cx==1:
        print ctag,
@@ -53,8 +53,8 @@ def xldf_insert(cmd,tree):
       cx = 1
       ctag = el.tag
     else:
-	 cx = 1
-	 ctag = el.tag
+     cx = 1
+     ctag = el.tag
     #print el.tag,
     cnt.insert(cnt_idx,ET.Element(el.tag,{}))
     cnt[cnt_idx].text = el.text
@@ -82,14 +82,33 @@ def xldf_append(cmd,tree):
   print '[----] xldf:append failed: target id',cmd.findtext('where'),'not found'
  else:
   print '[XLDF] append(',cmd.findtext('where'),',',
+  cx = 0
+  ctag = ''
   for p in cmd.findall('content/*'):
+   if cx:
+    if ctag==p.tag:
+     cx += 1
+    else:
+     if cx==1:
+      print ctag.replace('{'+bgfns+'}',''),
+     else:
+      print ctag.replace('{'+bgfns+'}',''),'*',cx,
+     cx = 1
+     ctag = p.tag
+   else:
+    cx = 1
+    ctag = p.tag
    #print found[-1].tag,found[-1][-1].tag
    if found[-1][-1].tag != 'content':
     found[-1].append(p)
     #found[-1].append(ET.Element('content',{}))
    else:
     found[-1][-1].append(p)
-   print p.tag,
+  if cx:
+   if cx==1:
+    print ctag.replace('{'+bgfns+'}',''),
+   else:
+    print ctag.replace('{'+bgfns+'}',''),'*',cx,
   print ')'
  return
 
@@ -190,7 +209,10 @@ def xldf_import_grammar(cmd,tree):
  else:
   cx = 0
   for p in gtree.findall('{'+bgfns+'}production'):
-   found[-1].append(p)
+   if found[-1][-1].tag != 'content':
+    found[-1].append(p)
+   else:
+    found[-1][-1].append(p)
    cx += 1
   if cx:
    print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file'),')','-',cx,'productions'
@@ -210,7 +232,10 @@ def xldf_import_sample(cmd,tree):
  else:
   el = ET.Element('sample',{})
   el.text = ''.join(sample.readlines())
-  found[-1].append(el)
+  if found[-1][-1].tag != 'content':
+   found[-1].append(el)
+  else:
+   found[-1][-1].append(el)
   print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file'),')'
  return
 

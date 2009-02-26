@@ -92,8 +92,8 @@
     </xsd:annotation>
     <xsd:choice>
       <xsd:element ref="xbgf:massage"/>
-      <xsd:element ref="xbgf:factor"/>
       <xsd:element ref="xbgf:distribute"/>
+      <xsd:element ref="xbgf:factor"/>
       <xsd:element ref="xbgf:deyaccify"/>
       <xsd:element ref="xbgf:yaccify"/>
       <xsd:element ref="xbgf:eliminate"/>
@@ -381,10 +381,26 @@
   <xsd:element name="deyaccify" type="bgf:nonterminal">
     <xsd:annotation>
       <xsd:documentation>
-        The definition of the given nonterminal is deyaccified.
-        That is, its definition is replaced by one that uses
+        Deyaccification is a widely used term that means `performing
+        activities of removing grammatical idiosyncrasies typical for
+        the tool called YACC'. YACC, or Yet Another Compiler Compiler,
+        was developed in the 1970s and has grown far beyond these boundaries
+        since then. However, it somehow became common practice to remain
+        within them even when grammar engineers do not use yacc as such
+        at all.
+      </xsd:documentation>
+      <xsd:documentation>
+        One of such limitations is the core target for this transformation:
+        yaccified constructions tend to prefer recursion over EBNF iteration.
+        The name of a nonterminal must be provided as an argument, then
+        the transformation engine checks if the grammar productions for this
+        nonterminal fit into one of the yaccified patterns. If not, the error
+        is reported, otherwise the definition is replaced by one that uses
         regular expression operators instead of epsilon, choice,
-        and recursion. Both left- and right-recursive forms
+        and recursion.
+      </xsd:documentation>
+      <xsd:documentation>
+        Both left- and right-recursive forms
         can be factored with this transformation.
       </xsd:documentation>
     </xsd:annotation>
@@ -1120,12 +1136,16 @@
   <xsd:element name="yaccify">
     <xsd:annotation>
       <xsd:documentation>
-        The given production is a horizontal definition of an optional
-        or repeating nonterminal, given in BNF-only expressiveness. The
-        defined nonterminal must be equivalently defined in EBNF-like
-        expressiveness in the input grammar. One may often wish to use
-        extract to first introduce a nonterminal for the optional or
-        repeating phrase.
+        This transformation is the reverse of deyaccify. The productions provided
+        as arguments must be yaccified with respect to the actual content of the
+        grammar. If the deyaccification process on them is successful and yields
+        the production that can be found in the grammar, it is removed and replaced
+        by these simpler definitions of an optional
+        or repeating nonterminal, given in BNF-only expressiveness.
+      </xsd:documentation>
+      <xsd:documentation>
+        Some complex yaccify cases require prior use of extract for introduction of
+        an nonterminal for the optional or repeating phrase.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
