@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30428</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9DF685A6-6572-47F9-8DE3-1E827BFDB62F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>java_lci</RootNamespace>
+    <AssemblyName>java-lci</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <None Include="..\..\shared\xsd\bgf.xsd">
+      <Link>bgf.xsd</Link>
+    </None>
+    <None Include="..\..\shared\xsd\lcf.xsd">
+      <Link>lcf.xsd</Link>
+    </None>
+    <None Include="..\..\shared\xsd\ldf.xsd">
+      <Link>ldf.xsd</Link>
+    </None>
+    <None Include="..\..\shared\xsd\xbgf.xsd">
+      <Link>xbgf.xsd</Link>
+    </None>
+    <None Include="..\..\shared\xsd\xldf.xsd">
+      <Link>xldf.xsd</Link>
+    </None>
+    <None Include="beautify_bgf.xbgf" />
+    <None Include="beautify_xbgf.xbgf" />
+    <None Include="bnf.bgf" />
+    <None Include="bnf\bnf.lcf" />
+    <None Include="bnf\xbgf\designate.xbgf" />
+    <None Include="bnf\xbgf\preferBnf.xbgf" />
+    <None Include="bnf\xbgf\refactorBnf.xbgf" />
+    <None Include="bnf\xbgf\stripTerminals.xbgf" />
+    <None Include="bnf\xbgf\stripWhitespace.xbgf" />
+    <None Include="xldf\completeDecorSection.xldf" />
+    <None Include="xldf\completeDecSection.xldf" />
+    <None Include="xldf\completeFoldSection.xldf" />
+    <None Include="xldf\completeIncSection.xldf" />
+    <None Include="xldf\completeIntro.xldf" />
+    <None Include="xldf\completeRefSection.xldf" />
+    <None Include="xldf\completeRevSections.xldf" />
+  </ItemGroup>
+</Project>

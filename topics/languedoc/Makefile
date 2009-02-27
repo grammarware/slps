@@ -40,6 +40,7 @@ clean:
 	rm -f xbgf*.bgf xbgf*.ldf xbgf.html xbgf.fo xbgf.pdf *.xbnf
 	rm -f bgf*.bgf ldf*.bgf ldf*.ldf ldf.fo ldf.pdf
 	rm -f *.aux *.log *.toc *.tex
+	rm -f distribute_*.bgf
 
 check:
 	ls -1 *.xbgf | xargs -n1 ${validator} xbgf

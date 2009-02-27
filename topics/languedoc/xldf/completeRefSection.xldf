@@ -15,7 +15,7 @@
     <section>element-massage</section>
     <inside>group-refactoringtransformation</inside>
   </xldf:place>
-  
+
   <xldf:insert>
     <after>
       <p>
@@ -221,6 +221,10 @@
   </xldf:place>
   <xldf:place>
     <section>element-horizontal</section>
+    <inside>group-refactoringtransformation</inside>
+  </xldf:place>
+  <xldf:place>
+    <section>element-rename</section>
     <inside>group-refactoringtransformation</inside>
   </xldf:place>
   <xldf:place>

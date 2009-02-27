@@ -20,11 +20,29 @@
     <inside>group-decorativetransformation</inside>
   </xldf:place>
   <xldf:place>
+    <section>element-deanonymize</section>
+    <inside>group-decorativetransformation</inside>
+  </xldf:place>
+  <xldf:append>
+    <where>element-anonymize</where>
+    <content>
+      <p>
+        Given the input BGF and a clear goal to strip all selectors,
+        it becomes trivial to generate a list of anonymize commands that,
+        if executed on the same grammar, would produce a selector-free
+        yet structurally equivalent grammar. We used such a generator
+        called strips in the FL case study as the final stage to converge
+        the abstract syntax (with selectors) with the concrte syntax (with
+        terminals).
+      </p>
+    </content>
+  </xldf:append>
+  <xldf:place>
     <section>element-anonymize</section>
     <inside>group-decorativetransformation</inside>
   </xldf:place>
   <xldf:place>
-    <section>element-deanonymize</section>
+    <section>element-dump</section>
     <inside>group-decorativetransformation</inside>
   </xldf:place>
 

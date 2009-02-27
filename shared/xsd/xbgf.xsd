@@ -42,10 +42,6 @@
       <xsd:group ref="xbgf:decorativetransformation"/>
       <!-- status unclear -->
       <xsd:element ref="xbgf:reroot"/>
-      <!-- debug -->
-      <xsd:element ref="xbgf:dump"/>
-      <!-- semantics unclear -->
-      <xsd:element ref="xbgf:rename"/>
       <!-- deprecated -->
       <xsd:element ref="xbgf:strip"/>
     </xsd:choice>
@@ -101,6 +97,9 @@
       <xsd:element ref="xbgf:import"/>
       <xsd:element ref="xbgf:vertical"/>
       <xsd:element ref="xbgf:horizontal"/>
+      <!-- semantics unclear -->
+      <xsd:element ref="xbgf:rename"/>
+      <!-- do we need them? -->
       <xsd:element ref="xbgf:rassoc"/>
       <xsd:element ref="xbgf:lassoc"/>
     </xsd:choice>
@@ -214,8 +213,10 @@
     <xsd:choice>
       <xsd:element ref="xbgf:designate"/>
       <xsd:element ref="xbgf:unlabel"/>
-      <xsd:element ref="xbgf:anonymize"/>
       <xsd:element ref="xbgf:deanonymize"/>
+      <xsd:element ref="xbgf:anonymize"/>
+      <!-- debug -->
+      <xsd:element ref="xbgf:dump"/>
     </xsd:choice>
   </xsd:group>
 
@@ -293,8 +294,12 @@
   <xsd:element name="deanonymize">
     <xsd:annotation>
       <xsd:documentation>
-        Adding a selector to the existing production.
-        Selectors must be introduced one at a time, and the one being introduced needs to be marked.
+        While labels are only used to name individual productions,
+        selectors can name arbitrary parts of any BGF expression.
+        This command allows to add a selector to the existing production.
+        To avoid disambiguations, the whole production is required
+        as an argument, with the newly introduced part being marked.
+        Selectors must be introduced one at a time.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -355,7 +360,14 @@
     <xsd:annotation>
       <xsd:documentation>
         An unlabeled production is labeled. The argument production is
-        the intended result, i.e., the labeled production.
+        the intended result, i.e., the labeled production---the transformation
+        refuses to work if the argument production contains no label.
+      </xsd:documentation>
+      <xsd:documentation>
+        Labelling transformations serve two roles usually: they can be used
+        directly to make the labels in both grammars agree so that they can
+        converge; or they are used to mark the target for the transformations
+        that follow them and perform local manipulations.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -368,7 +380,7 @@
   <xsd:element name="unlabel">
     <xsd:annotation>
       <xsd:documentation>
-        Strips an existing production from a label.
+        A reverse of designate that strips an existing production from a label.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -426,9 +438,15 @@
   <xsd:element name="dump">
     <xsd:annotation>
       <xsd:documentation>
-        A debugging tool.
-        Upon arrival at current transformation, the input grammar is dumped.
-        See the file xbgf.log.
+        Not so much of a decorative transformation, but more of a
+        debugging tool. When the dump command is encountered,
+        the transformation sequence stops and the grammar in its
+        current state is dumped to the file xbgf.log.
+      </xsd:documentation>
+      <xsd:documentation>
+        The contents of xbgf.log can be used as an input for grammar
+        comparator or for copy-pasting productions and expressions
+        from the grammar to the construction point of the XBGF sequence.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType/>
@@ -1085,7 +1103,8 @@
   <xsd:element name="anonymize">
     <xsd:annotation>
       <xsd:documentation>
-        Removes one (marked) selector from an existing definition.
+        A reverse of deanonymize that strips one (marked) selector
+        from an existing definition.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>

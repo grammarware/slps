@@ -188,6 +188,16 @@
         <name>grammar</name>
         <definition>
           <p>A set of interdependent productions.</p>
+          <bgf:production>
+            <nonterminal>grammar</nonterminal>
+            <bgf:expression>
+              <star>
+                <bgf:expression>
+                  <nonterminal>production</nonterminal>
+                </bgf:expression>
+              </star>
+            </bgf:expression>
+          </bgf:production>
         </definition>
       </term>
     </definitions>
