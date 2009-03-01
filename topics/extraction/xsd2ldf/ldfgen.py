@@ -52,7 +52,7 @@ def main(xsdfile,bgffile,ldffile):
  el = ET.SubElement(section,'foreword')
  el = ET.SubElement(el,'content')
  for p in stree.findall('/{%s}annotation/{%s}documentation' % (xsdns,xsdns))[1:]:
-  pel = ET.SubElement(el,'p')
+  pel = ET.SubElement(el,'text')
   pel.text = p.text
 
  if stree.findall('/{'+xsdns+'}import'):
@@ -81,7 +81,7 @@ def main(xsdfile,bgffile,ldffile):
   el = ET.SubElement(section,'description')
   el = ET.SubElement(el,'content')
   for p in nt.findall('./{%s}annotation/{%s}documentation' % (xsdns,xsdns)):
-   pel = ET.SubElement(el,'p')
+   pel = ET.SubElement(el,'text')
    pel.text = p.text
   # Need to decide whether to put productions inside description subsections
   #section.append(grammar[nt.attrib['name']])

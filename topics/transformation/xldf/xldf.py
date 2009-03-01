@@ -58,6 +58,9 @@ def xldf_insert(cmd,tree):
     #print el.tag,
     cnt.insert(cnt_idx,ET.Element(el.tag,{}))
     cnt[cnt_idx].text = el.text
+    for k in el:
+     cnt[cnt_idx].append(k)
+    #print el.tail
     cnt_idx += 1
    if cx:
     if cx==1:

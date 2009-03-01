@@ -1047,7 +1047,7 @@
         of the given nonterminal usage and replaces such occurrences with the
         defining expression of that nonterminal. By default the scope of the
         transformation is the full grammar, but it can be limited to all the
-        definitions of one nonterminal or to one labelled definition. Regardless
+        definitions of one nonterminal or to one labelled production. Regardless
         of the specified scope, unfolding is not applied to the definition
         of the argument nonterminal.
       </xsd:documentation>

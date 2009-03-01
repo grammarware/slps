@@ -126,9 +126,9 @@
   </xsl:template>
 
   <xsl:template match="formula">
-    <xsl:text>$$</xsl:text>
+    <xsl:text>$</xsl:text>
     <xsl:value-of select="."/>
-    <xsl:text>$$</xsl:text>
+    <xsl:text>$</xsl:text>
   </xsl:template>
 
   <xsl:template name="process-text">
@@ -142,8 +142,24 @@
         </xsl:when>
         <xsl:when test="local-name() = 'title'"/>
         <xsl:when test="local-name() = 'author'"/>
-        <xsl:when test="local-name() = 'p'">
-          <xsl:value-of select="."/>
+        <xsl:when test="local-name() = 'empty'"/>
+        <xsl:when test="local-name() = 'text'">
+          <xsl:for-each select="./node()">
+            <xsl:choose>
+              <xsl:when test="local-name() = 'keyword'">
+                <xsl:text>\textbf{</xsl:text>
+                <xsl:value-of select="."/>
+                <xsl:text>}</xsl:text>
+              </xsl:when>
+              <!--
+              <xsl:when test="namespace-uri() = 'http://planet-sl.org/ldf'">
+                <xsl:apply-templates select="."/>
+              </xsl:when>-->
+              <xsl:otherwise>
+                <xsl:copy-of select="."/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:for-each>
         </xsl:when>
         <xsl:when test="local-name() = 'list'">
           <xsl:apply-templates select="."/>
@@ -339,20 +355,43 @@
 	      </xsl:text>
   </xsl:template>
 
-  <!--xsl:value-of select="."/-->
-  <xsl:template match="text">
-    <p xmlns="http://www.w3.org/1999/xhtml">
-      <xsl:for-each select="node()">
-        <xsl:choose>
-          <xsl:when test="namespace-uri() = 'http://planet-sl.org/ldx'">
-            <xsl:apply-templates select="."/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:copy-of select="."/>
-          </xsl:otherwise>
-        </xsl:choose>
+  <xsl:template match="table">
+    <xsl:text>
+\begin{center}\begin{tabular}{</xsl:text>
+    <xsl:for-each select="./row[1]/cell">
+      <xsl:text>l</xsl:text>
+    </xsl:for-each>
+    <xsl:text>}</xsl:text>
+    <xsl:if test="./header">
+      <xsl:for-each select="./header">
+        <xsl:call-template name="process-text">
+          <xsl:with-param name="text" select="cell[1]"/>
+        </xsl:call-template>
+        <xsl:for-each select="cell[position()>1]">
+          <xsl:text>&amp;</xsl:text>
+          <xsl:call-template name="process-text">
+            <xsl:with-param name="text" select="."/>
+          </xsl:call-template>
+        </xsl:for-each>
+        <xsl:text>\\</xsl:text>
       </xsl:for-each>
-    </p>
+      <xsl:text>\hline</xsl:text>
+    </xsl:if>
+    <xsl:for-each select="./row">
+      <xsl:call-template name="process-text">
+        <xsl:with-param name="text" select="cell[1]"/>
+      </xsl:call-template>
+      <xsl:for-each select="cell[position()>1]">
+        <xsl:text>&amp;</xsl:text>
+        <xsl:call-template name="process-text">
+          <xsl:with-param name="text" select="."/>
+        </xsl:call-template>
+      </xsl:for-each>
+      <xsl:text>\\</xsl:text>
+    </xsl:for-each>
+    <xsl:text>\hline\end{tabular}\end{center}
+
+</xsl:text>
   </xsl:template>
 
 </xsl:stylesheet>

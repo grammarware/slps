@@ -52,9 +52,24 @@
     </xsd:sequence>
   </xsd:complexType>
 
+  <xsd:complexType name="TableRow">
+    <xsd:sequence>
+      <xsd:element name="cell" maxOccurs="unbounded" type="ldf:SimpleText"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="SimpleTable">
+    <xsd:sequence>
+      <xsd:element name="header" type="ldf:TableRow" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="row" type="ldf:TableRow" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
   <xsd:group name="insideSimpleText">
     <xsd:choice>
-      <xsd:element name="p" type="xsd:string"/>
+      <xsd:element name="empty" nillable="true"/>
+      <xsd:element name="text" type="ldf:mixedType"/>
+      <xsd:element name="table" type="ldf:SimpleTable"/>
       <xsd:element name="list" type="ldf:SimpleList"/>
       <xsd:element name="formula" type="xsd:string"/>
       <xsd:element name="sample" type="xsd:string"/>
@@ -499,5 +514,13 @@
     </xsd:sequence>
     <xsd:anyAttribute namespace="##other" processContents="lax"/>
   </xsd:complexType>
+
+  <xsd:element name="keyword" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>
+        Keywords are usually printed in bolder font weight.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
 
 </xsd:schema>
