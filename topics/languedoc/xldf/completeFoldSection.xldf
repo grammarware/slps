@@ -2,6 +2,7 @@
 <xldf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
+  xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <!-- compose a section on folding transformations -->
@@ -17,22 +18,25 @@
   </xldf:place>
   <xldf:insert>
     <before>
-      <p>
+      <text>
         The definition that is being unfolded is assumed to be horisontal
         (see the section on refactorings for more information about horisontal
         and vertical definitions).
-      </p>
+      </text>
     </before>
     <content>
-      <p>
-        Almost all the unfold transformations used in Java Language Specification
-        case are restricted in scope by a nonterminal. The reason for such statistics
-        is that when the language engineer wants to give up the nonterminal, he uses
-        the inline transformations. On the other hand, unfold usually happens as a
-        part of sequences with fold, downgrade, disappear, deyaccify, distribute,
+      <text>
+        Almost all the <ldf:keyword>unfold</ldf:keyword> transformations used in Java
+        Language Specification case study are restricted in scope by a nonterminal.
+        The reason for such statistics is that when the language engineer wants to
+        give up the nonterminal, he uses the <ldf:keyword>inline</ldf:keyword>
+        transformations. On the other hand, <ldf:keyword>unfold</ldf:keyword> usually
+        happens as a part of sequences with <ldf:keyword>fold</ldf:keyword>,
+        <ldf:keyword>downgrade</ldf:keyword>, <ldf:keyword>disappear</ldf:keyword>,
+        <ldf:keyword>deyaccify</ldf:keyword>, <ldf:keyword>distribute</ldf:keyword>,
         etc.---in which case it is only natural to try to limit the impact of every
         step.
-      </p>
+      </text>
     </content>
   </xldf:insert>
   <xldf:place>
@@ -46,7 +50,7 @@
   <xldf:append>
     <where>element-inline</where>
     <content>
-      <p>
+      <text>
         The inline transformation is by far the most used in Java Language Specification
         case. One of the reasons is what we call layering: in particular expressions
         and statements are introduced in the $G_j^R$ with a set of related nonterminals:
@@ -58,7 +62,7 @@
         that demonstrates that targets that converge only `readable' grammars require up to
         ten inline transformations each, while each target that takes both readable and
         implementable grammars in, contains 70--100 inline transformations in convergence path.
-      </p>
+      </text>
     </content>
   </xldf:append>
   <xldf:place>
@@ -68,13 +72,13 @@
   <xldf:append>
     <where>element-extract</where>
     <content>
-      <p>
+      <text>
         As seen from the experience gained from Java Language Specification case,
         it is highly unusual for extract to have limited scope. However, sometimes
         a limited impact is desired in order to avoid excessive subsequent unfoldings
         when the convergence requests for having several nonterminals with similar
         definitions.
-      </p>
+      </text>
     </content>
   </xldf:append>
   <xldf:place>
@@ -84,7 +88,7 @@
   <xldf:append>
     <where>element-abridge</where>
     <content>
-      <p>
+      <text>
         Reflexive chain productions are rarely encountered explicitly, so it calls for more clear explanation.
         However, after a series of transformations one can arrive at the point of having such
         a production and, quite naturally, wanting to get rid of it. An example of a transformation
@@ -93,7 +97,7 @@
         recursive composition, and after stripping away terminals and merging layers, these bracketing
         constructions become reflexive chain productions. The Factorial Language case has shown the need
         for it.
-      </p>
+      </text>
     </content>
   </xldf:append>
   <xldf:place>

@@ -71,4 +71,9 @@
     <None Include="xldf\completeRefSection.xldf" />
     <None Include="xldf\completeRevSections.xldf" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\shared\xsl\ldf2tex.xslt">
+      <Link>ldf2tex.xslt</Link>
+    </Content>
+  </ItemGroup>
 </Project>

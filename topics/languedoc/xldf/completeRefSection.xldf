@@ -2,7 +2,8 @@
 <xldf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
-  xmlns:xldf="http://planet-sl.org/xldf">
+  xmlns:xldf="http://planet-sl.org/xldf"
+  xmlns:ldf="http://planet-sl.org/ldf">
 
   <!-- compose a section on refactoring transformations -->
   <xldf:rename>
@@ -18,40 +19,311 @@
 
   <xldf:insert>
     <after>
-      <p>
+      <text>
         There are two expression arguments: one to be matched, and another one that
         replaces the matched expression. One of them must be in a `massage relation' to
         the other.
-      </p>
+      </text>
     </after>
     <content>
-      <p>The massage relation is defined as follows:</p>
-      <formula>(x^+)? = x^\star</formula>
-      <formula>(x^\star)? = x^\star</formula>
-      <formula>(x?)? = x?</formula>
-      <formula>(x^\star)^\star = x^\star</formula>
-      <formula>(x^+)^\star = x^\star</formula>
-      <formula>(x?)^\star = x^\star</formula>
-      <formula>(x^+)^+ = x^+</formula>
-      <formula>(x^\star)^+ = x^\star</formula>
-      <formula>(x?)^+ = x^\star</formula>
-      <p>The following formulae are more complicated examples of masssage:</p>
-      <formula>x|\varepsilon   = x?</formula>
-      <formula>x|x = x</formula>
-      <formula>x^+|\varepsilon  = x^\star</formula>
-      <formula>x^+|x? = x^\star</formula>
-      <formula>x x^\star = x^+</formula>
-      <formula>x (yx)^\star = (xy)^\star x</formula>
+      <text>
+        The massage relation is defined as follows. First of all, a choice of any two
+        symbols with EBNF modifiers can be refactored to a single modifier according to
+        the table below:
+      </text>
+      <table>
+        <header>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <formula>\varepsilon</formula>
+          </cell>
+          <cell>
+            <formula>x</formula>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </header>
+        <row>
+          <cell>
+            <formula>\varepsilon</formula>
+          </cell>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>x</formula>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x</formula>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </row>
+      </table>
+      <text>
+        Second, a composion of two EBNF modifers can be massaged to one modifier according
+        to the table below:
+      </text>
+      <table>
+        <header>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </header>
+        <row>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </row>
+      </table>
+      <text>
+        Sequential composition of symbols is more complicated since
+        it does not necessarily yield an EBNF modifier (those modifiers
+        are not expressive enough to denote `one or two' repetitions,
+        `two or more', etc). The following table shows the possible
+        <ldf:keyword>massage</ldf:keyword> manipulations:
+      </text>
+      <table>
+        <header>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <formula>x</formula>
+          </cell>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </header>
+        <row>
+          <cell>
+            <formula>x</formula>
+          </cell>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>x?</formula>
+          </cell>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <empty/>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+          <cell>
+            <formula>x^+</formula>
+          </cell>
+          <cell>
+            <formula>x^\star</formula>
+          </cell>
+        </row>
+      </table>
+      <text>
+        Here are more complicated rules for <ldf:keyword>massage</ldf:keyword>:
+      </text>
+      <formula>x (yx)? = (xy)? x</formula>
       <formula>x (yx)^+ = (xy)^+ x</formula>
-      <p>Another rule that is harder to express is when</p>
+      <formula>x (yx)^\star = (xy)^\star x</formula>
+      <text>Another rule that is harder to express is when</text>
       <formula>x? = x</formula>
-      <p>in the cases when x is optional anyway, i.e. it is one of the following:</p>
+      <text>in the cases when x is optional anyway, i.e. it is one of the following:</text>
       <formula>\varepsilon|...</formula>
-      <formula>y?</formula>
-      <formula>y^\star</formula>
+      <formula>a?</formula>
+      <formula>a^\star</formula>
       <formula>y|...</formula>
       <formula>y z ...</formula>
-      <p>where y and z are also recursively optional anyway.</p>
+      <text>where y and z are also recursively optional anyway, and a not necessary so.</text>
     </content>
   </xldf:insert>
 
@@ -66,7 +338,7 @@
   <xldf:append>
     <where>element-factor</where>
     <content>
-      <p>For example,</p>
+      <text>For example,</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
@@ -76,7 +348,7 @@
   <xldf:append>
     <where>element-factor</where>
     <content>
-      <p>After using this transformation:</p>
+      <text>After using this transformation:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>
@@ -86,7 +358,7 @@
   <xldf:append>
     <where>element-factor</where>
     <content>
-      <p>Will look like this:</p>
+      <text>Will look like this:</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
@@ -100,9 +372,9 @@
   <xldf:append>
     <where>element-deyaccify</where>
     <content>
-      <p>
+      <text>
         Deyaccification uses several general patterns. Left recursion like this:
-      </p>
+      </text>
       <bgf:production>
         <nonterminal>N</nonterminal>
         <bgf:expression>
@@ -122,9 +394,9 @@
           <nonterminal>y</nonterminal>
         </bgf:expression>
       </bgf:production>
-      <p>
+      <text>
         Becomes:
-      </p>
+      </text>
       <bgf:production>
         <nonterminal>N</nonterminal>
         <bgf:expression>
@@ -142,9 +414,9 @@
           </sequence>
         </bgf:expression>
       </bgf:production>
-      <p>
+      <text>
         Right recursion like this:
-      </p>
+      </text>
       <bgf:production>
         <nonterminal>N</nonterminal>
         <bgf:expression>
@@ -164,9 +436,9 @@
           <nonterminal>y</nonterminal>
         </bgf:expression>
       </bgf:production>
-      <p>
+      <text>
         Becomes:
-      </p>
+      </text>
       <bgf:production>
         <nonterminal>N</nonterminal>
         <bgf:expression>
@@ -184,9 +456,9 @@
           </sequence>
         </bgf:expression>
       </bgf:production>
-      <p>
+      <text>
         In either case, it is checked if x and y are the same. If they are, the result is more concise:
-      </p>
+      </text>
       <bgf:production>
         <nonterminal>N</nonterminal>
         <bgf:expression>
