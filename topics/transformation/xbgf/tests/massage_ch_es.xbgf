@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -8,23 +9,20 @@
           <epsilon/>
         </bgf:expression>
         <bgf:expression>
-          <plus>
+          <star>
             <bgf:expression>
-            <nonterminal>function</nonterminal>
+              <nonterminal>bar</nonterminal>
             </bgf:expression>
-          </plus>
+          </star>
         </bgf:expression>
       </choice>
     </bgf:expression>
     <bgf:expression>
       <star>
         <bgf:expression>
-          <nonterminal>function</nonterminal>
+          <nonterminal>bar</nonterminal>
         </bgf:expression>
       </star>
     </bgf:expression>
-    <in>
-      <label>main</label>
-    </in>
   </xbgf:massage>
 </xbgf:sequence>

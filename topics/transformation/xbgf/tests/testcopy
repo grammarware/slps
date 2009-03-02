@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo Copying...
+cp $1.bgf $2.bgf
+cp $1.baseline $2.baseline
+cp $1.xbgf $2.xbgf
+echo Test case copied.

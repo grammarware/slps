@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo Attempting...
+svn mv $1.bgf $2.bgf
+svn mv $1.baseline $2.baseline
+svn mv $1.xbgf $2.xbgf
+rm -f $1.out $1.log
+echo Test case renamed.
