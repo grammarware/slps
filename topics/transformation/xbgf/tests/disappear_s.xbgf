@@ -3,25 +3,25 @@
   xmlns:xbgf="http://planet-sl.org/xbgf">
   <xbgf:disappear>
     <bgf:production>
-      <nonterminal>a</nonterminal>
+      <nonterminal>foo</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>b</nonterminal>
+            <nonterminal>bar</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <marked>
               <bgf:expression>
                 <star>
                   <bgf:expression>
-                    <nonterminal>d</nonterminal>
+                    <nonterminal>wex</nonterminal>
                   </bgf:expression>
                 </star>
               </bgf:expression>
             </marked>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>c</nonterminal>
+            <nonterminal>zap</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>

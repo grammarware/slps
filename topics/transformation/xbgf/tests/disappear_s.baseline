@@ -1,13 +1,13 @@
 <bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
   <bgf:production>
-    <nonterminal>a</nonterminal>
+    <nonterminal>foo</nonterminal>
     <bgf:expression>
       <sequence>
         <bgf:expression>
-          <nonterminal>b</nonterminal>
+          <nonterminal>bar</nonterminal>
         </bgf:expression>
         <bgf:expression>
-          <nonterminal>c</nonterminal>
+          <nonterminal>zap</nonterminal>
         </bgf:expression>
       </sequence>
     </bgf:expression>

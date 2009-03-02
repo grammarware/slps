@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <nonterminal>bar</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>zap</nonterminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>bar</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>zap</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+  </xbgf:massage>
+</xbgf:sequence>
