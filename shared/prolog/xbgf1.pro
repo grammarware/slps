@@ -610,40 +610,59 @@ massage(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
 massage_bothways(X1,X2) :- massage_rules(X1,X2), !.
 massage_bothways(X1,X2) :- massage_rules(X2,X1), !.
 
-% Deprecated
+% Deprecated - please use anonymize/deanonymize instead!
 massage_rules(s(_,X),X).
 
 massage_rules(?(s(S,X)),s(S,?(X))).
 massage_rules(*(s(S,X)),s(S,*(X))).
 massage_rules(+(s(S,X)),s(S,+(X))).
 
+%% All possible composition combinations
+% ?(...)
+massage_rules(?(?(X)),?(X)).
 massage_rules(?(+(X)),*(X)).
 massage_rules(?(*(X)),*(X)).
-massage_rules(?(?(X)),?(X)).
-massage_rules(*(*(X)),*(X)).
-massage_rules(*(+(X)),*(X)).
-massage_rules(*(?(X)),*(X)).
+% +(...)
+massage_rules(+(?(X)),*(X)).
 massage_rules(+(+(X)),+(X)).
 massage_rules(+(*(X)),*(X)).
-massage_rules(+(?(X)),*(X)).
-massage_rules(?(X),';'(L)) :- length(L,2),member(X,L),member(true,L).
+% *(...)
+massage_rules(*(?(X)),*(X)).
+massage_rules(*(+(X)),*(X)).
+massage_rules(*(*(X)),*(X)).
+%% All possible choice combinations
+% true|...
+%massage_rules(?(';'([X|L1])),';'([L2])) :- append(L3,L1,L2), length(L3,2),member(X, L3),member(true,L3).
+massage_rules(?(X),';'(L)) :- length(L,2),member(  X, L),member(true,L).
+massage_rules(?(X),';'(L)) :- length(L,2),member(?(X),L),member(true,L).
 massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(true,L).
+massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(true,L).
+% x|...
+massage_rules(X,';'([s(_,X),s(_,X)])).
+massage_rules(?(X),';'(L)) :- length(L,2),member(?(X),L),member(X,L).
+massage_rules(+(X),';'(L)) :- length(L,2),member(+(X),L),member(X,L).
+massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(X,L).
+% x?|...
 massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(?(X),L).
-massage_rules(+(X),','([X,*(X)])).
-massage_rules(','([X,*(','([Y,X]))]),','([*(','([X,Y])),X])).
+massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(?(X),L).
+% x+|...
+massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(+(X),L).
+%% All possible sequential combinations
+massage_rules(*(X),','([*(X),*(X)])).
+massage_rules(+(X),','(L)) :- length(L,2),member(  X, L),member(*(X),L).
+massage_rules(+(X),','(L)) :- length(L,2),member(+(X),L),member(?(X),L).
+massage_rules(*(X),','(L)) :- length(L,2),member(*(X),L),member(?(X),L).
+massage_rules(+(X),','(L)) :- length(L,2),member(+(X),L),member(*(X),L).
+%% Miscellaneous
+massage_rules(','([X,?(','([Y,X]))]),','([?(','([X,Y])),X])).
 massage_rules(','([X,+(','([Y,X]))]),','([+(','([X,Y])),X])).
-massage_rules(?(X),X) :- optional_anyway(X).
-massage_rules(';'([X,Y]),N) :- equal_anyway(N,X),equal_anyway(N,Y).
-
-optional_anyway(true).
-optional_anyway(?(_)).
-optional_anyway(*(_)).
-optional_anyway(';'(Xs)) :- member(X,Xs), optional_anyway(X).
-optional_anyway(','(Xs)) :- maplist(xbgf1:optional_anyway,Xs).
-
-equal_anyway(X,X).
-equal_anyway(X,Y) :- massage_rules(X,Y).
-equal_anyway(X,Y) :- massage_rules(Y,X).
+massage_rules(','([X,*(','([Y,X]))]),','([*(','([X,Y])),X])).
+%% Binary distributivity of optionality
+massage_rules(?(','([?(X),Y])),','([?(X),?(Y)])).
+massage_rules(?(','([X,?(Y)])),','([?(X),?(Y)])).
+massage_rules(?(','([*(X),Y])),','([*(X),?(Y)])).
+massage_rules(?(','([X,*(Y)])),','([?(X),*(Y)])).
+massage_rules(?(';'([X,Y])),';'([?(X),?(Y)])).
 
 %
 % p([l(permute)], f, n(p))

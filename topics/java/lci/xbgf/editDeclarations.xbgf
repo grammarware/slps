@@ -1379,7 +1379,7 @@
     </in>
   </xbgf:fold>
 
-  <!-- ISSUE CORRECT
+  <!--
   Fixing brutally
   
    - Fail: ArrayInitializer.
@@ -1387,31 +1387,39 @@
      vs.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
   -->
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>TMP</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>VariableInitializer</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>VariableInitializer</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
   <xbgf:massage>
     <bgf:expression>
       <sequence>
         <bgf:expression>
           <optional>
             <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <nonterminal>VariableInitializer</nonterminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <star>
-                    <bgf:expression>
-                      <sequence>
-                        <bgf:expression>
-                          <terminal>,</terminal>
-                        </bgf:expression>
-                        <bgf:expression>
-                          <nonterminal>VariableInitializer</nonterminal>
-                        </bgf:expression>
-                      </sequence>
-                    </bgf:expression>
-                  </star>
-                </bgf:expression>
-              </sequence>
+              <nonterminal>TMP</nonterminal>
             </bgf:expression>
           </optional>
         </bgf:expression>
@@ -1429,29 +1437,7 @@
         <bgf:expression>
           <sequence>
             <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <sequence>
-                    <bgf:expression>
-                      <nonterminal>VariableInitializer</nonterminal>
-                    </bgf:expression>
-                    <bgf:expression>
-                      <star>
-                        <bgf:expression>
-                          <sequence>
-                            <bgf:expression>
-                              <terminal>,</terminal>
-                            </bgf:expression>
-                            <bgf:expression>
-                              <nonterminal>VariableInitializer</nonterminal>
-                            </bgf:expression>
-                          </sequence>
-                        </bgf:expression>
-                      </star>
-                    </bgf:expression>
-                  </sequence>
-                </bgf:expression>
-              </optional>
+              <nonterminal>TMP</nonterminal>
             </bgf:expression>
             <bgf:expression>
               <optional>
@@ -1465,54 +1451,7 @@
       </optional>
     </bgf:expression>
   </xbgf:massage>
-  <xbgf:narrow>
-    <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <nonterminal>VariableInitializer</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <star>
-                <bgf:expression>
-                  <sequence>
-                    <bgf:expression>
-                      <terminal>,</terminal>
-                    </bgf:expression>
-                    <bgf:expression>
-                      <nonterminal>VariableInitializer</nonterminal>
-                    </bgf:expression>
-                  </sequence>
-                </bgf:expression>
-              </star>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </optional>
-    </bgf:expression>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <nonterminal>VariableInitializer</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <star>
-            <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <terminal>,</terminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>VariableInitializer</nonterminal>
-                </bgf:expression>
-              </sequence>
-            </bgf:expression>
-          </star>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
-  </xbgf:narrow>
+  <xbgf:inline>TMP</xbgf:inline>
 
   <!-- BREFACTOR 
   Can't really match this
