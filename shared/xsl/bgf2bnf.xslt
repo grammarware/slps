@@ -112,7 +112,18 @@
   <xsl:template match="selectable">
     <xsl:value-of select="selector"/>
     <xsl:text>::</xsl:text>
-    <xsl:apply-templates select="bgf:expression"/>
+    <xsl:choose>
+      <xsl:when test="local-name(bgf:expression/*) = 'star'
+                   or local-name(bgf:expression/*) = 'optional'
+                   or local-name(bgf:expression/*) = 'plus'">
+        <xsl:text>(</xsl:text>
+        <xsl:apply-templates select="bgf:expression"/>
+        <xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="bgf:expression"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="sequence">

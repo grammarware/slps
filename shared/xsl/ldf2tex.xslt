@@ -125,12 +125,6 @@
     <xsl:text>\end{description}</xsl:text>
   </xsl:template>
 
-  <xsl:template match="formula">
-    <xsl:text>$</xsl:text>
-    <xsl:value-of select="."/>
-    <xsl:text>$</xsl:text>
-  </xsl:template>
-
   <xsl:template name="process-text">
     <xsl:param name="text"/>
     <xsl:for-each select="$text/node()">
@@ -165,7 +159,15 @@
           <xsl:apply-templates select="."/>
         </xsl:when>
         <xsl:when test="local-name() = 'formula'">
-          <xsl:apply-templates select="."/>
+          <xsl:text>$</xsl:text>
+          <xsl:if test="local-name($text) != 'cell'">
+            <xsl:text>$</xsl:text>
+          </xsl:if>
+          <xsl:value-of select="."/>
+          <xsl:text>$</xsl:text>
+          <xsl:if test="local-name($text) != 'cell'">
+            <xsl:text>$</xsl:text>
+          </xsl:if>
         </xsl:when>
         <xsl:when test="local-name() = 'production'">
           <xsl:text>
@@ -359,7 +361,7 @@
     <xsl:text>
 \begin{center}\begin{tabular}{</xsl:text>
     <xsl:for-each select="./row[1]/cell">
-      <xsl:text>l</xsl:text>
+      <xsl:text>c</xsl:text>
     </xsl:for-each>
     <xsl:text>}</xsl:text>
     <xsl:if test="./header">

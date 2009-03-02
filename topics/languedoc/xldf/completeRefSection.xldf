@@ -29,7 +29,8 @@
       <text>
         The massage relation is defined as follows. First of all, a choice of any two
         symbols with EBNF modifiers can be refactored to a single modifier according to
-        the table below:
+        the table below (parenthesized expressions are not implemented directly, but
+        covered by other variants):
       </text>
       <table>
         <header>
@@ -57,7 +58,7 @@
             <formula>\varepsilon</formula>
           </cell>
           <cell>
-            <empty/>
+            <formula>(\varepsilon)</formula>
           </cell>
           <cell>
             <formula>x?</formula>
@@ -103,7 +104,7 @@
             <formula>x?</formula>
           </cell>
           <cell>
-            <formula>x?</formula>
+            <formula>(x?)</formula>
           </cell>
           <cell>
             <formula>x^\star</formula>
@@ -126,7 +127,7 @@
             <formula>x^\star</formula>
           </cell>
           <cell>
-            <formula>x^+</formula>
+            <formula>(x^+)</formula>
           </cell>
           <cell>
             <formula>x^\star</formula>
@@ -149,7 +150,7 @@
             <formula>x^\star</formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>(x^\star)</formula>
           </cell>
         </row>
       </table>
