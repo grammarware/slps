@@ -16,8 +16,6 @@ elif [ ! -r $2 ]; then
 elif [ ! -r ${SLPS}/shared/xsd/$1.xsd ]; then
     echo "Oops: schema for $1 not found or not readable."
     exit 1
-elif [ "$1" == "ldf" ]; then
-    java -jar ${SLPS}/download/msv/msv.jar ${SLPS}/shared/xsd/$1.xsd $2
 else
     xmllint --noout --schema ${SLPS}/shared/xsd/$1.xsd $2
 fi

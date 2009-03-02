@@ -44,5 +44,6 @@ clean:
 
 check:
 	ls -1 *.xbgf | xargs -n1 ${validator} xbgf
+	ls -1 xldf/*.xldf | xargs -n1 ${validator} xldf
 	ls -1 *.bgf  | xargs -n1 ${validator} bgf
 	ls -1 *.ldf  | xargs -n1 ${validator} ldf
