@@ -1,7 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   <xbgf:fold>
-    <nonterminal>xs</nonterminal>
+    <nonterminal>bar</nonterminal>
+    <in>
+      <label>l1</label>
+    </in>
   </xbgf:fold>
 </xbgf:sequence>
