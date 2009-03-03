@@ -2,6 +2,6 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   <xbgf:distribute>
-    <nonterminal>a</nonterminal>
+    <nonterminal>foo</nonterminal>
   </xbgf:distribute>
 </xbgf:sequence>

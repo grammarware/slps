@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
   <bgf:production>
-    <nonterminal>N</nonterminal>
+    <nonterminal>foo</nonterminal>
     <bgf:expression>
-      <star>
+      <plus>
         <bgf:expression>
-          <terminal>a</terminal>
+          <nonterminal>bar</nonterminal>
         </bgf:expression>
-      </star>
+      </plus>
     </bgf:expression>
   </bgf:production>
 </bgf:grammar>

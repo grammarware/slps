@@ -6,16 +6,20 @@
     <bgf:expression>
       <star>
         <bgf:expression>
-          <nonterminal>wex</nonterminal>
+          <nonterminal>wez</nonterminal>
         </bgf:expression>
       </star>
     </bgf:expression>
   </bgf:production>
   <bgf:production>
     <label>l2</label>
-    <nonterminal>zap</nonterminal>
+    <nonterminal>qux</nonterminal>
     <bgf:expression>
-      <nonterminal>bar</nonterminal>
+      <star>
+        <bgf:expression>
+          <nonterminal>wez</nonterminal>
+        </bgf:expression>
+      </star>
     </bgf:expression>
   </bgf:production>
   <bgf:production>
@@ -23,7 +27,7 @@
     <bgf:expression>
       <star>
         <bgf:expression>
-          <nonterminal>wex</nonterminal>
+          <nonterminal>wez</nonterminal>
         </bgf:expression>
       </star>
     </bgf:expression>

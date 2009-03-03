@@ -1,18 +1,18 @@
 <bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
   <bgf:production>
-    <nonterminal>a</nonterminal>
+    <nonterminal>foo</nonterminal>
     <bgf:expression>
       <sequence>
         <bgf:expression>
-          <nonterminal>b</nonterminal>
+          <nonterminal>bar</nonterminal>
         </bgf:expression>
         <bgf:expression>
           <choice>
             <bgf:expression>
-              <nonterminal>c</nonterminal>
+              <nonterminal>qux</nonterminal>
             </bgf:expression>
             <bgf:expression>
-              <nonterminal>d</nonterminal>
+              <nonterminal>wez</nonterminal>
             </bgf:expression>
           </choice>
         </bgf:expression>
