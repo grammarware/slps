@@ -74,8 +74,9 @@ def main(xsdfile,bgffile,ldffile):
   if nt.tag not in acceptedtags:
    continue
   section = ET.SubElement(dtree,'core')
-  el = ET.SubElement(section,'id')
-  el.text = nt.tag.replace('{'+xsdns+'}','')+'-'+nt.attrib['name']
+  section.set('id',nt.tag.replace('{'+xsdns+'}','')+'-'+nt.attrib['name'])
+  #el = ET.SubElement(section,'id')
+  #el.text = nt.tag.replace('{'+xsdns+'}','')+'-'+nt.attrib['name']
   el = ET.SubElement(section,'title')
   el.text = nt.attrib['name']
   el = ET.SubElement(section,'description')

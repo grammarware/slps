@@ -319,35 +319,42 @@
       <formula>x (yx)? = (xy)? x</formula>
       <formula>x (yx)^+ = (xy)^+ x</formula>
       <formula>x (yx)^\star = (xy)^\star x</formula>
-      <text>
-        An example of a massaging that takes three steps to complete is presented below.
-        The input BGF is:
-      </text>
     </content>
   </xldf:append>
+  <xldf:add-subsection>
+    <example id="massage-example">
+      <content>
+        <text>
+          An example of a massaging that takes three steps to complete is presented below.
+          The input BGF is:
+        </text>
+      </content>
+    </example>
+    <to>element-massage</to>
+  </xldf:add-subsection>
   <xldf:import-grammar>
-    <target>element-massage</target>
+    <target>massage-example</target>
     <file>../transformation/xbgf/tests/massage_triple.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>element-massage</where>
+    <where>massage-example</where>
     <content>
       <text>After performing these transformation steps:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>
-    <target>element-massage</target>
+    <target>massage-example</target>
     <file>../transformation/xbgf/tests/massage_triple.xbgf</file>
     <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
-    <where>element-massage</where>
+    <where>massage-example</where>
     <content>
       <text>The result will be:</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>element-massage</target>
+    <target>massage-example</target>
     <file>../transformation/xbgf/tests/massage_triple.baseline</file>
   </xldf:import-grammar>
 
@@ -355,37 +362,38 @@
     <section>element-distribute</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
-  <xldf:append>
-    <where>element-distribute</where>
-    <content>
-      <text>For example,</text>
-    </content>
-  </xldf:append>
+  <xldf:add-subsection>
+    <example id="distribute-example">
+      <content> <text>For example,</text></content>
+    </example>
+    <to>element-distribute</to>
+  </xldf:add-subsection>
   <xldf:import-grammar>
-    <target>element-distribute</target>
+    <target>distribute-example</target>
     <file>../transformation/xbgf/tests/distribute_nt.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>element-distribute</where>
+    <where>distribute-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>
-    <target>element-distribute</target>
+    <target>distribute-example</target>
     <file>../transformation/xbgf/tests/distribute_nt.xbgf</file>
     <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
-    <where>element-distribute</where>
+    <where>distribute-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>element-distribute</target>
+    <target>distribute-example</target>
     <file>../transformation/xbgf/tests/distribute_nt.baseline</file>
   </xldf:import-grammar>
+  
   <xldf:place>
     <section>element-factor</section>
     <inside>group-refactoring-transformation</inside>

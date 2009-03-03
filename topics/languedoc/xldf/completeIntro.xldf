@@ -5,7 +5,7 @@
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
-  <xldf:add-section>
+  <xldf:add-subsection>
     <designGoals>
       <author>Vadim Zaytsev</author>
       <content>
@@ -63,11 +63,10 @@
         </list>
       </content>
     </designGoals>
-  </xldf:add-section>
+  </xldf:add-subsection>
 
-  <xldf:add-section>
-    <notation>
-      <id>notation-section</id>
+  <xldf:add-subsection>
+    <notation id="notation-section">
       <author>Vadim Zaytsev</author>
       <content>
         <text>
@@ -77,7 +76,7 @@
         </text>
       </content>
     </notation>
-  </xldf:add-section>
+  </xldf:add-subsection>
 
   <xldf:import-grammar>
     <target>notation-section</target>
@@ -111,9 +110,8 @@
   </xldf:append>
 
   <!-- compatibility section is about converging BGF and BNF -->
-  <xldf:add-section>
-    <compatibility>
-      <id>compatibility-section</id>
+  <xldf:add-subsection>
+    <compatibility id="compatibility-section">
       <author>Vadim Zaytsev</author>
       <content>
         <text>
@@ -130,7 +128,7 @@
         </text>
       </content>
     </compatibility>
-  </xldf:add-section>
+  </xldf:add-subsection>
 
   <xldf:import-sample>
     <target>compatibility-section</target>
@@ -235,8 +233,7 @@
 
   <!-- list of definitions -->
   <xldf:add-section>
-    <definitions>
-      <id>definitions-section</id>
+    <definitions id="definitions-section">
       <author>Vadim Zaytsev</author>
       <term>
         <name>grammar</name>

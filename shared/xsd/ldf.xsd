@@ -10,10 +10,9 @@
   <!-- types of content -->
   <xsd:complexType name="ListOfTerms">
     <xsd:sequence>
-      <xsd:element name="id" type="xsd:ID" minOccurs="0"/>
       <xsd:element name="title" type="xsd:string" minOccurs="0"/>
-      <xsd:sequence minOccurs="0">
-        <xsd:element name="author" type="xsd:string" maxOccurs="unbounded"/>
+      <xsd:sequence>
+        <xsd:element name="author" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
       <xsd:element name="term" maxOccurs="unbounded">
         <xsd:complexType>
@@ -24,6 +23,7 @@
         </xsd:complexType>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID" use="optional"/>
   </xsd:complexType>
 
   <xsd:complexType name="ListOfInternalLinks">
@@ -48,7 +48,7 @@
 
   <xsd:complexType name="SimpleText">
     <xsd:sequence>
-      <xsd:group ref="ldf:insideSimpleText" maxOccurs="unbounded"/>
+      <xsd:group ref="ldf:SimpleTextElement" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -65,9 +65,11 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:group name="insideSimpleText">
+  <xsd:group name="SimpleTextElement">
     <xsd:choice>
-      <xsd:element name="empty" nillable="true"/>
+      <xsd:element name="empty" nillable="true">
+        <xsd:complexType/>
+      </xsd:element>
       <xsd:element name="text" type="ldf:mixedType"/>
       <xsd:element name="table" type="ldf:SimpleTable"/>
       <xsd:element name="list" type="ldf:SimpleList"/>
@@ -81,34 +83,38 @@
 
   <xsd:complexType name="SimpleSection">
     <xsd:sequence>
-      <xsd:element name="id" type="xsd:ID" minOccurs="0"/>
       <xsd:element name="title" type="xsd:string" minOccurs="0"/>
-      <xsd:sequence minOccurs="0">
-        <xsd:element name="author" type="xsd:string" maxOccurs="unbounded"/>
+      <xsd:sequence>
+        <xsd:element name="author" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
       <xsd:element name="content" type="ldf:SimpleText"/>
     </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID" use="optional"/>
   </xsd:complexType>
 
   <xsd:complexType name="StructuredSection">
     <xsd:sequence>
-      <xsd:element name="id" type="xsd:ID" minOccurs="0"/>
       <xsd:element name="title" type="xsd:string"/>
-      <xsd:sequence minOccurs="0">
-        <xsd:element name="author" type="xsd:string" maxOccurs="unbounded"/>
+      <xsd:sequence>
+        <xsd:element name="author" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
-      <xsd:choice maxOccurs="unbounded">
-        <xsd:element name="placeholder" type="ldf:generated"/>
-        <xsd:group ref="ldf:normative"/>
-        <xsd:group ref="ldf:informative"/>
-        <xsd:element ref="bgf:production"/>
-        <xsd:element name="relationship" type="ldf:ListOfInternalLinks"/>
-        <!-- <xsd:group ref="ldf:top-section"/> -->
-        <xsd:element name="subtopic" type="ldf:StructuredSection"/>
-      </xsd:choice>
+      <xsd:group ref="ldf:StructuredSectionElement" maxOccurs="unbounded" />
     </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID" use="optional"/>
   </xsd:complexType>
 
+  <xsd:group name="StructuredSectionElement">
+    <xsd:choice>
+      <xsd:element name="placeholder" type="ldf:generated"/>
+      <xsd:group ref="ldf:normative"/>
+      <xsd:group ref="ldf:informative"/>
+      <xsd:element ref="bgf:production"/>
+      <xsd:element name="relationship" type="ldf:ListOfInternalLinks"/>
+      <!-- <xsd:group ref="ldf:top-section"/> -->
+      <xsd:element name="subtopic" type="ldf:StructuredSection"/>
+    </xsd:choice>
+  </xsd:group>
+  
   <!-- tokens -->
 
   <xsd:group name="normative">
@@ -132,7 +138,7 @@
     </xsd:choice>
   </xsd:group>
 
-  <xsd:group name="lexical">
+  <xsd:group name="LexicalSection">
     <xsd:annotation>
       <xsd:documentation>
         Sections describing lexical structure tend to be shorter, less structured inside,
@@ -238,7 +244,7 @@
         <xsd:element name="lexicalPart" minOccurs="0">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:group ref="ldf:lexical" maxOccurs="unbounded"/>
+              <xsd:group ref="ldf:LexicalSection" maxOccurs="unbounded"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>

@@ -75,8 +75,10 @@ def xldf_insert(cmd,tree):
 
 def findnode(tree,id):
  for s in tree.findall('//*'):
-  if s.findall('id'):
-   if s.findtext('id')==id:
+  #if s.findall('id'):
+  if s.get('id'):
+   #if s.findtext('id')==id:
+   if s.get('id')==id:
     return s
  return None
 
@@ -174,11 +176,7 @@ def xldf_rename(cmd,tree):
 def xldf_add_section(cmd,tree):
  success = False
  s = cmd.findall('*')[0]
- if s.tag in ('foreword','designGoals','scope','conformance','compliance','compatibility','notation','normativeReferences','documentStructure','whatsnew'):
-  tree.findall('//frontMatter')[0].append(s)
-  print '[XLDF] add-section to front matter'
-  success = True
- elif s.tag in ('definitions','abbreviations','languageOverview'):
+ if s.tag in ('definitions','abbreviations','languageOverview'):
   if tree.findall('//lists'):
    tree.findall('//lists')[0].append(s)
   else:
@@ -198,7 +196,39 @@ def xldf_add_section(cmd,tree):
   print '[XLDF] add-section to the core'
   success = True
  if not success:
-  print '[----] add-section failed'
+  print '[----] add-section failed, double check or try add-subsection instead'
+ return
+
+def xldf_remove_section(cmd,tree):
+ found = findnode(tree,cmd.findtext('id'))
+ if found:
+  if cmd.findall('from'):
+   foundp = findnode(tree,cmd.findtext('from'))
+   foundp.remove(found)
+  else:
+   tree.getroot().remove(found)
+  print '[XLDF] remove-section is successful'
+ else:
+  print '[----] remove-section couldn''t find id',cmd.findtext('id')
+
+def xldf_add_subsection(cmd,tree):
+ success = False
+ s = cmd.findall('*')[0]
+ if s.tag in ('foreword','designGoals','scope','conformance','compliance','compatibility','notation','normativeReferences','documentStructure','whatsnew'):
+  tree.findall('//frontMatter')[0].append(s)
+  print '[XLDF] add-subsection to front matter'
+  success = True
+ elif s.tag in ('purpose','description','location','considerations','defaults','normative','note','example','informative'):
+  found = findnode(tree,cmd.findtext('to'))
+  if found:
+   found.append(s)
+   print '[XLDF] add-subsection to id',cmd.findtext('to')
+   success = True
+  else:
+   print '[----] add-subsection failed, can''t find id',cmd.findtext('to')
+   return
+ if not success:
+  print '[----] add-subsection failed, double check or try add-section instead'
  return
 
 def xldf_import_grammar(cmd,tree):
@@ -271,8 +301,12 @@ def main(xldffile,inldffile,outldffile):
    xldf_rename(cmd,ltree)
   elif cmdname == 'append':
    xldf_append(cmd,ltree)
+  elif cmdname == 'remove-section':
+   xldf_remove_section(cmd,ltree)
   elif cmdname == 'add-section':
    xldf_add_section(cmd,ltree)
+  elif cmdname == 'add-subsection':
+   xldf_add_subsection(cmd,ltree)
   else:
    print '[----] Unknown XLDF command:',cmdname
 
