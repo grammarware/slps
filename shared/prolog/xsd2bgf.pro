@@ -489,9 +489,19 @@ xFromSType(S,T,X)
     children(name(xsd:enumeration),R,Es),
     ( \+ Es == [] ->
           (
-            maplist(attribute(value),Es,Vs),
-            maplist(xFromEnumeration,Vs,Xs),
-            X = ';'(Xs)
+			(
+				attribute(base,R,QN),
+				qname(QN,_,token),
+            	maplist(attribute(value),Es,Vs),
+            	maplist(xFromTokenEnumeration,Vs,Xs),
+            	X = ';'(Xs)
+			)
+		  ;
+			(
+            	maplist(attribute(value),Es,Vs),
+            	maplist(xFromEnumeration,Vs,Xs),
+            	X = ';'(Xs)
+			)
           )
         ;
           (
@@ -502,6 +512,7 @@ xFromSType(S,T,X)
     !.
 
 xFromEnumeration(V,s(V,true)).
+xFromTokenEnumeration(V,t(V)).
 
 
 %
