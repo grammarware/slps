@@ -23,24 +23,12 @@ xbgf.ldf:
 
 rebuild:
 	make clean
-	make samples
 	make build
-
-samples:
-	cp ../transformation/xbgf/tests/distribute1.bgf distribute_before.bgf
-	cp ../transformation/xbgf/tests/distribute1.baseline distribute_after.bgf
-	../../shared/tools/xbgf2xbnf ../transformation/xbgf/tests/distribute1.xbgf distribute.xbnf
-	../../shared/tools/xbgf2xbnf bnf/xbgf/designate.xbgf designate.xbnf
-	../../shared/tools/xbgf2xbnf bnf/xbgf/preferBnf.xbgf preferBnf.xbnf
-	../../shared/tools/xbgf2xbnf bnf/xbgf/refactorBnf.xbgf refactorBnf.xbnf
-	../../shared/tools/xbgf2xbnf bnf/xbgf/stripTerminals.xbgf stripTerminals.xbnf
-	../../shared/tools/xbgf2xbnf bnf/xbgf/stripWhitespace.xbgf stripWhitespace.xbnf
 
 clean:
 	rm -f xbgf*.bgf xbgf*.ldf xbgf.html xbgf.fo xbgf.pdf *.xbnf
 	rm -f bgf*.bgf ldf*.bgf ldf*.ldf ldf.fo ldf.pdf
-	rm -f *.aux *.log *.toc *.tex
-	rm -f distribute_*.bgf
+	rm -f *.aux *.log *.toc *.tex printed_for_xldf.tmp
 
 check:
 	ls -1 *.xbgf | xargs -n1 ${validator} xbgf

@@ -8,13 +8,13 @@
   <!-- compose a section on folding transformations -->
   <xldf:rename>
     <from>
-      <title>foldingtransformation</title>
+      <title>folding-transformation</title>
     </from>
     <to>Folding and unfolding transformations</to>
   </xldf:rename>
   <xldf:place>
     <section>element-unfold</section>
-    <inside>group-foldingtransformation</inside>
+    <inside>group-folding-transformation</inside>
   </xldf:place>
   <xldf:insert>
     <before>
@@ -39,13 +39,73 @@
       </text>
     </content>
   </xldf:insert>
+ 
+  
+  <xldf:import-grammar>
+    <target>element-unfold</target>
+    <file>../transformation/xbgf/tests/unfold.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>element-unfold</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>element-unfold</target>
+    <file>../transformation/xbgf/tests/unfold.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>element-unfold</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-unfold</target>
+    <file>../transformation/xbgf/tests/unfold.baseline</file>
+  </xldf:import-grammar>
+
   <xldf:place>
     <section>element-fold</section>
-    <inside>group-foldingtransformation</inside>
+    <inside>group-folding-transformation</inside>
   </xldf:place>
+  <xldf:append>
+    <where>element-fold</where>
+    <content>
+      <text>Very much like unfolding, folding can take place locally. For example,</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-fold</target>
+    <file>../transformation/xbgf/tests/fold_nt.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>element-fold</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>element-fold</target>
+    <file>../transformation/xbgf/tests/fold_nt.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>element-fold</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-fold</target>
+    <file>../transformation/xbgf/tests/fold_nt.baseline</file>
+  </xldf:import-grammar>
+  
   <xldf:place>
     <section>element-inline</section>
-    <inside>group-foldingtransformation</inside>
+    <inside>group-folding-transformation</inside>
   </xldf:place>
   <xldf:append>
     <where>element-inline</where>
@@ -64,11 +124,38 @@
         implementable grammars in, contains 70--100 <ldf:keyword>inline</ldf:keyword>
         transformations in convergence path.
       </text>
+      <text>An example follows. When we have:</text>
     </content>
   </xldf:append>
+  <xldf:import-grammar>
+    <target>element-inline</target>
+    <file>../transformation/xbgf/tests/inline.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>element-inline</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>element-inline</target>
+    <file>../transformation/xbgf/tests/inline.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>element-inline</where>
+    <content>
+      <text>It will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-inline</target>
+    <file>../transformation/xbgf/tests/inline.baseline</file>
+  </xldf:import-grammar>
+  
   <xldf:place>
     <section>element-extract</section>
-    <inside>group-foldingtransformation</inside>
+    <inside>group-folding-transformation</inside>
   </xldf:place>
   <xldf:append>
     <where>element-extract</where>
@@ -80,11 +167,40 @@
         when the convergence requests for having several nonterminals with similar
         definitions.
       </text>
+      <text>
+        <ldf:keyword>Extract</ldf:keyword> also works vertically. Given the input:
+      </text>
     </content>
   </xldf:append>
+  <xldf:import-grammar>
+    <target>element-extract</target>
+    <file>../transformation/xbgf/tests/extract_subch.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>element-extract</where>
+    <content>
+      <text>After performing this transformation step:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>element-extract</target>
+    <file>../transformation/xbgf/tests/extract_subch.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>element-extract</where>
+    <content>
+      <text>The result will be:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-extract</target>
+    <file>../transformation/xbgf/tests/extract_subch.baseline</file>
+  </xldf:import-grammar>
+
   <xldf:place>
     <section>element-abridge</section>
-    <inside>group-foldingtransformation</inside>
+    <inside>group-folding-transformation</inside>
   </xldf:place>
   <xldf:append>
     <where>element-abridge</where>
@@ -103,15 +219,15 @@
   </xldf:append>
   <xldf:place>
     <section>element-detour</section>
-    <inside>group-foldingtransformation</inside>
+    <inside>group-folding-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-unchain</section>
-    <inside>group-foldingtransformation</inside>
+    <inside>group-folding-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-chain</section>
-    <inside>group-foldingtransformation</inside>
+    <inside>group-folding-transformation</inside>
   </xldf:place>
 
 </xldf:sequence>

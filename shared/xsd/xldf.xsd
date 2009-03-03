@@ -55,12 +55,18 @@
        <xsd:choice>
          <xsd:element name="before">
            <xsd:complexType>
-             <xsd:group ref="ldf:insideSimpleText"/>
+             <xsd:choice>
+               <xsd:element name="id" type="xsd:string"/>
+               <xsd:group ref="ldf:insideSimpleText"/>
+             </xsd:choice>
            </xsd:complexType>
          </xsd:element>
          <xsd:element name="after">
            <xsd:complexType>
-             <xsd:group ref="ldf:insideSimpleText"/>
+             <xsd:choice>
+               <xsd:element name="id" type="xsd:string"/>
+               <xsd:group ref="ldf:insideSimpleText"/>
+             </xsd:choice>
            </xsd:complexType>
          </xsd:element>
        </xsd:choice>
@@ -80,7 +86,9 @@
         <xsd:group ref="ldf:front-simple-section"/>
         <xsd:group ref="ldf:front-list"/>
         <xsd:group ref="ldf:lexical"/>
-        <xsd:element name="core" type="ldf:StructuredSection"/>
+        <xsd:group ref="ldf:normative"/>
+        <xsd:group ref="ldf:informative"/>
+<!--       <xsd:element name="core" type="ldf:StructuredSection"/>--> 
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>
@@ -156,8 +164,9 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="target" type="xsd:string"/>        <!-- IDREF -->
-        <xsd:element name="file" type="xsd:string"/>          <!-- IDREF -->
+        <xsd:element name="target" type="xsd:string"/>                 <!-- IDREF -->
+        <xsd:element name="file" type="xsd:string"/>                   <!-- IDREF -->
+        <xsd:element name="prettyprinter" type="xsd:string" minOccurs="0"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

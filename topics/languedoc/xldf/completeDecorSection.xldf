@@ -7,21 +7,21 @@
   <!-- compose a section on decorative transformations -->
   <xldf:rename>
     <from>
-      <title>decorativetransformation</title>
+      <title>decorative-transformation</title>
     </from>
     <to>Decorative transformations</to>
   </xldf:rename>
   <xldf:place>
     <section>element-designate</section>
-    <inside>group-decorativetransformation</inside>
+    <inside>group-decorative-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-unlabel</section>
-    <inside>group-decorativetransformation</inside>
+    <inside>group-decorative-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-deanonymize</section>
-    <inside>group-decorativetransformation</inside>
+    <inside>group-decorative-transformation</inside>
   </xldf:place>
   <xldf:append>
     <where>element-anonymize</where>
@@ -39,11 +39,11 @@
   </xldf:append>
   <xldf:place>
     <section>element-anonymize</section>
-    <inside>group-decorativetransformation</inside>
+    <inside>group-decorative-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-dump</section>
-    <inside>group-decorativetransformation</inside>
+    <inside>group-decorative-transformation</inside>
   </xldf:place>
 
 </xldf:sequence>

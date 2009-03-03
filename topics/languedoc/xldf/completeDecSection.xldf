@@ -7,25 +7,25 @@
   <!-- compose a section on decreasing transformations -->
   <xldf:rename>
     <from>
-      <title>decreasingtransformation</title>
+      <title>decreasing-transformation</title>
     </from>
     <to>Grammar shortening transformations</to>
   </xldf:rename>
   <xldf:place>
     <section>element-remove</section>
-    <inside>group-decreasingtransformation</inside>
+    <inside>group-decreasing-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-disappear</section>
-    <inside>group-decreasingtransformation</inside>
+    <inside>group-decreasing-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-narrow</section>
-    <inside>group-decreasingtransformation</inside>
+    <inside>group-decreasing-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-downgrade</section>
-    <inside>group-decreasingtransformation</inside>
+    <inside>group-decreasing-transformation</inside>
   </xldf:place>
 
 </xldf:sequence>

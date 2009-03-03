@@ -7,53 +7,53 @@
   <!-- compose a section on abstract revising transformations -->
   <xldf:rename>
     <from>
-      <title>concreterevisingtransformation</title>
+      <title>concrete-revising-transformation</title>
     </from>
     <to>Refactorings in term-oriented semantics</to>
   </xldf:rename>
   <xldf:place>
     <section>element-abstractize</section>
-    <inside>group-concreterevisingtransformation</inside>
+    <inside>group-concrete-revising-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-concretize</section>
-    <inside>group-concreterevisingtransformation</inside>
+    <inside>group-concrete-revising-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-permute</section>
-    <inside>group-concreterevisingtransformation</inside>
+    <inside>group-concrete-revising-transformation</inside>
   </xldf:place>
 
   <!-- compose a section on concrete revising transformations -->
   <xldf:rename>
     <from>
-      <title>abstractrevisingtransformation</title>
+      <title>abstract-revising-transformation</title>
     </from>
     <to>Semantics revising transformations</to>
   </xldf:rename>
   <xldf:place>
     <section>element-define</section>
-    <inside>group-abstractrevisingtransformation</inside>
+    <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-undefine</section>
-    <inside>group-abstractrevisingtransformation</inside>
+    <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-redefine</section>
-    <inside>group-abstractrevisingtransformation</inside>
+    <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-inject</section>
-    <inside>group-abstractrevisingtransformation</inside>
+    <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-project</section>
-    <inside>group-abstractrevisingtransformation</inside>
+    <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-replace</section>
-    <inside>group-abstractrevisingtransformation</inside>
+    <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
 
 </xldf:sequence>

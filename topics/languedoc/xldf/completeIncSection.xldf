@@ -7,29 +7,29 @@
   <!-- compose a section on increasing transformations -->
   <xldf:rename>
     <from>
-      <title>increasingtransformation</title>
+      <title>increasing-transformation</title>
     </from>
     <to>Grammar lengthening transformations</to>
   </xldf:rename>
   <xldf:place>
     <section>element-add</section>
-    <inside>group-increasingtransformation</inside>
+    <inside>group-increasing-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-appear</section>
-    <inside>group-increasingtransformation</inside>
+    <inside>group-increasing-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-widen</section>
-    <inside>group-increasingtransformation</inside>
+    <inside>group-increasing-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-upgrade</section>
-    <inside>group-increasingtransformation</inside>
+    <inside>group-increasing-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-unite</section>
-    <inside>group-increasingtransformation</inside>
+    <inside>group-increasing-transformation</inside>
   </xldf:place>
 
 </xldf:sequence>

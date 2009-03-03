@@ -8,23 +8,17 @@
   <!-- compose a section on refactoring transformations -->
   <xldf:rename>
     <from>
-      <title>refactoringtransformation</title>
+      <title>refactoring-transformation</title>
     </from>
     <to>Other refactoring transformations</to>
   </xldf:rename>
   <xldf:place>
     <section>element-massage</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
 
-  <xldf:insert>
-    <after>
-      <text>
-        There are two expression arguments: one to be matched, and another one that
-        replaces the matched expression. One of them must be in a `massage relation' to
-        the other.
-      </text>
-    </after>
+  <xldf:append>
+    <where>element-massage</where>
     <content>
       <text>
         The massage relation is defined as follows. First of all, a choice of any two
@@ -311,64 +305,94 @@
         </row>
       </table>
       <text>
-        Here are more complicated rules for <ldf:keyword>massage</ldf:keyword>:
+        Distributivity rules for optionality modifier are also covered
+        by <ldf:keyword>massage</ldf:keyword>:
+      </text>
+      <formula>(x? y)? = x? y?</formula>
+      <formula>(x y?)? = x? y?</formula>
+      <formula>(x^\star y)? = x^\star y?</formula>
+      <formula>(x y^\star)? = x? y^\star</formula>
+      <formula>(x | y)? = x? | y?</formula>
+      <text>
+        Associativity rules for <ldf:keyword>massage</ldf:keyword>:
       </text>
       <formula>x (yx)? = (xy)? x</formula>
       <formula>x (yx)^+ = (xy)^+ x</formula>
       <formula>x (yx)^\star = (xy)^\star x</formula>
-      <text>Another rule that is harder to express is when</text>
-      <formula>x? = x</formula>
-      <text>in the cases when x is optional anyway, i.e. it is one of the following:</text>
-      <formula>\varepsilon|...</formula>
-      <formula>a?</formula>
-      <formula>a^\star</formula>
-      <formula>y|...</formula>
-      <formula>y z ...</formula>
-      <text>where y and z are also recursively optional anyway, and a not necessary so.</text>
+      <text>
+        An example of a massaging that takes three steps to complete is presented below.
+        The input BGF is:
+      </text>
     </content>
-  </xldf:insert>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-massage</target>
+    <file>../transformation/xbgf/tests/massage_triple.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>element-massage</where>
+    <content>
+      <text>After performing these transformation steps:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>element-massage</target>
+    <file>../transformation/xbgf/tests/massage_triple.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>element-massage</where>
+    <content>
+      <text>The result will be:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-massage</target>
+    <file>../transformation/xbgf/tests/massage_triple.baseline</file>
+  </xldf:import-grammar>
 
   <xldf:place>
     <section>element-distribute</section>
-    <inside>group-refactoringtransformation</inside>
-  </xldf:place>
-  <xldf:place>
-    <section>element-factor</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:append>
-    <where>element-factor</where>
+    <where>element-distribute</where>
     <content>
       <text>For example,</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>element-factor</target>
-    <file>distribute_before.bgf</file>
+    <target>element-distribute</target>
+    <file>../transformation/xbgf/tests/distribute_nt.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>element-factor</where>
+    <where>element-distribute</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>
-    <target>element-factor</target>
-    <file>distribute.xbnf</file>
+    <target>element-distribute</target>
+    <file>../transformation/xbgf/tests/distribute_nt.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
-    <where>element-factor</where>
+    <where>element-distribute</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>element-factor</target>
-    <file>distribute_after.bgf</file>
+    <target>element-distribute</target>
+    <file>../transformation/xbgf/tests/distribute_nt.baseline</file>
   </xldf:import-grammar>
   <xldf:place>
+    <section>element-factor</section>
+    <inside>group-refactoring-transformation</inside>
+  </xldf:place>
+  <xldf:place>
     <section>element-deyaccify</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:append>
     <where>element-deyaccify</where>
@@ -376,137 +400,96 @@
       <text>
         Deyaccification uses several general patterns. Left recursion like this:
       </text>
-      <bgf:production>
-        <nonterminal>N</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <nonterminal>N</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>x</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
-      <bgf:production>
-        <nonterminal>N</nonterminal>
-        <bgf:expression>
-          <nonterminal>y</nonterminal>
-        </bgf:expression>
-      </bgf:production>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-deyaccify</target>
+    <file>../transformation/xbgf/tests/deyaccify_left.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>element-deyaccify</where>
+    <content>
       <text>
         Becomes:
       </text>
-      <bgf:production>
-        <nonterminal>N</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <nonterminal>y</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <star>
-                <bgf:expression>
-                  <nonterminal>x</nonterminal>
-                </bgf:expression>
-              </star>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-deyaccify</target>
+    <file>../transformation/xbgf/tests/deyaccify_left.baseline</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>element-deyaccify</where>
+    <content>
       <text>
         Right recursion like this:
       </text>
-      <bgf:production>
-        <nonterminal>N</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <nonterminal>x</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>N</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
-      <bgf:production>
-        <nonterminal>N</nonterminal>
-        <bgf:expression>
-          <nonterminal>y</nonterminal>
-        </bgf:expression>
-      </bgf:production>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-deyaccify</target>
+    <file>../transformation/xbgf/tests/deyaccify_right.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>element-deyaccify</where>
+    <content>
       <text>
         Becomes:
       </text>
-      <bgf:production>
-        <nonterminal>N</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <star>
-                <bgf:expression>
-                  <nonterminal>x</nonterminal>
-                </bgf:expression>
-              </star>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>y</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
-      <text>
-        In either case, it is checked if x and y are the same. If they are, the result is more concise:
-      </text>
-      <bgf:production>
-        <nonterminal>N</nonterminal>
-        <bgf:expression>
-          <plus>
-            <bgf:expression>
-              <nonterminal>x</nonterminal>
-            </bgf:expression>
-          </plus>
-        </bgf:expression>
-      </bgf:production>
     </content>
   </xldf:append>
+  <xldf:import-grammar>
+    <target>element-deyaccify</target>
+    <file>../transformation/xbgf/tests/deyaccify_right.baseline</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>element-deyaccify</where>
+    <content>
+      <text>
+        In either case, it is checked if bar and wez are the same. If they are, the result is more concise:
+      </text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>element-deyaccify</target>
+    <file>../transformation/xbgf/tests/deyaccify_right_plus.baseline</file>
+  </xldf:import-grammar>
+
   <xldf:place>
     <section>element-yaccify</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-eliminate</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-introduce</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-import</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-vertical</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-horizontal</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-rename</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-rassoc</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:place>
     <section>element-lassoc</section>
-    <inside>group-refactoringtransformation</inside>
+    <inside>group-refactoring-transformation</inside>
   </xldf:place>
 
 </xldf:sequence>

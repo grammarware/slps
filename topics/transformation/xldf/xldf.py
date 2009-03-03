@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import os
 import sys
 import string
 import elementtree.ElementTree as ET
@@ -224,8 +225,17 @@ def xldf_import_grammar(cmd,tree):
  return
 
 def xldf_import_sample(cmd,tree):
+ ending = ''
+ if cmd.findall('prettyprinter'):
+  inputfile = 'printed_for_xldf.tmp'
+  if os.system(cmd.findtext('prettyprinter')+' '+cmd.findtext('file')+' '+inputfile):
+   print '[----] xldf:import failed: can''t execute the pretty-printer!'
+   return
+  ending = '- pretty-printed successfully'
+ else:
+  inputfile = cmd.findtext('file')
  try:
-  sample = open(cmd.findtext('file'),'r')
+  sample = open(inputfile,'r')
  except IOError,e:
   print '[----] xldf:import failed: file',cmd.findtext('file'),'not found'
   return
@@ -239,7 +249,7 @@ def xldf_import_sample(cmd,tree):
    found[-1].append(el)
   else:
    found[-1][-1].append(el)
-  print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file'),')'
+  print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file'),')',ending
  return
 
 def main(xldffile,inldffile,outldffile):

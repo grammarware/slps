@@ -13,6 +13,54 @@
           XBGF operator suite was developed mainly for grammar convergence
           activities.
         </text>
+        <list>
+          <item>
+            <ldf:keyword>Grammar recovery.</ldf:keyword>
+            In order to recover a working grammar from a real grammar artifact one needs
+            to perform various activities such as grammar extraction, grammar beautification,
+            deyaccification, error fixing, etc,---all of them are present in XBGF.
+          </item>
+          <item>
+            <ldf:keyword>Grammar convergence.</ldf:keyword>
+            An infrastructure for grammar convergence (see Chapter 3) contains three
+            essential parts: grammar extractors, a grammar comparator and a grammar transformer.
+            The latter component is needed for changing the source grammars so that
+            they become structurally identical at the convergence point.
+            XBGF suite can be used as a framework for programmable grammar transformations,
+            it provides all the required expressive power.
+          </item>
+          <item>
+            <ldf:keyword>Language documentation.</ldf:keyword>
+            It is possible and quite expected that the grammar that is shown in the language
+            standard, programmer's manual or any similar document is not exactly the same
+            as the one used for creating a compiler. For example, Java Language Specification
+            includes two grammars, each one created and maintained manually and separately.
+            A transformation suite can be useful in such a case since it helps to generate
+            one of the versions (perhaps the more reader-friendly one) from the other automatically,
+            both making their relationship more explicit and reducing maintenance effort and
+            increasing reliability.
+          </item>
+          <item>
+            <ldf:keyword>Language evolution.</ldf:keyword>
+            A language rarely stays as it was developed on its first day. If any language is being
+            used in practice for some time, new constructs are added to it to respond to the needs
+            of the end users (programmers). XBGF suite has multiple operators for expressing
+            language extensions and revisions, they can be used to document the changes between
+            versions and dialects of the language.
+          </item>
+          <item>
+            <ldf:keyword>Language design.</ldf:keyword>
+            DSL design is not a rare activity nowadays, and it is quite common to develop
+            the language gradually, regularly synchronising with the needs and knowledge
+            of domain experts. XBGF suite allows to document these steps as transformation
+            steps departing from the base-line grammar or even an empty grammar and finally
+            reaching the language ready to be deployed.
+          </item>
+          <item>
+            <ldf:keyword>Agile parsing.</ldf:keyword>
+            W.I.P.
+          </item>
+        </list>
       </content>
     </designGoals>
   </xldf:add-section>
@@ -86,7 +134,8 @@
 
   <xldf:import-sample>
     <target>compatibility-section</target>
-    <file>preferBnf.xbnf</file>
+    <file>bnf/xbgf/preferBnf.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
   <xldf:append>
@@ -110,7 +159,8 @@
 
   <xldf:import-sample>
     <target>compatibility-section</target>
-    <file>stripWhitespace.xbnf</file>
+    <file>bnf/xbgf/stripWhitespace.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
   <xldf:append>
@@ -126,7 +176,8 @@
 
   <xldf:import-sample>
     <target>compatibility-section</target>
-    <file>designate.xbnf</file>
+    <file>bnf/xbgf/designate.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
   <xldf:append>
@@ -145,7 +196,8 @@
 
   <xldf:import-sample>
     <target>compatibility-section</target>
-    <file>stripTerminals.xbnf</file>
+    <file>bnf/xbgf/stripTerminals.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
   <xldf:append>
@@ -166,7 +218,8 @@
 
   <xldf:import-sample>
     <target>compatibility-section</target>
-    <file>refactorBnf.xbnf</file>
+    <file>bnf/xbgf/refactorBnf.xbgf</file>
+    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
   <xldf:append>

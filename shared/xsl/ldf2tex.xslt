@@ -93,7 +93,9 @@
     <xsl:text>\begin{itemize}</xsl:text>
     <xsl:for-each select="item">
       <xsl:text>\item </xsl:text>
-      <xsl:value-of select="."/>
+      <xsl:call-template name="process-mixed">
+        <xsl:with-param name="content" select="."/>
+      </xsl:call-template>
     </xsl:for-each>
     <xsl:text>\end{itemize}</xsl:text>
   </xsl:template>
@@ -118,11 +120,31 @@
         <xsl:with-param name="string" select="name"/>
       </xsl:call-template>
       <xsl:text>] </xsl:text>
-          <xsl:call-template name="process-text">
-            <xsl:with-param name="text" select="definition"/>
-          </xsl:call-template>
+      <xsl:call-template name="process-text">
+        <xsl:with-param name="text" select="definition"/>
+      </xsl:call-template>
     </xsl:for-each>
     <xsl:text>\end{description}</xsl:text>
+  </xsl:template>
+
+  <xsl:template name="process-mixed">
+    <xsl:param name="content"/>
+    <xsl:for-each select="$content/node()">
+      <xsl:choose>
+        <xsl:when test="local-name() = 'keyword'">
+          <xsl:text>\textbf{</xsl:text>
+          <xsl:value-of select="."/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <!--
+              <xsl:when test="namespace-uri() = 'http://planet-sl.org/ldf'">
+                <xsl:apply-templates select="."/>
+              </xsl:when>-->
+        <xsl:otherwise>
+          <xsl:copy-of select="."/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="process-text">
@@ -138,22 +160,9 @@
         <xsl:when test="local-name() = 'author'"/>
         <xsl:when test="local-name() = 'empty'"/>
         <xsl:when test="local-name() = 'text'">
-          <xsl:for-each select="./node()">
-            <xsl:choose>
-              <xsl:when test="local-name() = 'keyword'">
-                <xsl:text>\textbf{</xsl:text>
-                <xsl:value-of select="."/>
-                <xsl:text>}</xsl:text>
-              </xsl:when>
-              <!--
-              <xsl:when test="namespace-uri() = 'http://planet-sl.org/ldf'">
-                <xsl:apply-templates select="."/>
-              </xsl:when>-->
-              <xsl:otherwise>
-                <xsl:copy-of select="."/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:for-each>
+          <xsl:call-template name="process-mixed">
+            <xsl:with-param name="content" select="."/>
+          </xsl:call-template>
         </xsl:when>
         <xsl:when test="local-name() = 'list'">
           <xsl:apply-templates select="."/>
@@ -284,7 +293,7 @@
 
   <xsl:template name="process-StructuredSection">
     <xsl:param name="section"/>
-      <xsl:for-each select="$section/*">
+    <xsl:for-each select="$section/*">
       <xsl:choose>
         <xsl:when test="local-name() = 'subtopic'">
           <xsl:call-template name="subsectionize">
@@ -305,8 +314,8 @@
           <xsl:choose>
             <xsl:when test="local-name($section) = 'subtopic'">
               <xsl:call-template name="subsubsectionize">
-            <xsl:with-param name="target" select="."/>
-          </xsl:call-template>
+                <xsl:with-param name="target" select="."/>
+              </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
               <xsl:call-template name="subsectionize">
@@ -314,7 +323,7 @@
               </xsl:call-template>
             </xsl:otherwise>
           </xsl:choose>
-           <xsl:call-template name="process-SimpleSection">
+          <xsl:call-template name="process-SimpleSection">
             <xsl:with-param name="section" select="."/>
           </xsl:call-template>
         </xsl:otherwise>
@@ -349,10 +358,10 @@
   </xsl:template>
 
   <xsl:template match="sample">
-      <xsl:text>
+    <xsl:text>
 	        \begin{verbatim}</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>\end{verbatim}
+    <xsl:value-of select="."/>
+    <xsl:text>\end{verbatim}
 	
 	      </xsl:text>
   </xsl:template>

@@ -42,7 +42,7 @@
 
   <xsd:complexType name="SimpleList">
     <xsd:sequence>
-      <xsd:element name="item" type="xsd:string" maxOccurs="unbounded"/>
+      <xsd:element name="item" type="ldf:mixedType" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -510,9 +510,9 @@
 
   <xsd:complexType name="mixedType" mixed="true">
     <xsd:sequence minOccurs="0" maxOccurs="unbounded">
-      <xsd:any processContents="lax"/>
+      <xsd:any namespace="http://planet-sl.org/ldf" processContents="lax"/>
     </xsd:sequence>
-    <xsd:anyAttribute namespace="##other" processContents="lax"/>
+    <!--<xsd:anyAttribute namespace="##other" processContents="lax"/>-->
   </xsd:complexType>
 
   <xsd:element name="keyword" type="xsd:string">

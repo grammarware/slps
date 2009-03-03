@@ -34,13 +34,13 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>
-      <xsd:group ref="xbgf:foldingtransformation"/>
-      <xsd:group ref="xbgf:refactoringtransformation"/>
-      <xsd:group ref="xbgf:increasingtransformation"/>
-      <xsd:group ref="xbgf:decreasingtransformation"/>
-      <xsd:group ref="xbgf:concreterevisingtransformation"/>
-      <xsd:group ref="xbgf:abstractrevisingtransformation"/>
-      <xsd:group ref="xbgf:decorativetransformation"/>
+      <xsd:group ref="xbgf:folding-transformation"/>
+      <xsd:group ref="xbgf:refactoring-transformation"/>
+      <xsd:group ref="xbgf:increasing-transformation"/>
+      <xsd:group ref="xbgf:decreasing-transformation"/>
+      <xsd:group ref="xbgf:concrete-revising-transformation"/>
+      <xsd:group ref="xbgf:abstract-revising-transformation"/>
+      <xsd:group ref="xbgf:decorative-transformation"/>
       <!-- status unclear -->
       <xsd:element ref="xbgf:reroot"/>
       <!-- deprecated -->
@@ -48,7 +48,7 @@
     </xsd:choice>
   </xsd:group>
 
-  <xsd:group name="foldingtransformation">
+  <xsd:group name="folding-transformation">
     <xsd:annotation>
       <xsd:documentation>
         Folding and unfolding activities are the most basic ones in grammar
@@ -79,7 +79,7 @@
       <xsd:element ref="xbgf:chain"/>
     </xsd:choice>
   </xsd:group>
-  <xsd:group name="refactoringtransformation">
+  <xsd:group name="refactoring-transformation">
     <xsd:annotation>
       <xsd:documentation>
         Here is a list of the XBGF transformations that perform
@@ -104,7 +104,7 @@
       <xsd:element ref="xbgf:lassoc"/>
     </xsd:choice>
   </xsd:group>
-  <xsd:group name="increasingtransformation">
+  <xsd:group name="increasing-transformation">
     <xsd:annotation>
       <xsd:documentation>
         Here is a list of the XBGF transformations that
@@ -119,7 +119,7 @@
       <xsd:element ref="xbgf:unite"/>
     </xsd:choice>
   </xsd:group>
-  <xsd:group name="decreasingtransformation">
+  <xsd:group name="decreasing-transformation">
     <xsd:annotation>
       <xsd:documentation>
         Here is a list of the XBGF transformations that
@@ -133,7 +133,7 @@
       <xsd:element ref="xbgf:downgrade"/>
     </xsd:choice>
   </xsd:group>
-  <xsd:group name="concreterevisingtransformation">
+  <xsd:group name="concrete-revising-transformation">
     <xsd:annotation>
       <xsd:documentation>
         We may refer to the semantics of a grammar as the language (set of strings)
@@ -171,7 +171,7 @@
       <xsd:element ref="xbgf:permute"/>
     </xsd:choice>
   </xsd:group>
-  <xsd:group name="abstractrevisingtransformation">
+  <xsd:group name="abstract-revising-transformation">
     <xsd:annotation>
       <xsd:documentation>
         Some grammar differences may require more arbitrary replacements,
@@ -198,7 +198,7 @@
       <xsd:element ref="xbgf:replace"/>
     </xsd:choice>
   </xsd:group>
-  <xsd:group name="decorativetransformation">
+  <xsd:group name="decorative-transformation">
     <xsd:annotation>
       <xsd:documentation>
         Last but not least, there are two pairs of refactorings that are
