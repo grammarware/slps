@@ -1337,22 +1337,144 @@
   </xbgf:extract>
   <xbgf:massage>
     <bgf:expression>
-      <sequence>
+      <optional>
         <bgf:expression>
-          <optional>
+          <nonterminal>TMP</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>TMP</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:distribute>
+    <nonterminal>ArrayInitializer</nonterminal>
+  </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>ArrayInitializer</nonterminal>
+  </xbgf:vertical>
+  <xbgf:disappear>
+    <bgf:production>
+      <nonterminal>ArrayInitializer</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:disappear>
+  <xbgf:horizontal>ArrayInitializer</xbgf:horizontal>
+  <xbgf:factor>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>{</terminal>
+            </bgf:expression>
             <bgf:expression>
               <nonterminal>TMP</nonterminal>
             </bgf:expression>
-          </optional>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <terminal>,</terminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>}</terminal>
+            </bgf:expression>
+          </sequence>
         </bgf:expression>
         <bgf:expression>
-          <optional>
+          <sequence>
             <bgf:expression>
-              <terminal>,</terminal>
+              <terminal>{</terminal>
             </bgf:expression>
-          </optional>
+            <bgf:expression>
+              <terminal>}</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>{</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <nonterminal>TMP</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <optional>
+                    <bgf:expression>
+                      <terminal>,</terminal>
+                    </bgf:expression>
+                  </optional>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+            <bgf:expression>
+              <epsilon/>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>}</terminal>
         </bgf:expression>
       </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>TMP</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <terminal>,</terminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+      </choice>
     </bgf:expression>
     <bgf:expression>
       <optional>

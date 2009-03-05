@@ -658,10 +658,10 @@ massage_rules(','([X,?(','([Y,X]))]),','([?(','([X,Y])),X])).
 massage_rules(','([X,+(','([Y,X]))]),','([+(','([X,Y])),X])).
 massage_rules(','([X,*(','([Y,X]))]),','([*(','([X,Y])),X])).
 %% Binary distributivity of optionality
-massage_rules(?(','([?(X),Y])),','([?(X),?(Y)])).
-massage_rules(?(','([X,?(Y)])),','([?(X),?(Y)])).
-massage_rules(?(','([*(X),Y])),','([*(X),?(Y)])).
-massage_rules(?(','([X,*(Y)])),','([?(X),*(Y)])).
+%massage_rules(?(','([?(X),?(Y)])),','([?(X),?(Y)])).
+%%massage_rules(?(','([*(X),?(Y)])),','([*(X),?(Y)])).
+%massage_rules(?(','([?(X),*(Y)])),','([?(X),*(Y)])).
+%massage_rules(?(','([*(X),*(Y)])),','([*(X),*(Y)])).
 massage_rules(?(';'([X,Y])),';'([?(X),?(Y)])).
 
 %

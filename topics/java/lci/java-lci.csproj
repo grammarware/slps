@@ -48,6 +48,9 @@
     <None Include="..\..\..\shared\xsd\lcf.xsd">
       <Link>lcf.xsd</Link>
     </None>
+    <None Include="..\..\..\shared\xsd\ldf.xsd">
+      <Link>ldf.xsd</Link>
+    </None>
     <None Include="..\..\..\shared\xsd\xbgf.xsd">
       <Link>xbgf.xsd</Link>
     </None>
