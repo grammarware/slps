@@ -21,13 +21,17 @@
 \usepackage{listings}
 \lstdefinelanguage{pp}{%
   numbers=none,
-  morestring=[b]",
-  stringstyle=\tt,
-  literate={EPSILON}{{$\varepsilon$\,\,}}1 {*}{{$^\star$}}1
-  {+}{{$^+$}}1 {?}{{$?$}}1,
+  literate={EPSILON}{{$\varepsilon$}}1 {STRING}{{$\lambda$}}1
+  {*}{{$^\star$}}1 {+}{{$^+$}}1 {?}{{$?$}}1 {&lt;}{{$\langle$}}1 {&gt;}{{$\rangle$}}1,
   keywordstyle=\normalfont\bfseries,
-  morekeywords={sequence,abridge,add,anonymize,appear,chain,define,deanonymize,designate,detour,deyaccify,disappear,distribute,downgrade,dump,eliminate,extract,factor,fold,horizontal,inject,inline,introduce,lassoc,massage,narrow,permute,project,rassoc,redefine,remove,rename,replace,reroot,strip,terminalize,unchain,unde
-fine,unfold,unite,unterminalize,upgrade,vertical,widen,yaccify,one,of},
+ morekeywords={unfold,fold,inline,extract,abridge,detour,unchain,chain,
+ massage,distribute,factor,deyaccify,yaccify,eliminate,introduce,import,vertical,horizontal,rename,
+ renameL,renameN,renameS,renameT,rassoc,lassoc,
+ add,addV,addH,appear,widen,upgrade,unite,
+ remove,removeV,removeH,disappear,narrow,downgrade,
+ abstractize,concretize,permute,
+ define,undefine,rederfine,inject,project,replace,
+ designate,unlabel,deanonymize,anonymize,dump,reroot,in},
   columns=fullflexible,
   basicstyle=\tt,
 }
