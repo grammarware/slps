@@ -13,8 +13,7 @@
   </xsd:annotation>
 
   <xsd:import namespace="http://planet-sl.org/ldf" schemaLocation="ldf.xsd"/>
-  <xsd:import namespace="http://planet-sl.org/bgf" schemaLocation="bgf.xsd"/>
-  <xsd:import namespace="http://planet-sl.org/xbgf" schemaLocation="xbgf.xsd"/>
+  <!--xsd:import namespace="http://planet-sl.org/xbgf" schemaLocation="xbgf.xsd"/-->
 
   <xsd:element name="sequence">
     <xsd:annotation>
@@ -204,8 +203,8 @@
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
-  
-  <xsd:element name="transform-grammar">
+
+  <!--xsd:element name="transform-grammar">
     <xsd:annotation>
       <xsd:documentation>
         Deprecated
@@ -214,26 +213,6 @@
     <xsd:complexType>
       <xsd:group ref="xbgf:transformation"/>
     </xsd:complexType>
-  </xsd:element>
-
-  <xsd:group name="scope">
-    <xsd:annotation>
-      <xsd:documentation>
-        Several transformation operators are possibly restricted to
-        a specific scope as opposed to their application to the full
-        input grammar. Two major forms of scope can be identified.
-        First, a production can be appointed by its label. Second, a
-        definition (nonterminal) can be appointed by its defined
-        nonterminal. Arguably, one may want to be able to appoint a
-        production even when it is not labeled, but a prior designate
-        transformation can then be used in order to attach a label
-        to the production in question.
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:choice>
-      <xsd:element name="label" type="bgf:label"/>
-      <xsd:element name="nonterminal" type="bgf:nonterminal"/>
-    </xsd:choice>
-  </xsd:group>
+  </xsd:element-->
 
 </xsd:schema>

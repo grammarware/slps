@@ -1,4 +1,4 @@
-validator = ../../shared/tools/checkxml
+validator = ../../../shared/tools/checkxml
 
 build: bgf_pretty.bgf xbgf.ldf
 	python ../../../topics/transformation/xldf/xldf.py xldf/completeIntro.xldf xbgf.ldf xbgf1.ldf
