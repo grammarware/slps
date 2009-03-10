@@ -27,7 +27,10 @@ def main(xsdfile,bgffile,ldffile):
  cx=0
  for prod in gtree.findall('//{%s}production' % bgfns):
   cx+=1
-  grammar[prod.findtext('nonterminal')]=prod
+  nt = prod.findtext('nonterminal')
+  if nt not in grammar.keys():
+   grammar[nt] = []
+  grammar[nt].append(prod)
  print 'Found', cx, 'productions'
 
  dtree.set('xmlns:ldf',ldfns)
@@ -89,7 +92,8 @@ def main(xsdfile,bgffile,ldffile):
     pel.append(sub)
   # Need to decide whether to put productions inside description subsections
   #section.append(grammar[nt.attrib['name']])
-  el.append(grammar[nt.attrib['name']])
+  for prod in grammar[nt.attrib['name']]:
+   el.append(prod)
   # print grammar[nt.attrib['name']]
 
  ET.ElementTree(dtree).write(ldffile)

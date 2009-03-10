@@ -75,6 +75,7 @@
     <None Include="..\presentation\prettyprint\xbgf\stripWhitespace.xbgf">
       <Link>xbgf\bnf\xbgf\stripWhitespace.xbgf</Link>
     </None>
+    <None Include="ldf\beautify.xbgf" />
     <None Include="xbgf\beautify_bgf.xbgf" />
     <None Include="xbgf\beautify_xbgf.xbgf" />
     <None Include="xbgf\xldf\completeDecorSection.xldf" />
@@ -91,6 +92,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ldf\xldf\" />
     <Folder Include="xldf\xldf\" />
   </ItemGroup>
 </Project>

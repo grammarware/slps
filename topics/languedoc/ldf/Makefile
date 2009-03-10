@@ -7,7 +7,8 @@ build: ldf.ldf
 
 ldf.ldf:
 	../../../shared/tools/xsd2bgf ../../../shared/xsd/ldf.xsd ldf.bgf
-	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/ldf.xsd ldf.bgf ldf.ldf
+	../../../shared/tools/xbgf beautify.xbgf ldf.bgf ldf_cool.bgf
+	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/ldf.xsd ldf_cool.bgf ldf.ldf
 
 rebuild:
 	make clean

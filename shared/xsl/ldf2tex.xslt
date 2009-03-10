@@ -18,6 +18,19 @@
 \documentclass{article}
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
+\usepackage{listings}
+\lstdefinelanguage{pp}{%
+  numbers=none,
+  morestring=[b]",
+  stringstyle=\tt,
+  literate={EPSILON}{{$\varepsilon$\,\,}}1 {*}{{$^\star$}}1
+  {+}{{$^+$}}1 {?}{{$?$}}1,
+  keywordstyle=\normalfont\bfseries,
+  morekeywords={sequence,abridge,add,anonymize,appear,chain,define,deanonymize,designate,detour,deyaccify,disappear,distribute,downgrade,dump,eliminate,extract,factor,fold,horizontal,inject,inline,introduce,lassoc,massage,narrow,permute,project,rassoc,redefine,remove,rename,replace,reroot,strip,terminalize,unchain,unde
+fine,unfold,unite,unterminalize,upgrade,vertical,widen,yaccify,one,of},
+  columns=fullflexible,
+  basicstyle=\tt,
+}
 \begin{document}
     </xsl:text>
     <!-- title -->
@@ -180,9 +193,10 @@
         </xsl:when>
         <xsl:when test="local-name() = 'production'">
           <xsl:text>
-	        \begin{verbatim}</xsl:text>
+	        \begin{lstlisting}[language=pp]
+</xsl:text>
           <xsl:apply-templates select="."/>
-          <xsl:text>\end{verbatim}
+          <xsl:text>\end{lstlisting}
 	
 	      </xsl:text>
         </xsl:when>
@@ -276,9 +290,10 @@
         <xsl:when test="local-name() = 'author'"/>
         <xsl:when test="local-name() = 'production'">
           <xsl:text>
-	        \begin{verbatim}</xsl:text>
+	        \begin{lstlisting}[language=pp]
+</xsl:text>
           <xsl:apply-templates select="."/>
-          <xsl:text>\end{verbatim}
+          <xsl:text>\end{lstlisting}
 	
 	      </xsl:text>
         </xsl:when>
@@ -359,9 +374,10 @@
 
   <xsl:template match="sample">
     <xsl:text>
-	        \begin{verbatim}</xsl:text>
+	        \begin{lstlisting}[language=pp]
+</xsl:text>
     <xsl:value-of select="."/>
-    <xsl:text>\end{verbatim}
+    <xsl:text>\end{lstlisting}
 	
 	      </xsl:text>
   </xsl:template>
