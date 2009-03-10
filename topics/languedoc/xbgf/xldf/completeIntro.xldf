@@ -95,7 +95,7 @@
 
   <xldf:import-grammar>
     <target>notation-section</target>
-    <file>bnf.bgf</file>
+    <file>../../presentation/prettyprint/bnf.bgf</file>
   </xldf:import-grammar>
 
   <xldf:append>
@@ -132,8 +132,8 @@
 
   <xldf:import-sample>
     <target>compatibility-section</target>
-    <file>bnf/xbgf/preferBnf.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../presentation/prettyprint/xbgf/preferBnf.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
   <xldf:append>
@@ -157,8 +157,8 @@
 
   <xldf:import-sample>
     <target>compatibility-section</target>
-    <file>bnf/xbgf/stripWhitespace.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../presentation/prettyprint/xbgf/stripWhitespace.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
   <xldf:append>
@@ -174,8 +174,8 @@
 
   <xldf:import-sample>
     <target>compatibility-section</target>
-    <file>bnf/xbgf/designate.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../presentation/prettyprint/xbgf/designate.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
   <xldf:append>
@@ -194,8 +194,8 @@
 
   <xldf:import-sample>
     <target>compatibility-section</target>
-    <file>bnf/xbgf/stripTerminals.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../presentation/prettyprint/xbgf/stripTerminals.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
   <xldf:append>
@@ -216,8 +216,8 @@
 
   <xldf:import-sample>
     <target>compatibility-section</target>
-    <file>bnf/xbgf/refactorBnf.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../presentation/prettyprint/xbgf/refactorBnf.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
   <xldf:append>

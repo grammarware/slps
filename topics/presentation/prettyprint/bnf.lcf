@@ -56,7 +56,7 @@
     <name>bnf</name>
     <grammar>
       <extraction>
-        cp ../bnf.bgf
+        cp bnf.bgf
       </extraction>
     </grammar>
   </source>

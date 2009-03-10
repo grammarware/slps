@@ -50,7 +50,7 @@
   
   <xldf:import-grammar>
     <target>unfold-example</target>
-    <file>../transformation/xbgf/tests/unfold.bgf</file>
+    <file>../../transformation/xbgf/tests/unfold.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>unfold-example</where>
@@ -60,8 +60,8 @@
   </xldf:append>
   <xldf:import-sample>
     <target>unfold-example</target>
-    <file>../transformation/xbgf/tests/unfold.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../transformation/xbgf/tests/unfold.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
     <where>unfold-example</where>
@@ -71,7 +71,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>unfold-example</target>
-    <file>../transformation/xbgf/tests/unfold.baseline</file>
+    <file>../../transformation/xbgf/tests/unfold.baseline</file>
   </xldf:import-grammar>
 
   <xldf:place>
@@ -88,7 +88,7 @@
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>fold-example</target>
-    <file>../transformation/xbgf/tests/fold_nt.bgf</file>
+    <file>../../transformation/xbgf/tests/fold_nt.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>fold-example</where>
@@ -98,8 +98,8 @@
   </xldf:append>
   <xldf:import-sample>
     <target>fold-example</target>
-    <file>../transformation/xbgf/tests/fold_nt.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../transformation/xbgf/tests/fold_nt.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
     <where>fold-example</where>
@@ -109,7 +109,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>fold-example</target>
-    <file>../transformation/xbgf/tests/fold_nt.baseline</file>
+    <file>../../transformation/xbgf/tests/fold_nt.baseline</file>
   </xldf:import-grammar>
   
   <xldf:place>
@@ -148,7 +148,7 @@
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>inline-example</target>
-    <file>../transformation/xbgf/tests/inline.bgf</file>
+    <file>../../transformation/xbgf/tests/inline.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>inline-example</where>
@@ -158,8 +158,8 @@
   </xldf:append>
   <xldf:import-sample>
     <target>inline-example</target>
-    <file>../transformation/xbgf/tests/inline.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../transformation/xbgf/tests/inline.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
     <where>inline-example</where>
@@ -169,7 +169,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>inline-example</target>
-    <file>../transformation/xbgf/tests/inline.baseline</file>
+    <file>../../transformation/xbgf/tests/inline.baseline</file>
   </xldf:import-grammar>
   
   <xldf:place>
@@ -202,7 +202,7 @@
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>extract-example</target>
-    <file>../transformation/xbgf/tests/extract_subch.bgf</file>
+    <file>../../transformation/xbgf/tests/extract_subch.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>extract-example</where>
@@ -212,8 +212,8 @@
   </xldf:append>
   <xldf:import-sample>
     <target>extract-example</target>
-    <file>../transformation/xbgf/tests/extract_subch.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../transformation/xbgf/tests/extract_subch.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
     <where>extract-example</where>
@@ -223,7 +223,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>extract-example</target>
-    <file>../transformation/xbgf/tests/extract_subch.baseline</file>
+    <file>../../transformation/xbgf/tests/extract_subch.baseline</file>
   </xldf:import-grammar>
 
   <xldf:place>

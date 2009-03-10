@@ -308,10 +308,9 @@
         Distributivity rules for optionality modifier are also covered
         by <ldf:keyword>massage</ldf:keyword>:
       </text>
-      <formula>(x? y)? = x? y?</formula>
-      <formula>(x y?)? = x? y?</formula>
-      <formula>(x^\star y)? = x^\star y?</formula>
-      <formula>(x y^\star)? = x? y^\star</formula>
+      <formula>(x? y?)? = x? y?</formula>
+      <formula>(x^\star y?)? = x^\star y?</formula>
+      <formula>(x? y^\star)? = x? y^\star</formula>
       <formula>(x | y)? = x? | y?</formula>
       <text>
         Associativity rules for <ldf:keyword>massage</ldf:keyword>:
@@ -334,7 +333,7 @@
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>massage-example</target>
-    <file>../transformation/xbgf/tests/massage_triple.bgf</file>
+    <file>../../transformation/xbgf/tests/massage_triple.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>massage-example</where>
@@ -344,8 +343,8 @@
   </xldf:append>
   <xldf:import-sample>
     <target>massage-example</target>
-    <file>../transformation/xbgf/tests/massage_triple.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../transformation/xbgf/tests/massage_triple.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
     <where>massage-example</where>
@@ -355,7 +354,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>massage-example</target>
-    <file>../transformation/xbgf/tests/massage_triple.baseline</file>
+    <file>../../transformation/xbgf/tests/massage_triple.baseline</file>
   </xldf:import-grammar>
 
   <xldf:place>
@@ -370,7 +369,7 @@
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>distribute-example</target>
-    <file>../transformation/xbgf/tests/distribute_nt.bgf</file>
+    <file>../../transformation/xbgf/tests/distribute_nt.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>distribute-example</where>
@@ -380,8 +379,8 @@
   </xldf:append>
   <xldf:import-sample>
     <target>distribute-example</target>
-    <file>../transformation/xbgf/tests/distribute_nt.xbgf</file>
-    <prettyprinter>../../shared/tools/xbgf2xbnf</prettyprinter>
+    <file>../../transformation/xbgf/tests/distribute_nt.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
     <where>distribute-example</where>
@@ -391,7 +390,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>distribute-example</target>
-    <file>../transformation/xbgf/tests/distribute_nt.baseline</file>
+    <file>../../transformation/xbgf/tests/distribute_nt.baseline</file>
   </xldf:import-grammar>
   
   <xldf:place>
@@ -412,7 +411,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>element-deyaccify</target>
-    <file>../transformation/xbgf/tests/deyaccify_left.bgf</file>
+    <file>../../transformation/xbgf/tests/deyaccify_left.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>element-deyaccify</where>
@@ -424,7 +423,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>element-deyaccify</target>
-    <file>../transformation/xbgf/tests/deyaccify_left.baseline</file>
+    <file>../../transformation/xbgf/tests/deyaccify_left.baseline</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>element-deyaccify</where>
@@ -436,7 +435,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>element-deyaccify</target>
-    <file>../transformation/xbgf/tests/deyaccify_right.bgf</file>
+    <file>../../transformation/xbgf/tests/deyaccify_right.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>element-deyaccify</where>
@@ -448,7 +447,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>element-deyaccify</target>
-    <file>../transformation/xbgf/tests/deyaccify_right.baseline</file>
+    <file>../../transformation/xbgf/tests/deyaccify_right.baseline</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>element-deyaccify</where>
@@ -460,7 +459,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>element-deyaccify</target>
-    <file>../transformation/xbgf/tests/deyaccify_right_plus.baseline</file>
+    <file>../../transformation/xbgf/tests/deyaccify_right_plus.baseline</file>
   </xldf:import-grammar>
 
   <xldf:place>

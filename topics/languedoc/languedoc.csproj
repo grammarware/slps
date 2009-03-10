@@ -54,26 +54,43 @@
     <None Include="..\..\shared\xsd\xldf.xsd">
       <Link>xldf.xsd</Link>
     </None>
-    <None Include="beautify_bgf.xbgf" />
-    <None Include="beautify_xbgf.xbgf" />
-    <None Include="bnf.bgf" />
-    <None Include="bnf\bnf.lcf" />
-    <None Include="bnf\xbgf\designate.xbgf" />
-    <None Include="bnf\xbgf\preferBnf.xbgf" />
-    <None Include="bnf\xbgf\refactorBnf.xbgf" />
-    <None Include="bnf\xbgf\stripTerminals.xbgf" />
-    <None Include="bnf\xbgf\stripWhitespace.xbgf" />
-    <None Include="xldf\completeDecorSection.xldf" />
-    <None Include="xldf\completeDecSection.xldf" />
-    <None Include="xldf\completeFoldSection.xldf" />
-    <None Include="xldf\completeIncSection.xldf" />
-    <None Include="xldf\completeIntro.xldf" />
-    <None Include="xldf\completeRefSection.xldf" />
-    <None Include="xldf\completeRevSections.xldf" />
+    <None Include="..\presentation\prettyprint\bnf.bgf">
+      <Link>xbgf\bnf\bnf.bgf</Link>
+    </None>
+    <None Include="..\presentation\prettyprint\bnf.lcf">
+      <Link>xbgf\bnf\bnf.lcf</Link>
+    </None>
+    <None Include="..\presentation\prettyprint\xbgf\designate.xbgf">
+      <Link>xbgf\bnf\xbgf\designate.xbgf</Link>
+    </None>
+    <None Include="..\presentation\prettyprint\xbgf\preferBnf.xbgf">
+      <Link>xbgf\bnf\xbgf\preferBnf.xbgf</Link>
+    </None>
+    <None Include="..\presentation\prettyprint\xbgf\refactorBnf.xbgf">
+      <Link>xbgf\bnf\xbgf\refactorBnf.xbgf</Link>
+    </None>
+    <None Include="..\presentation\prettyprint\xbgf\stripTerminals.xbgf">
+      <Link>xbgf\bnf\xbgf\stripTerminals.xbgf</Link>
+    </None>
+    <None Include="..\presentation\prettyprint\xbgf\stripWhitespace.xbgf">
+      <Link>xbgf\bnf\xbgf\stripWhitespace.xbgf</Link>
+    </None>
+    <None Include="xbgf\beautify_bgf.xbgf" />
+    <None Include="xbgf\beautify_xbgf.xbgf" />
+    <None Include="xbgf\xldf\completeDecorSection.xldf" />
+    <None Include="xbgf\xldf\completeDecSection.xldf" />
+    <None Include="xbgf\xldf\completeFoldSection.xldf" />
+    <None Include="xbgf\xldf\completeIncSection.xldf" />
+    <None Include="xbgf\xldf\completeIntro.xldf" />
+    <None Include="xbgf\xldf\completeRefSection.xldf" />
+    <None Include="xbgf\xldf\completeRevSections.xldf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\shared\xsl\ldf2tex.xslt">
       <Link>ldf2tex.xslt</Link>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="xldf\xldf\" />
   </ItemGroup>
 </Project>
