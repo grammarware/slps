@@ -18,6 +18,31 @@ ET._namespace_map[htmlns]='html'
 
 acceptedtags = ('{'+xsdns+'}complexType','{'+xsdns+'}element','{'+xsdns+'}simpleType','{'+xsdns+'}group')
 
+def mapXSD2LDF(stree,dtree,grammar):
+ for nt in stree.findall('/*'):
+  if nt.tag not in acceptedtags:
+   continue
+  section = ET.SubElement(dtree,'core')
+  section.set('id',nt.tag.replace('{'+xsdns+'}','')+'-'+nt.attrib['name'])
+  #el = ET.SubElement(section,'id')
+  #el.text = nt.tag.replace('{'+xsdns+'}','')+'-'+nt.attrib['name']
+  el = ET.SubElement(section,'title')
+  el.text = nt.attrib['name']
+  el = ET.SubElement(section,'description')
+  el = ET.SubElement(el,'content')
+  for p in nt.findall('./{%s}annotation/{%s}documentation' % (xsdns,xsdns)):
+   pel = ET.SubElement(el,'text')
+   pel.text = p.text
+   # e.g. keywords
+   for sub in p:
+    pel.append(sub)
+  # Need to decide whether to put productions inside description subsections
+  #section.append(grammar[nt.attrib['name']])
+  for prod in grammar[nt.attrib['name']]:
+   el.append(prod)
+  # print grammar[nt.attrib['name']]
+	
+
 def main(xsdfile,bgffile,ldffile):
  grammar={}
  gtree = ET.parse(bgffile)
@@ -35,7 +60,6 @@ def main(xsdfile,bgffile,ldffile):
 
  dtree.set('xmlns:ldf',ldfns)
  dtree.set('xmlns:bgf',bgfns)
- #dtree.set('xmlns:ldx',ldxns)
  dtree.set('xmlns:html',htmlns)
 
  section = ET.SubElement(dtree,'titlePage')
@@ -65,62 +89,14 @@ def main(xsdfile,bgffile,ldffile):
   for p in stree.findall('/{'+xsdns+'}import'):
    pel = ET.SubElement(el,'item')
    pel.text = p.attrib['schemaLocation']
+   istree = ET.parse('/'.join(xsdfile.split('/')[:-1])+'/'+p.attrib['schemaLocation'])
+   mapXSD2LDF(istree,dtree,grammar)
+  print len(stree.findall('/{'+xsdns+'}import')),'external schema(ta) imported.'
 
- #el = copymixedcontent(dtree,'title',stree,'/{%s}annotation/{%s}documentation' % (xsdns,xsdns))
- #el = ET.SubElement(dtree,'author')
- #el.text = 'XSD2LDF generator'
- #el = ET.SubElement(dtree,'abstract')
- #el.text = '...abstract...'
- #content = ET.SubElement(dtree,'content')
-
- for nt in stree.findall('/*'):
-  if nt.tag not in acceptedtags:
-   continue
-  section = ET.SubElement(dtree,'core')
-  section.set('id',nt.tag.replace('{'+xsdns+'}','')+'-'+nt.attrib['name'])
-  #el = ET.SubElement(section,'id')
-  #el.text = nt.tag.replace('{'+xsdns+'}','')+'-'+nt.attrib['name']
-  el = ET.SubElement(section,'title')
-  el.text = nt.attrib['name']
-  el = ET.SubElement(section,'description')
-  el = ET.SubElement(el,'content')
-  for p in nt.findall('./{%s}annotation/{%s}documentation' % (xsdns,xsdns)):
-   pel = ET.SubElement(el,'text')
-   pel.text = p.text
-   # e.g. keywords
-   for sub in p:
-    pel.append(sub)
-  # Need to decide whether to put productions inside description subsections
-  #section.append(grammar[nt.attrib['name']])
-  for prod in grammar[nt.attrib['name']]:
-   el.append(prod)
-  # print grammar[nt.attrib['name']]
+ mapXSD2LDF(stree,dtree,grammar)
 
  ET.ElementTree(dtree).write(ldffile)
  return
-
- for nt in stree.findall('/{%s}group' % (xsdns)):
-  s = ET.SubElement(content,'section')
-  el = ET.SubElement(s,'title')
-  el.text = nt.attrib['name']
-  con2 = ET.SubElement(s,'content')
-  el = copymixedcontent(con2,'text',nt,'./{%s}annotation/{%s}documentation' % (xsdns,xsdns))
-  el = ET.SubElement(con2,'grammar')
-  el.set('language',xbgfns)
-  el.append(grammar[nt.attrib['name']])
-  #print 'found group!'
-
- for nt in stree.findall('/{%s}element' % (xsdns)):
-  s = ET.SubElement(content,'section')
-  el = ET.SubElement(s,'title')
-  el.text = nt.attrib['name']
-  con2 = ET.SubElement(s,'content')
-  el = copymixedcontent(con2,'text',nt,'./{%s}annotation/{%s}documentation' % (xsdns,xsdns))
-  el = ET.SubElement(con2,'grammar')
-  el.set('language',xbgfns)
-  el.append(grammar[nt.attrib['name']])
-
- ET.ElementTree(dtree).write(ldffile)
 
 def bgfns_(element):
  return '{'+bgfns+'}'+element
