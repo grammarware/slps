@@ -147,6 +147,33 @@ def xldf_place(cmd,tree):
   print '[----] xldf:place failed: don''t know how to place subsections in',found2.tag
  return
 
+def xldf_drop(cmd,tree):
+ found = findnode(tree,cmd.findtext('section'))
+ if not found:
+  print '[----] xldf:drop failed: the node not found!'
+  return
+ tree.getroot().remove(found)
+ print '[XLDF] drop('+cmd.findtext('section')+')'
+ return
+
+def xldf_combine(cmd,tree):
+ found = findnode(tree,cmd.findtext('section'))
+ if not found:
+  print '[----] xldf:combine failed: source node not found!'
+  return
+ found2 = findnode(tree,cmd.findtext('with'))
+ if not found2:
+  print '[----] xldf:combine failed: target node not found!'
+  return
+ target = found2.findall('content')[0]
+ for p in found.findall('*/content/*'):
+  target.append(p)
+ tree.getroot().remove(found)
+ print '[XLDF] combine('+cmd.findtext('section')+',',cmd.findtext('with')+')'
+ #else:
+ # print '[----] xldf:combine failed: don''t know how to place subsections in',found2.tag
+ return
+
 def xldf_rename(cmd,tree):
  if cmd.findall('from/title'):
   byid = False
@@ -295,8 +322,12 @@ def main(xldffile,inldffile,outldffile):
    xldf_import_grammar(cmd,ltree)
   elif cmdname == 'import-sample':
    xldf_import_sample(cmd,ltree)
+  elif cmdname == 'drop':
+   xldf_drop(cmd,ltree)
   elif cmdname == 'place':
    xldf_place(cmd,ltree)
+  elif cmdname == 'combine':
+   xldf_combine(cmd,ltree)
   elif cmdname == 'rename':
    xldf_rename(cmd,ltree)
   elif cmdname == 'append':

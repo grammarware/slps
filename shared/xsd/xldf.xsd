@@ -36,7 +36,9 @@
       <xsd:element ref="xldf:insert"/>
       <xsd:element ref="xldf:import-grammar"/>
       <xsd:element ref="xldf:import-sample"/>
+      <xsd:element ref="xldf:drop"/>
       <xsd:element ref="xldf:place"/>
+      <xsd:element ref="xldf:combine"/>
       <xsd:element ref="xldf:rename"/>
       <xsd:element ref="xldf:append"/>
       <xsd:element ref="xldf:remove-section"/>
@@ -125,7 +127,7 @@
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>
-  
+
   <xsd:element name="place">
     <xsd:annotation>
       <xsd:documentation>
@@ -134,8 +136,40 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="section" type="xsd:string"/>         <!-- IDREF -->
-        <xsd:element name="inside" type="xsd:string"/>         	<!-- IDREF -->
+        <xsd:element name="section" type="xsd:string"/>
+        <!-- IDREF -->
+        <xsd:element name="inside" type="xsd:string"/>
+        <!-- IDREF -->
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="combine">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="section" type="xsd:string"/>
+        <!-- IDREF -->
+        <xsd:element name="with" type="xsd:string"/>
+        <!-- IDREF -->
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="drop">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="section" type="xsd:string"/>
+        <!-- IDREF -->
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
