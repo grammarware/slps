@@ -91,6 +91,14 @@
 </xsl:text>
   </xsl:template>
 
+  <xsl:template match="xbgf:unlabel">
+    <xsl:value-of select="local-name()" />
+    <xsl:text>([</xsl:text>
+    <xsl:value-of select="label"/>
+    <xsl:text>]);
+</xsl:text>
+  </xsl:template>
+
   <xsl:template match="xbgf:distribute|xbgf:vertical">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>
@@ -105,10 +113,14 @@
     <xsl:value-of select="local-name()" />
     <xsl:text>(
  </xsl:text>
-    <xsl:apply-templates select="./bgf:expression[1]"/>
+    <xsl:call-template name="no-parenthesis">
+      <xsl:with-param name="expr" select="./bgf:expression[1]"/>
+    </xsl:call-template>
     <xsl:text>,
  </xsl:text>
-    <xsl:apply-templates select="./bgf:expression[2]"/>
+    <xsl:call-template name="no-parenthesis">
+      <xsl:with-param name="expr" select="./bgf:expression[2]"/>
+    </xsl:call-template>
     <xsl:choose>
       <xsl:when test="in">
         <xsl:text>

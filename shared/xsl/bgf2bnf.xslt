@@ -9,8 +9,8 @@
       omit-xml-declaration="yes"
       />
 
- <xsl:template match="/bgf:grammar">
-      <xsl:apply-templates select="./bgf:*"/>
+  <xsl:template match="/bgf:grammar">
+    <xsl:apply-templates select="./bgf:*"/>
   </xsl:template>
 
   <xsl:template match="bgf:production">
@@ -26,17 +26,9 @@
         <xsl:for-each select="./bgf:expression/choice/bgf:expression">
           <xsl:text>
         </xsl:text>
-          <xsl:apply-templates select="."/>
-        </xsl:for-each>
-        <xsl:text>
-</xsl:text>
-      </xsl:when>
-      <xsl:when test="./bgf:expression/sequence">
-        <xsl:text>
-        </xsl:text>
-        <xsl:for-each select="./bgf:expression/sequence/*">
-          <xsl:apply-templates select="."/>
-          <xsl:text> </xsl:text>
+          <xsl:call-template name="no-parenthesis">
+            <xsl:with-param name="expr" select="."/>
+          </xsl:call-template>
         </xsl:for-each>
         <xsl:text>
 </xsl:text>
@@ -44,13 +36,15 @@
       <xsl:otherwise>
         <xsl:text>
         </xsl:text>
-        <xsl:apply-templates select="./bgf:expression"/>
+        <xsl:call-template name="no-parenthesis">
+          <xsl:with-param name="expr" select="./bgf:expression"/>
+        </xsl:call-template>
         <xsl:text>
 </xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <xsl:template match="bgf:expression">
     <xsl:apply-templates select="./*"/>
   </xsl:template>
@@ -75,13 +69,13 @@
     <xsl:apply-templates select="./*"/>
     <xsl:text>?</xsl:text>
   </xsl:template>
-  
+
   <xsl:template match="terminal">
     <xsl:text>"</xsl:text>
     <xsl:value-of select="."/>
     <xsl:text>"</xsl:text>
   </xsl:template>
-  
+
   <xsl:template match="value">
     <xsl:choose>
       <xsl:when test=". = 'string'">
@@ -92,7 +86,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <xsl:template match="epsilon">
     <xsl:text>EPSILON</xsl:text>
   </xsl:template>
@@ -136,18 +130,6 @@
     <xsl:text>)</xsl:text>
   </xsl:template>
 
-  <!-- top level choices - one per line -->
-  <xsl:template match="/bgf:grammar/bgf:production/bgf:expression/choice">
-    <xsl:call-template name="car">
-      <xsl:with-param name="expr" select="./bgf:expression[1]"/>
-    </xsl:call-template>
-    <xsl:for-each select="./bgf:expression[position()>1]">
-      <xsl:call-template name="cdr">
-        <xsl:with-param name="expr" select="."/>
-      </xsl:call-template>
-    </xsl:for-each>
-  </xsl:template>
-
   <!-- inner choices - BNF bar -->
   <xsl:template match="choice">
     <xsl:text>(</xsl:text>
@@ -159,23 +141,20 @@
     <xsl:text>)</xsl:text>
   </xsl:template>
 
-  
-  <xsl:template name="car">
+  <xsl:template name="no-parenthesis">
     <xsl:param name="expr"/>
-    <xsl:text>
-</xsl:text>
-    <xsl:apply-templates select="$expr/*"/>
-    <xsl:text>
-</xsl:text>
-  </xsl:template>
-
-  <xsl:template name="cdr">
-    <xsl:param name="expr"/>
-    <xsl:text>
-        </xsl:text>
-    <xsl:apply-templates select="$expr/*"/>
-    <xsl:text>
-</xsl:text>
+    <xsl:choose>
+      <xsl:when test="$expr/sequence">
+        <xsl:apply-templates select="$expr/sequence/bgf:expression[1]/*"/>
+        <xsl:for-each select="$expr/sequence/bgf:expression[position()>1]">
+          <xsl:text> </xsl:text>
+          <xsl:apply-templates select="./*"/>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="$expr"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
