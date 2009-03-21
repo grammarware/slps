@@ -1,25 +1,24 @@
 validator = ../../../shared/tools/checkxml
+xldf = ../../../shared/tools/xldf
+xbgf = ../../../shared/tools/xbgf
 
-build: bgf_pretty.bgf xbgf.ldf
-	python ../../../topics/transformation/xldf/xldf.py xldf/completeIntro.xldf xbgf.ldf xbgf1.ldf
-	python ../../../topics/transformation/xldf/xldf.py xldf/completeFoldSection.xldf xbgf1.ldf xbgf2.ldf
-	python ../../../topics/transformation/xldf/xldf.py xldf/completeRefSection.xldf xbgf2.ldf xbgf3.ldf
-	python ../../../topics/transformation/xldf/xldf.py xldf/completeIncSection.xldf xbgf3.ldf xbgf4.ldf
-	python ../../../topics/transformation/xldf/xldf.py xldf/completeDecSection.xldf xbgf4.ldf xbgf5.ldf
-	python ../../../topics/transformation/xldf/xldf.py xldf/completeRevSections.xldf xbgf5.ldf xbgf6.ldf
-	python ../../../topics/transformation/xldf/xldf.py xldf/completeDecorSection.xldf xbgf6.ldf xbgf7.ldf
+build: xbgf.ldf
+	${xldf} xldf/completeIntro.xldf xbgf.ldf xbgf1.ldf
+	${xldf} xldf/completeFoldSection.xldf xbgf1.ldf xbgf2.ldf
+	${xldf} xldf/completeRefSection.xldf xbgf2.ldf xbgf3.ldf
+	${xldf} xldf/completeIncSection.xldf xbgf3.ldf xbgf4.ldf
+	${xldf} xldf/completeDecSection.xldf xbgf4.ldf xbgf5.ldf
+	${xldf} xldf/completeRevSections.xldf xbgf5.ldf xbgf6.ldf
+	${xldf} xldf/completeDecorSection.xldf xbgf6.ldf xbgf7.ldf
 	xsltproc ../../../shared/xsl/ldf2tex.xslt xbgf7.ldf > xbgf.tex
 	pdflatex -interaction=batchmode xbgf
 	pdflatex -interaction=batchmode xbgf
 
-bgf_pretty.bgf:
-	../../../shared/tools/xsd2bgf ../../../shared/xsd/bgf.xsd bgf.bgf
-	../../../shared/tools/xbgf beautify_bgf.xbgf bgf.bgf bgf_pretty.bgf
-
-xbgf.ldf:
+xbgf.ldf: 
 	../../../shared/tools/xsd2bgf ../../../shared/xsd/xbgf.xsd xbgf.bgf
-	../../../shared/tools/xbgf beautify_xbgf.xbgf xbgf.bgf xbgf_1.bgf
-	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/xbgf.xsd xbgf_1.bgf xbgf.ldf
+	${xbgf} beautify_bgf.xbgf xbgf.bgf xbgf_1.bgf
+	${xbgf} beautify_xbgf.xbgf xbgf_1.bgf xbgf_2.bgf
+	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/xbgf.xsd xbgf_2.bgf xbgf.ldf
 
 rebuild:
 	make clean

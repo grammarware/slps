@@ -233,59 +233,8 @@
     </bgf:production>
   </xbgf:anonymize>
 
-  <xbgf:anonymize>
-    <bgf:production>
-      <nonterminal>scope</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <marked>
-              <bgf:expression>
-                <selectable>
-                  <selector>label</selector>
-                  <bgf:expression>
-                    <nonterminal>label</nonterminal>
-                  </bgf:expression>
-                </selectable>
-              </bgf:expression>
-            </marked>
-          </bgf:expression>
-          <bgf:expression>
-            <selectable>
-              <selector>nonterminal</selector>
-              <bgf:expression>
-                <nonterminal>nonterminal</nonterminal>
-              </bgf:expression>
-            </selectable>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:anonymize>
-
-  <xbgf:anonymize>
-    <bgf:production>
-      <nonterminal>scope</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>label</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <marked>
-              <bgf:expression>
-                <selectable>
-                  <selector>nonterminal</selector>
-                  <bgf:expression>
-                    <nonterminal>nonterminal</nonterminal>
-                  </bgf:expression>
-                </selectable>
-              </bgf:expression>
-            </marked>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:anonymize>
+  <xbgf:vertical>
+    <nonterminal>scope</nonterminal>
+  </xbgf:vertical>
 
 </xbgf:sequence>

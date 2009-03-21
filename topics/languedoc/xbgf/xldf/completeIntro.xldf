@@ -71,18 +71,43 @@
       <content>
         <text>
           BGF is a BNF-like Grammar Format, an XML dialect of Extended Backus Naur Form
-          that was used in the language convergence infrastructure. Its grammar is presented
+          that was used in the language convergence infrastructure. The grammar of
+          its abstract syntax, generated from the corresponding XML Schema, is presented
           below in a slightly beautified form (all undefined nonterminals are strings):
         </text>
       </content>
     </notation>
   </xldf:add-subsection>
 
-  <xldf:import-grammar>
-    <target>notation-section</target>
-    <file>bgf_pretty.bgf</file>
-  </xldf:import-grammar>
-
+  <xldf:combine>
+    <section>element-grammar</section>
+    <with>notation-section</with>
+  </xldf:combine>  
+  <xldf:combine>
+    <section>element-production</section>
+    <with>notation-section</with>
+  </xldf:combine>  
+  <xldf:combine>
+    <section>element-expression</section>
+    <with>notation-section</with>
+  </xldf:combine>
+  <xldf:combine>
+    <section>simpleType-value</section>
+    <with>notation-section</with>
+  </xldf:combine>
+  <xldf:drop>
+    <section>simpleType-label</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>simpleType-nonterminal</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>simpleType-selector</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>simpleType-terminal</section>
+  </xldf:drop>
+  
   <xldf:append>
     <where>notation-section</where>
     <content>
@@ -146,7 +171,9 @@
         its semantics only means that we do not want to have empty samples
         while an empty grammar is still acceptable in general. Since this is
         data refinement, a semantic decreasing transformation is used without
-        hesitation. The rest of the transformational sequence is trivial refactorings.
+        hesitation. The rest of the transformational sequence are
+        trivial refactorings (verticalisations are already performed in the
+        example from the previous section).
       </text>
       <text>
         The BNF source undergoes the following transformation for stripping

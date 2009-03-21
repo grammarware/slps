@@ -194,7 +194,7 @@
     <example id="extract-example">
       <content>
         <text>
-          <ldf:keyword>Extract</ldf:keyword> also works vertically. Given the input:
+          Extraction also works vertically. Given the input:
         </text>
       </content>
     </example>
