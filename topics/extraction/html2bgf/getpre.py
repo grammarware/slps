@@ -13,8 +13,12 @@ def processSection(text,tagN,cx,p):
  # p - file output
  max = cx
  content = text.split('</h'+`tagN`+'>')
+ if content[0].find('<a name')==0:
+  title = content[0].split('>')[1].split()[0].split('<')[0]
+ else:
+  title = content[0].split()[0]
  for kw in yes:
-  if content[0].split()[0]==kw:
+  if title==kw:
    max = counter[kw]
    break
  for kw in no:
@@ -25,15 +29,15 @@ def processSection(text,tagN,cx,p):
   if max:
    if pattern.has_key(kw):
     if pattern[kw][len(pattern[kw])-max]=='-':
-     #print 'Not including one <pre> in',kw
+     print 'Not including one <pre> in',kw
      max -= 1
      continue
-   #print 'Matched <pre> in',content[0].split()[0]
+   print 'Matched <pre> in',title
    p.write(pre.split('</pre>')[0].replace('<br>','').replace('&#32;',' '))
    p.write('\n<hr>\n')
    max -= 1
   else:
-   #print 'Skipped <pre> in',content[0].split()[0]
+   print 'Skipped <pre> in',title
    pass
  for ss in subsections[1:]:
   processSection(ss,tagN+1,max,p)
@@ -77,7 +81,12 @@ else:
  out = open(sys.argv[3],'w')
  out.write('<pre>')
  #checkSection(''.join(open(sys.argv[2],'r').readlines()),1,False,out,'start')
- for toplevel in ''.join(open(sys.argv[2],'r').readlines()).split('<h1>')[1:]:
-  processSection(toplevel,1,0,out)
+ content = ''.join(open(sys.argv[2],'r').readlines())
+ if content.find('<h1>')<0:
+  for toplevel in content.split('<h2>')[1:]:
+   processSection(toplevel,2,0,out)
+ else:
+  for toplevel in content.split('<h1>')[1:]:
+   processSection(toplevel,1,0,out)
  out.write('</pre>')
  out.close()
