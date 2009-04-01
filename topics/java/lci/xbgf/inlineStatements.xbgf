@@ -194,25 +194,7 @@
      vs.
       - [], +n(BlockStatement)
   -->
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>BlockStatementsOpt</nonterminal>
-      <bgf:expression>
-        <optional>
-          <bgf:expression>
-            <nonterminal>BlockStatements</nonterminal>
-          </bgf:expression>
-        </optional>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
   <xbgf:inline>BlockStatements</xbgf:inline>
-  <xbgf:rename>
-    <nonterminal>
-      <from>BlockStatementsOpt</from>
-      <to>BlockStatements</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:massage>
     <bgf:expression>
       <optional>
@@ -233,6 +215,18 @@
       </star>
     </bgf:expression>
   </xbgf:massage>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>BlockStatements</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <nonterminal>BlockStatement</nonterminal>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
 
   <!-- ISSUE CORRECT BRUTAL?
   The collected grammar does not allow interface declarations and labelled statements inside blocks.

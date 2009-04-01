@@ -144,7 +144,7 @@ vs
             <terminal>)</terminal>
           </bgf:expression>
           <bgf:expression>
-            <nonterminal>UnaryExpression</nonterminal>
+            <nonterminal>Expression3</nonterminal>
           </bgf:expression>
         </sequence>
       </bgf:expression>
@@ -158,14 +158,8 @@ vs
   <xbgf:horizontal>UnaryExpressionNotPlusMinus</xbgf:horizontal>
   <xbgf:inline>UnaryExpressionNotPlusMinus</xbgf:inline>
   <xbgf:distribute>
-    <nonterminal>UnaryExpression</nonterminal>
+    <nonterminal>Expression3</nonterminal>
   </xbgf:distribute>
-  <xbgf:rename>
-    <nonterminal>
-      <from>UnaryExpression</from>
-      <to>Expression3</to>
-    </nonterminal>
-  </xbgf:rename>
 
   <xbgf:inline>PostDecrementExpression</xbgf:inline>
   <xbgf:inline>PostIncrementExpression</xbgf:inline>
@@ -573,7 +567,7 @@ vs
   Now to Expression2, using the expressway -->
   <xbgf:redefine>
     <bgf:production>
-      <nonterminal>ConditionalOrExpression</nonterminal>
+      <nonterminal>Expression2</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
@@ -615,12 +609,6 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:redefine>
-  <xbgf:rename>
-    <nonterminal>
-      <from>ConditionalOrExpression</from>
-      <to>Expression2</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>Expression2Rest</nonterminal>
@@ -832,7 +820,7 @@ vs
   <xbgf:remove>
     <vertical>
       <bgf:production>
-        <nonterminal>AssignmentExpression</nonterminal>
+        <nonterminal>Expression1</nonterminal>
         <bgf:expression>
           <nonterminal>Assignment</nonterminal>
         </bgf:expression>
@@ -840,12 +828,6 @@ vs
     </vertical>
   </xbgf:remove>
   <xbgf:inline>ConditionalExpression</xbgf:inline>
-  <xbgf:rename>
-    <nonterminal>
-      <from>AssignmentExpression</from>
-      <to>Expression1</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:fold>
     <nonterminal>Expression1</nonterminal>
   </xbgf:fold>

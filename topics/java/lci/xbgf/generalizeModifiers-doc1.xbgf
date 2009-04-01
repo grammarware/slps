@@ -11,12 +11,6 @@
   -->
 
   <!-- ISSUE PERMISSIVENESS -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>ClassModifier</from>
-      <to>Modifier</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:unite>
     <add>InterfaceModifier</add>
     <to>Modifier</to>
@@ -44,12 +38,6 @@
   </xbgf:unite>
 
   <!-- ISSUE PERMISSIVENESS plural -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>ClassModifiers</from>
-      <to>Modifiers</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:unite>
     <add>ConstantModifiers</add>
     <to>Modifiers</to>

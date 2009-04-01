@@ -1,0 +1,33 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- app1/doc1 naming convention changed in JLS2 -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>Name</from>
+      <to>QualifiedIdentifier</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>InterfaceMemberDeclaration</from>
+      <to>InterfaceBodyDeclaration</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  <!-- unites in refactorTypes -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>PrimitiveType</from>
+      <to>BasicType</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassTypeList</from>
+      <to>TypeList</to>
+    </nonterminal>
+  </xbgf:rename>
+
+</xbgf:sequence>

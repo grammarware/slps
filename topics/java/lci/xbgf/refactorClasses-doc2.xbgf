@@ -73,7 +73,7 @@
   <xbgf:horizontal>TypeDeclaration</xbgf:horizontal>
   <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
   <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
-  <xbgf:horizontal>InterfaceMemberDeclaration</xbgf:horizontal>
+  <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -93,7 +93,7 @@
     <nonterminal>TypeDeclaration</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
-    <nonterminal>InterfaceMemberDeclaration</nonterminal>
+    <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
   <!-- 

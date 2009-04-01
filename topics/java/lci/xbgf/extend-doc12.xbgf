@@ -1207,7 +1207,7 @@
           <bgf:expression>
             <optional>
               <bgf:expression>
-                <nonterminal>FormalParameterList</nonterminal>
+                <nonterminal>FormalParameters</nonterminal>
               </bgf:expression>
             </optional>
           </bgf:expression>
@@ -1230,12 +1230,6 @@
       - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
 
   -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>FormalParameterList</from>
-      <to>FormalParameters</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:horizontal>FormalParameters</xbgf:horizontal>
   <xbgf:unfold>
     <nonterminal>FormalParameters</nonterminal>
@@ -1383,12 +1377,6 @@
      vs.
       - [], ,([t(throws), n(ExceptionTypeList)])
   -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>ClassTypeList</from>
-      <to>ExceptionTypeList</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:upgrade>
     <bgf:production>
       <nonterminal>ExceptionTypeList</nonterminal>

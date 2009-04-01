@@ -627,7 +627,7 @@
         <bgf:expression>
           <plus>
             <bgf:expression>
-              <nonterminal>InterfaceMemberDeclaration</nonterminal>
+              <nonterminal>InterfaceBodyDeclaration</nonterminal>
             </bgf:expression>
           </plus>
         </bgf:expression>
@@ -636,17 +636,11 @@
     <bgf:expression>
       <star>
         <bgf:expression>
-          <nonterminal>InterfaceMemberDeclaration</nonterminal>
+          <nonterminal>InterfaceBodyDeclaration</nonterminal>
         </bgf:expression>
       </star>
     </bgf:expression>
   </xbgf:massage>
-  <xbgf:rename>
-    <nonterminal>
-      <from>InterfaceMemberDeclaration</from>
-      <to>InterfaceBodyDeclaration</to>
-    </nonterminal>
-  </xbgf:rename>
 
   <!-- 
    - Fail: CompilationUnit.

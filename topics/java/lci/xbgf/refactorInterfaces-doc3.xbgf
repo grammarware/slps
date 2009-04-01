@@ -169,13 +169,7 @@
   -->
   <xbgf:deyaccify>InterfaceMemberDeclarations</xbgf:deyaccify>
   <xbgf:inline>InterfaceMemberDeclarations</xbgf:inline>
-  <xbgf:rename>
-    <nonterminal>
-      <from>InterfaceMemberDeclaration</from>
-      <to>InterfaceBodyDeclaration</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:massage>
+   <xbgf:massage>
     <bgf:expression>
       <optional>
         <bgf:expression>

@@ -42,8 +42,6 @@
   <!-- finishing touches -->
   <xbgf:eliminate>FormalParameterList</xbgf:eliminate>
   <xbgf:eliminate>LastFormalParameter</xbgf:eliminate>
-  <xbgf:eliminate>Wildcard</xbgf:eliminate>
-  <xbgf:eliminate>WildcardBounds</xbgf:eliminate>
   <xbgf:eliminate>TypeDeclSpecifier</xbgf:eliminate>
 
 </xbgf:sequence>

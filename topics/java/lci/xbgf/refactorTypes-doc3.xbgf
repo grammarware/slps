@@ -81,14 +81,8 @@
   <xbgf:horizontal>NumericType</xbgf:horizontal>
   <xbgf:inline>NumericType</xbgf:inline>
   <xbgf:distribute>
-    <nonterminal>PrimitiveType</nonterminal>
+    <nonterminal>BasicType</nonterminal>
   </xbgf:distribute>
-  <xbgf:rename>
-    <nonterminal>
-      <from>PrimitiveType</from>
-      <to>BasicType</to>
-    </nonterminal>
-  </xbgf:rename>
 
   <!-- ISSUE PERMISSIVENESS
   Merging interfaces with classes and making lists and other things conform -->
@@ -123,10 +117,10 @@
     </vertical>
   </xbgf:remove>
   <xbgf:inline>ReferenceType</xbgf:inline>
-  <!--InterfaceTypeList-->
+  <!--ex-InterfaceTypeList-->
   <xbgf:upgrade>
     <bgf:production>
-      <nonterminal>InterfaceTypeList</nonterminal>
+      <nonterminal>TypeList</nonterminal>
       <bgf:expression>
         <marked>
           <bgf:expression>
@@ -144,11 +138,11 @@
   </xbgf:upgrade>
   <xbgf:upgrade>
     <bgf:production>
-      <nonterminal>InterfaceTypeList</nonterminal>
+      <nonterminal>TypeList</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>InterfaceTypeList</nonterminal>
+            <nonterminal>TypeList</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <terminal>,</terminal>
@@ -172,7 +166,7 @@
   </xbgf:upgrade>
   <xbgf:upgrade>
     <bgf:production>
-      <nonterminal>InterfaceTypeList</nonterminal>
+      <nonterminal>TypeList</nonterminal>
       <bgf:expression>
         <marked>
           <bgf:expression>
@@ -190,11 +184,11 @@
   </xbgf:upgrade>
   <xbgf:upgrade>
     <bgf:production>
-      <nonterminal>InterfaceTypeList</nonterminal>
+      <nonterminal>TypeList</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>InterfaceTypeList</nonterminal>
+            <nonterminal>TypeList</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <terminal>,</terminal>
@@ -374,21 +368,11 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:upgrade>
-  
+
   <xbgf:unite>
     <add>InterfaceType</add>
     <to>ClassType</to>
   </xbgf:unite>
-  <!--xbgf:unite>
-    <add>InterfaceTypeList</add>
-    <to>ClassTypeList</to>
-  </xbgf:unite-->
-  <xbgf:rename>
-    <nonterminal>
-      <from>InterfaceTypeList</from>
-      <to>TypeList</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
 
   <!-- Introducing brackets -->
@@ -435,7 +419,7 @@
     </bgf:production>
   </xbgf:extract>
 
-  
+
 
   <!-- Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
@@ -616,9 +600,9 @@
                   <bgf:expression>
                     <terminal>extends</terminal>
                   </bgf:expression>
-                      <bgf:expression>
-                        <nonterminal>Type</nonterminal>
-                      </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Type</nonterminal>
+                  </bgf:expression>
                   <bgf:expression>
                     <star>
                       <bgf:expression>
@@ -793,52 +777,247 @@ TypeArgument:
 
   -->
   <xbgf:deyaccify>ActualTypeArgumentList</xbgf:deyaccify>
-  <!-- GENERALITY -->
-  <xbgf:redefine>
+  <xbgf:unfold>
+    <nonterminal>TypeDeclSpecifier</nonterminal>
+    <in>
+      <nonterminal>WildcardBounds</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:unfold>
+    <nonterminal>TypeDeclSpecifier</nonterminal>
+    <in>
+      <nonterminal>TypeArgument</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:upgrade>
     <bgf:production>
-      <nonterminal>ActualTypeArgument</nonterminal>
-      <bgf:expression>
-        <nonterminal>Type</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-    <bgf:production>
-      <nonterminal>ActualTypeArgument</nonterminal>
+      <nonterminal>WildcardBounds</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <terminal>?</terminal>
+            <terminal>extends</terminal>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <marked>
               <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <choice>
-                      <bgf:expression>
-                        <terminal>extends</terminal>
-                      </bgf:expression>
-                      <bgf:expression>
-                        <terminal>super</terminal>
-                      </bgf:expression>
-                    </choice>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Type</nonterminal>
-                  </bgf:expression>
-                </sequence>
+                <nonterminal>Type</nonterminal>
               </bgf:expression>
-            </optional>
+            </marked>
           </bgf:expression>
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:redefine>
-  <xbgf:rename>
-    <nonterminal>
-      <from>ActualTypeArgument</from>
-      <to>TypeArgument</to>
-    </nonterminal>
-  </xbgf:rename>
+    <bgf:production>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <optional>
+                      <bgf:expression>
+                        <nonterminal>TypeArguments</nonterminal>
+                      </bgf:expression>
+                    </optional>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>BracketsOpt</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>.</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Identifier</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>TypeArguments</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>WildcardBounds</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>super</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Type</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <optional>
+                      <bgf:expression>
+                        <nonterminal>TypeArguments</nonterminal>
+                      </bgf:expression>
+                    </optional>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>BracketsOpt</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>.</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Identifier</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>TypeArguments</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>TypeArgument</nonterminal>
+      <bgf:expression>
+        <marked>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+        </marked>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>QualifiedIdentifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <optional>
+                      <bgf:expression>
+                        <nonterminal>TypeArguments</nonterminal>
+                      </bgf:expression>
+                    </optional>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>BracketsOpt</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>.</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Identifier</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>TypeArguments</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <xbgf:horizontal>WildcardBounds</xbgf:horizontal>
+  <xbgf:inline>WildcardBounds</xbgf:inline>
+  <xbgf:inline>Wildcard</xbgf:inline>
+  <xbgf:factor>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>extends</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Type</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>super</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Type</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <terminal>extends</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>super</terminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Type</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  
   <xbgf:inline>ActualTypeArgumentList</xbgf:inline>
 
   <!-- ...the story of BracketsOpt is continued in refactorExpressions-doc3 -->

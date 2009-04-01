@@ -112,6 +112,12 @@
     <None Include="xbgf\refactorTypes-doc2.xbgf" />
     <None Include="xbgf\refactorTypes-doc3.xbgf" />
     <None Include="xbgf\refactorTypes-jls1.xbgf" />
-    <None Include="xbgf\rename-jls2.xbgf" />
+    <None Include="xbgf\rename-app1.xbgf" />
+    <None Include="xbgf\rename-doc1.xbgf" />
+    <None Include="xbgf\rename-doc12.xbgf" />
+    <None Include="xbgf\rename-doc2.xbgf" />
+    <None Include="xbgf\rename-doc3.xbgf" />
+    <None Include="xbgf\rename-jls1.xbgf" />
+    <None Include="xbgf\rename-jls12.xbgf" />
   </ItemGroup>
 </Project>

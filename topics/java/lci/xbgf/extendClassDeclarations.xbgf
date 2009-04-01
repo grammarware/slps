@@ -560,7 +560,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
-  <!-- BREFACTOR local rename -->
+  <!-- BREFACTOR local re-name -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>MethodDeclaratorRest</nonterminal>

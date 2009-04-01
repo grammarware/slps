@@ -30,36 +30,23 @@ vs
   -->
   
   <!-- ISSUE PERMISSIVENESS -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>AmbiguousName</from>
-      <to>QualifiedIdentifier</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:unite>
     <add>MethodName</add>
-    <to>QualifiedIdentifier</to>
+    <to>Name</to>
   </xbgf:unite>
   <xbgf:unite>
     <add>TypeName</add>
-    <to>QualifiedIdentifier</to>
+    <to>Name</to>
   </xbgf:unite>
   <xbgf:unite>
     <add>PackageName</add>
-    <to>QualifiedIdentifier</to>
+    <to>Name</to>
   </xbgf:unite>
   <xbgf:unite>
     <add>ExpressionName</add>
-    <to>QualifiedIdentifier</to>
+    <to>Name</to>
   </xbgf:unite>
-  <xbgf:deyaccify>QualifiedIdentifier</xbgf:deyaccify>
-
-  <!-- use another name -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>QualifiedIdentifier</from>
-      <to>Name</to>
-    </nonterminal>
-  </xbgf:rename>
+  
+  <xbgf:deyaccify>Name</xbgf:deyaccify>
 
 </xbgf:sequence>

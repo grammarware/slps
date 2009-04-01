@@ -91,11 +91,13 @@
     <branch>
       <input>app1</input>
       <perform>correct-app1</perform>
+      <perform>rename-app1</perform>
       <perform>refactor-app1</perform>
     </branch>
     <branch>
       <input>doc1</input>
       <perform>correct-doc1</perform>
+      <perform>rename-doc1</perform>
       <perform>generalizeModifiers-doc1</perform>
       <perform>generalizeNames-doc1</perform>
       <perform>refactor-doc1</perform>
@@ -115,6 +117,7 @@
       <input>doc2</input>
       <perform>recover-doc2</perform>
       <perform>correct-doc2</perform>
+      <perform>rename-doc2</perform>
       <perform>generalizeModifiers</perform>
       <perform>generalizeNames</perform>
       <perform>deyaccifyStatements</perform>
@@ -146,6 +149,7 @@
       <input>doc3</input>
       <perform>recover-doc3</perform>
       <perform>correct-doc3</perform>
+      <perform>rename-doc3</perform>
       <perform>generalizeModifiers</perform>
       <perform>generalizeNames</perform>
       <perform>deyaccifyStatements</perform>
@@ -167,6 +171,7 @@
     <name>jls12</name>
     <branch>
       <input>jls1</input>
+      <perform>rename-jls1</perform>
       <perform>refactorStatements-jls1</perform>
       <perform>generalizeStatements</perform>
       <perform>refactorTypes-jls1</perform>
@@ -184,7 +189,7 @@
     <name>jls123</name>
     <branch>
       <input>jls12</input>
-      <perform>rename-jls2</perform>
+      <perform>rename-jls12</perform>
       <perform>extendDeclarations</perform>
       <perform>extendWithAnnotations</perform>
       <perform>extendClassDeclarations</perform>
@@ -218,6 +223,7 @@
     <name>doc123</name>
     <branch>
       <input>doc12</input>
+      <perform>rename-doc12</perform>
       <perform>extendModifiers</perform>
       <perform>extend-doc12</perform>
     </branch>

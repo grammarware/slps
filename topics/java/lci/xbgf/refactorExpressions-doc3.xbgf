@@ -173,22 +173,8 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <!-- What suits to approximate future Expression1 -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>ConditionalExpression</from>
-      <to>Expression1</to>
-    </nonterminal>
-  </xbgf:rename>
-
   <!-- ISSUE PERMISSIVENESS
   Everything that can be united to make Expression2 -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>ConditionalOrExpression</from>
-      <to>Expression2</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:unite>
     <add>ConditionalAndExpression</add>
     <to>Expression2</to>
@@ -228,12 +214,6 @@
   <xbgf:horizontal>Expression2</xbgf:horizontal>
 
   <!-- Introducing another layering scheme: Expression3 -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>UnaryExpression</from>
-      <to>Expression3</to>
-    </nonterminal>
-  </xbgf:rename>
   <!-- GENERALITY -->
   <xbgf:replace>
     <bgf:expression>

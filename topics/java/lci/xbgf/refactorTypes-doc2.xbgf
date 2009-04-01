@@ -78,14 +78,8 @@
   <xbgf:horizontal>NumericType</xbgf:horizontal>
   <xbgf:inline>NumericType</xbgf:inline>
   <xbgf:distribute>
-    <nonterminal>PrimitiveType</nonterminal>
+    <nonterminal>BasicType</nonterminal>
   </xbgf:distribute>
-  <xbgf:rename>
-    <nonterminal>
-      <from>PrimitiveType</from>
-      <to>BasicType</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:vertical>
     <nonterminal>BasicType</nonterminal>
   </xbgf:vertical>
@@ -113,10 +107,10 @@
   *ClassOrInterfaceType:
         ClassType
   -->
-  <!-- ClassTypeList -->
+  <!-- ex-ClassTypeList -->
   <xbgf:upgrade>
     <bgf:production>
-      <nonterminal>ClassTypeList</nonterminal>
+      <nonterminal>TypeList</nonterminal>
       <bgf:expression>
         <marked>
           <bgf:expression>
@@ -134,11 +128,11 @@
   </xbgf:upgrade>
   <xbgf:upgrade>
     <bgf:production>
-      <nonterminal>ClassTypeList</nonterminal>
+      <nonterminal>TypeList</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ClassTypeList</nonterminal>
+            <nonterminal>TypeList</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <terminal>,</terminal>
@@ -162,7 +156,7 @@
   </xbgf:upgrade>
   <xbgf:upgrade>
     <bgf:production>
-      <nonterminal>ClassTypeList</nonterminal>
+      <nonterminal>TypeList</nonterminal>
       <bgf:expression>
         <marked>
           <bgf:expression>
@@ -180,11 +174,11 @@
   </xbgf:upgrade>
   <xbgf:upgrade>
     <bgf:production>
-      <nonterminal>ClassTypeList</nonterminal>
+      <nonterminal>TypeList</nonterminal>
       <bgf:expression>
         <sequence>
           <bgf:expression>
-            <nonterminal>ClassTypeList</nonterminal>
+            <nonterminal>TypeList</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <terminal>,</terminal>
@@ -464,14 +458,8 @@
   </xbgf:unite>
   <xbgf:unite>
     <add>InterfaceTypeList</add>
-    <to>ClassTypeList</to>
+    <to>TypeList</to>
   </xbgf:unite>
-  <xbgf:rename>
-    <nonterminal>
-      <from>ClassTypeList</from>
-      <to>TypeList</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
   
   <!-- Introducing brackets brutally, too hard to derive -->
@@ -528,6 +516,5 @@
   <!-- Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>
-
 
 </xbgf:sequence>

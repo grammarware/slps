@@ -30,12 +30,6 @@ vs
   -->
   
   <!-- ISSUE PERMISSIVENESS -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>AmbiguousName</from>
-      <to>QualifiedIdentifier</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:unite>
     <add>MethodName</add>
     <to>QualifiedIdentifier</to>

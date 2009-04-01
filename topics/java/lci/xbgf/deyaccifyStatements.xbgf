@@ -9,25 +9,7 @@
       - [], ;([n(SwitchBlockStatementGroup), ,([n(SwitchBlockStatementGroups), n(SwitchBlockStatementGroup)])])
   -->
   <xbgf:deyaccify>SwitchBlockStatementGroups</xbgf:deyaccify>
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>SwitchBlockStatementGroupsOptPlus</nonterminal>
-      <bgf:expression>
-        <optional>
-          <bgf:expression>
-            <nonterminal>SwitchBlockStatementGroups</nonterminal>
-          </bgf:expression>
-        </optional>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
   <xbgf:inline>SwitchBlockStatementGroups</xbgf:inline>
-  <xbgf:rename>
-    <nonterminal>
-      <from>SwitchBlockStatementGroupsOptPlus</from>
-      <to>SwitchBlockStatementGroups</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:massage>
     <bgf:expression>
       <optional>
@@ -48,6 +30,18 @@
       </star>
     </bgf:expression>
   </xbgf:massage>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>SwitchBlockStatementGroups</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <nonterminal>SwitchBlockStatementGroup</nonterminal>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
   
   <!--  
    - Fail: Catches.

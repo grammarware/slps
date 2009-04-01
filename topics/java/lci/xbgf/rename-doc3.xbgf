@@ -1,0 +1,75 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- followed by a series of unites in generalizeModifiers -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassModifier</from>
+      <to>Modifier</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassModifiers</from>
+      <to>Modifiers</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  <!-- followed by unites in generalizeNames -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>AmbiguousName</from>
+      <to>QualifiedIdentifier</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  <!-- unites in refactorTypes -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>PrimitiveType</from>
+      <to>BasicType</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>InterfaceTypeList</from>
+      <to>TypeList</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ActualTypeArgument</from>
+      <to>TypeArgument</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  <!-- further explored in refactorExpressions -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>ConditionalExpression</from>
+      <to>Expression1</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ConditionalOrExpression</from>
+      <to>Expression2</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>UnaryExpression</from>
+      <to>Expression3</to>
+    </nonterminal>
+  </xbgf:rename>
+  
+  <!-- needed for refactorInterfaces -->
+  <xbgf:rename>
+    <nonterminal>
+      <from>InterfaceMemberDeclaration</from>
+      <to>InterfaceBodyDeclaration</to>
+    </nonterminal>
+  </xbgf:rename>
+
+</xbgf:sequence>

@@ -55,22 +55,16 @@
   -->
 
   <!-- First the deyaccification -->
+  <xbgf:deyaccify>Modifiers</xbgf:deyaccify>
   <xbgf:deyaccify>AbstractMethodModifiers</xbgf:deyaccify>
   <xbgf:deyaccify>InterfaceModifiers</xbgf:deyaccify>
   <xbgf:deyaccify>MethodModifiers</xbgf:deyaccify>
   <xbgf:deyaccify>FieldModifiers</xbgf:deyaccify>
   <xbgf:deyaccify>ConstructorModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>ClassModifiers</xbgf:deyaccify>
   <xbgf:deyaccify>ConstantModifiers</xbgf:deyaccify>
 
   <!-- ISSUE PERMISSIVENESS
   Now unification of singulars-->
-  <xbgf:rename>
-    <nonterminal>
-      <from>AbstractMethodModifier</from>
-      <to>Modifier</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:unite>
     <add>InterfaceModifier</add>
     <to>Modifier</to>
@@ -88,7 +82,7 @@
     <to>Modifier</to>
   </xbgf:unite>
   <xbgf:unite>
-    <add>ClassModifier</add>
+    <add>AbstractMethodModifier</add>
     <to>Modifier</to>
   </xbgf:unite>
   <xbgf:unite>
@@ -97,12 +91,12 @@
   </xbgf:unite>
 
   <!-- Getting rid of plurals altogether -->
+  <xbgf:inline>Modifiers</xbgf:inline>
   <xbgf:inline>AbstractMethodModifiers</xbgf:inline>
   <xbgf:inline>InterfaceModifiers</xbgf:inline>
   <xbgf:inline>MethodModifiers</xbgf:inline>
   <xbgf:inline>FieldModifiers</xbgf:inline>
   <xbgf:inline>ConstructorModifiers</xbgf:inline>
-  <xbgf:inline>ClassModifiers</xbgf:inline>
   <xbgf:inline>ConstantModifiers</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>

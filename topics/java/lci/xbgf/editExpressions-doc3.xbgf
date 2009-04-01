@@ -369,7 +369,7 @@
   <xbgf:deyaccify>StatementExpressionList</xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
-      <nonterminal>MoreStatementExpressions</nonterminal>
+      <nonterminal>Expressions</nonterminal>
       <bgf:expression>
         <star>
           <bgf:expression>
@@ -1054,12 +1054,6 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
-  <xbgf:rename>
-    <nonterminal>
-      <from>MoreStatementExpressions</from>
-      <to>Expressions</to>
-    </nonterminal>
-  </xbgf:rename>
 
   <!--
    - Fail: ForControl.
