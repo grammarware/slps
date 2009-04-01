@@ -100,7 +100,6 @@ def readxmlconfig (cfg):
  # methods
  for xmlnode in config.findall('//generator'):
   automethods[xmlnode.findtext('name')] = expandxml(xmlnode.findall('command')[0],{})
-
  print 'Read',
  if shortcuts:
   print len(shortcuts),'shortcuts,',
@@ -197,6 +196,17 @@ def makegraph():
   for src in targets[x][0]:
    graph_small.append([src[0],x])
 
+def hasArcFailed(a,b):
+ c = a.split('_')
+ d = c[0]
+ for x in c[1:]:
+  d += '.'+stripSelector2(x)
+ #print '[----]',d,b
+ for arc in failedarc:
+  if arc[0] == d and arc[1].find(b) == 0:
+   return True
+ return False
+
 def dumpgraph(df):
  dot = open(df+'_large.dot','w')
  dot.write('''digraph generated{
@@ -225,8 +235,10 @@ def dumpgraph(df):
   dot.write(';')
  dot.write('node [shape=point, style=solid];\n')
  nodezz=[]
+ #print 'Failed',failedarc
  for arc in graph_big:
   #dot.write(quote(arc[0])+'->'+quote(arc[1]))
+  #print 'Arc',arc
   dot.write(arc[0]+'->'+arc[1])
   if arc[0] not in nodezz:
    nodezz.append(arc[0])
@@ -235,7 +247,7 @@ def dumpgraph(df):
   par = ''
   if arc[3]:
    par += 'label="'+arc[3]+'" '
-  if [arc[2],arc[3]] in failedarc:
+  if hasArcFailed(arc[2],arc[3]):
    par += 'color=red '
   if par:
    dot.write(' ['+par+']')
@@ -459,8 +471,10 @@ def buildtargets():
 
 def isbad(x):
 # checks if the file x failed building
+ #print '[----]','is',x,'bad, given',failedarc,'?'
  for failed in failedarc:
-  if x == '.'.join(failed):
+  #print '[====]',failed[0]+'.'+stripSelector2(failed[1])
+  if x == failed[0]+'.'+stripSelector2(failed[1]):
    return True
  return False
 
