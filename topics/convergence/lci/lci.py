@@ -6,8 +6,10 @@ from elementtree import ElementTree
 
 # A global flag, if set, LCI will exit with a non-zero status
 problem = False
-
+# output streams redirected to null
 shutup = ' 1> /dev/null 2> /dev/null'
+# transformation type per action: postextraction, synchronization, etc
+ttype = {}
 orderedsrc = []
 shortcuts = {}
 actions = []
@@ -53,11 +55,11 @@ def readxmlconfig (cfg):
  for xmlnode in config.findall('//shortcut'):
   shortcuts[xmlnode.findtext('name')]=expandxml(xmlnode.findall('expansion')[0],{})
  # actions
- for xmlnode in config.findall('//target/branch/perform'):
+ for xmlnode in config.findall('//target/branch/*/perform'):
   if xmlnode.text not in actions:
    actions.append(xmlnode.text)
  # automated actions
- for xmlnode in config.findall('//target/branch/automated'):
+ for xmlnode in config.findall('//target/branch/*/automated'):
   if xmlnode.findtext('result') not in actions:
    actions.append(xmlnode.findtext('result'))
    autoactions[xmlnode.findtext('result')]=xmlnode.findtext('method')
@@ -85,12 +87,19 @@ def readxmlconfig (cfg):
   name = xmlnode.findtext('name')
   targets[name]= [[],'']
   for br in xmlnode.findall('branch'):
-   branch = [br.findtext('input')]
-   for p in br.findall('*'):
-    if p.tag == 'perform':
-     branch.append(p.text)
-    elif p.tag == 'automated':
-     branch.append(p.findtext('result'))
+   for phase in br.findall('*'):
+    if phase.tag == 'input':
+     branch = [br.findtext('input')]
+    else:
+     for p in phase.findall('*'):
+      if p.tag == 'perform':
+       branch.append(p.text)
+       ttype[p.text] = phase.tag
+      elif p.tag == 'automated':
+       branch.append(p.findtext('result'))
+       ttype[p.findtext('result')] = phase.tag
+      else:
+       print '[WARN] Unknown tag skipped:',p.tag
    targets[name][0].append(branch)
  # tools
  for xmlnode in config.findall('//tool'):
@@ -381,7 +390,7 @@ def preparebgf(cut):
       ontheroll = False
      else:
       print '[PASS]',
-     print 'Generated',a+'.xbgf','from',curname+'.bgf'
+     print 'Generated',ttype[a],a+'.xbgf','from',curname+'.bgf'
      if ontheroll:
       run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
       logwrite(run)
@@ -408,7 +417,7 @@ def preparebgf(cut):
       ontheroll = False
      else:
       print '[PASS]',
-     print 'Applied',a+'.xbgf','to',curname+'.bgf'
+     print 'Applied',ttype[a],a+'.xbgf','to',curname+'.bgf'
    else:
     failedarc.append([curname,a])
     failednode.append(cut[0]+"'"*(curname.count('.')+1))
@@ -637,7 +646,7 @@ def checkconsistency():
    sysexit(18)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.13'
+ print 'Language Covergence Infrastructure v1.14'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])
