@@ -65,6 +65,7 @@
     <None Include="xbgf\preferDcg.xbgf" />
     <None Include="xbgf\preferJaxb.xbgf" />
     <None Include="xbgf\removeLayers.xbgf" />
+    <None Include="xbgf\renameAntlr.xbgf" />
     <None Include="xbgf\renameJaxb.xbgf" />
     <None Include="xbgf\renameOm.xbgf" />
     <None Include="xbgf\renameSdf.xbgf" />

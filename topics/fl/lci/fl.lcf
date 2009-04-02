@@ -200,24 +200,24 @@
     <name>java</name>
     <branch>
       <input>jaxb</input>
-      <transformation>
+      <synchronization>
         <perform>trimJaxb</perform>
         <automated>
           <method>case</method>
           <result>renameJaxb</result>
         </automated>
-      </transformation>
+      </synchronization>
     </branch>
     <branch>
       <input>om</input>
-      <transformation>
+      <synchronization>
         <perform>trimOm</perform>
         <automated>
           <method>case</method>
           <result>renameOm</result>
         </automated>
         <perform>preferJaxb</perform>
-      </transformation>
+      </synchronization>
     </branch>
   </target>
 
@@ -225,19 +225,23 @@
     <name>abstract</name>
     <branch>
       <input>java</input>
-      <transformation>
+      <synchronization>
         <perform>reroot</perform>
+      </synchronization>
+      <transformation>
         <perform>unerase</perform>
       </transformation>
     </branch>
     <branch>
       <input>xsd</input>
-      <transformation>
+      <synchronization>
         <perform>trimXsd</perform>
         <automated>
           <method>case</method>
           <result>renameXsd</result>
         </automated>
+      </synchronization>
+      <transformation>
         <perform>massageXsd</perform>
       </transformation>
     </branch>
@@ -250,6 +254,9 @@
     </branch>
     <branch>
       <input>antlr</input>
+      <synchronization>
+        <perform>renameAntlr</perform>
+      </synchronization>
       <transformation>
         <perform>preferDcg</perform>
       </transformation>
@@ -266,12 +273,12 @@
     </branch>
     <branch>
       <input>sdf</input>
-      <transformation>
+      <synchronization>
         <automated>
           <method>case</method>
           <result>renameSdf</result>
         </automated>
-      </transformation>
+      </synchronization>
     </branch>
   </target>
 
@@ -279,6 +286,9 @@
     <name>limit</name>
     <branch>
       <input>concrete</input>
+      <synchronization>
+        <perform>reroot</perform>
+      </synchronization>
       <transformation>
         <perform>defineLex</perform>
         <automated>
@@ -287,7 +297,6 @@
         </automated>
         <perform>stripNewline</perform>
         <perform>permuteArgs</perform>
-        <perform>reroot</perform>
       </transformation>
     </branch>
     <branch>

@@ -14,7 +14,8 @@ check:
 
 clean:
 	rm -f *~
-	rm -f codesamples/* xmlsamples/* bgf/*
+	rm -f codesamples/* xmlsamples/* bgf/* xbgf/stripTerminals.xbgf xbgf/stripSelectors.xbgf
+	rm -f xbgf/renameOm.xbgf xbgf/renameSdf.xbgf xbgf/renameJaxb.xbgf xbgf/renameXsd.xbgf
 	rm -rf bin obj
 	rm -f *.user *.suo
 	rm -f architecture*

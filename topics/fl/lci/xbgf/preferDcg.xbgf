@@ -1,24 +1,6 @@
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:rename>
-    <nonterminal>
-      <from>NEWLINE</from>
-      <to>newline</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:rename>
-    <nonterminal>
-      <from>ID</from>
-      <to>name</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:rename>
-    <nonterminal>
-      <from>INT</from>
-      <to>int</to>
-    </nonterminal>
-  </xbgf:rename>
   <xbgf:vertical>
     <nonterminal>expr</nonterminal>
   </xbgf:vertical>
