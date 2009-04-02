@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <lcf:configuration xmlns:lcf="http://planet-sl.org/lcf">
 
   <shortcut>
@@ -90,17 +90,29 @@
     <name>jls1</name>
     <branch>
       <input>app1</input>
-      <perform>correct-app1</perform>
-      <perform>rename-app1</perform>
-      <perform>refactor-app1</perform>
+      <postextraction>
+        <perform>correct-app1</perform>
+      </postextraction>
+      <synchronization>
+        <perform>rename-app1</perform>
+      </synchronization>
+      <transformation>
+        <perform>refactor-app1</perform>
+      </transformation>
     </branch>
     <branch>
       <input>doc1</input>
-      <perform>correct-doc1</perform>
-      <perform>rename-doc1</perform>
-      <perform>generalizeModifiers-doc1</perform>
-      <perform>generalizeNames-doc1</perform>
-      <perform>refactor-doc1</perform>
+      <postextraction>
+        <perform>correct-doc1</perform>
+      </postextraction>
+      <synchronization>
+        <perform>rename-doc1</perform>
+      </synchronization>
+      <transformation>
+        <perform>generalizeModifiers-doc1</perform>
+        <perform>generalizeNames-doc1</perform>
+        <perform>refactor-doc1</perform>
+      </transformation>
     </branch>
   </target>
 
@@ -108,29 +120,39 @@
     <name>jls2</name>
     <branch>
       <input>app2</input>
-      <perform>correct-app2</perform>
-      <perform>refactor-app2</perform>
-      <perform>generalizeLabels</perform>
-      <perform>generalizeBlock</perform>
+      <postextraction>
+        <perform>correct-app2</perform>
+      </postextraction>
+      <transformation>
+        <perform>refactor-app2</perform>
+        <perform>generalizeLabels</perform>
+        <perform>generalizeBlock</perform>
+      </transformation>
     </branch>
     <branch>
       <input>doc2</input>
-      <perform>recover-doc2</perform>
-      <perform>correct-doc2</perform>
-      <perform>rename-doc2</perform>
-      <perform>generalizeModifiers</perform>
-      <perform>generalizeNames</perform>
-      <perform>deyaccifyStatements</perform>
-      <perform>refactorTypes-doc2</perform>
-      <perform>refactorExpressions</perform>
-      <perform>inlineStatements</perform>
-      <perform>generalizeStatements</perform>
-      <perform>editExpressions-doc2</perform>
-      <perform>eliminate-doc2</perform>
-      <perform>refactorClasses-doc2</perform>
-      <perform>refactorInterfaces-doc2</perform>
-      <perform>refactorDeclarations-doc2</perform>
-      <perform>edit-doc2</perform>
+      <postextraction>
+        <perform>recover-doc2</perform>
+        <perform>correct-doc2</perform>
+      </postextraction>
+      <synchronization>
+        <perform>rename-doc2</perform>
+      </synchronization>
+      <transformation>
+        <perform>generalizeModifiers</perform>
+        <perform>generalizeNames</perform>
+        <perform>deyaccifyStatements</perform>
+        <perform>refactorTypes-doc2</perform>
+        <perform>refactorExpressions</perform>
+        <perform>inlineStatements</perform>
+        <perform>generalizeStatements</perform>
+        <perform>editExpressions-doc2</perform>
+        <perform>eliminate-doc2</perform>
+        <perform>refactorClasses-doc2</perform>
+        <perform>refactorInterfaces-doc2</perform>
+        <perform>refactorDeclarations-doc2</perform>
+        <perform>edit-doc2</perform>
+      </transformation>
     </branch>
   </target>
 
@@ -138,32 +160,42 @@
     <name>jls3</name>
     <branch>
       <input>app3</input>
-      <perform>recover-app3</perform>
-      <perform>correct-app3</perform>
-      <perform>refactor-app3</perform>
-      <perform>generalizeLabels</perform>
-      <perform>generalizeBlock</perform>
-      <perform>generalize-app3</perform>
+      <postextraction>
+        <perform>recover-app3</perform>
+        <perform>correct-app3</perform>
+      </postextraction>
+      <transformation>
+        <perform>refactor-app3</perform>
+        <perform>generalizeLabels</perform>
+        <perform>generalizeBlock</perform>
+        <perform>generalize-app3</perform>
+      </transformation>
     </branch>
     <branch>
       <input>doc3</input>
-      <perform>recover-doc3</perform>
-      <perform>correct-doc3</perform>
-      <perform>rename-doc3</perform>
-      <perform>generalizeModifiers</perform>
-      <perform>generalizeNames</perform>
-      <perform>deyaccifyStatements</perform>
-      <perform>refactorTypes-doc3</perform>
-      <perform>refactorExpressions-doc3</perform>
-      <perform>inlineStatements</perform>
-      <perform>generalizeStatements</perform>
-      <perform>refactorStatements-doc3</perform>
-      <perform>editExpressions-doc3</perform>
-      <perform>refactorClasses-doc3</perform>
-      <perform>refactorInterfaces-doc3</perform>
-      <perform>refactorEnums</perform>
-      <perform>refactorDeclarations-doc3</perform>
-      <perform>edit-doc3</perform>
+      <postextraction>
+        <perform>recover-doc3</perform>
+        <perform>correct-doc3</perform>
+      </postextraction>
+      <synchronization>
+        <perform>rename-doc3</perform>
+      </synchronization>
+      <transformation>
+        <perform>generalizeModifiers</perform>
+        <perform>generalizeNames</perform>
+        <perform>deyaccifyStatements</perform>
+        <perform>refactorTypes-doc3</perform>
+        <perform>refactorExpressions-doc3</perform>
+        <perform>inlineStatements</perform>
+        <perform>generalizeStatements</perform>
+        <perform>refactorStatements-doc3</perform>
+        <perform>editExpressions-doc3</perform>
+        <perform>refactorClasses-doc3</perform>
+        <perform>refactorInterfaces-doc3</perform>
+        <perform>refactorEnums</perform>
+        <perform>refactorDeclarations-doc3</perform>
+        <perform>edit-doc3</perform>
+      </transformation>
     </branch>
   </target>
 
@@ -171,32 +203,40 @@
     <name>jls12</name>
     <branch>
       <input>jls1</input>
-      <perform>rename-jls1</perform>
-      <perform>refactorStatements-jls1</perform>
-      <perform>generalizeStatements</perform>
-      <perform>refactorTypes-jls1</perform>
-      <perform>editDeclarations</perform>
-      <perform>refactorExpressions</perform>
-      <perform>editExpressions-jls1</perform>
-      <perform>extend-jls1</perform>
+      <synchronization>
+        <perform>rename-jls1</perform>
+      </synchronization>
+      <transformation>
+        <perform>refactorStatements-jls1</perform>
+        <perform>generalizeStatements</perform>
+        <perform>refactorTypes-jls1</perform>
+        <perform>editDeclarations</perform>
+        <perform>refactorExpressions</perform>
+        <perform>editExpressions-jls1</perform>
+        <perform>extend-jls1</perform>
+      </transformation>
     </branch>
     <branch>
       <input>jls2</input>
     </branch>
   </target>
-  
+
   <target>
     <name>jls123</name>
     <branch>
       <input>jls12</input>
-      <perform>rename-jls12</perform>
-      <perform>extendDeclarations</perform>
-      <perform>extendWithAnnotations</perform>
-      <perform>extendClassDeclarations</perform>
-      <perform>extendInterfaceDeclarations</perform>
-      <perform>extendWithTypeArguments</perform>
-      <perform>extendExpressions</perform>
-      <perform>extendStatements</perform>
+      <synchronization>
+        <perform>rename-jls12</perform>
+      </synchronization>
+      <transformation>
+        <perform>extendDeclarations</perform>
+        <perform>extendWithAnnotations</perform>
+        <perform>extendClassDeclarations</perform>
+        <perform>extendInterfaceDeclarations</perform>
+        <perform>extendWithTypeArguments</perform>
+        <perform>extendExpressions</perform>
+        <perform>extendStatements</perform>
+      </transformation>
     </branch>
     <branch>
       <input>jls3</input>
@@ -207,15 +247,23 @@
     <name>doc12</name>
     <branch>
       <input>doc1</input>
-      <perform>correct-doc1</perform>
-      <perform>edit-doc1</perform>
-      <perform>extend-doc1</perform>
+      <postextraction>
+        <perform>correct-doc1</perform>
+      </postextraction>
+      <transformation>
+        <perform>edit-doc1</perform>
+        <perform>extend-doc1</perform>
+      </transformation>
     </branch>
     <branch>
       <input>doc2</input>
-      <perform>recover-doc2</perform>
-      <perform>correct-doc2</perform>
-      <perform>refactorPackageNames</perform>
+      <postextraction>
+        <perform>recover-doc2</perform>
+        <perform>correct-doc2</perform>
+      </postextraction>
+      <transformation>
+        <perform>refactorPackageNames</perform>
+      </transformation>
     </branch>
   </target>
 
@@ -223,30 +271,24 @@
     <name>doc123</name>
     <branch>
       <input>doc12</input>
-      <perform>rename-doc12</perform>
-      <perform>extendModifiers</perform>
-      <perform>extend-doc12</perform>
+      <synchronization>
+        <perform>rename-doc12</perform>
+      </synchronization>
+      <transformation>
+        <perform>extendModifiers</perform>
+        <perform>extend-doc12</perform>
+      </transformation>
     </branch>
     <branch>
       <input>doc3</input>
-      <perform>recover-doc3</perform>
-      <perform>correct-doc3</perform>
-      <perform>refactorPackageNames</perform>
+      <postextraction>
+        <perform>recover-doc3</perform>
+        <perform>correct-doc3</perform>
+      </postextraction>
+      <transformation>
+        <perform>refactorPackageNames</perform>
+      </transformation>
     </branch>
   </target>
 
-  <!--
-  <target>
-    <name>formal</name>
-    <branch>
-      <input>jls1app</input>
-    </branch>
-    <branch>
-      <input>jls2app</input>
-    </branch>
-    <branch>
-      <input>jls3app</input>
-    </branch>
-  </target>
--->
 </lcf:configuration>

@@ -68,7 +68,7 @@
       <expand>tools</expand>/stripsxbgf
     </command>
   </generator>
-  
+
   <testset>
     <name>xmlsamples</name>
     <command>
@@ -200,20 +200,24 @@
     <name>java</name>
     <branch>
       <input>jaxb</input>
-      <perform>trimJaxb</perform>
-      <automated>
-        <method>case</method>
-        <result>renameJaxb</result>
-      </automated>
+      <transformation>
+        <perform>trimJaxb</perform>
+        <automated>
+          <method>case</method>
+          <result>renameJaxb</result>
+        </automated>
+      </transformation>
     </branch>
     <branch>
       <input>om</input>
-      <perform>trimOm</perform>
-      <automated>
-        <method>case</method>
-        <result>renameOm</result>
-      </automated>
-      <perform>preferJaxb</perform>
+      <transformation>
+        <perform>trimOm</perform>
+        <automated>
+          <method>case</method>
+          <result>renameOm</result>
+        </automated>
+        <perform>preferJaxb</perform>
+      </transformation>
     </branch>
   </target>
 
@@ -221,17 +225,21 @@
     <name>abstract</name>
     <branch>
       <input>java</input>
-      <perform>reroot</perform>
-      <perform>unerase</perform>
+      <transformation>
+        <perform>reroot</perform>
+        <perform>unerase</perform>
+      </transformation>
     </branch>
     <branch>
       <input>xsd</input>
-      <perform>trimXsd</perform>
-      <automated>
-        <method>case</method>
-        <result>renameXsd</result>
-      </automated>
-      <perform>massageXsd</perform>
+      <transformation>
+        <perform>trimXsd</perform>
+        <automated>
+          <method>case</method>
+          <result>renameXsd</result>
+        </automated>
+        <perform>massageXsd</perform>
+      </transformation>
     </branch>
   </target>
 
@@ -242,7 +250,9 @@
     </branch>
     <branch>
       <input>antlr</input>
-      <perform>preferDcg</perform>
+      <transformation>
+        <perform>preferDcg</perform>
+      </transformation>
     </branch>
   </target>
 
@@ -250,14 +260,18 @@
     <name>concrete</name>
     <branch>
       <input>topdown</input>
-      <perform>removeLayers</perform>
+      <transformation>
+        <perform>removeLayers</perform>
+      </transformation>
     </branch>
     <branch>
       <input>sdf</input>
-      <automated>
-        <method>case</method>
-        <result>renameSdf</result>
-      </automated>
+      <transformation>
+        <automated>
+          <method>case</method>
+          <result>renameSdf</result>
+        </automated>
+      </transformation>
     </branch>
   </target>
 
@@ -265,22 +279,26 @@
     <name>limit</name>
     <branch>
       <input>concrete</input>
-      <perform>defineLex</perform>
-      <automated>
-        <method>stript</method>
-        <result>stripTerminals</result>
-      </automated>
-      <perform>stripNewline</perform>
-      <perform>permuteArgs</perform>
-      <perform>reroot</perform>
+      <transformation>
+        <perform>defineLex</perform>
+        <automated>
+          <method>stript</method>
+          <result>stripTerminals</result>
+        </automated>
+        <perform>stripNewline</perform>
+        <perform>permuteArgs</perform>
+        <perform>reroot</perform>
+      </transformation>
     </branch>
     <branch>
       <input>abstract</input>
-      <perform>mkSignature</perform>
-      <automated>
-        <method>strips</method>
-        <result>stripSelectors</result>
-      </automated>
+      <transformation>
+        <perform>mkSignature</perform>
+        <automated>
+          <method>strips</method>
+          <result>stripSelectors</result>
+        </automated>
+      </transformation>
     </branch>
   </target>
 
