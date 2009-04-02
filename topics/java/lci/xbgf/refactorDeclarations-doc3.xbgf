@@ -970,6 +970,9 @@ AnnotationTypeElementRest:
               <terminal>)</terminal>
             </bgf:expression>
             <bgf:expression>
+              <nonterminal>BracketsOpt</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
               <optional>
                 <bgf:expression>
                   <nonterminal>DefaultValue</nonterminal>
@@ -1061,6 +1064,9 @@ AnnotationTypeElementRest:
                   <terminal>)</terminal>
                 </bgf:expression>
                 <bgf:expression>
+                  <nonterminal>BracketsOpt</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
                   <optional>
                     <bgf:expression>
                       <nonterminal>DefaultValue</nonterminal>
@@ -1122,6 +1128,9 @@ AnnotationTypeElementRest:
                 <terminal>)</terminal>
               </bgf:expression>
               <bgf:expression>
+                <nonterminal>BracketsOpt</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
                 <optional>
                   <bgf:expression>
                     <nonterminal>DefaultValue</nonterminal>
@@ -1179,6 +1188,9 @@ AnnotationTypeElementRest:
           </bgf:expression>
           <bgf:expression>
             <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
           </bgf:expression>
           <bgf:expression>
             <optional>

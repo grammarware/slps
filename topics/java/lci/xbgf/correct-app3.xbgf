@@ -142,8 +142,10 @@ Annotation:
   should be
   ElementValues:
         ElementValue [ "," ElementValues ]
+        
+   The XBGF command could've been concretize!
   -->
-  <xbgf:concretize>
+  <xbgf:inject>
     <bgf:production>
       <nonterminal>ElementValues</nonterminal>
       <bgf:expression>
@@ -172,7 +174,7 @@ Annotation:
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:concretize>
+  </xbgf:inject>
 
   <!--   undefine lexical term -->
   <!-- GENERALITY -->
@@ -261,4 +263,58 @@ AnnotationConstantRest:
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  
+  <!-- ISSUE CORRECT
+  as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
+* 18.1 does not permit the obsolescent array syntax in a method declaration of an annotation type:
+  AnnotationMethodRest:
+    () {[]} [DefaultValue]
+      where {[]} means 0 or more []'s. [DefaultValue] means 0 or 1 DefaultValue.
+  -->
+  <xbgf:appear>
+    <bgf:production>
+      <nonterminal>AnnotationMethodRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <sequence>
+                      <bgf:expression>
+                        <terminal>[</terminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <terminal>]</terminal>
+                      </bgf:expression>
+                    </sequence>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>DefaultValue</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:appear>
+  
+  <!-- ISSUE CORRECT
+  as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
+* 18.1 defines TypeArgument incorrectly, e.g. '? extends int' is legal.
+  Correct are ActualTypeArgument and Wildcard from 4.5.1. They use ReferenceType, which is in 4.3 but not 18.1.
+  -->
 </xbgf:sequence>

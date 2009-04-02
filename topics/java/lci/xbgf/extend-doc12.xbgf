@@ -731,6 +731,13 @@
           <bgf:expression>
             <optional>
               <bgf:expression>
+                <nonterminal>Dims</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
                 <nonterminal>DefaultValue</nonterminal>
               </bgf:expression>
             </optional>

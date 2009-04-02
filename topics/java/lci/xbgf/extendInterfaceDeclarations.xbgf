@@ -39,6 +39,9 @@
             <terminal>)</terminal>
           </bgf:expression>
           <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
             <optional>
               <bgf:expression>
                 <nonterminal>DefaultValue</nonterminal>
