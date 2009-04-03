@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<links:repository xmlns:links="http://planet-sl.org/links">
+  <list>
+    <title>Originals</title>
+    <item>
+      <title>Java Language Specification, §19</title>
+      <author>James Gosling</author>
+      <author>Bill Joy</author>
+      <author>Guy Steele</author>
+      <link>http://java.sun.com/docs/books/jls/first_edition/html/19.doc.html</link>
+      <version>1</version>
+      <form>HTML or PDF</form>
+      <comment>
+        The original JLS1. The link points to app1 grammar source.
+      </comment>
+    </item>
+    <item>
+      <title>Java Language Specification, Second Edition, §18</title>
+      <author>James Gosling</author>
+      <author>Bill Joy</author>
+      <author>Guy Steele</author>
+      <author>Gilad Bracha</author>
+      <link>http://java.sun.com/docs/books/jls/second_edition/html/syntax.doc.html</link>
+      <version>2</version>
+      <form>HTML or PDF</form>
+      <comment>
+        The original JLS2. The link points to app2 grammar source.
+      </comment>
+    </item>
+    <item>
+      <title>Java Language Specification, Third Edition, §18</title>
+      <author>James Gosling</author>
+      <author>Bill Joy</author>
+      <author>Guy Steele</author>
+      <author>Gilad Bracha</author>
+      <link>http://java.sun.com/docs/books/jls/third_edition/html/syntax.html</link>
+      <version>3</version>
+      <form>HTML or PDF</form>
+      <comment>
+        The original JLS3. The link points to app3 grammar source.
+      </comment>
+    </item>
+  </list>
+  <list>
+    <title>JLS1 derivatives</title>
+    <item>
+      <title>Java Language Grammar</title>
+      <author>Richard J. Botting</author>
+      <link>http://www.csci.csusb.edu/dick/samples/java.syntax.html</link>
+      <version>1</version>
+      <form>XBNF</form>
+      <comment>
+        The grammar is in the author's XBNF format that we don't have an extractor in the SLPS yet.
+      </comment>
+    </item>
+    <item>
+      <title>JLS LALR(1) Grammar</title>
+      <author>Neng-Fa Zhou</author>
+      <author>Sosuke Kaneko</author>
+      <author>Kouji Yamauchi</author>
+      <link>http://www.cad.mse.kyutech.ac.jp/people/zhou/dj/doc/revisedJavaGrammar.html</link>
+      <version>1</version>
+      <form>original HTML</form>
+      <comment>
+        A part of the project called DJ (Declarative Java).
+      </comment>
+    </item>
+    <item>
+      <title>CS118: yacc Java Grammar</title>
+      <author>Dmitri Bronnikov</author>
+      <author>Bill McKeeman</author>
+      <link>http://www.cs.dartmouth.edu/~mckeeman/cs118/notation/java11.html</link>
+      <version>1</version>
+      <form>YACC</form>
+      <comment>
+        Contains some updates to Java 1.1 (which is covered by Arnold/Gosling book, not by any JLS).
+      </comment>
+    </item>
+  </list>
+  <list>
+    <title>JLS2 derivatives</title>
+    <item>
+      <title>Java parser and tree parser</title>
+      <author>John Lilley</author>
+      <author>John Mitchell</author>
+      <author>Terence Parr</author>
+      <author>Scott Stanchfield</author>
+      <link>http://www.antlr.org/grammar/java</link>
+      <version>2</version>
+      <form>ANTLR</form>
+      <comment>
+        The grammar corresponds to Java 3, which is a bit more than JLS2.
+        In fact, the only reason J2SE 1.3 was not standardised is because it had too few changes from J2SE 1.2.
+      </comment>
+    </item>
+    <item>
+      <title>The Java JLS2 Grammar</title>
+      <author>Gaute Lykkenborg</author>
+      <link>http://www.lykkenborg.no/java/grammar/JLS2.html</link>
+      <version>2</version>
+      <form>browsable; ISO EBNF</form>
+      <comment>
+        Very fancy heavily hyperlinked and coloured HTML.
+        The grammar definition formalism was made compliant with ISO/IEC 14977:1996 standard.
+        Which changes/fixes were applied, if any, is unknown.
+      </comment>
+    </item>
+  </list>
+  <list>
+    <title>JLS3 derivatives</title>
+    <item>
+      <title>The Java JLS3 Grammar</title>
+      <author>Gaute Lykkenborg</author>
+      <link>http://www.lykkenborg.no/java/grammar/JLS3.html</link>
+      <version>3</version>
+      <form>browsable; ISO EBNF</form>
+      <comment>
+        Very fancy heavily hyperlinked and coloured HTML.
+        The grammar definition formalism was made compliant with ISO/IEC 14977:1996 standard.
+        Which changes/fixes were applied, if any, is unknown.
+      </comment>
+    </item>
+    <item>
+      <title>Java 1.5 grammar for ANTLR v3 that builds trees</title>
+      <author>Dieter Habelitz</author>
+      <link>http://www.antlr.org/grammar/1207932239307/Java1_5Grammars</link>
+      <version>3</version>
+      <form>ANTLR</form>
+      <comment>
+        Not derived from other ANTLR Java grammars, relation to JLS unknown.
+      </comment>
+    </item>
+    <item>
+      <title>Java 1.5 grammar for ANTLR v3</title>
+      <author>Terence Parr</author>
+      <link>http://www.antlr.org/grammar/1152141644268/Java.g</link>
+      <version>3</version>
+      <form>ANTLR</form>
+      <comment>
+        Claimed to be 'derived from spec', 'very clean' and 'pretty fast'.
+      </comment>
+    </item>
+    <item>
+      <title>Java 5 (aka 1.5) grammar update</title>
+      <author>Michael Studman</author>
+      <link>http://www.antlr.org/grammar/1090713067533/index.html</link>
+      <version>3</version>
+      <form>ANTLR</form>
+      <comment>
+        One of the most used ANTLR Java grammars, an update to the 1.3 grammar by Lilley/Mitchell/Parr/Stanchfield.
+      </comment>
+    </item>
+    <item>
+      <title>yet another java 1.5 grammar</title>
+      <author>Michael Stahl</author>
+      <link>http://www.antlr.org/grammar/1093454600181/java15-grammar.zip</link>
+      <version>3</version>
+      <form>ANTLR</form>
+      <comment>
+        Developed independently from the one by Michael Studman.
+      </comment>
+    </item>
+    <item>
+      <title>Updated Java 1.5 Grammar</title>
+      <author>Scott Wisniewski</author>
+      <link>http://www.antlr.org/grammar/1109874324096/java1.5.zip</link>
+      <version>3</version>
+      <form>ANTLR</form>
+      <comment>
+        Claimed to be based on Studman's one, but with 'better conformance to the Java Language Specification'.
+      </comment>
+    </item>
+    <item>
+      <title>Java 1.5 + Java preprocessor</title>
+      <author>Luca Colombi</author>
+      <link>http://www.antlr.org/grammar/1147455993609/Java5.zip</link>
+      <version>3</version>
+      <form>ANTLR</form>
+      <comment>
+        Based on the one by Wisniewski, but
+        'adapted to compile without error also in eclipse with antlr plugin and jdk 1.5'.
+      </comment>
+    </item>
+
+    <item>
+      <title>Java 1.5 Syntax (corrected)</title>
+      <author>Richard Bosworth</author>
+      <link>http://www.cmis.brighton.ac.uk/staff/rnb/bosware/javaSyntax/syntaxV2.html</link>
+      <version>3</version>
+      <form>original HTML</form>
+      <comment>
+        This is the only grammar that claims to fix all errors and still not go beyond that.
+        See the next link for their bugreport to Sun.
+      </comment>
+    </item>
+    <item>
+      <title>Bug ID: 6442525 Syntax specification (section 18) is inconsistent with other sections</title>
+      <author>Richard Bosworth</author>
+      <link>http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525</link>
+      <version>3</version>
+      <form>plain text</form>
+      <comment>
+        Even that the title claims to spot differences between app3 and doc3 grammars, some of the
+        issues being reported say that both are incorrect.
+      </comment>
+    </item>
+  </list>
+</links:repository>

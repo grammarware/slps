@@ -1,0 +1,40 @@
+<xsd:schema
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:links="http://planet-sl.org/links"
+  targetNamespace="http://planet-sl.org/links">
+
+  <xsd:element name="repository">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="list" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="title" type="xsd:string"/>
+              <xsd:element name="item" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="title" type="xsd:string"/>
+                    <xsd:element name="author" type="xsd:string" maxOccurs="unbounded"/>
+                    <xsd:element name="link" type="xsd:anyURI"/>
+                    <xsd:element name="version">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:int">
+                          <xsd:enumeration value="1"/>
+                          <xsd:enumeration value="2"/>
+                          <xsd:enumeration value="3"/>
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="form" type="xsd:string"/>
+                    <xsd:element name="comment" type="xsd:string"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>
