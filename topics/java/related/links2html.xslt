@@ -13,10 +13,8 @@
   <xsl:template match="/links:repository">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
       <head>
-        <title>
-          Link repository
-        </title>
-        <style>h1{text-align:center}</style>
+        <title>Link repository</title>
+        <style type="text/css">h1{text-align:center}</style>
       </head>
       <body>
         <h1>Link repository</h1>
