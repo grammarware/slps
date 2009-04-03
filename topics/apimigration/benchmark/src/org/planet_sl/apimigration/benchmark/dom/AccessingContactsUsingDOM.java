@@ -9,7 +9,6 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.xpath.XPathAPI;
 import org.jdom.JDOMException;
-import org.planet_sl.apimigration.benchmark.jdom.AccessingContactsUsingJDOM;
 import org.planet_sl.apimigration.benchmark.scenarios.accessing.Resources;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

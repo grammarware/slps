@@ -1,7 +1,7 @@
 package org.planet_sl.apimigration.benchmark.jdom;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.jdom.Document;
@@ -24,7 +24,7 @@ public class DocumentToContactsUsingJDOM extends DocumentToContacts {
 	
 	@SuppressWarnings("unchecked")
 	public List<Person> makeContacts() {
-		LinkedList<Person> contacts = new LinkedList<Person>();
+		ArrayList<Person> contacts = new ArrayList<Person>();
 		Iterator<Object> iter = document.getDescendants();
 		while (iter.hasNext()) {
 			Object node = iter.next();

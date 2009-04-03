@@ -12,6 +12,7 @@ import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.planet_sl.apimigration.benchmark.scenarios.xo_mapping.ContactsToDocument;
 import org.planet_sl.apimigration.benchmark.scenarios.xo_mapping.Person;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -78,6 +79,7 @@ public class ContactsToDocumentUsingDOM extends ContactsToDocument {
 			Element agex = doc.createElement("age");
 			agex.setTextContent(Integer.toString(p.getAge()));
 
+			Attr attr = doc.createAttribute("bla");
 			px.appendChild(namex);
 			px.appendChild(agex);
 

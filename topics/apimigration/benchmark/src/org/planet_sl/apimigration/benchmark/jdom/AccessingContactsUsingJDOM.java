@@ -10,7 +10,6 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.filter.ElementFilter;
 import org.jdom.input.SAXBuilder;
-import org.planet_sl.apimigration.benchmark.scenarios.accessing.Resources;
 
 
 @SuppressWarnings("unchecked")

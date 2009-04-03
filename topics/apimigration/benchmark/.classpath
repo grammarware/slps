@@ -17,10 +17,6 @@
 	<classpathentry kind="lib" path="deps/junit-4.5.jar"/>
 	<classpathentry kind="lib" path="deps/jaxb-ri/lib/jsr173_1.0_api.jar"/>
 	<classpathentry kind="lib" path="deps/dom4j-1.6.1/lib/jaxen-1.1-beta-6.jar"/>
-	<classpathentry kind="lib" path="deps/XOM/xom-1.1.jar" sourcepath="deps/XOM/src">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/Users/tvdstorm/Desktop/Koblenz/apimigration/samples/using-xml-apis/deps/XOM/apidocs/"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="deps/XOM/xom-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
