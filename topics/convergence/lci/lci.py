@@ -205,16 +205,49 @@ def makegraph():
   for src in targets[x][0]:
    graph_small.append([src[0],x])
 
-def hasArcFailed(a,b):
+def underscore2dot(a):
  c = a.split('_')
  d = c[0]
  for x in c[1:]:
   d += '.'+stripSelector2(x)
- #print '[----]',d,b
+ return d
+
+def hasArcFailed(a,b):
+ d = underscore2dot(a)
  for arc in failedarc:
   if arc[0] == d and arc[1].find(b) == 0:
    return True
  return False
+
+def distanceFrom(node):
+ #print node, underscore2dot(node)
+ for t in targets.keys():
+  if len(targets[t][0])!=2:
+   print '[FAIL] Only binary branches supported for now.'
+   return '?'
+  if '_'.join(map(stripSelector1,targets[t][0][0])).find(node)==0:
+   return compareGrammars(underscore2dot(node),targets[t][0][1])
+  elif '_'.join(map(stripSelector1,targets[t][0][1])).find(node)==0:
+   return compareGrammars(underscore2dot(node),targets[t][0][0])
+ print '[FAIL]',node,'not found in',targets
+ return '?'
+
+def compareGrammars(bgf,arr):
+ goal = arr[0]
+ for a in arr[1:]:
+  if ttype[a] in ('synchronization','postextraction'):
+   goal += '.'+stripSelector2(a)
+ #print '[----] Ready:',bgf,'vs',goal
+ #print '[++++] Distance is:',
+ run = 'expr `'+tools['comparison'] + ' bgf/'+bgf+'.bgf bgf/'+goal+'.bgf | grep "Fail:" | wc -l` + `'+tools['comparison'] + ' bgf/'+bgf+'.bgf bgf/'+goal+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w`'
+ logwrite(run)
+ if os.system(run+' > TMP-res'):
+  print '[WARN] Cannot measure the distance.'
+  return '?'
+ num = open('TMP-res','r')
+ n = num.readline().strip()
+ num.close()
+ return n
 
 def dumpgraph(df):
  dot = open(df+'_large.dot','w')
@@ -242,7 +275,7 @@ def dumpgraph(df):
   if x in failednode:
    dot.write(' [color=red]')
   dot.write(';')
- dot.write('node [shape=point, style=solid];\n')
+ dot.write('node [shape=circle, style=solid];\n')
  nodezz=[]
  #print 'Failed',failedarc
  for arc in graph_big:
@@ -274,7 +307,7 @@ def dumpgraph(df):
     #label = node.split('_')
     #label = label[0]+("'"*(len(label)-1))
     #dot.write(node+' [label="'+label+'" color='+colour+'];')
-    dot.write(node+' [color='+colour+'];\n')
+    dot.write(node+' [color='+colour+', label="'+distanceFrom(node)+'"];\n')
  dot.write('}')
  dot.close()
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
@@ -313,8 +346,10 @@ def dumpgraph(df):
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_small.pdf'
  logwrite(run)
  if os.system(run):
-  print '[WARN] Abstract diagram not generated'
+  print '[WARN] Abstract diagram not generated.'
   problem = True
+ else:
+  print '[PASS] Diagram generation completed.'
 
 def copyfile(x,y):
  xh=open(x,'r')
@@ -363,7 +398,8 @@ def validateall():
  if not problem:
   print '[PASS] Validation finished.'
 
-def preparebgf(cut):
+#def transformationChain(cut,whichtypes):
+def transformationChain(cut,target):
  # executes preparational actions (abstract, unerase, etc) before comparison
  if len(cut)==1:
   return cut[0]
@@ -380,6 +416,8 @@ def preparebgf(cut):
   ontheroll = True
   for a in cut[1:]:
    if ontheroll:
+    if ttype[a] not in ('postextraction','synchronization'):
+     continue
     if a in autoactions.keys():
      #print 'Automated action',a,'spotted!
      run = automethods[autoactions[a]]+' bgf/'+curname+'.bgf xbgf/'+a+'.xbgf'
@@ -405,7 +443,7 @@ def preparebgf(cut):
        print '[PASS]',
       print 'Applied generated',a+'.xbgf','to',curname+'.bgf'
     else:
-    #??? 
+     #??? 
      run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
      logwrite(run)
      if os.system(run+shutup):
@@ -423,6 +461,61 @@ def preparebgf(cut):
     failednode.append(cut[0]+"'"*(curname.count('.')+1))
     failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
    curname += '.'+stripSelector2(a)
+ if ontheroll:
+  print '[PASS]',
+ else:
+  print '[FAIL]',
+ print 'Postextraction and synchronyzation finished for target',target+'.'
+ # same for transformation
+ ontheroll = True
+ for a in cut[1:]:
+  if ontheroll:
+   if ttype[a] in ('postextraction','synchronization'):
+    continue
+   if a in autoactions.keys():
+    #print 'Automated action',a,'spotted!
+    run = automethods[autoactions[a]]+' bgf/'+curname+'.bgf xbgf/'+a+'.xbgf'
+    logwrite(run)
+    if os.system(run+shutup):
+     problem = True
+     print '[FAIL]',
+     ontheroll = False
+    else:
+     print '[PASS]',
+    print 'Generated',ttype[a],a+'.xbgf','from',curname+'.bgf'
+    if ontheroll:
+     run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
+     logwrite(run)
+     if os.system(run+shutup):
+      problem = True
+      print '[FAIL]',
+      failedarc.append([curname,a])
+      failednode.append(cut[0]+"'"*(curname.count('.')+1))
+      failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
+      ontheroll = False
+     else:
+      print '[PASS]',
+     print 'Applied generated',a+'.xbgf','to',curname+'.bgf'
+   else:
+    #??? 
+    run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
+    logwrite(run)
+    if os.system(run+shutup):
+     problem = True
+     print '[FAIL]',
+     failedarc.append([curname,a])
+     failednode.append(cut[0]+"'"*(curname.count('.')+1))
+     failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
+     ontheroll = False
+    else:
+     print '[PASS]',
+    print 'Applied',ttype[a],a+'.xbgf','to',curname+'.bgf'
+  else:
+   failedarc.append([curname,a])
+   failednode.append(cut[0]+"'"*(curname.count('.')+1))
+   failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
+  curname += '.'+stripSelector2(a)
+ # end of branch
  name = postfix2prefix('.'.join(cut))
  if name in failedaction:
   print '[FAIL]',
@@ -459,7 +552,7 @@ def buildtargets():
   inputs = targets[t][0]
   fileinputs = ['']*len(inputs)
   for i in range(0,len(inputs)):
-   fileinputs[i] = preparebgf(inputs[i])
+   fileinputs[i] = transformationChain(inputs[i],t)
   if len(inputs)>1:
    # need to diff
    diffall(t,fileinputs[0],fileinputs[1:])
