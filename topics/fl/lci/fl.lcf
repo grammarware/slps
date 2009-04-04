@@ -302,7 +302,7 @@
     <branch>
       <input>abstract</input>
       <transformation>
-        <perform>mkSignature</perform>
+        <perform>makeSignature</perform>
         <automated>
           <method>strips</method>
           <result>stripSelectors</result>
