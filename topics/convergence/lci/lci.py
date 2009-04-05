@@ -1,8 +1,58 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os
 import sys
 import glob
 from elementtree import ElementTree
+
+class Chain:
+ def __init__(self,*arr):
+  self.array=[]
+  for a in arr:
+   self.array.append(a)
+ def __call__(self):
+  return '.'.join(self.array)
+ def __repr__(self):
+  return '-'+'.'.join(self.array)+'-'
+ # singular items are strings, slices are Chains
+ def __getitem__(self,key):
+  if type(key)==type(slice(0,1,None)):
+   return ChainFromArray(self.array[key])
+  else:
+   return self.array[key]
+ def dotNodeName(self):
+  name = self.array[0]
+  for a in self.array[1:]:
+   name += '_'+stripSelector1(a)
+  return name
+ def bgfFileName(self):
+  name = self.array[0]
+  for a in self.array[1:]:
+   name += '.'+stripSelector2(a)
+  return name+'.bgf'
+ def futureBgfFileName(self,next):
+  name = self.array[0]
+  for a in self.array[1:]:
+   name += '.'+stripSelector2(a)
+  return name+'.'+stripSelector2(next)+'.bgf'
+ def append(self,step):
+  self.array.append(step)
+ def __len__(self):
+  return len(self.array)
+ def spaceNotation(self):
+  tmp = self.array[:]
+  tmp.reverse()
+  return ' '.join(tmp)
+ def __eq__(self,other):
+  if type(other)==type(''):
+   return self.array==other.split('.')
+  else:
+   return self.array==other.array
+
+def ChainFromArray(a):
+ x = Chain()
+ x.array = a[:]
+ return x
 
 # A global flag, if set, LCI will exit with a non-zero status
 problem = False
@@ -30,16 +80,7 @@ tools = {}
 treetools = {}
 automethods = {}
 almostfailed = []
-failednode = []
-failedarc  = []
-failedaction = []
-
-def postfix2prefix(post):
- #  input: 'x.c.b.a'
- # output: 'a b c x'
- pre = post.split('.')
- pre.reverse()
- return ' '.join(pre)
+failed = []
 
 def logwrite(s):
  log.write(s+'\n')
@@ -89,7 +130,7 @@ def readxmlconfig (cfg):
   for br in xmlnode.findall('branch'):
    for phase in br.findall('*'):
     if phase.tag == 'input':
-     branch = [br.findtext('input')]
+     branch = Chain(br.findtext('input'))
     else:
      for p in phase.findall('*'):
       if p.tag == 'perform':
@@ -189,60 +230,38 @@ def addarc(fromnode,tonode,q,labelnode):
 def makegraph():
  # first we generate a complete picture
  for x in targets.keys():
-  for src in targets[x][0]:
-   if len(src)==1:
-    addarc(src[0],x,'','')
+  for branch in targets[x][0]:
+   graph_small.append((branch[0],x))
+   if len(branch)==1:
+    graph_big.append((branch,Chain(x),''))
    else:
-    name  = src[0]
-    qname = src[0]
-    for i in range(1,len(src)-1):
-     qname += '_'+stripSelector1(src[i])
-     addarc(name,qname,name,stripSelector1(src[i]))
-     name = qname
-    addarc(name,x,qname,stripSelector1(src[-1]))
- # make a simplified one
- for x in targets.keys():
-  for src in targets[x][0]:
-   graph_small.append([src[0],x])
-
-def underscore2dot(a):
- c = a.split('_')
- d = c[0]
- for x in c[1:]:
-  d += '.'+stripSelector2(x)
- return d
-
-def hasArcFailed(a,b):
- d = underscore2dot(a)
- for arc in failedarc:
-  if arc[0] == d and arc[1].find(b) == 0:
-   return True
- return False
+    for i in range(1,len(branch)-1):
+     graph_big.append((branch[:i],branch[:(i+1)],stripSelector1(branch[i])))
+    graph_big.append((branch[:-1],Chain(x),stripSelector1(branch[-1])))
 
 def distanceFrom(node):
- #print node, underscore2dot(node)
  for t in targets.keys():
   if len(targets[t][0])!=2:
-   print '[FAIL] Only binary branches supported for now.'
-   return '?'
-  if '_'.join(map(stripSelector1,targets[t][0][0])).find(node)==0:
-   return compareGrammars(underscore2dot(node),targets[t][0][1])
-  elif '_'.join(map(stripSelector1,targets[t][0][1])).find(node)==0:
-   return compareGrammars(underscore2dot(node),targets[t][0][0])
- print '[FAIL]',node,'not found in',targets
+   print '[WARN] Only binary branches supported for now.'
+   continue
+  if targets[t][0][0]().find(node())==0:
+   return compareGrammars(node,targets[t][0][1])
+  elif targets[t][0][1]().find(node())==0:
+   return compareGrammars(node,targets[t][0][0])
+ print '[FAIL]',node(),'not found in',targets
  return '?'
 
 def compareGrammars(bgf,arr):
  goal = arr[0]
- for a in arr[1:]:
+ for a in arr().split('.')[1:]:
   if ttype[a] in ('synchronization','postextraction'):
    goal += '.'+stripSelector2(a)
  #print '[----] Ready:',bgf,'vs',goal
  #print '[++++] Distance is:',
- run = 'expr `'+tools['comparison'] + ' bgf/'+bgf+'.bgf bgf/'+goal+'.bgf | grep "Fail:" | wc -l` + `'+tools['comparison'] + ' bgf/'+bgf+'.bgf bgf/'+goal+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w`'
+ run = 'expr `'+tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "Fail:" | wc -l` + `'+tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w`'
  logwrite(run)
  if os.system(run+' > TMP-res'):
-  print '[WARN] Cannot measure the distance.'
+  print '[WARN] Cannot measure the distance between',bgf(),'and',goal
   return '?'
  num = open('TMP-res','r')
  n = num.readline().strip()
@@ -260,10 +279,13 @@ def dumpgraph(df):
  ''')
  for x in orderedsrc:
   dot.write(quote(x))
-  if x in failednode:
+  if x in failed:
    dot.write(' [color=red]')
   elif x in almostfailed:
    dot.write(' [color=blue]')
+  dot.write(';')
+ for x in orderedsrc:
+  dot.write(quote(x))
   if x==orderedsrc[-1]:
    dot.write(';')
   else:
@@ -272,42 +294,43 @@ def dumpgraph(df):
  dot.write('node [shape=octagon, style=bold];\n')
  for x in targets.keys():
   dot.write(quote(x))
-  if x in failednode:
+  if x in failed:
    dot.write(' [color=red]')
   dot.write(';')
  dot.write('node [shape=circle, style=solid];\n')
  nodezz=[]
- #print 'Failed',failedarc
+ done = []
  for arc in graph_big:
-  #dot.write(quote(arc[0])+'->'+quote(arc[1]))
-  #print 'Arc',arc
-  dot.write(arc[0]+'->'+arc[1])
-  if arc[0] not in nodezz:
+  if (arc[0].dotNodeName(),arc[1].dotNodeName()) in done:
+   continue
+  dot.write(arc[0].dotNodeName()+'->'+arc[1].dotNodeName())
+  done.append((arc[0].dotNodeName(),arc[1].dotNodeName()))
+  if arc[0] not in nodezz and arc[0]() not in targets.keys() and arc[0]() not in extractor.keys():
    nodezz.append(arc[0])
-  if arc[1] not in nodezz:
+  if arc[1] not in nodezz and arc[1]() not in targets.keys() and arc[1]() not in extractor.keys():
    nodezz.append(arc[1])
   par = ''
-  if arc[3]:
-   par += 'label="'+arc[3]+'" '
-  if hasArcFailed(arc[2],arc[3]):
+  if arc[2]:
+   par += 'label="'+arc[2]+'" '
+  if arc[1] in failed:
    par += 'color=red '
+  if arc[1]() in targets.keys():
+   pseudo = arc[0][:]
+   pseudo.append(arc[2])
+   if pseudo in failed:
+    par += 'color=red '
   if par:
    dot.write(' ['+par+']')
   dot.write(';\n')
  for node in nodezz:
-  if node not in extractor.keys():
-   if node not in targets.keys():
-    if node in failednode:
-     colour = 'red'
-    elif node in almostfailed:
-     colour = 'blue'
-    else:
-     colour = 'black'
-    # labels not needed anymore because nodes became points
-    #label = node.split('_')
-    #label = label[0]+("'"*(len(label)-1))
-    #dot.write(node+' [label="'+label+'" color='+colour+'];')
-    dot.write(node+' [color='+colour+', label="'+distanceFrom(node)+'"];\n')
+  if node in failed:
+   colour = 'red'
+  elif node in almostfailed:
+   colour = 'blue'
+  else:
+   colour = 'black'
+  # labels not needed anymore because nodes became points
+  dot.write(node.dotNodeName()+' [color='+colour+', label="'+distanceFrom(node)+'"];\n')
  dot.write('}')
  dot.close()
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
@@ -319,11 +342,14 @@ def dumpgraph(df):
  dot.write('digraph generated{ {rank=same; edge[style=invis,weight=10];\n')
  for x in orderedsrc:
   dot.write(quote(x))
-  if x in failednode:
+  if x in failed:
    dot.write(' [color=red]')
   elif x in almostfailed:
    dot.write(' [color=blue]')
-  if x == orderedsrc[-1]:
+  dot.write(';')
+ for x in orderedsrc:
+  dot.write(quote(x))
+  if x==orderedsrc[-1]:
    dot.write(';')
   else:
    dot.write('->')
@@ -331,14 +357,14 @@ def dumpgraph(df):
  dot.write('node [shape=octagon]\n')
  for x in targets.keys():
   dot.write(quote(x))
-  if x in failednode:
+  if x in failed:
    dot.write(' [color=red]')
   elif x in almostfailed:
    dot.write(' [color=blue]')
   dot.write(';')
  for arc in graph_small:
   dot.write(quote(arc[0])+'->'+quote(arc[1]))
-  if arc[0] in failednode and arc[1] in failednode:
+  if arc[0] in failed and arc[1] in failed:
    dot.write(' [color=red]')
   dot.write(';\n')
  dot.write('}')
@@ -370,7 +396,7 @@ def extractall():
     almostfailed.append(bgf)
    else:
     print '[FAIL] Extraction of',bgf+'.bgf failed'
-    failednode.append(bgf)
+    failed.append(Chain(bgf))
     problem = True
    #sysexit(3)
   else:
@@ -386,144 +412,93 @@ def extractall():
 def validateall():
  problem = False
  for bgf in extractor.keys():
-  if bgf in failednode:
+  if Chain(bgf) in failed:
    continue
   run = tools['validation']+' bgf/'+bgf+'.bgf'
   logwrite(run)
   if os.system(run+shutup):
    problem = True
    print '[FAIL] Validation failed on',bgf+'.bgf'
-   failednode.append(bgf)
+   failed.append(Chain(bgf))
    #sysexit(3)
  if not problem:
   print '[PASS] Validation finished.'
 
-#def transformationChain(cut,whichtypes):
+def runTransforms(cut,current,whichtypes):
+ ontheroll = True
+ for a in cut[1:]:
+  if ontheroll:
+   if ttype[a] not in whichtypes:
+    continue
+   if a in autoactions.keys():
+    #print 'Automated action',a,'spotted!
+    run = automethods[autoactions[a]]+' bgf/'+current.bgfFileName()+' xbgf/'+a+'.xbgf'
+    logwrite(run)
+    if os.system(run+shutup):
+     problem = True
+     print '[FAIL]',
+     ontheroll = False
+    else:
+     print '[PASS]',
+    print 'Generated',ttype[a],a+'.xbgf','from',current.bgfFileName()
+    if ontheroll:
+     run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+current.bgfFileName()+' bgf/'+current.futureBgfFileName(a)
+     logwrite(run)
+     if os.system(run+shutup):
+      problem = True
+      print '[FAIL]',
+      failed.append(current[:])
+      failed[-1].append(a)
+      ontheroll = False
+     else:
+      print '[PASS]',
+     print 'Applied generated',a+'.xbgf','to',current.bgfFileName()
+   else:
+    #??? 
+    run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+current.bgfFileName()+' bgf/'+current.futureBgfFileName(a)
+    logwrite(run)
+    if os.system(run+shutup):
+     problem = True
+     print '[FAIL]',
+     failed.append(current[:])
+     failed[-1].append(a)
+     ontheroll = False
+    else:
+     print '[PASS]',
+    print 'Applied',ttype[a],a+'.xbgf','to',current.bgfFileName()
+  else:
+   failed.append(current[:])
+   failed[-1].append(a)
+  current.append(a)
+ return ontheroll,current
+
 def transformationChain(cut,target):
  # executes preparational actions (abstract, unerase, etc) before comparison
  if len(cut)==1:
-  return cut[0]
+  # nothing to do
+  return Chain(cut[0])
  else:
-  if cut[0] in extractor.keys():
-   # starting point is a source
-   curname = cut[0]
-  else:
-   # starting point is another target
-   curname = targets[cut[0]][1]
-  # action names will be appended:
-  # x.bgf -> x.corrupt.bgf -> x.corrupt.confuse.bgf -> x.corrupt.confuse.destroy.bgf -> ...
-  # the very last one will be diffed
-  ontheroll = True
-  for a in cut[1:]:
-   if ontheroll:
-    if ttype[a] not in ('postextraction','synchronization'):
-     continue
-    if a in autoactions.keys():
-     #print 'Automated action',a,'spotted!
-     run = automethods[autoactions[a]]+' bgf/'+curname+'.bgf xbgf/'+a+'.xbgf'
-     logwrite(run)
-     if os.system(run+shutup):
-      problem = True
-      print '[FAIL]',
-      ontheroll = False
-     else:
-      print '[PASS]',
-     print 'Generated',ttype[a],a+'.xbgf','from',curname+'.bgf'
-     if ontheroll:
-      run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
-      logwrite(run)
-      if os.system(run+shutup):
-       problem = True
-       print '[FAIL]',
-       failedarc.append([curname,a])
-       failednode.append(cut[0]+"'"*(curname.count('.')+1))
-       failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
-       ontheroll = False
-      else:
-       print '[PASS]',
-      print 'Applied generated',a+'.xbgf','to',curname+'.bgf'
-    else:
-     #??? 
-     run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
-     logwrite(run)
-     if os.system(run+shutup):
-      problem = True
-      print '[FAIL]',
-      failedarc.append([curname,a])
-      failednode.append(cut[0]+"'"*(curname.count('.')+1))
-      failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
-      ontheroll = False
-     else:
-      print '[PASS]',
-     print 'Applied',ttype[a],a+'.xbgf','to',curname+'.bgf'
-   else:
-    failedarc.append([curname,a])
-    failednode.append(cut[0]+"'"*(curname.count('.')+1))
-    failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
-   curname += '.'+stripSelector2(a)
+  # start point at source or target
+  current = Chain(cut[0])
+ # action names will be appended:
+ # x.bgf -> x.corrupt.bgf -> x.corrupt.confuse.bgf -> x.corrupt.confuse.destroy.bgf -> ...
+ # the very last one will be diffed
+ ontheroll,current = runTransforms(cut,current,('postextraction','synchronization','normalization'))
  if ontheroll:
   print '[PASS]',
  else:
   print '[FAIL]',
  print 'Postextraction and synchronyzation finished for target',target+'.'
  # same for transformation
- ontheroll = True
- for a in cut[1:]:
-  if ontheroll:
-   if ttype[a] in ('postextraction','synchronization'):
-    continue
-   if a in autoactions.keys():
-    #print 'Automated action',a,'spotted!
-    run = automethods[autoactions[a]]+' bgf/'+curname+'.bgf xbgf/'+a+'.xbgf'
-    logwrite(run)
-    if os.system(run+shutup):
-     problem = True
-     print '[FAIL]',
-     ontheroll = False
-    else:
-     print '[PASS]',
-    print 'Generated',ttype[a],a+'.xbgf','from',curname+'.bgf'
-    if ontheroll:
-     run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
-     logwrite(run)
-     if os.system(run+shutup):
-      problem = True
-      print '[FAIL]',
-      failedarc.append([curname,a])
-      failednode.append(cut[0]+"'"*(curname.count('.')+1))
-      failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
-      ontheroll = False
-     else:
-      print '[PASS]',
-     print 'Applied generated',a+'.xbgf','to',curname+'.bgf'
-   else:
-    #??? 
-    run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+curname+'.bgf bgf/'+curname+'.'+stripSelector2(a)+'.bgf'
-    logwrite(run)
-    if os.system(run+shutup):
-     problem = True
-     print '[FAIL]',
-     failedarc.append([curname,a])
-     failednode.append(cut[0]+"'"*(curname.count('.')+1))
-     failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
-     ontheroll = False
-    else:
-     print '[PASS]',
-    print 'Applied',ttype[a],a+'.xbgf','to',curname+'.bgf'
-  else:
-   failedarc.append([curname,a])
-   failednode.append(cut[0]+"'"*(curname.count('.')+1))
-   failedaction.append(postfix2prefix(curname+'.'+stripSelector2(a)))
-  curname += '.'+stripSelector2(a)
+ ontheroll,current = runTransforms(cut,current,('transformation','refactoring'))
  # end of branch
- name = postfix2prefix('.'.join(cut))
- if name in failedaction:
+ if cut in failed:
   print '[FAIL]',
  else:
   print '[PASS]',
- print 'Branch finished'
- if name not in failedaction and tools.has_key('validation'):
-  a = tools['validation']+' bgf/'+curname+'.bgf'
+ print 'Branch finished as',current.bgfFileName()
+ if cut not in failed and tools.has_key('validation'):
+  a = tools['validation']+' bgf/'+current.bgfFileName()
   logwrite(a)
   if os.system(a+shutup):
    problem = True
@@ -531,7 +506,7 @@ def transformationChain(cut,target):
   else:
    print '[PASS]',
   print 'Branch result validated'
- return curname
+ return current
 
 def ordertargets():
  unordered = targets.keys()[:]
@@ -550,49 +525,41 @@ def ordertargets():
 def buildtargets():
  for t in ordertargets():
   inputs = targets[t][0]
-  fileinputs = ['']*len(inputs)
+  fileinputs = []
   for i in range(0,len(inputs)):
-   fileinputs[i] = transformationChain(inputs[i],t)
+   fileinputs.append(transformationChain(inputs[i],t))
   if len(inputs)>1:
    # need to diff
    diffall(t,fileinputs[0],fileinputs[1:])
   # save resulting name
   cx = 0
   while cx<len(fileinputs):
-   if not isbad(fileinputs[cx]):
+   if fileinputs[cx] not in failed:
     break
    cx+=1
   if cx<len(fileinputs):
-   print '[PASS] Target',t,'reached as',fileinputs[cx]+'.bgf'
-   copyfile('bgf/'+fileinputs[cx]+'.bgf','bgf/'+t+'.bgf')
-   logwrite('cp bgf/'+fileinputs[cx]+'.bgf bgf/'+t+'.bgf')
+   print '[PASS] Target',t,'reached as',fileinputs[cx].bgfFileName()
+   copyfile('bgf/'+fileinputs[cx].bgfFileName(),'bgf/'+t+'.bgf')
+   logwrite('cp bgf/'+fileinputs[cx].bgfFileName()+' bgf/'+t+'.bgf')
   else:
    # Tough luck: all branches failed
    print '[FAIL] Target',t,'unreachable'
   targets[t][1] = t
 
-def isbad(x):
-# checks if the file x failed building
- #print '[----]','is',x,'bad, given',failedarc,'?'
- for failed in failedarc:
-  #print '[====]',failed[0]+'.'+stripSelector2(failed[1])
-  if x == failed[0]+'.'+stripSelector2(failed[1]):
-   return True
- return False
-
 def diffall(t,car,cdr):
+ #print car,cdr
  if len(cdr)==1:
-  run = tools['comparison']+' bgf/'+car+'.bgf bgf/'+cdr[0]+'.bgf'
+  run = tools['comparison']+' bgf/'+car.bgfFileName()+' bgf/'+cdr[0].bgfFileName()
   logwrite(run)
   if os.system(run+shutup):
    problem = True
-   print '[FAIL] Mismatch in target',t+':',car+'.bgf','differs from',cdr[0]+'.bgf'
-   failednode.append(t)
+   print '[FAIL] Mismatch in target',t+':',car.bgfFileName(),'differs from',cdr[0].bgfFileName()
+   failed.append(Chain(t))
    #sysexit(3)
  else:
   for head in cdr:
    diffall(t,car,[head])
-  diffall(t,cdr[0],cdr[1:])
+  diffall(t,cdr[:1],cdr[1:])
 
 def chainXBTF(testcase,steps,t):
  fr = testcase
@@ -611,9 +578,7 @@ def chainXBTF(testcase,steps,t):
    print '[FAIL] Performing coupled',step,'on',fr,'failed'
    break
   fr = re
- tmp = steps[:]
- tmp.reverse()
- print '[PASS] Performed coupled',' '.join(tmp),'on',testcase,
+ print '[PASS] Performed coupled',steps.spaceNotation(),'on',testcase,
  if treetools.has_key('validation'):
   run = treetools['validation']+' '+re
   if os.system(run+shutup):
@@ -630,7 +595,7 @@ def diffBTFs(t):
   return
  if not treetools.has_key('comparison'):
   # no tree diff tool specified
-  rturn
+  return
  basetestset = testsets.keys()[0]
  for basetestcase in glob.glob(basetestset+'/*.'+t+'.btf'):
   for testset in testsets.keys()[1:]:
@@ -739,7 +704,7 @@ def checkconsistency():
    sysexit(18)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.14'
+ print 'Language Covergence Infrastructure v1.15'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readxmlconfig(sys.argv[1])
@@ -764,4 +729,3 @@ if __name__ == "__main__":
   print 'Usage:'
   print ' ',sys.argv[0],'<configuration file>','<diagram prefix>'
   sysexit(1)
-
