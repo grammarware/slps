@@ -398,7 +398,9 @@ diffN(RC,g(_,Ps1),g(_,Ps2),N)
           format('   - Ok: ~w.~n',[N])
         ; (
             RC = 1,
-            format('   - Fail: ~w.~n',[N]),
+            length(Q1,LQ1),
+            length(Q2,LQ2),
+            format('   - Fail (~w/~w): ~w.~n',[LQ1,LQ2,N]),
             maplist(format('      - ~w~n'),Q1),
             format('     vs.~n',[]),
             maplist(format('      - ~w~n'),Q2)
