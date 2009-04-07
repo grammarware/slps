@@ -61,6 +61,11 @@ public class Attribute extends Node {
 			}
 		}
 		
+		@Override
+		public String toString() {
+			return "[Attribute.Type." + getName() + "]";
+		}
+		
 		public int hashCode() {
 			return type;
 		}

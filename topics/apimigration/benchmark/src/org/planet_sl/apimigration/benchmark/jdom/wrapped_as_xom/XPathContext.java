@@ -3,6 +3,9 @@ package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+
+@MapsTo("")
 public class XPathContext {
 	List<org.jdom.Namespace> namespaces;
 	

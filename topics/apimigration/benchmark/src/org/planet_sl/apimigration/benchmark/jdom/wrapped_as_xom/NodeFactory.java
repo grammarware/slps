@@ -1,6 +1,9 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 
+
+@MapsTo("")
 public class NodeFactory {
 
 	public void finishMakingDocument(Document document) {

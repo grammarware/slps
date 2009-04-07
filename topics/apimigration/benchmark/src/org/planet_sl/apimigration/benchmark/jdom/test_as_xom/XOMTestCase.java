@@ -1,5 +1,15 @@
-package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
+package org.planet_sl.apimigration.benchmark.jdom.test_as_xom;
 
+
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Attribute;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Comment;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.DocType;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Document;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Element;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Namespace;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Node;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.ProcessingInstruction;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Text;
 
 import junit.framework.ComparisonFailure;
 import junit.framework.TestCase;

@@ -2,7 +2,10 @@ package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
 import java.net.URISyntaxException;
 
+import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+
 @SuppressWarnings("serial")
+@MapsTo("org.jdom.IllegalDataException")
 public class MalformedURIException extends RuntimeException {
 
 	@SuppressWarnings("unused")

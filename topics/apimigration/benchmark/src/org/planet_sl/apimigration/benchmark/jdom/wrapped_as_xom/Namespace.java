@@ -1,79 +1,77 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 
-
+@MapsTo("")
 public class Namespace extends Node {
 
+	public static final String XML_NAMESPACE = org.jdom.Namespace.XML_NAMESPACE.getURI();
 	org.jdom.Namespace namespace;
+	org.jdom.Element parent;
 	
 	Namespace(org.jdom.Namespace namespace) {
-		this.namespace = namespace;
+		this(namespace, null);
 	}
 
-	public Namespace(String prefix, String URI, Element parent) {
-		this(org.jdom.Namespace.getNamespace(prefix, URI));
-		parent.element.addNamespaceDeclaration(namespace);
+	Namespace(org.jdom.Namespace namespace, org.jdom.Element parent) {
+		this.namespace = namespace;
+		this.parent = parent;
+	}
+
+	public Namespace(String prefix, String URI, org.jdom.Element parent) {
+		this(org.jdom.Namespace.getNamespace(prefix, URI), parent);
+		parent.addNamespaceDeclaration(namespace);
 	}
 	
 
+	
 	public Node copy() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Namespace((org.jdom.Namespace)namespace, parent);
 	}
 
 	public void detach() {
-		// TODO Auto-generated method stub
-
+		parent = null;
 	}
 
-	public Node getChild(int position) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public int getChildCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	public String getPrefix() {
-		// TODO Auto-generated method stub
-		return null;
+		return namespace.getPrefix();
 	}
 
 	public String getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return namespace.getURI();
 	}
 
 	public String toXML() {
-		// TODO Auto-generated method stub
-		return null;
+		return "xmlns:" + getPrefix() + "=\"" + getValue() + "\"";
 	}
 
-	public String getBaseURI() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public Document getDocument() {
-		// TODO Auto-generated method stub
-		return null;
+		if (parent == null) {
+			return null;
+		}
+		return new Document(parent.getDocument());
 	}
 
 	public ParentNode getParent() {
-		// TODO Auto-generated method stub
-		return null;
+		if (parent == null) {
+			return (ParentNode)null;
+		}
+		return new Element((org.jdom.Element)parent);
 	}
 
 	public Nodes query(String xpath, XPathContext namespaces) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public Nodes query(String xpath) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String getBaseURI() {
+		return parent.getDocument().getBaseURI();
 	}
 
 }

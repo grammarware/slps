@@ -1,18 +1,18 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+
 
 @SuppressWarnings("serial")
-public class MultipleParentException extends RuntimeException {
-
-	private org.jdom.IllegalAddException jdomException;
+@MapsTo("org.jdom.IllegalAddException")
+public class MultipleParentException extends IllegalAddException {
 
 	public MultipleParentException(org.jdom.IllegalAddException e) {
-		this.jdomException = e;
+		super(e);
 	}
 
-	@Override
-	public String getMessage() {
-		return jdomException.getMessage();
+	public MultipleParentException(String string) {
+		super(string);
 	}
-	
+
 }

@@ -2,7 +2,10 @@ package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
 import java.util.List;
 
+import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+
 @SuppressWarnings("unchecked")
+@MapsTo("org.jdom.ProcessingInstruction")
 public class ProcessingInstruction extends Node {
 	org.jdom.ProcessingInstruction pi;
 
@@ -12,48 +15,49 @@ public class ProcessingInstruction extends Node {
 	
 	// XOM API starts below
 	
+	@MapsTo("org.jdom.ProcessingInstruction#clone()")
 	public ProcessingInstruction(ProcessingInstruction instruction) {
 		this((org.jdom.ProcessingInstruction)instruction.pi.clone());
 	}
 	
+	@MapsTo("org.jdom.ProcessingInstruction(String,String)")
 	public ProcessingInstruction(String target, String data) {
 		this(new org.jdom.ProcessingInstruction(target, data));
 	}
 
 	@Override
+	@MapsTo("org.jdom.ProcessingInstruction#clone()")
 	public Node copy() {
 		return new ProcessingInstruction((org.jdom.ProcessingInstruction)pi.clone());
 	}
 
 	@Override
+	@MapsTo("org.jdom.ProcessingInstruction#detach()")
 	public void detach() {
 		pi.detach();
 	}
 
 	@Override
+	@MapsTo("")
 	public String getBaseURI() {
 		// TODO: Unsure if this is correct 
 		return pi.getDocument().getBaseURI();
 	}
 
-	@Override
-	public Node getChild(int position) {
-		throw new IndexOutOfBoundsException("processing instructions don't have children");
-	}
 
 	@Override
-	public int getChildCount() {
-		return 0;
-	}
-
-	@Override
+	@MapsTo("org.jdom.ProcessingInstruction#getDocument()")
 	public Document getDocument() {
 		return new Document(pi.getDocument());
 	}
 
 	@Override
+	@MapsTo("org.jdom.ProcessingInstruction#getParent()")
 	public ParentNode getParent() {
 		org.jdom.Parent parent = pi.getParent();
+		if (parent == null) {
+			return null;
+		}
 		if (parent instanceof org.jdom.Element) {
 			return new Element((org.jdom.Element)parent);
 		}
@@ -64,11 +68,13 @@ public class ProcessingInstruction extends Node {
 	}
 
 	@Override
+	@MapsTo("org.jdom.ProcessingInstruction#getValue()")
 	public String getValue() {
 		return pi.getValue();
 	}
 
 	@Override
+	@MapsTo("")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath.newInstance(query);
@@ -84,6 +90,7 @@ public class ProcessingInstruction extends Node {
 	}
 
 	@Override
+	@MapsTo("")
 	public Nodes query(String query) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath.newInstance(query);
@@ -96,18 +103,22 @@ public class ProcessingInstruction extends Node {
 	}
 
 	@Override
+	@MapsTo("")
 	public String toXML() {
 		return new org.jdom.output.XMLOutputter().outputString(pi);
 	}
 
+	@MapsTo("org.jdom.ProcessingInstruction#getTarget()")
 	public String getTarget() {
 		return pi.getTarget();
 	}
 
+	@MapsTo("org.jdom.ProcessingInstruction#setTarget(String)")
 	public void setTarget(String target) {
 		pi.setTarget(target);
 	}
 
+	@MapsTo("org.jdom.ProcessingInstruction#setData(String)")
 	public void setValue(String data) {
 		// TODO: not sure if this is correct.
 		pi.setData(data);

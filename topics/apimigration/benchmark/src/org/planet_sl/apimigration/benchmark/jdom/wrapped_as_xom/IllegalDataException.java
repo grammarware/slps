@@ -1,8 +1,11 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+
 
 @SuppressWarnings("serial")
-public class IllegalDataException extends RuntimeException {
+@MapsTo("org.jdom.IllegalDataException")
+public class IllegalDataException extends WellformednessException {
 
 	private org.jdom.IllegalDataException jdomException;
 	private String data;
@@ -17,9 +20,9 @@ public class IllegalDataException extends RuntimeException {
 		this.data = data;
 	}
 
-	@Override
-	public String getMessage() {
-		return jdomException.getMessage();
+	public IllegalDataException(String message, String data) {
+		super(message);
+		this.data = data;
 	}
 
 	public String getData() {

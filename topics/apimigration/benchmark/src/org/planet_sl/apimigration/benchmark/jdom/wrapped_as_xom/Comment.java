@@ -2,8 +2,12 @@ package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
 import java.util.List;
 
+import org.jdom.output.XMLOutputter;
+import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+
 
 @SuppressWarnings("unchecked")
+@MapsTo("org.jdom.Comment")
 public class Comment extends Node {
 	org.jdom.Comment comment;
 	
@@ -13,63 +17,77 @@ public class Comment extends Node {
 
 	/// XOM api starts below
 	
+	@MapsTo("org.jdom.Comment#clone()")
 	public Comment(Comment comment) {
 		this((org.jdom.Comment)comment.comment.clone());
 	}
 
+	@MapsTo("org.jdom.Comment(String)")
 	public Comment(String data) {
-		this(new org.jdom.Comment(data));
+		if (data.indexOf("\r") > -1 ) {
+			// NOTE: more specific exception.
+			throw new IllegalCharacterDataException("invalid char in comment", data);
+		}
+		try {
+			comment = new org.jdom.Comment(data);
+		}
+		catch (org.jdom.IllegalDataException e) {
+			throw new IllegalCharacterDataException(e, data);
+		}
 	}
 	
 	@Override
+	@MapsTo("org.jdom.Comment#clone()")
 	public Node copy() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Comment((org.jdom.Comment)comment.clone());
 	}
 
 	@Override
+	@MapsTo("org.jdom.Comment#detach()")
 	public void detach() {
-		// TODO Auto-generated method stub
-
+		comment.detach();
 	}
 
 	@Override
+	@MapsTo("")
 	public String getBaseURI() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO: wrong
+		return comment.getDocument().getBaseURI();
 	}
 
 	@Override
-	public Node getChild(int position) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getChildCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
+	@MapsTo("org.jdom.Comment#getDocument()")
 	public Document getDocument() {
-		// TODO Auto-generated method stub
-		return null;
+		if (comment.getDocument() == null) {
+			return null;
+		}
+		return new Document(comment.getDocument());
 	}
 
 	@Override
+	@MapsTo("org.jdom.Comment#getParent()")
 	public ParentNode getParent() {
-		// TODO Auto-generated method stub
-		return null;
+		org.jdom.Parent parent = comment.getParent();
+		if (parent == null) {
+			return (ParentNode)parent;
+		}
+		if (parent instanceof org.jdom.Element) {
+			return new Element((org.jdom.Element)parent);
+		}
+		if (parent instanceof org.jdom.Document) {
+			return new Document((org.jdom.Document)parent);
+		}
+		throw new AssertionError("invalid parent for comment " + parent.getClass());
 	}
 
 	@Override
+	@MapsTo("org.jdom.Comment#getValue()")
 	public String getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return comment.getValue();
 	}
 
 	@Override
+	@MapsTo("")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath.newInstance(query);
@@ -85,6 +103,7 @@ public class Comment extends Node {
 	}
 
 	@Override
+	@MapsTo("")
 	public Nodes query(String query) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath.newInstance(query);
@@ -97,14 +116,24 @@ public class Comment extends Node {
 	}
 
 	@Override
+	@MapsTo("")
 	public String toXML() {
-		// TODO Auto-generated method stub
-		return null;
+		return new XMLOutputter().outputString(comment);
 	}
 
+	@MapsTo("org.jdom.Comment#setText(String)")
 	public void setValue(String data) {
-		// TODO Auto-generated method stub
-		
+		if (data == null) {
+			data = "";
+		}
+		try {
+			comment.setText(data);
+		}
+		catch (org.jdom.IllegalDataException e) {
+			// We throw a more specific exception here
+			// which is subclass of illegaldataexception
+			throw new IllegalCharacterDataException(e, data);
+		}
 	}
 
 }

@@ -16,7 +16,7 @@ public class Utils {
 			return new DocType((org.jdom.DocType)content);
 		}
 		if (content instanceof org.jdom.CDATA) {
-			return new CDATASection((org.jdom.CDATA)content);
+			return new Text((org.jdom.CDATA)content, true);
 		}
 		if (content instanceof org.jdom.ProcessingInstruction) {
 			return new ProcessingInstruction((org.jdom.ProcessingInstruction)content);
@@ -28,8 +28,8 @@ public class Utils {
 		if (child instanceof Element) {
 			return ((Element)child).element;
 		}
-		if (child instanceof CDATASection) {
-			return ((CDATASection)child).cdata;
+		if (child instanceof Text && ((Text)child).isCDATA) {
+			return ((Text)child).cdata;
 		}
 		if (child instanceof Text) {
 			return ((Text)child).text;

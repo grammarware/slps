@@ -61,7 +61,7 @@ public class Element extends ParentNode {
 	}
 	
 	@Override
-	@MapsTo("org.jdom.Element#addContent(Content)")
+	@MapsTo("org.jdom.Element#addContent(org.jdom.Content)")
 	public void appendChild(Node child) {
 		try {
 			element.addContent(node2content(child));
@@ -181,6 +181,7 @@ public class Element extends ParentNode {
 		 */
 		
 		if (uri == null || uri.equals("")) {
+			element.removeAttribute("base", org.jdom.Namespace.XML_NAMESPACE);
 			return;
 		}
 		try {
@@ -191,7 +192,12 @@ public class Element extends ParentNode {
 			if (!uriObject.isAbsolute()) {
 				throw new MalformedURIException("base URIs should be absolute.");
 			}
-			element.setAttribute("base", uriObject.toString(), org.jdom.Namespace.XML_NAMESPACE);
+			try {
+				element.setAttribute("base", uriObject.toASCIIString(), org.jdom.Namespace.XML_NAMESPACE);
+			}
+			catch (org.jdom.IllegalDataException e) {
+				throw new MalformedURIException("illegal data in uri");
+			}
 		}
 		catch (URISyntaxException e) {
 			throw new MalformedURIException(e, uri);
@@ -208,6 +214,9 @@ public class Element extends ParentNode {
 	@Override
 	@MapsTo("org.jdom.Element#detach()")
 	public void detach() {
+		if (element.getDocument().getRootElement() == element) {
+			throw new WellformednessException("detached root");
+		}
 		element.detach();
 	}
 
@@ -242,14 +251,24 @@ public class Element extends ParentNode {
 		// TODO: this probably incorrect in some cases.
 		org.jdom.Attribute base = element.getAttribute("base", org.jdom.Namespace.XML_NAMESPACE);
 		if (base != null) {
+			if (base.getValue().equals("")) {
+				String uri = element.getDocument().getBaseURI();
+				return uri == null ? "" : uri;
+			}
 			return base.getValue();
 		}
-		return getParent().getBaseURI();
+		if (getParent() != null) {
+			return getParent().getBaseURI();
+		}
+		return "";
 	}
 
 	@Override
 	@MapsTo("org.jdom.Element#getDocument()")
 	public Document getDocument() {
+		if (element.getDocument() == null) {
+			return null;
+		}
 		return new Document(element.getDocument());
 	}
 
@@ -257,6 +276,9 @@ public class Element extends ParentNode {
 	@MapsTo("org.jdom.Element#getParent()")
 	public ParentNode getParent() {
 		org.jdom.Parent parent = element.getParent();
+		if (parent == null) {
+			return (ParentNode)null;
+		}
 		if (parent instanceof org.jdom.Element) {
 			return new Element((org.jdom.Element)parent);
 		}

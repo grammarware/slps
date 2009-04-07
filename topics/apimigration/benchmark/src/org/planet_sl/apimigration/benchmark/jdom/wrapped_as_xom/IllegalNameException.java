@@ -1,7 +1,10 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+
 
 @SuppressWarnings("serial")
+@MapsTo("org.jdom.IllegalNameException")
 public class IllegalNameException extends RuntimeException {
 
 	private org.jdom.IllegalNameException jdomException;

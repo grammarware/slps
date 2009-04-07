@@ -1,7 +1,26 @@
-package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
+package org.planet_sl.apimigration.benchmark.jdom.test_as_xom;
 
 import java.io.File;
 import java.io.IOException;
+
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Attribute;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Builder;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Comment;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.DocType;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Document;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Element;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Elements;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.IllegalAddException;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.IllegalNameException;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.MalformedURIException;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.MultipleParentException;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.NamespaceConflictException;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.NoSuchAttributeException;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Node;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Nodes;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.ParsingException;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.ProcessingInstruction;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Text;
 
 
 /**
@@ -236,7 +255,8 @@ public class ElementTest extends XOMTestCase {
  }
 
  
- public void testToXML2() throws ParsingException, IOException {
+ @SuppressWarnings("deprecation")
+public void testToXML2() throws ParsingException, IOException {
      
      Builder builder = new Builder();
      File f = new File("data");
