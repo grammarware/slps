@@ -1123,20 +1123,23 @@ abridge(P1,g(Rs,Ps1),g(Rs,Ps2))
     append(Ps1a,Ps1b,Ps2).
 
 %
-% p([l(unterminalize)], f, n(p))
+% p([l(detour)], f, n(p))
 %
-% Strip all terminals within a given nonterminal's definition
+% Introduce a reflexive chain production
 %
-unterminalize(N,g(Rs,Ps1),g(Rs,Ps2))
+
+detour(P1,g(Rs,Ps1),g(Rs,Ps2))
  :- 
+    require(
+      P1 = p(_,N,n(N)),
+      'Production ~q is not a reflexive chain production.',
+      [P1]),
     usedNs(Ps1,Uses1),
     require(
       member(N,Uses1),
       'Nonterminal ~q must be used.',
       [N]),
-    splitN(Ps1,N,Ps0,Ps2a,Ps2b),
-    transform(try(xbgf1:stripTs_rule),g(Rs,Ps0),g(Rs,Ps3)),
-    concat([Ps2a,Ps3,Ps2b],Ps2).
+	append(Ps1,[P1],Ps2).
 
 %
 % p([l(stripL)], f, n(l))

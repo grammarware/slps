@@ -295,6 +295,12 @@ xml2xbgf(T,abridge(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
+xml2xbgf(T,detour(P2))
+ :-
+    self(name(xbgf:detour),T),
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
 xml2xbgf(T,stripL(L))
  :-
     self(name(xbgf:strip),T),

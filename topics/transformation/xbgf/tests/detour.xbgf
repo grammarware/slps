@@ -1,0 +1,13 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:detour>
+    <bgf:production>
+      <label>bracket</label>
+      <nonterminal>expr</nonterminal>
+      <bgf:expression>
+        <nonterminal>expr</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:detour>
+</xbgf:sequence>

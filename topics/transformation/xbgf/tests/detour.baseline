@@ -1,0 +1,23 @@
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  <bgf:production>
+    <label>constant</label>
+    <nonterminal>expr</nonterminal>
+    <bgf:expression>
+      <nonterminal>int</nonterminal>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
+    <label>neg</label>
+    <nonterminal>expr</nonterminal>
+    <bgf:expression>
+      <nonterminal>expr</nonterminal>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
+    <label>bracket</label>
+    <nonterminal>expr</nonterminal>
+    <bgf:expression>
+      <nonterminal>expr</nonterminal>
+    </bgf:expression>
+  </bgf:production>
+</bgf:grammar>
