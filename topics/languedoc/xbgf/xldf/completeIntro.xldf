@@ -5,6 +5,15 @@
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
+  <!-- beautify bgf -->
+  <xldf:transform-grammar>
+    <target>group-scope</target>
+    <xbgf:vertical>
+      <nonterminal>scope</nonterminal>
+    </xbgf:vertical>
+  </xldf:transform-grammar>
+
+  <!-- design goals -->
   <xldf:add-subsection>
     <designGoals>
       <author>Vadim Zaytsev</author>
@@ -82,15 +91,128 @@
   <xldf:combine>
     <section>element-grammar</section>
     <with>notation-section</with>
-  </xldf:combine>  
+  </xldf:combine>
+  <xldf:transform-grammar>
+    <target>element-production</target>
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>production</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <marked>
+                    <bgf:expression>
+                      <selectable>
+                        <selector>label</selector>
+                        <bgf:expression>
+                          <nonterminal>label</nonterminal>
+                        </bgf:expression>
+                      </selectable>
+                    </bgf:expression>
+                  </marked>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <selectable>
+                <selector>nonterminal</selector>
+                <bgf:expression>
+                  <nonterminal>nonterminal</nonterminal>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>expression</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+  </xldf:transform-grammar>
+  <xldf:transform-grammar>
+    <target>element-production</target>
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>production</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>label</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <marked>
+                <bgf:expression>
+                  <selectable>
+                    <selector>nonterminal</selector>
+                    <bgf:expression>
+                      <nonterminal>nonterminal</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </marked>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>expression</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+  </xldf:transform-grammar>
   <xldf:combine>
     <section>element-production</section>
     <with>notation-section</with>
-  </xldf:combine>  
+  </xldf:combine>
+  <xldf:transform-grammar>
+    <target>element-expression</target>
+    <xbgf:vertical>
+      <nonterminal>expression</nonterminal>
+    </xbgf:vertical>
+  </xldf:transform-grammar>
+  <xldf:transform-grammar>
+    <target>element-expression</target>
+    <xbgf:anonymize>
+      <bgf:production>
+        <label>selectable</label>
+        <nonterminal>expression</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <marked>
+                <bgf:expression>
+                  <selectable>
+                    <selector>selector</selector>
+                    <bgf:expression>
+                      <nonterminal>selector</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </marked>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>expression</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+  </xldf:transform-grammar>
   <xldf:combine>
     <section>element-expression</section>
     <with>notation-section</with>
   </xldf:combine>
+  <xldf:transform-grammar>
+    <target>simpleType-value</target>
+    <xbgf:vertical>
+      <nonterminal>value</nonterminal>
+    </xbgf:vertical>
+  </xldf:transform-grammar>
   <xldf:combine>
     <section>simpleType-value</section>
     <with>notation-section</with>

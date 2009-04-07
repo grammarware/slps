@@ -4,6 +4,80 @@
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf">
+  
+  <!-- beautify xbgf -->
+  <xldf:transform-grammar>
+    <target>element-fold</target>
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>fold</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <marked>
+                <bgf:expression>
+                  <selectable>
+                    <selector>nonterminal</selector>
+                    <bgf:expression>
+                      <nonterminal>nonterminal</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </marked>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <selectable>
+                    <selector>in</selector>
+                    <bgf:expression>
+                      <nonterminal>scope</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+  </xldf:transform-grammar>
+  <xldf:transform-grammar>
+    <target>element-unfold</target>
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>unfold</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <marked>
+                <bgf:expression>
+                  <selectable>
+                    <selector>nonterminal</selector>
+                    <bgf:expression>
+                      <nonterminal>nonterminal</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </marked>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <selectable>
+                    <selector>in</selector>
+                    <bgf:expression>
+                      <nonterminal>scope</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+  </xldf:transform-grammar>
 
   <!-- compose a section on folding transformations -->
   <xldf:rename>

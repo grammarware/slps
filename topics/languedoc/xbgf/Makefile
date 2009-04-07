@@ -16,9 +16,7 @@ build: xbgf.ldf
 
 xbgf.ldf: 
 	../../../shared/tools/xsd2bgf ../../../shared/xsd/xbgf.xsd xbgf.bgf
-	${xbgf} beautify_bgf.xbgf xbgf.bgf xbgf_1.bgf
-	${xbgf} beautify_xbgf.xbgf xbgf_1.bgf xbgf_2.bgf
-	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/xbgf.xsd xbgf_2.bgf xbgf.ldf
+	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/xbgf.xsd xbgf.bgf xbgf.ldf
 
 rebuild:
 	make clean
@@ -26,7 +24,7 @@ rebuild:
 
 clean:
 	rm -f xbgf*.bgf xbgf*.ldf xbgf.html xbgf.fo xbgf.pdf *.xbnf
-	rm -f bgf*.bgf ldf*.bgf ldf*.ldf ldf.fo ldf.pdf
+	rm -f bgf*.bgf ldf*.bgf ldf*.ldf ldf.fo ldf.pdf xldf-tmp*
 	rm -f *.aux *.log *.toc *.tex printed_for_xldf.tmp
 
 check:

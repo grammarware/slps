@@ -3,6 +3,28 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf">
+  
+  <!-- beautify xbgf -->
+  <xldf:transform-grammar>
+    <target>element-unlabel</target>
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>unlabel</nonterminal>
+        <bgf:expression>
+          <marked>
+            <bgf:expression>
+              <selectable>
+                <selector>label</selector>
+                <bgf:expression>
+                  <nonterminal>label</nonterminal>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+          </marked>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+  </xldf:transform-grammar>
 
   <!-- compose a section on decorative transformations -->
   <xldf:rename>

@@ -258,6 +258,51 @@ def xldf_add_subsection(cmd,tree):
   print '[----] add-subsection failed, double check or try add-section instead'
  return
 
+def xldf_transform_grammar(cmd,tree):
+ root = ET.Element('{'+xbgfns+'}sequence',{})
+ root.append(cmd.findall('*')[1])
+ ET.ElementTree(root).write('xldf-tmp.xbgf')
+ found = findnode(tree,cmd.findtext('target'))
+ if not found:
+  print '[----] xldf:transform-grammar failed: target id',cmd.findtext('where'),'not found'
+  return
+ root = ET.Element('{'+bgfns+'}grammar',{})
+ for p in found.findall('*/*/{'+bgfns+'}production'):
+  root.append(p)
+ ET.ElementTree(root).write('xldf-tmp.bgf')
+ #found.findall('{'+bgfns+'}production')[0].write('xldf-tmp.bgf')
+ if os.system('xbgf xldf-tmp.xbgf xldf-tmp.bgf xldf-tmp-result.bgf | grep -v Loading | grep -v Saving'):
+  print '[----] xldf:transform-grammar failed'
+  return
+ try:
+  gtree = ET.parse('xldf-tmp-result.bgf')
+ except IOError,e:
+  print '[----] xldf:transform-grammar failed: file',cmd.findtext('file'),'not found'
+  return
+ # remove old production
+ cx1 = 0
+ if found[-1][-1].tag != 'content':
+  for p in found[-1].findall('{'+bgfns+'}production'):
+   found[-1].remove(p)
+   cx1 +=1
+ else:
+  for p in found[-1][-1].findall('{'+bgfns+'}production'):
+   found[-1][-1].remove(p)
+   cx1 +=1
+ # add new productions
+ cx2 = 0
+ for p in gtree.findall('{'+bgfns+'}production'):
+  if found[-1][-1].tag != 'content':
+   found[-1].append(p)
+  else:
+   found[-1][-1].append(p)
+  cx2 += 1
+ if cx2:
+  print '[XLDF] transform-grammar(',cmd.findtext('target'),', ...)','-',cx1,':',cx2,'productions'
+ else:
+  print '[----] xldf:transform-grammar failed: no productions found in XBGF output'
+ return
+
 def xldf_import_grammar(cmd,tree):
  try:
   gtree = ET.parse(cmd.findtext('file'))
@@ -318,6 +363,8 @@ def main(xldffile,inldffile,outldffile):
   cmdname = cmd.tag.replace('{'+xldfns+'}','')
   if cmdname == 'insert':
    xldf_insert(cmd,ltree)
+  elif cmdname == 'transform-grammar':
+   xldf_transform_grammar(cmd,ltree)
   elif cmdname == 'import-grammar':
    xldf_import_grammar(cmd,ltree)
   elif cmdname == 'import-sample':

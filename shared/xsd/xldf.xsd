@@ -13,7 +13,7 @@
   </xsd:annotation>
 
   <xsd:import namespace="http://planet-sl.org/ldf" schemaLocation="ldf.xsd"/>
-  <!--xsd:import namespace="http://planet-sl.org/xbgf" schemaLocation="xbgf.xsd"/-->
+  <xsd:import namespace="http://planet-sl.org/xbgf" schemaLocation="xbgf.xsd"/>
 
   <xsd:element name="sequence">
     <xsd:annotation>
@@ -29,7 +29,10 @@
   <xsd:group name="transformation">
     <xsd:annotation>
       <xsd:documentation>
-        Here is a grouped list of all the XLDF transformations.
+        XLDF transformation suite does not include any sophisticated grammar
+        manipulations, in that sense it complements XBGF rather than extends it.
+        All grammar transformations are supposed to be performed prior to
+        language document transformations.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>
@@ -44,8 +47,23 @@
       <xsd:element ref="xldf:remove-section"/>
       <xsd:element ref="xldf:add-section"/>
       <xsd:element ref="xldf:add-subsection"/>
+      <xsd:element ref="xldf:transform-grammar"/>
     </xsd:choice>
   </xsd:group>
+
+  <xsd:element name="transform-grammar">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="target" type="xsd:string"/>
+        <xsd:group ref="xbgf:transformation"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
 
   <xsd:element name="insert">
     <xsd:annotation>
