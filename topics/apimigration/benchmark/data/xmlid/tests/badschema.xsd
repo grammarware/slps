@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:schema="http://www.example.org/schema"
+           elementFormDefault="qualified"
+	   targetNamespace="http://www.example.org/schema">
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+	     schemaLocation="badxml.xsd"/>
+
+  <xs:element name="doc">
+    <xs:complexType>
+      <xs:sequence>
+	<xs:element maxOccurs="unbounded" ref="schema:para"/>
+      </xs:sequence>
+      <xs:attribute ref="xsi:schemaLocation"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="para">
+    <xs:complexType mixed="true">
+      <xs:attribute ref="xml:id"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

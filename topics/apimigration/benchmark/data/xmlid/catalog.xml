@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-suite>
+
+  <test-catalog submitter="????">
+    <creator>?????</creator>
+      <date>2005-03-28</date>
+      
+	  <test-case category="????" id="normalize_001">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>Normalize xml:id attributes</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="error">
+          <input>001_normalize.xml</input>
+          <id>te st</id>
+        </scenario>
+      </test-case>
+
+	  <test-case category="????" id="undecl_002">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>Recognize xml:id attribute not declared in DTD</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="standard">
+          <input>002_undecl.xml</input>
+          <id>test</id>
+        </scenario>
+      </test-case>
+
+	  <test-case category="????" id="dtd_003">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>Recognize xml:id attribute declared as ID type in internal DTD subset</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="standard">
+          <input>003_dtd.xml</input>
+          <id>id</id>
+        </scenario>
+      </test-case>
+
+	  <test-case category="????" id="schema_004">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>Recognize xml:id attribute declared as ID type in W3C XML schema langauge schema</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="standard">
+          <input>004_schema.xml</input>
+          <id>id</id>
+        </scenario>
+      </test-case>
+
+
+	  <test-case category="????" id="errdup_005">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>Recognize duplicate xml:id attribute values on different elements</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="error">
+          <input>005_errdup.xml</input>
+          <id>dup</id>
+          <id>dup</id>
+        </scenario>
+      </test-case>
+
+
+	  <test-case category="????" id="errdtdbad_005">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>Recognize xml:id attribute declared as NMTOKENS type in internal DTD subset</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="error">
+          <input>005_errdtdbad.xml</input>
+          <id>id</id>
+        </scenario>
+      </test-case>
+
+
+	  <test-case category="????" id="errdtdbad_006">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>Recognize xml:id attribute declared as NMTOKENS type in W3C XML schema langauge schema</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="error">
+          <input>006_errschemabad.xml</input>
+          <id>id</id>
+        </scenario>
+      </test-case>
+
+  <test-case category="????" id="errdup_007">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>Recognize xml:id attribute value that duplciates the value of an ID type attribute declared in the internal DTD subset</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="error">
+          <input>007_errdup.xml</input>
+          <id>id1</id>
+          <id>id1</id>
+        </scenario>
+      </test-case>
+
+	  <test-case category="????" id="ok10_008">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>Recognize xml:id attribute in document without a DTD</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="standard">
+          <input>008_ok10.xml</input>
+          <id>anid</id>
+        </scenario>
+      </test-case>
+
+	  <test-case category="????" id="ok11_009" features="xml11">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>Recognize xml:id attribute in XML 1.1 document without a DTD</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="standard">
+          <input>009_ok11.xml</input>
+          <!-- My text editor is having trouble with the character in the middle here.
+               Could someone send me a numeric character reference for it? 
+            -->
+          <id>id?ok</id>
+        </scenario>
+      </test-case>
+
+	  <test-case category="????" id="okxref_010">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>An element can have both a DTD declared ID type attribute and an undeclared xml:id attribute.</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="standard">
+          <input>010_okxref.xml</input>
+          <id>id1</id>
+          <id>id2</id>
+        </scenario>
+      </test-case>
+
+	  <test-case category="????" id="oknormalize_11">
+        <file-path>tests</file-path>
+        <creator>????</creator>
+        <date>2005-03-28</date>
+        <purpose>xml:id attribute values are normalized</purpose>
+        <spec-citation place="4" type="section" version="1.0" spec="xml:id"/>
+        <scenario operation="standard">
+          <input>011_oknormalize.xml</input>
+          <id>anid</id>
+        </scenario>
+      </test-case>
+
+  </test-catalog>
+
+</test-suite>
