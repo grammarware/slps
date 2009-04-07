@@ -1,5 +1,10 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Issue;
 import java.util.List;
 
 import org.jdom.output.XMLOutputter;
@@ -11,19 +16,51 @@ import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 public class Comment extends Node {
 	org.jdom.Comment comment;
 	
-	Comment(org.jdom.Comment comment) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")  Comment(org.jdom.Comment comment)  {
 		this.comment = comment;
 	}
 
 	/// XOM api starts below
 	
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@MapsTo("org.jdom.Comment#clone()")
-	public Comment(Comment comment) {
+	public  Comment(Comment comment)  {
 		this((org.jdom.Comment)comment.comment.clone());
 	}
 
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@MapsTo("org.jdom.Comment(String)")
-	public Comment(String data) {
+	public  Comment(String data)  {
 		if (data.indexOf("\r") > -1 ) {
 			// NOTE: more specific exception.
 			throw new IllegalCharacterDataException("invalid char in comment", data);
@@ -36,37 +73,92 @@ public class Comment extends Node {
 		}
 	}
 	
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@Override
 	@MapsTo("org.jdom.Comment#clone()")
-	public Node copy() {
+	public  Node  copy()  {
 		return new Comment((org.jdom.Comment)comment.clone());
 	}
 
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@Override
 	@MapsTo("org.jdom.Comment#detach()")
-	public void detach() {
+	public  void detach()  {
 		comment.detach();
 	}
 
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@Override
 	@MapsTo("")
-	public String getBaseURI() {
+	public  String  getBaseURI()  {
 		// TODO: wrong
 		return comment.getDocument().getBaseURI();
 	}
 
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@Override
 	@MapsTo("org.jdom.Comment#getDocument()")
-	public Document getDocument() {
+	public  Document  getDocument()  {
 		if (comment.getDocument() == null) {
 			return null;
 		}
 		return new Document(comment.getDocument());
 	}
 
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@Override
 	@MapsTo("org.jdom.Comment#getParent()")
-	public ParentNode getParent() {
+	public  ParentNode  getParent()  {
 		org.jdom.Parent parent = comment.getParent();
 		if (parent == null) {
 			return (ParentNode)parent;
@@ -80,15 +172,37 @@ public class Comment extends Node {
 		throw new AssertionError("invalid parent for comment " + parent.getClass());
 	}
 
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@Override
 	@MapsTo("org.jdom.Comment#getValue()")
-	public String getValue() {
+	public  String  getValue()  {
 		return comment.getValue();
 	}
 
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@Override
 	@MapsTo("")
-	public Nodes query(String query, XPathContext namespaces) {
+	public  Nodes  query(String query, XPathContext namespaces)  {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath.newInstance(query);
 			for (Object o: namespaces.namespaces) {
@@ -102,9 +216,20 @@ public class Comment extends Node {
 		}
 	}
 
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@Override
 	@MapsTo("")
-	public Nodes query(String query) {
+	public  Nodes  query(String query)  {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath.newInstance(query);
 			List list = xpath.selectNodes(this.comment);
@@ -115,14 +240,36 @@ public class Comment extends Node {
 		}	
 	}
 
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@Override
 	@MapsTo("")
-	public String toXML() {
+	public  String  toXML()  {
 		return new XMLOutputter().outputString(comment);
 	}
 
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
 	@MapsTo("org.jdom.Comment#setText(String)")
-	public void setValue(String data) {
+	public  void setValue(String data)  {
 		if (data == null) {
 			data = "";
 		}

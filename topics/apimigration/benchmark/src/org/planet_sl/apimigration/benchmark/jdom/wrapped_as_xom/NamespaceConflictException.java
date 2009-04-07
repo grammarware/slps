@@ -1,5 +1,10 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Issue;
 import org.jdom.IllegalAddException;
 import org.jdom.IllegalNameException;
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
@@ -8,15 +13,48 @@ import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 @MapsTo("org.jdom.IllegalAddException") // TODO: check this
 public class NamespaceConflictException extends RuntimeException {
 
-	public NamespaceConflictException(IllegalNameException e, String uri) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  NamespaceConflictException(IllegalNameException e, String uri)  {
 		super(e.getMessage());
 	}
 
-	public NamespaceConflictException(String string) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  NamespaceConflictException(String string)  {
 		super(string);
 	}
 
-	public NamespaceConflictException(IllegalAddException e) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  NamespaceConflictException(IllegalAddException e)  {
 		super(e.getMessage());
 	}
 

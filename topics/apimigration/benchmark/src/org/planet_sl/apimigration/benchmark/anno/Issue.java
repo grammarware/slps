@@ -11,18 +11,26 @@ public @interface Issue {
 
 	public @interface Pre {
 		String [] value();
+		boolean resolved() default false;
 	}
 	
 	public @interface Post {
 		String [] value();
+		boolean resolved() default false;
 	}
 	
 	public @interface Invariant {
 		String [] value();
+		boolean resolved() default false;
 	}
 	
 	public @interface Throws {
 		String [] value();
+		boolean resolved() default false;
 	}
 	
+	public @interface Doc {
+		String [] value();
+		boolean resolved() default false;
+	}
 }

@@ -1,5 +1,10 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Issue;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,15 +16,48 @@ public class Serializer {
 	 * @see nu.xom.Serializer#flush()
 	 */
 	
-	public Serializer(OutputStream out) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  Serializer(OutputStream out)  {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Serializer(ByteArrayOutputStream out, String encoding) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  Serializer(ByteArrayOutputStream out, String encoding)  {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void flush() throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void flush() throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -27,7 +65,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#getEncoding()
 	 */
 	
-	public String getEncoding() {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  String  getEncoding()  {
 		return null;
 		// TODO Auto-generated method stub
 	}
@@ -36,7 +85,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#getIndent()
 	 */
 	
-	public int getIndent() {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  int getIndent()  {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -45,7 +105,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#getLineSeparator()
 	 */
 	
-	public String getLineSeparator() {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  String  getLineSeparator()  {
 		return null;
 		// TODO Auto-generated method stub
 	}
@@ -54,7 +125,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#getMaxLength()
 	 */
 	
-	public int getMaxLength() {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  int getMaxLength()  {
 		return 0;
 		// TODO Auto-generated method stub
 	}
@@ -63,7 +145,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#getPreserveBaseURI()
 	 */
 	
-	public boolean getPreserveBaseURI() {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  boolean getPreserveBaseURI()  {
 		return false;
 		// TODO Auto-generated method stub
 	}
@@ -72,7 +165,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#getUnicodeNormalizationFormC()
 	 */
 	
-	public boolean getUnicodeNormalizationFormC() {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  boolean getUnicodeNormalizationFormC()  {
 		return false;
 		// TODO Auto-generated method stub
 	}
@@ -81,7 +185,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#setIndent(int)
 	 */
 	
-	public void setIndent(int indent) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void setIndent(int indent)  {
 		// TODO Auto-generated method stub
 	}
 
@@ -89,7 +204,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#setLineSeparator(java.lang.String)
 	 */
 	
-	public void setLineSeparator(String lineSeparator) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void setLineSeparator(String lineSeparator)  {
 		// TODO Auto-generated method stub
 	}
 
@@ -97,7 +223,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#setMaxLength(int)
 	 */
 	
-	public void setMaxLength(int maxLength) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void setMaxLength(int maxLength)  {
 		// TODO Auto-generated method stub
 	}
 
@@ -105,7 +242,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#setOutputStream(java.io.OutputStream)
 	 */
 	
-	public void setOutputStream(OutputStream out) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void setOutputStream(OutputStream out) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -113,7 +261,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#setPreserveBaseURI(boolean)
 	 */
 	
-	public void setPreserveBaseURI(boolean preserve) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void setPreserveBaseURI(boolean preserve)  {
 		// TODO Auto-generated method stub
 	}
 
@@ -121,7 +280,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#setUnicodeNormalizationFormC(boolean)
 	 */
 	
-	public void setUnicodeNormalizationFormC(boolean normalize) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void setUnicodeNormalizationFormC(boolean normalize)  {
 		// TODO Auto-generated method stub
 	}
 
@@ -129,7 +299,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#write(nu.xom.Attribute)
 	 */
 	
-	protected void write(Attribute attribute) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void write(Attribute attribute) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -137,7 +318,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#write(nu.xom.Comment)
 	 */
 	
-	protected void write(Comment comment) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void write(Comment comment) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -145,7 +337,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#write(nu.xom.DocType)
 	 */
 	
-	protected void write(DocType doctype) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void write(DocType doctype) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -153,7 +356,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#write(nu.xom.Document)
 	 */
 	
-	public void write(Document arg0) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void write(Document arg0) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -161,7 +375,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#write(nu.xom.Element)
 	 */
 	
-	protected void write(Element arg0) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void write(Element arg0) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -169,7 +394,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#write(nu.xom.ProcessingInstruction)
 	 */
 	
-	protected void write(ProcessingInstruction instruction) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void write(ProcessingInstruction instruction) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -177,7 +413,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#write(nu.xom.Text)
 	 */
 	
-	protected void write(Text arg0) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void write(Text arg0) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -185,7 +432,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#writeAttributes(nu.xom.Element)
 	 */
 	
-	protected void writeAttributes(Element arg0) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void writeAttributes(Element arg0) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -193,7 +451,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#writeChild(nu.xom.Node)
 	 */
 	
-	protected void writeChild(Node node) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void writeChild(Node node) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -201,7 +470,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#writeEmptyElementTag(nu.xom.Element)
 	 */
 	
-	protected void writeEmptyElementTag(Element element) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void writeEmptyElementTag(Element element) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -209,7 +489,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#writeEndTag(nu.xom.Element)
 	 */
 	
-	protected void writeEndTag(Element element) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void writeEndTag(Element element) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -217,8 +508,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#writeNamespaceDeclaration(java.lang.String, java.lang.String)
 	 */
 	
-	protected void writeNamespaceDeclaration(String prefix, String uri)
-			throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void writeNamespaceDeclaration(String prefix, String uri) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -226,7 +527,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#writeNamespaceDeclarations(nu.xom.Element)
 	 */
 	
-	protected void writeNamespaceDeclarations(Element arg0) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void writeNamespaceDeclarations(Element arg0) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -234,7 +546,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#writeStartTag(nu.xom.Element)
 	 */
 	
-	protected void writeStartTag(Element element) throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void writeStartTag(Element element) throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -242,7 +565,18 @@ public class Serializer {
 	 * @see nu.xom.Serializer#writeXMLDeclaration()
 	 */
 	
-	protected void writeXMLDeclaration() throws IOException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void writeXMLDeclaration() throws IOException  {
 		// TODO Auto-generated method stub
 	}
 
@@ -250,7 +584,18 @@ public class Serializer {
 	 * @see java.lang.Object#clone()
 	 */
 	
-	protected Object clone() throws CloneNotSupportedException {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  Object  clone() throws CloneNotSupportedException  {
 		// TODO Auto-generated method stub
 		return super.clone();
 	}
@@ -259,7 +604,18 @@ public class Serializer {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	
-	public boolean equals(Object obj) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  boolean equals(Object obj)  {
 		// TODO Auto-generated method stub
 		return super.equals(obj);
 	}
@@ -268,7 +624,18 @@ public class Serializer {
 	 * @see java.lang.Object#finalize()
 	 */
 	
-	protected void finalize() throws Throwable {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void finalize() throws Throwable  {
 		// TODO Auto-generated method stub
 		super.finalize();
 	}
@@ -277,7 +644,18 @@ public class Serializer {
 	 * @see java.lang.Object#hashCode()
 	 */
 	
-	public int hashCode() {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  int hashCode()  {
 		// TODO Auto-generated method stub
 		return super.hashCode();
 	}
@@ -286,7 +664,18 @@ public class Serializer {
 	 * @see java.lang.Object#toString()
 	 */
 	
-	public String toString() {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  String  toString()  {
 		// TODO Auto-generated method stub
 		return super.toString();
 	}

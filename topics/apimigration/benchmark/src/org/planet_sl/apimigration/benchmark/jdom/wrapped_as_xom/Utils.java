@@ -1,8 +1,23 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
 
-public class Utils {
-	public static Node content2node(org.jdom.Content content) {
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Issue;public class Utils {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public static  Node  content2node(org.jdom.Content content)  {
 		if (content instanceof org.jdom.Element) {
 			return new Element((org.jdom.Element)content);
 		}
@@ -24,7 +39,18 @@ public class Utils {
 		throw new AssertionError("Not all content cases covered");
 	}
 	
-	public static org.jdom.Content node2content(Node child) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public static  org.jdom.Content  node2content(Node child)  {
 		if (child instanceof Element) {
 			return ((Element)child).element;
 		}

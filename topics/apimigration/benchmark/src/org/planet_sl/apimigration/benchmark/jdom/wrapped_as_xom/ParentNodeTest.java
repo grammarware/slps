@@ -1,26 +1,10 @@
-/* Copyright 2002-2004, 2006 Elliotte Rusty Harold
-   
-   This library is free software; you can redistribute it and/or modify
-   it under the terms of version 2.1 of the GNU Lesser General Public 
-   License as published by the Free Software Foundation.
-   
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
-   GNU Lesser General Public License for more details.
-   
-   You should have received a copy of the GNU Lesser General Public
-   License along with this library; if not, write to the 
-   Free Software Foundation, Inc., 59 Temple Place, Suite 330, 
-   Boston, MA 02111-1307  USA
-   
-   You can contact Elliotte Rusty Harold by sending e-mail to
-   elharo@metalab.unc.edu. Please include the word "XOM" in the
-   subject line. The XOM home page is located at http://www.xom.nu/
-*/
-
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Issue;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.XOMTestCase;
 
 import nu.xom.Comment;
@@ -47,7 +31,18 @@ import nu.xom.Text;
  */
 public class ParentNodeTest extends XOMTestCase {
 
-    public ParentNodeTest(String name) {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  ParentNodeTest(String name)  {
         super(name);
     }
     
@@ -57,7 +52,18 @@ public class ParentNodeTest extends XOMTestCase {
     private Text child;
     
     
-    protected void setUp() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	protected  void setUp()  {
         empty = new Element("Empty");
         notEmpty = new Element("NotEmpty");
         child = new Text("Hello");
@@ -65,7 +71,18 @@ public class ParentNodeTest extends XOMTestCase {
     }
 
     
-    public void testDetach() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testDetach()  {
         
         Text text = new Text("This will be attached then detached");
         empty.appendChild(text);
@@ -76,7 +93,18 @@ public class ParentNodeTest extends XOMTestCase {
     }
 
     
-    public void testAppendChild() {   
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testAppendChild()  {   
         
         Element child = new Element("test");
         empty.appendChild(child);
@@ -91,7 +119,18 @@ public class ParentNodeTest extends XOMTestCase {
     } 
 
     
-    public void testAppendChildToItself() { 
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testAppendChildToItself()  { 
         
         Element child = new Element("test");
         try {
@@ -105,7 +144,18 @@ public class ParentNodeTest extends XOMTestCase {
     } 
 
     
-    public void testCycle() {  
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testCycle()  {  
         
         Element a = new Element("test");
         Element b = new Element("test");
@@ -120,7 +170,18 @@ public class ParentNodeTest extends XOMTestCase {
         
     } 
 
-    public void testInsertChild() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testInsertChild()  {
         
         Element parent = new Element("parent");
         
@@ -195,7 +256,18 @@ public class ParentNodeTest extends XOMTestCase {
     } 
 
     
-    public void testAppendChild2() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testAppendChild2()  {
         
         try {
             empty.appendChild(new Document(notEmpty));
@@ -216,7 +288,18 @@ public class ParentNodeTest extends XOMTestCase {
     } 
 
     
-    public void testReplaceChild() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testReplaceChild()  {
         
         Element old1 = new Element("old1");
         Element old2 = new Element("old2");
@@ -283,7 +366,18 @@ public class ParentNodeTest extends XOMTestCase {
     } 
 
     
-    public void testIndexOf() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testIndexOf()  {
         
         Element child1 = new Element("old1");
         Text child2 = new Text("old2");
@@ -304,7 +398,18 @@ public class ParentNodeTest extends XOMTestCase {
     } 
 
     
-    public void testGetChild() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testGetChild()  {
         
         Element old1 = new Element("old1");
         Element old2 = new Element("old2");
@@ -339,7 +444,18 @@ public class ParentNodeTest extends XOMTestCase {
     } 
 
     
-    public void testRemoveChild() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testRemoveChild()  {
         
         try {
             empty.removeChild(0);
@@ -399,7 +515,18 @@ public class ParentNodeTest extends XOMTestCase {
     } 
 
 
-    public void testReplaceChildFailures() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testReplaceChildFailures()  {
         
         Element old1 = new Element("old1");
         Element old2 = new Element("old2");
@@ -437,7 +564,18 @@ public class ParentNodeTest extends XOMTestCase {
     } 
     
     
-    public void testReplaceChildInEmptyParent() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testReplaceChildInEmptyParent()  {
         
         Element test1 = new Element("test");
         Element test2 = new Element("test");
@@ -455,7 +593,18 @@ public class ParentNodeTest extends XOMTestCase {
     // Document that this behavior is intentional
     // An element cannot be replaced by its sibling unless
     // the sibling is first detached. 
-    public void testReplaceSibling() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testReplaceSibling()  {
         
         Element parent = new Element("parent");
         Element test1 = new Element("test");
@@ -480,7 +629,18 @@ public class ParentNodeTest extends XOMTestCase {
     // Similarly, this test documents the conscious decision
     // that you cannot insert an existing child into its own parent,
     // even at the same position
-    public void testCantInsertExisitngChild() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testCantInsertExisitngChild()  {
         
         Element parent = new Element("parent");
         Element test1 = new Element("test");
@@ -512,7 +672,18 @@ public class ParentNodeTest extends XOMTestCase {
     
     // can't remove when insertion is legal;
     // succeeed or fail as unit
-    public void testReplaceChildAtomicity() {
+    @Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  void testReplaceChildAtomicity()  {
         
         Element parent = new Element("parent");
         Text child = new Text("child");

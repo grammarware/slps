@@ -1,9 +1,24 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
-@SuppressWarnings("serial")
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Issue;@SuppressWarnings("serial")
 public class XMLException extends RuntimeException {
 
-	public XMLException(String message) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  XMLException(String message)  {
 		super(message);
 	}
 

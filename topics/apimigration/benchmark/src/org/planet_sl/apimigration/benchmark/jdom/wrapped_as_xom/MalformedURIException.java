@@ -1,5 +1,10 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Issue;
 import java.net.URISyntaxException;
 
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
@@ -12,21 +17,65 @@ public class MalformedURIException extends RuntimeException {
 	private URISyntaxException uriException;
 	private String data;
 
-	public MalformedURIException(String message) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  MalformedURIException(String message)  {
 		super(message);
 	}
 	
-	public MalformedURIException(URISyntaxException e) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  MalformedURIException(URISyntaxException e)  {
 		this(e.getMessage());
 		uriException = e;
 	}
 
-	public MalformedURIException(URISyntaxException e, String data) {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  MalformedURIException(URISyntaxException e, String data)  {
 		this(e);
 		this.data = data;
 	}
 
-	public String getData() {
+	@Progress(
+		value = Status.TODO, 
+		comment = ""
+	)
+	@Solution(
+		value = Strategy.OTHER,
+		comment = ""
+	)
+	@Issue.Pre("")
+	@Issue.Post("")
+	@Issue.Throws("")
+	public  String  getData()  {
 		return data;
 	}
 }
