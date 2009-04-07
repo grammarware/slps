@@ -76,8 +76,7 @@
       <Link>xbgf\bnf\xbgf\stripWhitespace.xbgf</Link>
     </None>
     <None Include="ldf\beautify.xbgf" />
-    <None Include="xbgf\beautify_bgf.xbgf" />
-    <None Include="xbgf\beautify_xbgf.xbgf" />
+    <None Include="xbgf\xbgf.xldf" />
     <None Include="xbgf\xldf\completeDecorSection.xldf" />
     <None Include="xbgf\xldf\completeDecSection.xldf" />
     <None Include="xbgf\xldf\completeFoldSection.xldf" />

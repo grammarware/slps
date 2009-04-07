@@ -321,18 +321,141 @@
     </considerations>
     <to>element-abridge</to>
   </xldf:add-subsection>
+  <xldf:add-subsection>
+    <example id="abridge-example">
+      <content>
+        <text>
+          Consider this abstract syntax:
+        </text>
+      </content>
+    </example>
+    <to>element-abridge</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>abridge-example</target>
+    <file>../../transformation/xbgf/tests/abridge.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>abridge-example</where>
+    <content>
+      <text>After performing this transformation step:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>abridge-example</target>
+    <file>../../transformation/xbgf/tests/abridge.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>abridge-example</where>
+    <content>
+      <text>
+        The grammar will be the same, but without the reflexive chain production
+        labelled as `bracket' previously:
+      </text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>abridge-example</target>
+    <file>../../transformation/xbgf/tests/abridge.baseline</file>
+  </xldf:import-grammar>
   
   <xldf:place>
     <section>element-detour</section>
     <inside>group-folding-transformation</inside>
   </xldf:place>
+  <xldf:add-subsection>
+    <example id="detour-example">
+      <content>
+        <text>
+          In the same way it was removed in the previous example,
+          the bracketing production can be added to the grammar:
+        </text>
+      </content>
+    </example>
+    <to>element-detour</to>
+  </xldf:add-subsection>
+  <xldf:import-sample>
+    <target>detour-example</target>
+    <file>../../transformation/xbgf/tests/detour.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  
   <xldf:place>
     <section>element-unchain</section>
     <inside>group-folding-transformation</inside>
   </xldf:place>
+  <xldf:add-subsection>
+    <considerations>
+      <content>
+        <text>
+          Chain productions are not commonly encountered in grammars of mainstream
+          programming languages. However, when converging grammars that hail from
+          different kinds of sources (i.e., different extraction processes) it can
+          be frequently needed to align grammars that use chain productions with
+          grammars that use labelled ones.
+        </text>
+      </content>
+    </considerations>
+    <to>element-unchain</to>
+  </xldf:add-subsection>
+  <xldf:add-subsection>
+    <example id="unchain-example">
+      <content>
+        <text>
+          Consider this grammar:
+        </text>
+      </content>
+    </example>
+    <to>element-unchain</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>unchain-example</target>
+    <file>../../transformation/xbgf/tests/unchain.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>unchain-example</where>
+    <content>
+      <text>After performing this transformation step:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>unchain-example</target>
+    <file>../../transformation/xbgf/tests/unchain.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>unchain-example</where>
+    <content>
+      <text>
+        The auxiliary nonterminal symbol is gone, as is the chain production:
+      </text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>unchain-example</target>
+    <file>../../transformation/xbgf/tests/unchain.baseline</file>
+  </xldf:import-grammar>
+  
   <xldf:place>
     <section>element-chain</section>
     <inside>group-folding-transformation</inside>
   </xldf:place>
-
+  <xldf:add-subsection>
+    <example id="chain-example">
+      <content>
+        <text>
+          In the same way it was removed in the previous example,
+          the chain production can be added to the grammar:
+        </text>
+      </content>
+    </example>
+    <to>element-chain</to>
+  </xldf:add-subsection>
+  <xldf:import-sample>
+    <target>chain-example</target>
+    <file>../../transformation/xbgf/tests/chain.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  
 </xldf:sequence>

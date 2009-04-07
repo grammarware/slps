@@ -43,20 +43,20 @@
             <bgf:expression>
               <sequence>
                 <bgf:expression>
-                  <nonterminal>c</nonterminal>
+                  <nonterminal>e</nonterminal>
                 </bgf:expression>
                 <bgf:expression>
-                  <nonterminal>d</nonterminal>
+                  <nonterminal>f</nonterminal>
                 </bgf:expression>
               </sequence>
             </bgf:expression>
             <bgf:expression>
               <sequence>
                 <bgf:expression>
-                  <nonterminal>e</nonterminal>
+                  <nonterminal>c</nonterminal>
                 </bgf:expression>
                 <bgf:expression>
-                  <nonterminal>f</nonterminal>
+                  <nonterminal>d</nonterminal>
                 </bgf:expression>
               </sequence>
             </bgf:expression>

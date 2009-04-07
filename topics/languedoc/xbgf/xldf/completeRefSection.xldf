@@ -397,6 +397,67 @@
     <section>element-factor</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
+  <xldf:add-subsection>
+    <considerations>
+      <content>
+        <text>
+          Factor transformations tend to be quite frequently used in grammar convergence.
+          They also have a tendency to be very long---since it is impossible to implement
+          <ldf:keyword>factor</ldf:keyword> symmetrically to <ldf:keyword>distribute</ldf:keyword>
+          (i.e., fully automated), the language engineer needs to supply two complete
+          expressions. The transformer then can easily assert that they are related by
+          distribution: basically, it internally performs <ldf:keyword>distribute</ldf:keyword>
+          on both of them and expects them to become identical. Hence, it is possible
+          to do `incomplete' factoring by pushing choices inwards but not to the innermost
+          position.
+        </text>
+        <text>
+          Two most commonly seen patterns of <ldf:keyword>factor</ldf:keyword> use are the following.
+          First, it is applied when we have a choice of two long expressions that are almost
+          identical except for some mismatching part. That part can be either extracted
+          or massaged later with more transformations. Second, it is needed when we have a wide
+          choice with the same leading (or trailing) symbol, and the goal is to let the common
+          part stay and encapsulate the rest inside a different nonterminal (by following
+          <ldf:keyword>extract</ldf:keyword>).
+        </text>
+      </content>
+    </considerations>
+    <to>element-factor</to>
+  </xldf:add-subsection>
+  <xldf:add-subsection>
+    <example id="factor-example">
+      <content>
+        <text>For example,</text>
+      </content>
+    </example>
+    <to>element-factor</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>factor-example</target>
+    <file>../../transformation/xbgf/tests/factor3.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>factor-example</where>
+    <content>
+      <text>After using this transformation (note the order of expressions):</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>factor-example</target>
+    <file>../../transformation/xbgf/tests/factor3.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>factor-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>factor-example</target>
+    <file>../../transformation/xbgf/tests/factor3.baseline</file>
+  </xldf:import-grammar>
+  
   <xldf:place>
     <section>element-deyaccify</section>
     <inside>group-refactoring-transformation</inside>
@@ -466,22 +527,81 @@
     <section>element-yaccify</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
+  
   <xldf:place>
     <section>element-eliminate</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
+  
   <xldf:place>
     <section>element-introduce</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
+  
   <xldf:place>
     <section>element-import</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
+  <xldf:add-subsection>
+    <considerations>
+      <content>
+        <text>
+          There are times when <ldf:keyword>introduce</ldf:keyword> is just not enough.
+          The simplest of such a situations is a case when we want to introduce two
+          productions, each defining a fresh nonterminal symbol, and each using the other.
+          Without <ldf:keyword>import</ldf:keyword> the only way to do it was to run one
+          <ldf:keyword>introduce</ldf:keyword> and one <ldf:keyword>define</ldf:keyword>,
+          which is semantically wrong since we are sure that before the first nonterminal
+          is introduced, the second one was fresh. So, instead we take the interdependent
+          productions together and introduce them in one step.
+        </text>
+        <text>
+          Technically, <ldf:keyword>import</ldf:keyword> can be used any time to
+          substitute any number of <ldf:keyword>introduce</ldf:keyword> transformations.
+        </text>
+      </content>
+    </considerations>
+    <to>element-import</to>
+  </xldf:add-subsection>
+  <xldf:add-subsection>
+    <example id="import-example">
+      <content>
+        <text>For example,</text>
+      </content>
+    </example>
+    <to>element-import</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>import-example</target>
+    <file>../../transformation/xbgf/tests/import.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>import-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>import-example</target>
+    <file>../../transformation/xbgf/tests/import.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>import-example</where>
+    <content>
+      <text>It will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>import-example</target>
+    <file>../../transformation/xbgf/tests/import.baseline</file>
+  </xldf:import-grammar>
+  
   <xldf:place>
     <section>element-vertical</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
+  
   <xldf:place>
     <section>element-horizontal</section>
     <inside>group-refactoring-transformation</inside>
