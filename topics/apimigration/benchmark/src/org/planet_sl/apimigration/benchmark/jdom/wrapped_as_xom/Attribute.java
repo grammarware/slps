@@ -336,7 +336,7 @@ public class Attribute extends Node {
 		}
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Progress(value = Status.DONTCARE, comment = "toXML() is more a debugging aid")
 	@Solution(value = Strategy.CLONE, comment = "")
 	@Issue.Post("proper escaping of attribute's value")
 	@Override
@@ -387,7 +387,8 @@ public class Attribute extends Node {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.CLONE, comment = "")
+	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
+	@Issue.Post("unclear how XPathContext affects the result")
 	@Override
 	@MapsTo("")
 	public Nodes query(String query, XPathContext namespaces) {
@@ -405,7 +406,8 @@ public class Attribute extends Node {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.CLONE, comment = "")
+	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
+	@Issue.Post("unclear how XPathContext affects the result")
 	@Override
 	@API(value = Kind.MACRO, doc = "query is not directly supported")
 	@MapsTo("")
