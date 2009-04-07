@@ -35,7 +35,7 @@ public class NamespaceIssues {
 		}		
 	}
 	
-	public static void dom4j() throws UnsupportedEncodingException, IOException {
+	public static void dom4j() throws IOException {
 		// DOM4J allows construction of "invalid" (?) XML document
 		org.dom4j.DocumentFactory fact = new org.dom4j.DocumentFactory();
 		org.dom4j.Element root = fact.createElement("todo:todo");
@@ -48,7 +48,7 @@ public class NamespaceIssues {
 		javax.xml.parsers.DocumentBuilder b;
 		try {
 			javax.xml.parsers.DocumentBuilderFactory f = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-			f.setNamespaceAware(true);
+			f.setNamespaceAware(true); // !!!
 		    b = f.newDocumentBuilder();
 		} catch (javax.xml.parsers.ParserConfigurationException e) {
 			e.printStackTrace();
@@ -81,12 +81,13 @@ public class NamespaceIssues {
 		// Setting URI and prefix has the consequence that the namespace declaration is added
 		root.setNamespaceURI("http://www.example.com"); 
 		root.setNamespacePrefix("todo");
+//		System.out.println(root.getAttributeCount()); // prints 0 xmlns etc. are no attributes.
 		nu.xom.Document doc = new nu.xom.Document(root);
 		System.out.println("XOM:");
 		System.out.println(doc.toXML());
 	}
 	
-	public static void dom4jWithURI() throws UnsupportedEncodingException, IOException {
+	public static void dom4jWithURI() throws IOException {
 		org.dom4j.DocumentFactory fact = new org.dom4j.DocumentFactory();
 		org.dom4j.Element root = fact.createElement("todo:todo"/*, "http://www.example.com" */);
 		
@@ -113,7 +114,7 @@ public class NamespaceIssues {
 		// passing in the the URI with createDocument makes no difference.
 		org.w3c.dom.Document doc = domImpl.createDocument("", "todo:todo", null);
 		
-		// DOM does not add the declaration by default.
+		// DOM does not add the declaration by default: use plain attribut
 		doc.getDocumentElement().setAttribute("xmlns:todo", "http://www.example.com");
 		System.out.println("DOM: ");
 		XMLSerializer serializer = new XMLSerializer(System.out, new OutputFormat(doc));
