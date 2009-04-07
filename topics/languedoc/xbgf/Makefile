@@ -2,21 +2,13 @@ validator = ../../../shared/tools/checkxml
 xldf = ../../../shared/tools/xldf
 xbgf = ../../../shared/tools/xbgf
 
-build: xbgf.ldf
-	${xldf} xldf/completeIntro.xldf xbgf.ldf xbgf1.ldf
-	${xldf} xldf/completeFoldSection.xldf xbgf1.ldf xbgf2.ldf
-	${xldf} xldf/completeRefSection.xldf xbgf2.ldf xbgf3.ldf
-	${xldf} xldf/completeIncSection.xldf xbgf3.ldf xbgf4.ldf
-	${xldf} xldf/completeDecSection.xldf xbgf4.ldf xbgf5.ldf
-	${xldf} xldf/completeRevSections.xldf xbgf5.ldf xbgf6.ldf
-	${xldf} xldf/completeDecorSection.xldf xbgf6.ldf xbgf7.ldf
-	xsltproc ../../../shared/xsl/ldf2tex.xslt xbgf7.ldf > xbgf.tex
-	pdflatex -interaction=batchmode xbgf
-	pdflatex -interaction=batchmode xbgf
-
-xbgf.ldf: 
+build:
 	../../../shared/tools/xsd2bgf ../../../shared/xsd/xbgf.xsd xbgf.bgf
 	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/xbgf.xsd xbgf.bgf xbgf.ldf
+	${xldf} xbgf.xldf xbgf.ldf xbgf_ready.ldf
+	xsltproc ../../../shared/xsl/ldf2tex.xslt xbgf_ready.ldf > xbgf.tex
+	pdflatex -interaction=batchmode xbgf
+	pdflatex -interaction=batchmode xbgf
 
 rebuild:
 	make clean

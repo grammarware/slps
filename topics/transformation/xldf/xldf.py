@@ -264,7 +264,7 @@ def xldf_transform_grammar(cmd,tree):
  ET.ElementTree(root).write('xldf-tmp.xbgf')
  found = findnode(tree,cmd.findtext('target'))
  if not found:
-  print '[----] xldf:transform-grammar failed: target id',cmd.findtext('where'),'not found'
+  print '[----] xldf:transform failed: target id',cmd.findtext('where'),'not found'
   return
  root = ET.Element('{'+bgfns+'}grammar',{})
  for p in found.findall('*/*/{'+bgfns+'}production'):
@@ -272,12 +272,12 @@ def xldf_transform_grammar(cmd,tree):
  ET.ElementTree(root).write('xldf-tmp.bgf')
  #found.findall('{'+bgfns+'}production')[0].write('xldf-tmp.bgf')
  if os.system('xbgf xldf-tmp.xbgf xldf-tmp.bgf xldf-tmp-result.bgf | grep -v Loading | grep -v Saving'):
-  print '[----] xldf:transform-grammar failed'
+  print '[----] xldf:transform failed: error in XBGF'
   return
  try:
   gtree = ET.parse('xldf-tmp-result.bgf')
  except IOError,e:
-  print '[----] xldf:transform-grammar failed: file',cmd.findtext('file'),'not found'
+  print '[----] xldf:transform failed: file',cmd.findtext('file'),'not found'
   return
  # remove old production
  cx1 = 0
@@ -298,9 +298,9 @@ def xldf_transform_grammar(cmd,tree):
    found[-1][-1].append(p)
   cx2 += 1
  if cx2:
-  print '[XLDF] transform-grammar(',cmd.findtext('target'),', ...)','-',cx1,':',cx2,'productions'
+  print '[XLDF] transform(',cmd.findtext('target'),', ...)','-',cx1,':',cx2,'productions'
  else:
-  print '[----] xldf:transform-grammar failed: no productions found in XBGF output'
+  print '[----] xldf:transform failed: no productions found in XBGF output'
  return
 
 def xldf_import_grammar(cmd,tree):
@@ -321,7 +321,7 @@ def xldf_import_grammar(cmd,tree):
     found[-1][-1].append(p)
    cx += 1
   if cx:
-   print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file'),')','-',cx,'productions'
+   print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file').split('/')[-1],')','-',cx,'productions'
   else:
    print '[----] xldf:import failed: no productions found in',cmd.findtext('file')
  return
@@ -351,133 +351,60 @@ def xldf_import_sample(cmd,tree):
    found[-1].append(el)
   else:
    found[-1][-1].append(el)
-  print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file'),')',ending
+  print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file').split('/')[-1],')',ending
  return
+
+def xldf_transform_document(cmd,tree):
+ print '[XLDF] transform(...,',cmd.findtext('file').split('/')[-1],') starts'
+ try:
+  xtree = ET.parse(cmd.findtext('file'))
+ except IOError,e:
+  print '[----] xldf:transform failed: file',cmd.findtext('file'),'not found'
+  return
+ for incmd in xtree.findall('*'):
+  xldf_perform_command(incmd,tree)
+ print '[XLDF] transform(...,',cmd.findtext('file').split('/')[-1],') is done'
+ return
+
+def xldf_perform_command(cmd,ltree):
+ cmdname = cmd.tag.replace('{'+xldfns+'}','')
+ if cmdname == 'insert':
+  xldf_insert(cmd,ltree)
+ elif cmdname == 'transform-grammar':
+  xldf_transform_grammar(cmd,ltree)
+ elif cmdname == 'import-grammar':
+  xldf_import_grammar(cmd,ltree)
+ elif cmdname == 'import-sample':
+  xldf_import_sample(cmd,ltree)
+ elif cmdname == 'drop':
+  xldf_drop(cmd,ltree)
+ elif cmdname == 'place':
+  xldf_place(cmd,ltree)
+ elif cmdname == 'combine':
+  xldf_combine(cmd,ltree)
+ elif cmdname == 'rename':
+  xldf_rename(cmd,ltree)
+ elif cmdname == 'append':
+  xldf_append(cmd,ltree)
+ elif cmdname == 'remove-section':
+  xldf_remove_section(cmd,ltree)
+ elif cmdname == 'add-section':
+  xldf_add_section(cmd,ltree)
+ elif cmdname == 'add-subsection':
+  xldf_add_subsection(cmd,ltree)
+ elif cmdname == 'transform-document':
+  xldf_transform_document(cmd,ltree)
+ else:
+  print '[----] Unknown XLDF command:',cmdname
 
 def main(xldffile,inldffile,outldffile):
  grammar={}
  xtree = ET.parse(xldffile)
  ltree = ET.parse(inldffile)
-
- for cmd in xtree.findall('*'):#'//{%s}*'%xldfns):
-  cmdname = cmd.tag.replace('{'+xldfns+'}','')
-  if cmdname == 'insert':
-   xldf_insert(cmd,ltree)
-  elif cmdname == 'transform-grammar':
-   xldf_transform_grammar(cmd,ltree)
-  elif cmdname == 'import-grammar':
-   xldf_import_grammar(cmd,ltree)
-  elif cmdname == 'import-sample':
-   xldf_import_sample(cmd,ltree)
-  elif cmdname == 'drop':
-   xldf_drop(cmd,ltree)
-  elif cmdname == 'place':
-   xldf_place(cmd,ltree)
-  elif cmdname == 'combine':
-   xldf_combine(cmd,ltree)
-  elif cmdname == 'rename':
-   xldf_rename(cmd,ltree)
-  elif cmdname == 'append':
-   xldf_append(cmd,ltree)
-  elif cmdname == 'remove-section':
-   xldf_remove_section(cmd,ltree)
-  elif cmdname == 'add-section':
-   xldf_add_section(cmd,ltree)
-  elif cmdname == 'add-subsection':
-   xldf_add_subsection(cmd,ltree)
-  else:
-   print '[----] Unknown XLDF command:',cmdname
-
+ for cmd in xtree.findall('*'):
+  xldf_perform_command(cmd,ltree)
  ltree.write(outldffile)
  return
-
- cx=0
- for prod in gtree.findall('//{%s}production' % bgfns):
-  cx+=1
-  grammar[prod.findtext('nonterminal')]=prod
- print 'Found', cx, 'productions'
-
- dtree.set('xmlns:ldf',ldfns)
- dtree.set('xmlns:bgf',bgfns)
- #dtree.set('xmlns:ldx',ldxns)
- dtree.set('xmlns:html',htmlns)
-
- section = ET.SubElement(dtree,'titlePage')
- el = ET.SubElement(section,'author')
- el.text = 'XSD2LDF generator'
- el = ET.SubElement(section,'topic')
- el.text = stree.findall('/{%s}annotation/{%s}documentation' % (xsdns,xsdns))[0].text
- el = ET.SubElement(section,'version')
- el.text = '1.0'
- el = ET.SubElement(section,'status')
- el.text = 'unknown'
- el = ET.SubElement(section,'date')
- # generate!!!
- el.text = '2008-02-21'
-
- section = ET.SubElement(dtree,'frontMatter')
- el = ET.SubElement(section,'foreword')
- el = ET.SubElement(el,'content')
- for p in stree.findall('/{%s}annotation/{%s}documentation' % (xsdns,xsdns))[1:]:
-  pel = ET.SubElement(el,'p')
-  pel.text = p.text
-
- if stree.findall('/{'+xsdns+'}import'):
-  el = ET.SubElement(section,'normativeReferences')
-  el = ET.SubElement(el,'content')
-  el = ET.SubElement(el,'list')
-  for p in stree.findall('/{'+xsdns+'}import'):
-   pel = ET.SubElement(el,'item')
-   pel.text = p.attrib['schemaLocation']
-
- #el = copymixedcontent(dtree,'title',stree,'/{%s}annotation/{%s}documentation' % (xsdns,xsdns))
- #el = ET.SubElement(dtree,'author')
- #el.text = 'XSD2LDF generator'
- #el = ET.SubElement(dtree,'abstract')
- #el.text = '...abstract...'
- #content = ET.SubElement(dtree,'content')
-
- for nt in stree.findall('/*'):
-  if nt.tag not in acceptedtags:
-   continue
-  section = ET.SubElement(dtree,'core')
-  el = ET.SubElement(section,'id')
-  el.text = nt.tag.replace('{'+xsdns+'}','')+'-'+nt.attrib['name']
-  el = ET.SubElement(section,'title')
-  el.text = nt.attrib['name']
-  el = ET.SubElement(section,'description')
-  el = ET.SubElement(el,'content')
-  for p in nt.findall('./{%s}annotation/{%s}documentation' % (xsdns,xsdns)):
-   pel = ET.SubElement(el,'p')
-   pel.text = p.text
-  section.append(grammar[nt.attrib['name']])
-  # print grammar[nt.attrib['name']]
-
- ET.ElementTree(dtree).write(ldffile)
- return
-
- for nt in stree.findall('/{%s}group' % (xsdns)):
-  s = ET.SubElement(content,'section')
-  el = ET.SubElement(s,'title')
-  el.text = nt.attrib['name']
-  con2 = ET.SubElement(s,'content')
-  el = copymixedcontent(con2,'text',nt,'./{%s}annotation/{%s}documentation' % (xsdns,xsdns))
-  el = ET.SubElement(con2,'grammar')
-  el.set('language',xbgfns)
-  el.append(grammar[nt.attrib['name']])
-  #print 'found group!'
-
- for nt in stree.findall('/{%s}element' % (xsdns)):
-  s = ET.SubElement(content,'section')
-  el = ET.SubElement(s,'title')
-  el.text = nt.attrib['name']
-  con2 = ET.SubElement(s,'content')
-  el = copymixedcontent(con2,'text',nt,'./{%s}annotation/{%s}documentation' % (xsdns,xsdns))
-  el = ET.SubElement(con2,'grammar')
-  el.set('language',xbgfns)
-  el.append(grammar[nt.attrib['name']])
-
- ET.ElementTree(dtree).write(ldffile)
 
 def bgfns_(element):
  return '{'+bgfns+'}'+element

@@ -48,8 +48,22 @@
       <xsd:element ref="xldf:add-section"/>
       <xsd:element ref="xldf:add-subsection"/>
       <xsd:element ref="xldf:transform-grammar"/>
+      <xsd:element ref="xldf:transform-document"/>
     </xsd:choice>
   </xsd:group>
+
+  <xsd:element name="transform-document">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="file" type="xsd:string"/>        <!-- IDREF -->
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
 
   <xsd:element name="transform-grammar">
     <xsd:annotation>

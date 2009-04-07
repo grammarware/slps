@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:sequence
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <xldf:transform-document>
+    <file>xldf/completeIntro.xldf</file>
+  </xldf:transform-document>
+  <xldf:transform-document>
+    <file>xldf/completeFoldSection.xldf</file>
+  </xldf:transform-document>
+  <xldf:transform-document>
+    <file>xldf/completeRefSection.xldf</file>
+  </xldf:transform-document>
+  <xldf:transform-document>
+    <file>xldf/completeIncSection.xldf</file>
+  </xldf:transform-document>
+  <xldf:transform-document>
+    <file>xldf/completeDecSection.xldf</file>
+  </xldf:transform-document>
+  <xldf:transform-document>
+    <file>xldf/completeRevSections.xldf</file>
+  </xldf:transform-document>
+  <xldf:transform-document>
+    <file>xldf/completeDecorSection.xldf</file>
+  </xldf:transform-document>
+
+</xldf:sequence>
