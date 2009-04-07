@@ -42,11 +42,11 @@ class Chain:
    return self.array==other.split('.')
   else:
    return self.array==other.array
- def dotNodeName(self):
+ def dotNodeName(self,target):
   name = self.array[0]
   for a in self.array[1:]:
    name += '_'+stripSpecifics(a)
-  return name
+  return name+'_'+target
  def bgfFileName(self):
   name = self.array[0]
   for a in self.array[1:]:
@@ -63,6 +63,14 @@ class Chain:
   tmp = self.array[:]
   tmp.reverse()
   return ' '.join(tmp)
+ def type(self):
+  t = 0
+  for a in self.array[1:]:
+   if ttype[a] in ('synchronization','postextraction','normalization'):
+    t = -1
+   if ttype[a] in ('transformation','refactoring'):
+    t = 1
+  return t
 
 def ChainFromArray(a):
  x = Chain()
@@ -220,22 +228,23 @@ def makeGraph():
   for branch in targets[x]:
    graphSmall.append((branch[0],x))
    if len(branch)==1:
-    graphBig.append((branch,Chain(x),''))
+    graphBig.append((branch,Chain(x),'',x))
    else:
     for i in range(1,len(branch)-1):
-     graphBig.append((branch[:i],branch[:(i+1)],stripSpecifics(branch[i])))
-    graphBig.append((branch[:-1],Chain(x),stripSpecifics(branch[-1])))
+     graphBig.append((branch[:i],branch[:(i+1)],stripSpecifics(branch[i]),x))
+    graphBig.append((branch[:-1],Chain(x),stripSpecifics(branch[-1]),x))
 
-def distanceFrom(node):
- for t in targets.keys():
-  if len(targets[t])!=2:
-   print '[WARN] Only binary branches supported for now.'
-   continue
-  if targets[t][0]().find(node())==0:
-   return compareGrammars(node,targets[t][1])
-  elif targets[t][1]().find(node())==0:
-   return compareGrammars(node,targets[t][0])
- print '[FAIL]',node(),'not found in',targets
+def distanceBetween(node,tgt):
+ if node()==tgt:
+  return '?'
+ if len(targets[tgt])!=2:
+  print '[WARN] Only binary branches supported for now.'
+  return '?'
+ if targets[tgt][0]().find(node())==0:
+  return compareGrammars(node,targets[tgt][1])
+ elif targets[tgt][1]().find(node())==0:
+  return compareGrammars(node,targets[tgt][0])
+ print '[FAIL]',node(),'not found on the way to target',tgt
  return '?'
 
 def compareGrammars(bgf,arr):
@@ -245,15 +254,31 @@ def compareGrammars(bgf,arr):
    goal += '.'+stripCamelCase(a)
  #print '[----] Ready:',bgf,'vs',goal
  #print '[++++] Distance is:',
- run = 'expr `'+tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "Fail:" | wc -l` + `'+tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w`'
+ #run = 'expr `'+tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "Fail:" | wc -l` + `'+tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w`'
+ run = tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w'
  writeLog(run)
  if os.system(run+' > TMP-res'):
-  print '[WARN] Cannot measure the distance between',bgf(),'and',goal
-  return '?'
- num = open('TMP-res','r')
- n = num.readline().strip()
- num.close()
- return n
+  #print '[WARN] Cannot count name mismatches between',bgf(),'and',goal
+  #return '?'
+  nameDiffs = '0'
+ else:
+  num = open('TMP-res','r')
+  nameDiffs = num.readline().strip()
+  num.close()
+ run = tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep Fail'
+ writeLog(run)
+ if os.system(run+' > TMP-res'):
+  #print '[WARN] Cannot count structural mismatches between',bgf(),'and',goal
+  #return '?'
+  strDiffs = 0
+ else:
+  num = open('TMP-res','r')
+  strDiffs = 0
+  for line in num.readlines():
+   nsn = line.strip().split('(')[1].split(')')[0].split('/')
+   strDiffs += max(int(nsn[0]),int(nsn[1]))
+  num.close()
+ return nameDiffs+'+'+`strDiffs`
 
 def dumpGraph(df):
  dot = open(df+'_large.dot','w')
@@ -280,22 +305,31 @@ def dumpGraph(df):
  dot.write('}\n')
  dot.write('node [shape=octagon, style=bold];\n')
  for x in targets.keys():
-  dot.write(quote(x))
+  dot.write(quote(x+'_'+x)+' [label="'+x+'"]')
   if x in failed:
    dot.write(' [color=red]')
   dot.write(';')
  dot.write('node [shape=circle, style=solid];\n')
+ # connect real target&source nodes with the "zero step" ones
+ for x in targets.keys():
+  for branch in targets[x]:
+   if branch[0] in targets.keys():
+    dot.write(quote(branch[0]+'_'+branch[0])+'->'+branch[:1].dotNodeName(x)+';')
+   else:
+    dot.write(quote(branch[0])+'->'+branch[:1].dotNodeName(x)+';')
+ # continue
  nodezz=[]
- done = []
+ dablNodezz=[]
  for arc in graphBig:
-  if (arc[0].dotNodeName(),arc[1].dotNodeName()) in done:
-   continue
-  dot.write(arc[0].dotNodeName()+'->'+arc[1].dotNodeName())
-  done.append((arc[0].dotNodeName(),arc[1].dotNodeName()))
-  if arc[0] not in nodezz and arc[0]() not in targets.keys() and arc[0]() not in extractor.keys():
-   nodezz.append(arc[0])
-  if arc[1] not in nodezz and arc[1]() not in targets.keys() and arc[1]() not in extractor.keys():
-   nodezz.append(arc[1])
+  dot.write(arc[0].dotNodeName(arc[3]))
+  dot.write('->'+arc[1].dotNodeName(arc[3]))
+  if (arc[0],arc[3]) not in nodezz:
+   nodezz.append((arc[0],arc[3]))
+  if (arc[1],arc[3]) not in nodezz:
+   nodezz.append((arc[1],arc[3]))
+  if (arc[0][-1] in targets.keys()) or (arc[0][-1] in orderedsrc) or (arc[0][-1] in ttype.keys() and ttype[arc[0][-1]] in ('synchronization','postextraction','normalization')):
+   if (arc[1][-1] in targets.keys()) or (arc[1][-1] in ttype.keys() and ttype[arc[1][-1]] in ('transformation','refactoring')):
+    dablNodezz.append(arc[0].dotNodeName(arc[3]))
   par = ''
   if arc[2]:
    par += 'label="'+arc[2]+'" '
@@ -309,15 +343,30 @@ def dumpGraph(df):
   if par:
    dot.write(' ['+par+']')
   dot.write(';\n')
- for node in nodezz:
+ for nNg in nodezz:
+  node,goal=nNg
   if node in failed:
    colour = 'red'
   elif node in almostFailed:
    colour = 'blue'
   else:
    colour = 'black'
-  # labels not needed anymore because nodes became points
-  dot.write(node.dotNodeName()+' [color='+colour+', label="'+distanceFrom(node)+'"];\n')
+  if node() in targets.keys():
+   dot.write(quote(node()+'_'+goal))
+   tmp =quote(node()+'_'+goal)
+   # test for end targets that do not need extra boxes
+  else:
+   dot.write(node.dotNodeName(goal))
+   tmp = node.dotNodeName(goal)
+  cx = distanceBetween(node,goal)
+  #print '[----]',node,'(->',goal,') =',cx,'['+tmp+']'
+  dot.write(' [color='+colour)
+  if cx != '?':
+   dot.write(', label="'+cx+'"')
+  if node.dotNodeName(goal) in dablNodezz:
+   # synch point
+   dot.write(', shape=doublecircle')
+  dot.write('];\n')
  dot.write('}')
  dot.close()
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
