@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+import org.planet_sl.apimigration.benchmark.anno.Progress;
 
 
 import static org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Utils.content2node;

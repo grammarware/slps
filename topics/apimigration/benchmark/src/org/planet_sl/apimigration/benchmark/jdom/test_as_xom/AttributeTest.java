@@ -14,7 +14,6 @@ import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.IllegalNameExcep
 import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.MalformedURIException;
 import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.NamespaceConflictException;
 import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.ParsingException;
-import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Attribute.Type;
 
 /**
 * <p>

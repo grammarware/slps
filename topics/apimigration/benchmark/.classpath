@@ -18,5 +18,6 @@
 	<classpathentry kind="lib" path="deps/jaxb-ri/lib/jsr173_1.0_api.jar"/>
 	<classpathentry kind="lib" path="deps/dom4j-1.6.1/lib/jaxen-1.1-beta-6.jar"/>
 	<classpathentry kind="lib" path="deps/XOM/xom-1.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
