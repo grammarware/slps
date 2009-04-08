@@ -10,150 +10,78 @@ import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 @MapsTo("")
 public abstract class Node {
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
+	@Progress(value = Status.TODO, comment = "")
+	@Solution(value = Strategy.OTHER, comment = "")
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	public abstract  Node  copy()  ;
+	public abstract Node copy();
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
+	@Progress(value = Status.TODO, comment = "")
+	@Solution(value = Strategy.OTHER, comment = "")
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	public abstract  String  getValue()  ;
+	public abstract String getValue();
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
+	@Progress(value = Status.TODO, comment = "")
+	@Solution(value = Strategy.OTHER, comment = "")
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	public abstract  String  toXML()  ;
+	public abstract String toXML();
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
+	@Progress(value = Status.TODO, comment = "")
+	@Solution(value = Strategy.OTHER, comment = "")
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	public abstract  void detach()  ;
+	public abstract void detach();
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
+	@Progress(value = Status.TODO, comment = "")
+	@Solution(value = Strategy.OTHER, comment = "")
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	public abstract  Document  getDocument()  ;
+	public abstract Document getDocument();
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
+	@Progress(value = Status.TODO, comment = "")
+	@Solution(value = Strategy.OTHER, comment = "")
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	public abstract  ParentNode  getParent()  ;
+	public abstract ParentNode getParent();
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
+	@Progress(value = Status.TODO, comment = "")
+	@Solution(value = Strategy.OTHER, comment = "")
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	public abstract  Nodes  query(String query, XPathContext namespaces)  ;
+	public abstract Nodes query(String query, XPathContext namespaces);
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
+	@Progress(value = Status.TODO, comment = "")
+	@Solution(value = Strategy.OTHER, comment = "")
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	public abstract  Nodes  query(String query)  ;
+	public abstract Nodes query(String query);
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
+	@Progress(value = Status.TODO, comment = "")
+	@Solution(value = Strategy.OTHER, comment = "")
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	public abstract  String  getBaseURI()  ;
+	public abstract String getBaseURI();
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
-	@Issue.Pre("")
-	@Issue.Post("")
-	@Issue.Throws("")
-	public  Node  getChild(int position)  {
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
+	public Node getChild(int position) {
 		throw new IndexOutOfBoundsException("comments have no children");
 	}
 
-	@Progress(
-		value = Status.TODO, 
-		comment = ""
-	)
-	@Solution(
-		value = Strategy.OTHER,
-		comment = ""
-	)
-	@Issue.Pre("")
-	@Issue.Post("")
-	@Issue.Throws("")
-	public  int getChildCount()  {
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
+	public int getChildCount() {
 		return 0;
 	}
 }
