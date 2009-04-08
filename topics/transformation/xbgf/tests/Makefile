@@ -6,7 +6,7 @@ test:
 
 testfull:
 	make build
-	ls -1 *.xbgf | xargs -n1 ./testperformfull
+	ls -1 *.xbgf | xargs -n1 ./testthorough
 
 complete:
 	@ls -1 *.xbgf | xargs -n1 ./quiettest
@@ -19,7 +19,7 @@ rebuild:
 	./testperform $*
 
 %.quiet:
-	./testperformfull $*
+	./testthorough $*
 
 clean:
 	rm -f *.out
