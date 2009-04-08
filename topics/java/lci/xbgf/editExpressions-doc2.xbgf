@@ -39,9 +39,6 @@
   <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
   <xbgf:horizontal>FieldAccess</xbgf:horizontal>
   <xbgf:inline>FieldAccess</xbgf:inline>
-  <xbgf:distribute>
-    <nonterminal>Primary</nonterminal>
-  </xbgf:distribute>
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>

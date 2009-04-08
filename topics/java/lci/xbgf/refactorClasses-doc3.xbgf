@@ -446,9 +446,6 @@
   <xbgf:inline>ConstructorDeclarator</xbgf:inline>
   <xbgf:inline>MethodHeader</xbgf:inline>
   <xbgf:inline>FieldDeclaration</xbgf:inline>
-  <xbgf:distribute>
-    <nonterminal>ClassBodyDeclaration</nonterminal>
-  </xbgf:distribute>
 
 
   <!-- 

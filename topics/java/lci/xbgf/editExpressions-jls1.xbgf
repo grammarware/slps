@@ -72,9 +72,6 @@
   <xbgf:inline>ArrayAccess</xbgf:inline>
 -->
   <xbgf:horizontal>Primary</xbgf:horizontal>
-  <xbgf:distribute>
-    <nonterminal>Primary</nonterminal>
-  </xbgf:distribute>
 
   <!-- 
   Multiple cases like this one:

@@ -21,7 +21,7 @@
 \usepackage{listings}
 \lstdefinelanguage{pp}{%
   numbers=none,
-  literate={EPSILON}{{$\varepsilon$}}1 {STRING}{{$\lambda$}}1
+  literate={EPSILON}{{$\varepsilon$}}1 %{STRING}{{$\lambda$}}1
   {*}{{$^\star$}}1 {+}{{$^+$}}1 {?}{{$?$}}1 {&lt;}{{$\langle$}}1 {&gt;}{{$\rangle$}}1,
   keywordstyle=\normalfont\bfseries,
  morekeywords={unfold,fold,inline,extract,abridge,detour,unchain,chain,

@@ -142,9 +142,6 @@
   <xbgf:horizontal>TryStatement</xbgf:horizontal>
   <xbgf:inline>TryStatement</xbgf:inline>
   <xbgf:inline>Finally</xbgf:inline>
-  <xbgf:distribute>
-    <nonterminal>Statement</nonterminal>
-  </xbgf:distribute>
 
   <!-- ISSUE PERMISSIVENESS
    - Fail: Statement.

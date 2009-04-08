@@ -40,9 +40,11 @@
   <xbgf:inline>EmptyStatement</xbgf:inline>
   <xbgf:inline>SwitchBlock</xbgf:inline>
   <xbgf:inline>Finally</xbgf:inline>
+  <!--
   <xbgf:distribute>
     <nonterminal>Statement</nonterminal>
   </xbgf:distribute>
+  -->
   <xbgf:vertical>
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>

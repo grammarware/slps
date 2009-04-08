@@ -957,9 +957,11 @@
   <xbgf:inline>PreDecrementExpression</xbgf:inline>
   <xbgf:horizontal>UnaryExpressionNotPlusMinus</xbgf:horizontal>
   <xbgf:inline>UnaryExpressionNotPlusMinus</xbgf:inline>
+  <!--
   <xbgf:distribute>
     <nonterminal>Expression3</nonterminal>
   </xbgf:distribute>
+  -->
   <xbgf:factor>
     <bgf:expression>
       <choice>

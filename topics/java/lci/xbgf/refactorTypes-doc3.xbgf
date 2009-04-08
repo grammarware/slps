@@ -80,9 +80,11 @@
   <xbgf:inline>FloatingPointType</xbgf:inline>
   <xbgf:horizontal>NumericType</xbgf:horizontal>
   <xbgf:inline>NumericType</xbgf:inline>
+  <!--
   <xbgf:distribute>
     <nonterminal>BasicType</nonterminal>
   </xbgf:distribute>
+  -->
 
   <!-- ISSUE PERMISSIVENESS
   Merging interfaces with classes and making lists and other things conform -->

@@ -8,7 +8,4 @@
   <xbgf:inline>concrete-revising-transformation</xbgf:inline>
   <xbgf:inline>abstract-revising-transformation</xbgf:inline>
   <xbgf:inline>decorative-transformation</xbgf:inline>
-  <xbgf:distribute>
-    <nonterminal>transformation</nonterminal>
-  </xbgf:distribute>
 </xbgf:sequence>
