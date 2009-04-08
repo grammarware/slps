@@ -68,9 +68,6 @@ public class Mappings {
 		}
 	}
 
-//	System.out.println("\"nu.xom." + s + "#" + method.getName() + "(" + 
-//	paramTypesToString(method.getParameterTypes()) + ")" + "\", \"" + ((MapsTo)anno).value() + "\"");
-
 	public static void addRow(List<Row> rows, AccessibleObject o) {
 		Row row = new Row();
 		row.from = o;
@@ -126,7 +123,7 @@ public class Mappings {
 		writer.write(Row.HEADER + "\n");
 		for (Row row: rows) {
 			writer.write(row.toString() + "\n");
-			System.out.println(row);
+			//System.out.println(row);
 		}
 	}
 

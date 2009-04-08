@@ -1,17 +1,16 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
-import org.planet_sl.apimigration.benchmark.anno.Progress;
-import org.planet_sl.apimigration.benchmark.anno.Wrapping;
-import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
-import org.planet_sl.apimigration.benchmark.anno.Solution;
-import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
-import org.planet_sl.apimigration.benchmark.anno.Issue;
 import static org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Utils.content2node;
 import static org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Utils.node2content;
 
 import java.util.List;
 
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Wrapping;
+import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
+import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
 
 @SuppressWarnings("unchecked")
 @MapsTo("java.util.List")

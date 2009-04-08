@@ -45,7 +45,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  ContentHandler  getContentHandler()  {
 		// TODO Auto-generated method stub
 		return null;
@@ -62,7 +61,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  DTDHandler  getDTDHandler()  {
 		// TODO Auto-generated method stub
 		return null;
@@ -79,7 +77,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  EntityResolver  getEntityResolver()  {
 		// TODO Auto-generated method stub
 		return null;
@@ -96,7 +93,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  ErrorHandler  getErrorHandler()  {
 		// TODO Auto-generated method stub
 		return null;
@@ -113,7 +109,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  boolean getFeature(String name) throws SAXNotRecognizedException,
 			SAXNotSupportedException  {
 		// TODO Auto-generated method stub
@@ -131,7 +126,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  Object  getProperty(String name) throws SAXNotRecognizedException,
 			SAXNotSupportedException  {
 		// TODO Auto-generated method stub
@@ -149,7 +143,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  void parse(InputSource input) throws IOException, SAXException  {
 		// TODO Auto-generated method stub
 
@@ -166,7 +159,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  void parse(String systemId) throws IOException, SAXException  {
 		// TODO Auto-generated method stub
 
@@ -183,7 +175,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  void setContentHandler(ContentHandler handler)  {
 		// TODO Auto-generated method stub
 
@@ -200,7 +191,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  void setDTDHandler(DTDHandler handler)  {
 		// TODO Auto-generated method stub
 
@@ -217,7 +207,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  void setEntityResolver(EntityResolver resolver)  {
 		// TODO Auto-generated method stub
 
@@ -234,7 +223,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  void setErrorHandler(ErrorHandler handler)  {
 		// TODO Auto-generated method stub
 
@@ -251,7 +239,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  void setFeature(String name, boolean value) throws SAXNotRecognizedException, SAXNotSupportedException  {
 		// TODO Auto-generated method stub
 
@@ -268,7 +255,6 @@ public class LocatorFilter implements XMLReader {
 	@Issue.Pre("")
 	@Issue.Post("")
 	@Issue.Throws("")
-	@Override
 	public  void setProperty(String name, Object value) throws SAXNotRecognizedException, SAXNotSupportedException  {
 		// TODO Auto-generated method stub
 
