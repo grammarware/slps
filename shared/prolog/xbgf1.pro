@@ -1013,30 +1013,42 @@ replaceN(X1,X2,N,g(Rs,Ps1),g(Rs,Ps3))
 
 replace(X1,X2,Ps2,Ps2a,Ps2b,Ps3)
  :-
-     format('~q and ~q~n',[X1,X2]),
-     stoptd(xbgf1:replace_rules(X1,X2),Ps2,Ps4),
+     replace_traversal(X1,X2,Ps2,Ps4),
      concat([Ps2a,Ps4,Ps2b],Ps3).
+
+replace_traversal(X1,X2,X3,X4)
+ :-
+    stoptd(xbgf1:replace_rules(X1,X2),X3,X4).
 
 replace_rules(X1,X2,X3,X2)
  :-
     eqX(X1,X3),
     !.
 
-replace_rules(','(Xs1),Y1,','(Xs2),','(Xs3))
+% Find sequence of interest as subsequence
+
+replace_rules(X1,Y1,','(Xs2),','(Xs3))
  :-
+    X1 = ','(Xs1),
     append(Xs1a,Xs1b,Xs2),
     append(Xs1c,Xs1d,Xs1b),
     eqX(','(Xs1),','(Xs1c)),
-    concat([Xs1a,[Y1],Xs1d],Xs3).
+    replace_traversal(X1,Y1,','(Xs1a),X1a),
+    replace_traversal(X1,Y1,','(Xs1d),X1d),
+    concat([[X1a],[Y1],[X1d]],Xs3),
+    !.
 
 % Incomplete but order-preserving replacement for choices
 
-replace_rules(';'(Xs1),Y1,';'(Xs2),';'(Xs3))
+replace_rules(X1,Y1,';'(Xs2),';'(Xs3))
  :-
+    X1 = ';'(Xs1),
     append(Xs1a,Xs1b,Xs2),
     append(Xs1c,Xs1d,Xs1b),
     eqX(';'(Xs1),';'(Xs1c)),
-    concat([Xs1a,[Y1],Xs1d],Xs3),
+    replace_traversal(X1,Y1,';'(Xs1a),X1a),
+    replace_traversal(X1,Y1,';'(Xs1d),X1d),
+    concat([[X1a],[Y1],[X1d]],Xs3),
     !.
 
 % Complete but non-order-preserving replacement for choices
