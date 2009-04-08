@@ -305,14 +305,6 @@
         </row>
       </table>
       <text>
-        Distributivity rules for optionality modifier are also covered
-        by <ldf:keyword>massage</ldf:keyword>:
-      </text>
-      <formula>(x? y?)? = x? y?</formula>
-      <formula>(x^\star y?)? = x^\star y?</formula>
-      <formula>(x? y^\star)? = x? y^\star</formula>
-      <formula>(x | y)? = x? | y?</formula>
-      <text>
         Associativity rules for <ldf:keyword>massage</ldf:keyword>:
       </text>
       <formula>x (yx)? = (xy)? x</formula>
@@ -324,7 +316,18 @@
     <example id="massage-example">
       <content>
         <text>
-          An example of a massaging that takes three steps to complete is presented below.
+          Distributivity rules for optionality modifier such as these:
+        </text>
+        <formula>(x? y?)? = x? y?</formula>
+        <formula>(x^\star y?)? = x^\star y?</formula>
+        <formula>(x? y^\star)? = x? y^\star</formula>
+        <formula>(x | y)? = x? | y?</formula>
+        <text>
+          are not explicitly covered by <ldf:keyword>massage</ldf:keyword> since it is
+          possible to emulate them with a sequence of abovementioned patterns of
+          <ldf:keyword>massage</ldf:keyword>, as well as with <ldf:keyword>factor</ldf:keyword>
+          and similar transformations. Let us take the last formula as an example of a massaging
+          that takes several to complete.
           The input BGF is:
         </text>
       </content>
@@ -333,7 +336,7 @@
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>massage-example</target>
-    <file>../../transformation/xbgf/tests/massage_triple.bgf</file>
+    <file>../../transformation/xbgf/tests/massage_distr_ch.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>massage-example</where>
@@ -343,7 +346,7 @@
   </xldf:append>
   <xldf:import-sample>
     <target>massage-example</target>
-    <file>../../transformation/xbgf/tests/massage_triple.xbgf</file>
+    <file>../../transformation/xbgf/tests/massage_distr_ch.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
@@ -354,8 +357,19 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>massage-example</target>
-    <file>../../transformation/xbgf/tests/massage_triple.baseline</file>
+    <file>../../transformation/xbgf/tests/massage_distr_ch.baseline</file>
   </xldf:import-grammar>
+  <xldf:append>
+    <where>massage-example</where>
+    <content>
+      <text>
+        The selectors and <ldf:keyword>anonymize</ldf:keyword> commands are necessary
+        because otherwise the choice of two epsilons would be removed automatically
+        during the normalisation phase. The rest of distributivity laws are expressed
+        quite similarly to this example.
+    </text>
+    </content>
+  </xldf:append>
 
   <xldf:place>
     <section>element-distribute</section>

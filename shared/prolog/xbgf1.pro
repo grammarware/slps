@@ -662,7 +662,7 @@ massage_rules(','([X,*(','([Y,X]))]),','([*(','([X,Y])),X])).
 %%massage_rules(?(','([*(X),?(Y)])),','([*(X),?(Y)])).
 %massage_rules(?(','([?(X),*(Y)])),','([?(X),*(Y)])).
 %massage_rules(?(','([*(X),*(Y)])),','([*(X),*(Y)])).
-massage_rules(?(';'([X,Y])),';'([?(X),?(Y)])).
+%massage_rules(?(';'([X,Y])),';'([?(X),?(Y)])).
 
 %
 % p([l(permute)], f, n(p))
@@ -1046,9 +1046,10 @@ replace_rules(X1,Y1,';'(Xs2),';'(Xs3))
     append(Xs1a,Xs1b,Xs2),
     append(Xs1c,Xs1d,Xs1b),
     eqX(';'(Xs1),';'(Xs1c)),
-    replace_traversal(X1,Y1,';'(Xs1a),X1a),
-    replace_traversal(X1,Y1,';'(Xs1d),X1d),
-    concat([[X1a],[Y1],[X1d]],Xs3),
+    %replace_traversal(X1,Y1,';'(Xs1a),X1a),
+    %replace_traversal(X1,Y1,';'(Xs1d),X1d),
+    %concat([[X1a],[Y1],[X1d]],Xs3),
+	concat([Xs1a,[Y1],Xs1d],Xs3),
     !.
 
 % Complete but non-order-preserving replacement for choices

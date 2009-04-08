@@ -332,31 +332,6 @@
       <nonterminal>ImportDeclaration</nonterminal>
     </in>
   </xbgf:extract>
-  <!-- BAD! BAD! REMOVE! start -->
-  <xbgf:replace>
-    <bgf:expression>
-      <star>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <terminal>.</terminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>Identifier</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </star>
-    </bgf:expression>
-    <bgf:expression>
-      <star>
-        <bgf:expression>
-          <nonterminal>dotId</nonterminal>
-        </bgf:expression>
-      </star>
-    </bgf:expression>
-  </xbgf:replace>
-  <!-- BAD! BAD! REMOVE! end -->
   <xbgf:massage>
     <bgf:expression>
       <sequence>
