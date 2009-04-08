@@ -255,6 +255,10 @@ normalize_algebraically_rules(','(Xs1),','(Xs2))
  :-
     append(Xs1a,[true|Xs1b],Xs1),
     append(Xs1a,Xs1b,Xs2).
+normalize_algebraically_rules(';'(Xs1),';'(Xs5))
+ :-
+    append(Xs2,[';'(Xs3)|Xs4],Xs1),
+    concat([Xs2,Xs3,Xs4],Xs5).
 normalize_algebraically_rules(';'(Xs1),';'(Xs2))
  :-
     append(Xs1a,[fail|Xs1b],Xs1),
