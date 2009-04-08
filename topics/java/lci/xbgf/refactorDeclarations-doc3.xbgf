@@ -308,30 +308,32 @@
       - [], ,([t(import), t(static), n(QualifiedIdentifier), t(.), n(Identifier), t((;))])
       - [], ,([t(import), n(QualifiedIdentifier), ?(,([t(.), t(*)])), t((;))])
   -->
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
-      <nonterminal>QualifiedIdentifier</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
-      <nonterminal>Identifier</nonterminal>
-    </bgf:expression>
+  <xbgf:unfold>
+    <nonterminal>QualifiedIdentifier</nonterminal>
     <in>
       <nonterminal>ImportDeclaration</nonterminal>
     </in>
-  </xbgf:replace>
-  <!-- TODO: old style -->
-  <xbgf:widen>
-    <bgf:expression>
-      <sequence>
-        <bgf:expression>
-          <terminal>.</terminal>
-        </bgf:expression>
-        <bgf:expression>
-          <nonterminal>Identifier</nonterminal>
-        </bgf:expression>
-      </sequence>
-    </bgf:expression>
+  </xbgf:unfold>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>dotId</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <in>
+      <nonterminal>ImportDeclaration</nonterminal>
+    </in>
+  </xbgf:extract>
+  <!-- BAD! BAD! REMOVE! start -->
+  <xbgf:replace>
     <bgf:expression>
       <star>
         <bgf:expression>
@@ -346,55 +348,57 @@
         </bgf:expression>
       </star>
     </bgf:expression>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <nonterminal>dotId</nonterminal>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+  </xbgf:replace>
+  <!-- BAD! BAD! REMOVE! end -->
+  <xbgf:massage>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>dotId</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>dotId</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <plus>
+        <bgf:expression>
+          <nonterminal>dotId</nonterminal>
+        </bgf:expression>
+      </plus>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:widen>
+    <bgf:expression>
+      <plus>
+        <bgf:expression>
+          <nonterminal>dotId</nonterminal>
+        </bgf:expression>
+      </plus>
+    </bgf:expression>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <nonterminal>dotId</nonterminal>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
     <in>
       <nonterminal>ImportDeclaration</nonterminal>
     </in>
   </xbgf:widen>
-  <xbgf:appear>
-    <bgf:production>
-      <nonterminal>ImportDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>import</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>static</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <marked>
-              <bgf:expression>
-                <star>
-                  <bgf:expression>
-                    <sequence>
-                      <bgf:expression>
-                        <terminal>.</terminal>
-                      </bgf:expression>
-                      <bgf:expression>
-                        <nonterminal>Identifier</nonterminal>
-                      </bgf:expression>
-                    </sequence>
-                  </bgf:expression>
-                </star>
-              </bgf:expression>
-            </marked>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>.</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>*</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:appear>
   <xbgf:horizontal>ImportDeclaration</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
@@ -413,22 +417,9 @@
             <bgf:expression>
               <star>
                 <bgf:expression>
-                  <sequence>
-                    <bgf:expression>
-                      <terminal>.</terminal>
-                    </bgf:expression>
-                    <bgf:expression>
-                      <nonterminal>Identifier</nonterminal>
-                    </bgf:expression>
-                  </sequence>
+                  <nonterminal>dotId</nonterminal>
                 </bgf:expression>
               </star>
-            </bgf:expression>
-            <bgf:expression>
-              <terminal>.</terminal>
-            </bgf:expression>
-            <bgf:expression>
-              <terminal>*</terminal>
             </bgf:expression>
             <bgf:expression>
               <terminal>;</terminal>
@@ -449,16 +440,15 @@
             <bgf:expression>
               <star>
                 <bgf:expression>
-                  <sequence>
-                    <bgf:expression>
-                      <terminal>.</terminal>
-                    </bgf:expression>
-                    <bgf:expression>
-                      <nonterminal>Identifier</nonterminal>
-                    </bgf:expression>
-                  </sequence>
+                  <nonterminal>dotId</nonterminal>
                 </bgf:expression>
               </star>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>*</terminal>
             </bgf:expression>
             <bgf:expression>
               <terminal>;</terminal>
@@ -481,14 +471,7 @@
         <bgf:expression>
           <star>
             <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <terminal>.</terminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>Identifier</nonterminal>
-                </bgf:expression>
-              </sequence>
+              <nonterminal>dotId</nonterminal>
             </bgf:expression>
           </star>
         </bgf:expression>
@@ -548,60 +531,6 @@
       </optional>
     </bgf:expression>
   </xbgf:massage>
-  <xbgf:vertical>
-    <nonterminal>ImportDeclaration</nonterminal>
-  </xbgf:vertical>
-  <xbgf:appear>
-    <bgf:production>
-      <nonterminal>ImportDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>import</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Identifier</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <marked>
-              <bgf:expression>
-                <star>
-                  <bgf:expression>
-                    <sequence>
-                      <bgf:expression>
-                        <terminal>.</terminal>
-                      </bgf:expression>
-                      <bgf:expression>
-                        <nonterminal>Identifier</nonterminal>
-                      </bgf:expression>
-                    </sequence>
-                  </bgf:expression>
-                </star>
-              </bgf:expression>
-            </marked>
-          </bgf:expression>
-          <bgf:expression>
-            <optional>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <terminal>.</terminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <terminal>*</terminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </optional>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>;</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:appear>
-  <xbgf:horizontal>ImportDeclaration</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -616,14 +545,7 @@
             <bgf:expression>
               <star>
                 <bgf:expression>
-                  <sequence>
-                    <bgf:expression>
-                      <terminal>.</terminal>
-                    </bgf:expression>
-                    <bgf:expression>
-                      <nonterminal>Identifier</nonterminal>
-                    </bgf:expression>
-                  </sequence>
+                  <nonterminal>dotId</nonterminal>
                 </bgf:expression>
               </star>
             </bgf:expression>
@@ -660,14 +582,7 @@
             <bgf:expression>
               <star>
                 <bgf:expression>
-                  <sequence>
-                    <bgf:expression>
-                      <terminal>.</terminal>
-                    </bgf:expression>
-                    <bgf:expression>
-                      <nonterminal>Identifier</nonterminal>
-                    </bgf:expression>
-                  </sequence>
+                  <nonterminal>dotId</nonterminal>
                 </bgf:expression>
               </star>
             </bgf:expression>
@@ -713,14 +628,7 @@
         <bgf:expression>
           <star>
             <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <terminal>.</terminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <nonterminal>Identifier</nonterminal>
-                </bgf:expression>
-              </sequence>
+              <nonterminal>dotId</nonterminal>
             </bgf:expression>
           </star>
         </bgf:expression>
@@ -763,6 +671,7 @@
       </optional>
     </bgf:expression>
   </xbgf:massage>
+  <xbgf:inline>dotId</xbgf:inline>
 
   <!-- ISSUE CORRECT (;)
    - Fail: MethodDeclaratorRest.

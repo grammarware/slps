@@ -115,21 +115,6 @@
   -->
 
   <!-- [Dims] vs BracketsOpt-->
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>B</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <terminal>[</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>]</terminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
   <xbgf:deyaccify>Dims</xbgf:deyaccify>
   <xbgf:unfold>
     <nonterminal>Dims</nonterminal>
@@ -137,7 +122,6 @@
       <nonterminal>BracketsOpt</nonterminal>
     </in>
   </xbgf:unfold>
-  <xbgf:inline>B</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
       <optional>
@@ -623,30 +607,29 @@
     <nonterminal>InfixOp</nonterminal>
   </xbgf:vertical>
 
-  <!-- revert of lassoc-->
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>TMP</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>InfixOp</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>Expression3</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
+  <!-- revert of l-assoc-->
   <xbgf:widen>
     <bgf:expression>
-      <nonterminal>TMP</nonterminal>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>InfixOp</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Expression3</nonterminal>
+        </bgf:expression>
+      </sequence>
     </bgf:expression>
     <bgf:expression>
       <star>
         <bgf:expression>
-          <nonterminal>TMP</nonterminal>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>InfixOp</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Expression3</nonterminal>
+            </bgf:expression>
+          </sequence>
         </bgf:expression>
       </star>
     </bgf:expression>
@@ -654,7 +637,6 @@
       <nonterminal>Expression2</nonterminal>
     </in>
   </xbgf:widen>
-  <xbgf:inline>TMP</xbgf:inline>
 
   <!--  extracting Expression2Rest -->
   <xbgf:factor>

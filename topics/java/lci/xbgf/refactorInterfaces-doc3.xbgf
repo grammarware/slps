@@ -654,34 +654,75 @@
       - [], ;([n('ElementValue'), ,([n('ElementValues'), t((',')), n('ElementValue')])])
   -->
   <xbgf:deyaccify>ElementValues</xbgf:deyaccify>
-  <!-- TODO: can be yaccify after yaccify2 test case works -->
-  <!-- BREFACTOR -->
-  <xbgf:redefine>
+  <xbgf:massage>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <nonterminal>ElementValue</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>,</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>ElementValue</nonterminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <nonterminal>ElementValue</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>,</terminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>ElementValue</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:yaccify>
     <bgf:production>
       <nonterminal>ElementValues</nonterminal>
       <bgf:expression>
-        <choice>
+        <nonterminal>ElementValue</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>ElementValues</nonterminal>
+      <bgf:expression>
+        <sequence>
           <bgf:expression>
             <nonterminal>ElementValue</nonterminal>
           </bgf:expression>
           <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <nonterminal>ElementValue</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>,</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>ElementValues</nonterminal>
-              </bgf:expression>
-            </sequence>
+            <terminal>,</terminal>
           </bgf:expression>
-        </choice>
+          <bgf:expression>
+            <nonterminal>ElementValues</nonterminal>
+          </bgf:expression>
+        </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:redefine>
-  <!-- end of future yaccify -->
+  </xbgf:yaccify>
+  <xbgf:horizontal>ElementValues</xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
