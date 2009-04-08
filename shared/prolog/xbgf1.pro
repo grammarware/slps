@@ -12,11 +12,12 @@ transformG(sequence(Ts1),G1,G2)
     normalizeG(Ts1,Ts2),
     accum(xbgf1:transformG,Ts2,G1,G2).
 
-transformG(Xbgf,G1,G4)
+transformG(Xbgf1,G1,G4)
  :-
-    format('[XBGF] ~q~n',[Xbgf]),
+    normalizeG(Xbgf1,Xbgf2),    
+    format('[XBGF] ~q~n',[Xbgf2]),
     normalizeG(G1,G2),
-    apply(Xbgf,[G2,G3]),
+    apply(Xbgf2,[G2,G3]),
     normalizeG(G3,G4),
     require(
       ( \+ G2 == G4 ),
@@ -633,7 +634,20 @@ massage_rules(*(*(X)),*(X)).
 %% All possible choice combinations
 % true|...
 %massage_rules(?(';'([X|L1])),';'([L2])) :- append(L3,L1,L2), length(L3,2),member(X, L3),member(true,L3).
-massage_rules(?(X),';'(L)) :- length(L,2),member(  X, L),member(true,L).
+
+%
+% Not general enough but a good explanation of what follows
+%
+% massage_rules(?(X),';'(L)) :- length(L,2),member(  X, L),member(true,L).
+%
+
+massage_rules(?(X),';'(L))
+ :-
+    append(L1,[true|L2],L),
+    append(L1,L2,L3),
+    normalizeG(';'(L3),Y),
+    eqX(X,Y).
+
 massage_rules(?(X),';'(L)) :- length(L,2),member(?(X),L),member(true,L).
 massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(true,L).
 massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(true,L).
