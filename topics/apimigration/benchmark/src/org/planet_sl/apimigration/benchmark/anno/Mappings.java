@@ -1,8 +1,14 @@
 package org.planet_sl.apimigration.benchmark.anno;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -12,42 +18,42 @@ public class Mappings {
 	
 	private static final String CLASSES[] = {"Attribute",
 			"Builder",
-			"XPathContext",
+//			"XPathContext",
 			"Comment",
 			"DocType",
 			"Document",
 			"Element",
 			"Elements",
-			"IllegalAddException",
-			"IllegalCharacterDataException",
-			"IllegalDataException",
-			"IllegalNameException",
-			"IllegalTargetException",
-			"LocatorFilter",
-			"MalformedURIException",
-			"MultipleParentException",
-			"ValidityException",
-			"WellformednessException",
-			"XMLException",
-			"XPathException",
-			"Namespace",
-			"NamespaceConflictException",
+//			"IllegalAddException",
+//			"IllegalCharacterDataException",
+//			"IllegalDataException",
+//			"IllegalNameException",
+//			"IllegalTargetException",
+//			"LocatorFilter",
+//			"MalformedURIException",
+//			"MultipleParentException",
+//			"ValidityException",
+//			"WellformednessException",
+//			"XMLException",
+//			"XPathException",
+//			"Namespace",
+//			"NamespaceConflictException",
 			"Node",
-			"NodeFactory",
+//			"NodeFactory",
 			"Nodes",
-			"NoSuchAttributeException",
-			"NoSuchChildException",
+//			"NoSuchAttributeException",
+//			"NoSuchChildException",
 			"ParentNode",
-			"ParentNodeTest",
-			"ParsingException",
+//			"ParsingException",
 			"ProcessingInstruction",
-			"Serializer",
-			"Text",
-			"Utils"};
+//			"Serializer",
+			"Text" 
+//			"Utils"
+			};
 	
-	public static void main(String arg[]) throws ClassNotFoundException {
-		classMappings();
-		methodMappings();
+	public static void main(String arg[]) throws ClassNotFoundException, IOException {
+		//		classMappings();
+		methodMappings(new File("annos.csv"));
 	}
 	
 	public static void classMappings() throws ClassNotFoundException {
@@ -61,26 +67,66 @@ public class Mappings {
 			}
 		}
 	}
+
+//	System.out.println("\"nu.xom." + s + "#" + method.getName() + "(" + 
+//	paramTypesToString(method.getParameterTypes()) + ")" + "\", \"" + ((MapsTo)anno).value() + "\"");
+
+	public static void addRow(List<Row> rows, AccessibleObject o) {
+		Row row = new Row();
+		row.from = o;
+		boolean mapped = false;
+		for (Annotation anno: o.getAnnotations()) {
+			if (anno instanceof Wrapping) {
+				// should not be in table
+				return;
+			}
+			if (anno instanceof MapsTo) {
+				mapped = true;
+				row.to = (MapsTo)anno;
+			}
+			if (anno instanceof Progress) {
+				row.progress = (Progress)anno;
+			}
+			if (anno instanceof Solution) {
+				row.solution = (Solution)anno;
+			}
+			if (anno instanceof Issue.Pre) {
+				row.preIssue = (Issue.Pre)anno;
+			}
+			if (anno instanceof Issue.Post) {
+				row.postIssue = (Issue.Post)anno;
+			}
+			if (anno instanceof Issue.Throws) {
+				row.throwsIssue = (Issue.Throws)anno;
+			}
+			if (anno instanceof Issue.Invariant) {
+				row.invariantIssue = (Issue.Invariant)anno;
+			}
+			if (anno instanceof Issue.Doc) {
+				row.docIssue = (Issue.Doc)anno;
+			}
+		}
+		if (mapped) {
+			rows.add(row);
+		}
+	}
 	
-	public static void methodMappings() throws ClassNotFoundException {
+	public static void methodMappings(File file) throws ClassNotFoundException, IOException {
+		List<Row> rows = new ArrayList<Row>();
 		for (String s: CLASSES) {
 			Class<?> klass = Class.forName(PKG + "." + s);
 			for (Method method: klass.getDeclaredMethods()) {
-				for (Annotation anno: method.getAnnotations()) {
-					if (anno.annotationType().equals(MapsTo.class)) {
-						System.out.println("\"nu.xom." + s + "#" + method.getName() + "(" + 
-								paramTypesToString(method.getParameterTypes()) + ")" + "\", \"" + ((MapsTo)anno).value() + "\"");
-					}
-				}
+				addRow(rows, method);
 			}
 			for (Constructor<?> cons: klass.getDeclaredConstructors()) {
-				for (Annotation anno: cons.getAnnotations()) {
-					if (anno.annotationType().equals(MapsTo.class)) {
-						System.out.println("\"nu.xom." + s + "(" + 
-								paramTypesToString(cons.getParameterTypes()) + ")" + "\", \"" + ((MapsTo)anno).value() + "\"");
-					}
-				}
+				addRow(rows, cons);
 			}
+		}
+		FileWriter writer = new FileWriter(file);
+		writer.write(Row.HEADER + "\n");
+		for (Row row: rows) {
+			writer.write(row.toString() + "\n");
+			System.out.println(row);
 		}
 	}
 

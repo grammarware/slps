@@ -427,6 +427,7 @@ public class Attribute extends Node {
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
+	@MapsTo("org.jdom.Attribute#equals(Object)")
 	public boolean equals(Object o) {
 		if (!(o instanceof Attribute)) {
 			return false;
@@ -437,6 +438,7 @@ public class Attribute extends Node {
 	@Progress(value = Status.DONTCARE, comment = "opaque")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
+	@MapsTo("org.jdom.Attribute#hashCode()")
 	public int hashCode() {
 		return attribute.hashCode();
 	}

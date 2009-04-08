@@ -197,6 +197,7 @@ public class Builder {
 
 	@Progress(value = Status.GIVENUP, comment = "")
 	@Issue.Post("No NodeFactory available since it does not work with SAXBuilder")
+//	@Solution(Strategy.OTHER)
 	@MapsTo("")
 	public NodeFactory getNodeFactory() {
 		throw new UnsupportedOperationException(

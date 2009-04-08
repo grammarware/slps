@@ -531,6 +531,7 @@ public class Element extends ParentNode {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
+	@MapsTo("")
 	public Element getFirstChildElement(String name) {
 		List list = element.getChildren(name);
 		if (list.size() > 0) {
@@ -687,6 +688,7 @@ public class Element extends ParentNode {
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
+	@MapsTo("org.jdom.Element#equals(Object)")
 	public boolean equals(Object o) {
 		if (!(o instanceof Element)) {
 			return false;
@@ -696,6 +698,7 @@ public class Element extends ParentNode {
 
 	@Progress(value = Status.DONTCARE, comment = "opaque")
 	@Override
+	@MapsTo("org.jdom.Element#hashCode()")
 	public int hashCode() {
 		return element.hashCode();
 	}

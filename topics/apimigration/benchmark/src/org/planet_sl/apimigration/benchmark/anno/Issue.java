@@ -9,26 +9,36 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Issue {
 
+	@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
+	@Retention(RetentionPolicy.RUNTIME)
 	public @interface Pre {
 		String [] value();
 		boolean resolved() default false;
 	}
 	
+	@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
+	@Retention(RetentionPolicy.RUNTIME)
 	public @interface Post {
 		String [] value();
 		boolean resolved() default false;
 	}
 	
+	@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
+	@Retention(RetentionPolicy.RUNTIME)
 	public @interface Invariant {
 		String [] value();
 		boolean resolved() default false;
 	}
 	
+	@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
+	@Retention(RetentionPolicy.RUNTIME)
 	public @interface Throws {
 		String [] value();
 		boolean resolved() default false;
 	}
 	
+	@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
+	@Retention(RetentionPolicy.RUNTIME)
 	public @interface Doc {
 		String [] value();
 		boolean resolved() default false;

@@ -9,11 +9,31 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Progress {
 	public enum Status {
-		TODO,
-		NEEDSWORK,
-		OK,
-		DONTCARE,
-		GIVENUP
+		TODO() {
+			public String toString() {
+				return "TD";
+			}
+		},
+		NEEDSWORK() {
+			public String toString() {
+				return "NW";
+			}
+		},
+		OK() {
+			public String toString() {
+				return "OK";
+			}
+		},
+		DONTCARE() {
+			public String toString() {
+				return "DC";
+			}
+		},
+		GIVENUP() {
+			public String toString() {
+				return "GU";
+			}
+		};
 	}
 	Status value() default Status.TODO;
 	String comment() default "";

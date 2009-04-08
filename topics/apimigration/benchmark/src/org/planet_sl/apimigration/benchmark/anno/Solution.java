@@ -9,12 +9,36 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Solution {
 	public enum Strategy {
-		MACRO,
-		EXTERNAL_MACRO,
-		DELEGATE,
-		ADVANCED_DELEGATE,
-		CLONE,
-		OTHER
+		MACRO() {
+			public String toString() {
+				return "M";
+			}
+		},
+		EXTERNAL_MACRO() {
+			public String toString() {
+				return "EM";
+			}
+		},
+		DELEGATE() {
+			public String toString() {
+				return "D";
+			}
+		},
+		ADVANCED_DELEGATE() {
+			public String toString() {
+				return "AD";
+			}
+		},
+		CLONE() {
+			public String toString() {
+				return "C";
+			}
+		},
+		OTHER() {
+			public String toString() {
+				return "O";
+			}
+		}
 	}
 	Strategy value();
 	String comment() default "";

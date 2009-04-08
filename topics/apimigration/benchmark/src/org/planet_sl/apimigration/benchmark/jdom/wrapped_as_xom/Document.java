@@ -320,6 +320,7 @@ public class Document extends ParentNode {
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
+	@MapsTo("org.jdom.Document#equals(Object)")
 	public boolean equals(Object o) {
 		if (!(o instanceof Document)) {
 			return false;
@@ -329,6 +330,7 @@ public class Document extends ParentNode {
 
 	@Progress(value = Status.DONTCARE, comment = "opaque")
 	@Override
+	@MapsTo("org.jdom.Document#hashCode()")
 	public int hashCode() {
 		return document.hashCode();
 	}
