@@ -120,7 +120,4 @@
     <label>two</label>
   </xbgf:unlabel>
   <xbgf:horizontal>foo</xbgf:horizontal>
-  <xbgf:distribute>
-    <nonterminal>foo</nonterminal>
-  </xbgf:distribute>
 </xbgf:sequence>

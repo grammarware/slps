@@ -173,20 +173,36 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:anonymize>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>bar</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>bar</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
   <xbgf:anonymize>
     <bgf:production>
       <nonterminal>foo</nonterminal>
       <bgf:expression>
         <choice>
           <bgf:expression>
-            <choice>
+            <optional>
               <bgf:expression>
                 <nonterminal>bar</nonterminal>
               </bgf:expression>
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
-            </choice>
+            </optional>
           </bgf:expression>
           <bgf:expression>
             <choice>
@@ -211,25 +227,6 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:anonymize>
-  <xbgf:massage>
-    <bgf:expression>
-      <choice>
-        <bgf:expression>
-          <nonterminal>bar</nonterminal>
-        </bgf:expression>
-        <bgf:expression>
-          <epsilon/>
-        </bgf:expression>
-      </choice>
-    </bgf:expression>
-    <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <nonterminal>bar</nonterminal>
-        </bgf:expression>
-      </optional>
-    </bgf:expression>
-  </xbgf:massage>
   <xbgf:massage>
     <bgf:expression>
       <choice>

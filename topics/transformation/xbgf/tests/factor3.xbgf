@@ -8,26 +8,26 @@
         <bgf:expression>
           <sequence>
             <bgf:expression>
-              <nonterminal>b</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
               <nonterminal>c</nonterminal>
             </bgf:expression>
             <bgf:expression>
               <nonterminal>d</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>e</nonterminal>
             </bgf:expression>
           </sequence>
         </bgf:expression>
         <bgf:expression>
           <sequence>
             <bgf:expression>
-              <nonterminal>b</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>e</nonterminal>
+              <nonterminal>c</nonterminal>
             </bgf:expression>
             <bgf:expression>
               <nonterminal>f</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>g</nonterminal>
             </bgf:expression>
           </sequence>
         </bgf:expression>
@@ -36,27 +36,27 @@
     <bgf:expression>
       <sequence>
         <bgf:expression>
-          <nonterminal>b</nonterminal>
+          <nonterminal>c</nonterminal>
         </bgf:expression>
         <bgf:expression>
           <choice>
             <bgf:expression>
               <sequence>
                 <bgf:expression>
-                  <nonterminal>e</nonterminal>
+                  <nonterminal>d</nonterminal>
                 </bgf:expression>
                 <bgf:expression>
-                  <nonterminal>f</nonterminal>
+                  <nonterminal>e</nonterminal>
                 </bgf:expression>
               </sequence>
             </bgf:expression>
             <bgf:expression>
               <sequence>
                 <bgf:expression>
-                  <nonterminal>c</nonterminal>
+                  <nonterminal>f</nonterminal>
                 </bgf:expression>
                 <bgf:expression>
-                  <nonterminal>d</nonterminal>
+                  <nonterminal>g</nonterminal>
                 </bgf:expression>
               </sequence>
             </bgf:expression>

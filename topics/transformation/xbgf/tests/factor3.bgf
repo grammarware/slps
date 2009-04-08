@@ -4,30 +4,42 @@
     <bgf:expression>
       <choice>
         <bgf:expression>
+          <nonterminal>a</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>b</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
           <sequence>
-            <bgf:expression>
-              <nonterminal>b</nonterminal>
-            </bgf:expression>
             <bgf:expression>
               <nonterminal>c</nonterminal>
             </bgf:expression>
             <bgf:expression>
               <nonterminal>d</nonterminal>
             </bgf:expression>
+            <bgf:expression>
+              <nonterminal>e</nonterminal>
+            </bgf:expression>
           </sequence>
         </bgf:expression>
         <bgf:expression>
           <sequence>
             <bgf:expression>
-              <nonterminal>b</nonterminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>e</nonterminal>
+              <nonterminal>c</nonterminal>
             </bgf:expression>
             <bgf:expression>
               <nonterminal>f</nonterminal>
             </bgf:expression>
+            <bgf:expression>
+              <nonterminal>g</nonterminal>
+            </bgf:expression>
           </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>h</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>i</nonterminal>
         </bgf:expression>
       </choice>
     </bgf:expression>

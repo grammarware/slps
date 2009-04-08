@@ -39,9 +39,6 @@
       </choice>
     </bgf:expression>
   </xbgf:massage>
-  <xbgf:distribute>
-    <nonterminal>foo</nonterminal>
-  </xbgf:distribute>
   <xbgf:anonymize>
     <bgf:production>
       <nonterminal>foo</nonterminal>
