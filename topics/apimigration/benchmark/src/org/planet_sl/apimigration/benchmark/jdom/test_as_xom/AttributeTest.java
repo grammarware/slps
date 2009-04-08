@@ -692,7 +692,8 @@ public class AttributeTest extends XOMTestCase {
  
  // Test for a bug that was caught by other tests; but not 
  // sufficiently isolated by them
- public void testPrefixedAttributeBug() throws ParsingException, IOException {
+ @SuppressWarnings("deprecation")
+public void testPrefixedAttributeBug() throws ParsingException, IOException {
      
      Builder builder = new Builder();
      File f = new File("data");

@@ -336,7 +336,7 @@ public class Attribute extends Node {
 		}
 	}
 
-	@Progress(value = Status.DONTCARE, comment = "toXML() is more a debugging aid")
+	@Progress(value = Status.DONTCARE, comment = "is a debugging aid")
 	@Solution(value = Strategy.CLONE, comment = "")
 	@Issue.Post("proper escaping of attribute's value")
 	@Override
@@ -357,12 +357,14 @@ public class Attribute extends Node {
 		attribute.detach();
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.CLONE, comment = "")
-	@Issue.Post("for lack of an alternative: delegate to the parent of this attribute")
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@MapsTo("")
 	public String getBaseURI() {
 		org.jdom.Element parent = attribute.getParent();
+		if (parent == null) {
+			return "";
+		}
 		return new Element(parent).getBaseURI();
 	}
 

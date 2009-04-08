@@ -148,9 +148,9 @@ public class Comment extends Node {
 		}
 	}
 
-	@Progress(value = Status.DONTCARE, comment = "debugging aid")
+	@Progress(value = Status.DONTCARE, comment = "is debugging aid")
 	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("the resulting string is probably not always exactly the same")
+	@Issue.Post("the resulting string may be slightly different")
 	@Override
 	@MapsTo("")
 	public String toXML() {

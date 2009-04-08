@@ -24,20 +24,23 @@ public class Builder {
 		this.builder = builder;
 	}
 
+	//org.apache.xerces.parsers.
+	private static final String SAX = "org.apache.xerces.parsers.SAXParser";
+
 	// XOM api starts below
 
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.DELEGATE, comment = "")
+	@Progress(value = Status.NEEDSWORK, comment = "parsers behave differently")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@MapsTo("org.jdom.input.SAXBuilder()")
 	public Builder() {
-		this(new org.jdom.input.SAXBuilder());
+		this(new org.jdom.input.SAXBuilder(SAX));
 	}
 
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.DELEGATE, comment = "")
+	@Progress(value = Status.NEEDSWORK, comment = "parsers behave differently")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@MapsTo("org.jdom.input.SAXBuilder(boolean)")
 	public Builder(boolean validate) {
-		this(new org.jdom.input.SAXBuilder(validate));
+		this(new org.jdom.input.SAXBuilder(SAX, validate));
 	}
 
 	@Progress(value = Status.GIVENUP, comment = "")

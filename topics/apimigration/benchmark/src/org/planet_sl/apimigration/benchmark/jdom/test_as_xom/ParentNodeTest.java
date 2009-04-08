@@ -1,11 +1,10 @@
-package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
+package org.planet_sl.apimigration.benchmark.jdom.test_as_xom;
 
 import org.planet_sl.apimigration.benchmark.anno.Progress;
 import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
 import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
 import org.planet_sl.apimigration.benchmark.anno.Issue;
-import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.XOMTestCase;
 
 import nu.xom.Comment;
 import nu.xom.CycleException;
