@@ -58,7 +58,7 @@ if __name__ == "__main__":
  for x in lcf.findall('/target'):
   name = x.findtext('name')
   targets[name] = []
-  for y in x.findall('branch/perform'):
+  for y in x.findall('branch/*/perform'):
    targets[name].append(y.text)
  path = sys.argv[3]
  if path[-1] != '/':
