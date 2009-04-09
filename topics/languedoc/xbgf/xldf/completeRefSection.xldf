@@ -321,6 +321,7 @@
         <formula>(x? y?)? = x? y?</formula>
         <formula>(x^\star y?)? = x^\star y?</formula>
         <formula>(x? y^\star)? = x? y^\star</formula>
+        <formula>(x^\star y^\star)? = x^\star y^\star</formula>
         <formula>(x | y)? = x? | y?</formula>
         <text>
           are not explicitly covered by <ldf:keyword>massage</ldf:keyword> since it is
@@ -528,7 +529,8 @@
     <where>element-deyaccify</where>
     <content>
       <text>
-        In either case, it is checked if bar and wez are the same. If they are, the result is more concise:
+        In either case, it is checked if bar and wez are the same nonterminal.
+        If they are, the result is more concise:
       </text>
     </content>
   </xldf:append>
@@ -541,7 +543,82 @@
     <section>element-yaccify</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
-  
+  <xldf:add-subsection>
+    <considerations>
+      <content>
+        <text>
+          Yaccification is a typical example of grammar adaptation activity.
+          However, it can be utilised in grammar convergence process as well:
+          think of a situation when one of the sources is yaccified using left
+          recursion while the other one---using right recursion. In such a case
+          it would be better to deyaccify both of them. If this is due to some
+          considerations impossible or undesirable, one can deyaccify, say,
+          left recursion and then yaccify if back to right recursion.
+        </text>
+        <text>
+          Since it is not possible for the transformation engine to guess which
+          kind of BNF recursion the suite user would need, <ldf:keyword>yaccify</ldf:keyword>
+          takes two productions as parameters, unlike <ldf:keyword>deyaccify</ldf:keyword>
+          which works perfectly just given the nonterminal name.
+        </text>
+      </content>
+    </considerations>
+    <to>element-yaccify</to>
+  </xldf:add-subsection>
+  <xldf:add-subsection>
+    <example id="yaccify-example">
+      <content>
+        <text>For example, this piece of grammar:</text>
+      </content>
+    </example>
+    <to>element-yaccify</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>yaccify-example</target>
+    <file>../../transformation/xbgf/tests/yaccify_left_plus.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>yaccify-example</where>
+    <content>
+      <text>can either be yaccified with left recursion:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>yaccify-example</target>
+    <file>../../transformation/xbgf/tests/yaccify_left_plus.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>yaccify-example</where>
+    <content>
+      <text>to look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>yaccify-example</target>
+    <file>../../transformation/xbgf/tests/yaccify_left_plus.baseline</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>yaccify-example</where>
+    <content>
+      <text>or yaccified with right recursion:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>yaccify-example</target>
+    <file>../../transformation/xbgf/tests/yaccify_right_plus.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>yaccify-example</where>
+    <content>
+      <text>to look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>yaccify-example</target>
+    <file>../../transformation/xbgf/tests/yaccify_right_plus.baseline</file>
+  </xldf:import-grammar>  
   <xldf:place>
     <section>element-eliminate</section>
     <inside>group-refactoring-transformation</inside>

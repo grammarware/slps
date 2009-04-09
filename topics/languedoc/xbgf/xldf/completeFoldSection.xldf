@@ -7,42 +7,6 @@
   
   <!-- beautify xbgf -->
   <xldf:transform-grammar>
-    <target>element-fold</target>
-    <xbgf:anonymize>
-      <bgf:production>
-        <nonterminal>fold</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <marked>
-                <bgf:expression>
-                  <selectable>
-                    <selector>nonterminal</selector>
-                    <bgf:expression>
-                      <nonterminal>nonterminal</nonterminal>
-                    </bgf:expression>
-                  </selectable>
-                </bgf:expression>
-              </marked>
-            </bgf:expression>
-            <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <selectable>
-                    <selector>in</selector>
-                    <bgf:expression>
-                      <nonterminal>scope</nonterminal>
-                    </bgf:expression>
-                  </selectable>
-                </bgf:expression>
-              </optional>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
-    </xbgf:anonymize>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
     <target>element-unfold</target>
     <xbgf:anonymize>
       <bgf:production>
@@ -93,9 +57,9 @@
   <xldf:insert>
     <before>
       <text>
-        The definition that is being unfolded is assumed to be horisontal
-        (see the section on refactorings for more information about horisontal
-        and vertical definitions).
+        The definition that is being unfolded is assumed to be horisontal,
+        i.e. to consist of one single production. See the section on refactorings
+        for more information about horisontal and vertical definitions.
       </text>
     </before>
     <content>
@@ -148,6 +112,44 @@
     <file>../../transformation/xbgf/tests/unfold.baseline</file>
   </xldf:import-grammar>
 
+  <!-- beautify xbgf -->
+  <xldf:transform-grammar>
+    <target>element-fold</target>
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>fold</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <marked>
+                <bgf:expression>
+                  <selectable>
+                    <selector>nonterminal</selector>
+                    <bgf:expression>
+                      <nonterminal>nonterminal</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </marked>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <selectable>
+                    <selector>in</selector>
+                    <bgf:expression>
+                      <nonterminal>scope</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+  </xldf:transform-grammar>
+  
   <xldf:place>
     <section>element-fold</section>
     <inside>group-folding-transformation</inside>
@@ -195,7 +197,7 @@
       <content>
         <text>
           The <ldf:keyword>inline</ldf:keyword> transformation is by far the
-          most used in Java Language Specification case. One of the reasons
+          most used in Java Language Specification case study. One of the reasons
           is what we call layering: in particular expressions and statements
           are introduced in the $G_j^R$ with a set of related nonterminals:
           LabeledStatement, IfThenElseStatement, WhileStatement, ForStatement, etc, and
@@ -369,7 +371,9 @@
       <content>
         <text>
           In the same way it was removed in the previous example,
-          the bracketing production can be added to the grammar:
+          the bracketing production can be added to the grammar.
+          The transformation that reverts the impact of the previous
+          <ldf:keyword>abridge</ldf:keyword>, looks like this:
         </text>
       </content>
     </example>
@@ -446,7 +450,9 @@
       <content>
         <text>
           In the same way it was removed in the previous example,
-          the chain production can be added to the grammar:
+          the chain production can be added to the grammar.
+          The transformation that reverts the impact of the previous
+          <ldf:keyword>unchain</ldf:keyword>, looks like this:
         </text>
       </content>
     </example>

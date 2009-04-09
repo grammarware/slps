@@ -2,7 +2,7 @@ validator = ../../../shared/tools/checkxml
 xldf = ../../../shared/tools/xldf
 xbgf = ../../../shared/tools/xbgf
 
-build: architecture_large.pdf
+build: bnfbgf.pdf
 	../../../shared/tools/xsd2bgf ../../../shared/xsd/xbgf.xsd xbgf.bgf
 	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/xbgf.xsd xbgf.bgf xbgf.ldf
 	${xldf} xbgf.xldf xbgf.ldf xbgf_ready.ldf
@@ -10,9 +10,9 @@ build: architecture_large.pdf
 	pdflatex -interaction=batchmode xbgf
 	pdflatex -interaction=batchmode xbgf
 
-architecture_large.pdf:
+bnfbgf.pdf:
 	cd ../../presentation/prettyprint ; make
-	cp ../../presentation/prettyprint/architecture_large.pdf .
+	cp ../../presentation/prettyprint/architecture_large.pdf bnfbgf.pdf
 
 rebuild:
 	make clean
@@ -21,8 +21,7 @@ rebuild:
 clean:
 	rm -f xbgf*.bgf xbgf*.ldf xbgf.html xbgf.fo xbgf.pdf *.xbnf
 	rm -f bgf*.bgf ldf*.bgf ldf*.ldf ldf.fo ldf.pdf xldf-tmp*
-	rm -f *.aux *.log *.toc *.tex printed_for_xldf.tmp
-	rm -f architecture_large.pdf
+	rm -f *.aux *.log *.toc *.tex printed_for_xldf.tmp bnfbgf.pdf
 
 check:
 	ls -1 *.xbgf | xargs -n1 ${validator} xbgf

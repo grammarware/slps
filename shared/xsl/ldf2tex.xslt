@@ -19,6 +19,7 @@
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
 \usepackage{listings}
+\usepackage{graphicx}
 \lstdefinelanguage{pp}{%
   numbers=none,
   literate={EPSILON}{{$\varepsilon$}}1 %{STRING}{{$\lambda$}}1
@@ -386,10 +387,47 @@
 	      </xsl:text>
   </xsl:template>
 
+<!--
+	\begin{figure}[t!]
+	\begin{center}
+	\includegraphics[width=0.85\textwidth]{convtree_jls_s.pdf}
+	\end{center}
+	\icaption{Convergence tree for the JLS grammars.}
+	\label{F:jls-less}
+	\end{figure}
+	
+-->
+  <xsl:template match="figure">
+    <xsl:text>
+	        \begin{figure}\begin{center}
+</xsl:text>
+     <xsl:choose>
+     	<xsl:when test="type = 'PDF'">
+     		<xsl:text>\includegraphics[width=0.5\textwidth]{</xsl:text>
+		    <xsl:value-of select="file"/>
+     		<xsl:text>}</xsl:text>
+     	</xsl:when>
+<xsl:otherwise>
+	<xsl:text>...don't know how to insert a figure...</xsl:text>
+</xsl:otherwise>
+     </xsl:choose>
+    <xsl:text>\end{center}\caption{</xsl:text>
+    <xsl:value-of select="caption"/>
+    <xsl:text>}</xsl:text>
+<xsl:if test="@id">
+    <xsl:text>\caption{</xsl:text>
+    <xsl:value-of select="@id"/>
+    <xsl:text>}</xsl:text>
+</xsl:if>
+    <xsl:text>\end{figure}
+
+	      </xsl:text>
+  </xsl:template>
+
   <xsl:template match="table">
     <xsl:text>
-\begin{center}\begin{tabular}{</xsl:text>
-    <xsl:for-each select="./row[1]/cell">
+\begin{center}\begin{tabular}{c|</xsl:text>
+    <xsl:for-each select="./row[1]/cell[position()>1]">
       <xsl:text>c</xsl:text>
     </xsl:for-each>
     <xsl:text>}</xsl:text>

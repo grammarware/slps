@@ -54,7 +54,7 @@
         if executed on the same grammar, would produce a selector-free
         yet structurally equivalent grammar. We used such a generator
         called strips in the FL case study as the final stage to converge
-        the abstract syntax (with selectors) with the concrte syntax (with
+        the abstract syntax (with selectors) with the concrete syntax (with
         terminals).
       </text>
     </content>

@@ -258,6 +258,22 @@ def xldf_add_subsection(cmd,tree):
   print '[----] add-subsection failed, double check or try add-section instead'
  return
 
+def xldf_add_figure(cmd,tree):
+ success = False
+ s = cmd.findall('*')[0]
+ found = findnode(tree,cmd.findtext('to'))
+ if found:
+  if found[-1].tag=='content':
+   found[-1].append(s)
+   print '[XLDF] add-figure to id',cmd.findtext('to')
+   success = True
+ else:
+  print '[----] add-figure failed, can''t find id',cmd.findtext('to')
+  return
+ if not success:
+  print '[----] add-figure failed, double check or try add-section instead'
+ return
+
 def xldf_transform_grammar(cmd,tree):
  root = ET.Element('{'+xbgfns+'}sequence',{})
  cx0 = 0
@@ -395,6 +411,8 @@ def xldf_perform_command(cmd,ltree):
   xldf_add_section(cmd,ltree)
  elif cmdname == 'add-subsection':
   xldf_add_subsection(cmd,ltree)
+ elif cmdname == 'add-figure':
+  xldf_add_figure(cmd,ltree)
  elif cmdname == 'transform-document':
   xldf_transform_document(cmd,ltree)
  else:

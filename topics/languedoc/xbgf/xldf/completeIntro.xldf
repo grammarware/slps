@@ -364,6 +364,20 @@
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
+  <xldf:add-figure>
+    <figure>
+      <caption>
+        Full convergence diagram for BNF and BGF. The top nodes are sources, the bottom node
+        is the target, the arc labels are separate XBGF scripts, the nodes contain
+        numbers of name mismatches and structural mismatches between each step and
+        the synch point (marked as a double circle).
+      </caption>
+      <type>PDF</type>
+      <file>bnfbgf.pdf</file>
+    </figure>
+    <to>compatibility-section</to>
+  </xldf:add-figure>
+
   <xldf:append>
     <where>compatibility-section</where>
     <content>
@@ -385,20 +399,6 @@
     <file>../../presentation/prettyprint/xbgf/refactorBnf.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
-
-  <xldf:add-figure>
-    <figure>
-      <caption>
-        Full convergence diagram for BNF and BGF. The top nodes are sources, the bottom node
-        is the target, the arc labels are separate XBGF scripts, the nodes contain
-        numbers of name mismatches and structural mismatches between each step and
-        the synch point (marked as a double circle).
-      </caption>
-      <type>PDF</type>
-      <file>architecture_large.pdf</file>
-    </figure>
-    <to>compatibility-section</to>
-  </xldf:add-figure>
 
   <xldf:append>
     <where>compatibility-section</where>

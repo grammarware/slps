@@ -470,11 +470,11 @@
     <xsd:annotation>
       <xsd:documentation>
         An unused definition (at most used within the definition itself)
-        is removed. The undefine operator should be used instead when
-        the definition must be remove despite remaining uses. The
-        remove operator should be used instead when only part of the
-        definition (i.e., a production of a vertical definition) is
-        to be removed.
+        is removed. The <ldf:keyword>undefine</ldf:keyword> operator
+        should be utilised instead when the definition must be removed despite
+        remaining uses. The <ldf:keyword>remove</ldf:keyword> operator
+        should be utilised instead when only part of the definition (i.e.,
+        a production of a vertical definition) is  to be removed.
       </xsd:documentation>
     </xsd:annotation>
   </xsd:element>
@@ -537,8 +537,9 @@
       <xsd:documentation>
         Folding replaces every expression that matches with the right hand
         side of the given nonterminal's definition with the nonterminal
-        itself. As with unfold, fold works on the scope of the grammar,
-        but its impact can be limited to one labelled production or to
+        itself. As with <ldf:keyword>unfold</ldf:keyword>,
+        <ldf:keyword>fold</ldf:keyword> works on the scope of the grammar,
+        and its impact can be limited to one labelled production or to
         all the productions belonging to one nonterminal. Regardless
         of the specified scope, folding is not applied to the definition
         of the argument nonterminal.
@@ -546,7 +547,7 @@
       <xsd:documentation>
         Since this transformation strives to preserve the language, it needs
         a horisontal definition to work. When only one of several existing
-        definitions is used for folding, it actually increases the semantics
+        definitions is used for folding, it would actually increase the semantics
         of the language after transformation---the corresponding XBGF command
         is called <ldf:keyword>upgrade</ldf:keyword>.
       </xsd:documentation>
@@ -606,11 +607,11 @@
   <xsd:element name="introduce">
     <xsd:annotation>
       <xsd:documentation>
-        A definition of a fresh nonterminal is added. The add operator
-        should be used instead, if the nonterminal is already defined,
-        is to be merely extended. The define operator should be used
-        instead, if the nonterminal is readily in use, but merely lacks
-        a definition.
+        A definition of a fresh nonterminal is added. The <ldf:keyword>add</ldf:keyword>
+        operator should be used instead, if the nonterminal is already defined,
+        is to be merely extended. The <ldf:keyword>define</ldf:keyword> operator
+        should be used instead, if the nonterminal is readily in use, but merely
+        lacks a definition.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -925,7 +926,8 @@
   <xsd:element name="detour">
     <xsd:annotation>
       <xsd:documentation>
-        A reverse of abridge that can introduce a reflexive chain production.
+        A reverse of <ldf:keyword>abridge</ldf:keyword> that can introduce
+        a reflexive chain production.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -1058,7 +1060,7 @@
   <xsd:element name="unfold">
     <xsd:annotation>
       <xsd:documentation>
-        The most basic unfolding transformation searches for all the instances
+        The most basic unfolding transformation searches the scope for all the instances
         of the given nonterminal usage and replaces such occurrences with the
         defining expression of that nonterminal. By default the scope of the
         transformation is the full grammar, but it can be limited to all the
@@ -1067,9 +1069,9 @@
         of the argument nonterminal.
       </xsd:documentation>
       <xsd:documentation>
-        The definition that is being unfolded is assumed to be horisontal
-        (see the section on refactorings for more information about horisontal
-        and vertical definitions).
+        The definition that is being unfolded is assumed to be horisontal,
+        i.e. to consist of one single production. See the section on refactorings
+        for more information about horisontal and vertical definitions.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -1170,16 +1172,17 @@
   <xsd:element name="yaccify">
     <xsd:annotation>
       <xsd:documentation>
-        This transformation is the reverse of deyaccify. The productions provided
-        as arguments must be yaccified with respect to the actual content of the
-        grammar. If the deyaccification process on them is successful and yields
-        the production that can be found in the grammar, it is removed and replaced
-        by these simpler definitions of an optional
+        This transformation is the reverse of <ldf:keyword>deyaccify</ldf:keyword>.
+        The productions provided as arguments must be yaccified with respect to the
+        actual content of the grammar. If the deyaccification process on them is
+        successful and yields the production that can be found in the grammar, it
+        is removed and replaced by these simpler definitions of an optional
         or repeating nonterminal, given in BNF-only expressiveness.
       </xsd:documentation>
       <xsd:documentation>
-        Some complex yaccify cases require prior use of extract for introduction of
-        an nonterminal for the optional or repeating phrase.
+        Some complex <ldf:keyword>yaccify</ldf:keyword> cases require prior
+        use of extract for introduction of an nonterminal for the optional
+        or repeating phrase.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
