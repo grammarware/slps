@@ -260,7 +260,10 @@ def xldf_add_subsection(cmd,tree):
 
 def xldf_transform_grammar(cmd,tree):
  root = ET.Element('{'+xbgfns+'}sequence',{})
- root.append(cmd.findall('*')[1])
+ cx0 = 0
+ for rule in cmd.findall('*')[1:]:
+  root.append(rule)
+  cx0 += 1
  ET.ElementTree(root).write('xldf-tmp.xbgf')
  found = findnode(tree,cmd.findtext('target'))
  if not found:
@@ -298,7 +301,7 @@ def xldf_transform_grammar(cmd,tree):
    found[-1][-1].append(p)
   cx2 += 1
  if cx2:
-  print '[XLDF] transform(',cmd.findtext('target'),', ...)','-',cx1,':',cx2,'productions'
+  print '[XLDF] transform(',cmd.findtext('target'),', ...)','-',cx0,'x-rules,',cx1,':',cx2,'productions'
  else:
   print '[----] xldf:transform failed: no productions found in XBGF output'
  return

@@ -43,7 +43,7 @@
       <expand>tools</expand>/striptxbgf
     </command>
   </generator>
- 
+
   <source>
     <name>bgf</name>
     <grammar>
@@ -61,22 +61,29 @@
     </grammar>
   </source>
 
-   <target>
+  <target>
     <name>grammarFormat</name>
     <branch>
       <input>bgf</input>
-      <perform>preferBnf</perform>
+      <synchronization>
+        <perform>renameBgf</perform>
+      </synchronization>
+      <transformation>
+        <perform>preferBnf</perform>
+      </transformation>
     </branch>
     <branch>
       <input>bnf</input>
-      <perform>stripWhitespace</perform>
-      <perform>designate</perform>
-      <automated>
-        <method>stript</method>
-        <result>stripTerminals</result>
-      </automated>
-      <perform>refactorBnf</perform>
+      <transformation>
+        <perform>stripWhitespace</perform>
+        <perform>designate</perform>
+        <automated>
+          <method>stript</method>
+          <result>stripTerminals</result>
+        </automated>
+        <perform>refactorBnf</perform>
+      </transformation>
     </branch>
   </target>
-  
+
 </lcf:configuration>

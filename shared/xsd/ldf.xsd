@@ -71,6 +71,7 @@
         <xsd:complexType/>
       </xsd:element>
       <xsd:element name="text" type="ldf:mixedType"/>
+      <xsd:element name="figure" type="ldf:SimpleFigure"/>
       <xsd:element name="table" type="ldf:SimpleTable"/>
       <xsd:element name="list" type="ldf:SimpleList"/>
       <xsd:element name="formula" type="xsd:string"/>
@@ -80,6 +81,15 @@
       <!--<xsd:element ref="mml:math"/>-->
     </xsd:choice>  
   </xsd:group>
+
+  <xsd:complexType name="SimpleFigure">
+    <xsd:sequence>
+      <xsd:element name="caption" type="xsd:string"/>
+      <xsd:element name="type" type="xsd:string"/>
+      <xsd:element name="file" type="xsd:string"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID" use="optional"/>
+  </xsd:complexType>
 
   <xsd:complexType name="SimpleSection">
     <xsd:sequence>

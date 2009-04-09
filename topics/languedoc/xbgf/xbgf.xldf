@@ -23,5 +23,8 @@
   <xldf:transform-document>
     <file>xldf/completeDecorSection.xldf</file>
   </xldf:transform-document>
+  <xldf:transform-document>
+    <file>xldf/completeMiscSection.xldf</file>
+  </xldf:transform-document>
 
 </xldf:sequence>

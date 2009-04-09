@@ -64,27 +64,4 @@
     <inside>group-decorative-transformation</inside>
   </xldf:place>
 
-  <xldf:add-section>
-    <core id="misc">
-      <title>Miscellaneous</title>
-      <author>Vadim Zaytsev</author>
-      <description>
-        <content>
-          <text>T.B.D.</text>
-        </content>
-      </description>
-    </core>
-  </xldf:add-section>
-  <xldf:place>
-    <section>element-dump</section>
-    <inside>misc</inside>
-  </xldf:place>
-  <xldf:place>
-    <section>element-reroot</section>
-    <inside>misc</inside>
-  </xldf:place>
-  <xldf:remove-section>
-    <id>element-strip</id>
-  </xldf:remove-section>
-
 </xldf:sequence>

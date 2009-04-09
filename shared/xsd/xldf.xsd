@@ -45,6 +45,7 @@
       <xsd:element ref="xldf:rename"/>
       <xsd:element ref="xldf:append"/>
       <xsd:element ref="xldf:remove-section"/>
+      <xsd:element ref="xldf:add-figure"/>
       <xsd:element ref="xldf:add-section"/>
       <xsd:element ref="xldf:add-subsection"/>
       <xsd:element ref="xldf:transform-grammar"/>
@@ -74,7 +75,7 @@
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="target" type="xsd:string"/>
-        <xsd:group ref="xbgf:transformation"/>
+        <xsd:group ref="xbgf:transformation" maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -154,9 +155,24 @@
             <xsd:group ref="ldf:normative"/>
             <xsd:group ref="ldf:informative"/>
           </xsd:choice>
-          <xsd:element name="to" type="xsd:string"/>          <!-- IDREF -->
+          <xsd:element name="to" type="xsd:string"/>
+          <!-- IDREF -->
         </xsd:sequence>
       </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="add-figure">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="figure" type="ldf:SimpleFigure"/>
+        <xsd:element name="to" type="xsd:string"/>        <!-- IDREF -->
+      </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
 

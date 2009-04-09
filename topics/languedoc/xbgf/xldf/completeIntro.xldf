@@ -270,13 +270,31 @@
           BNF was defined as a base-line grammar for a pretty-printer and therefor
           defines concrete syntax. BGF is extracted from the corresponding XML Schema
           and contains abstract syntax annotated with selectors. We choose to converge
-          them closer to abstract syntax (BGF). The only transformations applied to
-          the BGF grammar are these:
+          them closer to abstract syntax (BGF).
+        </text>
+        <text>
+          First, we resolve the name mismatch and compensate for the lack of notion of
+          `root elements' in BNF:
         </text>
       </content>
     </compatibility>
   </xldf:add-subsection>
 
+  <xldf:import-sample>
+    <target>compatibility-section</target>
+    <file>../../presentation/prettyprint/xbgf/renameBgf.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+
+  <xldf:append>
+    <where>compatibility-section</where>
+    <content>
+      <text>
+        The only remaining transformations applied to the BGF grammar are these:
+      </text>
+    </content>
+  </xldf:append>
+  
   <xldf:import-sample>
     <target>compatibility-section</target>
     <file>../../presentation/prettyprint/xbgf/preferBnf.xbgf</file>
@@ -287,9 +305,8 @@
     <where>compatibility-section</where>
     <content>
       <text>
-        As we can see, the first two transformations resolve the issue of
-        BGF having a notion of `root element' and BNF not having such a notion
-        at all. The third transformation, <ldf:keyword>narrow</ldf:keyword>, shortens the grammar, but
+        As we can see, the first of these transformations, <ldf:keyword>narrow</ldf:keyword>,
+        shortens the grammar, but
         its semantics only means that we do not want to have empty samples
         while an empty grammar is still acceptable in general. Since this is
         data refinement, a semantic decreasing transformation is used without
@@ -369,6 +386,20 @@
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
 
+  <xldf:add-figure>
+    <figure>
+      <caption>
+        Full convergence diagram for BNF and BGF. The top nodes are sources, the bottom node
+        is the target, the arc labels are separate XBGF scripts, the nodes contain
+        numbers of name mismatches and structural mismatches between each step and
+        the synch point (marked as a double circle).
+      </caption>
+      <type>PDF</type>
+      <file>architecture_large.pdf</file>
+    </figure>
+    <to>compatibility-section</to>
+  </xldf:add-figure>
+
   <xldf:append>
     <where>compatibility-section</where>
     <content>
@@ -408,11 +439,28 @@
     <inside>definitions-section</inside>
   </xldf:place>
 
+  <xldf:transform-grammar>
+    <target>group-transformation</target>
+    <xbgf:vertical>
+      <nonterminal>transformation</nonterminal>
+    </xbgf:vertical>
+     <xbgf:remove>
+      <vertical>
+        <bgf:production>
+          <nonterminal>transformation</nonterminal>
+          <bgf:expression>
+            <nonterminal>strip</nonterminal>
+          </bgf:expression>
+        </bgf:production>
+      </vertical>
+    </xbgf:remove>
+    <xbgf:horizontal>transformation</xbgf:horizontal>
+ </xldf:transform-grammar>
   <xldf:place>
     <section>group-transformation</section>
     <inside>definitions-section</inside>
   </xldf:place>
-
+ 
   <xldf:place>
     <section>group-scope</section>
     <inside>definitions-section</inside>
