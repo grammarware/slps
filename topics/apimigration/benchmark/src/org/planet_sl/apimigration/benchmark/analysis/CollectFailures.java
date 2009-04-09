@@ -1,4 +1,4 @@
-package org.planet_sl.apimigration.benchmark.anno;
+package org.planet_sl.apimigration.benchmark.analysis;
 
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="de/**" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="deps/dom4j-1.6.1/dom4j-1.6.1.jar" sourcepath="deps/dom4j-1.6.1/src/java"/>
 	<classpathentry kind="lib" path="deps/jdom-1.1/build/jdom.jar" sourcepath="deps/jdom-1.1/src/java"/>
@@ -17,11 +17,11 @@
 	<classpathentry kind="lib" path="deps/jaxb-ri/lib/jsr173_1.0_api.jar"/>
 	<classpathentry kind="lib" path="deps/dom4j-1.6.1/lib/jaxen-1.1-beta-6.jar"/>
 	<classpathentry kind="lib" path="deps/XOM/xom-1.2.jar"/>
-	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4">
 		<attributes>
 			<attribute name="org.eclipse.ajdt.inpath" value="org.eclipse.ajdt.inpath"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

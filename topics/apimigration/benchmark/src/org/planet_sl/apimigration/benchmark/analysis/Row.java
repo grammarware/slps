@@ -1,8 +1,18 @@
-package org.planet_sl.apimigration.benchmark.anno;
+package org.planet_sl.apimigration.benchmark.analysis;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+
+import org.planet_sl.apimigration.benchmark.anno.Issue;
+import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Issue.Doc;
+import org.planet_sl.apimigration.benchmark.anno.Issue.Invariant;
+import org.planet_sl.apimigration.benchmark.anno.Issue.Post;
+import org.planet_sl.apimigration.benchmark.anno.Issue.Pre;
+import org.planet_sl.apimigration.benchmark.anno.Issue.Throws;
 
 public class Row {
 
