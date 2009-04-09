@@ -59,6 +59,8 @@ public class CollectMappings {
 		methodMappings(new File("annos.csv"));
 		printMappingTable(new File("mappings.csv"));
 		printImplMappingTable(new File("implmapping.tex"));
+		printMappingTableTeX(new File("dommapping.tex"));
+		
 	}
 	
 	public static void printImplMappingTable(File file) throws IOException {
@@ -78,7 +80,7 @@ public class CollectMappings {
 				"HBW"
 		};
 		
-		writer.write("\\begin{tabular}{|l|l|l|l|l|l|l|l|l|}\\hline\n");
+		writer.write("\\begin{tabular}{|l|r|r|r|r|r|r|r|r|}\\hline\n");
 		for (int i = 0; i < headings.length; i++) {
 			writer.write(headings[i]);
 			if (i < headings.length - 1) {
@@ -121,9 +123,10 @@ public class CollectMappings {
 			writer.write(borderlineCompliantCount.get(from) + " & ");
 			writer.write(dontCareCount.get(from) + " & ");
 			writer.write(brickwalledCount.get(from).toString());
-			writer.write("\\\\\\hline\\hline\n");
+			writer.write("\\\\\\hline\n");
 		}
 		
+		writer.write("\\hline\n");
 		writer.write(" & " + simpleDelegateTotal + " & ");
 		writer.write(advancedDelegateTotal + " & ");
 		writer.write(macroTotal + " & ");
@@ -159,6 +162,50 @@ public class CollectMappings {
 
 		
 		}
+		writer.flush();
+		writer.close();
+	}
+	
+	public static void printMappingTableTeX(File file) throws IOException {
+		List<String> froms = new ArrayList<String>(typeMapping.keySet());
+		Collections.sort(froms);
+		FileWriter writer = new FileWriter(file);	
+		
+		String headings[] = {
+				"XOM Type",
+				"JDOM Type",
+				"\\#Mapped",
+				"\\#Derived"
+		};
+
+		writer.write("\\begin{tabular}{|l|l|r|r|}\\hline\n");
+		for (int i = 0; i < headings.length; i++) {
+			writer.write(headings[i]);
+			if (i < headings.length - 1) {
+				writer.write(" & ");
+			}
+			else {
+				writer.write("\\\\\\hline\\hline\n");
+			}
+			
+		}
+		
+		int mappedTotal = 0;
+		int derivedTotal = 0;
+		
+		for (String from: froms) {
+			mappedTotal += mappedFeatureCount.get(from) == null ? 0 : mappedFeatureCount.get(from);
+			derivedTotal += derivedFeatureCount.get(from) == null ? 0 : derivedFeatureCount.get(from);
+			writer.write(from + " & ");
+			writer.write(typeMapping.get(from).replaceAll("org.jdom.", "") + " & ");
+			writer.write(mappedFeatureCount.get(from) + " & ");
+			writer.write(derivedFeatureCount.get(from) + "\\\\\\hline\n");
+		}
+		
+		writer.write("\\hline\n");
+		
+		writer.write(" & & " + mappedTotal + " & " + derivedTotal + "\\\\\\hline\n");
+		writer.write("\\end{tabular}");
 		writer.flush();
 		writer.close();
 	}
@@ -220,16 +267,16 @@ public class CollectMappings {
 			}
 		}
 		if (mapped) {
+			if (!mappedFeatureCount.containsKey(from)) {
+				mappedFeatureCount.put(from, 0);
+			}
+			if (!derivedFeatureCount.containsKey(from)) {
+				derivedFeatureCount.put(from, 0);
+			}
 			if (!row.to.value().equals("")) {
-				if (!mappedFeatureCount.containsKey(from)) {
-					mappedFeatureCount.put(from, 0);
-				}
 				mappedFeatureCount.put(from, mappedFeatureCount.get(from) + 1);
 			}
 			else {
-				if (!derivedFeatureCount.containsKey(from)) {
-					derivedFeatureCount.put(from, 0);
-				}
 				derivedFeatureCount.put(from, derivedFeatureCount.get(from) + 1);
 			}
 			rows.add(row);
