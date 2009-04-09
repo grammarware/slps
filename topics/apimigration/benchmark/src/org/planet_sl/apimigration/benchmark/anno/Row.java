@@ -166,7 +166,7 @@ public class Row {
 		throw new AssertionError("from is an accessible object that is not Method/Constructor");
 	}
 
-	private static String q(Object o) {
+	static String q(Object o) {
 		if (o == null) {
 			o = "";
 		}

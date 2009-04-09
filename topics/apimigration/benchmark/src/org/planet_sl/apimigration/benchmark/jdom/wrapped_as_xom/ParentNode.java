@@ -7,7 +7,6 @@ import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
 import org.planet_sl.apimigration.benchmark.anno.Issue;
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 
-@MapsTo("org.jdom.Parent")
 public abstract class ParentNode extends Node {
 
 	@Progress(value = Status.TODO, comment = "")

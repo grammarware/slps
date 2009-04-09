@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>APIBenchmark</name>
+	<name>using-xml-apis</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -10,9 +10,15 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.stateofflow.eclipse.metrics.MetricsBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.ajdt.ui.ajnature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>com.stateofflow.eclipse.metrics.MetricsNature</nature>
 	</natures>
 </projectDescription>
