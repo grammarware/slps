@@ -56,7 +56,7 @@ public class ProcessingInstruction extends Node {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("")
 	public String getBaseURI() {
@@ -79,7 +79,7 @@ public class ProcessingInstruction extends Node {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.ProcessingInstruction#getParent()")
 	public ParentNode getParent() {
@@ -104,11 +104,10 @@ public class ProcessingInstruction extends Node {
 		return pi.getValue();
 	}
 
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Post("unsure how XPathContext affects the result")
+	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -123,11 +122,10 @@ public class ProcessingInstruction extends Node {
 		}
 	}
 
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Post("unsure how XPathContext affects the result")
+	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -139,10 +137,10 @@ public class ProcessingInstruction extends Node {
 		}
 	}
 
-	@Progress(value = Status.OK, comment = "")
+	@Progress(value = Status.DONTCARE, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.output.XMLOutputter#outputString(org.jdom.ProcessingInstruction)")
 	public String toXML() {
 		return new org.jdom.output.XMLOutputter().outputString(pi);
 	}
@@ -165,7 +163,6 @@ public class ProcessingInstruction extends Node {
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("org.jdom.ProcessingInstruction#setData(String)")
 	public void setValue(String data) {
-		// TODO: not sure if this is correct.
 		pi.setData(data);
 	}
 

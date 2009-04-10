@@ -11,8 +11,6 @@ import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.CommentTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.DocTypeTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.DocumentTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.ElementTest;
-import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.EncodingTest;
-import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.IDTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.LeafNodeTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.NamespaceNodeTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.NamespacesTest;
@@ -34,8 +32,6 @@ public class CollectFailures {
 		suite.addTestSuite(DocTypeTest.class);
 		suite.addTestSuite(DocumentTest.class);
 		suite.addTestSuite(ElementTest.class);
-		suite.addTestSuite(EncodingTest.class);
-		suite.addTestSuite(IDTest.class);
 		suite.addTestSuite(LeafNodeTest.class);
 		suite.addTestSuite(NamespaceNodeTest.class);
 		suite.addTestSuite(NamespacesTest.class);

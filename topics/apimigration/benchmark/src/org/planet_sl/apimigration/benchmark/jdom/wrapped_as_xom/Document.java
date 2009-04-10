@@ -185,10 +185,10 @@ public class Document extends ParentNode {
 	}
 
 	@Progress(value = Status.DONTCARE, comment = "is a debugging aid")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Issue.Post("the resulting String may be slightly different")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.output.XMLOutputter#outputString(org.jdom.Document)")
 	public String toXML() {
 		return new XMLOutputter().outputString(document);
 	}
@@ -196,7 +196,7 @@ public class Document extends ParentNode {
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Pre(value = "XOM disallows null and Text nodes", resolved = true)
-	@Issue.Throws("special exception for multiple parent situation")
+	@Issue.Throws(value = "special exception for multiple parent situation", resolved = true)
 	@Override
 	@MapsTo("org.jdom.Document#addContent(org.jdom.Content)")
 	public void appendChild(Node child) {
@@ -241,7 +241,7 @@ public class Document extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Document#addContent(int,org.jdom.Content)")
 	public void insertChild(Node child, int position) {
@@ -253,7 +253,7 @@ public class Document extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "detach is absent on jdom documents")
+	@Solution(value = Strategy.CLONE, comment = "detach is absent on jdom documents")
 	@MapsTo("")
 	public void detach() {
 		// nop: documents have no parent.
@@ -268,7 +268,7 @@ public class Document extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Document#getParent()")
 	public ParentNode getParent() {
@@ -281,12 +281,11 @@ public class Document extends ParentNode {
 		}
 		throw new AssertionError("Invalid parent for this document");
 	}
-
+	
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unclear how XPathContext affects the result")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -302,10 +301,9 @@ public class Document extends ParentNode {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unclear how XPathContext affects the result")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -329,6 +327,7 @@ public class Document extends ParentNode {
 	}
 
 	@Progress(value = Status.DONTCARE, comment = "opaque")
+	@Solution(Strategy.DELEGATE)
 	@Override
 	@MapsTo("org.jdom.Document#hashCode()")
 	public int hashCode() {

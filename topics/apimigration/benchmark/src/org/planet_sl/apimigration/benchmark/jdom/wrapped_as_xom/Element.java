@@ -83,7 +83,7 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Element#addContent(org.jdom.Content)")
 	public void appendChild(Node child) {
@@ -95,7 +95,7 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Element#getContent(int)")
 	public Node getChild(int position) {
@@ -103,7 +103,7 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.getContentSize()")
 	public int getChildCount() {
@@ -111,7 +111,7 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Element#indexOf(org.jdom.Content)")
 	public int indexOf(Node child) {
@@ -131,7 +131,7 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Element#removeContent(int)")
 	public Node removeChild(int position) {
@@ -260,7 +260,7 @@ public class Element extends ParentNode {
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Pre("in XOM this element must not be a root of a document")
-	// TODO: should this be Invariant issue? rootElements are always attached
+	@Issue.Invariant("root must remain attached")
 	@Override
 	@MapsTo("org.jdom.Element#detach()")
 	public void detach() {
@@ -321,7 +321,6 @@ public class Element extends ParentNode {
 	@Override
 	@MapsTo("org.jdom.Element#getDocument()")
 	public Document getDocument() {
-		// NB: this does not make it an Advanced Delegate because this a wrapping issue
 		if (element.getDocument() == null) {
 			return null;
 		}
@@ -329,7 +328,7 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Element#getParent()")
 	public ParentNode getParent() {
@@ -355,10 +354,9 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unclear how XPathContext affects the result")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -374,10 +372,9 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unclear how XPathContext affects the result")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -390,15 +387,15 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.DONTCARE, comment = "is debugging aid")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Issue.Post("the resulting string may be slightly different")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.output.XMLOutputter#outputString(Element)")
 	public String toXML() {
 		return new org.jdom.output.XMLOutputter().outputString(element);
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Throws(value = "XOM throws MultipleParentException vs IllegalAddException in jdom", resolved = true)
 	@MapsTo("org.jdom.Element#setAttribute()")
@@ -505,7 +502,7 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("org.jdom.Element#getChildren(String)")
 	public Elements getChildElements(String name) {
 		return new Elements(element.getChildren(name));
@@ -554,20 +551,21 @@ public class Element extends ParentNode {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
-	@Issue.Pre("")
-	@Issue.Post("")
-	@Issue.Throws("")
 	@MapsTo("org.jdom.Element#getName()")
 	public String getLocalName() {
 		return element.getName();
 	}
 
-	@Progress(value = Status.OK, comment = "")
+	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
 	@Issue.Post("TODO: check if result differs because of \"additional\"")
 	@MapsTo("")
 	public int getNamespaceDeclarationCount() {
-		return element.getAdditionalNamespaces().size();
+		int count = element.getAdditionalNamespaces().size();
+		if (element.getNamespace() != null) {
+			count++;
+		}
+		return count;
 	}
 
 	@Progress(value = Status.OK, comment = "")
@@ -661,7 +659,7 @@ public class Element extends ParentNode {
 		}
 	}
 
-	@Progress(value = Status.OK, comment = "")
+	@Progress(value = Status.GIVENUP, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
 	@MapsTo("")
 	public void setNamespacePrefix(String prefix) {
@@ -674,7 +672,7 @@ public class Element extends ParentNode {
 		}
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Progress(value = Status.GIVENUP, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
 	@MapsTo("")
 	public void setNamespaceURI(String uri) {

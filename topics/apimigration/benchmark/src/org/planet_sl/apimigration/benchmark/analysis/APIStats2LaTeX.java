@@ -14,7 +14,7 @@ import org.jdom.*;
 import org.jdom.filter.ElementFilter;
 import org.jdom.input.SAXBuilder;
 
-public class XML2LaTeXTable {
+public class APIStats2LaTeX {
 
 	public static void main(String args[]) throws JDOMException, IOException {
 		SAXBuilder builder = new SAXBuilder();

@@ -64,19 +64,16 @@ public class Comment extends Node {
 		comment.detach();
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
-	@Issue.Pre("")
-	@Issue.Post("unclear how baseURI should be determined for Comments in JDom")
 	@Override
 	@MapsTo("")
 	public String getBaseURI() {
-		// TODO: wrong
-		return comment.getDocument().getBaseURI();
+		return getParent().getBaseURI();
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Comment#getDocument()")
 	public Document getDocument() {
@@ -87,7 +84,7 @@ public class Comment extends Node {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Comment#getParent()")
 	public ParentNode getParent() {
@@ -114,10 +111,9 @@ public class Comment extends Node {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unsure how XPathContext affects the result")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -133,10 +129,9 @@ public class Comment extends Node {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unsure how XPathContext affects the result")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -149,19 +144,16 @@ public class Comment extends Node {
 	}
 
 	@Progress(value = Status.DONTCARE, comment = "is debugging aid")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Issue.Post("the resulting string may be slightly different")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.output.XMLOutputter#outputString(org.jdom.Comment)")
 	public String toXML() {
 		return new XMLOutputter().outputString(comment);
 	}
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Pre("")
-	@Issue.Post("")
-	@Issue.Throws("")
 	@MapsTo("org.jdom.Comment#setText(String)")
 	public void setValue(String data) {
 		if (data == null) {

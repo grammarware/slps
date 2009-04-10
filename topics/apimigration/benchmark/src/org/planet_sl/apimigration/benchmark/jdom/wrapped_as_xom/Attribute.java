@@ -18,13 +18,10 @@ public class Attribute extends Node {
 
 	@MapsTo("int")
 	public static class Type {
+		@Wrapping
 		private int type;
 
-		@Progress(value = Status.OK, comment = "")
-		@Solution(value = Strategy.OTHER, comment = "")
-		@Issue.Pre("")
-		@Issue.Post("")
-		@Issue.Throws("")
+		@Wrapping
 		Type(int type) {
 			this.type = type;
 		}
@@ -53,8 +50,7 @@ public class Attribute extends Node {
 				org.jdom.Attribute.ENUMERATED_TYPE);
 
 		@Progress(value = Status.OK, comment = "")
-		@Solution(value = Strategy.CLONE, comment = "")
-		@API(value = Kind.MACRO, doc = "JDOM attribute types are just ints")
+		@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 		public String getName() {
 			switch (type) {
 			case org.jdom.Attribute.UNDECLARED_TYPE:
@@ -87,20 +83,20 @@ public class Attribute extends Node {
 		}
 
 		@Progress(value = Status.DONTCARE, comment = "toString is for debugging")
-		@Solution(value = Strategy.MACRO, comment = "")
+		@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 		@Override
 		public String toString() {
 			return "[Attribute.Type." + getName() + "]";
 		}
 
 		@Progress(value = Status.DONTCARE, comment = "opaque")
-		@Solution(value = Strategy.MACRO, comment = "")
+		@Solution(value = Strategy.DELEGATE, comment = "")
 		public int hashCode() {
 			return type;
 		}
 
 		@Progress(value = Status.OK, comment = "")
-		@Solution(value = Strategy.MACRO, comment = "")
+		@Solution(value = Strategy.DELEGATE, comment = "")
 		public boolean equals(Object o) {
 			if (!(o instanceof Type)) {
 				return false;
@@ -156,9 +152,6 @@ public class Attribute extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
-	@Issue.Pre("")
-	@Issue.Post("")
-	@Issue.Throws("")
 	@MapsTo("org.jdom.Attribute(String,String,int)")
 	public Attribute(String localName, String value, Attribute.Type type) {
 		this(new org.jdom.Attribute(localName, value, ((Type) type).type));
@@ -166,9 +159,8 @@ public class Attribute extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Pre("")
-	@Issue.Post("")
-	@Issue.Throws("")
+	@Issue.Pre(value = "XOM allows colons in names, JDOM does not", resolved = true)
+	@Issue.Throws(value = "NamespaceConflictException is not thrown by JDOM", resolved = true)
 	@MapsTo("org.jdom.Attribute(String,String,org.jdom.Namespace)")
 	public Attribute(String name, String URI, String value) {
 		int index = name.indexOf(":");
@@ -200,9 +192,6 @@ public class Attribute extends Node {
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Pre(value = "XOM allows colons in names, JDOM does not", resolved = true)
 	@Issue.Throws(value = "NamespaceConflictException is not thrown by JDOM", resolved = true)
-	@API(value = { Kind.DATA, Kind.TYPE }, doc = {
-			"XOM allows colons in names", "JDOM::Namespace",
-			"XOM::Attribute.Type vs. int" })
 	@MapsTo("org.jdom.Attribute(String,String,int,org.jdom.Namespace)")
 	public Attribute(String name, String URI, String value, Attribute.Type type) {
 		int index = name.indexOf(":");
@@ -234,7 +223,6 @@ public class Attribute extends Node {
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
-	@API(value = Kind.IDIOM, doc = "XOM::copy vs. JDOM::clone")
 	@MapsTo("org.jdom.Attribute#clone()")
 	public Node copy() {
 		return new Attribute((org.jdom.Attribute) attribute.clone());
@@ -242,7 +230,6 @@ public class Attribute extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
-	@API(value = Kind.NAMING, doc = "XOM::getLocalName vs JDOM::getName")
 	@MapsTo("org.jdom.Attribute#getName()")
 	public String getLocalName() {
 		return attribute.getName();
@@ -250,7 +237,6 @@ public class Attribute extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
-	@API(Kind.EQUAL)
 	@MapsTo("org.jdom.Attribute#getNamespacePrefix()")
 	public String getNamespacePrefix() {
 		return attribute.getNamespacePrefix();
@@ -272,7 +258,6 @@ public class Attribute extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@API(value = Kind.TYPE, doc = "XOM::Attribute.Type vs int")
 	@MapsTo("org.jdom.Attribute#getAttributeType()")
 	public Type getType() {
 		return new Type(attribute.getAttributeType());
@@ -281,7 +266,6 @@ public class Attribute extends Node {
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
-	@API(Kind.EQUAL)
 	@MapsTo("org.jdom.Attribute#getValue()")
 	public String getValue() {
 		return attribute.getValue();
@@ -289,7 +273,6 @@ public class Attribute extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
-	@API(value = Kind.NAMING, doc = "XOM::setLocalName vs. setName")
 	@MapsTo("org.jdom.Attribute#setName()")
 	public void setLocalName(String localName) {
 		try {
@@ -302,8 +285,6 @@ public class Attribute extends Node {
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Throws(value = "xom throws NamespaceConflictException (not IllegalNameException)", resolved = true)
-	@API(value = { Kind.TYPE, Kind.THROWS }, doc = { "JDOM::Namespace",
-			"JDOM does not check invalid uris" })
 	@MapsTo("org.jdom.Attribute#setNamespace(Namespace)")
 	public void setNamespace(String prefix, String uri) {
 		try {
@@ -326,7 +307,7 @@ public class Attribute extends Node {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("org.jdom.Attribute#setValue()")
 	public void setValue(String value) {
 		try {
@@ -337,8 +318,8 @@ public class Attribute extends Node {
 	}
 
 	@Progress(value = Status.DONTCARE, comment = "is a debugging aid")
-	@Solution(value = Strategy.CLONE, comment = "")
-	@Issue.Post("proper escaping of attribute's value")
+	@Solution(value = Strategy.MACRO, comment = "")
+	@Issue.Post(value = "proper escaping of attribute's value", resolved = true)
 	@Override
 	@MapsTo("")
 	public String toXML() {
@@ -350,7 +331,6 @@ public class Attribute extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
-	// NOTE: no Post issue here; it would be if we would wrap XOM as JDOM...
 	@Override
 	@MapsTo("org.jdom.Attribute#detach()")
 	public void detach() {
@@ -377,7 +357,7 @@ public class Attribute extends Node {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Attribute#getParent()")
 	public ParentNode getParent() {
@@ -388,11 +368,10 @@ public class Attribute extends Node {
 		return new Element(attribute.getParent());
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unclear how XPathContext affects the result")
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -407,12 +386,10 @@ public class Attribute extends Node {
 		}
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unclear how XPathContext affects the result")
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Override
-	@API(value = Kind.MACRO, doc = "query is not directly supported")
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -435,7 +412,7 @@ public class Attribute extends Node {
 		return attribute.equals(((Attribute) o).attribute);
 	}
 
-	@Progress(value = Status.DONTCARE, comment = "opaque")
+	@Progress(value = Status.OK, comment = "opaque")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.Attribute#hashCode()")

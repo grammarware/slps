@@ -147,7 +147,7 @@ public class DocType extends Node {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Issue.Pre("XOM parses the InternalSubset string and throws accordingly")
 	@MapsTo("org.jdom.DocType#setInternalSubset(String)")
 	public void setInternalDTDSubset(String subset) {
@@ -200,10 +200,10 @@ public class DocType extends Node {
 	}
 
 	@Progress(value = Status.DONTCARE, comment = "debugging aid")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Issue.Post("output may differ slightly")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.output.XMLOutputter#outputString(org.jdom.OutputType)")
 	public String toXML() {
 		return new org.jdom.output.XMLOutputter().outputString(doctype);
 	}
@@ -243,7 +243,7 @@ public class DocType extends Node {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.DocType#getParent()")
 	public ParentNode getParent() {
@@ -261,11 +261,11 @@ public class DocType extends Node {
 		throw new AssertionError("invalid parent for doctype");
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unclear how XPathContext affects the result")
+
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -280,11 +280,10 @@ public class DocType extends Node {
 		}
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unclear how XPathContext affects the result")
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -294,5 +293,13 @@ public class DocType extends Node {
 		} catch (org.jdom.JDOMException e) {
 			throw new XPathException(e.getMessage(), e.getCause());
 		}
+	}
+	
+	@Progress(value = Status.DONTCARE, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
+	@Override
+	@MapsTo("")
+	public String toString() {
+		return  "[nu.xom.DocType: " + doctype.getElementName() + "]";
 	}
 }
