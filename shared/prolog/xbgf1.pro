@@ -1124,7 +1124,7 @@ narrow_rules(a,_).
 narrow_rules(*(X),+(X)).
 narrow_rules(*(X),?(X)).
 narrow_rules(*(X),X).
-narrow_rules(+(X),?(X)).
+%narrow_rules(+(X),?(X)).
 narrow_rules(+(X),X).
 narrow_rules(?(X),X).
 %narrow_rules(';'(L),X) :- length(L,2),member(X,L),member(true,L).
