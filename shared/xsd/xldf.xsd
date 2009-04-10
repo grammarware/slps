@@ -48,6 +48,7 @@
       <xsd:element ref="xldf:add-figure"/>
       <xsd:element ref="xldf:add-section"/>
       <xsd:element ref="xldf:add-subsection"/>
+      <xsd:element ref="xldf:extract-subsection"/>
       <xsd:element ref="xldf:transform-grammar"/>
       <xsd:element ref="xldf:transform-document"/>
     </xsd:choice>
@@ -159,6 +160,24 @@
           <!-- IDREF -->
         </xsd:sequence>
       </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="extract-subsection">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="from" type="xsd:string"/>
+        <xsd:element name="content" type="ldf:SimpleText"/>
+        <xsd:element name="title" type="xsd:string"/>
+        <xsd:element name="id" type="xsd:string"/>
+        <!--<xsd:element name="section" type="ldf:StructuredSection"/>-->
+        <xsd:element name="to" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
 

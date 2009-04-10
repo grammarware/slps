@@ -69,6 +69,9 @@
     <None Include="..\presentation\prettyprint\xbgf\refactorBnf.xbgf">
       <Link>xbgf\bnf\xbgf\refactorBnf.xbgf</Link>
     </None>
+    <None Include="..\presentation\prettyprint\xbgf\renameBgf.xbgf">
+      <Link>xbgf\bnf\xbgf\renameBgf.xbgf</Link>
+    </None>
     <None Include="..\presentation\prettyprint\xbgf\stripTerminals.xbgf">
       <Link>xbgf\bnf\xbgf\stripTerminals.xbgf</Link>
     </None>
@@ -82,6 +85,7 @@
     <None Include="xbgf\xldf\completeFoldSection.xldf" />
     <None Include="xbgf\xldf\completeIncSection.xldf" />
     <None Include="xbgf\xldf\completeIntro.xldf" />
+    <None Include="xbgf\xldf\completeMiscSection.xldf" />
     <None Include="xbgf\xldf\completeRefSection.xldf" />
     <None Include="xbgf\xldf\completeRevSections.xldf" />
   </ItemGroup>

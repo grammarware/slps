@@ -42,7 +42,7 @@
             <ldf:keyword>Language documentation.</ldf:keyword>
             It is possible and quite expected that the grammar that is shown in the language
             standard, programmer's manual or any similar document is not exactly the same
-            as the one used for creating a compiler. For example, Java Language Specification
+            as the one used for creating a compiler. For instance, Java Language Specification
             includes two grammars, each one created and maintained manually and separately.
             A transformation suite can be useful in such a case since it helps to generate
             one of the versions (perhaps the more reader-friendly one) from the other automatically,

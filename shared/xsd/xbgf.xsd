@@ -55,6 +55,8 @@
       <xsd:group ref="xbgf:concrete-revising-transformation"/>
       <xsd:group ref="xbgf:abstract-revising-transformation"/>
       <xsd:group ref="xbgf:decorative-transformation"/>
+      <!-- semantics unclear -->
+      <xsd:element ref="xbgf:rename"/>
       <!-- status unclear -->
       <xsd:element ref="xbgf:reroot"/>
       <!-- deprecated -->
@@ -113,8 +115,6 @@
       <xsd:element ref="xbgf:import"/>
       <xsd:element ref="xbgf:vertical"/>
       <xsd:element ref="xbgf:horizontal"/>
-      <!-- semantics unclear -->
-      <xsd:element ref="xbgf:rename"/>
       <!-- do we need them? -->
       <xsd:element ref="xbgf:rassoc"/>
       <xsd:element ref="xbgf:lassoc"/>
@@ -452,8 +452,7 @@
   <xsd:element name="dump">
     <xsd:annotation>
       <xsd:documentation>
-        Not so much of a decorative transformation, but more of a
-        debugging tool. When the dump command is encountered,
+        A debugging tool for XBGF. When the <ldf:keyword>dump</ldf:keyword> command is encountered,
         the transformation sequence stops and the grammar in its
         current state is dumped to the file xbgf.log.
       </xsd:documentation>
@@ -644,7 +643,7 @@
         with regard to the defined nonterminal. The argument production
         replace a production with the same defined nonterminal and label,
         if any, assuming that the defining expression uses an equivlent,
-        repeating expression form. The "l" in "lassoc" refers to the
+        repeating expression form. The `l' in `lassoc' refers to the
         intended effect at the level of derivation trees: the list of
         subtrees is to be converted into a nested binary tree in a
         left-associative manner.
@@ -758,7 +757,7 @@
         with regard to the defined nonterminal. The argument production
         replace a production with the same defined nonterminal and label,
         if any, assuming that the defining expression uses an equivlent,
-        repeating expression form. The "r" in "rassoc" refers to the
+        repeating expression form. The `r' in `rassoc' refers to the
         intended effect at the level of derivation trees: the list of
         subtrees is to be converted into a nested binary tree in a
         right-associative manner.

@@ -31,11 +31,13 @@
  add,addV,addH,appear,widen,upgrade,unite,
  remove,removeV,removeH,disappear,narrow,downgrade,
  abstractize,concretize,permute,
- define,undefine,rederfine,inject,project,replace,
+ define,undefine,redefine,inject,project,replace,
  designate,unlabel,deanonymize,anonymize,dump,reroot,in},
   columns=fullflexible,
   basicstyle=\tt,
 }
+\newcommand{\subsubsubsection}[1]{\paragraph{#1}}
+\newcommand{\subsubsubsubsection}[1]{\subparagraph{#1}}
 \begin{document}
     </xsl:text>
     <!-- title -->
@@ -251,9 +253,13 @@
     </xsl:choose>
     <xsl:text>}</xsl:text>
   </xsl:template>
+  
   <xsl:template name="subsectionize">
     <xsl:param name="target"/>
-    <xsl:text>\subsection{</xsl:text>
+    <xsl:param name="level"/>
+    <xsl:text>\sub</xsl:text>
+    <xsl:value-of select="$level"/>
+    <xsl:text>section{</xsl:text>
     <xsl:choose>
       <xsl:when test="$target/title">
         <xsl:value-of select="$target/title"/>
@@ -266,22 +272,7 @@
     </xsl:choose>
     <xsl:text>}</xsl:text>
   </xsl:template>
-  <xsl:template name="subsubsectionize">
-    <xsl:param name="target"/>
-    <xsl:text>\subsubsection{</xsl:text>
-    <xsl:choose>
-      <xsl:when test="$target/title">
-        <xsl:value-of select="$target/title"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="capitaliseLocalName">
-          <xsl:with-param name="section" select="$target"/>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:text>}</xsl:text>
-  </xsl:template>
-
+  
   <xsl:template name="process-SimpleSection">
     <xsl:param name="section"/>
     <xsl:for-each select="$section/*">
@@ -313,14 +304,22 @@
 
   <xsl:template name="process-StructuredSection">
     <xsl:param name="section"/>
+    <xsl:param name="level"/>
     <xsl:for-each select="$section/*">
       <xsl:choose>
         <xsl:when test="local-name() = 'subtopic'">
           <xsl:call-template name="subsectionize">
             <xsl:with-param name="target" select="."/>
+            <xsl:with-param name="level">
+              <xsl:value-of select="$level"/>
+            </xsl:with-param>
           </xsl:call-template>
           <xsl:call-template name="process-StructuredSection">
             <xsl:with-param name="section" select="."/>
+            <xsl:with-param name="level">
+              <xsl:text>sub</xsl:text>
+              <xsl:value-of select="$level"/>
+            </xsl:with-param>
           </xsl:call-template>
         </xsl:when>
         <xsl:when test="local-name() = 'author'"/>
@@ -333,13 +332,19 @@
         <xsl:otherwise>
           <xsl:choose>
             <xsl:when test="local-name($section) = 'subtopic'">
-              <xsl:call-template name="subsubsectionize">
+              <xsl:call-template name="subsectionize">
                 <xsl:with-param name="target" select="."/>
+                <xsl:with-param name="level">
+                  <xsl:value-of select="$level"/>
+                </xsl:with-param>
               </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
               <xsl:call-template name="subsectionize">
                 <xsl:with-param name="target" select="."/>
+                <xsl:with-param name="level">
+                  <xsl:value-of select="$level"/>
+                </xsl:with-param>
               </xsl:call-template>
             </xsl:otherwise>
           </xsl:choose>
@@ -387,7 +392,7 @@
 	      </xsl:text>
   </xsl:template>
 
-<!--
+  <!--
 	\begin{figure}[t!]
 	\begin{center}
 	\includegraphics[width=0.85\textwidth]{convtree_jls_s.pdf}
@@ -401,24 +406,24 @@
     <xsl:text>
 	        \begin{figure}\begin{center}
 </xsl:text>
-     <xsl:choose>
-     	<xsl:when test="type = 'PDF'">
-     		<xsl:text>\includegraphics[width=0.5\textwidth]{</xsl:text>
-		    <xsl:value-of select="file"/>
-     		<xsl:text>}</xsl:text>
-     	</xsl:when>
-<xsl:otherwise>
-	<xsl:text>...don't know how to insert a figure...</xsl:text>
-</xsl:otherwise>
-     </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="type = 'PDF'">
+        <xsl:text>\includegraphics[width=0.5\textwidth]{</xsl:text>
+        <xsl:value-of select="file"/>
+        <xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>...don't know how to insert a figure...</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:text>\end{center}\caption{</xsl:text>
     <xsl:value-of select="caption"/>
     <xsl:text>}</xsl:text>
-<xsl:if test="@id">
-    <xsl:text>\caption{</xsl:text>
-    <xsl:value-of select="@id"/>
-    <xsl:text>}</xsl:text>
-</xsl:if>
+    <xsl:if test="@id">
+      <xsl:text>\caption{</xsl:text>
+      <xsl:value-of select="@id"/>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
     <xsl:text>\end{figure}
 
 	      </xsl:text>

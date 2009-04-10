@@ -157,7 +157,7 @@
   <xldf:add-subsection>
     <example id="fold-example">
       <content>
-      <text>Very much like unfolding, folding can take place locally. For example,</text>
+      <text>Very much like unfolding, folding can take place locally. For instance,</text>
     </content>
     </example>
     <to>element-fold</to>

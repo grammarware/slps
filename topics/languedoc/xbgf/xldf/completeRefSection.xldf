@@ -368,7 +368,7 @@
         because otherwise the choice of two epsilons would be removed automatically
         during the normalisation phase. The rest of distributivity laws are expressed
         quite similarly to this example.
-    </text>
+      </text>
     </content>
   </xldf:append>
 
@@ -378,7 +378,9 @@
   </xldf:place>
   <xldf:add-subsection>
     <example id="distribute-example">
-      <content> <text>For example,</text></content>
+      <content>
+        <text>For instance,</text>
+      </content>
     </example>
     <to>element-distribute</to>
   </xldf:add-subsection>
@@ -407,7 +409,7 @@
     <target>distribute-example</target>
     <file>../../transformation/xbgf/tests/distribute_nt.baseline</file>
   </xldf:import-grammar>
-  
+
   <xldf:place>
     <section>element-factor</section>
     <inside>group-refactoring-transformation</inside>
@@ -442,7 +444,7 @@
   <xldf:add-subsection>
     <example id="factor-example">
       <content>
-        <text>For example,</text>
+        <text>For instance,</text>
       </content>
     </example>
     <to>element-factor</to>
@@ -472,7 +474,7 @@
     <target>factor-example</target>
     <file>../../transformation/xbgf/tests/factor3.baseline</file>
   </xldf:import-grammar>
-  
+
   <xldf:place>
     <section>element-deyaccify</section>
     <inside>group-refactoring-transformation</inside>
@@ -568,7 +570,7 @@
   <xldf:add-subsection>
     <example id="yaccify-example">
       <content>
-        <text>For example, this piece of grammar:</text>
+        <text>For instance, this piece of grammar:</text>
       </content>
     </example>
     <to>element-yaccify</to>
@@ -618,17 +620,84 @@
   <xldf:import-grammar>
     <target>yaccify-example</target>
     <file>../../transformation/xbgf/tests/yaccify_right_plus.baseline</file>
-  </xldf:import-grammar>  
+  </xldf:import-grammar>
+
   <xldf:place>
     <section>element-eliminate</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
-  
+  <xldf:add-subsection>
+    <example id="eliminate-example">
+      <content>
+        <text>For instance,</text>
+      </content>
+    </example>
+    <to>element-eliminate</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>eliminate-example</target>
+    <file>../../transformation/xbgf/tests/eliminate.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>eliminate-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>eliminate-example</target>
+    <file>../../transformation/xbgf/tests/eliminate.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>eliminate-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>eliminate-example</target>
+    <file>../../transformation/xbgf/tests/eliminate.baseline</file>
+  </xldf:import-grammar>
+
   <xldf:place>
     <section>element-introduce</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
-  
+  <xldf:add-subsection>
+    <example id="introduce-example">
+      <content>
+        <text>For instance,</text>
+      </content>
+    </example>
+    <to>element-introduce</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>introduce-example</target>
+    <file>../../transformation/xbgf/tests/introduce.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>introduce-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>introduce-example</target>
+    <file>../../transformation/xbgf/tests/introduce.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>introduce-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>introduce-example</target>
+    <file>../../transformation/xbgf/tests/introduce.baseline</file>
+  </xldf:import-grammar>
+
   <xldf:place>
     <section>element-import</section>
     <inside>group-refactoring-transformation</inside>
@@ -657,7 +726,7 @@
   <xldf:add-subsection>
     <example id="import-example">
       <content>
-        <text>For example,</text>
+        <text>For instance,</text>
       </content>
     </example>
     <to>element-import</to>
@@ -687,27 +756,157 @@
     <target>import-example</target>
     <file>../../transformation/xbgf/tests/import.baseline</file>
   </xldf:import-grammar>
-  
+
   <xldf:place>
     <section>element-vertical</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
-  
+  <xldf:add-subsection>
+    <example id="vertical-example">
+      <content>
+        <text>If the original production contained selectors:</text>
+      </content>
+    </example>
+    <to>element-vertical</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>vertical-example</target>
+    <file>../../transformation/xbgf/tests/vertical_s.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>vertical-example</where>
+    <content>
+      <text>the, after using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>vertical-example</target>
+    <file>../../transformation/xbgf/tests/vertical_s.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>vertical-example</where>
+    <content>
+      <text>they are converted to labels:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>vertical-example</target>
+    <file>../../transformation/xbgf/tests/vertical_s.baseline</file>
+  </xldf:import-grammar>
+
   <xldf:place>
     <section>element-horizontal</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
-  <xldf:place>
-    <section>element-rename</section>
-    <inside>group-refactoring-transformation</inside>
-  </xldf:place>
+  <xldf:add-subsection>
+    <example id="horizontal-example">
+      <content>
+        <text>If some or all of the original productions are labelled:</text>
+      </content>
+    </example>
+    <to>element-horizontal</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>horizontal-example</target>
+    <file>../../transformation/xbgf/tests/horizontal_l.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>horizontal-example</where>
+    <content>
+      <text>the, after using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>horizontal-example</target>
+    <file>../../transformation/xbgf/tests/horizontal_l.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>horizontal-example</where>
+    <content>
+      <text>each label is converted to a selector in a corresponding place:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>horizontal-example</target>
+    <file>../../transformation/xbgf/tests/horizontal_l.baseline</file>
+  </xldf:import-grammar>
+
   <xldf:place>
     <section>element-rassoc</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
+  <xldf:add-subsection>
+    <example id="rassoc-example">
+      <content>
+        <text>For instance,</text>
+      </content>
+    </example>
+    <to>element-rassoc</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>rassoc-example</target>
+    <file>../../transformation/xbgf/tests/rassoc1.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>rassoc-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>rassoc-example</target>
+    <file>../../transformation/xbgf/tests/rassoc1.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>rassoc-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>rassoc-example</target>
+    <file>../../transformation/xbgf/tests/rassoc1.baseline</file>
+  </xldf:import-grammar>
+  
   <xldf:place>
     <section>element-lassoc</section>
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
-
+  <xldf:add-subsection>
+    <example id="lassoc-example">
+      <content>
+        <text>For instance,</text>
+      </content>
+    </example>
+    <to>element-lassoc</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>lassoc-example</target>
+    <file>../../transformation/xbgf/tests/lassoc1.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>lassoc-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>lassoc-example</target>
+    <file>../../transformation/xbgf/tests/lassoc1.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>lassoc-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>lassoc-example</target>
+    <file>../../transformation/xbgf/tests/lassoc1.baseline</file>
+  </xldf:import-grammar>
+  
 </xldf:sequence>

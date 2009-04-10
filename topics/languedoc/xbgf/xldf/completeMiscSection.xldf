@@ -2,7 +2,210 @@
 <xldf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
-  xmlns:xldf="http://planet-sl.org/xldf">
+  xmlns:xldf="http://planet-sl.org/xldf"
+  xmlns:ldf="http://planet-sl.org/ldf">
+
+  <!--
+  <xldf:place>
+    <section>element-rename</section>
+    <inside>group-refactoring-transformation</inside>
+  </xldf:place>-->
+  <xldf:transform-grammar>
+    <target>element-rename</target>
+    <xbgf:vertical>
+      <nonterminal>rename</nonterminal>
+    </xbgf:vertical>
+  </xldf:transform-grammar>
+  
+  <xldf:extract-subsection>
+    <from>element-rename</from>
+    <content>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <label>label</label>
+        <nonterminal>rename</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <selectable>
+                <selector>from</selector>
+                <bgf:expression>
+                  <nonterminal>label</nonterminal>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <selectable>
+                <selector>to</selector>
+                <bgf:expression>
+                  <nonterminal>label</nonterminal>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </content>
+    <title>renameL</title>
+    <id>element-rename-label</id>
+  </xldf:extract-subsection>
+  <xldf:append>
+    <where>element-rename-label</where>
+    <content>
+      <text>
+        Renaming labels is a semantic preserving grammar transformation pretty-printed as <ldf:keyword>renameL</ldf:keyword>.
+        Given two label names, it simply searches the grammar for productions with the original label
+        and re-designates them with the new one.
+      </text>
+      <text>
+        <ldf:keyword>renameL</ldf:keyword> is a simple syntactic sugar for the specific combination of
+        <ldf:keyword>unlabel</ldf:keyword> and <ldf:keyword>designate</ldf:keyword>.
+      </text>
+    </content>
+  </xldf:append>
+
+  <xldf:extract-subsection>
+    <from>element-rename</from>
+    <content>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <label>nonterminal</label>
+        <nonterminal>rename</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <selectable>
+                <selector>from</selector>
+                <bgf:expression>
+                  <nonterminal>nonterminal</nonterminal>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <selectable>
+                <selector>to</selector>
+                <bgf:expression>
+                  <nonterminal>nonterminal</nonterminal>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </content>
+    <title>renameN</title>
+    <id>element-rename-nonterminal</id>
+  </xldf:extract-subsection>
+  <xldf:append>
+    <where>element-rename-nonterminal</where>
+    <content>
+      <text>
+        Similarly, this transformation can be used to rename nonterminals.
+        This variant is a syntactic sugar for the specific combination of
+        <ldf:keyword>inline</ldf:keyword> and <ldf:keyword>extract</ldf:keyword>,
+        it is a semantic preserving grammar transformation that is
+        pretty-printed as <ldf:keyword>renameN</ldf:keyword>.
+      </text>
+    </content>
+  </xldf:append>
+  
+  <xldf:extract-subsection>
+    <from>element-rename</from>
+    <content>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <label>selector</label>
+        <nonterminal>rename</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <selectable>
+                    <selector>in</selector>
+                    <bgf:expression>
+                      <nonterminal>label</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <selectable>
+                <selector>from</selector>
+                <bgf:expression>
+                  <nonterminal>selector</nonterminal>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <selectable>
+                <selector>to</selector>
+                <bgf:expression>
+                  <nonterminal>selector</nonterminal>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </content>
+    <title>renameS</title>
+    <id>element-rename-selector</id>
+  </xldf:extract-subsection>
+  <xldf:append>
+    <where>element-rename-selector</where>
+    <content>
+      <text>
+        Selectors can also be renamed by a semantic preserving grammar transformation that is
+        pretty-printed as <ldf:keyword>renameS</ldf:keyword>.
+        This variant is a syntactic sugar for the specific combination of
+        <ldf:keyword>anonymize</ldf:keyword> and <ldf:keyword>deanonymize</ldf:keyword>.
+      </text>
+    </content>
+  </xldf:append>
+  
+  <xldf:extract-subsection>
+    <from>element-rename</from>
+    <content>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <label>terminal</label>
+        <nonterminal>rename</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <selectable>
+                <selector>from</selector>
+                <bgf:expression>
+                  <nonterminal>terminal</nonterminal>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <selectable>
+                <selector>to</selector>
+                <bgf:expression>
+                  <nonterminal>terminal</nonterminal>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </content>
+    <title>renameT</title>
+    <id>element-rename-terminal</id>
+  </xldf:extract-subsection>
+  <xldf:append>
+    <where>element-rename-terminal</where>
+    <content>
+      <text>
+        Renaming terminals breaks string-oriented (concrete) semantics, but is still possible.
+        This variant is pretty-printed as <ldf:keyword>renameT</ldf:keyword>, it is
+        essentially syntactic sugar for the specific combination of
+        <ldf:keyword>abstractize</ldf:keyword> and <ldf:keyword>concretize</ldf:keyword>.
+      </text>
+    </content>
+  </xldf:append>
+  
+  <!--
   
   <xldf:add-section>
     <core id="misc">
@@ -22,7 +225,7 @@
   <xldf:place>
     <section>element-reroot</section>
     <inside>misc</inside>
-  </xldf:place>
+  </xldf:place>-->
   <xldf:remove-section>
     <!-- eliminate(strip) is implicit -->
     <id>element-strip</id>

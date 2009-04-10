@@ -29,6 +29,9 @@ def preparetext(s):
   return ' '.join(map(string.strip,s.split('\n')))
 
 def xldf_insert(cmd,tree):
+ if cmd.findall('*')[0].findall('*')[0].tag != 'text':
+  xldf_insert_symbolic(cmd,tree)
+  return
  welookfor = preparetext(cmd.findtext('*/*'))
  for cnt in tree.findall('.//content'):
   passed = False
@@ -71,6 +74,63 @@ def xldf_insert(cmd,tree):
    print ')'
    return
  print '[----] xldf:insert failed, cannot find the designated target!'
+ return
+
+def xml_eq(x,y):
+ if preparetext(x.text)!=preparetext(y.text):
+  return False
+ ex = x.findall('*')
+ ey = y.findall('*')
+ if len(ex)!=len(ey):
+  return False
+ for i in range(0,len(ex)):
+  if not xml_eq(ex[i],ey[i]):
+   return False
+ return True
+
+def xldf_insert_symbolic(cmd,tree):
+ welookfor = cmd.findall('*')[0].findall('*')[0]
+ for cnt in tree.findall('.//content'):
+  passed = False
+  for eli in range(0,len(cnt)):
+   if xml_eq(cnt[eli],welookfor):
+    cnt_idx = eli
+    passed = True
+  if passed:
+   if cmd.findall('*')[0].tag=='after':
+    cnt_idx += 1
+   print '[XLDF] insertS(',
+   cx = 0
+   ctag = ''
+   for el in cmd.findall('content/*'):
+    if cx:
+     if ctag==el.tag:
+      cx += 1
+     else:
+      if cx==1:
+       print ctag,
+      else:
+       print ctag,'*',cx,
+      cx = 1
+      ctag = el.tag
+    else:
+     cx = 1
+     ctag = el.tag
+    #print el.tag,
+    cnt.insert(cnt_idx,ET.Element(el.tag,{}))
+    cnt[cnt_idx].text = el.text
+    for k in el:
+     cnt[cnt_idx].append(k)
+    #print el.tail
+    cnt_idx += 1
+   if cx:
+    if cx==1:
+     print ctag,
+    else:
+     print ctag,'*',cx,
+   print ')'
+   return
+ print '[----] xldf:insertS failed, cannot find the designated target!'
  return
 
 def findnode(tree,id):
@@ -223,7 +283,7 @@ def xldf_add_section(cmd,tree):
   print '[XLDF] add-section to the core'
   success = True
  if not success:
-  print '[----] add-section failed, double check or try add-subsection instead'
+  print '[----] xldf:add-section failed, double check or try add-subsection instead'
  return
 
 def xldf_remove_section(cmd,tree):
@@ -236,26 +296,49 @@ def xldf_remove_section(cmd,tree):
    tree.getroot().remove(found)
   print '[XLDF] remove-section is successful'
  else:
-  print '[----] remove-section couldn''t find id',cmd.findtext('id')
+  print '[----] xldf:remove-section couldn''t find id',cmd.findtext('id')
 
 def xldf_add_subsection(cmd,tree):
  success = False
  s = cmd.findall('*')[0]
  if s.tag in ('foreword','designGoals','scope','conformance','compliance','compatibility','notation','normativeReferences','documentStructure','whatsnew'):
   tree.findall('//frontMatter')[0].append(s)
-  print '[XLDF] add-subsection to front matter'
+  print '[XLDF] add-subsection (',s.tag,', front matter, ...)'
   success = True
  elif s.tag in ('purpose','description','location','considerations','defaults','normative','note','example','informative'):
   found = findnode(tree,cmd.findtext('to'))
   if found:
    found.append(s)
-   print '[XLDF] add-subsection to id',cmd.findtext('to')
+   print '[XLDF] add-subsection (',s.tag,',',cmd.findtext('to'),'...)'
    success = True
   else:
-   print '[----] add-subsection failed, can''t find id',cmd.findtext('to')
+   print '[----] xldf:add-subsection failed, can''t find id',cmd.findtext('to')
    return
  if not success:
-  print '[----] add-subsection failed, double check or try add-section instead'
+  print '[----] xldf:add-subsection failed, double check or try add-section instead'
+ return
+
+def xldf_extract_subsection(cmd,tree):
+ where = findnode(tree,cmd.findtext('from'))
+ if not where:
+  print '[----] xldf:extract-subsection failed, can''t find id',cmd.findtext('to')
+  return
+ for e1 in where.findall('*/content/*'):
+  for e2 in cmd.findall('content/*'):
+   if xml_eq(e1,e2):
+    where.findall('*/content')[0].remove(e1)
+ st = ET.SubElement(where,'subtopic')
+ e = ET.SubElement(st,'title')
+ e.text = cmd.findtext('title')
+ e = ET.SubElement(st,'description')
+ e = ET.SubElement(e,'content')
+ for e2 in cmd.findall('content/*'):
+  e.append(e2)
+ print '[XLDF] extract-subsection (',cmd.findtext('from'),', content,',cmd.findtext('title'),
+ if cmd.findall('id'):
+  st.set('id',cmd.findtext('id'))
+  print ',',cmd.findtext('id'),
+ print ')'
  return
 
 def xldf_add_figure(cmd,tree):
@@ -386,37 +469,10 @@ def xldf_transform_document(cmd,tree):
  return
 
 def xldf_perform_command(cmd,ltree):
- cmdname = cmd.tag.replace('{'+xldfns+'}','')
- if cmdname == 'insert':
-  xldf_insert(cmd,ltree)
- elif cmdname == 'transform-grammar':
-  xldf_transform_grammar(cmd,ltree)
- elif cmdname == 'import-grammar':
-  xldf_import_grammar(cmd,ltree)
- elif cmdname == 'import-sample':
-  xldf_import_sample(cmd,ltree)
- elif cmdname == 'drop':
-  xldf_drop(cmd,ltree)
- elif cmdname == 'place':
-  xldf_place(cmd,ltree)
- elif cmdname == 'combine':
-  xldf_combine(cmd,ltree)
- elif cmdname == 'rename':
-  xldf_rename(cmd,ltree)
- elif cmdname == 'append':
-  xldf_append(cmd,ltree)
- elif cmdname == 'remove-section':
-  xldf_remove_section(cmd,ltree)
- elif cmdname == 'add-section':
-  xldf_add_section(cmd,ltree)
- elif cmdname == 'add-subsection':
-  xldf_add_subsection(cmd,ltree)
- elif cmdname == 'add-figure':
-  xldf_add_figure(cmd,ltree)
- elif cmdname == 'transform-document':
-  xldf_transform_document(cmd,ltree)
- else:
-  print '[----] Unknown XLDF command:',cmdname
+ try:
+  eval('xldf_'+cmd.tag.replace('{'+xldfns+'}','').replace('-','_'))(cmd,ltree)
+ except NameError,e:
+  print '[----] Unknown XLDF command:',cmd.tag.replace('{'+xldfns+'}','')
 
 def main(xldffile,inldffile,outldffile):
  grammar={}
