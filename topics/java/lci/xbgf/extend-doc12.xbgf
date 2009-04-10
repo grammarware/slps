@@ -1305,7 +1305,11 @@
         <bgf:expression>
           <sequence>
             <bgf:expression>
-              <nonterminal>VariableModifiers</nonterminal>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>VariableModifiers</nonterminal>
+                </bgf:expression>
+              </optional>
             </bgf:expression>
             <bgf:expression>
               <nonterminal>Type</nonterminal>

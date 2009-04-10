@@ -240,6 +240,18 @@ AnnotationConstantRest:
   </xbgf:inject>
 
   <!-- ISSUE CORRECT SPECERROR - forgotten definition -->
+  <!--    as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
+18.1 has no definition of FormalParameter, and should use this, as should 8.4.1 and 14.20:
+
+  FormalParameter:
+    VariableModifiers_opt Type VariableDeclaratorId
+    
+    VVZ does not agree to this fix, it should be in the same way it was in JLS2:
+
+FormalParameter:
+    "final"? Type VariableDeclaratorId
+    
+    -->
   <!-- GENERALITY -->
   <xbgf:define>
     <bgf:production>

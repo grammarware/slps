@@ -353,15 +353,20 @@
   <xbgf:extract>
     <bgf:production>
       <nonterminal>VariableModifiers</nonterminal>
-      <bgf:expression>
-        <optional>
           <bgf:expression>
             <terminal>final</terminal>
           </bgf:expression>
-        </optional>
-      </bgf:expression>
     </bgf:production>
+    <in>
+      <nonterminal>FormalParameter</nonterminal>
+    </in>
   </xbgf:extract>
+  <xbgf:fold>
+    <nonterminal>VariableModifiers</nonterminal>
+    <in>
+      <nonterminal>LocalVariableDeclaration</nonterminal>
+    </in>
+  </xbgf:fold>
   <xbgf:chain>
     <bgf:production>
       <nonterminal>VariableModifiers</nonterminal>
@@ -411,21 +416,6 @@
      vs.
       - [], ;([t(final), n(Annotation)])
   -->
-  <xbgf:narrow>
-    <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <terminal>final</terminal>
-        </bgf:expression>
-      </optional>
-    </bgf:expression>
-    <bgf:expression>
-      <terminal>final</terminal>
-    </bgf:expression>
-    <in>
-      <nonterminal>VariableModifier</nonterminal>
-    </in>
-  </xbgf:narrow>
   <xbgf:add>
     <vertical>
       <bgf:production>

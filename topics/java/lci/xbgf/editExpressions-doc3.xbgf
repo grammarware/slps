@@ -1062,7 +1062,7 @@
       - [], ,([n(ForInit), t((;)), ?(n(Expression)), t((;)), ?(n(ForUpdate))])
       - [], n(ForVarControl)
      vs.
-      - [], ,([?(?(t(final))), n(Type), n(Identifier), t(:), n(Expression)])
+      - [], ,([?(+(t(final))), n(Type), n(Identifier), t(:), n(Expression)])
       - [], ,([?(n(ForInit)), t((;)), ?(n(Expression)), t((;)), ?(n(ForUpdate))])
   -->
   <xbgf:narrow>
@@ -1080,27 +1080,7 @@
       <nonterminal>ForControl</nonterminal>
     </in>
   </xbgf:narrow>
-  <xbgf:massage>
-    <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <optional>
-            <bgf:expression>
-              <terminal>final</terminal>
-            </bgf:expression>
-          </optional>
-        </bgf:expression>
-      </optional>
-    </bgf:expression>
-    <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <terminal>final</terminal>
-        </bgf:expression>
-      </optional>
-    </bgf:expression>
-  </xbgf:massage>
-  <xbgf:extract>
+   <xbgf:extract>
     <bgf:production>
       <nonterminal>ForVarControlRest</nonterminal>
       <bgf:expression>

@@ -441,7 +441,7 @@
   <xbgf:vertical>
     <nonterminal>Statement</nonterminal>
   </xbgf:vertical>
-  
+
   <!-- should've been a part of generalizeModifiers! for doc3 -->
   <!--
    - Fail: LocalVariableDeclarationStatement.
@@ -471,12 +471,8 @@
       </plus>
     </bgf:expression>
     <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <terminal>final</terminal>
-        </bgf:expression>
-      </optional>
+      <terminal>final</terminal>
     </bgf:expression>
   </xbgf:narrow>
-  
+
 </xbgf:sequence>
