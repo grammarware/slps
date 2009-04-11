@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:sequence
+<xldf:evolution-sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <!-- compose a section on increasing transformations -->
-  <xldf:rename>
+  <xldf:retitle>
     <from>
       <title>increasing-transformation</title>
     </from>
     <to>Grammar lengthening transformations</to>
-  </xldf:rename>
+  </xldf:retitle>
   
   <xldf:place>
     <section>element-add</section>
@@ -221,25 +221,126 @@
     <where>element-widen</where>
     <content>
       <text>
-        The widening relation is defined as follows
-        (x is a widening of y if there is a $\surd$ symbol in the cell):
+        The widening relation is defined as follows:
       </text>
       <formula>x \textrm{ can be widened to } x?,\: x^+,\: x^\star</formula>
-      <formula>x? \textrm{ can be widened to } x^+,\: x^\star</formula>
+      <formula>x? \textrm{ can be widened to } x^\star</formula>
       <formula>x^+ \textrm{ can be widened to } x^\star</formula>
       <text>
-        ...
+        It is trivial to prove that for each case the expression on the left is included
+        in the expression on the right, but not otherwise. For going the other way
+        <ldf:keyword>narrow</ldf:keyword> transformation is used. For shaping
+        an expression into a completely equivalent one, use <ldf:keyword>massage</ldf:keyword>.
       </text>
     </content>
   </xldf:append>
+  <xldf:add-subsection>
+    <example id="widen-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-widen</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>widen-example</target>
+    <file>../../transformation/xbgf/tests/widen_l.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>widen-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>widen-example</target>
+    <file>../../transformation/xbgf/tests/widen_l.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>widen-example</where>
+    <content>
+      <text>The result will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>widen-example</target>
+    <file>../../transformation/xbgf/tests/widen_l.baseline</file>
+  </xldf:import-grammar>
 
   <xldf:place>
     <section>element-upgrade</section>
     <inside>group-increasing-transformation</inside>
   </xldf:place>
+  <xldf:add-subsection>
+    <example id="upgrade-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-upgrade</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>upgrade-example</target>
+    <file>../../transformation/xbgf/tests/upgrade.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>upgrade-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>widen-example</target>
+    <file>../../transformation/xbgf/tests/upgrade.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>upgrade-example</where>
+    <content>
+      <text>The result will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>upgrade-example</target>
+    <file>../../transformation/xbgf/tests/upgrade.baseline</file>
+  </xldf:import-grammar>
+  
   <xldf:place>
     <section>element-unite</section>
     <inside>group-increasing-transformation</inside>
   </xldf:place>
-
-</xldf:sequence>
+  <xldf:add-subsection>
+    <example id="unite-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-unite</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>unite-example</target>
+    <file>../../transformation/xbgf/tests/unite_normal.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>unite-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>unite-example</target>
+    <file>../../transformation/xbgf/tests/unite_normal.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>unite-example</where>
+    <content>
+      <text>The result will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>unite-example</target>
+    <file>../../transformation/xbgf/tests/unite_normal.baseline</file>
+  </xldf:import-grammar>
+</xldf:evolution-sequence>

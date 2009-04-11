@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:evolution-sequence
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <xldf:transform-document>
+    <file>xldf/dropXbgf.xldf</file>
+  </xldf:transform-document>
+  <xldf:transform-document>
+    <file>xldf/dropLdf.xldf</file>
+  </xldf:transform-document>
+
+</xldf:evolution-sequence>

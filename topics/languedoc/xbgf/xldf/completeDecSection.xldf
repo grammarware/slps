@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:sequence
+<xldf:evolution-sequence
   xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <!-- compose a section on decreasing transformations -->
-  <xldf:rename>
+  <xldf:retitle>
     <from>
       <title>decreasing-transformation</title>
     </from>
     <to>Grammar shortening transformations</to>
-  </xldf:rename>
+  </xldf:retitle>
+  
   <xldf:place>
     <section>element-remove</section>
     <inside>group-decreasing-transformation</inside>
@@ -19,13 +21,65 @@
     <section>element-disappear</section>
     <inside>group-decreasing-transformation</inside>
   </xldf:place>
+  
   <xldf:place>
     <section>element-narrow</section>
     <inside>group-decreasing-transformation</inside>
   </xldf:place>
+  <xldf:append>
+    <where>element-narrow</where>
+    <content>
+      <text>
+        The narrowing relation is defined as follows:
+      </text>
+      <formula>x? \textrm{ can be narrowed to } x</formula>
+      <formula>x^+ \textrm{ can be narrowed to } x</formula>
+      <formula>x^\star \textrm{ can be narrowed to } x,\: x?,\: x^+</formula>
+      <text>
+        It is trivial to prove that for each case the expression on the right is included
+        in the expression on the right, but not otherwise. For going the other way
+        <ldf:keyword>widen</ldf:keyword> transformation is used. For shaping
+        an expression into a completely equivalent one, use <ldf:keyword>massage</ldf:keyword>.
+      </text>
+    </content>
+  </xldf:append>
+  <xldf:add-subsection>
+    <example id="narrow-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-narrow</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>narrow-example</target>
+    <file>../../transformation/xbgf/tests/narrow_global.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>narrow-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>narrow-example</target>
+    <file>../../transformation/xbgf/tests/narrow_global.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>narrow-example</where>
+    <content>
+      <text>The result will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>narrow-example</target>
+    <file>../../transformation/xbgf/tests/narrow_global.baseline</file>
+  </xldf:import-grammar>
+  
   <xldf:place>
     <section>element-downgrade</section>
     <inside>group-decreasing-transformation</inside>
   </xldf:place>
 
-</xldf:sequence>
+</xldf:evolution-sequence>

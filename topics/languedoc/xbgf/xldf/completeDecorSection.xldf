@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:sequence
+<xldf:evolution-sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf">
@@ -27,12 +27,12 @@
   </xldf:transform-grammar>
 
   <!-- compose a section on decorative transformations -->
-  <xldf:rename>
+  <xldf:retitle>
     <from>
       <title>decorative-transformation</title>
     </from>
     <to>Decorative transformations</to>
-  </xldf:rename>
+  </xldf:retitle>
   <xldf:place>
     <section>element-designate</section>
     <inside>group-decorative-transformation</inside>
@@ -64,4 +64,4 @@
     <inside>group-decorative-transformation</inside>
   </xldf:place>
 
-</xldf:sequence>
+</xldf:evolution-sequence>

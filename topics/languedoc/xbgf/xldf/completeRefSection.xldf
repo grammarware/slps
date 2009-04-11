@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:sequence
+<xldf:evolution-sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf"
   xmlns:ldf="http://planet-sl.org/ldf">
 
   <!-- compose a section on refactoring transformations -->
-  <xldf:rename>
+  <xldf:retitle>
     <from>
       <title>refactoring-transformation</title>
     </from>
     <to>Other refactoring transformations</to>
-  </xldf:rename>
+  </xldf:retitle>
   <xldf:place>
     <section>element-massage</section>
     <inside>group-refactoring-transformation</inside>
@@ -909,4 +909,4 @@
     <file>../../transformation/xbgf/tests/lassoc1.baseline</file>
   </xldf:import-grammar>
   
-</xldf:sequence>
+</xldf:evolution-sequence>

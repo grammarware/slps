@@ -88,6 +88,9 @@
     <None Include="xbgf\xldf\completeMiscSection.xldf" />
     <None Include="xbgf\xldf\completeRefSection.xldf" />
     <None Include="xbgf\xldf\completeRevSections.xldf" />
+    <None Include="xldf\xldf.xldf" />
+    <None Include="xldf\xldf\dropLdf.xldf" />
+    <None Include="xldf\xldf\dropXbgf.xldf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\shared\xsl\ldf2tex.xslt">
@@ -96,6 +99,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ldf\xldf\" />
-    <Folder Include="xldf\xldf\" />
   </ItemGroup>
 </Project>

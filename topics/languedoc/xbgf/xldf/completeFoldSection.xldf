@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:sequence
+<xldf:evolution-sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:ldf="http://planet-sl.org/ldf"
@@ -44,12 +44,12 @@
   </xldf:transform-grammar>
 
   <!-- compose a section on folding transformations -->
-  <xldf:rename>
+  <xldf:retitle>
     <from>
       <title>folding-transformation</title>
     </from>
     <to>Folding and unfolding transformations</to>
-  </xldf:rename>
+  </xldf:retitle>
   <xldf:place>
     <section>element-unfold</section>
     <inside>group-folding-transformation</inside>
@@ -464,4 +464,4 @@
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   
-</xldf:sequence>
+</xldf:evolution-sequence>

@@ -234,7 +234,7 @@ def xldf_combine(cmd,tree):
  # print '[----] xldf:combine failed: don''t know how to place subsections in',found2.tag
  return
 
-def xldf_rename(cmd,tree):
+def xldf_retitle(cmd,tree):
  if cmd.findall('from/title'):
   byid = False
   welookfor = cmd.findtext('from/title')

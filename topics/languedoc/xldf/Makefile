@@ -1,13 +1,12 @@
 validator = ../../shared/tools/checkxml
 
 build: xldf.ldf
-	xsltproc ../../../shared/xsl/ldf2tex.xslt xldf.ldf > xldf.tex
-	pdflatex -interaction=batchmode xldf
-	pdflatex -interaction=batchmode xldf
-
-xldf.ldf:
 	../../../shared/tools/xsd2bgf ../../../shared/xsd/xldf.xsd xldf.bgf
 	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/xldf.xsd xldf.bgf xldf.ldf
+	../../../shared/tools/xldf xldf.xldf xldf.ldf xldf_ready.ldf
+	xsltproc ../../../shared/xsl/ldf2tex.xslt xldf_ready.ldf > xldf.tex
+	pdflatex -interaction=batchmode xldf
+	pdflatex -interaction=batchmode xldf
 
 rebuild:
 	make clean

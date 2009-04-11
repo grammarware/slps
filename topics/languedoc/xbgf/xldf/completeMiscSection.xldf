@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:sequence
+<xldf:evolution-sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf"
@@ -231,4 +231,4 @@
     <id>element-strip</id>
   </xldf:remove-section>
 
-</xldf:sequence>
+</xldf:evolution-sequence>

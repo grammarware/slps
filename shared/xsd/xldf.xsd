@@ -1,6 +1,5 @@
 <xsd:schema
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf"
@@ -15,18 +14,18 @@
   <xsd:import namespace="http://planet-sl.org/ldf" schemaLocation="ldf.xsd"/>
   <xsd:import namespace="http://planet-sl.org/xbgf" schemaLocation="xbgf.xsd"/>
 
-  <xsd:element name="sequence">
+  <xsd:element name="evolution-sequence">
     <xsd:annotation>
       <xsd:documentation>
         Sequential composition of multiple transformations.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-      <xsd:group ref="xldf:transformation" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:group ref="xldf:document-transformation" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:group name="transformation">
+  <xsd:group name="document-transformation">
     <xsd:annotation>
       <xsd:documentation>
         XLDF transformation suite does not include any sophisticated grammar
@@ -36,25 +35,25 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>
-      <xsd:element ref="xldf:insert"/>
-      <xsd:element ref="xldf:import-grammar"/>
-      <xsd:element ref="xldf:import-sample"/>
-      <xsd:element ref="xldf:drop"/>
-      <xsd:element ref="xldf:place"/>
-      <xsd:element ref="xldf:combine"/>
-      <xsd:element ref="xldf:rename"/>
-      <xsd:element ref="xldf:append"/>
-      <xsd:element ref="xldf:remove-section"/>
       <xsd:element ref="xldf:add-figure"/>
       <xsd:element ref="xldf:add-section"/>
       <xsd:element ref="xldf:add-subsection"/>
+      <xsd:element ref="xldf:append"/>
+      <xsd:element ref="xldf:combine"/>
+      <xsd:element ref="xldf:drop"/>
       <xsd:element ref="xldf:extract-subsection"/>
-      <xsd:element ref="xldf:transform-grammar"/>
+      <xsd:element ref="xldf:insert"/>
+      <xsd:element ref="xldf:import-grammar"/>
+      <xsd:element ref="xldf:import-sample"/>
+      <xsd:element ref="xldf:place"/>
+      <xsd:element ref="xldf:retitle"/>
+      <xsd:element ref="xldf:remove-section"/>
       <xsd:element ref="xldf:transform-document"/>
+      <xsd:element ref="xldf:transform-grammar"/>
     </xsd:choice>
   </xsd:group>
 
-  <xsd:element name="transform-document">
+  <xsd:element name="add-figure">
     <xsd:annotation>
       <xsd:documentation>
         TBD
@@ -62,67 +61,8 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="file" type="xsd:string"/>        <!-- IDREF -->
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="transform-grammar">
-    <xsd:annotation>
-      <xsd:documentation>
-        TBD
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="target" type="xsd:string"/>
-        <xsd:group ref="xbgf:transformation" maxOccurs="unbounded"/>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="insert">
-    <xsd:annotation>
-      <xsd:documentation>
-        TBD
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-       <xsd:choice>
-         <xsd:element name="before">
-           <xsd:complexType>
-             <xsd:choice>
-               <xsd:element name="id" type="xsd:string"/>
-               <xsd:group ref="ldf:SimpleTextElement"/>
-             </xsd:choice>
-           </xsd:complexType>
-         </xsd:element>
-         <xsd:element name="after">
-           <xsd:complexType>
-             <xsd:choice>
-               <xsd:element name="id" type="xsd:string"/>
-               <xsd:group ref="ldf:SimpleTextElement"/>
-             </xsd:choice>
-           </xsd:complexType>
-         </xsd:element>
-         <xsd:element name="to" type="xsd:string"/>
-       </xsd:choice>
-       <xsd:element name="content" type="ldf:SimpleText"/>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="remove-section">
-    <xsd:annotation>
-      <xsd:documentation>
-        TBD
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="id" type="xsd:string"/>    <!-- IDREF -->
-        <xsd:element name="from" type="xsd:string" minOccurs="0"/>  <!-- IDREF -->
+        <xsd:element name="figure" type="ldf:SimpleFigure"/>
+        <xsd:element name="to" type="xsd:string"/>        <!-- IDREF -->
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -163,7 +103,7 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="extract-subsection">
+  <xsd:element name="append">
     <xsd:annotation>
       <xsd:documentation>
         TBD
@@ -171,42 +111,8 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="from" type="xsd:string"/>
-        <xsd:element name="content" type="ldf:SimpleText"/>
-        <xsd:element name="title" type="xsd:string"/>
-        <xsd:element name="id" type="xsd:string"/>
-        <!--<xsd:element name="section" type="ldf:StructuredSection"/>-->
-        <xsd:element name="to" type="xsd:string" minOccurs="0"/>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="add-figure">
-    <xsd:annotation>
-      <xsd:documentation>
-        TBD
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="figure" type="ldf:SimpleFigure"/>
-        <xsd:element name="to" type="xsd:string"/>        <!-- IDREF -->
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="place">
-    <xsd:annotation>
-      <xsd:documentation>
-        TBD
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="section" type="xsd:string"/>
-        <!-- IDREF -->
-        <xsd:element name="inside" type="xsd:string"/>
-        <!-- IDREF -->
+       <xsd:element name="where" type="xsd:string"/>			<!-- IDREF -->
+       <xsd:element name="content" type="ldf:SimpleText"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -241,7 +147,7 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="rename">
+  <xsd:element name="extract-subsection">
     <xsd:annotation>
       <xsd:documentation>
         TBD
@@ -249,29 +155,12 @@
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="from">
-          <xsd:complexType>
-            <xsd:choice>
-              <xsd:element name="id" type="xsd:string"/>
-              <xsd:element name="title" type="xsd:string"/>
-            </xsd:choice>
-          </xsd:complexType>
-        </xsd:element>
-        <xsd:element name="to" type="xsd:string"/>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="append">
-    <xsd:annotation>
-      <xsd:documentation>
-        TBD
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-       <xsd:element name="where" type="xsd:string"/>			<!-- IDREF -->
-       <xsd:element name="content" type="ldf:SimpleText"/>
+        <xsd:element name="from" type="xsd:string"/>
+        <xsd:element name="content" type="ldf:SimpleText"/>
+        <xsd:element name="title" type="xsd:string"/>
+        <xsd:element name="id" type="xsd:string"/>
+        <!--<xsd:element name="section" type="ldf:StructuredSection"/>-->
+        <xsd:element name="to" type="xsd:string" minOccurs="0"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -305,15 +194,120 @@
     </xsd:complexType>
   </xsd:element>
 
-  <!--xsd:element name="transform-grammar">
+  <xsd:element name="insert">
     <xsd:annotation>
       <xsd:documentation>
-        Deprecated
+        TBD
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-      <xsd:group ref="xbgf:transformation"/>
+      <xsd:sequence>
+        <xsd:group ref="xldf:relative"/>
+        <xsd:element name="content" type="ldf:SimpleText"/>
+      </xsd:sequence>
     </xsd:complexType>
-  </xsd:element-->
+  </xsd:element>
+
+  <xsd:element name="place">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="section" type="xsd:string"/>
+        <!-- IDREF -->
+        <xsd:element name="inside" type="xsd:string"/>
+        <!-- IDREF -->
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="retitle">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="from">
+          <xsd:complexType>
+            <xsd:choice>
+              <xsd:element name="id" type="xsd:string"/>
+              <xsd:element name="title" type="xsd:string"/>
+            </xsd:choice>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="to" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="remove-section">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="id" type="xsd:string"/>    <!-- IDREF -->
+        <xsd:element name="from" type="xsd:string" minOccurs="0"/>  <!-- IDREF -->
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="transform-document">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="file" type="xsd:string"/>        <!-- IDREF -->
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="transform-grammar">
+    <xsd:annotation>
+      <xsd:documentation>
+        TBD
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="target" type="xsd:string"/>
+        <xsd:group ref="xbgf:transformation" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  
+  
+  <xsd:group name="relative">
+    <xsd:choice>
+      <xsd:element name="before">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:group ref="ldf:SimpleTextElement"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="after">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:group ref="ldf:SimpleTextElement"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="to" type="xsd:string"/>
+    </xsd:choice>
+  </xsd:group>
 
 </xsd:schema>
