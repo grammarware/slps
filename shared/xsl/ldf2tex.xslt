@@ -79,7 +79,10 @@
     <xsl:value-of select="titlePage/date"/>
     <xsl:text>}</xsl:text>
     <!-- titlePage done -->
-    <xsl:text>\maketitle\tableofcontents</xsl:text>
+    <xsl:text>
+		\maketitle\tableofcontents
+		%% START_CONTENT
+	</xsl:text>
     <!-- placeholder: not implemented -->
     <!-- frontMatter -->
     <xsl:for-each select="frontMatter/*">
@@ -106,7 +109,7 @@
       </xsl:call-template>
     </xsl:for-each>
     <xsl:apply-templates select="core"/>
-    <xsl:text>\end{document}</xsl:text>
+    <xsl:text>\end{document}	%% END_CONTENT</xsl:text>
   </xsl:template>
 
   <xsl:template match="list">
