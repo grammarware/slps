@@ -5,7 +5,6 @@ import org.planet_sl.apimigration.benchmark.anno.Wrapping;
 import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
 import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
-import org.planet_sl.apimigration.benchmark.anno.Issue;
 import java.util.List;
 
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;

@@ -78,9 +78,9 @@ public class Text extends Node {
 	}
 
 	@Progress(value = Status.DONTCARE, comment = "is a debuggin aid")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.output.XMLOutputter#outputString(Text)")
 	public String toXML() {
 		return isCDATA ? new XMLOutputter().outputString(cdata)
 				: new XMLOutputter().outputString(text);
@@ -138,10 +138,9 @@ public class Text extends Node {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unclear how XPathContext affects the result")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath
@@ -157,10 +156,9 @@ public class Text extends Node {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.EXTERNAL_MACRO, comment = "")
-	@Issue.Post("unclear how XPathContext affects the result")
+	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@MapsTo("")
+	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {
 			org.jdom.xpath.XPath xpath = org.jdom.xpath.XPath

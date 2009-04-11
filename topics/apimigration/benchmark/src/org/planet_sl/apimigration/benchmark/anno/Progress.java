@@ -9,29 +9,30 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Progress {
 	public enum Status {
+		// TODO: compliance level 4!!!
 		TODO() {
 			public String toString() {
-				return "TD";
+				return "1";
 			}
 		},
 		NEEDSWORK() {
 			public String toString() {
-				return "NW";
+				return "2";
 			}
 		},
 		OK() {
 			public String toString() {
-				return "OK";
+				return "3";
 			}
 		},
 		DONTCARE() {
 			public String toString() {
-				return "DC";
+				return "1";
 			}
 		},
 		GIVENUP() {
 			public String toString() {
-				return "GU";
+				return "1";
 			}
 		};
 	}

@@ -11,27 +11,22 @@ public @interface Solution {
 	public enum Strategy {
 		MACRO() {
 			public String toString() {
-				return "M";
-			}
-		},
-		EXTERNAL_MACRO() {
-			public String toString() {
-				return "EM";
+				return "3";
 			}
 		},
 		DELEGATE() {
 			public String toString() {
-				return "D";
+				return "1";
 			}
 		},
 		ADVANCED_DELEGATE() {
 			public String toString() {
-				return "AD";
+				return "2";
 			}
 		},
 		CLONE() {
 			public String toString() {
-				return "C";
+				return "4";
 			}
 		},
 		OTHER() {

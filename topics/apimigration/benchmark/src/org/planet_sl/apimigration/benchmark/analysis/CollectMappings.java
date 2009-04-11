@@ -18,11 +18,6 @@ import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 import org.planet_sl.apimigration.benchmark.anno.Progress;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
 import org.planet_sl.apimigration.benchmark.anno.Wrapping;
-import org.planet_sl.apimigration.benchmark.anno.Issue.Doc;
-import org.planet_sl.apimigration.benchmark.anno.Issue.Invariant;
-import org.planet_sl.apimigration.benchmark.anno.Issue.Post;
-import org.planet_sl.apimigration.benchmark.anno.Issue.Pre;
-import org.planet_sl.apimigration.benchmark.anno.Issue.Throws;
 
 
 
@@ -80,18 +75,18 @@ public class CollectMappings {
 		FileWriter writer = new FileWriter(file);	
 	
 		String headings[] = {
-				"XOM Type",
-				"SD",
-				"AD",
-				"M",
-				"C",
-				"NC",
-				"BC",
-				"DC",
-				"HBW"
+				"nu.xom",
+				"\\delegateLevel{1}",
+				"\\delegateLevel{2}",
+				"\\delegateLevel{3}",
+				"\\delegateLevel{4}",
+				"\\complianceLevel{1}", // missing/don't care/todo
+				"\\complianceLevel{2}", // need's work: critical test fail
+				"\\complianceLevel{3}" // compliant: no critical tests fail
+				// TODO: level 4 fully compliant
 		};
 		
-		writer.write("\\begin{tabular}{|l|r|r|r|r|r|r|r|r|}\\hline\n");
+		writer.write("\\begin{tabular}{|l|r|r|r|r|r|r|r|}\\hline\n");
 		for (int i = 0; i < headings.length; i++) {
 			writer.write(headings[i]);
 			if (i < headings.length - 1) {
@@ -107,6 +102,7 @@ public class CollectMappings {
 		int simpleDelegateTotal = 0;
 		int advancedDelegateTotal = 0;
 		int macroTotal = 0;
+		int cloneTotal = 0;
 		int compliantTotal = 0;
 		int nonCompliantTotal = 0;
 		int borderlineCompliantTotal = 0;
@@ -119,6 +115,7 @@ public class CollectMappings {
 			simpleDelegateTotal += simpleDelegateCount.get(from);
 			advancedDelegateTotal += advancedDelegateCount.get(from);
 			macroTotal += macroCount.get(from);
+			cloneTotal += 0; // TODO
 			compliantTotal += compliantCount.get(from);
 			nonCompliantTotal += nonCompliantCount.get(from);
 			borderlineCompliantTotal += borderlineCompliantCount.get(from);
@@ -129,11 +126,10 @@ public class CollectMappings {
 			writer.write(simpleDelegateCount.get(from) + " & ");
 			writer.write(advancedDelegateCount.get(from) + " & ");
 			writer.write(macroCount.get(from) + " & ");
-			writer.write(compliantCount.get(from) + " & ");
+			writer.write(0 + " & ");
+			writer.write((dontCareCount.get(from) + brickwalledCount.get(from)) + " & ");
 			writer.write(nonCompliantCount.get(from) + " & ");
-			writer.write(borderlineCompliantCount.get(from) + " & ");
-			writer.write(dontCareCount.get(from) + " & ");
-			writer.write(brickwalledCount.get(from).toString());
+			writer.write(compliantCount.get(from).toString());
 			writer.write("\\\\\\hline\n");
 		}
 		
@@ -141,11 +137,10 @@ public class CollectMappings {
 		writer.write(" & " + simpleDelegateTotal + " & ");
 		writer.write(advancedDelegateTotal + " & ");
 		writer.write(macroTotal + " & ");
-		writer.write(compliantTotal + " & ");
+		writer.write(cloneTotal + " & ");
+		writer.write((dontCareTotal + brickwalledTotal) + " & ");
 		writer.write(nonCompliantTotal + " & ");
-		writer.write(borderlineCompliantTotal + " & ");
-		writer.write(dontCareTotal + " & ");
-		writer.write(brickwalledTotal + "\\\\\\hline\n");
+		writer.write(compliantTotal + "\\\\\\hline ");
 		
 		writer.write("\\end{tabular}\n");
 		writer.flush();
@@ -157,7 +152,7 @@ public class CollectMappings {
 		Collections.sort(froms);
 		FileWriter writer = new FileWriter(file);	
 		
-		writer.write(Row.q("XOM type") +", " + Row.q("JDOM type") + ", " + Row.q("#Mapped") + ", " + Row.q("#Derived") + "\n");
+		writer.write(Row.q("nu.xom") +", " + Row.q("org.jdom") + ", " + Row.q("#Mapped") + ", " + Row.q("#Derived") + "\n");
 		for (String from: froms) {
 		
 			writer.write(Row.q(from) + ", ");
@@ -183,10 +178,10 @@ public class CollectMappings {
 		FileWriter writer = new FileWriter(file);	
 		
 		String headings[] = {
-				"XOM Type",
-				"JDOM Type",
-				"\\#Mapped",
-				"\\#Derived"
+				"\\xomTypeHeading",
+				"\\jdomTypeHeading",
+				"\\mappedFeatureHeading",
+				"\\compositeFeatureHeading"
 		};
 
 		writer.write("\\begin{tabular}{|l|l|r|r|}\\hline\n");
@@ -208,7 +203,7 @@ public class CollectMappings {
 			mappedTotal += mappedFeatureCount.get(from) == null ? 0 : mappedFeatureCount.get(from);
 			derivedTotal += derivedFeatureCount.get(from) == null ? 0 : derivedFeatureCount.get(from);
 			writer.write(from + " & ");
-			writer.write(typeMapping.get(from).replaceAll("org.jdom.", "") + " & ");
+			writer.write(typeMapping.get(from).replaceAll("org.jdom.", "").replaceAll(";", "; ") + " & ");
 			writer.write(mappedFeatureCount.get(from) + " & ");
 			writer.write(derivedFeatureCount.get(from) + "\\\\\\hline\n");
 		}
