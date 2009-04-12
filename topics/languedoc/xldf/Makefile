@@ -1,6 +1,6 @@
 validator = ../../shared/tools/checkxml
 
-build: xldf.ldf
+build:
 	../../../shared/tools/xsd2bgf ../../../shared/xsd/xldf.xsd xldf.bgf
 	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/xldf.xsd xldf.bgf xldf.ldf
 	../../../shared/tools/xldf xldf.xldf xldf.ldf xldf_ready.ldf

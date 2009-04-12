@@ -33,18 +33,31 @@
     </from>
     <to>Decorative transformations</to>
   </xldf:retitle>
+  
   <xldf:place>
     <section>element-designate</section>
     <inside>group-decorative-transformation</inside>
   </xldf:place>
+  
   <xldf:place>
     <section>element-unlabel</section>
     <inside>group-decorative-transformation</inside>
   </xldf:place>
+  
   <xldf:place>
     <section>element-deanonymize</section>
     <inside>group-decorative-transformation</inside>
   </xldf:place>
+  <xldf:transform-grammar>
+    <target>element-deanonymize</target>
+    <xbgf:fold>
+      <nonterminal>marked-production</nonterminal>
+      <in>
+        <nonterminal>deanonymize</nonterminal>
+      </in>
+    </xbgf:fold>
+    <context>definitions-section</context>
+  </xldf:transform-grammar>
   <xldf:append>
     <where>element-anonymize</where>
     <content>
@@ -59,9 +72,20 @@
       </text>
     </content>
   </xldf:append>
+  
   <xldf:place>
     <section>element-anonymize</section>
     <inside>group-decorative-transformation</inside>
   </xldf:place>
-
+  <xldf:transform-grammar>
+    <target>element-anonymize</target>
+    <xbgf:fold>
+      <nonterminal>marked-production</nonterminal>
+      <in>
+        <nonterminal>anonymize</nonterminal>
+      </in>
+    </xbgf:fold>
+    <context>definitions-section</context>
+  </xldf:transform-grammar>
+  
 </xldf:evolution-sequence>

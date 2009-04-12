@@ -361,6 +361,11 @@
         The second parameter is one of that nonterminal's definitions,
         which right hand side will be used for replacement.
       </xsd:documentation>
+      <xsd:documentation>
+        The XBGF processor looks for the first production with the marked part (but without the markers).
+        If it is found, the marked part is replaced with the right hand side of the second argument
+        production.
+      </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
@@ -442,10 +447,7 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-      <xsd:choice>
-        <xsd:group ref="xbgf:scope"/>
-        <xsd:element ref="bgf:production"/>
-      </xsd:choice>
+      <xsd:group ref="xbgf:scope"/>
     </xsd:complexType>
   </xsd:element>
 

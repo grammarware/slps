@@ -230,20 +230,69 @@
     <section>simpleType-terminal</section>
   </xldf:drop>
   
-  <xldf:append>
-    <where>notation-section</where>
-    <content>
-      <text>
-        All BGFs and XBGFs are presented in a unified pretty-printed way.
-        The concrete syntax for it is presented below:
-      </text>
-    </content>
-  </xldf:append>
-
+   <xldf:add-section>
+    <core id="bnf">
+      <title>...</title>
+      <description>
+        <content>
+          <text>
+            All BGFs and XBGFs are presented in a unified pretty-printed way.
+            The concrete syntax for it is presented below:
+          </text>
+        </content>
+      </description>
+    </core>
+  </xldf:add-section>
   <xldf:import-grammar>
-    <target>notation-section</target>
+    <target>bnf</target>
     <file>../../presentation/prettyprint/bnf.bgf</file>
   </xldf:import-grammar>
+  <xldf:transform-grammar>
+    <target>bnf</target>
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>production</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <marked>
+                    <bgf:expression>
+                      <selectable>
+                        <selector>label</selector>
+                        <bgf:expression>
+                          <nonterminal>label</nonterminal>
+                        </bgf:expression>
+                      </selectable>
+                    </bgf:expression>
+                  </marked>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <selectable>
+                <selector>nonterminal</selector>
+                <bgf:expression>
+                  <value>string</value>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>:</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>right-hand-side</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+  </xldf:transform-grammar>
+  <xldf:combine>
+    <section>bnf</section>
+    <with>notation-section</with>
+  </xldf:combine>
 
   <xldf:append>
     <where>notation-section</where>
@@ -466,6 +515,50 @@
     <inside>definitions-section</inside>
   </xldf:place>
 
+  <xldf:add-section>
+    <core id="marked-production">
+      <title>Marked</title>
+      <description>
+        <author>Vadim Zaytsev</author>
+        <content>
+          <text>
+            Some of the grammar transformations, namely
+            <ldf:keyword>addH</ldf:keyword>,
+            <ldf:keyword>removeH</ldf:keyword>,
+            <ldf:keyword>appear</ldf:keyword>,
+            <ldf:keyword>disappear</ldf:keyword>,
+            <ldf:keyword>upgrade</ldf:keyword>,
+            <ldf:keyword>downgrade</ldf:keyword>,
+            <ldf:keyword>abstractize</ldf:keyword>,
+            <ldf:keyword>concretize</ldf:keyword>,
+            <ldf:keyword>inject</ldf:keyword>,
+            <ldf:keyword>project</ldf:keyword>,
+            <ldf:keyword>anonymize</ldf:keyword>,
+            <ldf:keyword>deanonymize</ldf:keyword>,
+            accept only marked productions as their arguments. 
+          </text>
+          <bgf:production>
+            <nonterminal>marked-production</nonterminal>
+            <bgf:expression>
+              <nonterminal>production</nonterminal>
+            </bgf:expression>
+          </bgf:production>
+          <text>
+            When transformations need to happen very locally, the level of nonterminal
+            or production is insufficient and introduction of selector annotations is
+            too much extra effort. For this cases, XBGF uses markers that show at which
+            point exactly should the transformation take place. Markers are pretty-printed
+            as angle brackets.
+          </text>
+        </content>
+      </description>
+    </core>
+  </xldf:add-section>
+  <xldf:place>
+    <section>marked-production</section>
+    <inside>definitions-section</inside>
+  </xldf:place>
+  
   <!-- <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"
 	          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	          xsi:schemaLocation="http://www.w3.org/1998/Math/MathML

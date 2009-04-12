@@ -12,6 +12,22 @@
     </bgf:expression>
   </bgf:production>
   <bgf:production>
+    <nonterminal>label</nonterminal>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>[</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <value>string</value>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>]</terminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
     <nonterminal>production</nonterminal>
     <bgf:expression>
       <sequence>
@@ -21,17 +37,7 @@
               <selectable>
                 <selector>label</selector>
                 <bgf:expression>
-                  <sequence>
-                    <bgf:expression>
-                      <terminal>[</terminal>
-                    </bgf:expression>
-                    <bgf:expression>
-                      <value>string</value>
-                    </bgf:expression>
-                    <bgf:expression>
-                      <terminal>]</terminal>
-                    </bgf:expression>
-                  </sequence>
+                  <nonterminal>label</nonterminal>
                 </bgf:expression>
               </selectable>
             </bgf:expression>

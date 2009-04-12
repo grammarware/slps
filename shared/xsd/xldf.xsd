@@ -282,6 +282,7 @@
       <xsd:sequence>
         <xsd:element name="target" type="xsd:string"/>
         <xsd:group ref="xbgf:transformation" maxOccurs="unbounded"/>
+        <xsd:element name="context" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

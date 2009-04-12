@@ -377,6 +377,24 @@
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
+    <considerations>
+      <content>
+        <text>
+          In fact, <ldf:keyword>distribute</ldf:keyword> is nothing more than an automated
+          version of <ldf:keyword>factor</ldf:keyword> that agressively pushes all the choices
+          that can be found in a production outwards.
+        </text>
+        <text>
+          This transformation is apparently non-injective, hence, it is impossible to have
+          a complete inverse of it. A more general <ldf:keyword>factor</ldf:keyword>
+          transformation, on the other hand, is as capable of emulating <ldf:keyword>distribute</ldf:keyword>'s
+          effect as it is capable of doing the reverse thing.
+        </text>
+      </content>
+    </considerations>
+    <to>element-distribute</to>
+  </xldf:add-subsection>
+  <xldf:add-subsection>
     <example id="distribute-example">
       <content>
         <text>For instance,</text>

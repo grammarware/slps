@@ -20,6 +20,7 @@
 \setcounter{tocdepth}{2}
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage{color}
 \lstdefinelanguage{pp}{%
   numbers=none,
   literate={EPSILON}{{$\varepsilon$}}1 %{STRING}{{$\lambda$}}1
@@ -38,6 +39,10 @@
 }
 \newcommand{\subsubsubsection}[1]{\paragraph{#1}}
 \newcommand{\subsubsubsubsection}[1]{\subparagraph{#1}}
+\makeatletter\newenvironment{graybox}{%
+   \begin{lrbox}{\@tempboxa}\begin{minipage}{0.9\columnwidth}}{\end{minipage}\end{lrbox}%
+   \colorbox[gray]{0.9}{\usebox{\@tempboxa}}
+}\makeatother
 \begin{document}
     </xsl:text>
     <!-- title -->
@@ -108,6 +113,9 @@
         <xsl:with-param name="section" select="."/>
       </xsl:call-template>
     </xsl:for-each>
+    <xsl:text>
+		%% START_CORE
+	</xsl:text>
     <xsl:apply-templates select="core"/>
     <xsl:text>\end{document}	%% END_CONTENT</xsl:text>
   </xsl:template>
@@ -203,10 +211,13 @@
         </xsl:when>
         <xsl:when test="local-name() = 'production'">
           <xsl:text>
+			\protect\mbox{}\protect
+			
+			\begin{graybox}
 	        \begin{lstlisting}[language=pp]
 </xsl:text>
           <xsl:apply-templates select="."/>
-          <xsl:text>\end{lstlisting}
+          <xsl:text>\end{lstlisting}\end{graybox}
 	
 	      </xsl:text>
         </xsl:when>
@@ -289,10 +300,13 @@
         <xsl:when test="local-name() = 'author'"/>
         <xsl:when test="local-name() = 'production'">
           <xsl:text>
+			\protect\mbox{}\protect
+			
+			\begin{graybox}
 	        \begin{lstlisting}[language=pp]
 </xsl:text>
           <xsl:apply-templates select="."/>
-          <xsl:text>\end{lstlisting}
+          <xsl:text>\end{lstlisting}\end{graybox}
 	
 	      </xsl:text>
         </xsl:when>
@@ -387,10 +401,13 @@
 
   <xsl:template match="sample">
     <xsl:text>
-	        \begin{lstlisting}[language=pp]
+		\protect\mbox{}\protect
+		
+		\begin{graybox}
+	    \begin{lstlisting}[language=pp]
 </xsl:text>
     <xsl:value-of select="."/>
-    <xsl:text>\end{lstlisting}
+    <xsl:text>\end{lstlisting}\end{graybox}
 	
 	      </xsl:text>
   </xsl:template>

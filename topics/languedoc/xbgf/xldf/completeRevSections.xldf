@@ -171,14 +171,37 @@
     </from>
     <to>Refactorings in term-oriented semantics</to>
   </xldf:retitle>
+  
   <xldf:place>
     <section>element-abstractize</section>
     <inside>group-concrete-revising-transformation</inside>
   </xldf:place>
+  <xldf:transform-grammar>
+    <target>element-abstractize</target>
+    <xbgf:fold>
+      <nonterminal>marked-production</nonterminal>
+      <in>
+        <nonterminal>abstractize</nonterminal>
+      </in>
+    </xbgf:fold>
+    <context>definitions-section</context>
+  </xldf:transform-grammar>
+  
   <xldf:place>
     <section>element-concretize</section>
     <inside>group-concrete-revising-transformation</inside>
   </xldf:place>
+  <xldf:transform-grammar>
+    <target>element-concretize</target>
+    <xbgf:fold>
+      <nonterminal>marked-production</nonterminal>
+      <in>
+        <nonterminal>concretize</nonterminal>
+      </in>
+    </xbgf:fold>
+    <context>definitions-section</context>
+  </xldf:transform-grammar>
+  
   <xldf:place>
     <section>element-permute</section>
     <inside>group-concrete-revising-transformation</inside>
@@ -191,26 +214,52 @@
     </from>
     <to>Semantics revising transformations</to>
   </xldf:retitle>
+  
   <xldf:place>
     <section>element-define</section>
     <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
+  
   <xldf:place>
     <section>element-undefine</section>
     <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
+  
   <xldf:place>
     <section>element-redefine</section>
     <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
+  
   <xldf:place>
     <section>element-inject</section>
     <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
+  <xldf:transform-grammar>
+    <target>element-inject</target>
+    <xbgf:fold>
+      <nonterminal>marked-production</nonterminal>
+      <in>
+        <nonterminal>inject</nonterminal>
+      </in>
+    </xbgf:fold>
+    <context>definitions-section</context>
+  </xldf:transform-grammar>
+  
   <xldf:place>
     <section>element-project</section>
     <inside>group-abstract-revising-transformation</inside>
   </xldf:place>
+  <xldf:transform-grammar>
+    <target>element-project</target>
+    <xbgf:fold>
+      <nonterminal>marked-production</nonterminal>
+      <in>
+        <nonterminal>project</nonterminal>
+      </in>
+    </xbgf:fold>
+    <context>definitions-section</context>
+  </xldf:transform-grammar>
+  
   <xldf:place>
     <section>element-replace</section>
     <inside>group-abstract-revising-transformation</inside>

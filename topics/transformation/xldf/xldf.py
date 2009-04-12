@@ -135,9 +135,7 @@ def xldf_insert_symbolic(cmd,tree):
 
 def findnode(tree,id):
  for s in tree.findall('//*'):
-  #if s.findall('id'):
   if s.get('id'):
-   #if s.findtext('id')==id:
    if s.get('id')==id:
     return s
  return None
@@ -361,16 +359,33 @@ def xldf_transform_grammar(cmd,tree):
  root = ET.Element('{'+xbgfns+'}sequence',{})
  cx0 = 0
  for rule in cmd.findall('*')[1:]:
-  root.append(rule)
-  cx0 += 1
+  if rule.tag != 'context':
+   root.append(rule)
+   cx0 += 1
  ET.ElementTree(root).write('xldf-tmp.xbgf')
  found = findnode(tree,cmd.findtext('target'))
  if not found:
   print '[----] xldf:transform failed: target id',cmd.findtext('where'),'not found'
   return
- root = ET.Element('{'+bgfns+'}grammar',{})
+ realprods = []
+ contextprods = []
  for p in found.findall('*/*/{'+bgfns+'}production'):
+  realprods.append(p)
+ for p in found.findall('*/{'+bgfns+'}production'):
+  realprods.append(p)
+ for c in cmd.findall('context'):
+  f = findnode(tree,c.text)
+  if not f:
+   print '[----] xldf:transform failed: context target id',c.text,'not found'
+   return
+  for p in f.findall('*/*/{'+bgfns+'}production'):
+   contextprods.append(p)
+ root = ET.Element('{'+bgfns+'}grammar',{})
+ for p in realprods:
   root.append(p)
+ for p in contextprods:
+  root.append(p)
+ #print '[====]',len(realprods),'+',len(contextprods),'productions'
  ET.ElementTree(root).write('xldf-tmp.bgf')
  #found.findall('{'+bgfns+'}production')[0].write('xldf-tmp.bgf')
  if os.system('xbgf xldf-tmp.xbgf xldf-tmp.bgf xldf-tmp-result.bgf | grep -v Loading | grep -v Saving'):
@@ -379,7 +394,8 @@ def xldf_transform_grammar(cmd,tree):
  try:
   gtree = ET.parse('xldf-tmp-result.bgf')
  except IOError,e:
-  print '[----] xldf:transform failed: file',cmd.findtext('file'),'not found'
+  print '[----] xldf:transform failed: XBGF result file not found'
+  sys.exit(3)
   return
  # remove old production
  cx1 = 0
@@ -394,6 +410,12 @@ def xldf_transform_grammar(cmd,tree):
  # add new productions
  cx2 = 0
  for p in gtree.findall('{'+bgfns+'}production'):
+  isContext = False
+  for cp in contextprods:
+   if xml_eq(cp,p):
+    isContext = True
+  if isContext:
+   continue
   if found[-1][-1].tag != 'content':
    found[-1].append(p)
   else:

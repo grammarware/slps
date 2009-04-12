@@ -20,7 +20,6 @@
     </bgf:expression>
   </xbgf:narrow>
 
-  <xbgf:inline>label</xbgf:inline>
   <xbgf:inline>terminal</xbgf:inline>
   <xbgf:inline>nonterminal</xbgf:inline>
   <xbgf:inline>selector</xbgf:inline>

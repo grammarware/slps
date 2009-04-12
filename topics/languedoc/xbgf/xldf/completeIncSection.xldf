@@ -94,6 +94,17 @@
     <title>addH</title>
     <id>element-add-h</id>
   </xldf:extract-subsection>
+  <xldf:transform-grammar>
+    <target>element-add-h</target>
+    <xbgf:fold>
+      <nonterminal>marked-production</nonterminal>
+      <in>
+        <nonterminal>add</nonterminal>
+      </in>
+    </xbgf:fold>
+    <context>definitions-section</context>
+  </xldf:transform-grammar>
+  
   <xldf:append>
     <where>element-add-h</where>
     <content>
@@ -105,6 +116,12 @@
         which is the most common use of this transformation. However, it is useful to have
         a command at hand that is capable of adding alternatives to any particular place
         of any grammar production.
+      </text>
+      <text>
+        Markers must denote the new part: i.e., the production without the marked part
+        must be present in the grammar, and if it is, the result will contain a
+        production with the marked part instead.
+        Obviously, the markers itself do not end up in the grammar.
       </text>
     </content>
   </xldf:append>
@@ -179,6 +196,16 @@
     <section>element-appear</section>
     <inside>group-increasing-transformation</inside>
   </xldf:place>
+  <xldf:transform-grammar>
+    <target>element-appear</target>
+    <xbgf:fold>
+      <nonterminal>marked-production</nonterminal>
+      <in>
+        <nonterminal>appear</nonterminal>
+      </in>
+    </xbgf:fold>
+    <context>definitions-section</context>
+  </xldf:transform-grammar>
   <xldf:add-subsection>
     <example id="appear-example">
       <content>
@@ -272,6 +299,31 @@
     <section>element-upgrade</section>
     <inside>group-increasing-transformation</inside>
   </xldf:place>
+  <xldf:transform-grammar>
+    <target>element-upgrade</target>
+    <xbgf:replace>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>production</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>production</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>marked-production</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>production</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </xbgf:replace>
+  </xldf:transform-grammar>
   <xldf:add-subsection>
     <example id="upgrade-example">
       <content>
@@ -291,7 +343,7 @@
     </content>
   </xldf:append>
   <xldf:import-sample>
-    <target>widen-example</target>
+    <target>upgrade-example</target>
     <file>../../transformation/xbgf/tests/upgrade.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>

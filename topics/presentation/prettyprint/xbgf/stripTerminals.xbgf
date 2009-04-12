@@ -5,6 +5,32 @@
     xmlns:xns1="http://planet-sl.org/bgf">
   <xns2:abstractize>
     <xns1:production>
+      <nonterminal>label</nonterminal>
+      <xns1:expression>
+	<sequence>
+	  <xns1:expression>
+	    <marked>
+	      <xns1:expression>
+		<terminal>[</terminal>
+	      </xns1:expression>
+	    </marked>
+	  </xns1:expression>
+	  <xns1:expression>
+	    <value>string</value>
+	  </xns1:expression>
+	  <xns1:expression>
+	    <marked>
+	      <xns1:expression>
+		<terminal>]</terminal>
+	      </xns1:expression>
+	    </marked>
+	  </xns1:expression>
+	</sequence>
+      </xns1:expression>
+    </xns1:production>
+  </xns2:abstractize>
+  <xns2:abstractize>
+    <xns1:production>
       <nonterminal>production</nonterminal>
       <xns1:expression>
 	<sequence>
@@ -14,25 +40,7 @@
 		<selectable>
 		  <selector>label</selector>
 		  <xns1:expression>
-		    <sequence>
-		      <xns1:expression>
-			<marked>
-			  <xns1:expression>
-			    <terminal>[</terminal>
-			  </xns1:expression>
-			</marked>
-		      </xns1:expression>
-		      <xns1:expression>
-			<value>string</value>
-		      </xns1:expression>
-		      <xns1:expression>
-			<marked>
-			  <xns1:expression>
-			    <terminal>]</terminal>
-			  </xns1:expression>
-			</marked>
-		      </xns1:expression>
-		    </sequence>
+		    <nonterminal>label</nonterminal>
 		  </xns1:expression>
 		</selectable>
 	      </xns1:expression>

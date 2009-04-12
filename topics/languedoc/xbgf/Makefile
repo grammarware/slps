@@ -5,8 +5,8 @@ xbgf = ../../../shared/tools/xbgf
 build: bnfbgf.pdf
 	../../../shared/tools/xsd2bgf ../../../shared/xsd/xbgf.xsd xbgf.bgf
 	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/xbgf.xsd xbgf.bgf xbgf.ldf
-	${xldf} xbgf.xldf xbgf.ldf xbgf_ready.ldf
-	xsltproc ../../../shared/xsl/ldf2tex.xslt xbgf_ready.ldf > xbgf.tex
+	${xldf} xbgf.xldf xbgf.ldf xbgf.ready.ldf
+	xsltproc ../../../shared/xsl/ldf2tex.xslt xbgf.ready.ldf > xbgf.tex
 	pdflatex -interaction=batchmode xbgf
 	pdflatex -interaction=batchmode xbgf
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:remove>
+    <horizontal>
+      <bgf:production>
+        <nonterminal>foo</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <marked>
+                <bgf:expression>
+                  <terminal>x</terminal>
+                </bgf:expression>
+              </marked>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>bar</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>wez</nonterminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+    </horizontal>
+  </xbgf:remove>
+</xbgf:sequence>

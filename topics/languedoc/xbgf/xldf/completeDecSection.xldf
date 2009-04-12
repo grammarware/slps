@@ -17,10 +17,228 @@
     <section>element-remove</section>
     <inside>group-decreasing-transformation</inside>
   </xldf:place>
+  <xldf:transform-grammar>
+    <target>element-remove</target>
+    <xbgf:vertical>
+      <nonterminal>remove</nonterminal>
+    </xbgf:vertical>
+  </xldf:transform-grammar>
+  <xldf:extract-subsection>
+    <from>element-remove</from>
+    <content>
+      <bgf:production>
+        <label>vertical</label>
+        <nonterminal>remove</nonterminal>
+        <bgf:expression>
+          <nonterminal>production</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </content>
+    <title>removeV</title>
+    <id>element-remove-v</id>
+  </xldf:extract-subsection>
+  <xldf:append>
+    <where>element-remove-v</where>
+    <content>
+      <text>
+        Vertical removal operates on the level of productions: it takes away one production
+        for some nonterminal leaving at least one more in the grammar.
+      </text>
+    </content>
+  </xldf:append>
+  <xldf:add-subsection>
+    <example id="remove-v-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-remove-v</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>remove-v-example</target>
+    <file>../../transformation/xbgf/tests/remove_vertical.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>remove-v-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>remove-v-example</target>
+    <file>../../transformation/xbgf/tests/remove_vertical.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>remove-v-example</where>
+    <content>
+      <text>The result will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>remove-v-example</target>
+    <file>../../transformation/xbgf/tests/remove_vertical.baseline</file>
+  </xldf:import-grammar>
+
+  <xldf:extract-subsection>
+    <from>element-remove</from>
+    <content>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <label>horizontal</label>
+        <nonterminal>remove</nonterminal>
+        <bgf:expression>
+          <nonterminal>production</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </content>
+    <title>removeH</title>
+    <id>element-remove-h</id>
+  </xldf:extract-subsection>
+  <xldf:transform-grammar>
+    <target>element-remove-h</target>
+    <xbgf:fold>
+      <nonterminal>marked-production</nonterminal>
+      <in>
+        <nonterminal>remove</nonterminal>
+      </in>
+    </xbgf:fold>
+    <context>definitions-section</context>
+  </xldf:transform-grammar>
+
+  <xldf:append>
+    <where>element-remove-h</where>
+    <content>
+      <text>
+        Horizontal removal looks inside productions: it removes any marked part of an internal choice,
+        getting rid of the choice altogether if necessary (say, if the removed part was one of two
+        alternatives). This allows to skip pre-transformational <ldf:keyword>vertical</ldf:keyword>
+        and post-transformational <ldf:keyword>horizontal</ldf:keyword> steps for productions with
+        a top-level choice, which is the most common use of this transformation.
+        However, it is useful to have a command at hand that is capable of removing alternatives
+        from any particular place of any grammar production.
+      </text>
+      <text>
+        Markers must denote the part to be removed: i.e., the production with the marked part
+        must be present in the grammar, and if it is, the result will contain a
+        production without the marked part instead.
+        Obviously, the markers itself do not end up in the grammar.
+      </text>
+    </content>
+  </xldf:append>
+  <xldf:add-subsection>
+    <example id="remove-h1-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-remove-h</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>remove-h1-example</target>
+    <file>../../transformation/xbgf/tests/remove_horizontal.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>remove-h1-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>remove-h1-example</target>
+    <file>../../transformation/xbgf/tests/remove_horizontal.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>remove-h1-example</where>
+    <content>
+      <text>The result will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>remove-h1-example</target>
+    <file>../../transformation/xbgf/tests/remove_horizontal.baseline</file>
+  </xldf:import-grammar>
+  <xldf:add-subsection>
+    <example id="remove-h2-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-remove-h</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>remove-h2-example</target>
+    <file>../../transformation/xbgf/tests/remove_inside.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>remove-h2-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>remove-h2-example</target>
+    <file>../../transformation/xbgf/tests/remove_inside.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>remove-h2-example</where>
+    <content>
+      <text>The result will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>remove-h2-example</target>
+    <file>../../transformation/xbgf/tests/remove_inside.baseline</file>
+  </xldf:import-grammar>
+
   <xldf:place>
     <section>element-disappear</section>
     <inside>group-decreasing-transformation</inside>
   </xldf:place>
+  <xldf:transform-grammar>
+    <target>element-disappear</target>
+    <xbgf:fold>
+      <nonterminal>marked-production</nonterminal>
+      <in>
+        <nonterminal>disappear</nonterminal>
+      </in>
+    </xbgf:fold>
+    <context>definitions-section</context>
+  </xldf:transform-grammar>
+  <xldf:add-subsection>
+    <example id="disappear-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-disappear</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>disappear-example</target>
+    <file>../../transformation/xbgf/tests/disappear_s.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>disappear-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>disappear-example</target>
+    <file>../../transformation/xbgf/tests/disappear_s.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>disappear-example</where>
+    <content>
+      <text>The result will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>disappear-example</target>
+    <file>../../transformation/xbgf/tests/disappear_s.baseline</file>
+  </xldf:import-grammar>
   
   <xldf:place>
     <section>element-narrow</section>
@@ -81,5 +299,63 @@
     <section>element-downgrade</section>
     <inside>group-decreasing-transformation</inside>
   </xldf:place>
-
+  <xldf:transform-grammar>
+    <target>element-downgrade</target>
+    <xbgf:replace>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>production</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>production</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>marked-production</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>production</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </xbgf:replace>
+  </xldf:transform-grammar>
+  <xldf:add-subsection>
+    <example id="downgrade-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-downgrade</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>downgrade-example</target>
+    <file>../../transformation/xbgf/tests/downgrade.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>downgrade-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>downgrade-example</target>
+    <file>../../transformation/xbgf/tests/downgrade.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>downgrade-example</where>
+    <content>
+      <text>The result will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>downgrade-example</target>
+    <file>../../transformation/xbgf/tests/downgrade.baseline</file>
+  </xldf:import-grammar>
+  
 </xldf:evolution-sequence>
