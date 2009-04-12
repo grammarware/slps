@@ -6,9 +6,11 @@ import org.planet_sl.apimigration.benchmark.anno.Issue;
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 import org.planet_sl.apimigration.benchmark.anno.Progress;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved;
 import org.planet_sl.apimigration.benchmark.anno.Wrapping;
 import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
 import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved.XML;
 
 @SuppressWarnings("unchecked")
 @MapsTo("org.jdom.Attribute")
@@ -120,8 +122,9 @@ public class Attribute extends Node {
 		this((org.jdom.Attribute) attribute.attribute.clone());
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Issue.Pre(value = "xom allows colonized names", resolved = true)
 	@Issue.Doc("XOM docs say first arg is localName, however, tests send colonized names")
 	@MapsTo("org.jdom.Attribute(String,String)")
 	public Attribute(String name, String value) {
@@ -318,6 +321,7 @@ public class Attribute extends Node {
 	@Progress(value = Status.NEEDSWORK, comment = "is a debugging aid")
 	@Solution(value = Strategy.CLONE, comment = "")
 	@Issue.Post(value = "proper escaping of attribute's value", resolved = true)
+	@Unresolved(XML.Escaping)
 	@Override
 	@MapsTo("")
 	public String toXML() {
@@ -368,6 +372,7 @@ public class Attribute extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Unresolved(XML.XPath)
 	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
@@ -387,6 +392,7 @@ public class Attribute extends Node {
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Override
+	@Unresolved(XML.XPath)
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {
@@ -416,20 +422,6 @@ public class Attribute extends Node {
 	@MapsTo("org.jdom.Attribute#hashCode()")
 	public int hashCode() {
 		return attribute.hashCode();
-	}
-
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
-	@MapsTo("")
-	public Node getChild(int position) {
-		throw new IndexOutOfBoundsException("comments have no children");
-	}
-
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
-	@MapsTo("")
-	public int getChildCount() {
-		return 0;
 	}
 
 }

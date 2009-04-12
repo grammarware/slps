@@ -74,17 +74,17 @@ public abstract class Node {
 	public abstract String getBaseURI();
 	
 	
-	@Progress(value = Status.TODO, comment = "")
-	@Solution(value = Strategy.OTHER, comment = "")
-	@Issue.Pre("")
-	@Issue.Post("")
-	@Issue.Throws("")
-	public abstract int getChildCount();
-	
-	@Progress(value = Status.TODO, comment = "")
-	@Solution(value = Strategy.OTHER, comment = "")
-	@Issue.Pre("")
-	@Issue.Post("")
-	@Issue.Throws("")
-	public abstract Node getChild(int i);
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.CLONE, comment = "")
+	@MapsTo("")
+	public Node getChild(int position) {
+		throw new IndexOutOfBoundsException("attributes have no children");
+	}
+
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.CLONE, comment = "")
+	@MapsTo("")
+	public int getChildCount() {
+		return 0;
+	}
 }

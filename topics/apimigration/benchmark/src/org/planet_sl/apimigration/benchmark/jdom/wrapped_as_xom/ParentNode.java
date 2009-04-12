@@ -65,17 +65,4 @@ public abstract class ParentNode extends Node {
 	@MapsTo("")
 	public abstract void insertChild(Node child, int position);
 
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
-	@MapsTo("")
-	public Node getChild(int position) {
-		throw new IndexOutOfBoundsException("comments have no children");
-	}
-
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
-	@MapsTo("")
-	public int getChildCount() {
-		return 0;
-	}
 }

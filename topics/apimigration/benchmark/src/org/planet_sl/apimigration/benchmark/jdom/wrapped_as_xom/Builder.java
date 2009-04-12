@@ -1,10 +1,12 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
 import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved;
 import org.planet_sl.apimigration.benchmark.anno.Wrapping;
 import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
 import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved.XML;
 import org.planet_sl.apimigration.benchmark.anno.Issue;
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +40,7 @@ public class Builder {
 
 	@Progress(value = Status.NEEDSWORK, comment = "parsers behave differently")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Unresolved(XML.Parsing)
 	@MapsTo("org.jdom.input.SAXBuilder(boolean)")
 	public Builder(boolean validate) {
 		this(new org.jdom.input.SAXBuilder(SAX, validate));
@@ -62,6 +65,7 @@ public class Builder {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Pre("Not sure if XMLReader.class can function as a SAX driver")
+	@Unresolved(XML.Parsing)
 	@MapsTo("org.jdom.input.SAXBuilder(String)")
 	public Builder(org.xml.sax.XMLReader parser) {
 		// TODO: don't know about this one...
@@ -71,6 +75,7 @@ public class Builder {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Pre("Not sure if XMLReader.class can function as a SAX driver")
+	@Unresolved(XML.Parsing)
 	@MapsTo("org.jdom.input.SAXBuilder(String,boolean)")
 	public Builder(org.xml.sax.XMLReader parser, boolean validate) {
 		this(new org.jdom.input.SAXBuilder(parser.getClass().getName(),
@@ -79,6 +84,7 @@ public class Builder {
 
 	@Progress(value = Status.GIVENUP, comment = "")
 	@Issue.Pre("NodeFactory is not available in JDOM and cannot be used by SAXBuilder")
+	@Unresolved(XML.Parsing)
 	@MapsTo("")
 	public Builder(org.xml.sax.XMLReader parser, boolean validate,
 			NodeFactory factory) {
@@ -89,6 +95,7 @@ public class Builder {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Throws("JDOMException can be thrown without being a JDOMParseException")
+	@Unresolved(XML.Parsing)
 	@MapsTo("org.jdom.input.SAXBuilder#build(String)")
 	public Document build(String systemID) throws ParsingException, IOException {
 		try {
@@ -104,6 +111,7 @@ public class Builder {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Throws("JDOMException can be thrown without being a JDOMParseException")
+	@Unresolved(XML.Parsing)
 	@MapsTo("org.jdom.input.SAXBuilder#build(InputStream)")
 	public Document build(InputStream in) throws ParsingException, IOException {
 		try {
@@ -119,6 +127,7 @@ public class Builder {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Throws("JDOMException can be thrown without being a JDOMParseException")
+	@Unresolved(XML.Parsing)
 	@MapsTo("org.jdom.input.SAXBuilder#build(InputStream,String)")
 	public Document build(InputStream in, String baseURI)
 			throws ParsingException, IOException {
@@ -135,6 +144,7 @@ public class Builder {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Throws("JDOMException can be thrown without being a JDOMParseException")
+	@Unresolved(XML.Parsing)
 	@MapsTo("org.jdom.input.SAXBuilder#build(File)")
 	public Document build(File in) throws ParsingException, IOException {
 		try {
@@ -150,6 +160,7 @@ public class Builder {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Throws("JDOMException can be thrown without being a JDOMParseException")
+	@Unresolved(XML.Parsing)
 	@MapsTo("org.jdom.input.SAXBuilder#build(Reader)")
 	public Document build(Reader in) throws ParsingException, IOException {
 		try {
@@ -165,6 +176,7 @@ public class Builder {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Throws("JDOMException can be thrown without being a JDOMParseException")
+	@Unresolved(XML.Parsing)
 	@MapsTo("org.jdom.input.SAXBuilder#build(Reader,String)")
 	public Document build(Reader in, String baseURI) throws ParsingException,
 			IOException {
@@ -181,6 +193,7 @@ public class Builder {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Throws("JDOMException can be thrown without being a JDOMParseException")
+	@Unresolved(XML.Parsing)
 	@MapsTo("org.jdom.input.SAXBuilder#build(String,String)")
 	public Document build(String document, String baseURI)
 			throws ParsingException, IOException {
@@ -197,7 +210,7 @@ public class Builder {
 
 	@Progress(value = Status.GIVENUP, comment = "")
 	@Issue.Post("No NodeFactory available since it does not work with SAXBuilder")
-//	@Solution(Strategy.OTHER)
+	@Unresolved(XML.Extension)
 	@MapsTo("")
 	public NodeFactory getNodeFactory() {
 		throw new UnsupportedOperationException(

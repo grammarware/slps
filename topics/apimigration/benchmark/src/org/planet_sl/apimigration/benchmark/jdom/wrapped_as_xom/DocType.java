@@ -1,10 +1,12 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
 import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved;
 import org.planet_sl.apimigration.benchmark.anno.Wrapping;
 import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
 import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved.XML;
 import org.planet_sl.apimigration.benchmark.anno.Issue;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class DocType extends Node {
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Pre("XOM does a lot more input validation on rootElementName")
 	@Issue.Throws("for some invalid names (starting with digits) jdom *does* throw")
+	@Unresolved(XML.DocTypeValidity)
 	@MapsTo("org.jdom.DocType(String)")
 	public DocType(String rootElementName) {
 		if (rootElementName == null) {
@@ -58,6 +61,7 @@ public class DocType extends Node {
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Pre("XOM does a lot more input validation on rootElementName etc.")
 	@MapsTo("org.jdom.DocType(String,String)")
+	@Unresolved(XML.DocTypeValidity)
 	public DocType(String rootElementName, String systemID) {
 		if (rootElementName == null) {
 			throw new IllegalNameException("null", rootElementName);
@@ -80,6 +84,7 @@ public class DocType extends Node {
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Pre("XOM does a lot more input validation on rootElementName etc.")
 	@MapsTo("org.jdom.DocType(String,String,String)")
+	@Unresolved(XML.DocTypeValidity)
 	public DocType(String rootElementName, String publicID, String systemID) {
 		if (rootElementName == null) {
 			throw new IllegalNameException("null", rootElementName);
@@ -150,6 +155,7 @@ public class DocType extends Node {
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Issue.Pre("XOM parses the InternalSubset string and throws accordingly")
 	@MapsTo("org.jdom.DocType#setInternalSubset(String)")
+	@Unresolved(XML.DocTypeValidity)
 	public void setInternalDTDSubset(String subset) {
 		if (subset == null) {
 			subset = "";
@@ -161,6 +167,7 @@ public class DocType extends Node {
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Pre("Xom checks for invalid characters")
 	@MapsTo("org.jdom.DocType#setPublicID(String)")
+	@Unresolved(XML.DocTypeValidity)
 	public void setPublicID(String id) {
 		if (doctype.getSystemID() == null || doctype.getSystemID().equals("")) {
 			throw new WellformednessException("public id without system id");
@@ -172,6 +179,7 @@ public class DocType extends Node {
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Pre("XOM checks for more invalid chars in rootElementNames ")
 	@MapsTo("org.jdom.DocType#setElementName(String)")
+	@Unresolved(XML.DocTypeValidity)
 	public void setRootElementName(String name) {
 		if (name == null) {
 			throw new IllegalNameException("null", name);
@@ -185,11 +193,12 @@ public class DocType extends Node {
 		doctype.setElementName(name);
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Progress(Status.NEEDSWORK)
+	@Solution(Strategy.ADVANCED_DELEGATE)
 	@Issue.Pre("XOM checks for invalid chars")
-	@Issue.Invariant("maintains that public is nulled before any systemid is nulled")
+	@Issue.Invariant(value = "public id must be nulled before systemid", resolved = true)
 	@MapsTo("org.jdom.DocType#setSystemId(String)")
+	@Unresolved(XML.DocTypeValidity)
 	public void setSystemID(String id) {
 		if (id == null || id.equals("")) {
 			if (!(doctype.getPublicID() == null || doctype.getPublicID().equals(""))) {
@@ -204,6 +213,7 @@ public class DocType extends Node {
 	@Issue.Post("output may differ slightly")
 	@Override
 	@MapsTo("org.jdom.output.XMLOutputter#outputString(org.jdom.OutputType)")
+	@Unresolved(XML.Serialization)
 	public String toXML() {
 		return new org.jdom.output.XMLOutputter().outputString(doctype);
 	}
@@ -262,8 +272,9 @@ public class DocType extends Node {
 	}
 
 
-	@Progress(value = Status.OK, comment = "")
+	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Unresolved(XML.XPath)
 	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
@@ -280,8 +291,9 @@ public class DocType extends Node {
 		}
 	}
 
-	@Progress(value = Status.OK, comment = "")
+	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Unresolved(XML.XPath)
 	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
@@ -296,24 +308,10 @@ public class DocType extends Node {
 	}
 	
 	@Progress(value = Status.DONTCARE, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
+	@Solution(value = Strategy.CLONE, comment = "")
 	@Override
 	@MapsTo("")
 	public String toString() {
 		return  "[nu.xom.DocType: " + doctype.getElementName() + "]";
-	}
-
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
-	@MapsTo("")
-	public Node getChild(int position) {
-		throw new IndexOutOfBoundsException("comments have no children");
-	}
-
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
-	@MapsTo("")
-	public int getChildCount() {
-		return 0;
 	}
 }

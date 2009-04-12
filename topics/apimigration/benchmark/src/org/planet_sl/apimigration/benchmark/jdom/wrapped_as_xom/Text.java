@@ -7,9 +7,11 @@ import org.planet_sl.apimigration.benchmark.anno.Issue;
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 import org.planet_sl.apimigration.benchmark.anno.Progress;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved;
 import org.planet_sl.apimigration.benchmark.anno.Wrapping;
 import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
 import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved.XML;
 
 @SuppressWarnings("unchecked")
 @MapsTo("org.jdom.Text;org.jdom.CDATA")
@@ -79,6 +81,8 @@ public class Text extends Node {
 
 	@Progress(value = Status.DONTCARE, comment = "is a debuggin aid")
 	@Solution(value = Strategy.DELEGATE, comment = "")
+	@Issue.Post("result may differ slightly")
+	@Unresolved(XML.Serialization)
 	@Override
 	@MapsTo("org.jdom.output.XMLOutputter#outputString(Text)")
 	public String toXML() {
@@ -103,7 +107,6 @@ public class Text extends Node {
 	@Override
 	@MapsTo("")
 	public String getBaseURI() {
-		// CHEATING to avoid duplicating the parent check for both cdata and text
 		return getParent() != null ? getParent().getBaseURI() : ""; 
 	}
 
@@ -140,6 +143,7 @@ public class Text extends Node {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
+	@Unresolved(XML.XPath)
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
@@ -158,6 +162,7 @@ public class Text extends Node {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
+	@Unresolved(XML.XPath)
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {
@@ -168,20 +173,6 @@ public class Text extends Node {
 		} catch (org.jdom.JDOMException e) {
 			throw new XPathException(e.getMessage(), e.getCause());
 		}
-	}
-
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
-	@MapsTo("")
-	public Node getChild(int position) {
-		throw new IndexOutOfBoundsException("comments have no children");
-	}
-
-	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
-	@MapsTo("")
-	public int getChildCount() {
-		return 0;
 	}
 
 }
