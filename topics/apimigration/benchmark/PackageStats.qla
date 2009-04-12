@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysis description="" name="PackageStats">
+<scope class="analysis scope" incrementalPopulation="true" kind="Projects" label="XOMandJDOM" stale="true">
+<project name="XOM"/>
+</scope>
+<query class="project query" path="src/PackageStats.ql" project="XOM"/>
+</analysis>

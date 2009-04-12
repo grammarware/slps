@@ -1,16 +1,14 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
-import org.planet_sl.apimigration.benchmark.anno.Progress;
-import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
-import org.planet_sl.apimigration.benchmark.anno.Solution;
-import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
-import org.planet_sl.apimigration.benchmark.anno.Issue;
 import java.util.List;
 
-import org.planet_sl.apimigration.benchmark.anno.API;
+import org.planet_sl.apimigration.benchmark.anno.Issue;
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
 import org.planet_sl.apimigration.benchmark.anno.Wrapping;
-import org.planet_sl.apimigration.benchmark.anno.API.Kind;
+import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
+import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
 
 @SuppressWarnings("unchecked")
 @MapsTo("org.jdom.Attribute")
@@ -126,21 +124,21 @@ public class Attribute extends Node {
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Issue.Doc("XOM docs say first arg is localName, however, tests send colonized names")
 	@MapsTo("org.jdom.Attribute(String,String)")
-	public Attribute(String localName, String value) {
-//		int index = name.indexOf(":");
-//		String prefix = "";
-//		String localName = name;
-//		if (index != -1) {
-//			prefix = name.substring(0, index);
-//			localName = name.substring(index + 1, name.length());
-//		}
-//		if (prefix.equals("xml")) {
-//			throw new NamespaceConflictException(
-//					"creating xml: prefix attribute without proper namespace");
-//		}
-//		if (prefix.equals("xmlns")) {
-//			throw new IllegalNameException("creating xmlns attribute", name);
-//		}
+	public Attribute(String name, String value) {
+		int index = name.indexOf(":");
+		String prefix = "";
+		String localName = name;
+		if (index != -1) {
+			prefix = name.substring(0, index);
+			localName = name.substring(index + 1, name.length());
+		}
+		if (prefix.equals("xml")) {
+			throw new NamespaceConflictException(
+					"creating xml: prefix attribute without proper namespace");
+		}
+		if (prefix.equals("xmlns")) {
+			throw new IllegalNameException("creating xmlns attribute", name);
+		}
 		try {
 			attribute = new org.jdom.Attribute(localName, value);
 		} catch (org.jdom.IllegalNameException e) {
@@ -317,8 +315,8 @@ public class Attribute extends Node {
 		}
 	}
 
-	@Progress(value = Status.DONTCARE, comment = "is a debugging aid")
-	@Solution(value = Strategy.MACRO, comment = "")
+	@Progress(value = Status.NEEDSWORK, comment = "is a debugging aid")
+	@Solution(value = Strategy.CLONE, comment = "")
 	@Issue.Post(value = "proper escaping of attribute's value", resolved = true)
 	@Override
 	@MapsTo("")
@@ -418,6 +416,20 @@ public class Attribute extends Node {
 	@MapsTo("org.jdom.Attribute#hashCode()")
 	public int hashCode() {
 		return attribute.hashCode();
+	}
+
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
+	@MapsTo("")
+	public Node getChild(int position) {
+		throw new IndexOutOfBoundsException("comments have no children");
+	}
+
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
+	@MapsTo("")
+	public int getChildCount() {
+		return 0;
 	}
 
 }

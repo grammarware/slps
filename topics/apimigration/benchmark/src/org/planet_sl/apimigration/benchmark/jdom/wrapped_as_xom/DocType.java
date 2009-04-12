@@ -302,4 +302,18 @@ public class DocType extends Node {
 	public String toString() {
 		return  "[nu.xom.DocType: " + doctype.getElementName() + "]";
 	}
+
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
+	@MapsTo("")
+	public Node getChild(int position) {
+		throw new IndexOutOfBoundsException("comments have no children");
+	}
+
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
+	@MapsTo("")
+	public int getChildCount() {
+		return 0;
+	}
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysis description="" name="TestSuiteStats">
+<scope class="analysis scope" incrementalPopulation="true" kind="Projects" label="XOMandJDOM" needsIndexing="true" stale="true">
+<project name="XOM"/>
+</scope>
+<query class="project query" path="src/TestSuiteStats.ql" project="XOM"/>
+</analysis>

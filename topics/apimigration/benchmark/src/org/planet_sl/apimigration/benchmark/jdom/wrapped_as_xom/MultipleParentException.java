@@ -24,9 +24,9 @@ public class MultipleParentException extends IllegalAddException {
 	@Issue.Post("")
 	@Issue.Throws("")
 	public  MultipleParentException(org.jdom.IllegalAddException e)  {
-		super(e);
+		super(e.getMessage(), e);
 	}
-
+	
 	@Progress(
 		value = Status.TODO, 
 		comment = ""
@@ -41,5 +41,6 @@ public class MultipleParentException extends IllegalAddException {
 	public  MultipleParentException(String string)  {
 		super(string);
 	}
+
 
 }

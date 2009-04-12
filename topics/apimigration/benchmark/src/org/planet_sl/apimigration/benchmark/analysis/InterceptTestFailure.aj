@@ -1,8 +1,12 @@
 package org.planet_sl.apimigration.benchmark.analysis;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Collections;
@@ -31,6 +35,18 @@ public aspect InterceptTestFailure {
 		return name;
 	}
 	
+	public static Map<String,Integer> failOnly = new HashMap<String, Integer>();
+	public static Map<String,Integer> errorOnly = new HashMap<String, Integer>();
+	public static Map<String,Integer> successOnly = new HashMap<String, Integer>();
+	public static Map<String,Integer> mixedOnly = new HashMap<String, Integer>();
+	public static Map<String,Integer> nonSuccessOnly = new HashMap<String, Integer>();
+	
+	private static String typeName(String string) {
+		string = string.replaceAll("execution\\(", "");
+		string = string.substring(0, string.indexOf("."));
+		return string;
+	}
+	
 	after(): execution(public static void CollectFailures.main(..)) {
 		System.out.println(tests + " tests with " + assertionsTotal + " assertions");
 		System.out.println(failuresTotal + " failures; " + errorsTotal + " errors");
@@ -46,6 +62,145 @@ public aspect InterceptTestFailure {
 		for (String method: successCount.keySet()) {
 			System.out.println("successes of " + method + ": " + successCount.get(method));
 		}
+		int c = 0;
+		for (String method: successCount.keySet()) {
+			if (!failureCount.containsKey(method) && !errorCount.containsKey(method)) {
+				c++;
+				inc(successOnly, typeName(method));
+				System.out.println("only successes for " + method + ": " + successCount.get(method));
+			}
+		}
+		System.out.println("Total only-success features: " + c);
+		c = 0;
+		for (String method: failureCount.keySet()) {
+			if (!successCount.containsKey(method) && !errorCount.containsKey(method)) {
+				c++;
+				inc(failOnly, typeName(method));
+				inc(nonSuccessOnly, typeName(method));
+				System.out.println("only failures for " + method + ": " + failureCount.get(method));
+			}
+		}
+		System.out.println("Total only-failure features: " + c);
+		c = 0;
+		for (String method: errorCount.keySet()) {
+			if (!successCount.containsKey(method) && !failureCount.containsKey(method)) {
+				c++;
+				inc(errorOnly, typeName(method));
+				inc(nonSuccessOnly, typeName(method));
+				System.out.println("only errors for " + method + ": " + errorCount.get(method));
+			}
+		}
+		System.out.println("Total only-error features: " + c);
+		
+		Set<String> mixedMethods = new HashSet<String>();
+		mixedMethods.addAll(errorCount.keySet());
+		mixedMethods.addAll(failureCount.keySet());
+		mixedMethods.addAll(successCount.keySet());
+		
+		c = 0;
+		for (String method: mixedMethods) {
+			if ((successCount.containsKey(method) && failureCount.containsKey(method)) ||
+					(successCount.containsKey(method) && errorCount.containsKey(method))) {
+				c++;
+				inc(mixedOnly, typeName(method));
+			}
+		}
+		System.out.println("Number of mixed result features: " + c);
+		
+		System.out.println("Number of mixed result per type");
+		List<String> mixedOnlyTypes = new ArrayList<String>(mixedOnly.keySet());
+		Collections.sort(mixedOnlyTypes);
+		
+		for (String type: mixedOnlyTypes) {
+			System.out.println(type + ": " + mixedOnly.get(type));
+		}
+		
+		System.out.println("Number of succes only per type");
+		List<String> successOnlyTypes = new ArrayList<String>(successOnly.keySet());
+		Collections.sort(successOnlyTypes);
+		for (String type: successOnlyTypes) {
+			System.out.println(type + ": " + successOnly.get(type));
+		}
+		
+		System.out.println("\nNumber of non-success only per type");
+		List<String> nonSuccessOnlyTypes = new ArrayList<String>(nonSuccessOnly.keySet());
+		Collections.sort(nonSuccessOnlyTypes);
+		for (String type: nonSuccessOnlyTypes) {
+			System.out.println(type + ": " + nonSuccessOnly.get(type));
+		}
+		
+		try {
+			Map<String,Integer> totalSuccessPerType = countPerType(successCount);
+			Map<String,Integer> totalFailurePerType = countPerType(failureCount);
+			Map<String,Integer> totalErrorPerType = countPerType(errorCount);
+			
+			Set<String> allTypes = new HashSet<String>(mixedOnlyTypes);
+			allTypes.addAll(successOnlyTypes);
+			allTypes.addAll(nonSuccessOnlyTypes);
+			List<String> allTypesList = new ArrayList<String>(allTypes);
+			Collections.sort(allTypesList);
+			for (String type: allTypesList) {
+				if (!mixedOnly.containsKey(type)) {
+					mixedOnly.put(type, 0);
+				}
+				if (!successOnly.containsKey(type)) {
+					successOnly.put(type, 0);
+				}
+				if (!nonSuccessOnly.containsKey(type)) {
+					nonSuccessOnly.put(type, 0);
+				}
+				if (!totalSuccessPerType.containsKey(type)) {
+					totalSuccessPerType.put(type, 0);
+				}
+				if (!totalFailurePerType.containsKey(type)) {
+					totalFailurePerType.put(type, 0);
+				}
+				if (!totalErrorPerType.containsKey(type)) {
+					totalErrorPerType.put(type, 0);
+				}
+			}
+			File file = new File("compliance.tex");
+			FileWriter writer = new FileWriter(file);
+			writer.write("\\begin{tabular}{|l|r|r|r|r|r|r|}\\hline\n");
+			writer.write("\\typeHeading\t\t\t\t& ");
+			writer.write("\\successHeading & ");
+			writer.write("\\failureHeading &");
+			writer.write("\\errorHeading &");
+			writer.write("\\successOnlyHeading\t& \\nonSuccessOnlyHeading \t& \\mixedHeading");
+			writer.write("\\\\\\hline\\hline\n");
+			for (String type: allTypesList) {
+				writer.write(type + "\t\t& ");
+				
+				
+				writer.write(totalSuccessPerType.get(type) + "\t& ");
+				writer.write(totalFailurePerType.get(type) + "\t& ");
+				writer.write(totalErrorPerType.get(type) + "\t& ");
+				
+				writer.write(successOnly.get(type) + "\t& ");
+				writer.write(nonSuccessOnly.get(type) + "\t& ");
+				writer.write(mixedOnly.get(type) + "\\\\\\hline\n");
+			}
+			writer.write("\\end{tabular}\n");
+			writer.flush();
+			writer.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	private static Map<String,Integer> countPerType(Map<String,Integer> count) {
+		Map<String,Integer> perType = new HashMap<String, Integer>();
+		for (String method: count.keySet()) {
+			if (!perType.containsKey(typeName(method))) {
+				perType.put(typeName(method), 0);
+			}
+			perType.put(typeName(method), perType.get(typeName(method)) + 
+				(count.get(method) == null ? new Integer(0) : count.get(method)));
+		}
+		return perType;
 	}
 	
 	private static Map<String,Integer> failureCount = new HashMap<String, Integer>();
@@ -60,6 +215,21 @@ public aspect InterceptTestFailure {
 	}
 	
 	private static void inc(Map<String,Integer> table, String currentMethod, int count) {
+		if (currentMethod.matches(".*Utils\\..*")) {
+			return;
+		}
+		if (currentMethod.matches(".*Test.*")) {
+			return;
+		}
+		if (currentMethod.matches(".*Exception.*")) {
+			return;
+		}
+		if (currentMethod.matches(".*NodeFactory.*")) {
+			return;
+		}
+		if (currentMethod.matches(".*Element\\.query.*")) {
+			return;
+		}
 		if (!table.containsKey(currentMethod)) {
 			table.put(currentMethod, 0);
 		}
@@ -91,9 +261,19 @@ public aspect InterceptTestFailure {
 			proceed();
 		}
 		catch (AssertionError e) {
+			for (StackTraceElement elt: e.getStackTrace()) {
+				//
+			}
 			failuresTotal++;
 			for (String method: methods) {
 				inc(failureCount, method);
+			}
+			throw e;
+		}
+		catch (RuntimeException e) {
+			errorsTotal++;
+			for (String method: methods) {
+				inc(errorCount, method);
 			}
 			throw e;
 		}
@@ -102,7 +282,7 @@ public aspect InterceptTestFailure {
 			for (String method: methods) {
 				inc(errorCount, method);
 			}
-			//throw e;
+			throw new RuntimeException(e);
 		}
 		for (String method: methods) {
 			inc(successCount, method, assertions);

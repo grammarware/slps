@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysis description="" name="APIStats">
+<scope class="analysis scope" incrementalPopulation="true" kind="Projects" label="XOMandJDOM">
+<project name="XOM"/>
+</scope>
+<query class="project query" path="src/APIStats.ql" project="XOM">
+<pattern class="pattern">
+<item kind="String" name="API"/>
+<item kind="Entity" name="type"/>
+<item kind="Integer" name="LOC"/>
+<item kind="Integer" name="featureCount"/>
+</pattern>
+</query>
+</analysis>

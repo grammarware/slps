@@ -80,13 +80,13 @@ public class CollectMappings {
 				"\\delegateLevel{2}",
 				"\\delegateLevel{3}",
 				"\\delegateLevel{4}",
-				"\\complianceLevel{1}", // missing/don't care/todo
-				"\\complianceLevel{2}", // need's work: critical test fail
-				"\\complianceLevel{3}" // compliant: no critical tests fail
+//				"\\complianceLevel{1}", // missing/don't care/todo
+//				"\\complianceLevel{2}", // need's work: critical test fail
+//				"\\complianceLevel{3}" // compliant: no critical tests fail
 				// TODO: level 4 fully compliant
 		};
 		
-		writer.write("\\begin{tabular}{|l|r|r|r|r|r|r|r|}\\hline\n");
+		writer.write("\\begin{tabular}{|l|r|r|r|r|}\\hline\n");
 		for (int i = 0; i < headings.length; i++) {
 			writer.write(headings[i]);
 			if (i < headings.length - 1) {
@@ -115,7 +115,7 @@ public class CollectMappings {
 			simpleDelegateTotal += simpleDelegateCount.get(from);
 			advancedDelegateTotal += advancedDelegateCount.get(from);
 			macroTotal += macroCount.get(from);
-			cloneTotal += 0; // TODO
+			cloneTotal += cloneCount.get(from);
 			compliantTotal += compliantCount.get(from);
 			nonCompliantTotal += nonCompliantCount.get(from);
 			borderlineCompliantTotal += borderlineCompliantCount.get(from);
@@ -126,10 +126,10 @@ public class CollectMappings {
 			writer.write(simpleDelegateCount.get(from) + " & ");
 			writer.write(advancedDelegateCount.get(from) + " & ");
 			writer.write(macroCount.get(from) + " & ");
-			writer.write(0 + " & ");
-			writer.write((dontCareCount.get(from) + brickwalledCount.get(from)) + " & ");
-			writer.write(nonCompliantCount.get(from) + " & ");
-			writer.write(compliantCount.get(from).toString());
+			writer.write(cloneCount.get(from) + "" );
+//			writer.write((dontCareCount.get(from) + brickwalledCount.get(from)) + " & ");
+//			writer.write(nonCompliantCount.get(from) + " & ");
+//			writer.write(compliantCount.get(from).toString());
 			writer.write("\\\\\\hline\n");
 		}
 		
@@ -137,10 +137,10 @@ public class CollectMappings {
 		writer.write(" & " + simpleDelegateTotal + " & ");
 		writer.write(advancedDelegateTotal + " & ");
 		writer.write(macroTotal + " & ");
-		writer.write(cloneTotal + " & ");
-		writer.write((dontCareTotal + brickwalledTotal) + " & ");
-		writer.write(nonCompliantTotal + " & ");
-		writer.write(compliantTotal + "\\\\\\hline ");
+		writer.write(cloneTotal + "\\\\\\hline");
+//		writer.write((dontCareTotal + brickwalledTotal) + " & ");
+//		writer.write(nonCompliantTotal + " & ");
+//		writer.write(compliantTotal + "\\\\\\hline ");
 		
 		writer.write("\\end{tabular}\n");
 		writer.flush();
@@ -204,8 +204,8 @@ public class CollectMappings {
 			derivedTotal += derivedFeatureCount.get(from) == null ? 0 : derivedFeatureCount.get(from);
 			writer.write(from + " & ");
 			writer.write(typeMapping.get(from).replaceAll("org.jdom.", "").replaceAll(";", "; ") + " & ");
-			writer.write(mappedFeatureCount.get(from) + " & ");
-			writer.write(derivedFeatureCount.get(from) + "\\\\\\hline\n");
+			writer.write((mappedFeatureCount.get(from) == null ? 0 : mappedFeatureCount.get(from)) + " & ");
+			writer.write((derivedFeatureCount.get(from) == null ? 0 : derivedFeatureCount.get(from))  + "\\\\\\hline\n");
 		}
 		
 		writer.write("\\hline\n");
@@ -293,6 +293,7 @@ public class CollectMappings {
 	static Map<String, Integer> simpleDelegateCount = new HashMap<String, Integer>();
 	static Map<String, Integer> advancedDelegateCount = new HashMap<String, Integer>();
 	static Map<String, Integer> macroCount = new HashMap<String, Integer>();
+	static Map<String, Integer> cloneCount = new HashMap<String, Integer>();
 	
 	static Map<String, Integer> compliantCount = new HashMap<String, Integer>();
 	static Map<String, Integer> nonCompliantCount = new HashMap<String, Integer>();
@@ -316,11 +317,13 @@ public class CollectMappings {
 		init(simpleDelegateCount, from);
 		init(advancedDelegateCount, from);
 		init(macroCount, from);
+		init(cloneCount, from);
 		
 		switch (anno.value()) {
 		case DELEGATE: inc(simpleDelegateCount, from); break;
 		case ADVANCED_DELEGATE: inc(advancedDelegateCount, from); break;
 		case MACRO: inc(macroCount, from); break;
+		case CLONE: inc(cloneCount, from); break;
 		}
 	}
 

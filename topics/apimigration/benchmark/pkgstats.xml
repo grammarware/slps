@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<run end="1239452379604" name="PackageStats" scope="XOMandJDOM" start="1239452376876">
+<run end="1239526324719" name="PackageStats" scope="XOMandJDOM" start="1239526318794">
 <query class="query" status="Success">
 <input class="project query" path="src/PackageStats.ql" project="XOM">
 <pattern class="pattern">
@@ -10,39 +10,31 @@
 <results complete="true"/>
 <row>
 <item class="entity" icon="icons/package.png" id="23" label="nu.xom" url="nu.xom"/>
-<item class="int" value="82"/>
-</row>
-<row>
-<item class="entity" icon="icons/package.png" id="96476" label="nu.xom.benchmarks" url="nu.xom.benchmarks"/>
-<item class="int" value="11"/>
+<item class="int" value="35"/>
 </row>
 <row>
 <item class="entity" icon="icons/package.png" id="98203" label="nu.xom.canonical" url="nu.xom.canonical"/>
-<item class="int" value="4"/>
+<item class="int" value="2"/>
 </row>
 <row>
 <item class="entity" icon="icons/package.png" id="107745" label="nu.xom.converters" url="nu.xom.converters"/>
 <item class="int" value="2"/>
 </row>
 <row>
-<item class="entity" icon="icons/package.png" id="112341" label="nu.xom.tests" url="nu.xom.tests"/>
-<item class="int" value="139"/>
-</row>
-<row>
 <item class="entity" icon="icons/package.png" id="270055" label="nu.xom.xinclude" url="nu.xom.xinclude"/>
-<item class="int" value="14"/>
+<item class="int" value="9"/>
 </row>
 <row>
 <item class="entity" icon="icons/package.png" id="277441" label="nu.xom.xslt" url="nu.xom.xslt"/>
-<item class="int" value="8"/>
+<item class="int" value="2"/>
 </row>
 <row>
 <item class="entity" icon="icons/package.png" id="280687" label="org.jdom" url="org.jdom"/>
-<item class="int" value="29"/>
+<item class="int" value="22"/>
 </row>
 <row>
 <item class="entity" icon="icons/package.png" id="282042" label="org.jdom.filter" url="org.jdom.filter"/>
-<item class="int" value="7"/>
+<item class="int" value="4"/>
 </row>
 <row>
 <item class="entity" icon="icons/package.png" id="309387" label="org.jdom.adapters" url="org.jdom.adapters"/>
@@ -50,15 +42,15 @@
 </row>
 <row>
 <item class="entity" icon="icons/package.png" id="309436" label="org.jdom.input" url="org.jdom.input"/>
-<item class="int" value="7"/>
+<item class="int" value="5"/>
 </row>
 <row>
 <item class="entity" icon="icons/package.png" id="321769" label="org.jdom.output" url="org.jdom.output"/>
-<item class="int" value="10"/>
+<item class="int" value="7"/>
 </row>
 <row>
 <item class="entity" icon="icons/package.png" id="333886" label="org.jdom.transform" url="org.jdom.transform"/>
-<item class="int" value="8"/>
+<item class="int" value="4"/>
 </row>
 </query>
 <analysis class="project analysis" path="src/PackageStats.qla" project="XOM"/>

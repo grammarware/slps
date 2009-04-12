@@ -182,4 +182,18 @@ public class ProcessingInstruction extends Node {
 		return pi.hashCode();
 	}
 
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
+	@MapsTo("")
+	public Node getChild(int position) {
+		throw new IndexOutOfBoundsException("comments have no children");
+	}
+
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.MACRO, comment = "")
+	@MapsTo("")
+	public int getChildCount() {
+		return 0;
+	}
+
 }

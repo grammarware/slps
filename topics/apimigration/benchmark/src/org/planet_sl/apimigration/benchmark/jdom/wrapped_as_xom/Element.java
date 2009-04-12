@@ -75,6 +75,15 @@ public class Element extends ParentNode {
 			prefix = name.substring(0, index);
 			localName = name.substring(index + 1, name.length());
 		}
+		if (prefix.equals("xmlns")) {
+			throw new NamespaceConflictException(prefix);
+		}
+		if (prefix.equals("xml") && !uri.equals(org.jdom.Namespace.XML_NAMESPACE.getURI())) {
+			throw new NamespaceConflictException(prefix);
+		}
+		if (!prefix.equals("xml") && uri.equals(org.jdom.Namespace.XML_NAMESPACE.getURI())) {
+			throw new NamespaceConflictException(prefix);
+		}
 		try {
 			element = new org.jdom.Element(localName, prefix, uri);
 		} catch (org.jdom.IllegalNameException e) {
@@ -127,6 +136,12 @@ public class Element extends ParentNode {
 		if (child == null) {
 			throw new NullPointerException("inserting null child");
 		}
+		if (child instanceof Document) {
+			throw new IllegalAddException("documents cannot be childs of elements");
+		}
+		if (child.getParent() != null) {
+			throw new MultipleParentException("child has a parent");
+		}
 		element.addContent(position, node2content(child));
 	}
 
@@ -140,7 +155,8 @@ public class Element extends ParentNode {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Pre("child must be a child of this element; jdom silently continues if not so")
+	@Issue.Pre(value = "child must be a child of this element; jdom silently continues if not so",
+		resolved = true)
 	@Override
 	@MapsTo("org.jdom.Element@removeContent(org.jdom.Content)")
 	public Node removeChild(Node child) {
@@ -191,7 +207,7 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
+	@Solution(value = Strategy.CLONE, comment = "")
 	@Issue.Pre("xom agressively checks uri for well-formedness and throws accordingly")
 	@Override
 	@MapsTo("")
@@ -259,8 +275,8 @@ public class Element extends ParentNode {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Pre("in XOM this element must not be a root of a document")
-	@Issue.Invariant("root must remain attached")
+	@Issue.Pre(value = "in XOM this element must not be a root of a document", resolved = true)
+	@Issue.Invariant(value = "root must remain attached", resolved = true)
 	@Override
 	@MapsTo("org.jdom.Element#detach()")
 	public void detach() {
@@ -271,7 +287,7 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
+	@Solution(value = Strategy.CLONE, comment = "")
 	@Issue.Post("in XOM the result is absolutized and/or converted from IRI to URI")
 	@Override
 	@MapsTo("")
@@ -400,10 +416,13 @@ public class Element extends ParentNode {
 	@Issue.Throws(value = "XOM throws MultipleParentException vs IllegalAddException in jdom", resolved = true)
 	@MapsTo("org.jdom.Element#setAttribute()")
 	public void addAttribute(Attribute attribute) {
+		if (attribute.attribute.getParent() != null) {
+			throw new MultipleParentException("has o parent already");
+		}
 		try {
 			element.setAttribute(((Attribute) attribute).attribute);
 		} catch (org.jdom.IllegalAddException e) {
-			throw new MultipleParentException(e);
+			throw new NamespaceConflictException(e);
 		}
 	}
 
@@ -412,9 +431,14 @@ public class Element extends ParentNode {
 	@Issue.Throws("XOM throws NamespaceConflictException vs. IllegalAddException in jdom")
 	@MapsTo("org.jdom.Element#addNamespaceDeclaration(org.jdom.Namespace)")
 	public void addNamespaceDeclaration(String prefix, String uri) {
+		if (prefix.equals("xml") && !uri.equals(org.jdom.Namespace.XML_NAMESPACE.getURI())) {
+				throw new NamespaceConflictException(prefix);
+		}
 		try {
 			element.addNamespaceDeclaration(org.jdom.Namespace.getNamespace(
 					prefix, uri));
+		} catch (org.jdom.IllegalNameException e) {
+			throw new IllegalNameException(e, uri);
 		} catch (org.jdom.IllegalAddException e) {
 			throw new NamespaceConflictException(e);
 		}
@@ -559,12 +583,13 @@ public class Element extends ParentNode {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
 	@Issue.Post("TODO: check if result differs because of \"additional\"")
+	//("Should also check for xml:... attributes")
 	@MapsTo("")
 	public int getNamespaceDeclarationCount() {
 		int count = element.getAdditionalNamespaces().size();
-		if (element.getNamespace() != null) {
-			count++;
-		}
+//		if (element.getNamespace() != null) {
+//			count++;
+//		}
 		return count;
 	}
 
@@ -585,8 +610,15 @@ public class Element extends ParentNode {
 		// XOM includes the namespace of the element itself (where JDOM does not
 		// for getAdditionalNamespaces)
 		// yet the order XOM uses is arbitrary.
+		if (index >= element.getAdditionalNamespaces().size()) {
+			throw new IndexOutOfBoundsException("index larger than size - 1");
+		}
+		if (index == 0) {
+			return element.getNamespace().getPrefix();
+		}
+		                
 		return ((org.jdom.Namespace) element.getAdditionalNamespaces().get(
-				index)).getPrefix();
+				index - 1)).getPrefix();
 	}
 
 	@Progress(value = Status.OK, comment = "")
@@ -622,14 +654,20 @@ public class Element extends ParentNode {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Throws(value = "jdom just returns false if it could not remove the attribute; XOM throws", resolved = true)
+	@Issue.Pre(value = "jdom just returns false if it could not remove the attribute; XOM throws", resolved = true)
 	@MapsTo("org.jdom.Element#removeAttribute(org.jdom.Attribute)")
 	public Attribute removeAttribute(Attribute attribute) {
+		if (attribute == null) {
+			throw new NullPointerException("null attribute");
+		}
+		if (element.getAttributes().size() == 0) {
+			throw new NoSuchAttributeException("no attributes; cannot remove " + attribute.getQualifiedName());
+		}
 		boolean removed = element
 				.removeAttribute(((Attribute) attribute).attribute);
 		if (!removed) {
 			throw new NoSuchAttributeException("no such attribute: "
-					+ attribute);
+					+ attribute.getQualifiedName());
 		}
 		return attribute;
 	}
@@ -676,9 +714,18 @@ public class Element extends ParentNode {
 	@Solution(value = Strategy.MACRO, comment = "")
 	@MapsTo("")
 	public void setNamespaceURI(String uri) {
-		// if (uri.equals("")) {
-		// throw new NamespaceConflictException("unsetting namespace");
-		// }
+		if (element.getNamespacePrefix().equals("")) {
+			if (uri == null || uri.equals("")) {
+				element.setNamespace(org.jdom.Namespace.NO_NAMESPACE);
+				return ;
+			}
+		}
+		else {
+			if (uri == null || uri.equals("")) {
+				throw new NamespaceConflictException("unsetting prefixed namespace");
+			}
+		}
+		
 		element.setNamespace(org.jdom.Namespace.getNamespace(element
 				.getNamespacePrefix(), uri));
 	}
