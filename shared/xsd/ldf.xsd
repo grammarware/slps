@@ -28,8 +28,8 @@
   <xsd:element name="document">
     <xsd:annotation>
       <xsd:documentation>
-        A document is essentially a section; see below.
-        It may contain some distinguished constituents of the kind of title information.
+        A document is essentially a sequence of several parts, such as title page, front matter,
+        lexical and syntax sections, placeholders for generated content and various lists.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -57,7 +57,6 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
-
         <xsd:element name="core" type="ldf:structuredSection" maxOccurs="unbounded"/>
         <xsd:element name="annex" type="ldf:structuredSection" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
@@ -65,6 +64,24 @@
   </xsd:element>
 
   <xsd:complexType name="titlePage">
+    <xsd:annotation>
+      <xsd:documentation>
+        The `title page' can in reality be rendered as several pages, but it contains the basic
+        information that helps to identify this particular language definition and to distinguish
+        it from similar documents. From our experience, language standards are either marked as
+        organisation-created or person-authored ones. In the former case, the document must contain
+        the name of the organisation and the standard reference number within it (e.g, ISO 10279).
+        In the latter case, one or more authors are specified. It is also possible to mark some sections
+        as having been authored by a specific set of authors, but the ones defined here are the principal
+        authors that identify the specific standard.
+      </xsd:documentation>
+      <xsd:documentation>
+        The `topic' of the language document is its pure textual title without the reference number
+        and status: e.g., `Programming Language REXX',
+        `Information technology --- Programming languages --- Full BASIC', etc. Either version or edition
+        follows.
+      </xsd:documentation>
+    </xsd:annotation>
     <xsd:sequence>
       <xsd:choice>
         <xsd:sequence>
@@ -85,6 +102,35 @@
       <!-- xsd:date -->
     </xsd:sequence>
   </xsd:complexType>
+
+  <xsd:simpleType name="body">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="ansi"/>
+      <xsd:enumeration value="ecma"/>
+      <xsd:enumeration value="ieee"/>
+      <xsd:enumeration value="iec"/>
+      <xsd:enumeration value="iso"/>
+      <xsd:enumeration value="iso/iet"/>
+      <xsd:enumeration value="itu"/>
+      <xsd:enumeration value="ietf"/>
+      <xsd:enumeration value="iec"/>
+      <xsd:enumeration value="oasis"/>
+      <xsd:enumeration value="wsa"/>
+      <xsd:enumeration value="w3c"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="status">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="draft"/>
+      <xsd:enumeration value="committee draft"/>
+      <xsd:enumeration value="recommendation"/>
+      <xsd:enumeration value="international standard"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+
 
 
   <!-- types of content -->
@@ -247,18 +293,7 @@
     </xsd:choice>
   </xsd:group>
 
-  <xsd:simpleType name="status">
-    <xsd:restriction base="xsd:token">
-      <xsd:enumeration value="unknown"/>
-      <xsd:enumeration value="draft"/>
-      <xsd:enumeration value="committee draft"/>
-      <xsd:enumeration value="recommendation"/>
-      <xsd:enumeration value="international standard"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-
-
-  <xsd:simpleType name="generated">
+   <xsd:simpleType name="generated">
     <xsd:restriction base="xsd:token">
       <xsd:enumeration value="index"/>
       <xsd:enumeration value="fullgrammar"/>
@@ -266,23 +301,6 @@
       <xsd:enumeration value="listofauthors"/>
       <xsd:enumeration value="listofcontents"/>
       <xsd:enumeration value="listofreferences"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-
-  <xsd:simpleType name="body">
-    <xsd:restriction base="xsd:token">
-      <xsd:enumeration value="ansi"/>
-      <xsd:enumeration value="ecma"/>
-      <xsd:enumeration value="ieee"/>
-      <xsd:enumeration value="iec"/>
-      <xsd:enumeration value="iso"/>
-      <xsd:enumeration value="iso/iet"/>
-      <xsd:enumeration value="itu"/>
-      <xsd:enumeration value="ietf"/>
-      <xsd:enumeration value="iec"/>
-      <xsd:enumeration value="oasis"/>
-      <xsd:enumeration value="wsa"/>
-      <xsd:enumeration value="w3c"/>
     </xsd:restriction>
   </xsd:simpleType>
 

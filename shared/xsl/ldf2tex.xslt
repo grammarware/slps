@@ -84,11 +84,12 @@
     <xsl:value-of select="titlePage/date"/>
     <xsl:text>}</xsl:text>
     <!-- titlePage done -->
+    <xsl:text>\maketitle</xsl:text>
+    <!-- placeholder: not completely implemented -->
+    <xsl:apply-templates select="placeholder"/>
     <xsl:text>
-		\maketitle\tableofcontents
 		%% START_CONTENT
-	</xsl:text>
-    <!-- placeholder: not implemented -->
+	  </xsl:text>
     <!-- frontMatter -->
     <xsl:for-each select="frontMatter/*">
       <xsl:call-template name="sectionize">
@@ -117,6 +118,8 @@
 		%% START_CORE
 	</xsl:text>
     <xsl:apply-templates select="core"/>
+    <xsl:text>\appendix</xsl:text>
+    <xsl:apply-templates select="annex"/>
     <xsl:text>\end{document}	%% END_CONTENT</xsl:text>
   </xsl:template>
 
@@ -266,8 +269,13 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>}</xsl:text>
+    <xsl:if test="@id">
+      <xsl:text>\label{</xsl:text>
+      <xsl:value-of select="@id"/>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
   </xsl:template>
-  
+
   <xsl:template name="subsectionize">
     <xsl:param name="target"/>
     <xsl:param name="level"/>
@@ -285,17 +293,17 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>}</xsl:text>
+    <xsl:if test="@id">
+      <xsl:text>\label{</xsl:text>
+      <xsl:value-of select="@id"/>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template name="process-SimpleSection">
     <xsl:param name="section"/>
     <xsl:for-each select="$section/*">
       <xsl:choose>
-        <xsl:when test="local-name() = 'id'">
-          <xsl:text>\label{</xsl:text>
-          <xsl:value-of select="."/>
-          <xsl:text>}</xsl:text>
-        </xsl:when>
         <xsl:when test="local-name() = 'title'"/>
         <xsl:when test="local-name() = 'author'"/>
         <xsl:when test="local-name() = 'production'">
@@ -317,6 +325,11 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+    <xsl:if test="$section/@id">
+      <xsl:text>\label{</xsl:text>
+      <xsl:value-of select="$section/@id"/>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="process-StructuredSection">
@@ -341,10 +354,8 @@
         </xsl:when>
         <xsl:when test="local-name() = 'author'"/>
         <xsl:when test="local-name() = 'title'"/>
-        <xsl:when test="local-name() = 'id'">
-          <xsl:text>\label{</xsl:text>
-          <xsl:value-of select="."/>
-          <xsl:text>}</xsl:text>
+        <xsl:when test="local-name() = 'placeholder'">
+          <xsl:apply-templates select="."/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:choose>
@@ -371,9 +382,14 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+    <xsl:if test="$section/@id">
+      <xsl:text>\label{</xsl:text>
+      <xsl:value-of select="$section/@id"/>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
   </xsl:template>
 
-  <xsl:template match="core">
+  <xsl:template match="core|annex">
     <xsl:call-template name="sectionize">
       <xsl:with-param name="target" select="."/>
     </xsl:call-template>
@@ -488,4 +504,31 @@
 </xsl:text>
   </xsl:template>
 
+  <xsl:template match="placeholder">
+    <!--
+      <xsd:enumeration value="index"/>
+      <xsd:enumeration value="listofauthors"/>
+      <xsd:enumeration value="listofreferences"/>
+    -->
+    <xsl:choose>
+      <xsl:when test=". = 'listofcontents'">
+        <xsl:text>\tableofcontents</xsl:text>
+      </xsl:when>
+      <xsl:when test=". = 'listoftables'">
+        <xsl:text>\listoftables</xsl:text>
+      </xsl:when>
+      <xsl:when test=". = 'fullgrammar'">
+        <xsl:text>
+	        \begin{lstlisting}[language=pp]
+</xsl:text>
+        <xsl:for-each select="//bgf:production">
+          <xsl:apply-templates select="."/>
+        </xsl:for-each>
+        <xsl:text>\end{lstlisting}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>(generated content placeholder)</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 </xsl:stylesheet>

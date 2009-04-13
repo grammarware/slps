@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:evolution-sequence
+  xmlns:ldf="http://planet-sl.org/ldf"
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <xldf:append>
+    <where>simpleType-body</where>
+    <content>
+      <text>
+        <ldf:keyword>ANSI (American National Standards Institute)</ldf:keyword>
+        is a private non-profit
+        organisation that is based in the USA~\cite{ANSIWeb}. It oversees the
+        development of a wide range of American standards, and coordinates that
+        those standards can be used worldwide. ANSI is an ISO/IEC representative
+        via United States National Committee (USNC), and it participates in most
+        ISO/IEC activities. Several programming language specifications started
+        out as ANSI standards and were later adopted by ISO
+        (most notably ISO C~\cite{ISO-C} and ISO COBOL~\cite{ISO-COBOL}).
+      </text>
+      <text>
+        <ldf:keyword>ECMA (European Computer Manufacturers Association)</ldf:keyword>, or
+        <ldf:keyword>Ecma International</ldf:keyword> (new name since 1994), is an international private
+        standards development organisation that takes care of ICT-related
+        issues~\cite{ECMAWeb}. It started in Europe in early sixties, now
+        it operates worldwide. Most well-known Ecma specifications are those
+        for C\#~\cite{ECMA-Csharp} and JavaScript~\cite{ECMA-Script}. Java
+        programming language specification was submitted to ECMA but
+        withdrawn afterwards without receiving official status. Some Ecma
+        standards are ISO standards as well.
+      </text>
+      <text>
+        <ldf:keyword>
+          IEEE-SA (Institute of Electrical and Electronics Engineers
+          Standards Association)
+        </ldf:keyword>
+        is a standardising branch of IEEE~\cite{IEEEWeb}.
+        It maintains almost a thousand of active industry standards in
+        electrical and electronics engineering and computer science, and
+        processes around 200 new proposals each year. However, it is not that
+        active yet on field of languages: only Scheme programming language
+        was standardised as IEEE Std 1178-1990 (later it became an ANSI standard).
+      </text>
+      <text>
+        <ldf:keyword>ISO (International Organization for Standardization)</ldf:keyword>~\cite{ISOWeb} and
+        <ldf:keyword>IEC (International Electrotechnical Commission)</ldf:keyword>~\cite{IECWeb} are huge
+        international standards development and distribution bodies. While the former
+        concentrates its effort more or less on sofware-related issues and the latter
+        one on hardware ones, there was quite an overlap that led to establishing a
+        Joint Technical Committee (JTC1) with 18 sub-committees dealing with different
+        areas. The work of SC22~\cite{SC22} a sub-committee on programming Languages,
+        their environments and systems software interfaces, and its components were
+        described in earlier sections.
+      </text>
+      <text>
+        <ldf:keyword>ISO (International Organization for Standardization)</ldf:keyword>
+        is one of
+        the biggest standardisation bodies that maintains a standardisation
+        committee or a working group for every significant topic. ISO/IEC
+        JTC1/SC22~\cite{SC22} is the international standardisation
+        subcommittee that deals with programming languages, their environments
+        and system software interfaces. Inside the subcommittee there are
+        active working groups for several mainstream programming languages:
+      </text>
+      <list>
+        <item>
+          <ldf:keyword>WG4</ldf:keyword>~\cite{WG4}: COBOL is the most used programming language
+          in industry. While the part of modern programming languages like Java is
+          growing rapidly, they still have to beat more than 225 billion lines of
+          COBOL code~\cite{SoftwareCosts,500} which are already in use. WG4 maintains
+          the ISO/IEC 1989:2002 standard~\cite{ISO-COBOL} keeping it up to date and
+          constantly introducing new features like object-oriented programming
+          or Unicode support.
+        </item>
+        <item>
+          <ldf:keyword>WG14</ldf:keyword>~\cite{WG14}: C is a widely used general-purpose
+          middle-level imperative procedural programming language. Unsatisfactorily
+          low level of the language and drastical maintainability deterioration
+          due to heavy use of C Preprocessor~\cite{Stallman} narrow its application
+          area considerably (mainly as an alternative to the assembly language
+          in system programming and embedded software).
+        </item>
+        <item>
+          <ldf:keyword>WG21</ldf:keyword>~\cite{WG21}: C++ started as a high-level object-oriented
+          extention to C, later evolved into a much bigger independent language
+          with data abstraction, generics, runtime typing and multiple inheritance.
+          C++ is slowly being replaced by modern successors like Java or C\#.
+          If counted together, C/C++ is the second most used programming language
+          with 20\% of installed software and 180 billion lines of code~\cite{Y2KProblem}.
+        </item>
+        <item>
+          <ldf:keyword>WG9</ldf:keyword>~\cite{WG9}: Ada was created as a language for embedded
+          and real-time systems. It was a result of extensive research done by High
+          Order Language Working Group, the group of professionals employed by
+          United States Department of Defense. The use of Ada in DoD projects was
+          mandatory for years, but is not anymore. The failure of Ariane 5 launch
+          system due to improper run-time error handling in Ada programming
+          language~\cite{Ariane5} raised some questions for its suitability.
+        </item>
+        <item>
+          <ldf:keyword>WG5</ldf:keyword>~\cite{WG5}: Fortran~\cite{Fortran} is less used
+          in industry, but still a lot of computational code was and is being
+          written in it. Popular Fortran libraries LINPACK and EISPACK evolved
+          into even more widely used programming language and a numerical
+          computing environment called MATLAB. Recently (on 15th of January, 2008)
+          WG5 released a new beta version of ISO Fortran specification that is as
+          of now still in the internal discussion phase.
+        </item>
+        <item>
+          <ldf:keyword>WG19</ldf:keyword>~\cite{WG19}: The working group for standardising
+          extended Backus Naur Form and Vienna Development Method. BNF will be
+          discussed in detail in the next chapter, and the latter subject
+          was one of the many harbingers of what is now known as model-driven
+          engineering~\cite{MegaModel}. WG19's notable output used in this
+          research is \cite{ISO-EBNF}.
+        </item>
+      </list>
+      <text>
+        There are also working groups for mainstream industry-unrelated programming
+        languages like ISLisp~\cite{WG16} (they have already been
+        outrun by ANSI~\cite{ANSI-Lisp}) or Prolog~\cite{WG17}. All other numbers
+        from WG1 throughout WG22 belong to the working groups which are no longer
+        active for some reasons (PLIP, Pascal, APL, Algol, PL/I, Basic, Modula-2,
+        Java).
+      </text>
+      <text>
+        <ldf:keyword>ITU (International Telecommunication Union)</ldf:keyword>
+        is the oldest standardisation
+        body in the world~\cite{ITUWeb}. It handles most of standards in
+        radio and telecommunications: for example, Integrated Services Digital Network
+        (ISDN) and Asymmetric Digital Subscriber Line (ADSL) are ITU standards.
+      </text>
+      <text>
+        <ldf:keyword>IETF (Internet Engineering Task Force)</ldf:keyword>
+        is an open standardisation body
+        with no formal membership~\cite{IETFWeb}. It operates on Requests for Comments
+        (RFCs) that can be suibmitted by anyone, are freely passed around for
+        commenting. There is a very fixed structure of an RFC and there are several
+        strict levels of approval (proposed, draft, full internet standard). TCP/IP
+        protocol stack, Unicode and Universal Resource Locators (URLs) are examples
+        of approved RFCs. IETF often collaborates with W3C and <ldf:keyword>ISO/IEC</ldf:keyword>.
+      </text>
+      <text>
+        <ldf:keyword>OASIS (Organization for the Advancement of Structured Information Standards)</ldf:keyword>
+        (ex-``SGML Open'') is a global consortium for standardisation on a
+        field of web services and e-business~\cite{OASISWeb}.
+        DocBook~\cite{DocBook} and DITA~\cite{DITA} are OASIS standards.
+      </text>
+      <text>
+        <ldf:keyword>WSA (Website Standards Association)</ldf:keyword>
+        is a group of industry experts
+        having several common goals, one of which is to identify and promote the
+        minimum standards that all websites should meet~\cite{WSAWeb}. This recently
+        created organisation does not have eny significant standards yet, but it
+        seems to strive for a wide range of them, from marketing to usability.
+      </text>
+      <text>
+        <ldf:keyword>W3C (World Wide Web Consortium)</ldf:keyword> is one of the largest standardisation
+        bodies active in the Internet-related areas. It develops inter-operable
+        technologies like specifications, guidelines and
+        grammarware to ``lead the Web to its full potential''~\cite{W3CWeb}.
+        Within this work we did not have any direct collaboration
+        with people from W3C, but we did use some of its web-related
+        standards. Basically
+        everything that is used to present, retrieve, transmit or store information
+        in the world wide web has been or is being standardised by W3C.
+        CSS~\cite{W3C-CSS}, XHTML~\cite{W3C-XHTML}, XML~\cite{W3C-XML},
+        XSLT~\cite{XSLT}, XML Schema~\cite{W3C-XSr,W3C-XS2,W3C-XS1},
+        XPath~\cite{XPath} and XQuery~\cite{XQuery} are W3C Working Drafts
+        and W3C Recommendations used in this thesis.
+      </text>
+    </content>
+  </xldf:append>
+
+</xldf:evolution-sequence>

@@ -77,7 +77,9 @@
       <xsd:choice>
         <xsd:group ref="ldf:frontList"/>
         <xsd:group ref="ldf:lexicalSection"/>
+        <xsd:element name="placeholder" type="ldf:generated"/>
         <xsd:element name="core" type="ldf:structuredSection"/>
+        <xsd:element name="annex" type="ldf:structuredSection"/>
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>

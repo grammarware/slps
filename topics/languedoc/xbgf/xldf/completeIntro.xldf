@@ -13,6 +13,10 @@
     </xbgf:vertical>
   </xldf:transform-grammar>
 
+  <xldf:add-section>
+    <placeholder>listofcontents</placeholder>
+  </xldf:add-section>
+
   <!-- design goals -->
   <xldf:add-subsection>
     <designGoals>

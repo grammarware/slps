@@ -276,9 +276,14 @@ def xldf_add_section(cmd,tree):
   tree.findall('//lexicalPart')[0].append(s)
   print '[XLDF] add-section to lexical part'
   success = True
- elif s.tag == 'core':
+ elif s.tag in ('core','annex'):
   tree.getroot().append(s)
-  print '[XLDF] add-section to the core'
+  print '[XLDF] add-section to the',s.tag
+  success = True
+ elif s.tag == 'placeholder':
+  print dir(tree.getroot())
+  tree.getroot().insert(1,s)
+  print '[XLDF] add-section to placeholders'
   success = True
  if not success:
   print '[----] xldf:add-section failed, double check or try add-subsection instead'
