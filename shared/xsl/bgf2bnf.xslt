@@ -79,7 +79,7 @@
   <xsl:template match="value">
     <xsl:choose>
       <xsl:when test=". = 'string'">
-        <xsl:text>STRING</xsl:text>
+        <xsl:text>STR</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>INT</xsl:text>

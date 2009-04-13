@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:evolution-sequence
+  xmlns:xldf="http://planet-sl.org/xldf">
+
+  <xldf:drop>
+    <section>element-grammar</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>element-production</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>element-expression</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>simpleType-value</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>simpleType-label</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>simpleType-nonterminal</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>simpleType-selector</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>simpleType-terminal</section>
+  </xldf:drop>
+  
+</xldf:evolution-sequence>

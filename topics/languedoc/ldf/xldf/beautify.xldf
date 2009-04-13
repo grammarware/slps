@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:evolution-sequence
+  xmlns:xldf="http://planet-sl.org/xldf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <xldf:transform-grammar>
+    <target>simpleType-body</target>
+    <xbgf:vertical>
+      <nonterminal>body</nonterminal>
+    </xbgf:vertical>
+  </xldf:transform-grammar>
+
+</xldf:evolution-sequence>
