@@ -1,10 +1,12 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
 import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved;
 import org.planet_sl.apimigration.benchmark.anno.Wrapping;
 import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
 import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved.XML;
 import org.planet_sl.apimigration.benchmark.anno.Issue;
 import static org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Utils.content2node;
 import static org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Utils.node2content;
@@ -189,6 +191,7 @@ public class Document extends ParentNode {
 	@Issue.Post("the resulting String may be slightly different")
 	@Override
 	@MapsTo("org.jdom.output.XMLOutputter#outputString(org.jdom.Document)")
+	@Unresolved(XML.Serialization)
 	public String toXML() {
 		return new XMLOutputter().outputString(document);
 	}
@@ -282,9 +285,8 @@ public class Document extends ParentNode {
 		throw new AssertionError("Invalid parent for this document");
 	}
 	
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
-	@Override
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
@@ -300,8 +302,8 @@ public class Document extends ParentNode {
 		}
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {

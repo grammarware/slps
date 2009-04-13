@@ -17,7 +17,9 @@ import org.planet_sl.apimigration.benchmark.anno.Issue;
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 import org.planet_sl.apimigration.benchmark.anno.Progress;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved;
 import org.planet_sl.apimigration.benchmark.anno.Wrapping;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved.XML;
 
 
 
@@ -161,10 +163,10 @@ public class CollectMappings {
 			writer.write(Row.q(derivedFeatureCount.get(from)) + "\n");
 
 			
-			System.out.print(Row.q(from) + ", ");
-			System.out.print(Row.q(typeMapping.get(from).replaceAll("org.jdom.", "")) + ", ");
-			System.out.print(Row.q(mappedFeatureCount.get(from)) + ", ");
-			System.out.println(Row.q(derivedFeatureCount.get(from)));
+			//System.out.print(Row.q(from) + ", ");
+			//System.out.print(Row.q(typeMapping.get(from).replaceAll("org.jdom.", "")) + ", ");
+//			System.out.print(Row.q(mappedFeatureCount.get(from)) + ", ");
+//			System.out.println(Row.q(derivedFeatureCount.get(from)));
 
 		
 		}
@@ -238,6 +240,7 @@ public class CollectMappings {
 	public static void addRow(String from, String to, List<Row> rows, AccessibleObject o) {
 		Row row = new Row();
 		row.from = o;
+		row.fromClass = from;
 		boolean mapped = false;
 		for (Annotation anno: o.getAnnotations()) {
 			if (anno instanceof Wrapping) {
@@ -247,6 +250,9 @@ public class CollectMappings {
 			if (anno instanceof MapsTo) {
 				mapped = true;
 				row.to = (MapsTo)anno;
+			}
+			if (anno instanceof Unresolved) {
+				row.unresolved.add((Unresolved)anno);
 			}
 			if (anno instanceof Progress) {
 				row.progress = (Progress)anno;
@@ -260,6 +266,7 @@ public class CollectMappings {
 				row.preIssue = (Issue.Pre)anno;
 			}
 			if (anno instanceof Issue.Post) {
+				System.out.println("Found a post: " + ((Issue.Post)anno).value()[0]);
 				row.postIssue = (Issue.Post)anno;
 			}
 			if (anno instanceof Issue.Throws) {
@@ -365,9 +372,341 @@ public class CollectMappings {
 		writer.write(Row.HEADER + "\n");
 		for (Row row: rows) {
 			writer.write(row.toString() + "\n");
-			System.out.println(row);
+			//System.out.println(row);
 		}
 		writer.flush();
+		writer.close();
+		writeIssuesTable(rows);
+		writeUnresolvedIssuesTable(rows);
+		writeIssuesSamplesTable(rows);
+	}
+
+	private static void writeUnresolvedIssuesTable(List<Row> rows) throws IOException {
+		Map<String, Integer> preCount = new HashMap<String, Integer>();
+		Map<String, Integer> postCount = new HashMap<String, Integer>();
+		Map<String, Integer> invCount = new HashMap<String, Integer>();
+		Map<String, Integer> preResolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> postResolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> invResolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> preUnresolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> postUnresolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> invUnresolvedCount = new HashMap<String, Integer>();
+		Map<String, Map<XML , Integer>> unresolveds = new HashMap<String, Map<XML, Integer>>();
+		int preUnresolvedTotal = 0;
+		int postUnresolvedTotal = 0;
+		int invUnresolvedTotal = 0;
+		int throwsUnresolvedTotal = 0;
+		for (Row row: rows) {
+			String type = row.fromClass;
+			init(preCount, type);
+			init(preResolvedCount, type);
+			init(preUnresolvedCount, type);
+			init(postCount, type);
+			init(postResolvedCount, type);
+			init(postUnresolvedCount, type);
+			init(invCount, type);
+			init(invResolvedCount, type);
+			init(invUnresolvedCount, type);
+			
+			if (!unresolveds.containsKey(type)) {
+				unresolveds.put(type, new HashMap<XML,Integer>());
+			}
+			
+			
+			for (Unresolved unr: row.unresolved) {
+				if (!unresolveds.get(type).containsKey(unr.value()[0])) {
+					unresolveds.get(type).put(unr.value()[0], 0);
+				}
+				unresolveds.get(type).put(unr.value()[0], unresolveds.get(type).get(unr.value()[0]) + 1);
+			}
+				
+			
+			if (row.preIssue != null) {
+				inc(preCount, type);
+				if (row.preIssue.resolved()) {
+					inc(preResolvedCount, type);
+				}
+				else {
+					inc(preUnresolvedCount, type);
+					preUnresolvedTotal++;
+				}
+			}
+			if (row.postIssue != null) {
+				inc(postCount, type);
+				if (row.postIssue.resolved()) {
+					inc(postResolvedCount, type);
+				}
+				else {
+					inc(postUnresolvedCount, type);
+					postUnresolvedTotal++;
+				}
+			}
+			if (row.invariantIssue != null) {
+				inc(invCount, type);
+				if (row.invariantIssue.resolved()) {
+					inc(invResolvedCount, type);
+				}
+				else {
+					inc(invUnresolvedCount, type);
+					invUnresolvedTotal++;
+				}
+			}
+		}
+		List<String> types = new ArrayList<String>(preCount.keySet());
+		Collections.sort(types);
+		FileWriter writer = new FileWriter(new File("unrissues.tex"));
+		writer.write("\\begin{tabular}{|l|r|r||r|r|r|r|r|}\\hline\n");
+		writer.write("\\typeHeadingIssues & \\preHeading &\\postHeading &");
+		
+		writer.write("\\BaseURIHeading & ");
+		writer.write("\\EscapingHeading & ");
+		writer.write("\\NamespacingHeading & ");
+		writer.write("\\SerializationHeading & ");
+//		writer.write("\\ParsingHeading & ");
+		writer.write("\\DocTypeValidityHeading ");
+
+		
+		writer.write("\\\\\\hline\\hline\n");
+		int baseuriTotal = 0;
+		int escapingTotal = 0;
+		int namespacingTotal = 0;
+		int serializationTotal = 0;
+		int parsingTotal = 0;
+		int doctypeTotal = 0;
+		
+		
+		for (String type: types) {
+			writer.write(type + " & " + (preUnresolvedCount.get(type) == 0 ? "\\ZERO" : preUnresolvedCount.get(type)));
+			writer.write(" & " + (postUnresolvedCount.get(type) == 0 ? "\\ZERO" : postUnresolvedCount.get(type)));
+//			writer.write(" & " + invUnresolvedCount.get(type));
+			
+			Integer baseuri = unresolveds.get(type).get(XML.BaseURI);
+			if (baseuri == null) baseuri = 0;
+			Integer escaping = unresolveds.get(type).get(XML.Escaping);
+			if (escaping == null) escaping = 0;
+			Integer namespacing = unresolveds.get(type).get(XML.Namespacing);
+			if (namespacing == null) namespacing = 0;
+			Integer serialization = unresolveds.get(type).get(XML.Serialization);
+			if (serialization == null) serialization = 0;
+			Integer parsing = unresolveds.get(type).get(XML.Parsing);
+			if (parsing == null) parsing = 0;
+			Integer doctype = unresolveds.get(type).get(XML.DocTypeValidity);
+			if (doctype == null) doctype = 0;
+			
+			baseuriTotal += baseuri;
+			escapingTotal += escaping;
+			namespacingTotal += namespacing;
+			serializationTotal += serialization;
+			//Temporarily!! Ugly HACK!
+			doctypeTotal += parsing;
+			doctypeTotal += doctype;
+			
+			writer.write(" & " +  (baseuri == 0 ? "\\ZERO" : baseuri));
+			writer.write(" & " +  (escaping == 0 ? "\\ZERO" : escaping));
+			writer.write(" & " +  (namespacing == 0 ? "\\ZERO" : namespacing));
+			writer.write(" & " +  (serialization == 0 ? "\\ZERO" : serialization));
+//			writer.write(" & " +  (parsing == 0 ? "\\ZERO" : parsing));
+			writer.write(" & " +  ((doctype +parsing) == 0 ? "\\ZERO" : (doctype + parsing)));
+			
+			writer.write("\\\\\\hline\n");
+		}
+		writer.write("\\hline\n");
+		writer.write(" & " + preUnresolvedTotal);
+		writer.write(" & " + postUnresolvedTotal);
+		
+		writer.write(" & " + baseuriTotal);
+		writer.write(" & " + escapingTotal);
+		writer.write(" & " + namespacingTotal);
+		writer.write(" & " + serializationTotal);
+//		writer.write(" & " + parsingTotal);
+		writer.write(" & " + doctypeTotal + "\\\\\\hline");
+		
+		writer.write("\\end{tabular}\n");
+		writer.close();
+	}
+
+	
+	private static void writeIssuesTable(List<Row> rows) throws IOException {
+		Map<String, Integer> preCount = new HashMap<String, Integer>();
+		Map<String, Integer> postCount = new HashMap<String, Integer>();
+		Map<String, Integer> invCount = new HashMap<String, Integer>();
+		Map<String, Integer> throwsCount = new HashMap<String, Integer>();
+		Map<String, Integer> preResolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> postResolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> invResolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> throwsResolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> preUnresolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> postUnresolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> invUnresolvedCount = new HashMap<String, Integer>();
+		Map<String, Integer> throwsUnresolvedCount = new HashMap<String, Integer>();
+		int preResolvedTotal = 0;
+		int postResolvedTotal = 0;
+		int invResolvedTotal = 0;
+		int throwsResolvedTotal = 0;
+		for (Row row: rows) {
+			String type = row.fromClass;
+			init(preCount, type);
+			init(preResolvedCount, type);
+			init(preUnresolvedCount, type);
+			init(postCount, type);
+			init(postResolvedCount, type);
+			init(postUnresolvedCount, type);
+			init(invCount, type);
+			init(invResolvedCount, type);
+			init(invUnresolvedCount, type);
+			init(throwsCount, type);
+			init(throwsResolvedCount, type);
+			init(throwsUnresolvedCount, type);
+			
+			if (row.preIssue != null) {
+				inc(preCount, type);
+				if (row.preIssue.resolved()) {
+					inc(preResolvedCount, type);
+					preResolvedTotal++;
+				}
+				else {
+					inc(preUnresolvedCount, type);
+				}
+			}
+			if (row.postIssue != null) {
+				inc(postCount, type);
+				if (row.postIssue.resolved()) {
+					inc(postResolvedCount, type);
+					postResolvedTotal++;
+				}
+				else {
+					inc(postUnresolvedCount, type);
+				}
+			}
+			if (row.invariantIssue != null) {
+				inc(invCount, type);
+				if (row.invariantIssue.resolved()) {
+					inc(invResolvedCount, type);
+					invResolvedTotal++;
+				}
+				else {
+					inc(invUnresolvedCount, type);
+				}
+			}
+			if (row.throwsIssue != null) {
+				inc(throwsCount, type);
+				if (row.throwsIssue.resolved()) {
+					inc(throwsResolvedCount, type);
+					throwsResolvedTotal++;
+				}
+				else {
+					inc(throwsUnresolvedCount, type);
+				}
+			}
+		}
+		List<String> types = new ArrayList<String>(preCount.keySet());
+		Collections.sort(types);
+		FileWriter writer = new FileWriter(new File("issues.tex"));
+		writer.write("\\begin{tabular}{|l|r|r|r|r|}\\hline\n");
+		writer.write("\\typeHeadingIssues & \\preHeading &\\postHeading & \\invariantHeading & \\throwsHeading\\\\\\hline\\hline\n");
+		for (String type: types) {
+			writer.write(type + " & " + (preResolvedCount.get(type) == 0 ? "\\ZERO" : preResolvedCount.get(type)));
+			writer.write(" & " + (postResolvedCount.get(type) == 0 ? "\\ZERO" : postResolvedCount.get(type)));
+			writer.write(" & " + (invResolvedCount.get(type)  == 0 ? "\\ZERO" : invResolvedCount.get(type)));
+			writer.write(" & " + (throwsResolvedCount.get(type) == 0 ? "\\ZERO" : throwsResolvedCount.get(type)));
+			writer.write("\\\\\\hline\n");
+		}
+		writer.write("\\hline\n");
+		writer.write(" & " + preResolvedTotal);
+		writer.write(" & " + postResolvedTotal);
+		writer.write(" & " + invResolvedTotal);
+		writer.write(" & " + throwsResolvedTotal + "\\\\\\hline");
+		writer.write("\\end{tabular}\n");
+		writer.close();
+	}
+	
+	private static String simpleFeature(AccessibleObject feature) {
+		String str = feature.toString();
+		//str = str.substring(str.indexOf("_xom") + 4);
+		str = str.replaceAll("org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.", "");
+		str = str.replaceAll("java.lang.", "");
+		str = str.substring(str.indexOf(".") + 1);
+		str = str.replaceAll("^public ", "");
+		return str.replaceAll("\\$", "\\\\\\$");
+	}
+	
+	private static void writeIssuesSamplesTable(List<Row> rows) throws IOException {
+		List<String> types = new ArrayList<String>();
+		Map<String,List<Row>> typeRows = new HashMap<String, List<Row>>();
+		for (Row row: rows) {
+			String type = row.fromClass;
+			if (!types.contains(type)) {
+				types.add(type);
+			}
+			if (!typeRows.containsKey(type)) {
+				typeRows.put(type, new ArrayList<Row>());
+			}
+			if (type.equals("Attribute")) {
+			System.out.println("Adding row for type: " + row);
+			System.out.println(row.postIssue);
+			}
+			
+			typeRows.get(type).add(row);
+		}
+		Collections.sort(types);
+		
+		
+		FileWriter writer = new FileWriter(new File("samples.tex"));
+		writer.write("\\begin{tabular}{|l|l|l|p{0.4\\textwidth}|}\\hline\n");
+		writer.write("\\typeHeadingSamples & \\featureHeadingSamples &\\categoryHeadingSamples & \\commentHeadingSamples\\\\\\hline\\hline\n");
+		for (String type: types) {
+			String str = type;
+			if (!typeRows.get(type).isEmpty()) {
+				for (Row row: typeRows.get(type)) {
+					if (type.equals("Attribute")) {
+						System.out.println("ATTRIBUTE's post: " + row.postIssue);
+					}
+					if (row.preIssue != null && row.preIssue.resolved()) {
+						if (simpleFeature(row.from).equals("Attribute(String,String)")) {
+							writer.write(str + " & ");
+							writer.write(simpleFeature(row.from) + " & ");
+							writer.write("Pre & ");
+							writer.write(row.preIssue.value()[0].replaceAll("&", "\\&"));
+							writer.write("\\\\\\hline\n");
+							str = "";
+						}
+					}
+					if (row.postIssue != null && row.postIssue.resolved()) {
+						System.out.println("POST for " + type + ": " + simpleFeature(row.from));
+						if (simpleFeature(row.from).indexOf("toXML") > - 1) {
+							writer.write(str + " & ");
+							writer.write(simpleFeature(row.from) + " & ");
+							writer.write("Post & ");
+							writer.write(row.postIssue.value()[0].replaceAll("&", "\\&"));
+							writer.write("\\\\\\hline\n");
+							str = "";
+						}
+					}
+					if (row.invariantIssue != null && row.invariantIssue.resolved()) {
+						if (simpleFeature(row.from).equals("setSystemID(String)")) {
+							writer.write(str + " & ");
+							writer.write(simpleFeature(row.from) + " & ");
+							writer.write("Invariant & ");
+							writer.write(row.invariantIssue.value()[0].replaceAll("&", "\\&"));
+							writer.write("\\\\\\hline\n");
+							str = "";
+						}
+					}
+					if (row.throwsIssue != null && row.throwsIssue.resolved()) {
+						if (simpleFeature(row.from).equals("addAttribute(Attribute)")) {
+							writer.write(str + " & ");
+							writer.write(simpleFeature(row.from) + " & ");
+							writer.write("Throws & ");
+							writer.write(row.throwsIssue.value()[0].replaceAll("&", "\\&"));
+							writer.write("\\\\\\hline\n");
+							str = "";
+						}
+					}
+					
+				}
+			}
+		}
+		writer.write("\\end{tabular}\n");
 		writer.close();
 	}
 

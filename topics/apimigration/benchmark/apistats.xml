@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<run end="1239545071219" name="APIStats" scope="XOMandJDOM" start="1239544985349">
+<run end="1239570809647" name="APIStats" scope="XOMandJDOM" start="1239570807234">
 <query class="query" status="Success">
 <input class="project query" path="src/APIStats.ql" project="XOM">
 <pattern class="pattern">
@@ -12,9 +12,15 @@
 <results complete="true"/>
 <row>
 <item class="string" value="nu.xom"/>
+<item class="entity" icon="icons/class.png" id="32" label="NodeFactory" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/NodeFactory.java:24:2478:11"/>
+<item class="int" value="46"/>
+<item class="int" value="15"/>
+</row>
+<row>
+<item class="string" value="nu.xom"/>
 <item class="entity" icon="icons/class.png" id="105" label="Element" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/Element.java:34:1769:7"/>
 <item class="int" value="895"/>
-<item class="int" value="45"/>
+<item class="int" value="48"/>
 </row>
 <row>
 <item class="string" value="nu.xom"/>
@@ -26,7 +32,7 @@
 <item class="string" value="nu.xom"/>
 <item class="entity" icon="icons/class.png" id="130" label="Document" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/Document.java:24:1169:8"/>
 <item class="int" value="173"/>
-<item class="int" value="21"/>
+<item class="int" value="23"/>
 </row>
 <row>
 <item class="string" value="nu.xom"/>
@@ -38,31 +44,37 @@
 <item class="string" value="nu.xom"/>
 <item class="entity" icon="icons/class.png" id="395" label="Attribute" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/Attribute.java:24:1492:9"/>
 <item class="int" value="454"/>
-<item class="int" value="28"/>
+<item class="int" value="33"/>
 </row>
 <row>
 <item class="string" value="nu.xom"/>
 <item class="entity" icon="icons/class.png" id="767" label="Text" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/Text.java:26:1286:4"/>
 <item class="int" value="252"/>
-<item class="int" value="16"/>
+<item class="int" value="18"/>
 </row>
 <row>
 <item class="string" value="nu.xom"/>
 <item class="entity" icon="icons/class.png" id="876" label="ProcessingInstruction" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/ProcessingInstruction.java:25:1539:21"/>
 <item class="int" value="107"/>
-<item class="int" value="18"/>
+<item class="int" value="20"/>
 </row>
 <row>
 <item class="string" value="nu.xom"/>
 <item class="entity" icon="icons/class.png" id="989" label="DocType" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/DocType.java:25:2039:7"/>
 <item class="int" value="261"/>
-<item class="int" value="23"/>
+<item class="int" value="27"/>
 </row>
 <row>
 <item class="string" value="nu.xom"/>
 <item class="entity" icon="icons/class.png" id="1077" label="Comment" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/Comment.java:24:1325:7"/>
 <item class="int" value="75"/>
-<item class="int" value="16"/>
+<item class="int" value="18"/>
+</row>
+<row>
+<item class="string" value="nu.xom"/>
+<item class="entity" icon="icons/class.png" id="43937" label="Serializer" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/Serializer.java:32:2077:10"/>
+<item class="int" value="438"/>
+<item class="int" value="20"/>
 </row>
 <row>
 <item class="string" value="nu.xom"/>
@@ -74,19 +86,19 @@
 <item class="string" value="nu.xom"/>
 <item class="entity" icon="icons/class.png" id="52285" label="Nodes" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/Nodes.java:27:1615:5"/>
 <item class="int" value="43"/>
-<item class="int" value="10"/>
+<item class="int" value="12"/>
 </row>
 <row>
 <item class="string" value="nu.xom"/>
 <item class="entity" icon="icons/class.png" id="73335" label="Builder" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/Builder.java:47:1967:7"/>
 <item class="int" value="785"/>
-<item class="int" value="18"/>
+<item class="int" value="25"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="280691" label="Comment" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/Comment.java:59:2793:7"/>
 <item class="int" value="31"/>
-<item class="int" value="11"/>
+<item class="int" value="12"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
@@ -98,19 +110,19 @@
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="280827" label="XMLOutputter" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/output/XMLOutputter.java:66:5151:12"/>
 <item class="int" value="806"/>
-<item class="int" value="39"/>
+<item class="int" value="42"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="280843" label="ProcessingInstruction" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/ProcessingInstruction.java:61:3020:21"/>
 <item class="int" value="174"/>
-<item class="int" value="19"/>
+<item class="int" value="21"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="282291" label="Document" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/Document.java:62:2948:8"/>
 <item class="int" value="251"/>
-<item class="int" value="40"/>
+<item class="int" value="45"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
@@ -122,43 +134,43 @@
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="282301" label="Attribute" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/Attribute.java:61:2939:9"/>
 <item class="int" value="216"/>
-<item class="int" value="27"/>
+<item class="int" value="31"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="282334" label="CDATA" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/CDATA.java:59:3158:5"/>
 <item class="int" value="50"/>
-<item class="int" value="14"/>
+<item class="int" value="16"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="282339" label="Text" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/Text.java:59:2966:4"/>
 <item class="int" value="89"/>
-<item class="int" value="17"/>
+<item class="int" value="18"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="282348" label="DocType" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/DocType.java:59:2827:7"/>
 <item class="int" value="70"/>
-<item class="int" value="17"/>
+<item class="int" value="20"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="282367" label="Element" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/Element.java:64:3212:7"/>
 <item class="int" value="487"/>
-<item class="int" value="78"/>
+<item class="int" value="82"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="282422" label="EntityRef" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/EntityRef.java:59:2836:9"/>
 <item class="int" value="65"/>
-<item class="int" value="15"/>
+<item class="int" value="18"/>
 </row>
 <row>
 <item class="string" value="org.jdom"/>
 <item class="entity" icon="icons/class.png" id="314612" label="SAXBuilder" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/org/jdom/input/SAXBuilder.java:69:3676:10"/>
 <item class="int" value="397"/>
-<item class="int" value="35"/>
+<item class="int" value="39"/>
 </row>
 </query>
 <analysis class="project analysis" path="src/APIStats.qla" project="XOM"/>

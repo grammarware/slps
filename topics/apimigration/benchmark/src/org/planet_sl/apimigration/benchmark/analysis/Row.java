@@ -3,11 +3,14 @@ package org.planet_sl.apimigration.benchmark.analysis;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.planet_sl.apimigration.benchmark.anno.Issue;
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 import org.planet_sl.apimigration.benchmark.anno.Progress;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved;
 import org.planet_sl.apimigration.benchmark.anno.Issue.Doc;
 import org.planet_sl.apimigration.benchmark.anno.Issue.Invariant;
 import org.planet_sl.apimigration.benchmark.anno.Issue.Post;
@@ -27,6 +30,8 @@ public class Row {
 	Issue.Post postIssue;
 	Issue.Invariant invariantIssue;
 	Issue.Doc docIssue;
+	String fromClass;
+	List<Unresolved> unresolved = new ArrayList<Unresolved>();
 	
 	
 	public static String HEADER = q("xom.nu") + ", " + q("org.jdom") + ", " + q("Status") + ", " + q("Strategy")

@@ -11,9 +11,11 @@ import org.planet_sl.apimigration.benchmark.anno.Issue;
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 import org.planet_sl.apimigration.benchmark.anno.Progress;
 import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved;
 import org.planet_sl.apimigration.benchmark.anno.Wrapping;
 import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
 import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
+import org.planet_sl.apimigration.benchmark.anno.Unresolved.XML;
 
 @SuppressWarnings("unchecked")
 @MapsTo("org.jdom.Element")
@@ -210,6 +212,7 @@ public class Element extends ParentNode {
 	@Solution(value = Strategy.CLONE, comment = "")
 	@Issue.Pre("xom agressively checks uri for well-formedness and throws accordingly")
 	@Override
+	@Unresolved(XML.BaseURI)
 	@MapsTo("")
 	public void setBaseURI(String uri) {
 		/*
@@ -290,6 +293,7 @@ public class Element extends ParentNode {
 	@Solution(value = Strategy.CLONE, comment = "")
 	@Issue.Post("in XOM the result is absolutized and/or converted from IRI to URI")
 	@Override
+	@Unresolved(XML.BaseURI)
 	@MapsTo("")
 	public String getBaseURI() {
 		/*
@@ -369,8 +373,8 @@ public class Element extends ParentNode {
 		return element.getValue();
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
@@ -387,8 +391,8 @@ public class Element extends ParentNode {
 		}
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
@@ -406,6 +410,7 @@ public class Element extends ParentNode {
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Issue.Post("the resulting string may be slightly different")
 	@Override
+	@Unresolved(XML.Serialization)
 	@MapsTo("org.jdom.output.XMLOutputter#outputString(Element)")
 	public String toXML() {
 		return new org.jdom.output.XMLOutputter().outputString(element);
@@ -413,7 +418,7 @@ public class Element extends ParentNode {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Throws(value = "XOM throws MultipleParentException vs IllegalAddException in jdom", resolved = true)
+	@Issue.Throws(value = "XOM throws MultipleParentException if argument is parented whereas JDOM throws IllegalAddException", resolved = true)
 	@MapsTo("org.jdom.Element#setAttribute()")
 	public void addAttribute(Attribute attribute) {
 		if (attribute.attribute.getParent() != null) {
@@ -428,7 +433,7 @@ public class Element extends ParentNode {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Throws("XOM throws NamespaceConflictException vs. IllegalAddException in jdom")
+	@Issue.Throws(value = "XOM throws NamespaceConflictException vs. IllegalAddException in jdom", resolved = true)
 	@MapsTo("org.jdom.Element#addNamespaceDeclaration(org.jdom.Namespace)")
 	public void addNamespaceDeclaration(String prefix, String uri) {
 		if (prefix.equals("xml") && !uri.equals(org.jdom.Namespace.XML_NAMESPACE.getURI())) {
@@ -465,7 +470,7 @@ public class Element extends ParentNode {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Throws("XOM returns null where jdom throws on illegal attr name")
+	@Issue.Throws(value = "XOM returns null where jdom throws on illegal attr name", resolved = true)
 	@MapsTo("org.jdom.Element#getAttribute(String,org.jdom.Namespace)")
 	public Attribute getAttribute(String localName, String namespaceURI) {
 		org.jdom.Attribute attr;
@@ -509,7 +514,7 @@ public class Element extends ParentNode {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Issue.Throws("XOM returns null where jdom throws on illegal attr name")
+	@Issue.Throws(value = "XOM returns null where jdom throws on illegal attr name", resolved = true)
 	@MapsTo("org.jdom.Element#getAttributeValue(String,org.jdom.Namespace")
 	public String getAttributeValue(String localName, String namespaceURI) {
 		org.jdom.Attribute attr;
@@ -585,6 +590,7 @@ public class Element extends ParentNode {
 	@Issue.Post("TODO: check if result differs because of \"additional\"")
 	//("Should also check for xml:... attributes")
 	@MapsTo("")
+	@Unresolved(XML.Namespacing)
 	public int getNamespaceDeclarationCount() {
 		int count = element.getAdditionalNamespaces().size();
 //		if (element.getNamespace() != null) {
@@ -604,6 +610,7 @@ public class Element extends ParentNode {
 	@Solution(value = Strategy.MACRO, comment = "")
 	@Issue.Post("result is undefined since XOM includes the element's own namespace")
 	@MapsTo("")
+	@Unresolved(XML.Namespacing)
 	public String getNamespacePrefix(int index) {
 		// TODO: this is probably an API mismatch
 		// A leaky abstraction.
@@ -673,7 +680,7 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("org.jdom.Element#removeContent()")
 	public Nodes removeChildren() {
 		return new Nodes(element.removeContent());
@@ -697,8 +704,10 @@ public class Element extends ParentNode {
 		}
 	}
 
-	@Progress(value = Status.GIVENUP, comment = "")
+	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
+	@Issue.Pre("XOM does more analysis on whether a call to this method is valid")
+	@Unresolved(XML.Namespacing)
 	@MapsTo("")
 	public void setNamespacePrefix(String prefix) {
 		// TODO: probably wrong; unsupported feature?
@@ -710,8 +719,10 @@ public class Element extends ParentNode {
 		}
 	}
 
-	@Progress(value = Status.GIVENUP, comment = "")
+	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
+	@Issue.Pre("XOM does more analysis on whether a call to this method is valid")
+	@Unresolved(XML.Namespacing)
 	@MapsTo("")
 	public void setNamespaceURI(String uri) {
 		if (element.getNamespacePrefix().equals("")) {

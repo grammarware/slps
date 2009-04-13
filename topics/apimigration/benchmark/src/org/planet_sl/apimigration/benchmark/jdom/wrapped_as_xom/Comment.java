@@ -112,9 +112,8 @@ public class Comment extends Node {
 		return comment.getValue();
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
-	@Unresolved(XML.XPath)
 	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
@@ -131,9 +130,8 @@ public class Comment extends Node {
 		}
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
-	@Unresolved(XML.XPath)
 	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {

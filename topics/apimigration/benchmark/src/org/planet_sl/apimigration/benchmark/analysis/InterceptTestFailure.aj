@@ -161,16 +161,28 @@ public aspect InterceptTestFailure {
 			}
 			File file = new File("compliance.tex");
 			FileWriter writer = new FileWriter(file);
-			writer.write("\\begin{tabular}{|l|r|r|r|r|r|r|}\\hline\n");
+			writer.write("\\begin{tabular}{|l|r|r|r||r|r|r|}\\hline\n");
 			writer.write("\\typeHeading\t\t\t\t& ");
 			writer.write("\\successHeading & ");
 			writer.write("\\failureHeading &");
 			writer.write("\\errorHeading &");
 			writer.write("\\successOnlyHeading\t& \\nonSuccessOnlyHeading \t& \\mixedHeading");
 			writer.write("\\\\\\hline\\hline\n");
+			int totalFailure = 0;
+			int totalError = 0;
+			int totalSuccess = 0;
+			int totalSuccessOnly = 0;
+			int totalNonSuccessOnly = 0;
+			int totalMixedOnly = 0;
 			for (String type: allTypesList) {
 				writer.write(type + "\t\t& ");
 				
+				totalSuccess += totalSuccessPerType.get(type);
+				totalFailure += totalFailurePerType.get(type);
+				totalError += totalErrorPerType.get(type);
+				totalSuccessOnly += successOnly.get(type);
+				totalNonSuccessOnly += nonSuccessOnly.get(type);
+				totalMixedOnly += mixedOnly.get(type);
 				
 				writer.write(totalSuccessPerType.get(type) + "\t& ");
 				writer.write(totalFailurePerType.get(type) + "\t& ");
@@ -180,6 +192,13 @@ public aspect InterceptTestFailure {
 				writer.write(nonSuccessOnly.get(type) + "\t& ");
 				writer.write(mixedOnly.get(type) + "\\\\\\hline\n");
 			}
+			writer.write("\\hline\n");
+			writer.write(" & " + totalSuccess);
+			writer.write(" & " + totalFailure);
+			writer.write(" & " + totalError);
+			writer.write(" & " + totalSuccessOnly);
+			writer.write(" & " + totalNonSuccessOnly);
+			writer.write(" & " + totalMixedOnly + "\\\\\\hline\n");
 			writer.write("\\end{tabular}\n");
 			writer.flush();
 			writer.close();

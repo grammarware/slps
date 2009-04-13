@@ -196,7 +196,7 @@ public class DocType extends Node {
 	@Progress(Status.NEEDSWORK)
 	@Solution(Strategy.ADVANCED_DELEGATE)
 	@Issue.Pre("XOM checks for invalid chars")
-	@Issue.Invariant(value = "public id must be nulled before systemid", resolved = true)
+	@Issue.Invariant(value = "XOM requires that Public ID has been nulled before SystemID can be", resolved = true)
 	@MapsTo("org.jdom.DocType#setSystemId(String)")
 	@Unresolved(XML.DocTypeValidity)
 	public void setSystemID(String id) {
@@ -272,9 +272,8 @@ public class DocType extends Node {
 	}
 
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Unresolved(XML.XPath)
 	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
@@ -291,9 +290,8 @@ public class DocType extends Node {
 		}
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
+	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Unresolved(XML.XPath)
 	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {

@@ -1,0 +1,7 @@
+\begin{tabular}{|l|l|l|p{0.4\textwidth}|}\hline
+\typeHeadingSamples & \featureHeadingSamples &\categoryHeadingSamples & \commentHeadingSamples\\\hline\hline
+Attribute & toXML() & Post & JDOM's escaping is different from XOM's\\\hline
+ & Attribute(String,String) & Pre & XOM allows colonized names in the first argument whereas JDOM does not\\\hline
+DocType & setSystemID(String) & Invariant & XOM requires that Public ID has been nulled before SystemID can be\\\hline
+Element & addAttribute(Attribute) & Throws & XOM throws MultipleParentException if argument is parented whereas JDOM throws IllegalAddException\\\hline
+\end{tabular}

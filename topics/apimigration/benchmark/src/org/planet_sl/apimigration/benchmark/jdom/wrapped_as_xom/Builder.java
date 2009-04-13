@@ -16,6 +16,7 @@ import java.io.StringReader;
 
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
 
+@MapsTo("org.jdom.input.SAXBuilder")
 public class Builder {
 
 	@Wrapping
@@ -48,6 +49,7 @@ public class Builder {
 
 	@Progress(value = Status.GIVENUP, comment = "")
 	@Issue.Pre("NodeFactory is not available in JDOM and cannot be used by SAXBuilder")
+	@Unresolved(XML.Parsing)
 	@MapsTo("")
 	public Builder(boolean validate, NodeFactory factory) {
 		throw new UnsupportedOperationException(
@@ -56,6 +58,7 @@ public class Builder {
 
 	@Progress(value = Status.GIVENUP, comment = "")
 	@Issue.Pre("NodeFactory is not available in JDOM and cannot be used by SAXBuilder")
+	@Unresolved(XML.Parsing)
 	@MapsTo("")
 	public Builder(NodeFactory factory) {
 		throw new UnsupportedOperationException(
@@ -210,7 +213,7 @@ public class Builder {
 
 	@Progress(value = Status.GIVENUP, comment = "")
 	@Issue.Post("No NodeFactory available since it does not work with SAXBuilder")
-	@Unresolved(XML.Extension)
+	@Unresolved(XML.Parsing)
 	@MapsTo("")
 	public NodeFactory getNodeFactory() {
 		throw new UnsupportedOperationException(

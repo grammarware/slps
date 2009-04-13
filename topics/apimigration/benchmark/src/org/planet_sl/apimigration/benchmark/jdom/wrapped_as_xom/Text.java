@@ -62,7 +62,6 @@ public class Text extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Override
 	@MapsTo("org.jdom.Text#clone();org.jdom.CDATA#clone()")
 	public Node copy() {
 		if (isCDATA) {
@@ -140,10 +139,9 @@ public class Text extends Node {
 		throw new AssertionError("invalid parent for this org.jdom.Text: " + text);
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Override
-	@Unresolved(XML.XPath)
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
@@ -159,10 +157,9 @@ public class Text extends Node {
 		}
 	}
 
-	@Progress(value = Status.NEEDSWORK, comment = "")
-	@Solution(value = Strategy.MACRO, comment = "")
+	@Progress(value = Status.OK, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
 	@Override
-	@Unresolved(XML.XPath)
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {

@@ -1,17 +1,13 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
-import org.planet_sl.apimigration.benchmark.anno.Issue;
-import org.planet_sl.apimigration.benchmark.anno.Progress;
-import org.planet_sl.apimigration.benchmark.anno.Unresolved;
-import org.planet_sl.apimigration.benchmark.anno.Wrapping;
-import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
-import org.planet_sl.apimigration.benchmark.anno.Solution;
-import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
-import org.planet_sl.apimigration.benchmark.anno.Unresolved.XML;
-
 import java.util.List;
 
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
+import org.planet_sl.apimigration.benchmark.anno.Progress;
+import org.planet_sl.apimigration.benchmark.anno.Solution;
+import org.planet_sl.apimigration.benchmark.anno.Wrapping;
+import org.planet_sl.apimigration.benchmark.anno.Progress.Status;
+import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
 
 @SuppressWarnings("unchecked")
 @MapsTo("org.jdom.ProcessingInstruction")
@@ -110,7 +106,6 @@ public class ProcessingInstruction extends Node {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@Unresolved(XML.XPath)
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
@@ -129,7 +124,6 @@ public class ProcessingInstruction extends Node {
 	@Progress(value = Status.NEEDSWORK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
 	@Override
-	@Unresolved(XML.XPath)
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {
