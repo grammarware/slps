@@ -1,0 +1,19 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 2 ]; then
+    echo "Language Convergence Infrastructure"
+    echo "Usage: lci <input-config> <diagram-prefix>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    sh ${SLPS}/shared/tools/checkxml lcf $1
+    python ${SLPS}/shared/python/lci.py $1 $2
+fi

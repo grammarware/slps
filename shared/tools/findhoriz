@@ -8,6 +8,6 @@ SLPS=${PWD}
 cd ${LOCAL1}
 
 ${SLPS}/shared/tools/bgf2bnf $1 $1.bnf
-python ${SLPS}/topics/presentation/analyses/findHorizontal.py $1.bnf
+python ${SLPS}/shared/python/findHorizontal.py $1.bnf
 rm -f $1.bnf
 

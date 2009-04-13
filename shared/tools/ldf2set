@@ -15,5 +15,5 @@ elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    python ${SLPS}/topics/extraction/ldf2set/ldf2set.py $1 $2
+    python ${SLPS}/shared/python/ldf2set.py $1 $2
 fi

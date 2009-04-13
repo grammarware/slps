@@ -3,7 +3,7 @@ validator = ../../../shared/tools/checkxml
 build:
 
 test:
-	python ../../convergence/lci/lci.py java.lcf architecture
+	../../../shared/tools/lci java.lcf architecture
 
 check:
 	${validator} lcf java.lcf

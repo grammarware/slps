@@ -4,7 +4,7 @@ validator = ${tools}/checkxml
 build:
 
 test:
-	python ../../convergence/lci/lci.py fl.lcf architecture
+	${tools}/lci fl.lcf architecture
 	@rm -f architecture*.dot
 
 check:

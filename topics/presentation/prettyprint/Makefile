@@ -6,7 +6,7 @@ all:
 	make check
 
 test:
-	python ../../convergence/lci/lci.py bnf.lcf architecture
+	../../../shared/tools/lci bnf.lcf architecture
 
 check:
 	${validator} lcf bnf.lcf

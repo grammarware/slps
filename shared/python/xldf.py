@@ -281,7 +281,6 @@ def xldf_add_section(cmd,tree):
   print '[XLDF] add-section to the',s.tag
   success = True
  elif s.tag == 'placeholder':
-  print dir(tree.getroot())
   tree.getroot().insert(1,s)
   print '[XLDF] add-section to placeholders'
   success = True

@@ -1,6 +1,8 @@
 #!/usr/bin/python
 import sys
 
+# post-processor for pretty-printer
+
 mode = 0
 for line in sys.stdin:
  if mode == 1:
@@ -11,7 +13,7 @@ for line in sys.stdin:
    tokens = line.split(' ')
    lline = tokens[0]
    for token in tokens[1:]:
-    if len(lline + ' ' + token)>55:
+    if len(lline + ' ' + token)>70:
      print lline
      lline = ' '*16 + token
     else:

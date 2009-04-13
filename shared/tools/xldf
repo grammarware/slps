@@ -18,5 +18,5 @@ elif [ ! -r $2 ]; then
     exit 1
 else
     rm -f $3
-    python ${SLPS}/topics/transformation/xldf/xldf.py $1 $2 $3
+    python ${SLPS}/shared/python/xldf.py $1 $2 $3
 fi

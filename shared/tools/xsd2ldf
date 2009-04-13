@@ -17,7 +17,7 @@ elif [ ! -r $1 ]; then
 else
     rm -f $2
     sh ${SLPS}/shared/tools/xsd2bgf $1 $2.bgf
-    python ${SLPS}/topics/extraction/xsd2ldf/ldfgen.py $1 $2.bgf $2
+    python ${SLPS}/shared/python/xsd2ldf.py $1 $2.bgf $2
     rm -f $2.bgf
 fi
 

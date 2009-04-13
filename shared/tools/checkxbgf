@@ -7,5 +7,5 @@ cd ../..
 SLPS=${PWD}
 cd ${LOCAL1}
 
-ls -1 *.xbgf | xargs -n1 python ${SLPS}/topics/presentation/analyses/xbgf_check.py
+ls -1 *.xbgf | xargs -n1 python ${SLPS}/shared/python/xbgf_check.py
 
