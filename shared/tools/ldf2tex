@@ -14,5 +14,5 @@ elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    xsltproc ${SLPS}/shared/xsl/ldf2tex.xslt $1 > $2
+    xsltproc ${SLPS}/shared/xsl/ldf2tex.xslt $1 | python ${SLPS}/topics/presentation/prettyprint/postproc.py > $2
 fi

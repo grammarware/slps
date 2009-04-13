@@ -9,37 +9,37 @@
     <section>group-document-transformation</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-ListOfTerms</section>
+    <section>complexType-listOfTerms</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-ListOfInternalLinks</section>
+    <section>complexType-listOfInternalLinks</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-SimpleList</section>
+    <section>complexType-simpleList</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-SimpleText</section>
+    <section>complexType-simpleText</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-TableRow</section>
+    <section>complexType-tableRow</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-SimpleTable</section>
+    <section>complexType-simpleTable</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-SimpleTextElement</section>
+    <section>group-simpleTextElement</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-SimpleFigure</section>
+    <section>complexType-simpleFigure</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-SimpleSection</section>
+    <section>complexType-simpleSection</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-StructuredSection</section>
+    <section>complexType-structuredSection</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-StructuredSectionElement</section>
+    <section>group-structuredSectionElement</section>
   </xldf:drop>
   <xldf:drop>
     <section>group-normative</section>
@@ -48,7 +48,7 @@
     <section>group-informative</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-LexicalSection</section>
+    <section>group-lexicalSection</section>
   </xldf:drop>
   <xldf:drop>
     <section>simpleType-status</section>
@@ -66,10 +66,10 @@
     <section>complexType-titlePage</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-front-simple-section</section>
+    <section>group-frontSection</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-front-list</section>
+    <section>group-frontList</section>
   </xldf:drop>
   <xldf:drop>
     <section>complexType-runnableType</section>

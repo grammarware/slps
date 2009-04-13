@@ -5,10 +5,9 @@ build: tex
 	pdflatex -interaction=batchmode xldf
 
 tex:
-	../../../shared/tools/xsd2bgf ../../../shared/xsd/xldf.xsd xldf.bgf
-	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/xldf.xsd xldf.bgf xldf.ldf
+	../../../shared/tools/xsd2ldf ../../../shared/xsd/xldf.xsd xldf.ldf
 	../../../shared/tools/xldf xldf.xldf xldf.ldf xldf.ready.ldf
-	xsltproc ../../../shared/xsl/ldf2tex.xslt xldf.ready.ldf > xldf.tex
+	../../../shared/tools/ldf2tex xldf.ready.ldf xldf.tex
 
 rebuild:
 	make clean

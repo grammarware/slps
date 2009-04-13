@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <xbgf:rename>
+    <nonterminal>
+      <from>expression</from>
+      <to>symbol</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:reroot/>
+  <xbgf:disappear>
+    <bgf:production>
+      <nonterminal>grammar</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <star>
+                  <bgf:expression>
+                    <selectable>
+                      <selector>root</selector>
+                      <bgf:expression>
+                        <nonterminal>nonterminal</nonterminal>
+                      </bgf:expression>
+                    </selectable>
+                  </bgf:expression>
+                </star>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <nonterminal>production</nonterminal>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:disappear>
+
+</xbgf:sequence>

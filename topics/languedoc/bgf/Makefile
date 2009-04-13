@@ -1,13 +1,14 @@
 validator = ../../shared/tools/checkxml
 
-build: bgf.ldf
-	xsltproc ../../../shared/xsl/ldf2tex.xslt bgf.ldf > bgf.tex
+build: tex
 	pdflatex -interaction=batchmode bgf
 	pdflatex -interaction=batchmode bgf
 
-bgf.ldf:
-	../../../shared/tools/xsd2bgf ../../../shared/xsd/bgf.xsd bgf.bgf
-	../../../topics/extraction/xsd2ldf/ldfgen.py ../../../shared/xsd/bgf.xsd bgf.bgf bgf.ldf
+tex:
+	../../../shared/tools/xsd2ldf ../../../shared/xsd/bgf.xsd bgf.ldf
+	../../../shared/tools/xldf bgf.xldf bgf.ldf bgf.ready.ldf
+	../../../shared/tools/ldf2tex bgf.ready.ldf bgf.tex
+
 
 rebuild:
 	make clean

@@ -16,10 +16,8 @@ elif [ ! -r $1 ]; then
     exit 1
 else
     rm -f $2
-    sh ${SLPS}/shared/tools/xsd2bgf $1 bgf.tmp
-    python ${SLPS}/topics/extraction/xsd2ldf/ldfgen.py $1 bgf.tmp $2
-    xsltproc ${SLPS}/shared/xsl/ldl2ldl_tail.xslt $2 >ldf.tmp
-    xsltproc ${SLPS}/shared/xsl/ldl2ldl_lift.xslt ldf.tmp >$2
-    rm -f lgf.tmp
+    sh ${SLPS}/shared/tools/xsd2bgf $1 $2.bgf
+    python ${SLPS}/topics/extraction/xsd2ldf/ldfgen.py $1 $2.bgf $2
+    rm -f $2.bgf
 fi
 

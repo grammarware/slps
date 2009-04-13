@@ -208,7 +208,7 @@ def xldf_place(cmd,tree):
 def xldf_drop(cmd,tree):
  found = findnode(tree,cmd.findtext('section'))
  if not found:
-  print '[----] xldf:drop failed: the node not found!'
+  print '[----] xldf:drop failed: node',cmd.findtext('section'),'not found!'
   return
  tree.getroot().remove(found)
  print '[XLDF] drop('+cmd.findtext('section')+')'
