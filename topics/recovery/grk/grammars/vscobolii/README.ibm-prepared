@@ -1,0 +1,99 @@
+<A NAME=disclaimer>
+<H1>Reverse-engineered VS COBOL II Application Programming Language
+Reference</H1>
+</A>
+
+<B>Important disclaimer</B>: This is NOT "<I>IBM's VS COBOL II
+Application Programming Language Reference</I>" but the present
+document has been <I>derived</I> from IBM's document in the sense of
+"document reverse engineering". This derivation has not been approved
+by IBM in any way. The derivation has been performed by <A
+HREF=http://www.cwi.nl/~ralf>Ralf L&auml;mmel</A> in a research effort
+on grammar engineering at the <A HREF=http://www.cwi.nl>CWI</A> and
+the <A HREF=http://www.cs.vu.nl>Free University</A> in Amsterdam.
+While this document is thought to be useful as a linked and normalised
+version of IBM's document, the document comes with ABSOLUTELY NO
+WARRANTY. To the extent possible, the document is COPYRIGHT Ralf
+L&auml;mmel, CWI, Free University Amsterdam, say to the extent not
+covered by IBM's copyright.
+
+<P>
+
+The overall <I>intention</I> of this prepared, say reverse-engineered
+version of IBM's document is to be more suitable for automated
+processing in a subsequent phase of document re-engineering. The
+original IBM document was retrieved from the IBM BookManager, and all
+necessary adaptations were traced in scripts; see the <A
+HREF=http://ww.cs.vu.nl/grammars/grk>GRK</A> distribution for
+details. These adaptations are mainly concerned with the removal of
+notational anomalies, with a revision of the links in the document to
+be fully self-referential, and with the notation used for syntax
+diagrams. Most of the adaptations are rather trivial and
+attractive. However, regarding the syntax diagrams, a few maybe
+debatable adaptations were performed; so we mention them here for
+clarity:
+
+<UL>
+
+<LI> Useful diagrams headers (i.e., nonterminal symbols) were
+established on the basis of a list of names that were manually derived
+by reviewing IBM's document. For example, the header "Format 1" in
+Section "1.5.1.2 Identifier" was turned into "identifier-format-i".
+
+<LI> Footnote marks like (1) where turned into proper syntactical
+elements by placing them next to the relevant element in the list. All
+actual footnote next was moved out of the way by starting an extra box
+after a diagram with notes.
+
+<LI> Syntax fragments (see <A HREF=#F.2.4>FRONT_2.4</A>) were turned
+into proper diagrams on their own. To this end, the names of the
+fragments had to be qualified in a few cases because some fragment
+names such as "phrase 1" were used in several contexts.
+
+</UL>
+
+<BR>
+
+<P>
+
+Useful links:
+
+<UL>
+
+<LI> <A HREF=ibm-transformed.html>The re-engineered IBM document</A> that
+was derived from this reverse-engineered document; this is probably
+the Cobol document you are looking for because one might say that it
+comprehends the most authoritive Cobol definition.
+
+<LI> <A HREF=http://www.cs.vu.nl/grammars/grk>The GRK home page</A>
+(GRK --- Grammar Recovery Kit) which is the portal for the involved
+technology for reverse and re-engineering grammars. This includes
+pointers to relevant reseearch papers.
+
+<LI> <A HREF=http://www.s390.ibm.com:80/bookmgr-cgi/bookmgr.cmd/>The
+IBM Bookmanager</A> which provides many IBM documents including
+"<I>IBM's VS COBOL II Application Programming Language Reference</I>"
+and other Cobol documents.
+
+<LI> A local copy of <A HREF=ibm.html>the underlying IBM document</A>
+downloaded in 1999; you probably do not want to click on this because
+you find up-to-date markup by following the above link for the IBM
+Bookmanager.
+
+</UL>
+
+<BR>
+
+<P>
+
+<A HREF=http://www.cwi.nl/~ralf>Ralf L&auml;mmel</A>
+<BR>
+4 June 2003
+<BR>
+Amsterdam
+<BR>
+email: <A HREF="mailto:Ralf.Laemmel@cwi.nl">Ralf.Laemmel@cwi.nl</A>
+
+<P>
+
+<HR>

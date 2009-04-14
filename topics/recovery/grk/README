@@ -1,0 +1,30 @@
+See INSTALL for installation matters.
+See COPYING for copyright matters.
+
+GRK provides tool support for semi-automatic grammar recovery. With
+the VS Cobol II case it also demonstrates the approach; see the README
+file in grammars/vscobolii. GRK is based on library functionality for
+Prological language processing and tools that automate certain aspects
+of grammar engineering; see the subdirectories lib and tools.
+
+To run the recovery case for VS Cobol II, type in:
+
+> make
+
+This will take you to the directory grammars/vscobolii, and two
+deliverables are derived from IBM's standard for VS Cobol II: a
+re-engineered Cobol reference; see the HTML files "*.html" in
+grammars/vscobolii. Furthermore, a Prolog-based prototype parser
+for Cobol is derived.
+
+To test the Prolog-based parser, type in:
+
+> make test
+
+(GNU make is assumed here.)
+Then a simple Cobol program will be parsed.
+Watch out for "Parsed 42 lines.".
+
+You can also generate a fast BTYACC-based parser.
+See the subdirectory grammars/vscobolii for details.
+

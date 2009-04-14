@@ -1,0 +1,1134 @@
+not-at-eop =
+   "NOT" "AT"? ("END-OF-PAGE" | "EOP") series-of-imperative-statements-4
+
+at-eop =
+   "AT"? ("END-OF-PAGE" | "EOP") series-of-imperative-statements-2
+
+write-before-after =
+   (("BEFORE" | "AFTER") "ADVANCING"? ((identifier-2 | integer-1) ("LINE" | "LINES")? | mnemonic-name-1 | "PAGE"))?
+
+not-at-end =
+   "NOT" "AT"? "END" series-of-imperative-statements-2
+
+at-end =
+   "AT"? "END" series-of-imperative-statements-1
+
+inspect-replacing-phrase =
+   "REPLACING" \\
+   ("CHARACTERS" "BY" (identifier-5 | literal-3) before-after-phrase* | ("ALL" | "LEADING" | "FIRST") ((identifier-3 | literal-1) "BY" (identifier-5 | literal-3) before-after-phrase*)+)+
+
+inspect-tallying-phrase =
+   "TALLYING" \\
+   (identifier-2 "FOR" ("CHARACTERS" before-after-phrase* | ("ALL" | "LEADING") ((identifier-3 | literal-1) before-after-phrase*)+)+)+
+
+before-after-phrase =
+   ("BEFORE" | "AFTER") "INITIAL"? (identifier-4 | literal-2)
+
+when-other-phrase =
+   "WHEN" "OTHER" series-of-imperative-statements-2
+
+when-phrase =
+   ("WHEN" e-phrase ("ALSO" e-phrase)*)+ series-of-imperative-statements-1
+
+e-phrase =
+   ("ANY" | condition | "TRUE" | "FALSE" | "NOT"? (identifier | literal | arithmetic-expression) (("THROUGH" | "THRU") (identifier | literal | arithmetic-expression))?)
+
+invalid-key =
+   "INVALID" "KEY"? series-of-imperative-statements
+
+not-invalid-key =
+   "NOT" "INVALID" "KEY"? series-of-imperative-statements
+
+not-on-exception =
+   "NOT" "ON"? "EXCEPTION" series-of-imperative-statements-2
+
+on-exception =
+   "ON"? "EXCEPTION" series-of-imperative-statements-1
+
+not-on-overflow =
+   "NOT" "ON"? "OVERFLOW" series-of-imperative-statements-2
+
+on-overflow =
+   "ON"? "OVERFLOW" series-of-imperative-statements-1
+
+not-on-size-error =
+   "NOT" "ON"? "SIZE" "ERROR" series-of-imperative-statements-2
+
+on-size-error =
+   "ON"? "SIZE" "ERROR" series-of-imperative-statements-1
+
+compiler-directing-statement =
+   (basis-directive | cbl-process-directive | control-cbl-directive | copy-directive | delete-directive | eject-directive | enter-directive | insert-directive | ready-reset-trace-directive | replace-directive | service-label-directive | service-reload-directive | skip123-directive | title-directive | use-directive)
+
+use-directive =
+   (use-directive-format-i | use-directive-format-ii | use-directive-format-iii)
+
+replace-directive =
+   (replace-directive-format-i | replace-directive-format-ii)
+
+write-statement =
+   (write-statement-format-i | write-statement-format-ii | write-statement-format-iii | write-statement-format-iv)
+
+subtract-statement =
+   (subtract-statement-format-i | subtract-statement-format-ii | subtract-statement-format-iii)
+
+set-statement =
+   (set-statement-format-i | set-statement-format-ii | set-statement-format-iii | set-statement-format-iv | set-statement-format-v)
+
+search-statement =
+   (search-statement-format-i | search-statement-format-ii)
+
+read-statement =
+   (read-statement-format-i | read-statement-format-ii)
+
+perform-statement =
+   (perform-statement-format-i | perform-statement-format-ii | perform-statement-format-iii | perform-statement-format-iv)
+
+open-statement =
+   (open-statement-format-i | open-statement-format-ii)
+
+multiply-statement =
+   (multiply-statement-format-i | multiply-statement-format-ii)
+
+move-statement =
+   (move-statement-format-i | move-statement-format-ii)
+
+inspect-statement =
+   (inspect-statement-format-i | inspect-statement-format-ii | inspect-statement-format-iii | inspect-statement-format-iv)
+
+go-to-statement =
+   (go-to-statement-format-i | go-to-statement-format-ii | altered-go-to | go-to-statement-format-iv)
+
+divide-statement =
+   (divide-statement-format-i | divide-statement-format-ii | divide-statement-format-iii | divide-statement-format-iv | divide-statement-format-v)
+
+close-statement =
+   (close-statement-format-i | close-statement-format-ii)
+
+call-statement =
+   (call-statement-format-i | call-statement-format-ii)
+
+add-statement =
+   (add-statement-format-i | add-statement-format-ii | add-statement-format-iii)
+
+accept-statement =
+   (accept-statement-format-i | accept-statement-format-ii)
+
+call-using-phrase =
+   "USING" (("BY"? "REFERENCE")? (identifier-2 | { "ADDRESS" "OF" identifier-3 } | { file-name-1 })+ | "BY"? "CONTENT" (({ "LENGTH" "OF" })? identifier-2 | { "ADDRESS" "OF" identifier-3 } | { literal-2 })+)+
+
+altered-go-to =
+   "GO" "TO"?
+
+occurs-clause =
+   (occurs-clause-format-i | occurs-clause-format-ii)
+
+data-clauses =
+   blank-when-zero-clause?
+|| external-clause?
+|| global-clause?
+|| justified-clause?
+|| occurs-clause?
+|| picture-clause?
+|| sign-clause?
+|| synchronized-clause?
+|| usage-clause?
+|| value-clause-format-i?
+
+data-description-entry =
+   (data-description-entry-format-i | data-description-entry-format-ii | data-description-entry-format-iii)
+
+code-set-clause =
+   "CODE-SET" "IS"? alphabet-name
+
+recording-mode-clause =
+   { "RECORDING" "MODE"? "IS"? mode }
+
+linage-area-clause =
+   ("WITH"? "FOOTING" "AT"? (data-name-6 | integer-9))? \\
+   ("LINES"? "AT"? "TOP" (data-name-7 | integer-10))? \\
+   ("LINES"? "AT"? "BOTTOM" (data-name-8 | integer-11))?
+
+linage-clause =
+   "LINAGE" "IS"? (qualified-data-name-5 | integer-8) "LINES"? linage-area-clause
+
+data-records-clause =
+   "DATA" ("RECORD" "IS"? | "RECORDS" "ARE"?) qualified-data-name-4+
+
+value-of-clause =
+   "VALUE" "OF" (system-name-1 "IS"? (qualified-data-name-3 | literal-1))+
+
+label-records-clause =
+   "LABEL" ("RECORD" "IS"? | "RECORDS" "ARE"?) ("STANDARD" | "OMITTED" | { qualified-data-name-2+ })
+
+record-varying-clause =
+   "IS"? "VARYING" "IN"? "SIZE"? \\
+   ("FROM"? integer-6)? ("TO" integer-7)? "CHARACTERS"?
+
+record-clause =
+   "RECORD" ("CONTAINS"? integer-3 "CHARACTERS"? | "CONTAINS"? integer-4 "TO" integer-5 "CHARACTERS"? | record-varying-clause ("DEPENDING" "ON"? qualified-data-name-1)?)
+
+block-contains-clause =
+   "BLOCK" "CONTAINS"? (integer-1 "TO")? integer-2 ("CHARACTERS" | "RECORDS" | "RECORD")?
+
+global-clause =
+   "IS"? "GLOBAL"
+
+external-clause =
+   "IS"? "EXTERNAL"
+
+file-clauses =
+   external-clause?
+|| global-clause?
+|| block-contains-clause?
+|| record-clause?
+|| label-records-clause?
+|| value-of-clause?
+|| data-records-clause?
+|| linage-clause?
+|| recording-mode-clause?
+|| code-set-clause?
+
+file-description-entry =
+   ("FD" | "SD") file-name-1 file-clauses "."
+
+status-clause =
+   "FILE"? "STATUS" "IS"? qualified-data-name-1 ({ qualified-data-name-8 })?
+
+relative-key =
+   "RELATIVE" "KEY"? "IS"? qualified-data-name-4
+
+record-key =
+   "RECORD" "KEY"? \\
+   "IS"? qualified-data-name-2 password-clause? \\
+   idx-entry*
+
+password-clause =
+   { "PASSWORD" "IS"? qualified-data-name-6 }
+
+key-clause =
+   (record-key | relative-key)
+
+access-mode-clause =
+   ("ACCESS" "MODE"? "IS"?)? ("SEQUENTIAL" | "RANDOM" | "DYNAMIC")
+
+record-delimiter-clause =
+   "RECORD" "DELIMITER" "IS"? ("STANDARD-1" | assignment-name-2)
+
+padding-character-clause =
+   "PADDING" "CHARACTER"? "IS"? (qualified-data-name-5 | literal-1)
+
+organisation-clause =
+   ("ORGANIZATION" "IS"?)? ("SEQUENTIAL" | "INDEXED" | "RELATIVE")
+
+reserve-clause =
+   "RESERVE" integer ("AREA" | "AREAS")?
+
+file-control-clauses =
+   reserve-clause?
+|| organisation-clause?
+|| padding-character-clause?
+|| record-delimiter-clause?
+|| access-mode-clause?
+|| key-clause?
+|| password-clause?
+|| status-clause?
+
+assign-clause =
+   "ASSIGN" "TO"? (assignment-name-1 | literal-1)+
+
+select-clause =
+   "SELECT" "OPTIONAL"? file-name-1
+
+file-control-entry =
+   select-clause assign-clause file-control-clauses "."
+
+special-names-clauses =
+   environment-clause*
+|| alphabet-clause*
+|| symbolic-clause*
+|| class-clause*
+|| currency-clause
+
+currency-clause =
+   ("CURRENCY" "SIGN"? "IS"? literal-6)? ("DECIMAL-POINT" "IS"? "COMMA")?
+
+class-clause =
+   "CLASS" class-name-1 "IS"? (literal-4 (("THROUGH" | "THRU") literal-5)?)+
+
+symbolic-clause =
+   "SYMBOLIC" "CHARACTERS"? (symbolic-character-1+ ("ARE" | "IS")? integer-1+)+ ("IN" alphabet-name-2)?
+
+alphabet-clause =
+   "ALPHABET" alphabet-name-1 "IS"? ("STANDARD-1" | "STANDARD-2" | "NATIVE" | "EBCDIC" | (literal-1 (("THROUGH" | "THRU") literal-2 | ("ALSO" literal-3)+)?)+)
+
+environment-clause =
+   (environment-name-1 "IS"? mnemonic-name-1 | environment-name-2 ("IS"? mnemonic-name-2 snp-entry? | snp-entry))
+
+computer-paragraphs =
+   source-computer-paragraph?
+|| object-computer-paragraph?
+
+statements =
+   (delimited-scope-statement statements? | conditional-statement | unconditional-statement statements?)
+
+sentence =
+   statements "."
+
+imperative-statement =
+   (unconditional-statement | delimited-scope-statement)
+
+statement =
+   (imperative-statement | conditional-statement)
+
+series-of-imperative-statements =
+   imperative-statement+
+
+procedure-division-content =
+   ("DECLARATIVES" "." (sect "." use-directive "." para)+ "END" "DECLARATIVES" ".")? \\
+   para? section*
+
+section =
+   section-name @1 "SECTION" priority-number? "." para
+
+using-phrase =
+   "USING" data-name-1+
+
+data-item-description-entry =
+   data-description-entry
+
+record-description-entry =
+   data-description-entry
+
+data-division-content =
+   ("FILE" "SECTION" "." (file-description-entry record-description-entry+)*)? \\
+   ("WORKING-STORAGE" "SECTION" "." data-description-entry*)? \\
+   ("LINKAGE" "SECTION" "." data-description-entry*)?
+
+environment-division-content =
+   configuration-section? input-output-section?
+
+identification-division-content =
+   ("AUTHOR" "."? @1 comment-entry*)?
+|| ("INSTALLATION" "."? @1 comment-entry*)?
+|| ("DATE-WRITTEN" "."? @1 comment-entry*)?
+|| ("DATE-COMPILED" "."? @1 comment-entry*)?
+|| ("SECURITY" "."? @1 comment-entry*)?
+|| ("REMARKS" "." comment-entry*)?
+
+copy-operand =
+   (quoted-pseudo-text | identifier | literal | cobol-word)
+
+abbreviation-rest =
+   (("AND" | "OR") "NOT"? relational-operator? (object | "(" object abbreviation-rest ")"))+
+
+object =
+   arithmetic-expression
+
+relational-operator =
+   "IS"? ("NOT"? ("GREATER" "THAN"? | ">" | "LESS" "THAN"? | "<" | "EQUAL" "TO"? | "=") | "GREATER" "THAN"? "OR" "EQUAL" "TO"? | ">=" | "LESS" "THAN"? "OR" "EQUAL" "TO"? | "<=")
+
+operand =
+   arithmetic-expression
+
+simple-condition =
+   (class-condition | condition-name-condition | relation-condition | sign-condition | switch-status-condition | "(" condition ")")
+
+combinable-condition =
+   (simple-condition | negated-simple-condition | abbreviated-combined-relation-condition)
+
+condition =
+   (combinable-condition | combined-condition)
+
+basis =
+   (identifier | literal | "(" arithmetic-expression ")")
+
+power =
+   ("+" | "-")? basis ("**" basis)*
+
+times-div =
+   power (("*" | "/") power)*
+
+arithmetic-expression =
+   times-div (("+" | "-") times-div)*
+
+mode =
+   ("F" | "V" | "U" | "S")
+
+special-register =
+   ("ADDRESS" "OF" data-name | "DEBUG-ITEM" | "LENGTH" "OF" identifier | "RETURN-CODE" | "SHIFT-OUT" | "SHIFT-IN" | "SORT-CONTROL" | "SORT-CORE-SIZE" | "SORT-FILE-SIZE" | "SORT-MESSAGE" | "SORT-MODE-SIZE" | "SORT-RETURN" | "TALLY" | "WHEN-COMPILED")
+
+literal =
+   (nonnumeric | numeric | dbcs | figurative-constant)
+
+figurative-constant =
+   ("ZERO" | "ZEROS" | "ZEROES" | "SPACE" | "SPACES" | "HIGH-VALUE" | "HIGH-VALUES" | "LOW-VALUE" | "LOW-VALUES" | "QUOTE" | "QUOTES" | "ALL" literal | "NULL" | "NULLS")
+
+basis-name =
+   program-name
+
+assignment-name =
+   system-name
+
+environment-name =
+   system-name
+
+implementor-name =
+   (environment-name | assignment-name)
+
+language-name =
+   system-name
+
+computer-name =
+   system-name
+
+section-name =
+   user-defined-word
+
+paragraph-name =
+   user-defined-word
+
+text-name =
+   user-defined-word
+
+program-name =
+   user-defined-word
+
+library-name =
+   user-defined-word
+
+symbolic-character =
+   alphabetic-user-defined-word
+
+routine-name =
+   alphabetic-user-defined-word
+
+record-name =
+   qualified-data-name
+
+mnemonic-name =
+   alphabetic-user-defined-word
+
+index-name =
+   alphabetic-user-defined-word
+
+file-name =
+   alphabetic-user-defined-word
+
+data-name =
+   alphabetic-user-defined-word
+
+condition-name =
+   alphabetic-user-defined-word
+
+class-name =
+   alphabetic-user-defined-word
+
+alphabet-name =
+   alphabetic-user-defined-word
+
+length =
+   arithmetic-expression
+
+leftmost-character-position =
+   arithmetic-expression
+
+condition-name-reference =
+   (condition-name-in-data-division | condition-name-in-special-names-paragraph)
+
+subscript =
+   (integer-1 | identifier-2 (("+" | "-") integer-2)? | index-name-1 (("+" | "-") integer-3)?)
+
+qualified-data-name =
+   data-name-1 (("IN" | "OF") data-name-2)* (("IN" | "OF") file-name-1)?
+
+identifier =
+   (identifier-format-i | identifier-format-ii | special-register)
+
+procedure-name =
+   (reference-to-procedure-division-name-format-i | reference-to-procedure-division-name-format-ii)
+
+abbreviated-combined-relation-condition =
+   (relation-condition abbreviation-rest | arithmetic-expression relational-operator "(" "NOT"? arithmetic-expression abbreviation-rest ")" | arithmetic-expression "(" "NOT"? relational-operator? arithmetic-expression abbreviation-rest ")")
+
+accept-statement-format-i =
+   "ACCEPT" identifier-1 ("FROM" (mnemonic-name-1 | { environment-name }))?
+
+accept-statement-format-ii =
+   "ACCEPT" identifier-2 "FROM" ("DATE" | "DAY" | "DAY-OF-WEEK" | "TIME")
+
+add-statement-format-i =
+   "ADD" (identifier-1 | literal-1)+ "TO" (identifier-2 "ROUNDED"?)+ \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-ADD"?
+
+add-statement-format-ii =
+   "ADD" (identifier-1 | literal-1)+ "TO"? (identifier-2 | literal-2) \\
+   "GIVING" (identifier-3 "ROUNDED"?)+ \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-ADD"?
+
+add-statement-format-iii =
+   "ADD" ("CORRESPONDING" | "CORR") identifier-1 "TO" identifier-2 \\
+   "ROUNDED"? on-size-error? \\
+   not-on-size-error? \\
+   "END-ADD"?
+
+after-phrase =
+   ("AFTER" (identifier-5 | index-name-3) "FROM" (identifier-6 | index-name-4 | literal-3) "BY" (identifier-7 | literal-4) "UNTIL" condition-2)*
+
+alter-statement =
+   "ALTER" \\
+   (procedure-name-1 "TO" ("PROCEED" "TO")? procedure-name-2)+
+
+basis-directive =
+   sequence-number? "BASIS" (basis-name | literal-1)
+
+blank-when-zero-clause =
+   "BLANK" "WHEN"? ("ZERO" | { "ZEROS" } | { "ZEROES" })
+
+call-statement-format-i =
+   "CALL" (identifier-1 | literal-1) \\
+   call-using-phrase? \\
+   on-overflow? "END-CALL"?
+
+call-statement-format-ii =
+   "CALL" (identifier-1 | literal-1) \\
+   call-using-phrase? \\
+   on-exception? \\
+   not-on-exception? "END-CALL"?
+
+cancel-statement =
+   "CANCEL" (identifier-1 | literal-1)+
+
+cbl-process-directive =
+   ("CBL" | "PROCESS") options-list?
+
+class-condition =
+   identifier-1 "IS"? "NOT"? ("NUMERIC" | "ALPHABETIC" | "ALPHABETIC-LOWER" | "ALPHABETIC-UPPER" | class-name-1 | { "DBCS" } | { "KANJI" })
+
+close-statement-format-i =
+   "CLOSE" \\
+   (file-name-1 (("REEL" | "UNIT") ("FOR"? "REMOVAL" | { "WITH"? "NO" "REWIND" })? | "WITH"? ("NO" "REWIND" | "LOCK"))?)+
+
+close-statement-format-ii =
+   "CLOSE" (file-name-1 ("WITH"? "LOCK")?)+
+
+cobol-source-program =
+   ("IDENTIFICATION" | { "ID" }) "DIVISION" "." "PROGRAM-ID" "."? @1 program-name-1 \\
+   ("IS"? "INITIAL" "PROGRAM"?)? "."? @1 \\
+   identification-division-content? \\
+   ("ENVIRONMENT" "DIVISION" "." environment-division-content)? \\
+   ("DATA" "DIVISION" "." data-division-content)? \\
+   ("PROCEDURE" "DIVISION" using-phrase? "." procedure-division-content)? \\
+   (nested-source-program* "END" "PROGRAM" program-name-1 ".")?
+
+combined-condition =
+   combinable-condition-1 (("AND" | "OR") combinable-condition-2)+
+
+comparing-pointer-data-items =
+   ("ADDRESS" "OF" identifier-1 | identifier-2 | "NULL" | "NULLS") "IS"? "NOT"? \\
+   ("EQUAL" "TO"? | "=") ("ADDRESS" "OF" identifier-3 | identifier-4 | "NULL" | "NULLS")
+
+compute-statement =
+   "COMPUTE" (identifier-1 "ROUNDED"?)+ ("=" | { "EQUAL" }) \\
+   arithmetic-expression \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-COMPUTE"?
+
+condition-name-condition =
+   condition-name-reference
+
+condition-name-in-data-division =
+   condition-name-1 (("IN" | "OF") data-name-1)* \\
+   (("IN" | "OF") file-name-1)? ("(" subscript ")")*
+
+condition-name-in-special-names-paragraph =
+   condition-name-1 (("IN" | "OF") mnemonic-name-1)*
+
+configuration-section =
+   "CONFIGURATION" "SECTION" "." computer-paragraphs special-names-paragraph?
+
+continue-statement =
+   "CONTINUE"
+
+control-cbl-directive =
+   ("*CONTROL" | "*CBL") ("SOURCE" | "NOSOURCE" | "LIST" | "NOLIST" | "MAP" | "NOMAP")+ "."?
+
+copy-directive =
+   "COPY" (text-name | { literal-1 }) (("OF" | "IN") (library-name | { literal-2 }))? \\
+   ({ "SUPPRESS" })? \\
+   ("REPLACING" (copy-operand-1 "BY" copy-operand-2)+)? "."
+
+data-at-level =
+   level-number (data-name-1 | "FILLER")?
+
+data-description-entry-format-i =
+   level-number (data-name-1 | "FILLER")? redefines-clause? \\
+   data-clauses "."
+
+data-description-entry-format-ii =
+   "66" data-name-1 renames-clause "."
+
+data-description-entry-format-iii =
+   "88" condition-name-1 value-clause-format-ii "."
+
+data-division =
+   "DATA" "DIVISION" "." \\
+   data-division-content
+
+delete-directive =
+   { sequence-number? "DELETE" sequence-number-field }
+
+delete-statement =
+   "DELETE" file-name-1 "RECORD"? \\
+   invalid-key? \\
+   not-invalid-key? \\
+   "END-DELETE"?
+
+display-statement =
+   "DISPLAY" (identifier-1 | literal-1)+ \\
+   ("UPON" (mnemonic-name-1 | { environment-name-1 }))? \\
+   ("WITH"? "NO" "ADVANCING")?
+
+divide-statement-format-i =
+   "DIVIDE" (identifier-1 | literal-1) "INTO" (identifier-2 "ROUNDED"?)+ \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-DIVIDE"?
+
+divide-statement-format-ii =
+   "DIVIDE" (identifier-1 | literal-1) "INTO" (identifier-2 | literal-2) \\
+   "GIVING" (identifier-3 "ROUNDED"?)+ \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-DIVIDE"?
+
+divide-statement-format-iii =
+   "DIVIDE" (identifier-1 | literal-1) "BY" (identifier-2 | literal-2) \\
+   "GIVING" (identifier-3 "ROUNDED"?)+ \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-DIVIDE"?
+
+divide-statement-format-iv =
+   "DIVIDE" (identifier-1 | literal-1) "INTO" (identifier-2 | literal-2) \\
+   "GIVING" identifier-3 "ROUNDED"? "REMAINDER" identifier-4 \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-DIVIDE"?
+
+divide-statement-format-v =
+   "DIVIDE" (identifier-1 | literal-1) "BY" (identifier-2 | literal-2) \\
+   "GIVING" identifier-3 "ROUNDED"? "REMAINDER" identifier-4 \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-DIVIDE"?
+
+eject-directive =
+   { "EJECT" "."? }
+
+enter-directive =
+   "ENTER" language-name-1 routine-name-1? "."
+
+entry-statement =
+   { "ENTRY" literal-1 ("USING" data-name-1+)? }
+
+environment-division =
+   "ENVIRONMENT" "DIVISION" "." environment-division-content
+
+evaluate-statement =
+   "EVALUATE" (identifier-1 | literal-1 | arithmetic-expression | condition | "TRUE" | "FALSE") ("ALSO" (identifier-2 | literal-2 | arithmetic-expression | condition | "TRUE" | "FALSE"))* \\
+   when-phrase+ \\
+   when-other-phrase? "END-EVALUATE"?
+
+exit-program-statement =
+   "EXIT" "PROGRAM"
+
+exit-statement =
+   "EXIT"
+
+fd-entry-relative-indexed-files =
+   "FD" file-name-1 external-clause? global-clause? \\
+   block-contains-clause? \\
+   record-clause? \\
+   ("LABEL" ("RECORD" "IS"? | "RECORDS" "ARE"?) ("STANDARD" | "OMITTED"))? \\
+   value-of-clause? \\
+   data-records-clause? "."
+
+fd-entry-sequential-files =
+   "FD" file-name-1 external-clause? global-clause? block-contains-clause? \\
+   record-clause? label-records-clause? \\
+   value-of-clause? data-records-clause? \\
+   linage-clause? recording-mode-clause? \\
+   code-set-clause? "."
+
+file-control-paragraph =
+   "FILE-CONTROL" "." @1 \\
+   file-control-entry* @2
+
+go-to-statement-format-i =
+   "GO" "TO"? procedure-name-1
+
+go-to-statement-format-ii =
+   "GO" "TO"? procedure-name-1+ "DEPENDING" "ON"? \\
+   identifier-1
+
+go-to-statement-format-iii =
+   paragraph-name "." altered-go-to "."
+
+go-to-statement-format-iv =
+   { "GO" "TO"? "MORE-LABELS" }
+
+goback-statement =
+   "GOBACK"
+
+i-o-control-paragraph =
+   "I-O-CONTROL" "." ((qsam-or-sam-i-o-control-entries | vsam-i-o-control-entries)+ ".")? \\
+   (sort-merge-i-o-control-entries ".")?
+
+identification-division =
+   ("IDENTIFICATION" | { "ID" }) "DIVISION" "." "PROGRAM-ID" "."? @1 program-name \\
+   ("IS"? ("COMMON" "INITIAL"? | "INITIAL" "COMMON"?) "PROGRAM"?)? "."? @1 \\
+   identification-division-content
+
+identifier-format-i =
+   \\
+   qualified-data-name ("(" subscript+ ")")? \\
+   ("(" leftmost-character-position ":" length? ")")?
+
+identifier-format-ii =
+   "LINAGE-COUNTER" (("IN" | "OF") file-name-2)?
+
+idx-entry =
+   "ALTERNATE" "RECORD"? @1 "KEY"? "IS"? qualified-data-name-3 \\
+   ({ "PASSWORD" "IS"? qualified-data-name-7 })? ("WITH"? "DUPLICATES")?
+
+if-statement =
+   "IF" condition-1 "THEN"? (statements | "NEXT" "SENTENCE") \\
+   ("ELSE" (statements | "NEXT" "SENTENCE"))? ("END-IF" @1)?
+
+initialize-statement =
+   "INITIALIZE" identifier-1+ \\
+   ("REPLACING" (("ALPHABETIC" | "ALPHANUMERIC" | "NUMERIC" | "ALPHANUMERIC-EDITED" | "NUMERIC-EDITED" | { "DBCS" } | { "EGCS" }) "DATA"? "BY" (identifier-2 | literal-1))+)?
+
+input-output-section =
+   "INPUT-OUTPUT" "SECTION" "." file-control-paragraph? \\
+   i-o-control-paragraph?
+
+insert-directive =
+   { sequence-number? "INSERT" sequence-number-field }
+
+inspect-statement-format-i =
+   "INSPECT" identifier-1 inspect-tallying-phrase
+
+inspect-statement-format-ii =
+   "INSPECT" identifier-1 inspect-replacing-phrase
+
+inspect-statement-format-iii =
+   "INSPECT" identifier-1 inspect-tallying-phrase inspect-replacing-phrase
+
+inspect-statement-format-iv =
+   "INSPECT" identifier-1 "CONVERTING" (identifier-6 | literal-4) "TO" \\
+   (identifier-7 | literal-5) before-after-phrase*
+
+into-from-identifier-phrase =
+   (("READ" | "RETURN") file-name-1 "RECORD"? ("INTO" identifier-1)? | ("RELEASE" | "REWRITE" | "WRITE") record-name-1 ("FROM" identifier-1)?)
+
+justified-clause =
+   ("JUSTIFIED" | "JUST") "RIGHT"?
+
+merge-statement =
+   "MERGE" file-name-1 ("ON"? ("ASCENDING" | "DESCENDING") "KEY"? qualified-data-name-1+)+ \\
+   ("COLLATING"? "SEQUENCE" "IS"? alphabet-name-1)? "USING" file-name-2 file-name-3+ \\
+   ("OUTPUT" "PROCEDURE" "IS"? procedure-name-1 (("THROUGH" | "THRU") procedure-name-2)? | "GIVING" file-name-4+)
+
+move-statement-format-i =
+   "MOVE" (identifier-1 | literal-1) "TO" identifier-2+
+
+move-statement-format-ii =
+   "MOVE" ("CORRESPONDING" | "CORR") identifier-1 "TO" identifier-2+
+
+multiply-statement-format-i =
+   "MULTIPLY" (identifier-1 | literal-1) "BY" (identifier-2 "ROUNDED"?)+ \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-MULTIPLY"?
+
+multiply-statement-format-ii =
+   "MULTIPLY" (identifier-1 | literal-1) "BY" (identifier-2 | literal-2) \\
+   "GIVING" (identifier-3 "ROUNDED"?)+ \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-MULTIPLY"?
+
+negated-simple-condition =
+   "NOT" condition-1
+
+nested-source-program =
+   ("IDENTIFICATION" | { "ID" }) "DIVISION" "." "PROGRAM-ID" "."? @1 program-name-2 \\
+   ("IS"? ("COMMON" "INITIAL"? | "INITIAL" "COMMON"?) "PROGRAM"?)? "."? @1 \\
+   identification-division-content? \\
+   ("ENVIRONMENT" "DIVISION" "." environment-division-content)? \\
+   ("DATA" "DIVISION" "." data-division-content)? \\
+   ("PROCEDURE" "DIVISION" using-phrase? "." procedure-division-content)? \\
+   nested-source-program* "END" "PROGRAM" program-name-2 "."
+
+object-computer-paragraph =
+   "OBJECT-COMPUTER" "." \\
+   (computer-name ("MEMORY" "SIZE"? integer ("WORDS" | "CHARACTERS" | "MODULES"))? ocp-entry ".")?
+
+occurs-clause-format-i =
+   "OCCURS" integer-2 "TIMES"? \\
+   (("ASCENDING" | "DESCENDING") "KEY"? "IS"? data-name-2+)* \\
+   ("INDEXED" "BY"? index-name-1+)?
+
+occurs-clause-format-ii =
+   "OCCURS" (integer-1 @1 "TO")? integer-2 "TIMES"? "DEPENDING" \\
+   "ON"? qualified-data-name-1 \\
+   (("ASCENDING" | "DESCENDING") "KEY"? "IS"? data-name-2+)* \\
+   ("INDEXED" "BY"? index-name-1+)?
+
+ocp-entry =
+   ("PROGRAM"? "COLLATING"? "SEQUENCE" "IS"? alphabet-name)? \\
+   ("SEGMENT-LIMIT" "IS"? priority-number)?
+
+open-statement-format-i =
+   "OPEN" ("INPUT" (file-name-1 ("REVERSED" | "WITH"? "NO" "REWIND")?)+ | "OUTPUT" (file-name-2 ("WITH"? "NO" "REWIND")?)+ | "I-O" file-name-3+ | "EXTEND" file-name-4+)+
+
+open-statement-format-ii =
+   "OPEN" ("INPUT" file-name-1+ | "OUTPUT" file-name-2+ | "I-O" file-name-3+ | "EXTEND" file-name-4+)+
+
+para =
+   (sentence* (paragraph-name "." sentence*)*)?
+
+perform-statement-format-i =
+   "PERFORM" \\
+   (procedure-name-1 (("THROUGH" | "THRU") procedure-name-2)? | series-of-imperative-statements-1? @1 "END-PERFORM")
+
+perform-statement-format-ii =
+   "PERFORM" (procedure-name-1 (("THROUGH" | "THRU") procedure-name-2)? (identifier-1 | integer-1) "TIMES" | (identifier-1 | integer-1) "TIMES" series-of-imperative-statements-1? @1 "END-PERFORM")
+
+perform-statement-format-iii =
+   "PERFORM" \\
+   (procedure-name-1 (("THROUGH" | "THRU") procedure-name-2)? test-phrase | test-phrase series-of-imperative-statements-1? @1 "END-PERFORM")
+
+perform-statement-format-iv =
+   "PERFORM" (procedure-name-1 (("THROUGH" | "THRU") procedure-name-2)? varying-phrase after-phrase | varying-phrase series-of-imperative-statements-1? @1 "END-PERFORM")
+
+picture-clause =
+   ("PICTURE" | "PIC") "IS"? character-string
+
+procedure-division-format-i =
+   "PROCEDURE" "DIVISION" using-phrase? "." \\
+   procedure-division-content
+
+procedure-division-format-ii =
+   "PROCEDURE" "DIVISION" using-phrase? "." \\
+   (paragraph-name "." @1 sentence*)+
+
+procedure-division-header =
+   "PROCEDURE" "DIVISION" ("USING" data-name-1+)? "."
+
+program-id-paragraph =
+   ("IDENTIFICATION" | { "ID" }) "DIVISION" "." "PROGRAM-ID" "."? @1 program-name \\
+   ("IS"? ("COMMON" "INITIAL"? | "INITIAL" "COMMON"?) "PROGRAM"?)? "."? @1
+
+qsam-or-sam-i-o-control-entries =
+   ("RERUN" "ON"? @1 (assignment-name-1 | file-name-1) "EVERY"? (integer-1 "RECORDS" | "END" "OF"? ("REEL" | "UNIT")) "OF"? file-name-1 | "SAME" "RECORD"? "AREA"? "FOR"? file-name-3 (file-name-4 @2)* | "MULTIPLE" "FILE" "TAPE"? "CONTAINS"? (file-name-5 ("POSITION" integer-2)?)+ | { "APPLY" "WRITE-ONLY" "ON"? file-name-2+ })
+
+qsam-sam-vsam-sequential-file-control-entries =
+   select-clause \\
+   assign-clause reserve-clause? \\
+   (("ORGANIZATION" "IS"?)? "SEQUENTIAL")? \\
+   padding-character-clause? \\
+   record-delimiter-clause? \\
+   ("ACCESS" "MODE"? "IS"? "SEQUENTIAL")? \\
+   password-clause? \\
+   status-clause? "."
+
+read-statement-format-i =
+   "READ" file-name-1 "NEXT"? "RECORD"? \\
+   ("INTO" identifier-1)? \\
+   at-end? \\
+   not-at-end? "END-READ"?
+
+read-statement-format-ii =
+   "READ" file-name-1 "RECORD"? ("INTO" identifier-1)? \\
+   ("KEY" "IS"? qualified-data-name-1)? \\
+   invalid-key? \\
+   not-invalid-key? "END-READ"?
+
+ready-reset-trace-directive =
+   { ("READY" | "RESET") "TRACE" "." }
+
+record-clause-format-i =
+   "RECORD" "CONTAINS"? integer-3 "CHARACTERS"?
+
+record-clause-format-ii =
+   "RECORD" "CONTAINS"? integer-4 "TO" integer-5 "CHARACTERS"?
+
+record-clause-format-iii =
+   "RECORD" "IS"? "VARYING" "IN"? "SIZE"? \\
+   ("FROM"? integer-6)? ("TO" integer-7)? "CHARACTERS"? \\
+   ("DEPENDING" "ON"? data-name-1)?
+
+redefines-clause =
+   "REDEFINES" data-name-2
+
+reference-modification =
+   data-name-1 "(" leftmost-character-position ":" length? \\
+   ")"
+
+reference-to-copy-library =
+   text-name-1 (("IN" | "OF") library-name-1)?
+
+reference-to-procedure-division-name-format-i =
+   paragraph-name-1 (("IN" | "OF") section-name-1)?
+
+reference-to-procedure-division-name-format-ii =
+   section-name-1
+
+relation-condition =
+   operand-1 relational-operator \\
+   operand-2
+
+release-statement =
+   "RELEASE" record-name-1 ("FROM" identifier-1)?
+
+renames-clause =
+   "RENAMES" qualified-data-name-2 \\
+   (("THROUGH" | "THRU") qualified-data-name-3)?
+
+replace-directive-format-i =
+   "REPLACE" ("==pseudo-text-1==" "BY" "==pseudo-text-2==")+ "."
+
+replace-directive-format-ii =
+   "REPLACE" "OFF" "."
+
+return-statement =
+   "RETURN" file-name-1 "RECORD"? ("INTO" identifier-1)? \\
+   at-end \\
+   not-at-end? "END-RETURN"?
+
+rewrite-statement =
+   "REWRITE" record-name-1 ("FROM" identifier-1)? \\
+   invalid-key? \\
+   not-invalid-key? \\
+   "END-REWRITE"?
+
+sd-entry-sort-merge-files =
+   "SD" file-name-1 \\
+   record-clause? \\
+   data-records-clause? { \\
+   block-contains-clause? \\
+   ("LABEL" ("RECORD" "IS"? | "RECORDS" "ARE"?) ("STANDARD" | "OMITTED" | qualified-data-name-2+))? \\
+   value-of-clause? \\
+   linage-clause? \\
+   code-set-clause? } "."
+
+search-statement-format-i =
+   "SEARCH" identifier-1 ("VARYING" (identifier-2 | index-name-1))? \\
+   at-end? \\
+   ("WHEN" condition-1 (series-of-imperative-statements-2 | "NEXT" "SENTENCE"))+ \\
+   ("END-SEARCH" @1)?
+
+search-statement-format-ii =
+   "SEARCH" "ALL" identifier-1 at-end? \\
+   "WHEN" (identifier-1 "IS"? ("EQUAL" "TO"? | "=") (identifier-3 | literal-1 | arithmetic-expression-1) | condition-name-reference-1) \\
+   ("AND" (identifier-2 "IS"? ("EQUAL" "TO"? | "=") (identifier-4 | literal-2 | arithmetic-expression-2) | condition-name-reference-2))* \\
+   (series-of-imperative-statements-2 @1 | "NEXT" "SENTENCE" @1)? ("END-SEARCH" @2)?
+
+sect =
+   section-name "SECTION" priority-number?
+
+sequence-of-cobol-source-programs =
+   "COBOL-source-program"+
+
+service-label-directive =
+   { "SERVICE" "LABEL" }
+
+service-reload-directive =
+   { "SERVICE" "RELOAD" identifier-1 }
+
+set-statement-format-i =
+   "SET" (index-name-1 | identifier-1)+ "TO" (index-name-2 | identifier-2 | integer-1)
+
+set-statement-format-ii =
+   "SET" index-name-3+ ("UP" "BY" | "DOWN" "BY") (identifier-3 | integer-2)
+
+set-statement-format-iii =
+   "SET" (mnemonic-name-1+ "TO" ("ON" | "OFF"))+
+
+set-statement-format-iv =
+   "SET" condition-name-reference-1+ "TO" "TRUE"
+
+set-statement-format-v =
+   { "SET" (identifier-4 | "ADDRESS" "OF" identifier-5)+ \\
+   "TO" (identifier-6 | "ADDRESS" "OF" identifier-7 | "NULL" | "NULLS") }
+
+sign-clause =
+   ("SIGN" "IS"?)? ("LEADING" | "TRAILING") ("SEPARATE" "CHARACTER"?)?
+
+sign-condition =
+   operand-1 "IS"? "NOT"? ("POSITIVE" | "NEGATIVE" | "ZERO")
+
+simple-data-reference =
+   data-name-1
+
+skip123-directive =
+   { ("SKIP1" | "SKIP2" | "SKIP3") "."? }
+
+snp-entry =
+   ("ON" "STATUS"? "IS"? condition-1 ("OFF" "STATUS"? "IS"? condition-2)? | "OFF" "STATUS"? "IS"? condition-2 ("ON" "STATUS"? "IS"? condition-1)?)
+
+sort-merge-i-o-control-entries =
+   ({ "RERUN" "ON" assignment-name-1 })? \\
+   ("SAME" ("RECORD" | "SORT" | "SORT-MERGE") "AREA"? "FOR"? file-name-3 (file-name-4 @1)*)+
+
+sort-statement =
+   "SORT" file-name-1 ("ON"? ("ASCENDING" | "DESCENDING") "KEY"? qualified-data-name-1+)+ \\
+   ("WITH"? "DUPLICATES" "IN"? "ORDER"?)? \\
+   ("COLLATING"? "SEQUENCE" "IS"? alphabet-name-1)? \\
+   ("USING" file-name-2+ | "INPUT" "PROCEDURE" "IS"? procedure-name-1 (("THROUGH" | "THRU") procedure-name-2)?) \\
+   ("GIVING" file-name-3+ | "OUTPUT" "PROCEDURE" "IS"? procedure-name-3 (("THROUGH" | "THRU") procedure-name-4)?)
+
+source-computer-paragraph =
+   "SOURCE-COMPUTER" "." \\
+   (computer-name ("WITH"? "DEBUGGING" "MODE")? ".")?
+
+special-names-paragraph =
+   "SPECIAL-NAMES" "." special-names-clauses ("." @1)?
+
+start-statement =
+   "START" file-name-1 \\
+   ("KEY" "IS"? ("EQUAL" "TO"? | "=" | "GREATER" "THAN"? | ">" | "NOT" "LESS" "THAN"? | "NOT" "<" | "GREATER" "THAN"? "OR" "EQUAL" "TO"? | ">=") qualified-data-name-1)? \\
+   invalid-key? \\
+   not-invalid-key? "END-START"?
+
+stop-statement =
+   "STOP" ("RUN" | literal-1)
+
+string-statement =
+   "STRING" \\
+   ((identifier-1 | literal-1)+ "DELIMITED" "BY"? (identifier-2 | literal-2 | "SIZE"))+ \\
+   "INTO" identifier-3 ("WITH"? "POINTER" identifier-4)? \\
+   on-overflow? \\
+   not-on-overflow? \\
+   "END-STRING"?
+
+subscripting =
+   (condition-name-1 | data-name-1) \\
+   "(" subscript+ ")"
+
+subtract-statement-format-i =
+   "SUBTRACT" (identifier-1 | literal-1)+ "FROM" \\
+   (identifier-2 "ROUNDED"?)+ \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-SUBTRACT"?
+
+subtract-statement-format-ii =
+   "SUBTRACT" (identifier-1 | literal-1)+ "FROM" (identifier-2 | literal-2) \\
+   "GIVING" (identifier-3 "ROUNDED"?)+ \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-SUBTRACT"?
+
+subtract-statement-format-iii =
+   "SUBTRACT" ("CORRESPONDING" | "CORR") identifier-1 "FROM" \\
+   identifier-2 "ROUNDED"? \\
+   on-size-error? \\
+   not-on-size-error? \\
+   "END-SUBTRACT"?
+
+switch-status-condition =
+   condition-name-reference
+
+synchronized-clause =
+   ("SYNCHRONIZED" | "SYNC") ("LEFT" | "RIGHT")?
+
+test-phrase =
+   ("WITH"? "TEST" ("BEFORE" | "AFTER"))? "UNTIL" condition-1
+
+title-directive =
+   { "TITLE" literal "."? }
+
+unstring-statement =
+   "UNSTRING" identifier-1 \\
+   ("DELIMITED" "BY"? "ALL"? (identifier-2 | literal-1) ("OR" "ALL"? (identifier-3 | literal-2))*)? "INTO" \\
+   (identifier-4 ("DELIMITER" "IN"? identifier-5)? ("COUNT" "IN"? identifier-6)?)+ \\
+   ("WITH"? "POINTER" identifier-7)? ("TALLYING" "IN"? identifier-8)? \\
+   on-overflow? not-on-overflow? \\
+   "END-UNSTRING"?
+
+usage-clause =
+   ("USAGE" "IS"?)? ("BINARY" | "COMP" | { "COMP-1" } | { "COMP-2" } | { "COMP-3" } | { "COMP-4" } | "COMPUTATIONAL" | { "COMPUTATIONAL-1" } | { "COMPUTATIONAL-2" } | { "COMPUTATIONAL-3" } | { "COMPUTATIONAL-4" } | "DISPLAY" | { "DISPLAY-1" } | "INDEX" | "PACKED-DECIMAL" | { "POINTER" })
+
+use-directive-format-i =
+   "USE" "GLOBAL"? "AFTER" "STANDARD"? ("EXCEPTION" | "ERROR") "PROCEDURE" \\
+   "ON"? (file-name-1+ | "INPUT" | "OUTPUT" | "I-O" | "EXTEND")
+
+use-directive-format-ii =
+   { "USE" "GLOBAL"? "AFTER" "STANDARD"? ("BEGINNING" | "ENDING")? \\
+   ("FILE" | "REEL" | "UNIT")? "LABEL" "PROCEDURE" "ON"? (file-name-1+ | "INPUT" | "OUTPUT" | "I-O" | "EXTEND") }
+
+use-directive-format-iii =
+   "USE" "FOR"? "DEBUGGING" "ON"? (procedure-name-1+ | "ALL" "PROCEDURES")
+
+value-clause-format-i =
+   "VALUE" "IS"? literal
+
+value-clause-format-ii =
+   ("VALUE" "IS"? | "VALUES" "ARE"?) \\
+   (literal-1 (("THROUGH" | "THRU") literal-2)?)+
+
+value-clause-format-iii =
+   { "VALUE" "IS"? ("NULL" | "NULLS") }
+
+varying-phrase =
+   ("WITH"? "TEST" ("BEFORE" | "AFTER"))? "VARYING" (identifier-2 | index-name-1) "FROM" (identifier-3 | index-name-2 | literal-1) "BY" (identifier-4 | literal-2) "UNTIL" \\
+   condition-1
+
+vsam-i-o-control-entries =
+   ("RERUN" "ON"? @1 (assignment-name-1 | file-name-1) "EVERY"? integer-1 "RECORDS" "OF"? file-name-1 | "SAME" "RECORD"? "AREA"? "FOR"? file-name-3 (file-name-4 @2)*)
+
+vsam-indexed-file-control-entries =
+   select-clause \\
+   assign-clause reserve-clause? \\
+   ("ORGANIZATION" "IS"?)? "INDEXED" \\
+   ("ACCESS" "MODE"? "IS"? ("SEQUENTIAL" | "RANDOM" | "DYNAMIC"))? \\
+   record-key \\
+   status-clause? "."
+
+vsam-relative-file-control-entries =
+   select-clause assign-clause \\
+   reserve-clause? ("ORGANIZATION" "IS"?)? "RELATIVE" \\
+   ("ACCESS" "MODE"? "IS"? ("SEQUENTIAL" relative-key? | ("RANDOM" | "DYNAMIC") relative-key))? \\
+   password-clause? status-clause? "."
+
+w-phrase =
+   at-eop? not-at-eop?
+
+write-statement-format-i =
+   "WRITE" record-name-1 ("FROM" identifier-1)? \\
+   (write-before-after @1 w-phrase | ({ invalid-key })? ({ not-invalid-key })?) "END-WRITE"?
+
+write-statement-format-ii =
+   "WRITE" record-name-1 ("FROM" identifier-1)? "END-WRITE"?
+
+write-statement-format-iii =
+   "WRITE" record-name-1 ("FROM" identifier-1)? \\
+   invalid-key? \\
+   not-invalid-key? \\
+   "END-WRITE"?
+
+write-statement-format-iv =
+   "WRITE" record-name-1 ("FROM" identifier-1)? \\
+   invalid-key? \\
+   not-invalid-key? \\
+   "END-WRITE"?
+

@@ -1,0 +1,5 @@
+The present GRK is entirely focused on IBM's standard of VS Cobol II.
+We only include the complete vscobolii case into the GRK distribution.
+Several other documents by IBM can be processed in largely the same
+way.  The overall process of grammar recovery and deployment applies
+to other kinds of documents and grammars as well.

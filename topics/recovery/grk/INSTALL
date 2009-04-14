@@ -1,0 +1,24 @@
+GRK by itself is free of installion burden.  That is, there is NO need
+to run anything like autoconf, configure, gmake, gmake install or
+whatever. (This is because all the tools etc. are plain Prolog
+programs that are run by invoking the SWI-Prolog system, and the
+remaining scripting is all accomplished by makefiles.)
+
+These are the prerequisites for GRK:
+
+- make (last tested under Leopard)
+- SWI-Prolog (tested with version 5.6.62) 
+
+Any recent version of these tools should work.  The makefiles assume
+that SWI-Prolog is invoked via "swipl". SWI-Prolog can be downloaded from
+this URL: http://www.swi-prolog.com Installing SWI-Prolog from a
+binary or a source distribution is really trivial.
+
+The simple and slow Prolog-based prototype parser, which demonstrates
+the correct functioning of GRK and the recovery case for VS Cobol II
+does not imply any further tooling requirement because this parser is
+pure Prolog.
+
+If you want to use the BTYACC-based Cobol parser that can be generated
+with GRK (and with the help of GDK), then you need a number of additional
+tools; see the subdirectory grammars/vscobolii/btyacc.

@@ -1,0 +1,30 @@
+Version ?.?? -- not formally released
+  - April 2009
+    * Changed Makefile to also work on MacOs
+    * Tested with current Swi Prolog
+
+No development during 2005--2008
+
+Version ?.?? not yet released
+  - added a cut to tools/reduced.pl
+  - closed output file in nop.pl (some Prolog versions care)
+
+Version 2.03 released 12 February 2004
+  - added grammars/empty
+
+Version 2.02 released 17 September 2003
+  - produced proper error message when fst fails
+
+Version 2.01 released 6 September 2003
+  - surpressed some innocent error messages during "gmake"
+
+Version 2.0 released 15 August 2003
+  tools
+	- added tool ast2lll for LLL export to connect to GDK
+  grammars/vscobolii
+	- added btyacc subdirectory for BTYACC parser; see README
+	- added deployment scripts to appeal to LLL and then BTYACC
+	- revised phases / grouping of deployment transformations 
+	- resolved a font problem in ibm-prepared.html
+
+Version 1.0 released 4 June 2003

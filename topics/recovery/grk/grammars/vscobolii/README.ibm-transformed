@@ -1,0 +1,80 @@
+<A NAME=disclaimer>
+<H1>Re-engineered VS COBOL II Application Programming Language
+Reference</H1>
+</A>
+
+<B>Important disclaimer</B>: This is NOT "<I>IBM's VS COBOL II
+Application Programming Language Reference</I>" but the present
+document has been <I>derived</I> from IBM's document in the sense of
+"document re-engineering". This derivation has not been approved by
+IBM in any way. The derivation has been performed by <A
+HREF=http://www.cwi.nl/~ralf>Ralf L&auml;mmel</A> in a research effort
+on grammar engineering at the <A HREF=http://www.cwi.nl>CWI</A> and
+the <A HREF=http://www.cs.vu.nl>Free University</A> in Amsterdam.
+While this document is thought to be useful as a completed, corrected,
+and linked version of IBM's document, the document comes with
+ABSOLUTELY NO WARRANTY. To the extent possible, the document is
+COPYRIGHT Ralf L&auml;mmel, CWI, Free University Amsterdam, say to the
+extent not covered by IBM's copyright.
+
+<P>
+
+The overall <I>intention</I> of this improved, say re-engineered
+version of IBM's document is to provide a useful Cobol grammar as part
+of the full, though modified IBM reference document. The original IBM
+document was retrieved from the IBM BookManager, and all necessary
+adaptations were traced in scripts; see the <A
+HREF=http://ww.cs.vu.nl/grammars/grk>GRK</A> distribution for
+details. These adaptations are concerned with completing the diagrams
+(i.e., adding syntax that was not in IBM's document previously),
+correcting the diagrams (i.e., rephrasing syntax which is in conflict
+with the intended one), and refactoring diagrams (to obtain a more
+concise definition of the Cobol syntax).  All adaptations are
+described by comments before the corresponding diagrams. (All these
+comment lines start with @@.)
+
+<BR>
+
+<P>
+
+Useful links:
+
+<UL>
+
+<LI> <A HREF=http://www.cs.vu.nl/grammars/grk>The GRK home page</A>
+(GRK --- Grammar Recovery Kit) which is the portal for the involved
+technology for reverse and re-engineering grammars. This includes
+pointers to relevant reseearch papers.
+
+<LI> <A HREF=http://www.s390.ibm.com:80/bookmgr-cgi/bookmgr.cmd/>The
+IBM Bookmanager</A> which provides many IBM documents including
+"<I>IBM's VS COBOL II Application Programming Language Reference</I>"
+and other Cobol documents.
+
+<LI> <A HREF=ibm-prepared.html>The reverse-engineered IBM document</A>
+that was derived from this reverse-engineered document; this is
+probably the Cobol document you are looking for because one might say
+that it comprehends the most authoritive Cobol definition.
+
+<LI> A local copy of <A HREF=ibm.html>the underlying IBM document</A>
+downloaded in 1999; you probably do not want to click on this because
+the above reverse-engineered version is more useful as it is linked
+and notational anomalies were eliminated.
+
+</UL>
+
+<BR>
+
+<P>
+
+<A HREF=http://www.cwi.nl/~ralf>Ralf L&auml;mmel</A>
+<BR>
+4 June 2003
+<BR>
+Amsterdam
+<BR>
+email: <A HREF="mailto:Ralf.Laemmel@cwi.nl">Ralf.Laemmel@cwi.nl</A>
+
+<P>
+
+<HR>

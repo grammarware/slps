@@ -1,0 +1,4 @@
+This examples illustrates how to get started with a new
+grammar. You can import grammars into GRK by adding rules
+with transformations in script.fst. You can export to LLL
+or EBNF using the targets in the Makefile.

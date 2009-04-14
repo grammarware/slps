@@ -1,0 +1,6 @@
+scratch
+tag.*
+*.ast
+.xpce
+ibm-prepared.*
+ibm-transformed.*

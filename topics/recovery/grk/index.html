@@ -1,0 +1,248 @@
+<HTML>
+<HEAD>
+   <meta name="description" content="GRK">
+   <meta name="keywords" content="grammars recovery Cobol">
+   <title>GRK --- Grammar Recovery Kit</title>
+</HEAD>
+
+<body bgcolor="#99CCFF">
+
+<H1>GRK --- Grammar Recovery Kit</H1>
+
+... is a software toolkit for <A
+HREF=http://www.cs.vu.nl/grammarware/semi-automatic-grammar-recovery>semi-automatic
+grammar recovery</A>. In fact, the toolkit goes beyond the basic idea
+of obtaining a relatively correct and complete grammar from a language
+reference, but GRK even addresses reverse and re-engineering of the
+language reference itself. This is demonstrated for IBM's VS Cobol II
+by deriving <I><A HREF=grammars/vscobolii/ibm-transformed.html>an
+authoritative definition of VS Cobol II</A></I> from IBM's application
+programming reference semi-automatically. This authoritative
+definition comprehends all the text from IBM's reference as well as
+comments on the performed adaptations. Furthermore, GRK provides some
+simple means for grammar deployment, that is, it derives actual
+parsers.  In the case of VS Cobol II, two parsers are derived: a slow,
+Prolog-based parser, and a fast, BTYACC-based parser (the latter with
+the help of <A HREF=http://gdk.sourceforge.net/>GDK</A>).
+
+<P>
+
+Read this <A HREF=http://www.cwi.nl/~ralf/grk/>4 pages article</A> if you like to get a quick and general idea.
+
+<P>
+
+Because of the potentially different kinds of documents that one can
+use for grammar recovery, there is no final answer to the question of
+tool support. The present GRK includes a number of tools that are of
+general use, e.g., a transformation tool for grammars, but several
+other tools are biased towards IBM standards such as the VS Cobol II
+application programming reference, e.g., a specific tool for diagram
+extraction.
+
+<P>
+
+GRK is being developed by <A HREF=http://www.cwi.nl/~ralf/>Ralf
+L&auml;mmel</A> at the Free University, Amsterdam and CWI. It is free
+software. Version 1.0 was released on June 4, 2003. GRK is implemented
+in SWI-Prolog and gmake is used to glue together all components. The
+GRK functionality can be seen as a careful implementation of the
+functionality that Ralf L&auml;mmel and Chris Verhoef describe in
+their paper on "<A
+HREF=http://www.cs.vu.nl/grammarware/semi-automatic-grammar-recovery>Semi-Automatic
+Grammar Recovery</A>" which appeared in SP&amp;E in 2001. GRK goes
+beyond that approach in that it also supports document re-engineering.
+GRK is part of a larger effort at VU &amp; CWI in Amsterdam on what we
+call <A HREF=http://www.cs.vu.nl/grammarware>engineering of grammarware</A>.
+
+<P>
+
+<HR>
+
+<H2>GRK tools</H2>
+
+<UL>
+
+<LI> <B>dia2ast</B> --- a parser for syntax diagrams as they appear in
+IBM documents.
+
+<LI> <B>ast2dia</B> --- a pretty printer for syntax diagrams.
+
+<LI> <B>fst</B> --- a framework for syntax transformations.
+
+<LI> <B>ast2ebnf</B> --- a pretty printer to represent GRK's grammars as EBNF.
+
+<LI> <B>ast2lll</B> --- an export tool to represent GRK's grammars in GDK's LLL format.
+
+<LI> <B>ast2dcg</B> --- generation of (Prolog-like) DCG from GRK's grammars.
+
+<LI> <B>reduced</B> --- a checking tool for reduced/terminated grammars.
+
+<LI> <B>prepare</B> --- preparation of IBM's VS Cobol II document.
+
+<LI> <B>extract</B> --- extraction of diagrams from IBM's VS Cobol II document.
+
+<LI> <B>inline</B> --- reinsert revised diagrams and comments into IBM's VS Cobol II document.
+
+<LI> <B>parser</B> --- a stub for DCG-based (say, Prolog-based) validation parser for Cobol.
+
+<LI> <B>lexical</B> --- a Prolog implementation of a scannerless lexer for Cobol.
+
+</UL>
+
+<HR>
+
+<H2>The VS Cobol II case</H2>
+
+The distribution comprehends a version of IBM's application
+programming reference for VS Cobol II as downloaded from the freely
+accessible <A
+HREF=http://publibz.boulder.ibm.com/cgi-bin/bookmgr_OS390/library>IBM
+BookManager® BookServer Library</A>. Several other documents and files
+are generated from this document. There are the following steps:
+
+<UL>
+<LI> Preparation: IBM's document is prepared to establish a number of 
+notational and markup assumptions.
+<LI> Extraction: the syntax diagrams are extracted from IBM's document.
+<LI> Parsing: the syntax diagrams are parsed to an enriched EBNF format.
+<LI> Recovery transformations: the EBNF is refactored, corrected and completed.
+<LI> Inlining: a revision of IBM's document is generated.
+<LI> Deployment transformations: a Prolog-like DCG is generated as a kind of
+validation parser.
+</UL>
+
+The result of preparation is called the <A
+HREF=grammars/vscobolii/ibm-prepared.html><I>the reverse-engineered
+IBM document</I></A> as it is useful on its own as a self-contained
+version of the IBM's application programming reference with a
+normalised notation. For example, all diagrams are labelled by
+appropriate names, and notational anomalies were eliminated. The
+result of all steps up-to inlining is called the <A
+HREF=grammars/vscobolii/ibm-transformed.html><I>the re-engineered IBM
+document</I></A> because several transformations were applied on the
+syntax diagrams. All the transformation scripts are included in the
+distribution but we link them here for convenience:
+
+<P>
+
+Deliverables
+
+<UL>
+<LI> <A
+HREF=grammars/vscobolii/ibm-prepared.html>The reverse-engineered
+IBM document</A>
+<LI> <A
+HREF=grammars/vscobolii/ibm-transformed.html>The re-engineered IBM
+document</A>
+</UL>
+
+Transformation scripts
+
+<UL>
+<LI> <A HREF=grammars/vscobolii/recovery/index.html>Scripts for grammar recovery</A>
+<LI> <A HREF=grammars/vscobolii/deployment/index.html>Scripts for grammar deployment</A>
+</UL>
+
+<HR>
+
+<H2>Download and installation</H2>
+
+<UL>
+<LI> Source distribution of GRK Version 2.0 <A HREF=http://www.cs.vu.nl/grammarware/grk-2.0.tar.gz>[.tar.gz]</A> (Released on 15 August 2003)
+<LI> See the files <A HREF=README>README</A>, <A HREF=INSTALL>INSTALL</A>, <A HREF=CHANGELOG>CHANGELOG</A> included in the distribution.
+<LI> Requires <A HREF=http://www.swi-prolog.org/>SWI-Prolog</A>.
+</UL>
+
+The installation of GRK and SWI-Prolog is really trivial.
+<BR>
+The generated Prolog-based Cobol parser can be readily used.
+<BR>
+Using the fast, BTYACC-based parser relies on the following:
+
+<UL>
+<LI> <A HREF=http://www.siber.com/btyacc/>BTYACC</A> Version 2.1 <A HREF=http://www.siber.com/btyacc/btyacc-2-1.tar.gz>[.tar.gz]</A>
+<LI> <A HREF=http://gdk.sourceforge.net/>GDK</A> Version 1.4.2 <A HREF=http://gdk.sourceforge.net/gdk-1.4.2.tar.gz>[.tar.gz]</A>.
+<LI> The scanner generator flex
+</UL>
+
+<P>
+
+<HR>
+
+<H3>Useful links</H3>
+
+<UL>
+<LI> <A HREF=http://www.cs.vu.nl/grammarware>Engineering of grammarware</A> --- a portal
+<LI> <A HREF=http://gdk.sourceforge.net/>GDK --- The Grammar Deployment Kit</A> --- a related Amsterdam-based kit
+<LI> <A HREF=http://www.cs.vu.nl/grammarware/semi-automatic-grammar-recovery>Semi-automatic grammar recovery</A> --- a paper on the subject
+<LI> <A
+HREF=http://publibz.boulder.ibm.com/cgi-bin/bookmgr_OS390/library>IBM
+BookManager® BookServer Library</A> --- IBM's portal for online standards
+<LI> <A HREF=http://mapage.noos.fr/~bpinon/a_cobol_parser.htm>A derived JavaCC-based Cobol parser</A> by Bernard Pinon
+</UL>
+
+<HR>
+
+<H2>Lessons learned</H2>
+
+<UL>
+<LI> There is no ultimate frontend technology.
+<LI> Going for plain YACC (say, LALR(1)) would be a real hassle.
+<LI> BTYACC is a good reference technology for the plain parsing part.
+<LI> Generalised parsing: no conflicts, but maybe too many ambiguities.
+<LI> You might want to use different languages for frontends.
+<LI> You might want to use open source, GPL, etc.
+<LI> Parser generators lack good means of customisation.
+<LI> Generate parser generator inputs; don't write them manually.
+<LI> Think of the abstract syntax as well incl. automation.
+<LI> Typing pays off for larger syntaxes.
+</UL>
+
+<HR>
+
+<H2>Acknowledgements</H2>
+
+I am grateful for the collaboration with Jan Kort on the subject of
+providing tooling for treating grammars as engineering artifacts.
+This activity contributes to an overall effort on <A
+HREF=http://www.cs.vu.nl/grammarware/>engineering of
+grammarware</A>. In this context, I am grateful for collaboration with
+Paul Klint, Steven Klusener, and Chris Verhoef. I am also very
+grateful for discussions and comments from colleagues, and I apologise
+for any omission in the following list: Mark van den
+Brand, Jim Cordy, Kris De Schutter, Jean-Marie Favre, Jan Heering,
+Niels Veerman, Ernst-Jan Verhoeven, Joost Visser.
+
+<P>
+
+<HR>
+
+<SMALL>
+Page last updated October 18, 2004.
+<BR>
+Send your email remarks to <A HREF=mailto:ralf@cwi.nl>Ralf L&auml;mmel</A>.
+</SMALL>
+
+<P>
+
+<!-- Begin Nedstat Basic code -->
+<!-- Title: GRK --- Grammar Recovery Kit -->
+<!-- URL: http://www.cs.vu.nl/grammars/grk/ -->
+<script language="JavaScript" type="text/javascript" src="http://m1.nedstatbasic.net/basic.js">
+</script>
+<script language="JavaScript" type="text/javascript" >
+<!--
+  nedstatbasic("ACQuVAkMHCpFFhcLklQKag7+CeCQ", 0);
+// -->
+</script>
+<noscript>
+<a target="_blank" href="http://v1.nedstatbasic.net/stats?ACQuVAkMHCpFFhcLklQKag7+CeCQ"><img
+src="http://m1.nedstatbasic.net/n?id=ACQuVAkMHCpFFhcLklQKag7+CeCQ"
+border="0" nosave width="18" height="18"
+alt="Nedstat Basic - Free web site statistics"></a>
+</noscript>
+<!-- End Nedstat Basic code -->
+
+
+</BODY>
+</HTML>

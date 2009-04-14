@@ -1,0 +1,3 @@
+
+TTterm VSCparse(TTbuf buf);
+

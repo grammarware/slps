@@ -1,0 +1,38 @@
+This is README file provides the necessary information about the
+BTYACC-based Cobol parser that comes with GRK. For general information
+go up to GRK's root directory. For COPYRIGHT information see the file
+COPYING. For limitations and bugs see the file TODO.
+
+This subdirectory demonstrates the deployment of the VS Cobol II
+grammar for production purposes. We use GDK's great tool lllexport to
+generate input for YACC --- in fact, BTYACC. We also use the simple
+term library that comes with GDK to represent parse trees. We use
+BTYACC (Backtracking YACC) to parse Cobol. We use FLEX to provide a
+simple (somewhat idealised) scanner. The tool versions of
+GDK/FLEX/BTYACC for which the approach has been tested are listed in
+the Makefile.
+
+Type in:
+
+> gmake
+
+to build the parser.
+
+Type in:
+
+> gmake test
+
+to test the parser
+by parsing a simple Cobol file
+and pretty-printing the result.
+
+The parser has been tested with several projects, which together
+roughly amount to 1 MLOC VS Cobol II code. The parser also
+incorporates comments and layout into the parse tree. It is assumed
+that the source code was preprocessed externally (as for continuation
+lines, comment entries, columns 1-7. columns > 72, etc.) Some typical
+positions of COPY statements are anticipated by the grammar. For demos
+on how to use this parser for program analysis or transformation, we
+refer to GDK and the Cobol distribution that comes with it.
+
+Send your comments and requests to ralf@cwi.nl.

@@ -1,0 +1,66 @@
+<TITLE>GRK deployment scripts for VS Cobol II</TITLE>
+
+<body bgcolor="#99CCFF">
+
+<H1><A HREF=../../../index.html>GRK</A> deployment scripts for VS Cobol II</H1>
+
+
+The deployment scripts are meant to derive a grammar that is useful
+for parsing from the re-engineering (i.e., recovered) IBM VS Cobol II
+grammar.
+
+<UL>
+
+<LI> <A HREF=liberal.fst>liberal.fst</A>
+  The grammar is liberalised to include obsolete constructs or
+  more or less undocumented constructs. This script is accumulated on
+  the basis of approved Cobol code (normally VS Cobol II code).
+
+<P>
+
+<LI> <A HREF=seq.fst>seq.fst</A>
+  The grammar is completed and refactored to correctly describe the 
+  syntax of possibly nested statement sequences. We did not include this
+  phase in the recovery / re-engineering part because the many details
+  are probably not suitable for a language reference.
+
+<P>
+
+<LI> <A HREF=copy.fst>copy.fst</A>
+  The grammar is further extended to include typical occurrences of 
+  COPY statements as context-free syntax. In this manner, Cobol source
+  can be parsed even if the COPY statements were not expanded.
+
+<P>
+
+<LI> <A HREF=reduce.fst>reduce.fst</A>
+  The grammar is reduced, say various nonterminals are eliminated 
+  together with, as for all other grammar transformations, comments
+  on the justification of these eliminations.
+
+<P>
+
+<LI> <A HREF=permute.fst>permute.fst</A>
+  Simplify grammar to enable a very simple approach for removing
+  permutation phrases. This simple approach parses x||y as 
+  (x|y)*. In order to make sense for certain kinds of parsers,
+  we better make sure that x and y do not generate empty string.
+
+<P>
+
+<LI> <A HREF=dcg.fst>dcg.fst</A>
+  The grammar is transformed to prepare it for its use as a DCG to be
+  executed in Prolog. Most notably, we establish cuts to limit
+  backtracking so to make the generated validating prototype parser
+  more efficient.
+
+<P>
+
+<LI> <A HREF=flex.fst>flex.fst</A>
+
+  The grammar is transformed to prepare it for its use as with a
+  flex-based scanner as done for the BTYACC-based parser. This
+  basically necessitates making the grammar a bit more liberal,
+  e.g., level numbers and numeric literals are not separated.
+
+</UL>

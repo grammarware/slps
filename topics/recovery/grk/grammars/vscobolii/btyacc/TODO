@@ -1,0 +1,27 @@
+Several improvements are desirable but these are not show stoppers.
+
+- As of writing, there are no YYVALID actions added to the BTYACC
+grammar which means that it could take quite a while before a parse
+error is reported because of the massive backtracking. In principle,
+GDK's lllexport is prepared to insert such actions on the basis of a
+designated command line option. It is just that the present grammar
+with optional periods in the DATA DIVISION makes it hard to find a
+good place to cut. In the PROCEDURE DIVISION, the cut could indeed be
+placed on the definition of a sentence which always ends on a period.
+
+- The number of YACC conflicts could be drastically reduced.  For
+example, several kinds of names could be unified, e.g., a proper
+distinction of condition names and data names cannot be properly
+enforced without a symbol table. GDK provides some scripts that would
+help with this.
+
+- The FLEX scanner could be replaced by a context-dependent scanner
+leading to a kind of scannerless parser. The problem here is that it
+needs some hacking to appeal to BTYACC scanner interface. For an
+approach that uses a scannerless parser see the C-based Cobol parser
+in GDK.
+
+- We could distribute the parser with a preprocessor but see the GRK
+page for a publically available preprocessor by Bernard Pinon. We
+don't distribute our own pre-/postprocessor because maintenance and
+copyright issues are unresolved.
