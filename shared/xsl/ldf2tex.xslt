@@ -185,11 +185,6 @@
     <xsl:param name="text"/>
     <xsl:for-each select="$text/node()">
       <xsl:choose>
-        <xsl:when test="local-name() = 'id'">
-          <xsl:text>\label{</xsl:text>
-          <xsl:value-of select="."/>
-          <xsl:text>}</xsl:text>
-        </xsl:when>
         <xsl:when test="local-name() = 'title'"/>
         <xsl:when test="local-name() = 'author'"/>
         <xsl:when test="local-name() = 'empty'"/>
@@ -325,11 +320,11 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
-    <xsl:if test="$section/@id">
+    <!--<xsl:if test="$section/@id">
       <xsl:text>\label{</xsl:text>
       <xsl:value-of select="$section/@id"/>
       <xsl:text>}</xsl:text>
-    </xsl:if>
+    </xsl:if>-->
   </xsl:template>
 
   <xsl:template name="process-StructuredSection">
@@ -382,11 +377,11 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
-    <xsl:if test="$section/@id">
+    <!--<xsl:if test="$section/@id">
       <xsl:text>\label{</xsl:text>
       <xsl:value-of select="$section/@id"/>
       <xsl:text>}</xsl:text>
-    </xsl:if>
+    </xsl:if>-->
   </xsl:template>
 
   <xsl:template match="core|annex">
