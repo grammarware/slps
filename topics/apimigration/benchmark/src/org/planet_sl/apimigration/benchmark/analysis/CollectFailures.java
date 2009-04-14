@@ -18,7 +18,6 @@ import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.NodesTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.ParentNodeTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.ProcessingInstructionTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.TextTest;
-import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.XPathTest;
 
 public class CollectFailures {
 
@@ -33,13 +32,12 @@ public class CollectFailures {
 		suite.addTestSuite(DocumentTest.class);
 		suite.addTestSuite(ElementTest.class);
 		suite.addTestSuite(LeafNodeTest.class);
-		suite.addTestSuite(NamespaceNodeTest.class);
+//		suite.addTestSuite(NamespaceNodeTest.class);
 		suite.addTestSuite(NamespacesTest.class);
 		suite.addTestSuite(NodesTest.class);
 		suite.addTestSuite(ParentNodeTest.class);
 		suite.addTestSuite(ProcessingInstructionTest.class);
 		suite.addTestSuite(TextTest.class);
-		suite.addTestSuite(XPathTest.class);
 		TestRunner runner = new TestRunner();
 		runner.doRun(suite);
 	}

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<run end="1239292757359" name="TestSuiteStats" scope="XOMandJDOM" start="1239292729752">
+<run end="1239632554520" name="TestSuiteStats" scope="XOMandJDOM" start="1239632527693">
 <query class="query" status="Success">
 <input class="project query" path="src/TestSuiteStats.ql" project="XOM">
 <pattern class="pattern">
@@ -12,247 +12,247 @@
 <results complete="true"/>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="139461" label="DocTypeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/DocTypeTest.java:43:1627:11"/>
+<item class="entity" icon="icons/class.png" id="139466" label="DocTypeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/DocTypeTest.java:43:1627:11"/>
 <item class="int" value="46"/>
 <item class="int" value="102"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="143609" label="AttributesTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/AttributesTest.java:27:1179:14"/>
+<item class="entity" icon="icons/class.png" id="143614" label="AttributesTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/AttributesTest.java:27:1179:14"/>
 <item class="int" value="2"/>
 <item class="int" value="5"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="143831" label="ProcessingInstructionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/ProcessingInstructionTest.java:29:1247:25"/>
+<item class="entity" icon="icons/class.png" id="143836" label="ProcessingInstructionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/ProcessingInstructionTest.java:29:1247:25"/>
 <item class="int" value="19"/>
 <item class="int" value="85"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="145878" label="NodesTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/NodesTest.java:30:1216:9"/>
+<item class="entity" icon="icons/class.png" id="145883" label="NodesTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/NodesTest.java:30:1216:9"/>
 <item class="int" value="10"/>
 <item class="int" value="33"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="158811" label="LeafNodeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/LeafNodeTest.java:27:1074:12"/>
+<item class="entity" icon="icons/class.png" id="158816" label="LeafNodeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/LeafNodeTest.java:27:1074:12"/>
 <item class="int" value="3"/>
 <item class="int" value="2"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="175910" label="ElementTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/ElementTest.java:47:1671:11"/>
+<item class="entity" icon="icons/class.png" id="175915" label="ElementTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/ElementTest.java:47:1671:11"/>
 <item class="int" value="69"/>
 <item class="int" value="233"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="199883" label="ParentNodeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/ParentNodeTest.java:37:1438:14"/>
+<item class="entity" icon="icons/class.png" id="199888" label="ParentNodeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/ParentNodeTest.java:37:1438:14"/>
 <item class="int" value="15"/>
 <item class="int" value="79"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="203295" label="CommentTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/CommentTest.java:31:1266:11"/>
+<item class="entity" icon="icons/class.png" id="203300" label="CommentTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/CommentTest.java:31:1266:11"/>
 <item class="int" value="17"/>
 <item class="int" value="52"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="209055" label="IDTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/IDTest.java:37:1395:6"/>
-<item class="int" value="17"/>
-<item class="int" value="22"/>
-</row>
-<row>
-<item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="228557" label="AttributeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/AttributeTest.java:37:1433:13"/>
+<item class="entity" icon="icons/class.png" id="228562" label="AttributeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/AttributeTest.java:37:1433:13"/>
 <item class="int" value="38"/>
 <item class="int" value="137"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="228586" label="TextTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/TextTest.java:29:1212:8"/>
+<item class="entity" icon="icons/class.png" id="228591" label="TextTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/TextTest.java:29:1212:8"/>
 <item class="int" value="18"/>
 <item class="int" value="50"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="228643" label="DocumentTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/DocumentTest.java:41:1515:12"/>
+<item class="entity" icon="icons/class.png" id="228648" label="DocumentTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/DocumentTest.java:41:1515:12"/>
 <item class="int" value="23"/>
 <item class="int" value="98"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="228686" label="NamespacesTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/NamespacesTest.java:29:1233:14"/>
+<item class="entity" icon="icons/class.png" id="228691" label="NamespacesTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/NamespacesTest.java:29:1233:14"/>
 <item class="int" value="53"/>
 <item class="int" value="110"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="228757" label="CDATASectionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/CDATASectionTest.java:29:1228:16"/>
-<item class="int" value="13"/>
-<item class="int" value="32"/>
-</row>
-<row>
-<item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="228856" label="BuilderTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/BuilderTest.java:74:2654:11"/>
+<item class="entity" icon="icons/class.png" id="228861" label="BuilderTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/BuilderTest.java:74:2654:11"/>
 <item class="int" value="152"/>
 <item class="int" value="335"/>
 </row>
 <row>
 <item class="boolean" value="false"/>
-<item class="entity" icon="icons/class.png" id="251185" label="BaseURITest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/BaseURITest.java:41:1917:11"/>
+<item class="entity" icon="icons/class.png" id="251192" label="BaseURITest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/BaseURITest.java:41:1917:11"/>
 <item class="int" value="76"/>
 <item class="int" value="98"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="112375" label="XMLExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XMLExceptionTest.java:39:1589:16"/>
+<item class="entity" icon="icons/class.png" id="112380" label="XMLExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XMLExceptionTest.java:39:1589:16"/>
 <item class="int" value="17"/>
 <item class="int" value="29"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="113253" label="EBCDICTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/EBCDICTest.java:36:1820:10"/>
+<item class="entity" icon="icons/class.png" id="113258" label="EBCDICTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/EBCDICTest.java:36:1820:10"/>
 <item class="int" value="1"/>
 <item class="int" value="1"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="113538" label="VerifierTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/VerifierTest.java:34:1670:12"/>
+<item class="entity" icon="icons/class.png" id="113543" label="VerifierTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/VerifierTest.java:34:1670:12"/>
 <item class="int" value="55"/>
 <item class="int" value="77"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="119043" label="XIncludeExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XIncludeExceptionTest.java:30:1362:21"/>
+<item class="entity" icon="icons/class.png" id="119048" label="XIncludeExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XIncludeExceptionTest.java:30:1362:21"/>
 <item class="int" value="9"/>
 <item class="int" value="13"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="119704" label="NodeFactoryTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/NodeFactoryTest.java:43:1558:15"/>
+<item class="entity" icon="icons/class.png" id="119709" label="NodeFactoryTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/NodeFactoryTest.java:43:1558:15"/>
 <item class="int" value="43"/>
 <item class="int" value="91"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="125066" label="XPathTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XPathTest.java:49:1735:9"/>
+<item class="entity" icon="icons/class.png" id="125071" label="XPathTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XPathTest.java:49:1735:9"/>
 <item class="int" value="123"/>
 <item class="int" value="288"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="138967" label="MegaTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/MegaTest.java:38:1411:8"/>
+<item class="entity" icon="icons/class.png" id="138972" label="MegaTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/MegaTest.java:38:1411:8"/>
 <item class="int" value="1"/>
 <item class="int" value="1"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="147271" label="XSLTransformTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XSLTransformTest.java:56:2192:16"/>
+<item class="entity" icon="icons/class.png" id="147276" label="XSLTransformTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XSLTransformTest.java:56:2192:16"/>
 <item class="int" value="52"/>
 <item class="int" value="155"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="158953" label="SerializerTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/SerializerTest.java:51:1825:14"/>
+<item class="entity" icon="icons/class.png" id="158958" label="SerializerTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/SerializerTest.java:51:1825:14"/>
 <item class="int" value="135"/>
 <item class="int" value="191"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="184318" label="ParsingExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/ParsingExceptionTest.java:26:1145:20"/>
+<item class="entity" icon="icons/class.png" id="184323" label="ParsingExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/ParsingExceptionTest.java:26:1145:20"/>
 <item class="int" value="11"/>
 <item class="int" value="20"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="184964" label="XSLExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XSLExceptionTest.java:26:1141:16"/>
+<item class="entity" icon="icons/class.png" id="184969" label="XSLExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XSLExceptionTest.java:26:1141:16"/>
 <item class="int" value="5"/>
 <item class="int" value="11"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="185399" label="XIncludeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XIncludeTest.java:62:2181:12"/>
+<item class="entity" icon="icons/class.png" id="185404" label="XIncludeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XIncludeTest.java:62:2181:12"/>
 <item class="int" value="137"/>
 <item class="int" value="158"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="202541" label="SubclassTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/SubclassTest.java:34:1340:12"/>
+<item class="entity" icon="icons/class.png" id="202546" label="SubclassTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/SubclassTest.java:34:1340:12"/>
 <item class="int" value="9"/>
 <item class="int" value="18"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="204543" label="ValidityExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/ValidityExceptionTest.java:27:1177:21"/>
+<item class="entity" icon="icons/class.png" id="204548" label="ValidityExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/ValidityExceptionTest.java:27:1177:21"/>
 <item class="int" value="8"/>
 <item class="int" value="22"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="205097" label="NamespaceNodeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/NamespaceNodeTest.java:31:1308:17"/>
+<item class="entity" icon="icons/class.png" id="205102" label="NamespaceNodeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/NamespaceNodeTest.java:31:1308:17"/>
 <item class="int" value="21"/>
 <item class="int" value="28"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="206249" label="AttributeTypeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/AttributeTypeTest.java:26:1156:17"/>
+<item class="entity" icon="icons/class.png" id="206254" label="AttributeTypeTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/AttributeTypeTest.java:26:1156:17"/>
 <item class="int" value="3"/>
 <item class="int" value="70"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="207383" label="XOMTestCaseTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XOMTestCaseTest.java:31:1332:15"/>
+<item class="entity" icon="icons/class.png" id="207388" label="XOMTestCaseTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XOMTestCaseTest.java:31:1332:15"/>
 <item class="int" value="13"/>
 <item class="int" value="24"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="208365" label="RoundTripTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/RoundTripTest.java:35:1384:13"/>
+<item class="entity" icon="icons/class.png" id="208370" label="RoundTripTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/RoundTripTest.java:35:1384:13"/>
 <item class="int" value="5"/>
 <item class="int" value="10"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="210929" label="XPathExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XPathExceptionTest.java:32:1292:18"/>
+<item class="entity" icon="icons/class.png" id="209060" label="IDTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/IDTest.java:37:1395:6"/>
+<item class="int" value="17"/>
+<item class="int" value="22"/>
+</row>
+<row>
+<item class="boolean" value="true"/>
+<item class="entity" icon="icons/class.png" id="210934" label="XPathExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/XPathExceptionTest.java:32:1292:18"/>
 <item class="int" value="7"/>
 <item class="int" value="12"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="211525" label="DOMConverterTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/DOMConverterTest.java:59:2030:16"/>
+<item class="entity" icon="icons/class.png" id="211530" label="DOMConverterTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/DOMConverterTest.java:59:2030:16"/>
 <item class="int" value="36"/>
 <item class="int" value="86"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="215750" label="CanonicalizerTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/CanonicalizerTest.java:52:1842:17"/>
+<item class="entity" icon="icons/class.png" id="215755" label="CanonicalizerTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/CanonicalizerTest.java:52:1842:17"/>
 <item class="int" value="91"/>
 <item class="int" value="81"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="228888" label="InfoTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/InfoTest.java:29:1240:8"/>
+<item class="entity" icon="icons/class.png" id="228762" label="CDATASectionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/CDATASectionTest.java:29:1228:16"/>
+<item class="int" value="13"/>
+<item class="int" value="32"/>
+</row>
+<row>
+<item class="boolean" value="true"/>
+<item class="entity" icon="icons/class.png" id="228895" label="InfoTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/InfoTest.java:29:1240:8"/>
 <item class="int" value="1"/>
 <item class="int" value="7"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="229221" label="CanonicalizationExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/CanonicalizationExceptionTest.java:26:1172:29"/>
+<item class="entity" icon="icons/class.png" id="229228" label="CanonicalizationExceptionTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/CanonicalizationExceptionTest.java:26:1172:29"/>
 <item class="int" value="5"/>
 <item class="int" value="10"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="231013" label="EncodingTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/EncodingTest.java:37:1463:12"/>
+<item class="entity" icon="icons/class.png" id="231020" label="EncodingTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/EncodingTest.java:37:1463:12"/>
 <item class="int" value="30"/>
 <item class="int" value="0"/>
 </row>
 <row>
 <item class="boolean" value="true"/>
-<item class="entity" icon="icons/class.png" id="251170" label="SAXConverterTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/SAXConverterTest.java:46:1666:16"/>
+<item class="entity" icon="icons/class.png" id="251177" label="SAXConverterTest" url="file:///Users/tvdstorm/Code/APIMigration/XOM/src/nu/xom/tests/SAXConverterTest.java:46:1666:16"/>
 <item class="int" value="25"/>
 <item class="int" value="10"/>
 </row>

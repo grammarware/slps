@@ -4,7 +4,7 @@
  */
 import default
 
-from Class type, int featureCount, int LOC, string API
+from Class type, int featureCount, int LOC, string API, int declaredFeatureCount
 where 
 (
  	API = "nu.xom" 
@@ -19,6 +19,8 @@ where
 			type.getName() = "Element" or
 			type.getName() = "Elements" or
 			type.getName() = "Node" or
+			type.getName() = "NodeFactory" or
+			type.getName() = "Serializer" or
 			type.getName() = "Nodes" or
 			type.getName() = "ParentNode" or
 			type.getName() = "ProcessingInstruction" or
@@ -29,7 +31,13 @@ where
  				m.isPublic() and not m.hasModifier("abstract") 
 				and (type.contains(m) or type.getASupertype().contains(m)) )
 			+ count(Constructor cons | cons.isPublic() 
-				and (type.contains(cons) or type.getASupertype().contains(cons))))
+				and (type.contains(cons) or type.getASupertype().contains(cons)))
+  and declaredFeatureCount = count(Method m | m.isPublic() and not m.hasModifier("abstract")
+			and type.contains(m)) 
+       +
+      count(Constructor cons | cons.isPublic() 
+				and (type.contains(cons)))
+)
 or ( 
 	API = "org.jdom" 
 	and (type.getPackage().getName() = "org.jdom" 
@@ -58,6 +66,11 @@ or (
 				and (type.contains(m) or type.getASupertype().contains(m)))
        + count(Constructor cons | cons.isPublic() 
 				and (type.contains(cons) or type.getASupertype().contains(cons)))
+   and declaredFeatureCount = count(Method m | m.isPublic() and not m.hasModifier("abstract")
+			and type.contains(m)) 
+       +
+      count(Constructor cons | cons.isPublic() 
+				and (type.contains(cons)))
  )
 
-select API, type, LOC, featureCount
+select API, type, LOC, featureCount, declaredFeatureCount

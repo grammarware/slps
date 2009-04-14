@@ -72,7 +72,7 @@ public class Text extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Override
+//	@Override
 	@MapsTo("org.jdom.Text#getText();org.jdom.CDATA#getValue()")
 	public String getValue() {
 		return isCDATA ? cdata.getValue() : text.getText();
@@ -82,7 +82,7 @@ public class Text extends Node {
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@Issue.Post("result may differ slightly")
 	@Unresolved(XML.Serialization)
-	@Override
+//	@Override
 	@MapsTo("org.jdom.output.XMLOutputter#outputString(Text)")
 	public String toXML() {
 		return isCDATA ? new XMLOutputter().outputString(cdata)
@@ -91,7 +91,7 @@ public class Text extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Override
+//	@Override
 	@MapsTo("org.jdom.Text#detach();org.jdom.CDATA#detach()")
 	public void detach() {
 		if (isCDATA) {
@@ -103,7 +103,7 @@ public class Text extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
-	@Override
+//	@Override
 	@MapsTo("")
 	public String getBaseURI() {
 		return getParent() != null ? getParent().getBaseURI() : ""; 
@@ -111,7 +111,7 @@ public class Text extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Override
+//	@Override
 	@MapsTo("org.jdom.Text#getDocument();org.jdom.CDATA#getDocument()")
 	public Document getDocument() {
 		org.jdom.Document doc = isCDATA ? cdata.getDocument() : text.getDocument();
@@ -123,7 +123,7 @@ public class Text extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Override
+//	@Override
 	@MapsTo("org.jdom.Text#getParent();org.jdom.CDATA#getParent()")
 	public ParentNode getParent() {
 		org.jdom.Parent parent = isCDATA ? cdata.getParent() : text.getParent();
@@ -141,7 +141,7 @@ public class Text extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Override
+//	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query, XPathContext namespaces) {
 		try {
@@ -159,7 +159,7 @@ public class Text extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
-	@Override
+//	@Override
 	@MapsTo("org.jdom.xpath.XPath#selectNodes(Object)")
 	public Nodes query(String query) {
 		try {

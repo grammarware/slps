@@ -28,8 +28,8 @@ public aspect InterceptTestFailure {
 	static String currentMethod = null;
 	
 	private static String prettyName(String name) {
-		name = name.replaceAll("execution\\(\\1\\)$", "\\1");
-		name = name.replaceAll("\\)$", "");
+//		name = name.replaceAll("call\\(\\1\\)$", "\\1");
+//		name = name.replaceAll("\\)$", "");
 		name = name.replaceAll("org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.", "");
 		name = name.substring(name.indexOf(" ") + 1);
 		return name;
@@ -42,7 +42,9 @@ public aspect InterceptTestFailure {
 	public static Map<String,Integer> nonSuccessOnly = new HashMap<String, Integer>();
 	
 	private static String typeName(String string) {
-		string = string.replaceAll("execution\\(", "");
+//		string = string.replaceAll("call\\(", "");
+		string = string.replaceAll("org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.","");
+		string = string.substring(string.indexOf(" ") + 1, string.length() - 1);
 		string = string.substring(0, string.indexOf("."));
 		return string;
 	}
@@ -71,41 +73,63 @@ public aspect InterceptTestFailure {
 			}
 		}
 		System.out.println("Total only-success features: " + c);
+		
+		
 		c = 0;
 		for (String method: failureCount.keySet()) {
 			if (!successCount.containsKey(method) && !errorCount.containsKey(method)) {
 				c++;
 				inc(failOnly, typeName(method));
-				inc(nonSuccessOnly, typeName(method));
 				System.out.println("only failures for " + method + ": " + failureCount.get(method));
 			}
 		}
 		System.out.println("Total only-failure features: " + c);
+		
+		
 		c = 0;
 		for (String method: errorCount.keySet()) {
 			if (!successCount.containsKey(method) && !failureCount.containsKey(method)) {
 				c++;
 				inc(errorOnly, typeName(method));
-				inc(nonSuccessOnly, typeName(method));
 				System.out.println("only errors for " + method + ": " + errorCount.get(method));
 			}
 		}
 		System.out.println("Total only-error features: " + c);
 		
-		Set<String> mixedMethods = new HashSet<String>();
-		mixedMethods.addAll(errorCount.keySet());
-		mixedMethods.addAll(failureCount.keySet());
-		mixedMethods.addAll(successCount.keySet());
-		
+
+		Set<String >nonSuccessOnlyMethods = new HashSet<String>(errorCount.keySet());
+		nonSuccessOnlyMethods.addAll(failureCount.keySet());
 		c = 0;
-		for (String method: mixedMethods) {
-			if ((successCount.containsKey(method) && failureCount.containsKey(method)) ||
-					(successCount.containsKey(method) && errorCount.containsKey(method))) {
+		for (String method: errorCount.keySet()) {
+			if (failureCount.containsKey(method)  && !successCount.containsKey(method)) {
 				c++;
-				inc(mixedOnly, typeName(method));
+				inc(nonSuccessOnly, typeName(method));
+//				System.out.println("only errors for " + method + ": " + errorCount.get(method));
+			}
+			else if (errorCount.containsKey(method) && !successCount.containsKey(method)) {
+				c++;
+				inc(nonSuccessOnly, typeName(method));
 			}
 		}
-		System.out.println("Number of mixed result features: " + c);
+		System.out.println("Total non-success only features: " + c);
+		
+		
+		Set<String> mixedOnlyMethods = new HashSet<String>(errorCount.keySet());
+		mixedOnlyMethods.addAll(failureCount.keySet());
+		mixedOnlyMethods.addAll(successCount.keySet());
+		c = 0;
+		for (String method: mixedOnlyMethods) {
+			if ((successCount.containsKey(method) && failureCount.containsKey(method))) { 
+				c += 1 ;// successCount.get(method) + failureCount.get(method);
+				inc(mixedOnly, typeName(method)); //, successCount.get(method) + failureCount.get(method));
+			}
+			else if (successCount.containsKey(method) && errorCount.containsKey(method)) {
+				c += 1; // successCount.get(method) + errorCount.get(method);
+				inc(mixedOnly, typeName(method)); //, successCount.get(method) + errorCount.get(method));
+			}
+
+		}
+		System.out.println("Total mixed-only features: " + c);
 		
 		System.out.println("Number of mixed result per type");
 		List<String> mixedOnlyTypes = new ArrayList<String>(mixedOnly.keySet());
@@ -207,6 +231,8 @@ public aspect InterceptTestFailure {
 			e.printStackTrace();
 		}
 		
+		System.out.println("TOTAL NUM OF FEATURES: " + features.size());
+		
 		
 	}
 	
@@ -246,7 +272,7 @@ public aspect InterceptTestFailure {
 		if (currentMethod.matches(".*NodeFactory.*")) {
 			return;
 		}
-		if (currentMethod.matches(".*Element\\.query.*")) {
+		if (currentMethod.matches(".*query.*")) {
 			return;
 		}
 		if (!table.containsKey(currentMethod)) {
@@ -262,10 +288,13 @@ public aspect InterceptTestFailure {
 	
 	private static boolean wasFeature = false;
 	private static Map<String,Integer> featureCallCount = new HashMap<String, Integer>();
+	private static Set<String> features = new HashSet<String>();
 	
-	after(): execution(* org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.*.*(..)) {
-		currentMethod = thisJoinPoint.toShortString();
+	before(): call(* org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.*.*(..)) &&
+		within(org.planet_sl.apimigration.benchmark.jdom.test_as_xom.*) {
+		currentMethod = thisJoinPoint.getSignature().toString();
 		inc(featureCallCount, currentMethod);
+		features.add(currentMethod);
 		if (!methods.contains(currentMethod)) {
 			methods.add(currentMethod);
 		}
