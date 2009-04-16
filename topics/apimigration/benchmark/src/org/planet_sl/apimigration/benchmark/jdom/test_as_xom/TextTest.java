@@ -21,10 +21,7 @@
 
 package org.planet_sl.apimigration.benchmark.jdom.test_as_xom;
 
-import nu.xom.Element;
-import nu.xom.IllegalCharacterDataException;
-import nu.xom.Node;
-import nu.xom.Text;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.*;
 
 /**
  * 

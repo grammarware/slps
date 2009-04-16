@@ -558,6 +558,7 @@ public class AttributeTest extends XOMTestCase {
      
      for (int i = 0; i < illegal.length; i++) {
          try {
+        	 System.err.println(illegal[i]);
              a.setNamespace(prefix, illegal[i]);
              fail("Illegal namespace URI allowed");  
          }

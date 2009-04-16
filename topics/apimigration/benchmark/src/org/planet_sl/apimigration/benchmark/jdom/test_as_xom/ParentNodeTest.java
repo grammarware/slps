@@ -6,17 +6,7 @@ import org.planet_sl.apimigration.benchmark.anno.Solution;
 import org.planet_sl.apimigration.benchmark.anno.Solution.Strategy;
 import org.planet_sl.apimigration.benchmark.anno.Issue;
 
-import nu.xom.Comment;
-import nu.xom.CycleException;
-import nu.xom.DocType;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.IllegalAddException;
-import nu.xom.MultipleParentException;
-import nu.xom.NoSuchChildException;
-import nu.xom.Node;
-import nu.xom.ProcessingInstruction;
-import nu.xom.Text;
+import org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.*;
 
 
 /**
