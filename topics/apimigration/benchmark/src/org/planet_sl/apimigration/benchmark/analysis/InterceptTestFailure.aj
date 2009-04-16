@@ -44,12 +44,20 @@ public aspect InterceptTestFailure {
 	private static String typeName(String string) {
 //		string = string.replaceAll("call\\(", "");
 		string = string.replaceAll("org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.","");
-		string = string.substring(string.indexOf(" ") + 1, string.length() - 1);
-		string = string.substring(0, string.indexOf("."));
+		//string = string.substring(string.indexOf(" ") + 1, string.length() - 1);
+		if (string.indexOf(".") > -1) {
+			System.err.println(string);
+			string = string.substring(string.indexOf(" ") + 1, string.length() - 1);
+			string = string.substring(0, string.indexOf("."));
+		}
+		else {
+			System.err.println(string);
+			string = string.substring(0, string.indexOf("("));
+		}
 		return string;
 	}
 	
-	after(): execution(public static void CollectFailures.main(..)) {
+	after(): execution(public static void CollectFailures*.main(..)) {
 		System.out.println(tests + " tests with " + assertionsTotal + " assertions");
 		System.out.println(failuresTotal + " failures; " + errorsTotal + " errors");
 		for (String method: assertionCount.keySet()) {
@@ -151,6 +159,14 @@ public aspect InterceptTestFailure {
 		Collections.sort(nonSuccessOnlyTypes);
 		for (String type: nonSuccessOnlyTypes) {
 			System.out.println(type + ": " + nonSuccessOnly.get(type));
+		}
+		
+		for (String feature: features) {
+			if (!successCount.containsKey(feature) &&
+					!failureCount.containsKey(feature) &&
+					!errorCount.containsKey(feature)) {
+				System.out.println("Unhit feature: " + feature);
+			}
 		}
 		
 		try {
@@ -260,28 +276,14 @@ public aspect InterceptTestFailure {
 	}
 	
 	private static void inc(Map<String,Integer> table, String currentMethod, int count) {
-		if (currentMethod.matches(".*Utils\\..*")) {
-			return;
-		}
-		if (currentMethod.matches(".*Test.*")) {
-			return;
-		}
-		if (currentMethod.matches(".*Exception.*")) {
-			return;
-		}
-		if (currentMethod.matches(".*NodeFactory.*")) {
-			return;
-		}
-		if (currentMethod.matches(".*query.*")) {
-			return;
-		}
-		if (!table.containsKey(currentMethod)) {
-			table.put(currentMethod, 0);
-		}
-		table.put(currentMethod, table.get(currentMethod) + count);
+		
+			if (!table.containsKey(currentMethod)) {
+				table.put(currentMethod, 0);
+			}
+			table.put(currentMethod, table.get(currentMethod) + count);
 	}
 	
-	before(): call(void assert*(..)) && within(org.planet_sl.apimigration.benchmark.jdom.test_as_xom.*) {
+	before(): call(void assert*(..)) {
 		assertions++;
 		assertionsTotal++;
 	}
@@ -290,18 +292,33 @@ public aspect InterceptTestFailure {
 	private static Map<String,Integer> featureCallCount = new HashMap<String, Integer>();
 	private static Set<String> features = new HashSet<String>();
 	
-	before(): call(* org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.*.*(..)) &&
-		within(org.planet_sl.apimigration.benchmark.jdom.test_as_xom.*) {
+	before(): 
+		call(public * org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.*.*(..)) ||
+		call(public org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.*.new(..)) ||
+		call(public * nu.xom.*.*(..)) {
 		currentMethod = thisJoinPoint.getSignature().toString();
 		inc(featureCallCount, currentMethod);
 		features.add(currentMethod);
-		if (!methods.contains(currentMethod)) {
-			methods.add(currentMethod);
+		if (currentMethod.matches(".*\\.Attribute.*") ||
+				currentMethod.matches(".*\\.Comment.*") ||
+				currentMethod.matches(".*\\.DocType.*") ||
+				currentMethod.matches(".*\\.Builder.*") ||
+				currentMethod.matches(".*\\.Document.*") ||
+				currentMethod.matches(".*\\.Element.*") ||
+				currentMethod.matches(".*\\.Elements.*") ||
+				currentMethod.matches(".*\\.Node.*") ||
+				currentMethod.matches(".*\\.Nodes.*") ||
+				currentMethod.matches(".*\\.ParentNode.*") ||
+				currentMethod.matches(".*\\.ProcessingInstruction.*") ||
+				currentMethod.matches(".*\\.Text.*")) {
+			if (!methods.contains(currentMethod)) {
+				methods.add(currentMethod);
+			}
 		}
 	}
 
 	
-	void around(): execution(void test*()) && within(org.planet_sl.apimigration.benchmark.jdom.test_as_xom.*) {
+	void around(): execution(void test*()) {
 		methods.clear();
 		assertions = 0;
 		tests++;

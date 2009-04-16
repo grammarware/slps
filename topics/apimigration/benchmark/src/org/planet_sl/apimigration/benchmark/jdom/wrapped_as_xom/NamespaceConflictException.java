@@ -58,4 +58,10 @@ public class NamespaceConflictException extends RuntimeException {
 		super(e.getMessage());
 	}
 
+	public NamespaceConflictException(IllegalAddException e, String defaultNs,
+			String uri) {
+
+		super(" default namespace " + uri + " conflicts with " + defaultNs);
+	}
+
 }

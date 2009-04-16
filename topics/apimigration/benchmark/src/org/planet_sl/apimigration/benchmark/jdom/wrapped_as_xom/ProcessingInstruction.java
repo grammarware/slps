@@ -34,7 +34,23 @@ public class ProcessingInstruction extends Node {
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("org.jdom.ProcessingInstruction(String,String)")
 	public ProcessingInstruction(String target, String data) {
-		this(new org.jdom.ProcessingInstruction(target, data));
+		String error = org.jdom.Verifier.checkProcessingInstructionTarget(target);
+		if (error != null) {
+			throw new IllegalTargetException(error, target);
+		}
+		error = org.jdom.Verifier.checkProcessingInstructionData(data);
+		if (error != null) {
+			throw new IllegalDataException(error, data);
+		}
+		if (data.indexOf("\r") > -1) {
+			throw new IllegalDataException("allowed cr", data);
+		}
+		if (data != null && !data.equals("")) {
+			if (Character.isWhitespace(data.charAt(0))) {
+				throw new IllegalDataException("allowed leading space", data);
+			}
+		}
+		pi = new org.jdom.ProcessingInstruction(target, data);
 	}
 
 	@Progress(value = Status.OK, comment = "")
@@ -155,6 +171,10 @@ public class ProcessingInstruction extends Node {
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("org.jdom.ProcessingInstruction#setTarget(String)")
 	public void setTarget(String target) {
+		String error = org.jdom.Verifier.checkProcessingInstructionTarget(target);
+		if (error != null) {
+			throw new IllegalTargetException(error, target);
+		}
 		pi.setTarget(target);
 	}
 
@@ -162,6 +182,10 @@ public class ProcessingInstruction extends Node {
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("org.jdom.ProcessingInstruction#setData(String)")
 	public void setValue(String data) {
+		String error = org.jdom.Verifier.checkProcessingInstructionData(data);
+		if (error != null) {
+			throw new IllegalDataException(error, data);
+		}
 		pi.setData(data);
 	}
 
@@ -182,5 +206,17 @@ public class ProcessingInstruction extends Node {
 		return pi.hashCode();
 	}
 
+	@Progress(value = Status.DONTCARE, comment = "debugging")
+	@Solution(value = Strategy.DELEGATE, comment = "")
+	@Override
+	public String toString() {
+		String str = pi.getData().replaceAll("\n", "\\\\n");
+		if (str.length() > 50) {
+			str = str.substring(0, 50) + "...";
+		}
+		return "[nu.xom.ProcessingInstruction: target=\"" + pi.getTarget() +
+			"\"; data=\"" + str + "\"]";
+	}
+	
 
 }

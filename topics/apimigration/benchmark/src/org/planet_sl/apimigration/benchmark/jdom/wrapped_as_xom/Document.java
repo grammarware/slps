@@ -147,6 +147,10 @@ public class Document extends ParentNode {
 	@Override
 	@MapsTo("org.jdom.Document#setBaseURI(String)")
 	public void setBaseURI(String uri) {
+		String error = org.jdom.Verifier.checkURI(uri);
+		if (error != null) {
+			throw new MalformedURIException(error);
+		}
 		document.setBaseURI(uri);
 	}
 
@@ -193,7 +197,12 @@ public class Document extends ParentNode {
 	@MapsTo("org.jdom.output.XMLOutputter#outputString(org.jdom.Document)")
 	@Unresolved(XML.Serialization)
 	public String toXML() {
-		return new XMLOutputter().outputString(document);
+		org.jdom.output.Format form = org.jdom.output.Format.getRawFormat();
+		form = form.setOmitEncoding(true);
+		form = form.setLineSeparator("\n");
+		org.jdom.output.XMLOutputter out = new org.jdom.output.XMLOutputter(form);
+		String str = out.outputString(document);
+		return str;
 	}
 
 	@Progress(value = Status.OK, comment = "")
@@ -336,4 +345,10 @@ public class Document extends ParentNode {
 		return document.hashCode();
 	}
 
+	@Progress(value = Status.DONTCARE, comment = "")
+	@Solution(value = Strategy.CLONE, comment = "")
+	@Override
+	public String toString() {
+		return "";
+	}
 }

@@ -69,6 +69,10 @@ public class DocType extends Node {
 		if (rootElementName.startsWith(":")) {
 			throw new IllegalNameException("colon", rootElementName);
 		}
+		String error = org.jdom.Verifier.checkSystemLiteral(systemID);
+		if (error != null) {
+			throw new IllegalDataException(error);
+		}
 		try {
 			doctype = new org.jdom.DocType(rootElementName, systemID);
 		}
@@ -92,6 +96,16 @@ public class DocType extends Node {
 		if (rootElementName.startsWith(":")) {
 			throw new IllegalNameException("colon", rootElementName);
 		}
+		
+		String error = org.jdom.Verifier.checkPublicID(publicID);
+		if (error != null) {
+			throw new WellformednessException(error);
+		}
+		error = org.jdom.Verifier.checkSystemLiteral(systemID);
+		if (error != null) {
+			throw new WellformednessException(error);
+		}
+		
 		/// illegal chars etc .... etc.
 		try {
 			doctype = new org.jdom.DocType(rootElementName, publicID, systemID);
@@ -215,7 +229,13 @@ public class DocType extends Node {
 	@MapsTo("org.jdom.output.XMLOutputter#outputString(org.jdom.OutputType)")
 	@Unresolved(XML.Serialization)
 	public String toXML() {
-		return new org.jdom.output.XMLOutputter().outputString(doctype);
+		org.jdom.output.Format form = org.jdom.output.Format.getRawFormat();
+		form = form.setOmitEncoding(true);
+		form = form.setLineSeparator("\n");
+		org.jdom.output.XMLOutputter out = new org.jdom.output.XMLOutputter(form);
+		String str = out.outputString(doctype);
+		return str;
+		//return str.substring(0, str.length() - 1);
 	}
 
 	@Progress(value = Status.OK, comment = "")

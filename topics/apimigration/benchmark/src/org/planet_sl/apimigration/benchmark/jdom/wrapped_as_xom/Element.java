@@ -86,6 +86,14 @@ public class Element extends ParentNode {
 		if (!prefix.equals("xml") && uri.equals(org.jdom.Namespace.XML_NAMESPACE.getURI())) {
 			throw new NamespaceConflictException(prefix);
 		}
+		String error = org.jdom.Verifier.checkNamespaceURI(uri);
+		if (error != null) {
+			throw new MalformedURIException(error);
+		}
+		error = org.jdom.Verifier.checkURI(uri);
+		if (error != null) {
+			throw new MalformedURIException(error);
+		}
 		try {
 			element = new org.jdom.Element(localName, prefix, uri);
 		} catch (org.jdom.IllegalNameException e) {
@@ -94,10 +102,29 @@ public class Element extends ParentNode {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.DELEGATE, comment = "")
+	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Issue.Throws(value = "XOM throws CycleException when JDOM throws IllegalAddException; " +
+			"MultipleParentException instead of IllegalAddException too", resolved = true)
 	@Override
 	@MapsTo("org.jdom.Element#addContent(org.jdom.Content)")
 	public void appendChild(Node child) {
+		if (child == this) {
+			throw new CycleException("cannot add child to itself");
+		}
+		// This is actually part of wrapping.
+		if (child instanceof Document) {
+			throw new IllegalAddException("cannot add document to elements");
+		}
+		org.jdom.Parent parent = element; 
+		while (parent != null) {
+			if (parent == node2content(child)) {
+				throw new CycleException("cannot add child to itself");
+			}
+			parent = parent.getParent(); 
+		}
+		if (child.getParent() != null) {
+			throw new MultipleParentException("child already as has parent");
+		}
 		try {
 			element.addContent(node2content(child));
 		} catch (org.jdom.IllegalAddException e) {
@@ -247,6 +274,10 @@ public class Element extends ParentNode {
 			element.removeAttribute("base", org.jdom.Namespace.XML_NAMESPACE);
 			return;
 		}
+		String error = org.jdom.Verifier.checkURI(uri);
+		if (error != null) {
+			throw new MalformedURIException(error);
+		}
 		try {
 			URI uriObject = new URI(uri);
 			if (uriObject.getFragment() != null) {
@@ -283,8 +314,10 @@ public class Element extends ParentNode {
 	@Override
 	@MapsTo("org.jdom.Element#detach()")
 	public void detach() {
-		if (element.getDocument().getRootElement() == element) {
-			throw new WellformednessException("detached root");
+		if (element.getDocument() != null) {
+			if (element.getDocument().getRootElement() == element) {
+				throw new WellformednessException("detached root");
+			}
 		}
 		element.detach();
 	}
@@ -426,6 +459,13 @@ public class Element extends ParentNode {
 		}
 		try {
 			element.setAttribute(((Attribute) attribute).attribute);
+			if (!attribute.attribute.getNamespaceURI().equals("")) {
+				if (!attribute.attribute.getNamespaceURI().equals(org.jdom.Namespace.XML_NAMESPACE.getURI())) {
+					element.addNamespaceDeclaration(org.jdom.Namespace.getNamespace(
+						attribute.attribute.getNamespacePrefix(), 
+						attribute.attribute.getNamespaceURI()));
+				}
+			}
 		} catch (org.jdom.IllegalAddException e) {
 			throw new NamespaceConflictException(e);
 		}
@@ -445,7 +485,7 @@ public class Element extends ParentNode {
 		} catch (org.jdom.IllegalNameException e) {
 			throw new IllegalNameException(e, uri);
 		} catch (org.jdom.IllegalAddException e) {
-			throw new NamespaceConflictException(e);
+			throw new NamespaceConflictException(e, element.getNamespaceURI(), uri);
 		}
 	}
 
@@ -519,9 +559,15 @@ public class Element extends ParentNode {
 	public String getAttributeValue(String localName, String namespaceURI) {
 		org.jdom.Attribute attr;
 		try {
-			attr = element.getAttribute(localName, org.jdom.Namespace
-					.getNamespace(namespaceURI));
+			if (namespaceURI.equals(org.jdom.Namespace.XML_NAMESPACE.getURI())) {
+				attr = element.getAttribute(localName, org.jdom.Namespace.XML_NAMESPACE);
+			}
+			else {
+				attr = element.getAttribute(localName, org.jdom.Namespace
+						.getNamespace(namespaceURI));
+			}
 		} catch (org.jdom.IllegalNameException e) {
+			System.err.println("EROR" + e.getMessage());
 			return null;
 		}
 		if (attr == null) {
@@ -639,7 +685,17 @@ public class Element extends ParentNode {
 	@Solution(value = Strategy.MACRO, comment = "")
 	@MapsTo("")
 	public String getNamespaceURI(String prefix) {
-		return element.getNamespace(prefix).getURI();
+		if (element.getNamespace(prefix) != null) {
+			return element.getNamespace(prefix).getURI();
+		}
+		for (Object o: element.getAdditionalNamespaces()) {
+			org.jdom.Namespace ns = (org.jdom.Namespace)o;
+			if (ns.getPrefix().equals(prefix)) {
+				return ns.getURI();
+			}
+		}
+		// ????
+		return "";
 	}
 
 	@Progress(value = Status.OK, comment = "")
@@ -683,7 +739,14 @@ public class Element extends ParentNode {
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("org.jdom.Element#removeContent()")
 	public Nodes removeChildren() {
-		return new Nodes(element.removeContent());
+		List kids = element.removeContent();
+		for (Object kid: kids) {
+			Node node = content2node((org.jdom.Content)kid);
+			if (node instanceof Element) {
+				((Element)node).setBaseURI(getBaseURI());
+			}
+		}
+		return new Nodes(kids);
 	}
 
 	@Progress(value = Status.OK, comment = "")
@@ -735,6 +798,10 @@ public class Element extends ParentNode {
 			if (uri == null || uri.equals("")) {
 				throw new NamespaceConflictException("unsetting prefixed namespace");
 			}
+		}
+		String error = org.jdom.Verifier.checkNamespaceURI(uri);
+		if (error != null) {
+			throw new MalformedURIException(error);
 		}
 		
 		element.setNamespace(org.jdom.Namespace.getNamespace(element

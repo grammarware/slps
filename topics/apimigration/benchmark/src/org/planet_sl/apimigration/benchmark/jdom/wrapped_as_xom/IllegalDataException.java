@@ -63,6 +63,10 @@ public class IllegalDataException extends WellformednessException {
 		this.data = data;
 	}
 
+	public IllegalDataException(String error) {
+		super(error);
+	}
+
 	@Progress(
 		value = Status.TODO, 
 		comment = ""

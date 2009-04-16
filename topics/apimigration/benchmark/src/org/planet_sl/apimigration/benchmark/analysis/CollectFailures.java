@@ -12,7 +12,6 @@ import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.DocTypeTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.DocumentTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.ElementTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.LeafNodeTest;
-import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.NamespaceNodeTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.NamespacesTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.NodesTest;
 import org.planet_sl.apimigration.benchmark.jdom.test_as_xom.ParentNodeTest;

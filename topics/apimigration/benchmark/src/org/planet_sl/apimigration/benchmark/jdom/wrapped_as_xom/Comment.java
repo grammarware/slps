@@ -171,6 +171,13 @@ public class Comment extends Node {
 			throw new IllegalCharacterDataException(e, data);
 		}
 	}
+	
+	@Progress(value = Status.DONTCARE, comment = "")
+	@Solution(value = Strategy.CLONE, comment = "")
+	@Override
+	public String toString() {
+		return "";
+	}
 
 
 }

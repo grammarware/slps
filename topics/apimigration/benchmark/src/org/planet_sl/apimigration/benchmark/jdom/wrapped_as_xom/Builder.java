@@ -25,9 +25,9 @@ public class Builder {
 	@Wrapping
 	Builder(org.jdom.input.SAXBuilder builder) {
 		this.builder = builder;
+		builder.setExpandEntities(false);
 	}
 
-	//org.apache.xerces.parsers.
 	private static final String SAX = "org.apache.xerces.parsers.SAXParser";
 
 	// XOM api starts below
@@ -220,4 +220,10 @@ public class Builder {
 				"no nodefactories supported in JDOM");
 	}
 
+	@Progress(value = Status.DONTCARE, comment = "")
+	@Solution(value = Strategy.CLONE, comment = "")
+	@Override
+	public String toString() {
+		return "";
+	}
 }

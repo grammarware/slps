@@ -1,8 +1,7 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
-import static org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Utils.content2node;
-import static org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.Utils.node2content;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.planet_sl.apimigration.benchmark.anno.MapsTo;
@@ -28,49 +27,59 @@ public class Nodes {
 	@Solution(value = Strategy.MACRO, comment = "")
 	@MapsTo("java.util.Collections.emptyList()")
 	public Nodes() {
-		this(java.util.Collections.emptyList());
+		this(new ArrayList<Object>());
 	}
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.MACRO, comment = "")
 	@MapsTo("java.util.Collections.singletonList(Object)")
-	public Nodes(Element test) {
-		this(java.util.Collections.singletonList(test));
+	public Nodes(Element elt) {
+		if (elt == null) {
+			throw new NullPointerException("null arg");
+		}
+		this.list = new ArrayList<Object>();
+		this.list.add(elt);
 	}
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("java.util.List#add(Object)")
 	public void append(Node node) {
-		list.add(node2content(node));
+		if (node == null) {
+			throw new NullPointerException("null append");
+		}
+		list.add(node);
 	}
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("java.util.List#contains(Object)")
 	public boolean contains(Node node) {
-		return list.contains(node2content(node));
+		return list.contains(node);
 	}
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("java.util.List#get(int)")
 	public Node get(int index) {
-		return content2node((org.jdom.Content) list.get(index));
+		return (Node)list.get(index);
 	}
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("java.util.List#add(int,Object)")
 	public void insert(Node node, int index) {
-		list.add(index, node2content(node));
+		if (node == null) {
+			throw new NullPointerException("null insert");
+		}
+		list.add(index, node);
 	}
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("java.util.List#remove(int)")
 	public Node remove(int index) {
-		return (Node) content2node((org.jdom.Content) list.remove(index));
+		return (Node) list.remove(index);
 	}
 
 	@Progress(value = Status.OK, comment = "")

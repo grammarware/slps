@@ -1,5 +1,7 @@
 package org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.planet_sl.apimigration.benchmark.anno.Issue;
@@ -288,6 +290,13 @@ public class Attribute extends Node {
 	@Issue.Throws(value = "xom throws NamespaceConflictException (not IllegalNameException)", resolved = true)
 	@MapsTo("org.jdom.Attribute#setNamespace(Namespace)")
 	public void setNamespace(String prefix, String uri) {
+		if (uri != null) {
+			try {
+				new URI(uri);
+			} catch (URISyntaxException e) {
+				throw new MalformedURIException(e, uri);
+			}
+		}
 		try {
 			attribute
 					.setNamespace(org.jdom.Namespace.getNamespace(prefix, uri));
@@ -328,7 +337,11 @@ public class Attribute extends Node {
 		return attribute.getName()
 				+ "=\""
 				+ new org.jdom.output.XMLOutputter()
-						.escapeAttributeEntities(attribute.getValue()) + "\"";
+						.escapeAttributeEntities(attribute.getValue())
+						.replaceAll("&#xA", "&#x0A") 
+						.replaceAll("&#xD", "&#x0D") 
+						.replaceAll("&#x9", "&#x09") + 
+						"\"";
 	}
 
 	@Progress(value = Status.OK, comment = "")
@@ -422,4 +435,12 @@ public class Attribute extends Node {
 		return attribute.hashCode();
 	}
 
+	
+	@Progress(value = Status.DONTCARE, comment = "")
+	@Solution(value = Strategy.CLONE, comment = "")
+	@Override
+	public String toString() {
+		return "";
+	}
+	
 }

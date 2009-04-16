@@ -41,9 +41,15 @@ public class Text extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
+	@Issue.Throws(value ="XOM throws IllegalCharacterDataException when JDOM throws IllegalData exception", resolved = true)
 	@MapsTo("org.jdom.Text(String)")
 	public Text(String data) {
-		this(new org.jdom.Text(data));
+		try {
+			text = new org.jdom.Text(data);
+		}
+		catch (org.jdom.IllegalDataException e) {
+			throw new IllegalCharacterDataException(e, data);
+		}
 	}
 
 	@Progress(value = Status.OK, comment = "")
@@ -55,9 +61,15 @@ public class Text extends Node {
 
 	@Progress(value = Status.OK, comment = "")
 	@Solution(value = Strategy.DELEGATE, comment = "")
+	@Issue.Throws(value ="XOM throws IllegalCharacterDataException when JDOM throws IllegalData exception", resolved = true)
 	@MapsTo("org.jdom.Text#setText(String)")
 	public void setValue(String data) {
-		text.setText(data);
+		try {
+			text.setText(data);
+		}
+		catch (org.jdom.IllegalDataException e) {
+			throw new IllegalCharacterDataException(e, data);
+		}
 	}
 
 	@Progress(value = Status.OK, comment = "")
@@ -86,7 +98,9 @@ public class Text extends Node {
 	@MapsTo("org.jdom.output.XMLOutputter#outputString(Text)")
 	public String toXML() {
 		return isCDATA ? new XMLOutputter().outputString(cdata)
-				: new XMLOutputter().outputString(text);
+				: new XMLOutputter().outputString(text).replaceAll("&#xA", "&#x0A") 
+				.replaceAll("&#xD", "&#x0D") 
+				.replaceAll("&#x9", "&#x09");
 	}
 
 	@Progress(value = Status.OK, comment = "")
@@ -172,4 +186,19 @@ public class Text extends Node {
 		}
 	}
 
+	
+	@Progress(value = Status.DONTCARE, comment = "")
+	@Solution(value = Strategy.CLONE, comment = "")
+	@Override
+	@MapsTo("")	
+	public String toString() {
+		String str = text.getText().replaceAll("\n", "\\\\n")
+			.replaceAll("\t", "\\\\t")
+			.replaceAll("\r", "\\\\r");
+		if (str.length() > 50) {
+			str = str.substring(0, 50) + "...";
+		}
+		return "[nu.xom.Text: " + str + "]";    
+	}
+	
 }
