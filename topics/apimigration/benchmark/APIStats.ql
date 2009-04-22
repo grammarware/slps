@@ -28,11 +28,18 @@ where
 			)
   and LOC = type.getCompilationUnit().getNumberOfLinesOfCode()
   and featureCount = count(Method m | 
- 				m.isPublic() and not m.hasModifier("abstract") 
+/*				not m.getName().matches("toString%") 
+				and not m.getName().matches("hashCode%")
+				and not m.getName().matches("equals%") 
+ 				and */ m.isPublic() and not m.hasModifier("abstract") 
 				and (type.contains(m) or type.getASupertype().contains(m)) )
 			+ count(Constructor cons | cons.isPublic() 
 				and (type.contains(cons) or type.getASupertype().contains(cons)))
-  and declaredFeatureCount = count(Method m | m.isPublic() and not m.hasModifier("abstract")
+  and declaredFeatureCount = count(Method m | 
+			/*not m.getName().matches("toString%") 
+				and not m.getName().matches("hashCode%")
+				and not m.getName().matches("equals%") 
+ 				and */ m.isPublic() and not m.hasModifier("abstract")
 			and type.contains(m)) 
        +
       count(Constructor cons | cons.isPublic() 
@@ -62,11 +69,20 @@ or (
 
   	and LOC = type.getCompilationUnit().getNumberOfLinesOfCode()
 	  and featureCount = count(Method m | 
+				/*not m.getName().matches("toString%") 
+				and not m.getName().matches("hashCode%")
+				and not m.getName().matches("equals%") 
+ 				and */
 				m.isPublic() and not m.hasModifier("abstract") 
 				and (type.contains(m) or type.getASupertype().contains(m)))
        + count(Constructor cons | cons.isPublic() 
 				and (type.contains(cons) or type.getASupertype().contains(cons)))
-   and declaredFeatureCount = count(Method m | m.isPublic() and not m.hasModifier("abstract")
+   and declaredFeatureCount = count(Method m | 
+				/*not m.getName().matches("toString%") 
+				and not m.getName().matches("hashCode%")
+				and not m.getName().matches("equals%") 
+ 				and */ 
+			m.isPublic() and not m.hasModifier("abstract")
 			and type.contains(m)) 
        +
       count(Constructor cons | cons.isPublic() 

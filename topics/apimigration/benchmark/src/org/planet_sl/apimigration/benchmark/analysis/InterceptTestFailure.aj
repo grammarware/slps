@@ -31,6 +31,7 @@ public aspect InterceptTestFailure {
 //		name = name.replaceAll("call\\(\\1\\)$", "\\1");
 //		name = name.replaceAll("\\)$", "");
 		name = name.replaceAll("org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.", "");
+		name = name.replaceAll("nu.xom.", "");
 		name = name.substring(name.indexOf(" ") + 1);
 		return name;
 	}
@@ -44,8 +45,13 @@ public aspect InterceptTestFailure {
 	private static String typeName(String string) {
 //		string = string.replaceAll("call\\(", "");
 		string = string.replaceAll("org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.","");
+		string = string.replaceAll("nu.xom.","");
 		//string = string.substring(string.indexOf(" ") + 1, string.length() - 1);
-		if (string.indexOf(".") > -1) {
+		if (string.indexOf(".") > -1 // if there is a dot
+			&& string.indexOf("(") > string.indexOf(".")
+				// and  ( comes before after it 
+			) {
+			// a method
 			System.err.println(string);
 			string = string.substring(string.indexOf(" ") + 1, string.length() - 1);
 			string = string.substring(0, string.indexOf("."));
@@ -295,10 +301,10 @@ public aspect InterceptTestFailure {
 	before(): 
 		call(public * org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.*.*(..)) ||
 		call(public org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.*.new(..)) ||
-		call(public * nu.xom.*.*(..)) {
+		call(public * nu.xom.*.*(..)) ||
+		call(public nu.xom.*.new(..)) {
 		currentMethod = thisJoinPoint.getSignature().toString();
 		inc(featureCallCount, currentMethod);
-		features.add(currentMethod);
 		if (currentMethod.matches(".*\\.Attribute.*") ||
 				currentMethod.matches(".*\\.Comment.*") ||
 				currentMethod.matches(".*\\.DocType.*") ||
@@ -306,14 +312,16 @@ public aspect InterceptTestFailure {
 				currentMethod.matches(".*\\.Document.*") ||
 				currentMethod.matches(".*\\.Element.*") ||
 				currentMethod.matches(".*\\.Elements.*") ||
-				currentMethod.matches(".*\\.Node.*") ||
+				//currentMethod.matches(".*\\.Node[^F].*") ||
 				currentMethod.matches(".*\\.Nodes.*") ||
 				currentMethod.matches(".*\\.ParentNode.*") ||
 				currentMethod.matches(".*\\.ProcessingInstruction.*") ||
-				currentMethod.matches(".*\\.Text.*")) {
+				currentMethod.matches(".*\\.Text[.(].*")) {
 			if (!methods.contains(currentMethod)) {
 				methods.add(currentMethod);
 			}
+			features.add(currentMethod);
+			
 		}
 	}
 

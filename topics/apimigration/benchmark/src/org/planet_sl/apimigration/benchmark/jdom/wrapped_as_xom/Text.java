@@ -196,7 +196,7 @@ public class Text extends Node {
 			.replaceAll("\t", "\\\\t")
 			.replaceAll("\r", "\\\\r");
 		if (str.length() > 50) {
-			str = str.substring(0, 50) + "...";
+			str = str.substring(0, 35) + "...";
 		}
 		return "[nu.xom.Text: " + str + "]";    
 	}

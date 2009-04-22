@@ -1,0 +1,34 @@
+
+// - NodeFactory issue filtered, and XPath query.
+
+//- Compliance columns have to go table 7. (implmapping)
+
+//- Attribute toXML must be clone/delegate level 4
+ 
+- Find more clones.
+
+- Table 8: pre/post/inv issues that are resolved.
+
+- Wrapping table stats: don't count annotations 
+
+- Annotate unresolved issues with (Domain Specific) types of issues
+  (need 5 to 10 issues). Cherrypicking based on annos.
+  e.g. Well-formedness of Base-URI; Escaping of result;
+       Incompatible namespace decl handling, Serialization
+
+
+//- Add jdom.output.XMLOutputter to jdomapi stats.
+
+// - Count constructors in APIstats.ql
+
+// - Don't count UTILS!
+
+//- fix node2content etc.
+
+// - move getChildCount in Node downwards
+
+//- multiple rows for mappings to multiple types (table 6)
+//  (and fix mapping for type)
+
+- Examples of : pre, post, inv, thows.
+

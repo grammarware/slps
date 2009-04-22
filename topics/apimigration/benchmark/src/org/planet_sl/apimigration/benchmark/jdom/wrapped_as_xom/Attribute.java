@@ -260,7 +260,7 @@ public class Attribute extends Node {
 	}
 
 	@Progress(value = Status.OK, comment = "")
-	@Solution(value = Strategy.ADVANCED_DELEGATE, comment = "")
+	@Solution(value = Strategy.DELEGATE, comment = "")
 	@MapsTo("org.jdom.Attribute#getAttributeType()")
 	public Type getType() {
 		return new Type(attribute.getAttributeType());
