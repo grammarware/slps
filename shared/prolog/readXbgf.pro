@@ -289,6 +289,13 @@ xml2xbgf(T,sequence(Ts2))
     !,
     maplist(once(xml2xbgf),Ts1,Ts2).
 
+xml2xbgf(T,sequence(Ts2))
+ :-
+    self(name(xbgf:atomic),T),
+    children(element,T,Ts1),
+    !,
+    maplist(once(xml2xbgf),Ts1,Ts2).
+
 xml2xbgf(T,abridge(P2))
  :-
     self(name(xbgf:abridge),T),

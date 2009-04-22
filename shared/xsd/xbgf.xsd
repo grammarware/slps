@@ -23,7 +23,21 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-      <xsd:group ref="xbgf:transformation" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:group ref="xbgf:transformation"/>
+        <xsd:element ref="xbgf:atomic"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="atomic">
+    <xsd:annotation>
+      <xsd:documentation>
+        Multiple transformations that must be for some reason perceived as one step.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:group ref="xbgf:transformation" maxOccurs="unbounded"/>
     </xsd:complexType>
   </xsd:element>
 
