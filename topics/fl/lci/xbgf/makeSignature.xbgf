@@ -48,5 +48,4 @@
     <nonterminal>ops</nonterminal>
   </xbgf:vertical>
 
-  <!-- strip all selectors -->
 </xbgf:sequence>
