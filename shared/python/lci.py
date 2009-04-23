@@ -75,9 +75,9 @@ class Chain:
  def type(self):
   t = 0
   for a in self.array[1:]:
-   if ttype[a] in ('synchronization','postextraction','normalization'):
+   if ttype[a] in ('earlyfixes','namematching','normalizing'):
     t = -1
-   if ttype[a] in ('transformation','refactoring'):
+   if ttype[a] in ('refactoring','extension','correction','relaxation'):
     t = 1
   return t
  def lastAction(self):
@@ -92,7 +92,8 @@ def ChainFromArray(a):
 problem = False
 # output streams redirected to null
 shutup = ' 1> /dev/null 2> /dev/null'
-# transformation type per action: postextraction, synchronization, etc
+# transformation type per action: earlyfixes, namematching, normalizing, refactoring,
+#								  extension, correction, relaxation
 ttype = {}
 orderedsrc = []
 shortcuts = {}
@@ -261,7 +262,7 @@ def distanceBetween(node,tgt):
 def compareGrammars(bgf,arr):
  goal = arr[0]
  for a in arr().split('.')[1:]:
-  if ttype[a] in ('synchronization','postextraction','normalization'):
+  if ttype[a] in ('earlyfixes','namematching','normalizing'):
    goal += '.'+stripCamelCase(a)
  #print '[----] Ready:',bgf,'vs',goal
  #print '[++++] Distance is:',
@@ -338,8 +339,8 @@ def dumpGraph(df):
    nodezz.append((arc[0],arc[3]))
   if (arc[1],arc[3]) not in nodezz:
    nodezz.append((arc[1],arc[3]))
-  if (arc[0][-1] in targets.keys()) or (arc[0][-1] in orderedsrc) or (arc[0][-1] in ttype.keys() and ttype[arc[0][-1]] in ('synchronization','postextraction','normalization')):
-   if (arc[1][-1] in targets.keys()) or (arc[1][-1] in ttype.keys() and ttype[arc[1][-1]] in ('transformation','refactoring')):
+  if (arc[0][-1] in targets.keys()) or (arc[0][-1] in orderedsrc) or (arc[0][-1] in ttype.keys() and ttype[arc[0][-1]] in ('earlyfixes','namematching','normalizing')):
+   if (arc[1][-1] in targets.keys()) or (arc[1][-1] in ttype.keys() and ttype[arc[1][-1]] in ('refactoring','extension','correction','relaxation')):
     dablNodezz.append(arc[0].dotNodeName(arc[3]))
   par = ''
   if arc[2]:
@@ -539,14 +540,14 @@ def transformationChain(cut,target):
  # action names will be appended:
  # x.bgf -> x.corrupt.bgf -> x.corrupt.confuse.bgf -> x.corrupt.confuse.destroy.bgf -> ...
  # the very last one will be diffed
- ontheroll,current = runTransforms(cut,current,('postextraction','synchronization','normalization'))
+ ontheroll,current = runTransforms(cut,current,('earlyfixes','namematching','normalizing'))
  if ontheroll:
   print '[PASS]',
  else:
   print '[FAIL]',
  print 'Postextraction and synchronyzation finished for target',target+'.'
  # same for transformation
- ontheroll,current = runTransforms(cut,current,('transformation','refactoring'))
+ ontheroll,current = runTransforms(cut,current,('refactoring','extension','correction','relaxation'))
  # end of branch
  if cut in failed:
   print '[FAIL]',
@@ -759,7 +760,7 @@ def checkConsistency():
    sysexit(18)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.15'
+ print 'Language Covergence Infrastructure v1.16'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readConfiguration(sys.argv[1])

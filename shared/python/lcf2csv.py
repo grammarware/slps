@@ -52,11 +52,11 @@ def main(lcffile,prefix):
   synch[t.findtext('name')] = []
   for b in t.findall('branch'):
    start = b.findtext('input')
-   for p in b.findall('postextraction/perform'):
+   for p in b.findall('earlyfixes/perform'):
     start += '.'+cutName(p.text)
-   for p in b.findall('synchronization/perform'):
+   for p in b.findall('namematching/perform'):
     start += '.'+cutName(p.text)
-   for p in b.findall('normalization/perform'):
+   for p in b.findall('normalizing/perform'):
     start += '.'+cutName(p.text)
    synch[t.findtext('name')].append(shorten(start))
  #print synch
@@ -65,10 +65,15 @@ def main(lcffile,prefix):
   for b in t.findall('branch'):
    start = b.findtext('input')
    csv = open(prefix+'.'+t.findtext('name')+'.'+start+'.txt','w')
-   csv.write('initial\t'+measure(shorten(start),t.findtext('name'))+'\n')
+   prev,csvstr = measure(shorten(start),t.findtext('name'))
+   csv.write('initial\t'+csvstr+'\n')
    for p in b.findall('*/perform'):
     start += '.'+cutName(p.text)
-    csv.write(p.text+'\t'+measure(shorten(start),t.findtext('name'))+'\n')    
+    cur,csvstr = measure(shorten(start),t.findtext('name'))
+    if cur>prev:
+     csvstr += '\tERROR'
+    csv.write(p.text+'\t'+csvstr+'\n')    
+    prev = cur
    csv.close()
   print 'Target',t.findtext('name'),'done.'
  #ET.ElementTree(newLcf).write(lcfName)
@@ -99,7 +104,7 @@ def measure(x,y):
    nsn = line.strip().split('(')[1].split(')')[0].split('/')
    strDiffs += max(int(nsn[0]),int(nsn[1]))
   num.close()
- return nameDiffs+'\t'+str(strDiffs)+'\t'+str(int(nameDiffs)+strDiffs)
+ return int(nameDiffs)+strDiffs,nameDiffs+'\t'+str(strDiffs)+'\t'+str(int(nameDiffs)+strDiffs)
 
 def cutName(lbl):
  l=''
@@ -109,52 +114,6 @@ def cutName(lbl):
   else:
    break
  return l
-
-def forNewTarget(xbgfDir1,xbgfDir2,t):
- print 'Splitting target',t.findtext('name'),'...'
- nt = ET.Element('target')
- nt.append(t.findall('name')[0])
- for branch in t.findall('branch'):
-  nbr = ET.Element('branch')
-  for e in branch.findall('*'):
-   if e.tag == 'input':
-    nbr.append(e)
-   else:
-    phase = ET.Element(e.tag)
-    for step in e.findall('*'):
-     # perform or automated
-     print '-->',step.tag,
-     if step.tag=='perform':
-      print step.text,'-',
-      for s in sliceFile(xbgfDir1,xbgfDir2,step.text):
-       phase.append(s)
-     else:
-      print step.findtext('result'),'-',
-      for s in sliceFile(xbgfDir1,xbgfDir2,step.findtext('result')):
-       phase.append(s)
-     #phase.append(step)
-    nbr.append(phase)
-  nt.append(nbr)
- return nt
-
-def sliceFile(xbgfDir1,xbgfDir2,text):
- sliced = []
- xtree = ET.parse(xbgfDir1+text+'.xbgf')
- cx = 0
- for t in xtree.findall('*'):
-  cx += 1
-  seq = ET.Element('{'+xbgfns+'}sequence')
-  if t.tag=='{'+xbgfns+'}atomic':
-   for sub in t.findall('*'):
-    seq.append(sub)
-  else:
-   seq.append(t)
-  ET.ElementTree(seq).write(xbgfDir2+text+'-'+`cx`+'.xbgf')
-  p = ET.Element('perform')
-  p.text = text+'-'+`cx`
-  sliced.append(p)
- print cx,'slices'
- return sliced
 
 if __name__ == "__main__":
  if len(sys.argv) == 3:

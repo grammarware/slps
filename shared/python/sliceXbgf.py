@@ -40,16 +40,44 @@ def main(lcffile,outdir):
  ET.ElementTree(newLcf).write(lcfName)
  return
 
+def appendXbgf(tree,xbgfFile):
+ if not tree:
+  tree = ET.Element('{'+xbgfns+'}sequence')
+ xtree = ET.parse(xbgfFile)
+ for t in xtree.findall('*'):
+  tree.append(t)
+ return tree
+
 def forNewTarget(xbgfDir1,xbgfDir2,t):
  print 'Splitting target',t.findtext('name'),'...'
  nt = ET.Element('target')
  nt.append(t.findall('name')[0])
  for branch in t.findall('branch'):
+  needNormalizing = False
+  normXbgf = None
+  normFiles = ''
   nbr = ET.Element('branch')
   for e in branch.findall('*'):
    if e.tag == 'input':
     nbr.append(e)
+   elif e.tag in ('earlyfixes','namematching','normalizing'):
+    needNormalizing = True
+    for step in e.findall('*'):
+     if step.tag=='perform':
+      normXbgf = appendXbgf(normXbgf,xbgfDir1+step.text+'.xbgf')
+      normFiles += step.text+' & '
+     else:
+      normXbgf = appendXbgf(normXbgf,xbgfDir1+step.findtext('result')+'.xbgf')
+      normFiles += step.findtext('result')+' & '
    else:
+    if needNormalizing:
+     phase = ET.SubElement(nbr,'normalizing')
+     p = ET.SubElement(phase,'perform')
+     p.text = 'normalize-'+nbr.findtext('input')+'-'+nt.findtext('name')
+     needNormalizing = False
+     ET.ElementTree(normXbgf).write(xbgfDir2+p.text+'.xbgf')
+     print '-->',normFiles[:-3],'accumulated to normalisation'
+     normFiles = ''
     phase = ET.Element(e.tag)
     for step in e.findall('*'):
      # perform or automated

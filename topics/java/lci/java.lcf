@@ -90,29 +90,25 @@
     <name>jls1</name>
     <branch>
       <input>app1</input>
-      <postextraction>
-        <perform>correct-app1</perform>
-      </postextraction>
-      <synchronization>
-        <perform>rename-app1</perform>
-      </synchronization>
-      <transformation>
+      <earlyfixes><perform>correct-app1</perform></earlyfixes>
+      <namematching><perform>rename-app1</perform></namematching>
+      <refactoring>
         <perform>refactor-app1</perform>
-      </transformation>
+      </refactoring>
     </branch>
     <branch>
       <input>doc1</input>
-      <postextraction>
+      <earlyfixes>
         <perform>correct-doc1</perform>
-      </postextraction>
-      <synchronization>
+      </earlyfixes>
+      <namematching>
         <perform>rename-doc1</perform>
-      </synchronization>
-      <transformation>
+      </namematching>
+      <refactoring>
         <perform>generalizeModifiers-doc1</perform>
         <perform>generalizeNames-doc1</perform>
         <perform>refactor-doc1</perform>
-      </transformation>
+      </refactoring>
     </branch>
   </target>
 
@@ -120,25 +116,25 @@
     <name>jls2</name>
     <branch>
       <input>app2</input>
-      <postextraction>
+      <earlyfixes>
         <perform>correct-app2</perform>
-      </postextraction>
-      <transformation>
-        <perform>refactor-app2</perform>
+      </earlyfixes>
+      <refactoring><perform>refactor-app2</perform></refactoring>
+      <relaxation>
         <perform>generalizeLabels</perform>
         <perform>generalizeBlock</perform>
-      </transformation>
+      </relaxation>
     </branch>
     <branch>
       <input>doc2</input>
-      <postextraction>
+      <earlyfixes>
         <perform>recover-doc2</perform>
         <perform>correct-doc2</perform>
-      </postextraction>
-      <synchronization>
+      </earlyfixes>
+      <namematching>
         <perform>rename-doc2</perform>
-      </synchronization>
-      <transformation>
+      </namematching>
+      <refactoring>
         <perform>generalizeModifiers</perform>
         <perform>generalizeNames</perform>
         <perform>deyaccifyStatements</perform>
@@ -152,7 +148,7 @@
         <perform>refactorInterfaces-doc2</perform>
         <perform>refactorDeclarations-doc2</perform>
         <perform>edit-doc2</perform>
-      </transformation>
+      </refactoring>
     </branch>
   </target>
 
@@ -160,27 +156,27 @@
     <name>jls3</name>
     <branch>
       <input>app3</input>
-      <postextraction>
+      <earlyfixes>
         <perform>recover-app3</perform>
         <perform>correct-app3</perform>
-      </postextraction>
-      <transformation>
-        <perform>refactor-app3</perform>
+      </earlyfixes>
+      <refactoring><perform>refactor-app3</perform></refactoring>
+      <relaxation>
         <perform>generalizeLabels</perform>
         <perform>generalizeBlock</perform>
         <perform>generalize-app3</perform>
-      </transformation>
+      </relaxation>
     </branch>
     <branch>
       <input>doc3</input>
-      <postextraction>
+      <earlyfixes>
         <perform>recover-doc3</perform>
         <perform>correct-doc3</perform>
-      </postextraction>
-      <synchronization>
+      </earlyfixes>
+      <namematching>
         <perform>rename-doc3</perform>
-      </synchronization>
-      <transformation>
+      </namematching>
+      <refactoring>
         <perform>generalizeModifiers</perform>
         <perform>generalizeNames</perform>
         <perform>deyaccifyStatements</perform>
@@ -195,7 +191,7 @@
         <perform>refactorEnums</perform>
         <perform>refactorDeclarations-doc3</perform>
         <perform>edit-doc3</perform>
-      </transformation>
+      </refactoring>
     </branch>
   </target>
 
@@ -203,18 +199,20 @@
     <name>jls12</name>
     <branch>
       <input>jls1</input>
-      <synchronization>
+      <namematching>
         <perform>rename-jls1</perform>
-      </synchronization>
-      <transformation>
+      </namematching>
+      <refactoring>
         <perform>refactorStatements-jls1</perform>
         <perform>generalizeStatements</perform>
         <perform>refactorTypes-jls1</perform>
         <perform>editDeclarations</perform>
         <perform>refactorExpressions</perform>
         <perform>editExpressions-jls1</perform>
+      </refactoring>
+      <extension>
         <perform>extend-jls1</perform>
-      </transformation>
+      </extension>
     </branch>
     <branch>
       <input>jls2</input>
@@ -225,10 +223,10 @@
     <name>jls123</name>
     <branch>
       <input>jls12</input>
-      <synchronization>
+      <namematching>
         <perform>rename-jls12</perform>
-      </synchronization>
-      <transformation>
+      </namematching>
+      <extension>
         <perform>extendDeclarations</perform>
         <perform>extendWithAnnotations</perform>
         <perform>extendClassDeclarations</perform>
@@ -236,7 +234,7 @@
         <perform>extendWithTypeArguments</perform>
         <perform>extendExpressions</perform>
         <perform>extendStatements</perform>
-      </transformation>
+      </extension>
     </branch>
     <branch>
       <input>jls3</input>
@@ -247,23 +245,25 @@
     <name>doc12</name>
     <branch>
       <input>doc1</input>
-      <postextraction>
+      <earlyfixes>
         <perform>correct-doc1</perform>
-      </postextraction>
-      <transformation>
+      </earlyfixes>
+      <refactoring>
         <perform>edit-doc1</perform>
+      </refactoring>
+      <extension>
         <perform>extend-doc1</perform>
-      </transformation>
+      </extension>
     </branch>
     <branch>
       <input>doc2</input>
-      <postextraction>
+      <earlyfixes>
         <perform>recover-doc2</perform>
         <perform>correct-doc2</perform>
-      </postextraction>
-      <transformation>
+      </earlyfixes>
+      <refactoring>
         <perform>refactorPackageNames</perform>
-      </transformation>
+      </refactoring>
     </branch>
   </target>
 
@@ -271,23 +271,23 @@
     <name>doc123</name>
     <branch>
       <input>doc12</input>
-      <synchronization>
+      <namematching>
         <perform>rename-doc12</perform>
-      </synchronization>
-      <transformation>
+      </namematching>
+      <extension>
         <perform>extendModifiers</perform>
         <perform>extend-doc12</perform>
-      </transformation>
+      </extension>
     </branch>
     <branch>
       <input>doc3</input>
-      <postextraction>
+      <earlyfixes>
         <perform>recover-doc3</perform>
         <perform>correct-doc3</perform>
-      </postextraction>
-      <transformation>
+      </earlyfixes>
+      <refactoring>
         <perform>refactorPackageNames</perform>
-      </transformation>
+      </refactoring>
     </branch>
   </target>
 

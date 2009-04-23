@@ -142,9 +142,21 @@
         <xsd:complexType>
           <xsd:sequence>
             <xsd:element name="input" type="xsd:string" />
+            <xsd:element name="earlyfixes" type="lcf:phaseType" minOccurs="0"/>
+            <xsd:element name="namematching" type="lcf:phaseType" minOccurs="0"/>
+            <xsd:element name="normalizing" type="lcf:phaseType" minOccurs="0"/>
+            
+            <xsd:element name="refactoring" type="lcf:phaseType" minOccurs="0"/>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+              <xsd:element name="extension" type="lcf:phaseType"/>
+              <xsd:element name="correction" type="lcf:phaseType"/>
+              <xsd:element name="relaxation" type="lcf:phaseType"/>
+            </xsd:choice>
+            <!--
             <xsd:element name="postextraction" type="lcf:phaseType" minOccurs="0"/>
             <xsd:element name="synchronization" type="lcf:phaseType" minOccurs="0"/>
             <xsd:element name="transformation" type="lcf:phaseType" minOccurs="0"/>
+            -->
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>

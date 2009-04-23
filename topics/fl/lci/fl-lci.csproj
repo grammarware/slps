@@ -59,8 +59,8 @@
     </None>
     <None Include="fl.lcf" />
     <None Include="xbgf\defineLex.xbgf" />
+    <None Include="xbgf\makeSignature.xbgf" />
     <None Include="xbgf\massageXsd.xbgf" />
-    <None Include="xbgf\mkSignature.xbgf" />
     <None Include="xbgf\permuteArgs.xbgf" />
     <None Include="xbgf\preferDcg.xbgf" />
     <None Include="xbgf\preferJaxb.xbgf" />

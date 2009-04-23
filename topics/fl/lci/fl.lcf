@@ -200,24 +200,24 @@
     <name>java</name>
     <branch>
       <input>jaxb</input>
-      <synchronization>
+      <namematching>
         <perform>trimJaxb</perform>
         <automated>
           <method>case</method>
           <result>renameJaxb</result>
         </automated>
-      </synchronization>
+      </namematching>
     </branch>
     <branch>
       <input>om</input>
-      <synchronization>
+      <namematching>
         <perform>trimOm</perform>
         <automated>
           <method>case</method>
           <result>renameOm</result>
         </automated>
         <perform>preferJaxb</perform>
-      </synchronization>
+      </namematching>
     </branch>
   </target>
 
@@ -225,25 +225,25 @@
     <name>abstract</name>
     <branch>
       <input>java</input>
-      <synchronization>
+      <namematching>
         <perform>reroot</perform>
-      </synchronization>
-      <transformation>
+      </namematching>
+      <refactoring>
         <perform>unerase</perform>
-      </transformation>
+      </refactoring>
     </branch>
     <branch>
       <input>xsd</input>
-      <synchronization>
+      <namematching>
         <perform>trimXsd</perform>
         <automated>
           <method>case</method>
           <result>renameXsd</result>
         </automated>
-      </synchronization>
-      <transformation>
+      </namematching>
+      <refactoring>
         <perform>massageXsd</perform>
-      </transformation>
+      </refactoring>
     </branch>
   </target>
 
@@ -254,12 +254,12 @@
     </branch>
     <branch>
       <input>antlr</input>
-      <synchronization>
+      <namematching>
         <perform>renameAntlr</perform>
-      </synchronization>
-      <transformation>
+      </namematching>
+      <refactoring>
         <perform>preferDcg</perform>
-      </transformation>
+      </refactoring>
     </branch>
   </target>
 
@@ -267,18 +267,18 @@
     <name>concrete</name>
     <branch>
       <input>topdown</input>
-      <transformation>
+      <refactoring>
         <perform>removeLayers</perform>
-      </transformation>
+      </refactoring>
     </branch>
     <branch>
       <input>sdf</input>
-      <synchronization>
+      <namematching>
         <automated>
           <method>case</method>
           <result>renameSdf</result>
         </automated>
-      </synchronization>
+      </namematching>
     </branch>
   </target>
 
@@ -286,10 +286,10 @@
     <name>limit</name>
     <branch>
       <input>concrete</input>
-      <synchronization>
+      <namematching>
         <perform>reroot</perform>
-      </synchronization>
-      <transformation>
+      </namematching>
+      <refactoring>
         <perform>defineLex</perform>
         <automated>
           <method>stript</method>
@@ -297,17 +297,17 @@
         </automated>
         <perform>stripNewline</perform>
         <perform>permuteArgs</perform>
-      </transformation>
+      </refactoring>
     </branch>
     <branch>
       <input>abstract</input>
-      <transformation>
+      <refactoring>
         <perform>makeSignature</perform>
         <automated>
           <method>strips</method>
           <result>stripSelectors</result>
         </automated>
-      </transformation>
+      </refactoring>
     </branch>
   </target>
 
