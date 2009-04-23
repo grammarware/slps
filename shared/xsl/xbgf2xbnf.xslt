@@ -12,10 +12,19 @@
       omit-xml-declaration="yes"
       />
 
- <xsl:template match="/xbgf:sequence">
-      <xsl:apply-templates select="./xbgf:*"/>
+  <xsl:template match="/xbgf:sequence">
+    <xsl:apply-templates select="./xbgf:*"/>
   </xsl:template>
-  
+
+  <xsl:template match="xbgf:atomic">
+    <xsl:value-of select="local-name()" />
+    <xsl:text>(
+</xsl:text>
+    <xsl:apply-templates select="./xbgf:*"/>
+    <xsl:text>);
+</xsl:text>
+  </xsl:template>
+
   <!-- optional context -->
   <xsl:template name="context">
     <xsl:param name="in"/>
