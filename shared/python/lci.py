@@ -48,15 +48,24 @@ class Chain:
    name += '_'+stripSpecifics(a)
   return name+'_'+target
  def bgfFileName(self):
-  name = self.array[0]
+  name = [self.array[0]]
   for a in self.array[1:]:
-   name += '.'+stripCamelCase(a)
-  return name+'.bgf'
+   if name[-1].isdigit():
+    if name[-2]==stripCamelCase(a):
+     name[-1] = str(int(name[-1])+1)
+    else:
+     name.append(stripCamelCase(a))
+   elif name[-1]==stripCamelCase(a):
+    name.append('2')
+   else:
+    name.append(stripCamelCase(a))
+  return '.'.join(name)+'.bgf'
  def futureBgfFileName(self,next):
-  name = self.array[0]
-  for a in self.array[1:]:
-   name += '.'+stripCamelCase(a)
-  return name+'.'+stripCamelCase(next)+'.bgf'
+  tmp = self.array[:]
+  self.array.append(stripCamelCase(next))
+  name = self.bgfFileName()
+  self.array = tmp
+  return name
  def append(self,step):
   self.array.append(step)
  def spaceNotation(self):
@@ -71,6 +80,8 @@ class Chain:
    if ttype[a] in ('transformation','refactoring'):
     t = 1
   return t
+ def lastAction(self):
+  return self.array[-1]
 
 def ChainFromArray(a):
  x = Chain()
@@ -250,7 +261,7 @@ def distanceBetween(node,tgt):
 def compareGrammars(bgf,arr):
  goal = arr[0]
  for a in arr().split('.')[1:]:
-  if ttype[a] in ('synchronization','postextraction'):
+  if ttype[a] in ('synchronization','postextraction','normalization'):
    goal += '.'+stripCamelCase(a)
  #print '[----] Ready:',bgf,'vs',goal
  #print '[++++] Distance is:',
@@ -343,8 +354,15 @@ def dumpGraph(df):
   if par:
    dot.write(' ['+par+']')
   dot.write(';\n')
+ #currentFileName = df+'.'+nodezz[0][1]+'.csv'
+ #currentFile = open(currentFileName,'w')
+ #print nodezz
  for nNg in nodezz:
   node,goal=nNg
+  #if df+'.'+goal+'.csv' != currentFileName:
+  # currentFile.close()
+  # currentFileName = df+'.'+goal+'.csv'
+  # currentFile = open(currentFileName,'w')
   if node in failed:
    colour = 'red'
   elif node in almostFailed:
@@ -363,10 +381,12 @@ def dumpGraph(df):
   dot.write(' [color='+colour)
   if cx != '?':
    dot.write(', label="'+cx+'"')
+   #currentFile.write(node.lastAction()+','+`eval(cx)`+'\n')
   if node.dotNodeName(goal) in dablNodezz:
    # synch point
    dot.write(', shape=doublecircle')
   dot.write('];\n')
+ #currentFile.close()
  dot.write('}')
  dot.close()
  run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
@@ -756,7 +776,7 @@ if __name__ == "__main__":
    print '----- Tree convergence phase finished. -----'
   else:
    print '[WARN] No testing performed.'
-  dumpGraph(sys.argv[2])
+  #dumpGraph(sys.argv[2])
   if problem:
    sysexit(100)
   log.close()
