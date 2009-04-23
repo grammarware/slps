@@ -469,7 +469,7 @@
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>factor-example</target>
-    <file>../../transformation/xbgf/tests/factor3.bgf</file>
+    <file>../../transformation/xbgf/tests/factor_local.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>factor-example</where>
@@ -479,7 +479,7 @@
   </xldf:append>
   <xldf:import-sample>
     <target>factor-example</target>
-    <file>../../transformation/xbgf/tests/factor3.xbgf</file>
+    <file>../../transformation/xbgf/tests/factor_local.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
@@ -490,7 +490,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>factor-example</target>
-    <file>../../transformation/xbgf/tests/factor3.baseline</file>
+    <file>../../transformation/xbgf/tests/factor_local.baseline</file>
   </xldf:import-grammar>
 
   <xldf:place>
@@ -865,7 +865,7 @@
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>rassoc-example</target>
-    <file>../../transformation/xbgf/tests/rassoc1.bgf</file>
+    <file>../../transformation/xbgf/tests/rassoc_s.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>rassoc-example</where>
@@ -875,7 +875,7 @@
   </xldf:append>
   <xldf:import-sample>
     <target>rassoc-example</target>
-    <file>../../transformation/xbgf/tests/rassoc1.xbgf</file>
+    <file>../../transformation/xbgf/tests/rassoc_s.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
@@ -886,7 +886,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>rassoc-example</target>
-    <file>../../transformation/xbgf/tests/rassoc1.baseline</file>
+    <file>../../transformation/xbgf/tests/rassoc_s.baseline</file>
   </xldf:import-grammar>
   
   <xldf:place>
@@ -903,7 +903,7 @@
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>lassoc-example</target>
-    <file>../../transformation/xbgf/tests/lassoc1.bgf</file>
+    <file>../../transformation/xbgf/tests/lassoc_p.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
     <where>lassoc-example</where>
@@ -913,7 +913,7 @@
   </xldf:append>
   <xldf:import-sample>
     <target>lassoc-example</target>
-    <file>../../transformation/xbgf/tests/lassoc1.xbgf</file>
+    <file>../../transformation/xbgf/tests/lassoc_p.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
@@ -924,7 +924,7 @@
   </xldf:append>
   <xldf:import-grammar>
     <target>lassoc-example</target>
-    <file>../../transformation/xbgf/tests/lassoc1.baseline</file>
+    <file>../../transformation/xbgf/tests/lassoc_p.baseline</file>
   </xldf:import-grammar>
   
 </xldf:evolution-sequence>

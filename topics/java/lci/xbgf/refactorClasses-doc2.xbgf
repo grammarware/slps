@@ -73,27 +73,29 @@
   <xbgf:horizontal>TypeDeclaration</xbgf:horizontal>
   <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
   <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
-  <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>ClassDeclaration</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>InterfaceDeclaration</nonterminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
+  <xbgf:atomic>
+    <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <nonterminal>ClassDeclaration</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>InterfaceDeclaration</nonterminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:vertical>
+      <nonterminal>InterfaceBodyDeclaration</nonterminal>
+    </xbgf:vertical>
+  </xbgf:atomic>
   <xbgf:vertical>
     <nonterminal>TypeDeclaration</nonterminal>
-  </xbgf:vertical>
-  <xbgf:vertical>
-    <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
 
   <!-- 
@@ -394,9 +396,6 @@
   <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:distribute>
-  <xbgf:vertical>
-    <nonterminal>ClassBodyDeclaration</nonterminal>
-  </xbgf:vertical>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>MethodOrFieldDecl</nonterminal>
@@ -436,46 +435,51 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
-
-  <!-- modifiers -->
-  <xbgf:appear>
-    <bgf:production>
+  <xbgf:atomic>
+    <xbgf:vertical>
       <nonterminal>ClassBodyDeclaration</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <marked>
-              <bgf:expression>
-                <star>
-                  <bgf:expression>
-                    <nonterminal>Modifier</nonterminal>
-                  </bgf:expression>
-                </star>
-              </bgf:expression>
-            </marked>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:appear>
-  <xbgf:fold>
-    <nonterminal>ModifiersOpt</nonterminal>
-  </xbgf:fold>
+    </xbgf:vertical>
 
-  <!-- finishing touches -->
-  <xbgf:remove>
-    <vertical>
+    <!-- modifiers -->
+    <xbgf:appear>
       <bgf:production>
         <nonterminal>ClassBodyDeclaration</nonterminal>
         <bgf:expression>
-          <nonterminal>FieldDeclaration</nonterminal>
+          <sequence>
+            <bgf:expression>
+              <marked>
+                <bgf:expression>
+                  <star>
+                    <bgf:expression>
+                      <nonterminal>Modifier</nonterminal>
+                    </bgf:expression>
+                  </star>
+                </bgf:expression>
+              </marked>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+            </bgf:expression>
+          </sequence>
         </bgf:expression>
       </bgf:production>
-    </vertical>
-  </xbgf:remove>
-  <xbgf:eliminate>FieldDeclaration</xbgf:eliminate>
+    </xbgf:appear>
+    <xbgf:fold>
+      <nonterminal>ModifiersOpt</nonterminal>
+    </xbgf:fold>
+
+    <!-- finishing touches -->
+    <xbgf:remove>
+      <vertical>
+        <bgf:production>
+          <nonterminal>ClassBodyDeclaration</nonterminal>
+          <bgf:expression>
+            <nonterminal>FieldDeclaration</nonterminal>
+          </bgf:expression>
+        </bgf:production>
+      </vertical>
+    </xbgf:remove>
+    <xbgf:eliminate>FieldDeclaration</xbgf:eliminate>
+  </xbgf:atomic>
 
 </xbgf:sequence>

@@ -160,7 +160,10 @@ vs
   <xbgf:distribute>
     <nonterminal>Expression3</nonterminal>
   </xbgf:distribute>
-
+  <xbgf:vertical>
+    <nonterminal>Expression3</nonterminal>
+  </xbgf:vertical>
+  
   <xbgf:inline>PostDecrementExpression</xbgf:inline>
   <xbgf:inline>PostIncrementExpression</xbgf:inline>
   <xbgf:remove>
@@ -483,85 +486,87 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <xbgf:extract>
-    <bgf:production>
+  <xbgf:atomic>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>Selector</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>.</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>Identifier</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <optional>
+                    <bgf:expression>
+                      <nonterminal>Arguments</nonterminal>
+                    </bgf:expression>
+                  </optional>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>.</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>this</terminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>.</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>super</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>SuperSuffix</nonterminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>.</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>new</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>InnerCreator</nonterminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>[</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>Expression</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>]</terminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:vertical>
       <nonterminal>Selector</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Identifier</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>Arguments</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>this</terminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>super</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>SuperSuffix</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>.</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>new</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>InnerCreator</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>[</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Expression</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <terminal>]</terminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
+    </xbgf:vertical>
+  </xbgf:atomic>
   <xbgf:inline>PostfixExpression</xbgf:inline>
-  <xbgf:vertical>
-    <nonterminal>Selector</nonterminal>
-  </xbgf:vertical>
 
   <!--  BREFACTOR 
   Now to Expression2, using the expressway -->
@@ -645,76 +650,78 @@ vs
   <xbgf:vertical>
     <nonterminal>Expression2Rest</nonterminal>
   </xbgf:vertical>
-  <!-- BREFACTOR -->
-  <xbgf:define>
-    <bgf:production>
+  <xbgf:atomic>
+    <!-- BREFACTOR -->
+    <xbgf:define>
+      <bgf:production>
+        <nonterminal>Infixop</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <terminal>||</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&amp;&amp;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>|</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>^</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&amp;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>==</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>!=</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&lt;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&gt;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&lt;=</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&gt;=</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&lt;&lt;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&gt;&gt;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&gt;&gt;&gt;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>+</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>-</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>*</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>/</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>%</terminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:define>
+    <xbgf:vertical>
       <nonterminal>Infixop</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <terminal>||</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&amp;&amp;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>|</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>^</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&amp;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>==</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>!=</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&lt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&gt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&lt;=</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&gt;=</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&lt;&lt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&gt;&gt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&gt;&gt;&gt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>+</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>-</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>*</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>/</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>%</terminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:define>
-  <xbgf:vertical>
-    <nonterminal>Infixop</nonterminal>
-  </xbgf:vertical>
+    </xbgf:vertical>
+  </xbgf:atomic>
   <!-- BREFACTOR -->
   <xbgf:undefine>MultiplicativeExpression</xbgf:undefine>
   <!-- BREFACTOR -->
@@ -878,9 +885,5 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:redefine>
-
-  <xbgf:vertical>
-    <nonterminal>Expression3</nonterminal>
-  </xbgf:vertical>
 
 </xbgf:sequence>

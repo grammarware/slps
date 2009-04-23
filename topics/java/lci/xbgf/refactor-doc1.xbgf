@@ -173,26 +173,30 @@
      vs.
       - [], ;([,([n(PrimitiveType), t([), t(])]), ,([n(Name), t([), t(])]), ,([n(ArrayType), t([), t(])])])
   -->
-  <xbgf:horizontal>Type</xbgf:horizontal>
-  <xbgf:unfold>
-    <nonterminal>Type</nonterminal>
-    <in>
-      <nonterminal>ArrayType</nonterminal>
-    </in>
-  </xbgf:unfold>
-  <xbgf:vertical>
-    <nonterminal>Type</nonterminal>
-  </xbgf:vertical>
-  <xbgf:horizontal>ReferenceType</xbgf:horizontal>
-  <xbgf:unfold>
-    <nonterminal>ReferenceType</nonterminal>
-    <in>
-      <nonterminal>ArrayType</nonterminal>
-    </in>
-  </xbgf:unfold>
-  <xbgf:vertical>
-    <nonterminal>ReferenceType</nonterminal>
-  </xbgf:vertical>
+  <xbgf:atomic>
+    <xbgf:horizontal>Type</xbgf:horizontal>
+    <xbgf:unfold>
+      <nonterminal>Type</nonterminal>
+      <in>
+        <nonterminal>ArrayType</nonterminal>
+      </in>
+    </xbgf:unfold>
+    <xbgf:vertical>
+      <nonterminal>Type</nonterminal>
+    </xbgf:vertical>
+  </xbgf:atomic>
+  <xbgf:atomic>
+    <xbgf:horizontal>ReferenceType</xbgf:horizontal>
+    <xbgf:unfold>
+      <nonterminal>ReferenceType</nonterminal>
+      <in>
+        <nonterminal>ArrayType</nonterminal>
+      </in>
+    </xbgf:unfold>
+    <xbgf:vertical>
+      <nonterminal>ReferenceType</nonterminal>
+    </xbgf:vertical>
+  </xbgf:atomic>
   <xbgf:unfold>
     <nonterminal>ClassOrInterfaceType</nonterminal>
     <in>
@@ -202,6 +206,7 @@
   <xbgf:distribute>
     <nonterminal>ArrayType</nonterminal>
   </xbgf:distribute>
+
   <xbgf:vertical>
     <nonterminal>ArrayType</nonterminal>
   </xbgf:vertical>

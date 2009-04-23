@@ -492,6 +492,11 @@
     <inside>definitions-section</inside>
   </xldf:place>
 
+  <xldf:place>
+    <section>element-atomic</section>
+    <inside>definitions-section</inside>
+  </xldf:place>
+
   <xldf:transform-grammar>
     <target>group-transformation</target>
     <xbgf:vertical>
