@@ -23,7 +23,7 @@ def shorten(dottedName):
    name.append(cutName(a))
  return '.'.join(name)
 
-def main(lcffile,prefix):
+def main(lcffile,gdt,prefix):
  ltree = ET.parse(lcffile)
  newLcf = ET.Element(slpsns.lcf_('configuration'))
  xbgfDir = '/'.join(lcffile.split('/')[:-1])
@@ -51,11 +51,11 @@ def main(lcffile,prefix):
   for b in t.findall('branch'):
    start = b.findtext('input')
    csv = open(prefix+'.'+t.findtext('name')+'.'+start+'.txt','w')
-   prev,csvstr = measure(shorten(start),t.findtext('name'))
+   prev,csvstr = measure(gdt,shorten(start),t.findtext('name'))
    csv.write('initial\t'+csvstr+'\n')
    for p in b.findall('*/perform'):
     start += '.'+cutName(p.text)
-    cur,csvstr = measure(shorten(start),t.findtext('name'))
+    cur,csvstr = measure(gdt,shorten(start),t.findtext('name'))
     if cur>prev:
      csvstr += '\tERROR'
     csv.write(p.text+'\t'+csvstr+'\n')    
@@ -65,8 +65,12 @@ def main(lcffile,prefix):
  #ET.ElementTree(newLcf).write(lcfName)
  return
 
-def measure(x,y):
- nm,sm = metrics.mismatches('gdt',x,y)
+def measure(gdt,x,y):
+ if synch[y][0].split('.')[0]!=x.split('.')[0]:
+  z=synch[y][0]
+ else:
+  z=synch[y][1]
+ nm,sm = metrics.mismatches(gdt,'bgf/'+x+'.bgf','bgf/'+z+'.bgf')
  return nm+sm,str(nm)+'\t'+str(sm)+'\t'+str(nm+sm)
 
 def cutName(lbl):
@@ -79,11 +83,12 @@ def cutName(lbl):
  return l
 
 if __name__ == "__main__":
- if len(sys.argv) == 3:
-  apply(main,sys.argv[1:3])
+ if len(sys.argv) == 4:
+  slpsns.init(ET)
+  apply(main,sys.argv[1:4])
  else:
   print '''This tool takes an LCF file and produces a set of CSV files, diffing all BGFs in all branches
 
 Usage:'''
-  print ' ',sys.argv[0],'<input lcf file>','<prefix>'
+  print ' ',sys.argv[0],'<input lcf file>','<comparator>','<prefix>'
   sys.exit(1)

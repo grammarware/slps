@@ -1,24 +1,20 @@
 #!/usr/bin/python
-import sys
+import os
 
-def mismatches(comparator,x,y):
- if synch[y][0].split('.')[0]!=x.split('.')[0]:
-  z=synch[y][0]
- else:
-  z=synch[y][1]
+def mismatches(comparator,x,z):
  #print '[',y,']',x,'vs',z
- run = comparator+' bgf/'+x+'.bgf bgf/'+z+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w'
+ run = comparator+' '+x+' '+z+' | grep "only:" | grep -o "\[..*\]" | wc -w'
  if os.system(run+' > TMP-res'):
   nameDiffs = '0'
-  #print 'ERROR1:',run
+  print 'ERROR1:',run
  else:
   num = open('TMP-res','r')
   nameDiffs = num.readline().strip()
   num.close()
- run = comparator+' bgf/'+x+'.bgf bgf/'+z+'.bgf | grep Fail'
+ run = comparator+' '+x+' '+z+' | grep Fail'
  if os.system(run+' > TMP-res'):
   strDiffs = 0
-  #print 'ERROR2:',run
+  print 'ERROR2:',run
  else:
   num = open('TMP-res','r')
   strDiffs = 0

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ..
+LOCAL2=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 3 ]; then
+    echo "Usage: xbgfs <XBGF-input> <BGF-input> <BGF-synch>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+    exit 1
+else
+    python ${LOCAL2}/python/runSliced.py $1 $2 ${LOCAL2}/tools/xbgf ${LOCAL2}/tools/gdt $3
+fi

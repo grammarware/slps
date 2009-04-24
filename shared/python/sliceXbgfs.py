@@ -28,6 +28,7 @@ def main(lcffile,outdir):
 
 if __name__ == "__main__":
  if len(sys.argv) == 3:
+  slpsns.init(ET)
   apply(main,sys.argv[1:3])
  else:
   print '''XBGF slicing tool

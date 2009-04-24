@@ -15,10 +15,7 @@ def sliceFile(xbgfDir1,xbgfDir2,text):
   else:
    seq.append(t)
   ET.ElementTree(seq).write(xbgfDir2+text+'-'+`cx`+'.xbgf')
-  p = ET.Element('perform')
-  p.text = text+'-'+`cx`
-  sliced.append(p)
- print cx,'slices'
+  sliced.append(text+'-'+`cx`)
  return sliced
 
 def sliceTarget(xbgfDir1,xbgfDir2,t):
@@ -57,12 +54,20 @@ def sliceTarget(xbgfDir1,xbgfDir2,t):
      print '-->',step.tag,
      if step.tag=='perform':
       print step.text,'-',
-      for s in sliceFile(xbgfDir1,xbgfDir2,step.text):
-       phase.append(s)
+      slices = sliceFile(xbgfDir1,xbgfDir2,step.text)
+      print len(slices),'slices'
+      for s in slices:
+       p = ET.Element('perform')
+       p.text = s
+       phase.append(p)
      else:
       print step.findtext('result'),'-',
-      for s in sliceFile(xbgfDir1,xbgfDir2,step.findtext('result')):
-       phase.append(s)
+      slices = sliceFile(xbgfDir1,xbgfDir2,step.findtext('result'))
+      print len(slices),'slices'
+      for s in slices:
+       p = ET.Element('perform')
+       p.text = s
+       phase.append(p)
      #phase.append(step)
     nbr.append(phase)
   nt.append(nbr)

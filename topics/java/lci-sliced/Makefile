@@ -6,13 +6,13 @@ build:
 	time make csv
 	
 slice:
-	../../../shared/python/sliceXbgf.py ../lci/java.lcf .
+	../../../shared/python/sliceXbgfs.py ../lci/java.lcf .
 
 test:
 	../../../shared/tools/lci java.lcf architecture
 
 csv:
-	../../../shared/python/lcf2csv.py java.lcf csv
+	../../../shared/python/lcf2csv.py java.lcf ../../../shared/tools/gdt csv
 
 check:
 	${validator} lcf java.lcf
