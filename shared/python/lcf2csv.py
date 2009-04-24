@@ -3,22 +3,8 @@ import os
 import sys
 import string
 import elementtree.ElementTree as ET
-
-lcfns = 'http://planet-sl.org/lcf'
-ldfns = 'http://planet-sl.org/ldf'
-xldfns = 'http://planet-sl.org/xldf'
-bgfns = 'http://planet-sl.org/bgf'
-xbgfns= 'http://planet-sl.org/xbgf'
-xsdns = 'http://www.w3.org/2001/XMLSchema'
-htmlns= 'http://www.w3.org/1999/xhtml'
-
-ET._namespace_map[lcfns] = 'lcf'
-ET._namespace_map[ldfns] = 'ldf'
-ET._namespace_map[xldfns] = 'xldf'
-ET._namespace_map[bgfns] = 'bgf'
-ET._namespace_map[xbgfns]='xbgf'
-ET._namespace_map[xsdns] = 'xsd'
-ET._namespace_map[htmlns]='html'
+import slpsns
+import metrics
 
 synch = {}
 
@@ -39,7 +25,7 @@ def shorten(dottedName):
 
 def main(lcffile,prefix):
  ltree = ET.parse(lcffile)
- newLcf = ET.Element('{'+lcfns+'}configuration')
+ newLcf = ET.Element(slpsns.lcf_('configuration'))
  xbgfDir = '/'.join(lcffile.split('/')[:-1])
  if xbgfDir == '':
   xbgfDir = 'xbgf/'
@@ -80,31 +66,8 @@ def main(lcffile,prefix):
  return
 
 def measure(x,y):
- if synch[y][0].split('.')[0]!=x.split('.')[0]:
-  z=synch[y][0]
- else:
-  z=synch[y][1]
- #print '[',y,']',x,'vs',z
- run = 'gdt bgf/'+x+'.bgf bgf/'+z+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w'
- if os.system(run+' > TMP-res'):
-  nameDiffs = '0'
-  #print 'ERROR1:',run
- else:
-  num = open('TMP-res','r')
-  nameDiffs = num.readline().strip()
-  num.close()
- run = 'gdt bgf/'+x+'.bgf bgf/'+z+'.bgf | grep Fail'
- if os.system(run+' > TMP-res'):
-  strDiffs = 0
-  #print 'ERROR2:',run
- else:
-  num = open('TMP-res','r')
-  strDiffs = 0
-  for line in num.readlines():
-   nsn = line.strip().split('(')[1].split(')')[0].split('/')
-   strDiffs += max(int(nsn[0]),int(nsn[1]))
-  num.close()
- return int(nameDiffs)+strDiffs,nameDiffs+'\t'+str(strDiffs)+'\t'+str(int(nameDiffs)+strDiffs)
+ nm,sm = metrics.mismatches('gdt',x,y)
+ return nm+sm,str(nm)+'\t'+str(sm)+'\t'+str(nm+sm)
 
 def cutName(lbl):
  l=''
