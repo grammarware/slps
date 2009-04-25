@@ -207,12 +207,12 @@ public aspect InterceptTestFailure {
 			}
 			File file = new File("compliance.tex");
 			FileWriter writer = new FileWriter(file);
-			writer.write("\\begin{tabular}{|l|r|r|r||r|r|r|}\\hline\n");
-			writer.write("\\typeHeading\t\t\t\t& ");
-			writer.write("\\successHeading & ");
-			writer.write("\\failureHeading &");
-			writer.write("\\errorHeading &");
-			writer.write("\\successOnlyHeading\t& \\nonSuccessOnlyHeading \t& \\mixedHeading");
+			writer.write("\\begin{tabular}{|l|r|r|r|}\\hline\n");
+			//writer.write("\\typeHeading\t\t\t\t& ");
+			//writer.write("\\successHeading & ");
+			//writer.write("\\failureHeading &");
+			//writer.write("\\errorHeading &");
+			writer.write("& \\successOnlyHeading\t& \\nonSuccessOnlyHeading \t& \\mixedHeading");
 			writer.write("\\\\\\hline\\hline\n");
 			int totalFailure = 0;
 			int totalError = 0;
@@ -230,22 +230,34 @@ public aspect InterceptTestFailure {
 				totalNonSuccessOnly += nonSuccessOnly.get(type);
 				totalMixedOnly += mixedOnly.get(type);
 				
-				writer.write(totalSuccessPerType.get(type) + "\t& ");
-				writer.write(totalFailurePerType.get(type) + "\t& ");
-				writer.write(totalErrorPerType.get(type) + "\t& ");
+//				writer.write(totalSuccessPerType.get(type) + "\t& ");
+//				writer.write(totalFailurePerType.get(type) + "\t& ");
+//				writer.write(totalErrorPerType.get(type) + "\t& ");
 				
 				writer.write(successOnly.get(type) + "\t& ");
 				writer.write(nonSuccessOnly.get(type) + "\t& ");
 				writer.write(mixedOnly.get(type) + "\\\\\\hline\n");
 			}
 			writer.write("\\hline\n");
-			writer.write(" & " + totalSuccess);
-			writer.write(" & " + totalFailure);
-			writer.write(" & " + totalError);
+//			writer.write(" & " + totalSuccess);
+//			writer.write(" & " + totalFailure);
+//			writer.write(" & " + totalError);
 			writer.write(" & " + totalSuccessOnly);
 			writer.write(" & " + totalNonSuccessOnly);
 			writer.write(" & " + totalMixedOnly + "\\\\\\hline\n");
 			writer.write("\\end{tabular}\n");
+			
+			writer.flush();
+			writer.close();
+			
+			writer = new FileWriter(new File("numbers.tex"));
+			
+			writer.write("\\def\\numOfTestMethods{" + tests + "}\n");
+			writer.write("\\def\\numOfAssertionsExecuted{" + assertionsTotal + "}\n");
+			writer.write("\\def\\numOfFailures{" + failuresTotal +  "}\n");
+			writer.write("\\def\\numOfErrors{" + errorsTotal + "}\n");
+			writer.write("\\def\\numOfSuccesses{" + (tests - (errorsTotal + failuresTotal)) + "}\n");
+			
 			writer.flush();
 			writer.close();
 		}
@@ -362,39 +374,5 @@ public aspect InterceptTestFailure {
 		}
 	}
 	
-
-//	Collections.sort(methods);
-//	for (String method: methods) {
-//		System.out.println(method + ": ");
-//		System.out.println("\t" + assertionCount.get(method) + " assertions");
-//		System.out.println("\t" + failureCount.get(method) + " failed");
-//		System.out.println("\t" + errorCount.get(method) + " errors");
-//	}
-//	System.out.println("***** FAILURES ****** (" + failures.size() + " out of " + tests + ")");
-//	int i = 1;
-//	for (String test: failures.keySet()) {
-//		String prettyTest = test.replaceAll("execution\\(", "").replaceAll("\\)$", "");
-//		String prettyMethod = failures.get(test);
-//		prettyMethod = prettyMethod.replaceAll("execution\\(", "");
-//		prettyMethod = prettyMethod.replaceAll("\\)$", "");
-//		prettyMethod = prettyMethod.replaceAll("org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.", "");
-//		prettyMethod = prettyMethod.substring(prettyMethod.indexOf(" ") + 1);
-//		System.out.println(i + " " + prettyTest + ": " + prettyMethod);
-//		i++;
-//	}
-//	System.out.println("***** ERRORS ****** (" + errors.size() + " out of " + tests + ")");
-//	// TODO refactor...
-//	i = 1;
-//	for (String test: errors.keySet()) {
-//		String prettyTest = test.replaceAll("execution\\(", "").replaceAll("\\)$", "");
-//		String prettyMethod = errors.get(test);
-//		prettyMethod = prettyMethod.replaceAll("execution\\(", "");
-//		prettyMethod = prettyMethod.replaceAll("\\)$", "");
-//		prettyMethod = prettyMethod.replaceAll("org.planet_sl.apimigration.benchmark.jdom.wrapped_as_xom.", "");
-//		prettyMethod = prettyMethod.substring(prettyMethod.indexOf(" ") + 1);
-//		System.out.println(i + " " + prettyTest + ": " + prettyMethod + " ("
-//				+ exceptions.get(test).getClass() + ")");
-//		i++;
-//	}
-	
 }
+
