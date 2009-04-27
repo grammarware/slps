@@ -7,6 +7,6 @@ cd ../..
 SLPS=${PWD}
 cd ${LOCAL1}
 
-python ${SLPS}/topics/presentation/metrics/xbgf_overview.py $1 $2 $3 >$4
-python ${SLPS}/topics/presentation/metrics/xbgf_detailed_overview.py $1 $2 $3 >$5
+python ${SLPS}/shared/python/xbgf_overview.py $1 $2 $3 >$4
+python ${SLPS}/shared/python/xbgf_detailed_overview.py $1 $2 $3 >$5
 

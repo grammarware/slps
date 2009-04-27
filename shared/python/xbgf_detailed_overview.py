@@ -1,31 +1,13 @@
 #!/usr/bin/python
 import os
 import sys
+import slpsns
+import slpsXPath
 import elementtree.ElementTree as ET
 
 names   = []
 targets = {}
 results = {}
-
-bgfns = 'http://planet-sl.org/bgf'
-xbgfns= 'http://planet-sl.org/xbgf'
-xsdns = 'http://www.w3.org/2001/XMLSchema'
-
-ET._namespace_map[bgfns] = 'bgf'
-ET._namespace_map[xbgfns]='xbgf'
-ET._namespace_map[xsdns] = 'xsd'
-
-def loc(filename):
- f = open(filename,'r')
- c = len(f.readlines())
- f.close()
- return c-1
-
-def noi(filename):
- f = open(filename,'r')
- c = ''.join(f.readlines()).count('<!--')
- f.close()
- return c
 
 def report(keys,key,note):
  s = note.replace('xbgf:','')
@@ -47,9 +29,9 @@ if __name__ == "__main__":
   sys.exit(1)
  xsd = ET.parse(sys.argv[1])
  gn = 0
- for x in xsd.findall('/xsd:group/xsd:choice'.replace('xsd:','{'+xsdns+'}')):
+ for x in xsd.findall('/'+slpsns.xsd_('group')+'/'+slpsns.xsd_('choice')):
   names.append([])
-  for y in x.findall('xsd:element'.replace('xsd:','{'+xsdns+'}')):
+  for y in x.findall(slpsns.xsd_('element')):
    if y.attrib.has_key('ref'):
     names[gn].append(y.attrib['ref'])
   gn += 1
@@ -76,13 +58,13 @@ if __name__ == "__main__":
   results['NOI'][x] = 0
   results['NOX'][x] = 0
   for y in targets[x]:
-   results['LOC'][x] += loc(path+y+'.xbgf')
-   results['NOI'][x] += noi(path+y+'.xbgf')
+   results['LOC'][x] += slpsXPath.loc(path+y+'.xbgf')
+   results['NOI'][x] += slpsXPath.noi(path+y+'.xbgf')
    xbgf = ET.parse(path+y+'.xbgf')
    results['NOX'][x] += len(xbgf.findall('/*'))
    for z in names:
     for q in z:
-     results[q][x] += len(xbgf.findall(q.replace('xbgf:','{'+xbgfns+'}')))
+     results[q][x] += len(xbgf.findall(q.replace('xbgf:',slpsns.xbgf_(''))))
  for x in names:
   for y in x:
    used = False
