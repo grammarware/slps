@@ -17,11 +17,10 @@
   </xsl:template>
 
   <xsl:template match="xbgf:atomic">
-    <xsl:value-of select="local-name()" />
-    <xsl:text>(
+    <xsl:text>[[
 </xsl:text>
     <xsl:apply-templates select="./xbgf:*"/>
-    <xsl:text>);
+    <xsl:text>]];
 </xsl:text>
   </xsl:template>
 
