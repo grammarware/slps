@@ -3,7 +3,7 @@ validator = ../../../shared/tools/checkxml
 build:
 
 test:
-	../../../shared/tools/lci java3.lcf architecture
+	../../../shared/tools/lci java.lcf architecture
 
 check:
 	${validator} lcf java.lcf

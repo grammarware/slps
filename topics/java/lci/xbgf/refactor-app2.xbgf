@@ -80,6 +80,7 @@
       </bgf:production>
     </xbgf:extract>
   </xbgf:atomic>
+  
   <xbgf:massage>
     <bgf:expression>
       <optional>
@@ -103,7 +104,7 @@
 
   <xbgf:horizontal>MemberDecl</xbgf:horizontal>
   <xbgf:inline>MemberDecl</xbgf:inline>
-  <xbgf:distribute>
+<!--  <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:distribute>
   <xbgf:vertical>
@@ -112,9 +113,10 @@
   <xbgf:distribute>
     <nonterminal>Statement</nonterminal>
   </xbgf:distribute>
+  
   <xbgf:vertical>
     <nonterminal>Statement</nonterminal>
-  </xbgf:vertical>
+  </xbgf:vertical>-->
 
   <xbgf:fold>
     <nonterminal>ParExpression</nonterminal>

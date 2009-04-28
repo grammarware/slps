@@ -147,8 +147,11 @@
         <perform>refactorClasses-doc2</perform>
         <perform>refactorInterfaces-doc2</perform>
         <perform>refactorDeclarations-doc2</perform>
-        <perform>edit-doc2</perform>
+        <perform>refactorMinorMismatches</perform>
       </refactoring>
+      <relaxation>
+        <perform>edit-doc2</perform>
+      </relaxation>
     </branch>
   </target>
 
@@ -208,8 +211,11 @@
         <perform>refactorTypes-jls1</perform>
         <perform>editDeclarations</perform>
         <perform>refactorExpressions</perform>
-        <perform>editExpressions-jls1</perform>
+        <perform>refactorMinorMismatches</perform>
       </refactoring>
+      <relaxation>
+        <perform>editExpressions-jls1</perform>
+      </relaxation>
       <extension>
         <perform>extend-jls1</perform>
       </extension>
