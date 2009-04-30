@@ -1,0 +1,8 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- should be a part of inlineStatements, actually, but needed only for doc3 -->
+  <xbgf:horizontal>ForStatement</xbgf:horizontal>
+  
+</xbgf:sequence>

@@ -42,6 +42,8 @@
   <!-- finishing touches -->
   <xbgf:eliminate>FormalParameterList</xbgf:eliminate>
   <xbgf:eliminate>LastFormalParameter</xbgf:eliminate>
+  <xbgf:eliminate>NonWildTypeArguments</xbgf:eliminate>
+  <xbgf:eliminate>ReferenceTypeList</xbgf:eliminate>
   <xbgf:eliminate>TypeDeclSpecifier</xbgf:eliminate>
-
+  
 </xbgf:sequence>

@@ -163,7 +163,12 @@
         <perform>recover-app3</perform>
         <perform>correct-app3</perform>
       </earlyfixes>
-      <refactoring><perform>refactor-app3</perform></refactoring>
+      <namematching>
+        <perform>extract-app3</perform>
+      </namematching>
+      <refactoring>
+        <perform>refactor-app3</perform>
+      </refactoring>
       <relaxation>
         <perform>generalizeLabels</perform>
         <perform>generalizeBlock</perform>
@@ -184,17 +189,20 @@
         <perform>generalizeNames</perform>
         <perform>deyaccifyStatements</perform>
         <perform>refactorTypes-doc3</perform>
-        <perform>refactorExpressions-doc3</perform>
+        <perform>inlineForStatement</perform>
         <perform>inlineStatements</perform>
         <perform>generalizeStatements</perform>
         <perform>refactorStatements-doc3</perform>
-        <perform>editExpressions-doc3</perform>
         <perform>refactorClasses-doc3</perform>
         <perform>refactorInterfaces-doc3</perform>
         <perform>refactorEnums</perform>
         <perform>refactorDeclarations-doc3</perform>
-        <perform>edit-doc3</perform>
       </refactoring>
+      <relaxation>
+        <perform>relaxExpressions-doc3</perform>
+        <perform>editExpressions-doc3</perform>
+        <perform>edit-doc3</perform>
+      </relaxation>
     </branch>
   </target>
 

@@ -114,49 +114,6 @@
 
   -->
 
-  <!-- [Dims] vs BracketsOpt-->
-  <xbgf:deyaccify>Dims</xbgf:deyaccify>
-  <xbgf:unfold>
-    <nonterminal>Dims</nonterminal>
-    <in>
-      <nonterminal>BracketsOpt</nonterminal>
-    </in>
-  </xbgf:unfold>
-  <xbgf:massage>
-    <bgf:expression>
-      <optional>
-        <bgf:expression>
-          <plus>
-            <bgf:expression>
-              <sequence>
-                <bgf:expression>
-                  <terminal>[</terminal>
-                </bgf:expression>
-                <bgf:expression>
-                  <terminal>]</terminal>
-                </bgf:expression>
-              </sequence>
-            </bgf:expression>
-          </plus>
-        </bgf:expression>
-      </optional>
-    </bgf:expression>
-    <bgf:expression>
-      <star>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <terminal>[</terminal>
-            </bgf:expression>
-            <bgf:expression>
-              <terminal>]</terminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </star>
-    </bgf:expression>
-  </xbgf:massage>
-
   <!-- ISSUE PERMISSIVENESS
   Everything that can be united to make Expression2 -->
   <xbgf:unite>
@@ -1468,8 +1425,5 @@
       <nonterminal>Expression</nonterminal>
     </in>
   </xbgf:widen>
-  
-  <!-- should be a part of inlineStatements, actually, but needed only for doc3 -->
-  <xbgf:horizontal>ForStatement</xbgf:horizontal>
-  
+    
 </xbgf:sequence>

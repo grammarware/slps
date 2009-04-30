@@ -499,6 +499,50 @@
     </bgf:production>
   </xbgf:extract>
 
+  <!-- [Dims] vs BracketsOpt-->
+  <xbgf:deyaccify>Dims</xbgf:deyaccify>
+  <xbgf:unfold>
+    <nonterminal>Dims</nonterminal>
+    <in>
+      <nonterminal>BracketsOpt</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>[</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <terminal>]</terminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>[</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>]</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+  </xbgf:massage>
+
+
   <!--
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(ResultType), n(MethodDeclarator), ?(n(Throws)), n(MethodBody)])
   -->
@@ -1173,8 +1217,7 @@ Block:
     </bgf:production>
   </xbgf:disappear>
   <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
-  <xbgf:eliminate>NonWildTypeArguments</xbgf:eliminate>
-  <xbgf:eliminate>ReferenceTypeList</xbgf:eliminate>
+
   <xbgf:fold>
     <nonterminal>Block</nonterminal>
   </xbgf:fold>
