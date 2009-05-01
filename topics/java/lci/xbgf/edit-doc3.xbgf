@@ -38,7 +38,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
-
+  
   <!-- finishing touches -->
   <xbgf:eliminate>FormalParameterList</xbgf:eliminate>
   <xbgf:eliminate>LastFormalParameter</xbgf:eliminate>

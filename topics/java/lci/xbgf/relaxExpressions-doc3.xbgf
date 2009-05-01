@@ -116,44 +116,46 @@
 
   <!-- ISSUE PERMISSIVENESS
   Everything that can be united to make Expression2 -->
-  <xbgf:unite>
-    <add>ConditionalAndExpression</add>
-    <to>Expression2</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>InclusiveOrExpression</add>
-    <to>Expression2</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>ExclusiveOrExpression</add>
-    <to>Expression2</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>AndExpression</add>
-    <to>Expression2</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>EqualityExpression</add>
-    <to>Expression2</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>RelationalExpression</add>
-    <to>Expression2</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>ShiftExpression</add>
-    <to>Expression2</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>AdditiveExpression</add>
-    <to>Expression2</to>
-  </xbgf:unite>
-  <xbgf:unite>
-    <add>MultiplicativeExpression</add>
-    <to>Expression2</to>
-  </xbgf:unite>
-  <xbgf:horizontal>Expression2</xbgf:horizontal>
-
+  <xbgf:atomic>
+    <xbgf:unite>
+      <add>ConditionalAndExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    <xbgf:unite>
+      <add>InclusiveOrExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    <xbgf:unite>
+      <add>ExclusiveOrExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    <xbgf:unite>
+      <add>AndExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    <xbgf:unite>
+      <add>EqualityExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    <xbgf:unite>
+      <add>RelationalExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    <xbgf:unite>
+      <add>ShiftExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    <xbgf:unite>
+      <add>AdditiveExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    <xbgf:unite>
+      <add>MultiplicativeExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    <xbgf:horizontal>Expression2</xbgf:horizontal>
+  </xbgf:atomic>
+  
   <!-- Introducing another layering scheme: Expression3 -->
   <!-- GENERALITY -->
   <xbgf:replace>
@@ -494,75 +496,77 @@
       </sequence>
     </bgf:expression>
   </xbgf:factor>
-  <xbgf:extract>
-    <bgf:production>
+  <xbgf:atomic>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>InfixOp</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <terminal>&#38;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&#38;&#38;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>||</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>|</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>^</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>==</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>!=</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&lt;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&gt;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&lt;=</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&gt;=</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&lt;&lt;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&gt;&gt;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>&gt;&gt;&gt;</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>+</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>-</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>*</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>/</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>%</terminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:vertical>
       <nonterminal>InfixOp</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <terminal>&#38;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&#38;&#38;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>||</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>|</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>^</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>==</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>!=</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&lt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&gt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&lt;=</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&gt;=</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&lt;&lt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&gt;&gt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>&gt;&gt;&gt;</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>+</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>-</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>*</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>/</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>%</terminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
-  <xbgf:vertical>
-    <nonterminal>InfixOp</nonterminal>
-  </xbgf:vertical>
+    </xbgf:vertical>
+  </xbgf:atomic>
 
   <!-- revert of l-assoc-->
   <xbgf:widen>
@@ -671,42 +675,44 @@
       </sequence>
     </bgf:expression>
   </xbgf:factor>
-  <xbgf:extract>
-    <bgf:production>
+  <xbgf:atomic>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>Expression2Rest</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <sequence>
+                <bgf:expression>
+                  <terminal>instanceof</terminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>Type</nonterminal>
+                </bgf:expression>
+              </sequence>
+            </bgf:expression>
+            <bgf:expression>
+              <star>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <nonterminal>InfixOp</nonterminal>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <nonterminal>Expression3</nonterminal>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </star>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:vertical>
       <nonterminal>Expression2Rest</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>instanceof</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Type</nonterminal>
-              </bgf:expression>
-            </sequence>
-          </bgf:expression>
-          <bgf:expression>
-            <star>
-              <bgf:expression>
-                <sequence>
-                  <bgf:expression>
-                    <nonterminal>InfixOp</nonterminal>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Expression3</nonterminal>
-                  </bgf:expression>
-                </sequence>
-              </bgf:expression>
-            </star>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
-  <xbgf:vertical>
-    <nonterminal>Expression2Rest</nonterminal>
-  </xbgf:vertical>
+    </xbgf:vertical>
+  </xbgf:atomic>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -1014,36 +1020,38 @@
       </sequence>
     </bgf:expression>
   </xbgf:factor>
-  <xbgf:extract>
-    <bgf:production>
+  <xbgf:atomic>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>PrefixOp</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <terminal>++</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>--</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>+</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>-</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>~</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>!</terminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:vertical>
       <nonterminal>PrefixOp</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <terminal>++</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>--</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>+</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>-</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>~</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>!</terminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
-  <xbgf:vertical>
-    <nonterminal>PrefixOp</nonterminal>
-  </xbgf:vertical>
+    </xbgf:vertical>
+  </xbgf:atomic>
 
   <!-- ISSUE PERMISSIVENESS BRUTAL
  - Fail: StatementExpression.
@@ -1156,27 +1164,29 @@
       </sequence>
     </bgf:expression>
   </xbgf:factor>
-  <xbgf:extract>
-    <bgf:production>
+  <xbgf:atomic>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>PostfixOp</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <terminal>++</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>--</terminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+      <in>
+        <nonterminal>PostfixExpression</nonterminal>
+      </in>
+    </xbgf:extract>
+    <xbgf:vertical>
       <nonterminal>PostfixOp</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <terminal>++</terminal>
-          </bgf:expression>
-          <bgf:expression>
-            <terminal>--</terminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-    <in>
-      <nonterminal>PostfixExpression</nonterminal>
-    </in>
-  </xbgf:extract>
-  <xbgf:vertical>
-    <nonterminal>PostfixOp</nonterminal>
-  </xbgf:vertical>
+    </xbgf:vertical>
+  </xbgf:atomic>
 
   <!-- 
    - Fail: Expression3/PostfixExpression.
@@ -1184,26 +1194,28 @@
      vs.
       - [], ,([;([n(Primary), n(QualifiedIdentifier)]), *(n(PostfixOp))])
   -->
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>TMP</nonterminal>
-      <bgf:expression>
-        <choice>
-          <bgf:expression>
-            <nonterminal>Primary</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>QualifiedIdentifier</nonterminal>
-          </bgf:expression>
-        </choice>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
-  <xbgf:vertical>
-    <nonterminal>PostfixExpression</nonterminal>
-  </xbgf:vertical>
-  <xbgf:deyaccify>PostfixExpression</xbgf:deyaccify>
-  <xbgf:inline>TMP</xbgf:inline>
+  <xbgf:atomic>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>TMP</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <nonterminal>Primary</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>QualifiedIdentifier</nonterminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:vertical>
+      <nonterminal>PostfixExpression</nonterminal>
+    </xbgf:vertical>
+    <xbgf:deyaccify>PostfixExpression</xbgf:deyaccify>
+    <xbgf:inline>TMP</xbgf:inline>
+  </xbgf:atomic>
 
   <xbgf:inline>PostfixExpression</xbgf:inline>
 

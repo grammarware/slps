@@ -135,7 +135,7 @@
         <perform>rename-doc2</perform>
       </namematching>
       <refactoring>
-        <perform>generalizeModifiers</perform>
+        <perform>generalizeModifiers-doc2</perform>
         <perform>generalizeNames</perform>
         <perform>deyaccifyStatements</perform>
         <perform>refactorTypes-doc2</perform>
@@ -185,20 +185,22 @@
         <perform>rename-doc3</perform>
       </namematching>
       <refactoring>
-        <perform>generalizeModifiers</perform>
-        <perform>generalizeNames</perform>
         <perform>deyaccifyStatements</perform>
-        <perform>refactorTypes-doc3</perform>
         <perform>inlineForStatement</perform>
         <perform>inlineStatements</perform>
-        <perform>generalizeStatements</perform>
         <perform>refactorStatements-doc3</perform>
         <perform>refactorClasses-doc3</perform>
-        <perform>refactorInterfaces-doc3</perform>
         <perform>refactorEnums</perform>
-        <perform>refactorDeclarations-doc3</perform>
       </refactoring>
       <relaxation>
+        <perform>generalizeModifiers-doc3</perform>
+        <perform>relaxClasses-doc3</perform>
+        <perform>generalizeNames</perform>
+        <perform>refactorTypes-doc3</perform>
+        <perform>generalizeStatements</perform>
+        <perform>refactorInterfaces-doc3</perform>
+        
+        <perform>refactorDeclarations-doc3</perform>
         <perform>relaxExpressions-doc3</perform>
         <perform>editExpressions-doc3</perform>
         <perform>edit-doc3</perform>

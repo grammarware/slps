@@ -803,10 +803,6 @@
     </bgf:expression>
   </xbgf:massage>
 
-  <xbgf:fold>
-    <nonterminal>BracketsOpt</nonterminal>
-  </xbgf:fold>
-
   <!-- 
    - Fail: ImportDeclaration.
       - [], ,([t(import), ?(t(static)), n(Identifier), *(,([t(.), n(Identifier)])), ?(,([t(.), t(*)])), t((;))])

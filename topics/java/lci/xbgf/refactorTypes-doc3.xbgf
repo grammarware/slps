@@ -370,6 +370,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:upgrade>
+  <xbgf:inline>Super</xbgf:inline>
 
   <xbgf:unite>
     <add>InterfaceType</add>
@@ -389,11 +390,18 @@
           <bgf:expression>
             <marked>
               <bgf:expression>
-                <optional>
+                <star>
                   <bgf:expression>
-                    <nonterminal>Dims</nonterminal>
+                    <sequence>
+                      <bgf:expression>
+                        <terminal>[</terminal>
+                      </bgf:expression>
+                      <bgf:expression>
+                        <terminal>]</terminal>
+                      </bgf:expression>
+                    </sequence>
                   </bgf:expression>
-                </optional>
+                </star>
               </bgf:expression>
             </marked>
           </bgf:expression>
@@ -408,18 +416,7 @@
      vs.
       - [], ,([n(QualifiedIdentifier), *(,([?(n(TypeArguments)), n(BracketsOpt), t(.), n(Identifier)])), ?(n(TypeArguments)), n(BracketsOpt)])
   -->
-  <xbgf:extract>
-    <bgf:production>
-      <nonterminal>BracketsOpt</nonterminal>
-      <bgf:expression>
-        <optional>
-          <bgf:expression>
-            <nonterminal>Dims</nonterminal>
-          </bgf:expression>
-        </optional>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:extract>
+
 
 
 
@@ -439,6 +436,9 @@
   -->
   <xbgf:deyaccify>TypeDeclSpecifier</xbgf:deyaccify>
 
+  <xbgf:fold>
+    <nonterminal>BracketsOpt</nonterminal>
+  </xbgf:fold>
   <xbgf:upgrade>
     <bgf:production>
       <nonterminal>RelationalExpression</nonterminal>
@@ -625,11 +625,18 @@
                           <bgf:expression>
                             <marked>
                               <bgf:expression>
-                                <optional>
+                                <star>
                                   <bgf:expression>
-                                    <nonterminal>Dims</nonterminal>
+                                    <sequence>
+                                      <bgf:expression>
+                                        <terminal>[</terminal>
+                                      </bgf:expression>
+                                      <bgf:expression>
+                                        <terminal>]</terminal>
+                                      </bgf:expression>
+                                    </sequence>
                                   </bgf:expression>
-                                </optional>
+                                </star>
                               </bgf:expression>
                             </marked>
                           </bgf:expression>
@@ -1051,11 +1058,18 @@ TypeArgument:
                   <bgf:expression>
                     <marked>
                       <bgf:expression>
-                        <optional>
+                        <star>
                           <bgf:expression>
-                            <nonterminal>Dims</nonterminal>
+                            <sequence>
+                              <bgf:expression>
+                                <terminal>[</terminal>
+                              </bgf:expression>
+                              <bgf:expression>
+                                <terminal>]</terminal>
+                              </bgf:expression>
+                            </sequence>
                           </bgf:expression>
-                        </optional>
+                        </star>
                       </bgf:expression>
                     </marked>
                   </bgf:expression>
@@ -1077,11 +1091,18 @@ TypeArgument:
             </optional>
           </bgf:expression>
           <bgf:expression>
-            <optional>
+            <star>
               <bgf:expression>
-                <nonterminal>Dims</nonterminal>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>[</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>]</terminal>
+                  </bgf:expression>
+                </sequence>
               </bgf:expression>
-            </optional>
+            </star>
           </bgf:expression>
         </sequence>
       </bgf:expression>
