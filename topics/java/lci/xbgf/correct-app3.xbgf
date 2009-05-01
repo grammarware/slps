@@ -13,6 +13,7 @@
 Annotation:
         </em><code>@</code><em> TypeName [<code>(</code> [Identifier <code>=</code>] ElementValue<code>)</code>]
   -->
+  <!-- KNOWNBUG -->
   <xbgf:unite>
     <add>TypeName</add>
     <to>QualifiedIdentifier</to>
@@ -25,6 +26,7 @@ Annotation:
      vs.
       - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
   -->
+  <!-- KNOWNBUG -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>Expression2Rest</nonterminal>
@@ -51,6 +53,7 @@ Annotation:
   <!-- ISSUE CORRECT SPECERROR 
   lacking definition copied from JLS2 with proper renaming -->
   <!-- GENERALITY -->
+  <!-- KNOWNBUG -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ForUpdate</nonterminal>
@@ -66,6 +69,7 @@ Annotation:
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- KNOWNBUG -->
   <xbgf:unite>
     <add>MoreStatementExpressions</add>
     <to>Expressions</to>
@@ -79,6 +83,7 @@ Annotation:
       - [], ;([n(Block),
                ,([t(break), ?(n(Identifier)), t((;))]),
   -->
+  <!-- CORRECTION -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -108,6 +113,7 @@ Annotation:
   
   <!--   ISSUE CORRECT SPECERROR
          same with continue -->
+	  <!-- CORRECTION -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -145,6 +151,7 @@ Annotation:
         
    The XBGF command could've been concretize!
   -->
+  <!-- KNOWNBUG -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ElementValues</nonterminal>
@@ -178,6 +185,7 @@ Annotation:
 
   <!--   undefine lexical term -->
   <!-- GENERALITY -->
+  <!-- RELAXATION -->
   <xbgf:undefine>Identifier</xbgf:undefine>
 
   <!-- ISSUE CORRECT SPECERROR -->
@@ -194,6 +202,7 @@ AnnotationMethodRest:
 AnnotationConstantRest:
         VariableDeclarators
   -->
+  <!-- CORRECTION -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>AnnotationTypeElementRest</nonterminal>
@@ -219,6 +228,7 @@ AnnotationConstantRest:
       </bgf:expression>
     </bgf:production>
   </xbgf:project>
+  <!-- CORRECTION -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>AnnotationMethodOrConstantRest</nonterminal>
@@ -253,6 +263,7 @@ FormalParameter:
     
     -->
   <!-- GENERALITY -->
+  <!-- KNOWNBUG -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>FormalParameter</nonterminal>
@@ -283,6 +294,7 @@ FormalParameter:
     () {[]} [DefaultValue]
       where {[]} means 0 or more []'s. [DefaultValue] means 0 or 1 DefaultValue.
   -->
+  <!-- KNOWNBUG -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>AnnotationMethodRest</nonterminal>
@@ -324,7 +336,7 @@ FormalParameter:
     </bgf:production>
   </xbgf:appear>
   
-  <!-- ISSUE CORRECT
+  <!-- I S S U E   C O R R E C T 
   as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
 * 18.1 defines TypeArgument incorrectly, e.g. '? extends int' is legal.
   Correct are ActualTypeArgument and Wildcard from 4.5.1. They use ReferenceType, which is in 4.3 but not 18.1.

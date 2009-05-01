@@ -27,6 +27,7 @@
   <xbgf:vertical>
     <nonterminal>ConstantModifier</nonterminal>
   </xbgf:vertical>
+  <!-- CORRECTION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -53,6 +54,7 @@
      vs.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators)])
   -->
+  <!-- CORRECTION -->
   <xbgf:widen>
     <bgf:expression>
       <nonterminal>ConstantModifiers</nonterminal>
@@ -78,6 +80,7 @@
       
   SimpleTypeName is not defined formally in the JLS1
   -->
+  <!-- CORRECTION -->
   <xbgf:unite>
     <add>SimpleTypeName</add>
     <to>Identifier</to>
@@ -85,6 +88,7 @@
 
   <!-- ISSUE CORRECT SPECERROR
        Another typo of JLS2 -->
+	  <!-- INITCORR -->
   <xbgf:unite>
     <add>Identifer</add>
     <to>Identifier</to>

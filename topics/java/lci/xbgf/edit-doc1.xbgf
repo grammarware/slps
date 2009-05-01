@@ -80,6 +80,7 @@
       - [], ;([,([t(new), n(ClassOrInterfaceType), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))]),
                ,([n(Primary), t(.), t(new), n(Identifier), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))])])
   -->
+  <!-- EXTENSION -->
   <xbgf:upgrade>
     <bgf:production>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
@@ -118,6 +119,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:upgrade>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -151,6 +153,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>

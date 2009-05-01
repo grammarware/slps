@@ -10,6 +10,7 @@
   <!-- ISSUE CORRECT SPECERROR
   They forgot to define a nonterminal with "intuitive" name - we predicted it in ISO N3977! -->
   <!-- GENERALITY -->
+  <!-- INITCORR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ForInitOpt</nonterminal>
@@ -27,6 +28,7 @@
   <!-- ISSUE CORRECT SPECERROR
   They forgot to define a nonterminal with "intuitive" name - we predicted it in ISO N3977! -->
   <!-- GENERALITY -->
+<!-- INITCORR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ForUpdateOpt</nonterminal>
@@ -43,6 +45,7 @@
 
   <!-- ISSUE CORRECT SPECERROR
   let's complete some of the statements with a trailing semicolon-->
+ <!-- CORRECTION -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -72,6 +75,7 @@
   
   <!-- ISSUE CORRECT SPECERROR
   Same for BreakStatement -->
+ <!-- CORRECTION -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -108,6 +112,7 @@
      Primary { Selector } { PostfixOp }
   -->
   <!-- GENERALITY -->
+  <!-- INITCORR -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>Expr</nonterminal>
@@ -123,6 +128,7 @@
      vs.
       - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
  -->
+ <!-- CORRECTION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
@@ -180,6 +186,7 @@
   <!-- ISSUE CORRECT SPECERROR
   undefined non-terminals -->
   <!-- GENERALITY -->
+  <!-- INITCORR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ExpressionStatement</nonterminal>
@@ -205,6 +212,7 @@
 
   <!--   undefine lexical term -->
   <!-- GENERALITY -->
+  <!-- RELAXATION -->
   <xbgf:undefine>Identifier</xbgf:undefine>
 
   <!-- ISSUE CORRECT SPECERROR
@@ -214,6 +222,7 @@
      vs.
       - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
   -->
+  <!-- KNOWNBUG -->
   <xbgf:project>
     <bgf:production>
       <nonterminal>Expression2Rest</nonterminal>

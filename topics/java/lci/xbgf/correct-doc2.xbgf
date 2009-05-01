@@ -15,6 +15,7 @@
      vs.
       - [], ;([n(ConstantModifier), ,([n(ConstantModifiers), n(ConstantModifer)])])
   -->
+  <!-- INITCORR -->
   <xbgf:unite>
     <add>ConstantModifer</add>
     <to>ConstantModifier</to>
@@ -22,6 +23,7 @@
   
   <!-- ISSUE CORRECT SPECERROR
   Another typo of JLS2 -->
+  <!-- INITCORR -->
   <xbgf:unite>
     <add>Identifer</add>
     <to>Identifier</to>
@@ -30,6 +32,7 @@
   <!-- ISSUE CORRECT SPECERROR
   Left forgotten and undefined -->
   <!-- GENERALITY -->
+  <!-- INITCORR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ClassName</nonterminal>
@@ -67,6 +70,7 @@
       
   SimpleTypeName is not defined formally in the JLS2
   -->
+  <!-- CORRECTION -->
   <xbgf:unite>
     <add>SimpleTypeName</add>
     <to>Identifier</to>

@@ -14,6 +14,7 @@
      vs.
       - [], ;([n(ConstantModifier), ,([n(ConstantModifier), n(ConstantModifers)])])
   -->
+  <!-- INITCORR -->
   <xbgf:unite>
     <add>ConstantModifers</add>
     <to>ConstantModifiers</to>
@@ -30,6 +31,7 @@
 </em></pre></blockquote>
   -->
   <!-- GENERALITY -->
+  <!-- INITCORR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>TypeParameters</nonterminal>
@@ -49,6 +51,7 @@
     </bgf:production>
   </xbgf:define>
   <!-- GENERALITY -->
+  <!-- INITCORR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>TypeParameterList</nonterminal>
@@ -86,6 +89,7 @@
       
   SimpleTypeName is not defined formally in the JLS2
   -->
+  <!-- CORRECTION -->
   <xbgf:unite>
     <add>SimpleTypeName</add>
     <to>Identifier</to>
@@ -94,6 +98,7 @@
   <!-- ISSUE CORRECT SPECERROR
   Left forgotten and undefined -->
   <!-- GENERALITY -->
+  <!-- INITCORR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ClassName</nonterminal>
@@ -125,10 +130,12 @@
 
   <!-- ISSUE CORRECT SPECERROR
   "Expression1" and "Expression2" define different "Expression"s in AssertStatement actually -->
+  <!-- INITCORR -->
   <xbgf:unite>
     <add>Expression1</add>
     <to>Expression</to>
   </xbgf:unite>
+  <!-- INITCORR -->
   <xbgf:unite>
     <add>Expression2</add>
     <to>Expression</to>
@@ -280,6 +287,7 @@
               ,([n(TypeName), t(.), n(Identifier)]),
               ,([n(PackageOrTypeName), t(.), n(Identifier)])])
   -->
+  <!-- CORRECTION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -307,6 +315,7 @@
   AnnotationTypeElementDeclaration:
     AbstractMethodModifiersopt Type Identifier ( ) Dimsopt DefaultValueopt ;
   -->
+  <!-- KNOWNBUG -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
@@ -365,6 +374,7 @@
   FormalParameter:
     VariableModifiers_opt Type VariableDeclaratorId
     -->
+  <!-- KNOWNBUG -->
   <xbgf:widen>
     <bgf:expression>
       <nonterminal>VariableModifiers</nonterminal>
@@ -390,6 +400,7 @@
     VariableModifiers_opt Type ..._opt VariableDeclaratorId
     FormalParameter
   -->
+  <!-- KNOWNBUG -->
   <xbgf:widen>
     <bgf:expression>
       <nonterminal>VariableModifiers</nonterminal>
@@ -410,6 +421,7 @@
 
     the same problem
   -->
+<!-- KNOWNBUG -->
   <xbgf:widen>
     <bgf:expression>
       <nonterminal>VariableModifiers</nonterminal>
