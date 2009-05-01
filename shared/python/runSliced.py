@@ -17,22 +17,23 @@ def main(xbgfFile,bgfFile,xbgf,gdt,synch):
  sliced = slicing.sliceFile(xbgfDir,xbgfDir,xbgfFile.split('/')[-1].replace('.xbgf',''))
  print 'Runnning...'
  pnm,psm = metrics.mismatches(gdt,bgfFile,synch)
+ print 'Mismatches originally:',pnm,'+',psm,'...',len(sliced),'steps to go'
  cx = ''
  for p in sliced:
-  run = xbgf+' '+xbgfDir+p+'.xbgf '+bgfFile+cx+' '+bgfFile+cx+'_ 1> /dev/null 2> /dev/null'
+  run = xbgf+' '+xbgfDir+p+'.xbgf '+bgfFile+cx+' '+bgfFile+cx+'_ | grep "XBGF"'#1> /dev/null 2> /dev/null'
   if os.system(run):
    print 'Error running',p,'!'
    print run
    sys.exit(2)
-  nm,sm = metrics.mismatches(gdt,bgfFile+cx,synch)
+  nm,sm = metrics.mismatches(gdt,bgfFile+cx+'_',synch)
   print 'Mismatches:',nm,'+',sm
-  if nm+sm>pnm+psm:
-   print 'The number of mismatches went up from',pnm+psm,'to',nm+sm
-   sys.exit(3)
   if nm>pnm:
    print 'Observed increase in name mismatches!'
   if sm>psm:
    print 'Observed increase in structural mismatches!'
+  if nm+sm>pnm+psm:
+   print 'The number of mismatches went up from',pnm+psm,'to',nm+sm
+   sys.exit(3)
   cx += '_'
   pnm,psm=nm,sm
  print 'Cleaning up...'
@@ -42,8 +43,9 @@ def main(xbgfFile,bgfFile,xbgf,gdt,synch):
  print s
  s = 'rm -f '
  for c in sliced:
-  s += c
- print s
+  s += xbgfDir+c+'.xbgf '
+ if os.system(s):
+  print 'Error cleaning up sliced XBGFs!'
  return
 
 if __name__ == "__main__":

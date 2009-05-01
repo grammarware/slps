@@ -66,7 +66,7 @@ if __name__ == "__main__":
    results['SRE'][x] += slpsXPath.noni(xbgf,slpsXPath.messyxbgf)+\
                         slpsXPath.nosi(path+y+'.xbgf','REVISE')+\
                         slpsXPath.noPartiallyUnsafe(xbgf)
-   results['NOX'][x] += len(xbgf.findall('/*'))
+   results['NOX'][x] += slpsXPath.notr(xbgf)
    for z in names:
     results[z][x] += len(xbgf.findall('/'+slpsns.xbgf_(z)))
  for x in names[:]:

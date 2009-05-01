@@ -53,11 +53,15 @@ def runxpath2(filename,xpathexpr):
  tmp.close()
  return res
 
+def notr(xbgf):
+ return len(xbgf.findall('/*')) - \
+        len(xbgf.findall('/'+slpsns.xbgf_('atomic'))) + \
+        len(xbgf.findall('/'+slpsns.xbgf_('atomic')+'/*'))
+
 def noni(xbgf,arrayxbgf):
- global xbgfns
  cx = 0
  for c in arrayxbgf:
-  cx += len(xbgf.findall('//'+slpsns.xbgf_(c)))
+  cx += len(xbgf.findall('//'+slpsns.xbgf_(c)))# + len(xbgf.findall('//'+slpsns.xbgf_('atomic')+'/'+slpsns.xbgf_(c)))
  return cx
 
 def noPartiallyUnsafe(xbgf):
