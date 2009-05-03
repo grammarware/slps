@@ -11,6 +11,7 @@
       - [], ,([t({), n(BlockStatements), t(})])
   -->
   <!-- REVISE -->
+  <!-- POSTEXTR -->
   <xbgf:replace>
     <bgf:expression>
       <star>
@@ -41,6 +42,7 @@
       - [], ,([t({), ?(n(AnnotationTypeElementDeclarations)), t(})])
   -->
   <!-- REVISE -->
+  <!-- POSTEXTR -->
   <xbgf:redefine>
     <bgf:production>
       <nonterminal>AnnotationTypeBody</nonterminal>
@@ -69,6 +71,7 @@ ArrayInitializer:
         { [VariableInitializer {, VariableInitializer} [,]] }
   -->
   <!-- REVISE -->
+  <!-- POSTEXTR -->
   <xbgf:redefine>
     <bgf:production>
       <nonterminal>ArrayInitializer</nonterminal>

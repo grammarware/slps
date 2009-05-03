@@ -8,6 +8,7 @@
      vs.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators)])
   -->
+  <!-- EXTENSION -->
   <xbgf:upgrade>
     <bgf:production>
       <nonterminal>ConstantDeclaration</nonterminal>
@@ -71,6 +72,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -119,6 +121,7 @@
                  n(MethodInvocation),
                  n(ArrayAccess)])
     -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -139,6 +142,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -159,6 +163,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -186,6 +191,7 @@
      vs.
       - [], ,([?(t(final)), n(Type), n(VariableDeclarators)])
    -->
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>LocalVariableDeclaration</nonterminal>
@@ -219,6 +225,7 @@
      vs.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(synchronized), t(native), t(strictfp)])
    -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -244,6 +251,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -261,6 +269,7 @@
      vs.
       - [], ;([n(FieldDeclaration), n(MethodDeclaration), n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -271,6 +280,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -281,6 +291,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -298,6 +309,7 @@
      vs.
       - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration), n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -308,6 +320,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -318,6 +331,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -335,6 +349,7 @@
      vs.
       - [], ;([n(LocalVariableDeclarationStatement), n(ClassDeclaration), n(Statement)])
    -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -352,6 +367,7 @@
      vs.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(strictfp)])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -362,6 +378,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -372,6 +389,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -382,6 +400,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -399,6 +418,7 @@
      vs.
       - [], ;([,([t(this), t((), ?(n(ArgumentList)), t()), t((;))]), ,([t(super), t((), ?(n(ArgumentList)), t()), t((;))]), ,([n(Primary), t(.), t(super), t((), ?(n(ArgumentList)), t()), t((;))])])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -442,6 +462,7 @@
      vs.
       - [], ;([,([n(MethodName), t((), ?(n(ArgumentList)), t())]), ,([n(Primary), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([n(ClassName), t(.), t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())])])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -488,6 +509,7 @@
      vs.
       - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(strictfp)])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -498,6 +520,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -508,6 +531,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -518,6 +542,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -535,6 +560,7 @@
      vs.
       - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(TypeName), n(DimExprs), ?(n(Dims))]), ,([t(new), n(PrimitiveType), n(Dims), n(ArrayInitializer)]), ,([t(new), n(TypeName), n(Dims), n(ArrayInitializer)])])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -558,6 +584,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -588,6 +615,7 @@
      vs.
       - [], ,([?(t(final)), n(Type), n(VariableDeclaratorId)])
   -->
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>FormalParameter</nonterminal>

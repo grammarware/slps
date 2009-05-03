@@ -7,6 +7,7 @@
    - Fail: ForInit.
       - [], ,([?(t(final)), n(Type), n(VariableDeclarators)])
   -->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -99,6 +100,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <!-- EXTENSION -->
   <xbgf:narrow>
     <bgf:expression>
       <optional>
@@ -214,6 +216,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -230,6 +233,7 @@
      vs.
       - [], ,([t(assert), n(Expression), ?(,([t(:), n(Expression)])), t((;))])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>

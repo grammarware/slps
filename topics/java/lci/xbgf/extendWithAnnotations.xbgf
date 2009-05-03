@@ -119,6 +119,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:import>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -148,6 +149,7 @@
      vs.
       - [], ,([?(,([?(n(Annotations)), t(package), n(QualifiedIdentifier), t((;))])), *(n(ImportDeclaration)), *(n(TypeDeclaration))])
   -->
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>CompilationUnit</nonterminal>

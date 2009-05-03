@@ -73,6 +73,7 @@
       <nonterminal>NormalInterfaceDeclaration</nonterminal>
     </in>
   </xbgf:unfold>
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>NormalInterfaceDeclaration</nonterminal>
@@ -123,6 +124,7 @@
      vs.
       - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
 -->
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>NormalInterfaceDeclaration</nonterminal>
@@ -200,6 +202,7 @@
   <xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
 
   <!-- modifiers -->
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
@@ -223,6 +226,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
@@ -270,6 +274,7 @@
       <nonterminal>AnnotationTypeDeclaration</nonterminal>
     </in>
   </xbgf:unfold>
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>AnnotationTypeDeclaration</nonterminal>
@@ -313,6 +318,7 @@
   so we effectively "narrow" it (by executing remove instead of deyaccify/narrow)
   (also because narrow(*(L),true) doesn't work)
   -->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -402,6 +408,7 @@
   <xbgf:vertical>
     <nonterminal>Annotation</nonterminal>
   </xbgf:vertical>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -637,7 +644,9 @@
   <!-- ISSUE PERMISSIVENESS
   ExceptionTypeList vs QualifiedIdentifierList -->
   <!-- GENERALITY -->
+  <!-- RELAXATION -->
   <xbgf:undefine>ExceptionTypeList</xbgf:undefine>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>ExceptionTypeList</add>
     <to>QualifiedIdentifierList</to>
@@ -873,6 +882,7 @@
 -->
   <!-- TODO: too brutal -->
   <!-- GENERALITY -->
+  <!-- RELAXATION -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>FormalParameterList</nonterminal>
@@ -887,6 +897,7 @@
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
     </in>
   </xbgf:unfold>
+  <!-- CORRECTION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
@@ -999,6 +1010,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- BREFACTOR NOTINCDEC -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -1022,6 +1034,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
+  <!-- BREFACTOR NOTINCDEC -->
   <xbgf:add>
     <vertical>
       <bgf:production>

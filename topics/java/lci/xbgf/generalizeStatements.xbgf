@@ -8,6 +8,7 @@
      vs.
       - [], ,([n(SwitchLabels), +n(BlockStatement)])
   -->
+  <!-- CORRECTION -->
   <xbgf:widen>
     <bgf:expression>
       <plus>

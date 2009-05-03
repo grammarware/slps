@@ -16,6 +16,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -152,6 +153,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>MethodHeader</nonterminal>
@@ -239,6 +241,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -277,6 +280,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>PackageDeclaration</nonterminal>
@@ -322,6 +326,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -376,6 +381,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -413,6 +419,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -438,6 +445,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>NormalClassDeclaration</nonterminal>
@@ -648,6 +656,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -833,6 +842,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -898,6 +908,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -915,6 +926,7 @@
      vs.
       - [], ,([?(n(AbstractMethodModifiers)), ?(n(TypeParameters)), n(ResultType), n(MethodDeclarator), ?(n(Throws)), t((;))])
   -->
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>AbstractMethodDeclaration</nonterminal>
@@ -1014,6 +1026,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>MethodInvocation</nonterminal>
@@ -1056,6 +1069,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>MethodInvocation</nonterminal>
@@ -1098,6 +1112,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>MethodInvocation</nonterminal>
@@ -1146,6 +1161,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -1189,6 +1205,7 @@
      vs.
       - [], ,([?(n(TypeParameters)), n(Identifier), t((), ?(n(FormalParameterList)), t())])
   -->
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ConstructorDeclarator</nonterminal>
@@ -1298,6 +1315,7 @@
       <nonterminal>FormalParameterList</nonterminal>
     </in>
   </xbgf:extract>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -1336,6 +1354,7 @@
      vs.
       - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators), t((;))])
   -->
+  <!-- CORRECTION -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>ConstantDeclaration</nonterminal>
@@ -1388,6 +1407,7 @@
      vs.
       - [], ,([t(throws), n(ExceptionTypeList)])
   -->
+  <!-- RELAXATION -->
   <xbgf:upgrade>
     <bgf:production>
       <nonterminal>ExceptionTypeList</nonterminal>
@@ -1406,6 +1426,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:upgrade>
+  <!-- RELAXATION -->
   <xbgf:upgrade>
     <bgf:production>
       <nonterminal>ExceptionTypeList</nonterminal>
@@ -1493,7 +1514,8 @@
   </xbgf:fold>
   <xbgf:unlabel>
     <label>ClassType</label>
-  </xbgf:unlabel>  <xbgf:fold>
+  </xbgf:unlabel>
+  <xbgf:fold>
     <nonterminal>InterfaceType</nonterminal>
     <in>
       <label>InterfaceType</label>
@@ -1644,6 +1666,7 @@
       <nonterminal>InterfaceType</nonterminal>
     </in>
   </xbgf:fold>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -1664,6 +1687,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassType</nonterminal>
@@ -1687,6 +1711,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>InterfaceType</nonterminal>
@@ -1721,6 +1746,7 @@
                ,([?(n(NonWildTypeArguments)), t(super), t((), ?(n(ArgumentList)), t()), t((;))]),
                ,([n(Primary), t(.), ?(n(NonWildTypeArguments)), t(super), t((), ?(n(ArgumentList)), t()), t((;))])])
   -->
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
@@ -1760,6 +1786,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
@@ -1799,6 +1826,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ExplicitConstructorInvocation</nonterminal>
@@ -1853,6 +1881,7 @@
       - [], ;([,([t(new), ?(n(TypeArguments)), n(ClassOrInterfaceType), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))]),
                ,([n(Primary), t(.), t(new), ?(n(TypeArguments)), n(Identifier), ?(n(TypeArguments)), t((), ?(n(ArgumentList)), t()), ?(n(ClassBody))])])
   -->
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
@@ -1899,6 +1928,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>
@@ -1951,6 +1981,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassInstanceCreationExpression</nonterminal>

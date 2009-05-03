@@ -30,26 +30,32 @@ vs
   -->
   
   <!-- ISSUE PERMISSIVENESS -->
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>MethodName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>TypeName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>PackageName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>PackageOrTypeName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>ExpressionName</add>
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>ClassName</add>
     <to>QualifiedIdentifier</to>

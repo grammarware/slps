@@ -17,6 +17,7 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:extract>
+    <!-- CORRECTION -->
     <xbgf:widen>
       <bgf:expression>
         <nonterminal>SwitchLabel</nonterminal>

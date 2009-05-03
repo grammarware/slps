@@ -32,6 +32,7 @@
      vs.
       - [], ,([*(n(Modifier)), t(enum), n(Identifier), ?(,([t(implements), n(TypeList)])), n(EnumBody)])
   -->
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>EnumDeclaration</nonterminal>

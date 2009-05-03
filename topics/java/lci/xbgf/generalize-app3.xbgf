@@ -11,6 +11,7 @@
 Later should be a massage (AB|AB?)->AB?
 
   -->
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>ConditionalExpression</add>
     <to>Expression1</to>

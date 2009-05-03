@@ -11,6 +11,7 @@
 
   -->
   <!-- GENERALITY -->
+  <!-- POSTEXTR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>InterfaceDeclaration</nonterminal>
@@ -38,6 +39,7 @@
       - [], ;([,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(TypeParameters))]), ,([?(n(ExtendsInterfaces)), n(InterfaceBody)])])
   -->
   <!-- REVISE -->
+  <!-- POSTEXTR -->
   <xbgf:redefine>
     <bgf:production>
       <nonterminal>NormalInterfaceDeclaration</nonterminal>
@@ -79,6 +81,7 @@
       - [], *(,([?(n(ElementValues)), ?(t((,)))]))
   -->
   <!-- REVISE -->
+  <!-- POSTEXTR -->
   <xbgf:redefine>
     <bgf:production>
       <nonterminal>ElementValueArrayInitializer</nonterminal>
@@ -112,6 +115,7 @@
   <!-- ISSUE EXTRACTERROR
   extractor's problem -->
   <!-- REVISE -->
+  <!-- POSTEXTR -->
   <xbgf:replace>
     <bgf:expression>
       <terminal>ClassName</terminal>

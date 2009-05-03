@@ -117,38 +117,47 @@
   <!-- ISSUE PERMISSIVENESS
   Everything that can be united to make Expression2 -->
   <xbgf:atomic>
+	<!-- RELAXATION -->
     <xbgf:unite>
       <add>ConditionalAndExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
+	<!-- RELAXATION -->
     <xbgf:unite>
       <add>InclusiveOrExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
+	<!-- RELAXATION -->
     <xbgf:unite>
       <add>ExclusiveOrExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
+	<!-- RELAXATION -->
     <xbgf:unite>
       <add>AndExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
+	<!-- RELAXATION -->
     <xbgf:unite>
       <add>EqualityExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
+	<!-- RELAXATION -->
     <xbgf:unite>
       <add>RelationalExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
+	<!-- RELAXATION -->
     <xbgf:unite>
       <add>ShiftExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
+	<!-- RELAXATION -->
     <xbgf:unite>
       <add>AdditiveExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
+	<!-- RELAXATION -->
     <xbgf:unite>
       <add>MultiplicativeExpression</add>
       <to>Expression2</to>
@@ -158,6 +167,7 @@
   
   <!-- Introducing another layering scheme: Expression3 -->
   <!-- GENERALITY -->
+  <!-- RELAXATION -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>Expression2</nonterminal>
@@ -569,6 +579,7 @@
   </xbgf:atomic>
 
   <!-- revert of l-assoc-->
+  <!-- RELAXATION -->
   <xbgf:widen>
     <bgf:expression>
       <sequence>
@@ -1061,6 +1072,7 @@
 ???
  -->
   <!-- GENERALITY -->
+  <!-- RELAXATION -->
   <xbgf:redefine>
     <bgf:production>
       <nonterminal>StatementExpression</nonterminal>
@@ -1244,12 +1256,55 @@
   <xbgf:distribute>
     <nonterminal>Assignment</nonterminal>
   </xbgf:distribute>
-  <!-- should be 
+   <xbgf:vertical>
+    <nonterminal>Assignment</nonterminal>
+  </xbgf:vertical>
   <xbgf:deyaccify>Assignment</xbgf:deyaccify>
-  after test case deyaccify8 starts working
-  -->
-  <!-- BREFACTOR -->
-  <xbgf:redefine>
+  <xbgf:atomic>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>TMP</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>LeftHandSide</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>AssignmentOperator</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:massage>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <nonterminal>TMP</nonterminal>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TMP</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+      <bgf:expression>
+        <plus>
+          <bgf:expression>
+            <nonterminal>TMP</nonterminal>
+          </bgf:expression>
+        </plus>
+      </bgf:expression>
+    </xbgf:massage>
+    <xbgf:inline>TMP</xbgf:inline>
+  </xbgf:atomic>
+  
+  <!-- replacing LeftHandSide by Expression1 in Assignment -->
+  <!-- RELAXATION -->
+  <xbgf:downgrade>
     <bgf:production>
       <nonterminal>Assignment</nonterminal>
       <bgf:expression>
@@ -1259,7 +1314,11 @@
               <bgf:expression>
                 <sequence>
                   <bgf:expression>
-                    <nonterminal>LeftHandSide</nonterminal>
+                    <marked>
+                      <bgf:expression>
+                        <nonterminal>LeftHandSide</nonterminal>
+                      </bgf:expression>
+                    </marked>
                   </bgf:expression>
                   <bgf:expression>
                     <nonterminal>AssignmentOperator</nonterminal>
@@ -1274,17 +1333,325 @@
         </sequence>
       </bgf:expression>
     </bgf:production>
-  </xbgf:redefine>
-  <xbgf:inline>Assignment</xbgf:inline>
-  <!-- GENERALITY -->
-  <xbgf:replace>
-    <bgf:expression>
+    <bgf:production>
       <nonterminal>LeftHandSide</nonterminal>
-    </bgf:expression>
-    <bgf:expression>
+      <bgf:expression>
+        <nonterminal>QualifiedIdentifier</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:downgrade>
+  <!-- RELAXATION -->
+  <xbgf:appear>
+    <bgf:production>
+      <nonterminal>Assignment</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <plus>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                        <nonterminal>QualifiedIdentifier</nonterminal>
+                      </bgf:expression>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <star>
+                          <bgf:expression>
+                            <nonterminal>PostfixOp</nonterminal>
+                          </bgf:expression>
+                        </star>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>AssignmentOperator</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </plus>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression1</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:appear>
+  <!-- RELAXATION -->
+  <xbgf:add>
+    <horizontal>
+      <bgf:production>
+        <nonterminal>Assignment</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <plus>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <choice><bgf:expression>
+                          <nonterminal>QualifiedIdentifier</nonterminal>
+                        </bgf:expression>
+                        <bgf:expression>
+                          <marked>
+                            <bgf:expression>
+                              <nonterminal>Primary</nonterminal>
+                            </bgf:expression>
+                          </marked>
+                        </bgf:expression>
+                      </choice>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <star>
+                        <bgf:expression>
+                          <nonterminal>PostfixOp</nonterminal>
+                        </bgf:expression>
+                      </star>
+                    </bgf:expression>                    <bgf:expression>
+                      <nonterminal>AssignmentOperator</nonterminal>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </plus>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Expression1</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </horizontal>
+  </xbgf:add>
+  <!-- RELAXATION -->
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>Assignment</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <plus>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <nonterminal>Expression3</nonterminal>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>AssignmentOperator</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </plus>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression1</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Expression3</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <choice>
+              <bgf:expression>
+                <nonterminal>QualifiedIdentifier</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Primary</nonterminal>
+              </bgf:expression>
+            </choice>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <nonterminal>PostfixOp</nonterminal>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>    </bgf:production>
+  </xbgf:upgrade>
+  <!-- RELAXATION -->
+  <xbgf:appear>
+    <bgf:production>
+      <nonterminal>Assignment</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <plus>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                        <nonterminal>Expression3</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <optional>
+                          <bgf:expression>
+                            <nonterminal>Expression2Rest</nonterminal>
+                          </bgf:expression>
+                        </optional>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>AssignmentOperator</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </plus>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression1</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:appear>
+  <!-- RELAXATION -->
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>Assignment</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <plus>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <nonterminal>Expression2</nonterminal>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>AssignmentOperator</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </plus>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression1</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
+      <nonterminal>Expression2</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Expression3</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Expression2Rest</nonterminal>
+                  </bgf:expression>
+                </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <!-- RELAXATION -->
+  <xbgf:appear>
+    <bgf:production>
+      <nonterminal>Assignment</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <plus>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <nonterminal>Expression2</nonterminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <optional>
+                          <bgf:expression>
+                            <nonterminal>Expression1Rest</nonterminal>
+                          </bgf:expression>
+                        </optional>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>AssignmentOperator</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </plus>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression1</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:appear>
+  <!-- RELAXATION -->
+  <xbgf:upgrade>
+    <bgf:production>
+      <nonterminal>Assignment</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <plus>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <nonterminal>Expression1</nonterminal>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>AssignmentOperator</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </plus>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression1</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production>
       <nonterminal>Expression1</nonterminal>
-    </bgf:expression>
-  </xbgf:replace>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>Expression2</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Expression1Rest</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  <!-- end of "replace" -->
+  
+  <xbgf:inline>Assignment</xbgf:inline>
   <xbgf:eliminate>LeftHandSide</xbgf:eliminate>
   <xbgf:factor>
     <bgf:expression>
@@ -1382,6 +1749,7 @@
     </bgf:expression>
   </xbgf:massage>
   <!-- a job for lassoc/rassoc??? -->
+  <!-- RELAXATION -->
   <xbgf:narrow>
     <bgf:expression>
       <star>
@@ -1408,6 +1776,7 @@
       </sequence>
     </bgf:expression>
   </xbgf:narrow>
+  <!-- RELAXATION -->
   <xbgf:widen>
     <bgf:expression>
       <sequence>

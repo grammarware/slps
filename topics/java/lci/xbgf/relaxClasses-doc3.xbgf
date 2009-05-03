@@ -156,6 +156,7 @@
     </bgf:production>
   </xbgf:extract>
   <!-- ISSUE PERMISSIVENESS -->
+  <!-- RELAXATION -->
   <xbgf:narrow>
     <bgf:expression>
       <optional>
@@ -187,6 +188,8 @@
    -->
   <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
 
+  <!-- TODO WTF -->
+  <!-- RELAXATION -->
   <!--  
       - [], ,([*(n(Modifier)), n(Type), n(VariableDeclarators), t((;))])
   -->
@@ -239,6 +242,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -299,6 +303,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -344,6 +349,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -354,6 +360,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -566,6 +573,7 @@
       - [], ;([n(ClassDeclaration), n(InterfaceDeclaration)])
       
   -->
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -611,6 +619,7 @@ MethodBody:
 Block:
         "{" BlockStatements "}"
   -->
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>ConstructorBody</nonterminal>
@@ -645,6 +654,7 @@ Block:
   <xbgf:fold>
     <nonterminal>Block</nonterminal>
   </xbgf:fold>
+  <!-- RELAXATION -->
   <xbgf:upgrade>
     <bgf:production>
       <nonterminal>ConstructorBody</nonterminal>

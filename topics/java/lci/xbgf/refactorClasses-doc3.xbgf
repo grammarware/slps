@@ -127,7 +127,7 @@
   </xbgf:massage>
 
   <!-- modifiers -->
-
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>NormalClassDeclaration</nonterminal>
@@ -178,6 +178,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassMemberDeclaration</nonterminal>
@@ -201,6 +202,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassMemberDeclaration</nonterminal>
@@ -404,6 +406,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:redefine>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>

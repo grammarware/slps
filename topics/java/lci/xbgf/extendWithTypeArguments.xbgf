@@ -85,6 +85,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>Type</nonterminal>
@@ -125,6 +126,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>Type</nonterminal>
