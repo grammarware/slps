@@ -160,12 +160,10 @@ vs
   <xbgf:distribute>
     <nonterminal>Expression3</nonterminal>
   </xbgf:distribute>
-  <xbgf:vertical>
-    <nonterminal>Expression3</nonterminal>
-  </xbgf:vertical>
-  
+
   <xbgf:inline>PostDecrementExpression</xbgf:inline>
   <xbgf:inline>PostIncrementExpression</xbgf:inline>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -176,6 +174,7 @@ vs
       </bgf:production>
     </vertical>
   </xbgf:remove>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -194,6 +193,7 @@ vs
     </vertical>
   </xbgf:remove>
   <xbgf:deyaccify>PostfixExpression</xbgf:deyaccify>
+  <!-- RELAXATION -->
   <xbgf:add>
     <horizontal>
       <bgf:production>
@@ -207,17 +207,17 @@ vs
               <star>
                 <bgf:expression>
                   <choice>
-                     <bgf:expression>
+                    <bgf:expression>
                       <marked>
                         <bgf:expression>
                           <terminal>--</terminal>
                         </bgf:expression>
                       </marked>
                     </bgf:expression>
-                  <bgf:expression>
+                    <bgf:expression>
                       <terminal>++</terminal>
                     </bgf:expression>
-                   </choice>
+                  </choice>
                 </bgf:expression>
               </star>
             </bgf:expression>
@@ -226,6 +226,7 @@ vs
       </bgf:production>
     </horizontal>
   </xbgf:add>
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>PostfixExpression</nonterminal>
@@ -824,6 +825,7 @@ vs
   <xbgf:undefine>LeftHandSide</xbgf:undefine>
   <!-- BREFACTOR -->
   <xbgf:undefine>Assignment</xbgf:undefine>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -840,6 +842,7 @@ vs
   </xbgf:fold>
 
   <!-- Expression -->
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>Expression</nonterminal>
@@ -871,19 +874,25 @@ vs
     </bgf:production>
   </xbgf:appear>
 
-  <!-- BREFACTOR 
+  <!--  
    - Fail: StatementExpression.
       - [], n(Expression)
      vs.
       - [], ;([n(Assignment), ,([t(++), n(Expression3)]), ,([t(- -), n(Expression3)]), ,([n(Primary), *(n(Selector)), *(;([t(++), t(- -)])), t(++)]), ,([n(Primary), *(n(Selector)), *(;([t(++), t(- -)])), t(- -)]), n(MethodInvocation), n(ClassInstanceCreationExpression)])
   -->
-  <xbgf:redefine>
-    <bgf:production>
-      <nonterminal>StatementExpression</nonterminal>
-      <bgf:expression>
-        <nonterminal>Expression</nonterminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:redefine>
+  <xbgf:atomic>
+    <!-- BREFACTOR -->
+    <xbgf:redefine>
+      <bgf:production>
+        <nonterminal>StatementExpression</nonterminal>
+        <bgf:expression>
+          <nonterminal>Expression</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:redefine>
+    <xbgf:vertical>
+      <nonterminal>Expression3</nonterminal>
+    </xbgf:vertical>
+  </xbgf:atomic>
 
 </xbgf:sequence>

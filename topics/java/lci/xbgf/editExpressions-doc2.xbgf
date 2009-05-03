@@ -51,6 +51,7 @@
      vs.
       - [], t(this)
   -->
+    <!-- RELAXATION -->
     <xbgf:appear>
       <bgf:production>
         <nonterminal>Primary</nonterminal>
@@ -81,6 +82,7 @@
      vs.
       - [], ,([n(Type), t(.), t(class)])
   -->
+    <!-- RELAXATION -->
     <xbgf:downgrade>
       <bgf:production>
         <nonterminal>Primary</nonterminal>
@@ -109,6 +111,7 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:downgrade>
+    <!-- RELAXATION -->
     <xbgf:appear>
       <bgf:production>
         <nonterminal>Primary</nonterminal>
@@ -158,6 +161,7 @@
      vs.
       - [], n(ArrayCreationExpression)
    -->
+    <!-- RELAXATION -->
     <xbgf:remove>
       <vertical>
         <bgf:production>
@@ -253,7 +257,8 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:introduce>
-    <xbgf:add>
+     <!-- RELAXATION -->
+   <xbgf:add>
       <vertical>
         <bgf:production>
           <nonterminal>Primary</nonterminal>
@@ -340,6 +345,7 @@
         <nonterminal>Primary</nonterminal>
       </in>
     </xbgf:extract>
+    <!-- RELAXATION -->
     <xbgf:widen>
       <bgf:expression>
         <nonterminal>IdentifierSuffix</nonterminal>
@@ -352,6 +358,7 @@
         </optional>
       </bgf:expression>
     </xbgf:widen>
+    <!-- RELAXATION -->
     <xbgf:add>
       <vertical>
         <bgf:production>
@@ -396,6 +403,7 @@
         </bgf:production>
       </vertical>
     </xbgf:add>
+    <!-- RELAXATION -->
     <xbgf:add>
       <vertical>
         <bgf:production>
@@ -406,6 +414,7 @@
         </bgf:production>
       </vertical>
     </xbgf:add>
+    <!-- RELAXATION -->
     <xbgf:add>
       <vertical>
         <bgf:production>
@@ -423,6 +432,7 @@
         </bgf:production>
       </vertical>
     </xbgf:add>
+    <!-- RELAXATION -->
     <xbgf:add>
       <vertical>
         <bgf:production>
@@ -443,6 +453,7 @@
         </bgf:production>
       </vertical>
     </xbgf:add>
+    <!-- RELAXATION -->
     <xbgf:add>
       <vertical>
         <bgf:production>
@@ -582,6 +593,7 @@
       <nonterminal>Primary</nonterminal>
     </in>
   </xbgf:extract>
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>SuperSuffix</nonterminal>
@@ -608,6 +620,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -628,6 +641,7 @@
       - [], ,([n(Primary), n(SuperSuffix)])
       - [], n(ClassInstanceCreationExpression)
   -->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -639,6 +653,7 @@
     </vertical>
   </xbgf:remove>
   <!--xbgf:eliminate>ArrayAccess</xbgf:eliminate-->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -650,6 +665,7 @@
     </vertical>
   </xbgf:remove>
   <!--xbgf:eliminate>MethodInvocation</xbgf:eliminate-->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -661,6 +677,7 @@
     </vertical>
   </xbgf:remove>
   <!--xbgf:eliminate>ClassInstanceCreationExpression</xbgf:eliminate-->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -678,6 +695,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>

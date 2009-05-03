@@ -196,6 +196,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -206,6 +207,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -223,6 +225,7 @@
      vs.
       - [], ,([t(interface), n(Identifier), ?(n(TypeParameters)), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
   -->
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>NormalInterfaceDeclaration</nonterminal>
@@ -273,6 +276,7 @@
       - [], ,([n(ModifiersOpt), n(TypeParameters), t(void), n(Identifier), t((), ?(n(FormalParameterDecls)), t()), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
       - [], ,([n(ModifiersOpt), n(TypeParameters), n(Type), n(Identifier), t((), ?(n(FormalParameterDecls)), t()), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -329,6 +333,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -420,6 +425,7 @@
       - [], ,([n(ModifiersOpt), t(void), n(Identifier), t((), ?(n(FormalParameterDecls)), t()), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
   -->
   <!-- GENERALITY -->
+  <!-- EXTENSION -->
   <xbgf:replace>
     <bgf:expression>
       <sequence>
@@ -452,6 +458,7 @@
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
     </in>
   </xbgf:unfold>
+  <!-- EXTENSION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>InterfaceBodyDeclaration</nonterminal>

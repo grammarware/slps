@@ -163,6 +163,7 @@
     </bgf:production>
   </xbgf:introduce>
   <!-- GENERALITY -->
+  <!-- EXTENSION -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ElementValue</nonterminal>
@@ -184,6 +185,7 @@
     </bgf:production>
   </xbgf:define>
   <!-- GENERALITY -->
+  <!-- EXTENSION -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ElementValues</nonterminal>
@@ -244,6 +246,7 @@
      vs.
       - [], ;([n(Annotation), t(public), t(protected), t(private), t(static), t(final), t(transient), t((volatile))])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -261,6 +264,7 @@
      vs.
       - [], ;([n(Annotation), t(public), t(protected), t(private), t(abstract), t(static), t(strictfp)])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -278,6 +282,7 @@
      vs.
       - [], ;([n(Annotation), t(public), t(abstract)])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -295,6 +300,7 @@
      vs.
       - [], ;([n(Annotation), t(public), t(static), t(final)])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -312,6 +318,7 @@
      vs.
       - [], ;([n(Annotation), t(public), t(protected), t(private), t(abstract), t(static), t(final), t(synchronized), t(native), t(strictfp)])
    -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -329,6 +336,7 @@
      vs.
       - [], ;([n(Annotation), t(public), t(protected), t(private), t(abstract), t(static), t(final), t(strictfp)])
    -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -375,6 +383,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -399,6 +408,7 @@
      vs.
       - [], ;([n(Annotation), t(public), t(protected), t(private)])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -416,6 +426,7 @@
      vs.
       - [], ;([t(final), n(Annotation)])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>

@@ -65,26 +65,32 @@
 
   <!-- ISSUE PERMISSIVENESS
   Now unification of singulars-->
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>InterfaceModifier</add>
     <to>Modifier</to>
   </xbgf:unite>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>MethodModifier</add>
     <to>Modifier</to>
   </xbgf:unite>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>FieldModifier</add>
     <to>Modifier</to>
   </xbgf:unite>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>ConstructorModifier</add>
     <to>Modifier</to>
   </xbgf:unite>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>AbstractMethodModifier</add>
     <to>Modifier</to>
   </xbgf:unite>
+  <!-- RELAXATION -->
   <xbgf:unite>
     <add>ConstantModifier</add>
     <to>Modifier</to>

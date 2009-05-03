@@ -206,6 +206,7 @@
   too hard to match:
         - [], n(ArrayAccess)
   -->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -234,6 +235,7 @@
       <nonterminal>Primary</nonterminal>
     </in>
   </xbgf:extract>
+  <!-- RELAXATION -->
   <xbgf:widen>
     <bgf:expression>
       <nonterminal>IdentifierSuffix</nonterminal>
@@ -252,6 +254,7 @@
 
   <!-- ISSUE EXTEND BRUTAL
   same problem -->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -276,6 +279,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -313,6 +317,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -350,6 +355,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -368,6 +374,7 @@
     </vertical>
   </xbgf:add>
   <!-- GENERALITY -->
+  <!-- RELAXATION -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>Creator</nonterminal>
@@ -391,7 +398,8 @@
     </bgf:production>
   </xbgf:define>
   <!-- GENERALITY -->
-  <xbgf:define>
+   <!-- RELAXATION -->
+ <xbgf:define>
     <bgf:production>
       <nonterminal>ArrayCreatorRest</nonterminal>
       <bgf:expression>
@@ -454,6 +462,7 @@
   <!-- ISSUE EXTEND
   new stuff
   ,([n(BasicType), n(BracketsOpt), t(.), t(class)]), ,([t(void), t(.), t(class)])-->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -477,6 +486,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -503,6 +513,7 @@
       - [], ,([n(Primary), t(.), n(Identifier), n(Arguments)])
       - [], ,([n(Primary), t(.), n(Identifier)])
 -->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -530,6 +541,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -561,6 +573,7 @@
      vs.
       - [], ,([t(this), ?(n(Arguments))])
   -->
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>Primary</nonterminal>

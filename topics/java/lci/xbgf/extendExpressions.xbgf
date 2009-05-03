@@ -18,6 +18,7 @@ CreatedName:
       <nonterminal>Creator</nonterminal>
     </in>
   </xbgf:unfold>
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>Creator</nonterminal>
@@ -58,6 +59,7 @@ CreatedName:
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>Creator</nonterminal>
@@ -110,6 +112,7 @@ CreatedName:
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>CreatedName</nonterminal>
@@ -154,6 +157,7 @@ CreatedName:
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>Creator</nonterminal>
@@ -201,6 +205,7 @@ CreatedName:
       <nonterminal>Primary</nonterminal>
     </in>
   </xbgf:unfold>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -407,6 +412,7 @@ CreatedName:
      vs.
       - [], ,([;([n(Primary), n(QualifiedIdentifier)]), *(n(PostfixOp))])
   -->
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>Expression3</nonterminal>
@@ -438,7 +444,8 @@ CreatedName:
     </bgf:production>
   </xbgf:disappear>
   <xbgf:eliminate>Selector</xbgf:eliminate>
-  
+
+  <!-- EXTENSION -->
   <xbgf:add>
     <horizontal>
       <bgf:production>

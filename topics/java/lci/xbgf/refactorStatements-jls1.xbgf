@@ -76,6 +76,7 @@
       - [], ,([t(switch), n(ParExpression), t({), n(SwitchBlockStatementGroups), t(})])
   -->
   <xbgf:inline>SwitchBlock</xbgf:inline>
+  <!-- CORRECTION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>SwitchStatement</nonterminal>
@@ -150,6 +151,7 @@
       - [], ,([t(if), n(ParExpression), n(Statement), ?(,([t(else), n(Statement)]))])
   -->
   <!-- GENERALITY -->
+  <!-- RELAXATION -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>StatementNoShortIf</nonterminal>
@@ -331,6 +333,7 @@
      vs.
       - [], ;([n(LocalVariableDeclarationStatement), n(ClassOrInterfaceDeclaration), ,([?(,([n(Identifier), t(:)])), n(Statement)])])
   -->
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -341,6 +344,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>BlockStatement</nonterminal>
@@ -415,6 +419,7 @@
      vs.
       - [], ;([,([n(StatementExpression), n(MoreStatementExpressions)]), ,([?(t(final)), n(Type), n(VariableDeclarators)])])
   -->
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>LocalVariableDeclaration</nonterminal>

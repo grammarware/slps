@@ -20,6 +20,7 @@
   -->
   <xbgf:horizontal>ClassOrInterfaceType</xbgf:horizontal>
   <!-- GENERALITY -->
+  <!-- RELAXATION -->
   <xbgf:replace>
     <bgf:expression>
       <choice>
@@ -100,6 +101,7 @@
                ,([t((), n(Name), n(Dims), t()), n(UnaryExpressionNotPlusMinus)])])
   -->
   <!-- GENERALITY -->
+  <!-- RELAXATION -->
   <xbgf:replace>
     <bgf:expression>
       <nonterminal>ReferenceType</nonterminal>

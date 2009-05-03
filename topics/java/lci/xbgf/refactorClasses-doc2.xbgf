@@ -106,6 +106,7 @@
       
    Later with factor/distribute this should be done better!
   -->
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -184,6 +185,7 @@
       <nonterminal>ClassDeclaration</nonterminal>
     </in>
   </xbgf:unfold>
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>ClassDeclaration</nonterminal>
@@ -425,6 +427,7 @@
       <nonterminal>MethodOrFieldDecl</nonterminal>
     </in>
   </xbgf:extract>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -441,6 +444,7 @@
     </xbgf:vertical>
 
     <!-- modifiers -->
+    <!-- RELAXATION -->
     <xbgf:appear>
       <bgf:production>
         <nonterminal>ClassBodyDeclaration</nonterminal>
@@ -469,6 +473,7 @@
     </xbgf:fold>
 
     <!-- finishing touches -->
+    <!-- RELAXATION -->
     <xbgf:remove>
       <vertical>
         <bgf:production>

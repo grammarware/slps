@@ -39,11 +39,6 @@
   <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
   <xbgf:horizontal>FieldAccess</xbgf:horizontal>
   <xbgf:inline>FieldAccess</xbgf:inline>
-  <!--
-  <xbgf:distribute>
-    <nonterminal>Primary</nonterminal>
-  </xbgf:distribute>
-  -->
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
   </xbgf:vertical>
@@ -54,6 +49,7 @@
      vs.
       - [], t(this)
   -->
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -84,6 +80,7 @@
      vs.
       - [], ,([n(Type), t(.), t(class)])
   -->
+  <!-- RELAXATION -->
   <xbgf:downgrade>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -112,6 +109,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:downgrade>
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -161,6 +159,7 @@
      vs.
       - [], n(ArrayCreationExpression)
    -->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -340,6 +339,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -425,6 +425,7 @@
       <nonterminal>Primary</nonterminal>
     </in>
   </xbgf:extract>
+  <!-- RELAXATION -->
   <xbgf:widen>
     <bgf:expression>
       <nonterminal>IdentifierSuffix</nonterminal>
@@ -437,6 +438,7 @@
       </optional>
     </bgf:expression>
   </xbgf:widen>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -481,6 +483,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -491,6 +494,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
+  <!-- RELAXATION -->
   <xbgf:add>
     <horizontal>
       <bgf:production>
@@ -519,6 +523,7 @@
       </bgf:production>
     </horizontal>
   </xbgf:add>
+  <!-- RELAXATION -->
   <xbgf:add>
     <horizontal>
       <bgf:production>
@@ -572,6 +577,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- RELAXATION -->
   <xbgf:add>
     <horizontal>
       <bgf:production>
@@ -645,6 +651,7 @@
       <nonterminal>Primary</nonterminal>
     </in>
   </xbgf:extract>
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>SuperSuffix</nonterminal>
@@ -671,6 +678,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+  <!-- RELAXATION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -691,6 +699,7 @@
       - [], ,([n(Primary), n(SuperSuffix)])
       - [], n(ClassInstanceCreationExpression)
   -->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -702,6 +711,7 @@
     </vertical>
   </xbgf:remove>
   <xbgf:eliminate>ArrayAccess</xbgf:eliminate>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -713,6 +723,7 @@
     </vertical>
   </xbgf:remove>
   <xbgf:eliminate>MethodInvocation</xbgf:eliminate>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -724,6 +735,7 @@
     </vertical>
   </xbgf:remove>
   <xbgf:eliminate>ClassInstanceCreationExpression</xbgf:eliminate>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -741,6 +753,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -771,6 +784,7 @@
      vs.
       - [], ,([n(Identifier), *(n(SuperSuffix)), ?(n(IdentifierSuffix))])
   -->
+  <!-- RELAXATION -->
   <xbgf:downgrade>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -821,6 +835,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:downgrade>
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>Primary</nonterminal>
@@ -917,6 +932,7 @@
      vs.
       - [], ,([t(.), ;([t(class), t(this), ,([t(super), n(Arguments)]), ,([t(new), n(InnerCreator)])])])
   -->
+  <!-- CORRECTION -->
   <xbgf:add>
     <horizontal>
       <bgf:production>
@@ -968,6 +984,7 @@
       </bgf:production>
     </horizontal>
   </xbgf:add>
+  <!-- CORRECTION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>IdentifierSuffix</nonterminal>
@@ -1032,6 +1049,7 @@
       - [], ,([?(t(final)), n(Type), n(VariableDeclarators)])
       - [], ,([n(StatementExpression), n(MoreStatementExpressions)])
   -->
+  <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
       <bgf:production>
@@ -1065,6 +1083,7 @@
       - [], ,([?(+(t(final))), n(Type), n(Identifier), t(:), n(Expression)])
       - [], ,([?(n(ForInit)), t((;)), ?(n(Expression)), t((;)), ?(n(ForUpdate))])
   -->
+  <!-- CORRECTION -->
   <xbgf:narrow>
     <bgf:expression>
       <optional>
@@ -1124,6 +1143,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- CORRECTION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -1183,6 +1203,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
+  <!-- CORRECTION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ForVarControl</nonterminal>
@@ -1226,6 +1247,7 @@
      vs.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)]))])), ?(t((,))), t(})])
   -->
+  <!-- CORRECTION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>ArrayInitializer</nonterminal>
@@ -1277,6 +1299,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
+  <!-- CORRECTION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ArrayInitializer</nonterminal>

@@ -150,6 +150,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:chain>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -168,6 +169,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
@@ -279,6 +281,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>NormalClassDeclaration</nonterminal>
@@ -625,6 +628,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- EXTENSION -->
   <xbgf:add>
     <vertical>
       <bgf:production>

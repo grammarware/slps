@@ -23,6 +23,7 @@
       <nonterminal>ImportDeclaration</nonterminal>
     </in>
   </xbgf:unfold>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ImportDeclaration</nonterminal>
@@ -86,6 +87,7 @@
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
     </in>
   </xbgf:unfold>
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -139,6 +141,7 @@
     </in>
   </xbgf:fold>
   <!-- return ClassOrInterfaceDeclaration to its original form -->
+  <!-- RELAXATION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -244,6 +247,7 @@
     </bgf:production>
   </xbgf:introduce>
 
+  <!-- EXTENSION -->
   <xbgf:add>
     <horizontal>
       <bgf:production>
@@ -295,6 +299,7 @@
       </bgf:production>
     </horizontal>
   </xbgf:add>
+  <!-- EXTENSION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>IdentifierSuffix</nonterminal>

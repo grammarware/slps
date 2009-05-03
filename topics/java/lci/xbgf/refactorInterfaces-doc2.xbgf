@@ -67,6 +67,7 @@
       <nonterminal>InterfaceDeclaration</nonterminal>
     </in>
   </xbgf:unfold>
+  <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
       <nonterminal>InterfaceDeclaration</nonterminal>
@@ -179,6 +180,7 @@
     </xbgf:vertical>
 
     <!-- Serious lack of everything -->
+    <!-- RELAXATION -->
     <xbgf:remove>
       <vertical>
         <bgf:production>
@@ -496,6 +498,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:introduce>
+  <!-- CORRECTION -->
   <xbgf:add>
     <vertical>
       <bgf:production>
