@@ -50,23 +50,27 @@ if __name__ == "__main__":
   for y in slpsXPath.rkeys:
    results[y][x] = 0
   for y in targets[x]:
-   xbgf = ET.parse(path+y+'.xbgf')
-   results['LOC'][x] += slpsXPath.loc(path+y+'.xbgf')
-   results['NOI'][x] += slpsXPath.nosi(path+y+'.xbgf','ISSUE')
-   results['NI~'][x] += slpsXPath.nosi(path+y+'.xbgf','ISSUE REFACTOR')
-   results['NI+'][x] += slpsXPath.nosi(path+y+'.xbgf','EXTEND')
-   results['NI!'][x] += slpsXPath.nosi(path+y+'.xbgf','CORRECT')
-   results['NI^'][x] += slpsXPath.nosi(path+y+'.xbgf','PERMISSIVENESS')
-   results['COR'][x] += slpsXPath.nosi(path+y+'.xbgf','EXTRACTERROR')
-   results['SGO'][x] += slpsXPath.noni(xbgf,slpsXPath.safexbgf)+\
-                        slpsXPath.nosi(path+y+'.xbgf','BREFACTOR')+\
-                        slpsXPath.noPartiallySafe(xbgf)
-   results['SID'][x] += slpsXPath.noni(xbgf,slpsXPath.incdecxbgf)+\
-                        slpsXPath.nosi(path+y+'.xbgf','GENERALITY')
-   results['SRE'][x] += slpsXPath.noni(xbgf,slpsXPath.messyxbgf)+\
-                        slpsXPath.nosi(path+y+'.xbgf','REVISE')+\
-                        slpsXPath.noPartiallyUnsafe(xbgf)
+   xbgfFile = path+y+'.xbgf'
+   xbgf = ET.parse(xbgfFile)
+   results['LOC'][x] += slpsXPath.loc(xbgfFile)
+   results['NOI'][x] += slpsXPath.nosi(xbgfFile,'ISSUE')
+   results['NI~'][x] += slpsXPath.nosi(xbgfFile,'ISSUE REFACTOR')
+   results['NI+'][x] += slpsXPath.nosi(xbgfFile,'EXTEND')
+   results['NI!'][x] += slpsXPath.nosi(xbgfFile,'CORRECT')
+   results['NI^'][x] += slpsXPath.nosi(xbgfFile,'PERMISSIVENESS')
+   results['COR'][x] += slpsXPath.nosi(xbgfFile,'EXTRACTERROR')
+   results['SGO'][x] += slpsXPath.countSemanticPreserving(xbgf,xbgfFile)
+   results['SID'][x] += slpsXPath.countSemanticIncDec(xbgf,xbgfFile)
+   results['SRE'][x] += slpsXPath.countSemanticRevising(xbgf,xbgfFile)
    results['NOX'][x] += slpsXPath.notr(xbgf)
+   results['EKB'][x] += slpsXPath.nosi(xbgfFile,'KNOWNBUG')
+   results['EPX'][x] += slpsXPath.nosi(xbgfFile,'POSTEXTR')
+   results['EIC'][x] += slpsXPath.nosi(xbgfFile,'INITCORR')
+   results['EAR'][x] += slpsXPath.nosi(xbgfFile,'KNOWNBUG')+slpsXPath.nosi(xbgfFile,'POSTEXTR')+slpsXPath.nosi(xbgfFile,'INITCORR')
+   results['FEX'][x] += slpsXPath.nosi(xbgfFile,'EXTENSION')
+   results['FRE'][x] += slpsXPath.nosi(xbgfFile,'RELAXATION')
+   results['FCO'][x] += slpsXPath.nosi(xbgfFile,'CORRECTION')
+   results['FIN'][x] += slpsXPath.nosi(xbgfFile,'EXTENSION')+slpsXPath.nosi(xbgfFile,'RELAXATION')+slpsXPath.nosi(xbgfFile,'CORRECTION')
    for z in names:
     results[z][x] += len(xbgf.findall('/'+slpsns.xbgf_(z)))
  for x in names[:]:
@@ -105,6 +109,15 @@ if __name__ == "__main__":
  report(sorted,'NI+','\\'+lcfname+'IssuesExtend')
  report(sorted,'NI^','\\'+lcfname+'IssuesPermit')
  # report(sorted,'NI~','\\'+lcfname+'IssuesRefactor')
+ report(sorted,'EAR','\\'+lcfname+'Early')
+ report(sorted,'EKB','\\'+lcfname+'EarlyKnownBugs')
+ report(sorted,'EPX','\\'+lcfname+'EarlyPostExtraction')
+ report(sorted,'EIC','\\'+lcfname+'EarlyInitialCorrection')
+ print '\\hline'
+ report(sorted,'FIN','\\'+lcfname+'Final')
+ report(sorted,'FCO','\\'+lcfname+'FinalCorrection')
+ report(sorted,'FRE','\\'+lcfname+'FinalRelaxation')
+ report(sorted,'FEX','\\'+lcfname+'FinalExtension')
  print '\\hline'
  print '\\end{tabular}'
  sys.exit(0)

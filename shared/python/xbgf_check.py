@@ -18,14 +18,9 @@ if __name__ == "__main__":
  xbgfFile = sys.argv[1]
  xbgf = ET.parse(xbgfFile)
  print "%30s" % xbgfFile.split('.')[0]+':',
- cx = slpsXPath.noni(xbgf,slpsXPath.safexbgf) + \
-      slpsXPath.nosi(xbgfFile,'BREFACTOR') + \
-      slpsXPath.noPartiallySafe(xbgf), \
-      slpsXPath.noni(xbgf,slpsXPath.incdecxbgf) + \
-      slpsXPath.nosi(xbgfFile,'GENERALITY'), \
-      slpsXPath.noni(xbgf,slpsXPath.messyxbgf) + \
-      slpsXPath.nosi(xbgfFile,'REVISE') + \
-      slpsXPath.noPartiallyUnsafe(xbgf)
+ cx = slpsXPath.countSemanticPreserving(xbgf,xbgfFile), \
+      slpsXPath.countSemanticIncDec(xbgf,xbgfFile), \
+      slpsXPath.countSemanticRevising(xbgf,xbgfFile)
  early = slpsXPath.nosi(xbgfFile,'KNOWNBUG'),  slpsXPath.nosi(xbgfFile,'POSTEXTR'),   slpsXPath.nosi(xbgfFile,'INITCORR')
  final = slpsXPath.nosi(xbgfFile,'EXTENSION'), slpsXPath.nosi(xbgfFile,'RELAXATION'), slpsXPath.nosi(xbgfFile,'CORRECTION')
  realSum = slpsXPath.notr(xbgf)
@@ -49,7 +44,10 @@ if __name__ == "__main__":
    print 'C'+`final[2]`,
   print '}',
  if sum(early)+sum(final) != cx[1]+cx[2]:
-  print 'TAGERROR'
+  if sum(cx) != realSum:
+   print 'TAGERROR','ERROR'
+  else:
+   print 'TAGERROR'
   sys.exit(1)
  if sum(cx) != realSum:
   print 'ERROR'

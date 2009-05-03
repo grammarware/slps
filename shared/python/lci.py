@@ -545,7 +545,7 @@ def transformationChain(cut,target):
   print '[PASS]',
  else:
   print '[FAIL]',
- print 'Postextraction and synchronyzation finished for target',target+'.'
+ print 'Postextraction and synchronization finished for target',target+'.'
  # same for transformation
  ontheroll,current = runTransforms(cut,current,('refactoring','extension','correction','relaxation'))
  # end of branch

@@ -23,7 +23,7 @@ incdecxbgf = ('remove','add','disappear','appear','narrow','widen',
 #incdecxbgf = ('add',      'narrow',   'remove','unite',     'widen',    'rassoc',    'lassoc')
 messyxbgf =  ('permute',  'dump','project','inject','concretize','abstractize')
 
-rkeys = ('LOC','NOI','NOX','NI~','NI+','NI!','SGO','COR','NI^','SID','SRE')
+rkeys = ('LOC','NOI','NOX','NI~','NI+','NI!','SGO','COR','NI^','SID','SRE','EKB','EPX','EIC','FRE','FEX','FCO','EAR','FIN')
 
 def runxpath(filename,xpathexpr):
  os.system('xpath '+filename+' "'+xpathexpr+'" 1>TMP-res 2>/dev/null')
@@ -95,3 +95,13 @@ def noi(filename):
  c = ''.join(f.readlines()).count('<!--')
  f.close()
  return c
+
+def countSemanticPreserving(xbgf,xbgfFile):
+ return noni(xbgf,safexbgf) + nosi(xbgfFile,'BREFACTOR') + noPartiallySafe(xbgf)
+
+def countSemanticIncDec(xbgf,xbgfFile):
+ return noni(xbgf,incdecxbgf) + nosi(xbgfFile,'GENERALITY') - nosi(xbgfFile,'NOTINCDEC')
+
+def countSemanticRevising(xbgf,xbgfFile):
+ return noni(xbgf,messyxbgf) + nosi(xbgfFile,'REVISE') + noPartiallyUnsafe(xbgf)
+
