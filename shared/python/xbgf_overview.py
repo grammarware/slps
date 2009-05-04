@@ -115,9 +115,9 @@ if __name__ == "__main__":
  report(sorted,'EIC','\\'+lcfname+'EarlyInitialCorrection')
  print '\\hline'
  report(sorted,'FIN','\\'+lcfname+'Final')
- report(sorted,'FCO','\\'+lcfname+'FinalCorrection')
- report(sorted,'FRE','\\'+lcfname+'FinalRelaxation')
  report(sorted,'FEX','\\'+lcfname+'FinalExtension')
+ report(sorted,'FRE','\\'+lcfname+'FinalRelaxation')
+ report(sorted,'FCO','\\'+lcfname+'FinalCorrection')
  print '\\hline'
  print '\\end{tabular}'
  sys.exit(0)
