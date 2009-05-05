@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -28,7 +29,7 @@
   <!-- ISSUE CORRECT SPECERROR
   They forgot to define a nonterminal with "intuitive" name - we predicted it in ISO N3977! -->
   <!-- GENERALITY -->
-<!-- INITCORR -->
+  <!-- INITCORR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>ForUpdateOpt</nonterminal>
@@ -45,7 +46,7 @@
 
   <!-- ISSUE CORRECT SPECERROR
   let's complete some of the statements with a trailing semicolon-->
- <!-- CORRECTION -->
+  <!-- CORRECTION -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -72,10 +73,10 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  
+
   <!-- ISSUE CORRECT SPECERROR
   Same for BreakStatement -->
- <!-- CORRECTION -->
+  <!-- CORRECTION -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -121,14 +122,14 @@
       <nonterminal>Expression</nonterminal>
     </bgf:expression>
   </xbgf:replace>
-  
- <!-- ISSUE CORRECT INCOMPATIBILITY
+
+  <!-- ISSUE CORRECT INCOMPATIBILITY
    - Fail: VoidInterfaceMethodDeclaratorRest.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
      vs.
       - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
  -->
- <!-- CORRECTION -->
+  <!-- CORRECTION -->
   <xbgf:appear>
     <bgf:production>
       <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
@@ -182,7 +183,7 @@
       <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
     </in>
   </xbgf:fold>
-  
+
   <!-- ISSUE CORRECT SPECERROR
   undefined non-terminals -->
   <!-- GENERALITY -->

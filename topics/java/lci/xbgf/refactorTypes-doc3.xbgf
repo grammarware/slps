@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -1037,7 +1038,7 @@ TypeArgument:
       </sequence>
     </bgf:expression>
   </xbgf:factor>
-  
+
   <xbgf:inline>ActualTypeArgumentList</xbgf:inline>
 
   <!-- ...the story of BracketsOpt is continued in refactorExpressions-doc3 -->

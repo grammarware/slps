@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -361,9 +362,9 @@
   <xbgf:extract>
     <bgf:production>
       <nonterminal>VariableModifiers</nonterminal>
-          <bgf:expression>
-            <terminal>final</terminal>
-          </bgf:expression>
+      <bgf:expression>
+        <terminal>final</terminal>
+      </bgf:expression>
     </bgf:production>
     <in>
       <nonterminal>FormalParameter</nonterminal>

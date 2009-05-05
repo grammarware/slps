@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -16,7 +17,7 @@
   EnumBodyDeclarations is defined as:
      ";" [ ClassBodyDeclarations ]
   -->
-  
+
   <!-- 
    - Fail: Arguments.
       - [], ,([t((), ?(,([n(Expression), *(,([t((,)), n(Expression)]))])), t())])
@@ -25,7 +26,7 @@
   -->
   <xbgf:deyaccify>ArgumentList</xbgf:deyaccify>
   <xbgf:inline>ArgumentList</xbgf:inline>
-  
+
   <!-- 
   - Fail: EnumDeclaration.
       - [], ,([t(enum), n(Identifier), ?(,([t(implements), n(TypeList)])), n(EnumBody)])

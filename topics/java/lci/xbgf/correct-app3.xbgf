@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -110,10 +111,10 @@ Annotation:
       </bgf:expression>
     </bgf:production>
   </xbgf:inject>
-  
+
   <!--   ISSUE CORRECT SPECERROR
          same with continue -->
-	  <!-- CORRECTION -->
+  <!-- CORRECTION -->
   <xbgf:inject>
     <bgf:production>
       <nonterminal>Statement</nonterminal>
@@ -286,7 +287,7 @@ FormalParameter:
       </bgf:expression>
     </bgf:production>
   </xbgf:define>
-  
+
   <!-- ISSUE CORRECT
   as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
 * 18.1 does not permit the obsolescent array syntax in a method declaration of an annotation type:
@@ -335,7 +336,7 @@ FormalParameter:
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  
+
   <!-- I S S U E   C O R R E C T 
   as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
 * 18.1 defines TypeArgument incorrectly, e.g. '? extends int' is legal.

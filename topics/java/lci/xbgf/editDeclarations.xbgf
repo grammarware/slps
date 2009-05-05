@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -254,7 +255,7 @@
   <xbgf:fold>
     <nonterminal>QualifiedIdentifierList</nonterminal>
   </xbgf:fold>
-  
+
   <!--  
    - Fail: InterfaceDeclaration.
       - [], ,([?(n(Modifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
@@ -1315,7 +1316,7 @@
       </in>
     </xbgf:extract>
   </xbgf:atomic>
-  
+
   <!-- ISSUE EXTEND
    - Fail: InterfaceMemberDecl.
       - [], ;([n(InterfaceMethodOrFieldDecl), ,([t(void), n(Identifier), n(VoidInterfaceMethodDeclaratorRest)])])
@@ -1985,7 +1986,7 @@ Block:
     </bgf:production>
   </xbgf:upgrade>
   <xbgf:inline>ConstructorBody</xbgf:inline>
-  
+
   <!-- ISSUE EXTEND
   Empty class body declaration -->
   <!-- EXTENSION -->

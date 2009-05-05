@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -117,54 +118,54 @@
   <!-- ISSUE PERMISSIVENESS
   Everything that can be united to make Expression2 -->
   <xbgf:atomic>
-	<!-- RELAXATION -->
+    <!-- RELAXATION -->
     <xbgf:unite>
       <add>ConditionalAndExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
-	<!-- RELAXATION -->
+    <!-- RELAXATION -->
     <xbgf:unite>
       <add>InclusiveOrExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
-	<!-- RELAXATION -->
+    <!-- RELAXATION -->
     <xbgf:unite>
       <add>ExclusiveOrExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
-	<!-- RELAXATION -->
+    <!-- RELAXATION -->
     <xbgf:unite>
       <add>AndExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
-	<!-- RELAXATION -->
+    <!-- RELAXATION -->
     <xbgf:unite>
       <add>EqualityExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
-	<!-- RELAXATION -->
+    <!-- RELAXATION -->
     <xbgf:unite>
       <add>RelationalExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
-	<!-- RELAXATION -->
+    <!-- RELAXATION -->
     <xbgf:unite>
       <add>ShiftExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
-	<!-- RELAXATION -->
+    <!-- RELAXATION -->
     <xbgf:unite>
       <add>AdditiveExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
-	<!-- RELAXATION -->
+    <!-- RELAXATION -->
     <xbgf:unite>
       <add>MultiplicativeExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
     <xbgf:horizontal>Expression2</xbgf:horizontal>
   </xbgf:atomic>
-  
+
   <!-- Introducing another layering scheme: Expression3 -->
   <!-- GENERALITY -->
   <!-- RELAXATION -->
@@ -1256,7 +1257,7 @@
   <xbgf:distribute>
     <nonterminal>Assignment</nonterminal>
   </xbgf:distribute>
-   <xbgf:vertical>
+  <xbgf:vertical>
     <nonterminal>Assignment</nonterminal>
   </xbgf:vertical>
   <xbgf:deyaccify>Assignment</xbgf:deyaccify>
@@ -1301,7 +1302,7 @@
     </xbgf:massage>
     <xbgf:inline>TMP</xbgf:inline>
   </xbgf:atomic>
-  
+
   <!-- replacing LeftHandSide by Expression1 in Assignment -->
   <!-- RELAXATION -->
   <xbgf:downgrade>
@@ -1351,8 +1352,8 @@
               <bgf:expression>
                 <sequence>
                   <bgf:expression>
-                        <nonterminal>QualifiedIdentifier</nonterminal>
-                      </bgf:expression>
+                    <nonterminal>QualifiedIdentifier</nonterminal>
+                  </bgf:expression>
                   <bgf:expression>
                     <marked>
                       <bgf:expression>
@@ -1390,7 +1391,8 @@
                 <bgf:expression>
                   <sequence>
                     <bgf:expression>
-                      <choice><bgf:expression>
+                      <choice>
+                        <bgf:expression>
                           <nonterminal>QualifiedIdentifier</nonterminal>
                         </bgf:expression>
                         <bgf:expression>
@@ -1408,7 +1410,8 @@
                           <nonterminal>PostfixOp</nonterminal>
                         </bgf:expression>
                       </star>
-                    </bgf:expression>                    <bgf:expression>
+                    </bgf:expression>
+                    <bgf:expression>
                       <nonterminal>AssignmentOperator</nonterminal>
                     </bgf:expression>
                   </sequence>
@@ -1475,7 +1478,8 @@
             </star>
           </bgf:expression>
         </sequence>
-      </bgf:expression>    </bgf:production>
+      </bgf:expression>
+    </bgf:production>
   </xbgf:upgrade>
   <!-- RELAXATION -->
   <xbgf:appear>
@@ -1488,7 +1492,7 @@
               <bgf:expression>
                 <sequence>
                   <bgf:expression>
-                        <nonterminal>Expression3</nonterminal>
+                    <nonterminal>Expression3</nonterminal>
                   </bgf:expression>
                   <bgf:expression>
                     <marked>
@@ -1553,11 +1557,11 @@
             <nonterminal>Expression3</nonterminal>
           </bgf:expression>
           <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>Expression2Rest</nonterminal>
-                  </bgf:expression>
-                </optional>
+            <optional>
+              <bgf:expression>
+                <nonterminal>Expression2Rest</nonterminal>
+              </bgf:expression>
+            </optional>
           </bgf:expression>
         </sequence>
       </bgf:expression>
@@ -1650,7 +1654,7 @@
     </bgf:production>
   </xbgf:upgrade>
   <!-- end of "replace" -->
-  
+
   <xbgf:inline>Assignment</xbgf:inline>
   <xbgf:eliminate>LeftHandSide</xbgf:eliminate>
   <xbgf:factor>
@@ -1806,5 +1810,5 @@
       <nonterminal>Expression</nonterminal>
     </in>
   </xbgf:widen>
-    
+
 </xbgf:sequence>

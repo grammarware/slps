@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-<!--
+  <!--
    - Fail (1/2): Statement.
       - [], ,([t(try), n(Block), ;([n(Catches), ,([?(n(Catches)), t(finally), n(Block)])])])
      vs.
@@ -52,46 +53,46 @@
           </bgf:expression>
         </choice>
       </bgf:expression>
+      <bgf:expression>
+        <sequence>
           <bgf:expression>
-            <sequence>
-              <bgf:expression>
-                <terminal>try</terminal>
-              </bgf:expression>
-              <bgf:expression>
-                <nonterminal>Block</nonterminal>
-              </bgf:expression>
-              <bgf:expression>
-                <choice>
-                  <bgf:expression>
-                    <sequence>
-                      <bgf:expression>
-                        <optional>
-                          <bgf:expression>
-                            <nonterminal>Catches</nonterminal>
-                          </bgf:expression>
-                        </optional>
-                      </bgf:expression>
-                      <bgf:expression>
-                        <terminal>finally</terminal>
-                      </bgf:expression>
-                      <bgf:expression>
-                        <nonterminal>Block</nonterminal>
-                      </bgf:expression>
-                    </sequence>
-                  </bgf:expression>
-                  <bgf:expression>
-                    <nonterminal>Catches</nonterminal>
-                  </bgf:expression>
-                </choice>
-              </bgf:expression>
-            </sequence>
+            <terminal>try</terminal>
           </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Block</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <choice>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <optional>
+                      <bgf:expression>
+                        <nonterminal>Catches</nonterminal>
+                      </bgf:expression>
+                    </optional>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <terminal>finally</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Block</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Catches</nonterminal>
+              </bgf:expression>
+            </choice>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
     </xbgf:factor>
     <xbgf:vertical>
       <nonterminal>Statement</nonterminal>
     </xbgf:vertical>
   </xbgf:atomic>
-  
+
   <!--
    - Fail (1/4): ClassBodyDeclaration.
       - [], ,([n(ModifiersOpt), ;([n(MethodOrFieldDecl), ,([t(void), n(Identifier), n(MethodDeclaratorRest)]), ,([n(Identifier), n(ConstructorDeclaratorRest)]), n(ClassOrInterfaceDeclaration)])])

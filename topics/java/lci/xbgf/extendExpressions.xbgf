@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -191,7 +191,7 @@ CreatedName:
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  
+
   <!-- ISSUE EXTEND
    - Fail: Primary.
       - [], ,([n(QualifiedIdentifier), ?(n(IdentifierSuffix))])
@@ -237,7 +237,7 @@ CreatedName:
       </bgf:production>
     </vertical>
   </xbgf:add>
-  
+
   <!--
    - Fail: Expression3.
       - [], ,([t((), n(Type), t()), n(Expression3)])
@@ -405,7 +405,7 @@ CreatedName:
   <xbgf:vertical>
     <nonterminal>Expression3</nonterminal>
   </xbgf:vertical>
-  
+
   <!-- ISSUE PERMISSIVENESS
   - Fail: Expression3.
       - [], ,([n(Primary), *(n(Selector)), *(n(PostfixOp))])
@@ -557,4 +557,4 @@ CreatedName:
   <xbgf:vertical>
     <nonterminal>Expression3</nonterminal>
   </xbgf:vertical>
-</xbgf:sequence> 
+</xbgf:sequence>

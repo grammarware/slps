@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -833,7 +834,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:import>
-  
+
   <xbgf:chain>
     <bgf:production>
       <nonterminal>InterfaceDeclaration</nonterminal>
@@ -1533,7 +1534,7 @@
   <xbgf:vertical>
     <nonterminal>ClassOrInterfaceType</nonterminal>
   </xbgf:vertical>
-  
+
   <!-- ISSUE EXTEND -->
   <xbgf:introduce>
     <bgf:production>
@@ -1735,7 +1736,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
- 
+
   <!-- ISSUE EXTEND 
      - Fail: ExplicitConstructorInvocation.
       - [], ;([,([t(this), t((), ?(n(ArgumentList)), t()), t((;))]),
@@ -2041,5 +2042,5 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
- 
+
 </xbgf:sequence>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -6,7 +7,7 @@
   <xbgf:reroot>
     <root>CompilationUnit</root>
   </xbgf:reroot>
-  
+
   <!-- ISSUE CORRECT SPECERROR
   This is an error (typo) in JLS2.
   
@@ -20,7 +21,7 @@
     <add>ConstantModifer</add>
     <to>ConstantModifier</to>
   </xbgf:unite>
-  
+
   <!-- ISSUE CORRECT SPECERROR
   Another typo of JLS2 -->
   <!-- INITCORR -->
@@ -61,7 +62,7 @@
   <xbgf:vertical>
     <nonterminal>ClassName</nonterminal>
   </xbgf:vertical>
-  
+
   <!-- ISSUE CORRECT SPECERROR
    - Fail: ConstructorDeclarator.
       - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
@@ -210,5 +211,5 @@
   <xbgf:vertical>
     <nonterminal>CastExpression</nonterminal>
   </xbgf:vertical>
- 
+
 </xbgf:sequence>

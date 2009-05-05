@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -121,7 +122,7 @@
   -->
   <xbgf:deyaccify>InterfaceMemberDeclarations</xbgf:deyaccify>
   <xbgf:inline>InterfaceMemberDeclarations</xbgf:inline>
-   <xbgf:massage>
+  <xbgf:massage>
     <bgf:expression>
       <optional>
         <bgf:expression>
@@ -433,7 +434,7 @@
 
   </xbgf:atomic>
 
- <!--
+  <!--
    - Fail: InterfaceMethodOrFieldRest.
       - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
      vs.

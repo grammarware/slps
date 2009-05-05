@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -54,7 +55,7 @@
       <nonterminal>Expression3</nonterminal>
     </xbgf:vertical>
   </xbgf:atomic>
-  
+
   <!-- pushing optionals outside -->
   <xbgf:atomic>
     <xbgf:inline>Expression1Rest</xbgf:inline>
@@ -80,7 +81,7 @@
       </bgf:production>
     </xbgf:extract>
   </xbgf:atomic>
-  
+
   <xbgf:massage>
     <bgf:expression>
       <optional>
@@ -104,7 +105,7 @@
 
   <xbgf:horizontal>MemberDecl</xbgf:horizontal>
   <xbgf:inline>MemberDecl</xbgf:inline>
-<!--  <xbgf:distribute>
+  <!--  <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:distribute>
   <xbgf:vertical>
@@ -121,6 +122,5 @@
   <xbgf:fold>
     <nonterminal>ParExpression</nonterminal>
   </xbgf:fold>
-
 
 </xbgf:sequence>

@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
   <xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify>
-  
+
   <!-- 
    - Fail: VariableDeclarator.
       - [], ,([n(Identifier), n(VariableDeclaratorRest)])
@@ -128,7 +129,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  
+
   <!-- 
    - Fail: CompilationUnit.
       - [], ,([?(,([t(package), n(QualifiedIdentifier), t((;))])), *(n(ImportDeclaration)), *(n(TypeDeclaration))])
@@ -189,7 +190,7 @@
   -->
   <xbgf:inline>SingleTypeImportDeclaration</xbgf:inline>
   <xbgf:inline>TypeImportOnDemandDeclaration</xbgf:inline>
-  
+
   <!-- 
    - Fail: ImportDeclaration.
       - [], ,([t(import), n(QualifiedIdentifier), ?(,([t(.), t(*)])), t((;))])

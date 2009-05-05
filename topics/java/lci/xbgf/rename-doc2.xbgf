@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -23,7 +24,7 @@
       <to>QualifiedIdentifier</to>
     </nonterminal>
   </xbgf:rename>
-  
+
   <!-- unites in refactorTypes -->
   <xbgf:rename>
     <nonterminal>
@@ -65,5 +66,5 @@
       <to>InterfaceBodyDeclaration</to>
     </nonterminal>
   </xbgf:rename>
-  
+
 </xbgf:sequence>

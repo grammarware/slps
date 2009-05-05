@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -475,7 +476,7 @@
     <to>TypeList</to>
   </xbgf:unite>
   <xbgf:deyaccify>TypeList</xbgf:deyaccify>
-  
+
   <!-- Introducing brackets brutally, too hard to derive -->
   <!-- RELAXATION -->
   <xbgf:appear>
@@ -527,7 +528,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  
+
   <!-- Finishing touches -->
   <xbgf:inline>ClassOrInterfaceType</xbgf:inline>
   <xbgf:inline>ClassType</xbgf:inline>

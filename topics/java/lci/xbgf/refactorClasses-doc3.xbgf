@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -227,7 +228,7 @@
     </bgf:production>
   </xbgf:appear>
   <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
-  
+
   <!-- 
    - Fail: NormalClassDeclaration.
       - [], ,([t(class), n(Identifier), ?(,([t(extends), n(Type)])), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
@@ -581,4 +582,4 @@
     </in>
   </xbgf:extract>
 
- </xbgf:sequence>
+</xbgf:sequence>

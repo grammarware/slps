@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -50,7 +51,7 @@
       <nonterminal>TypeImportOnDemandDeclaration</nonterminal>
     </in>
   </xbgf:fold>
-  
+
 
   <!-- 
   Local substitution:
@@ -308,5 +309,5 @@
   <xbgf:vertical>
     <nonterminal>ClassInstanceCreationExpression</nonterminal>
   </xbgf:vertical>
-  
+
 </xbgf:sequence>

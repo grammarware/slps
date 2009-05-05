@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -39,12 +40,12 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
-  
+
   <!-- finishing touches -->
   <xbgf:eliminate>FormalParameterList</xbgf:eliminate>
   <xbgf:eliminate>LastFormalParameter</xbgf:eliminate>
   <xbgf:eliminate>NonWildTypeArguments</xbgf:eliminate>
   <xbgf:eliminate>ReferenceTypeList</xbgf:eliminate>
   <xbgf:eliminate>TypeDeclSpecifier</xbgf:eliminate>
-  
+
 </xbgf:sequence>

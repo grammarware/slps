@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xbgf:sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
@@ -104,8 +105,8 @@
     </bgf:expression>
   </xbgf:replace>
   <xbgf:eliminate>Selector</xbgf:eliminate>
-  
-  
+
+
   <!-- we don't need minimised lookahead here -->
   <xbgf:horizontal>InterfaceMemberDecl</xbgf:horizontal>
   <xbgf:inline>InterfaceMemberDecl</xbgf:inline>
@@ -122,7 +123,7 @@
   <xbgf:distribute>
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:distribute>
-<!--remove when done-->
+  <!--remove when done-->
   <xbgf:vertical>
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:vertical>
