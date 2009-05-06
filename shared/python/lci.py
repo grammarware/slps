@@ -75,9 +75,9 @@ class Chain:
  def type(self):
   t = 0
   for a in self.array[1:]:
-   if ttype[a] in ('earlyfixes','namematching','normalizing'):
+   if ttype[a] in ('preparation','nominal-matching','normalizing'):
     t = -1
-   if ttype[a] in ('refactoring','extension','correction','relaxation'):
+   if ttype[a] in ('structural-matching','extension','correction','relaxation'):
     t = 1
   return t
  def lastAction(self):
@@ -92,7 +92,7 @@ def ChainFromArray(a):
 problem = False
 # output streams redirected to null
 shutup = ' 1> /dev/null 2> /dev/null'
-# transformation type per action: earlyfixes, namematching, normalizing, refactoring,
+# transformation type per action: preparation, nominal-matching, normalizing, structural-matching,
 #								  extension, correction, relaxation
 ttype = {}
 orderedsrc = []
@@ -262,7 +262,7 @@ def distanceBetween(node,tgt):
 def compareGrammars(bgf,arr):
  goal = arr[0]
  for a in arr().split('.')[1:]:
-  if ttype[a] in ('earlyfixes','namematching','normalizing'):
+  if ttype[a] in ('preparation','nominal-matching','normalizing'):
    goal += '.'+stripCamelCase(a)
  #print '[----] Ready:',bgf,'vs',goal
  #print '[++++] Distance is:',
@@ -339,8 +339,8 @@ def dumpGraph(df):
    nodezz.append((arc[0],arc[3]))
   if (arc[1],arc[3]) not in nodezz:
    nodezz.append((arc[1],arc[3]))
-  if (arc[0][-1] in targets.keys()) or (arc[0][-1] in orderedsrc) or (arc[0][-1] in ttype.keys() and ttype[arc[0][-1]] in ('earlyfixes','namematching','normalizing')):
-   if (arc[1][-1] in targets.keys()) or (arc[1][-1] in ttype.keys() and ttype[arc[1][-1]] in ('refactoring','extension','correction','relaxation')):
+  if (arc[0][-1] in targets.keys()) or (arc[0][-1] in orderedsrc) or (arc[0][-1] in ttype.keys() and ttype[arc[0][-1]] in ('preparation','nominal-matching','normalizing')):
+   if (arc[1][-1] in targets.keys()) or (arc[1][-1] in ttype.keys() and ttype[arc[1][-1]] in ('structural-matching','extension','correction','relaxation')):
     dablNodezz.append(arc[0].dotNodeName(arc[3]))
   par = ''
   if arc[2]:
@@ -522,7 +522,7 @@ def runTransforms(cut,current,whichtypes):
      ontheroll = False
     else:
      print '[PASS]',
-    print 'Applied',ttype[a],a+'.xbgf','to',current.bgfFileName()
+    print 'Applied',ttype[a].replace('-',' '),a+'.xbgf','to',current.bgfFileName()
   else:
    failed.append(current[:])
    failed[-1].append(a)
@@ -540,14 +540,14 @@ def transformationChain(cut,target):
  # action names will be appended:
  # x.bgf -> x.corrupt.bgf -> x.corrupt.confuse.bgf -> x.corrupt.confuse.destroy.bgf -> ...
  # the very last one will be diffed
- ontheroll,current = runTransforms(cut,current,('earlyfixes','namematching','normalizing'))
+ ontheroll,current = runTransforms(cut,current,('preparation','nominal-matching','normalizing'))
  if ontheroll:
   print '[PASS]',
  else:
   print '[FAIL]',
  print 'Postextraction and synchronization finished for target',target+'.'
  # same for transformation
- ontheroll,current = runTransforms(cut,current,('refactoring','extension','correction','relaxation'))
+ ontheroll,current = runTransforms(cut,current,('structural-matching','extension','correction','relaxation'))
  # end of branch
  if cut in failed:
   print '[FAIL]',

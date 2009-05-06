@@ -30,7 +30,7 @@ def sliceTarget(xbgfDir1,xbgfDir2,t):
   for e in branch.findall('*'):
    if e.tag == 'input':
     nbr.append(e)
-   elif e.tag in ('earlyfixes','namematching','normalizing'):
+   elif e.tag in ('preparation','nominal-matching','normalizing'):
     needNormalizing = True
     for step in e.findall('*'):
      if step.tag=='perform':

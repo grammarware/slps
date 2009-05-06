@@ -90,25 +90,25 @@
     <name>jls1</name>
     <branch>
       <input>impl1</input>
-      <earlyfixes><perform>correct-impl1</perform></earlyfixes>
-      <namematching><perform>rename-impl1</perform></namematching>
-      <refactoring>
+      <preparation><perform>correct-impl1</perform></preparation>
+      <nominal-matching><perform>rename-impl1</perform></nominal-matching>
+      <structural-matching>
         <perform>refactor-impl1</perform>
-      </refactoring>
+      </structural-matching>
     </branch>
     <branch>
       <input>read1</input>
-      <earlyfixes>
+      <preparation>
         <perform>correct-read1</perform>
-      </earlyfixes>
-      <namematching>
+      </preparation>
+      <nominal-matching>
         <perform>rename-read1</perform>
-      </namematching>
-      <refactoring>
+      </nominal-matching>
+      <structural-matching>
         <perform>generalizeModifiers-read1</perform>
         <perform>generalizeNames-read1</perform>
         <perform>refactor-read1</perform>
-      </refactoring>
+      </structural-matching>
     </branch>
   </target>
 
@@ -116,10 +116,10 @@
     <name>jls2</name>
     <branch>
       <input>impl2</input>
-      <earlyfixes>
+      <preparation>
         <perform>correct-impl2</perform>
-      </earlyfixes>
-      <refactoring><perform>refactor-impl2</perform></refactoring>
+      </preparation>
+      <structural-matching><perform>refactor-impl2</perform></structural-matching>
       <relaxation>
         <perform>generalizeLabels</perform>
         <perform>generalizeBlock</perform>
@@ -127,14 +127,14 @@
     </branch>
     <branch>
       <input>read2</input>
-      <earlyfixes>
+      <preparation>
         <perform>recover-read2</perform>
         <perform>correct-read2</perform>
-      </earlyfixes>
-      <namematching>
+      </preparation>
+      <nominal-matching>
         <perform>rename-read2</perform>
-      </namematching>
-      <refactoring>
+      </nominal-matching>
+      <structural-matching>
         <perform>generalizeModifiers-read2</perform>
         <perform>generalizeNames</perform>
         <perform>deyaccifyStatements</perform>
@@ -148,7 +148,7 @@
         <perform>refactorInterfaces-read2</perform>
         <perform>refactorDeclarations-read2</perform>
         <perform>refactorMinorMismatches</perform>
-      </refactoring>
+      </structural-matching>
       <relaxation>
         <perform>edit-read2</perform>
       </relaxation>
@@ -159,16 +159,16 @@
     <name>jls3</name>
     <branch>
       <input>impl3</input>
-      <earlyfixes>
+      <preparation>
         <perform>recover-impl3</perform>
         <perform>correct-impl3</perform>
-      </earlyfixes>
-      <namematching>
+      </preparation>
+      <nominal-matching>
         <perform>extract-impl3</perform>
-      </namematching>
-      <refactoring>
+      </nominal-matching>
+      <structural-matching>
         <perform>refactor-impl3</perform>
-      </refactoring>
+      </structural-matching>
       <relaxation>
         <perform>generalizeLabels</perform>
         <perform>generalizeBlock</perform>
@@ -177,21 +177,21 @@
     </branch>
     <branch>
       <input>read3</input>
-      <earlyfixes>
+      <preparation>
         <perform>recover-read3</perform>
         <perform>correct-read3</perform>
-      </earlyfixes>
-      <namematching>
+      </preparation>
+      <nominal-matching>
         <perform>rename-read3</perform>
-      </namematching>
-      <refactoring>
+      </nominal-matching>
+      <structural-matching>
         <perform>deyaccifyStatements</perform>
         <perform>inlineForStatement</perform>
         <perform>inlineStatements</perform>
         <perform>refactorStatements-read3</perform>
         <perform>refactorClasses-read3</perform>
         <perform>refactorEnums</perform>
-      </refactoring>
+      </structural-matching>
       <relaxation>
         <perform>generalizeModifiers-read3</perform>
         <perform>relaxClasses-read3</perform>
@@ -212,17 +212,17 @@
     <name>jls12</name>
     <branch>
       <input>jls1</input>
-      <namematching>
+      <nominal-matching>
         <perform>rename-jls1</perform>
-      </namematching>
-      <refactoring>
+      </nominal-matching>
+      <structural-matching>
         <perform>refactorStatements-jls1</perform>
         <perform>generalizeStatements</perform>
         <perform>refactorTypes-jls1</perform>
         <perform>editDeclarations</perform>
         <perform>refactorExpressions</perform>
         <perform>refactorMinorMismatches</perform>
-      </refactoring>
+      </structural-matching>
       <relaxation>
         <perform>editExpressions-jls1</perform>
       </relaxation>
@@ -239,9 +239,9 @@
     <name>jls123</name>
     <branch>
       <input>jls12</input>
-      <namematching>
+      <nominal-matching>
         <perform>rename-jls12</perform>
-      </namematching>
+      </nominal-matching>
       <extension>
         <perform>extendDeclarations</perform>
         <perform>extendWithAnnotations</perform>
@@ -261,25 +261,25 @@
     <name>read12</name>
     <branch>
       <input>read1</input>
-      <earlyfixes>
+      <preparation>
         <perform>correct-read1</perform>
-      </earlyfixes>
-      <refactoring>
+      </preparation>
+      <structural-matching>
         <perform>edit-read1</perform>
-      </refactoring>
+      </structural-matching>
       <extension>
         <perform>extend-read1</perform>
       </extension>
     </branch>
     <branch>
       <input>read2</input>
-      <earlyfixes>
+      <preparation>
         <perform>recover-read2</perform>
         <perform>correct-read2</perform>
-      </earlyfixes>
-      <refactoring>
+      </preparation>
+      <structural-matching>
         <perform>refactorPackageNames</perform>
-      </refactoring>
+      </structural-matching>
     </branch>
   </target>
 
@@ -287,9 +287,9 @@
     <name>read123</name>
     <branch>
       <input>read12</input>
-      <namematching>
+      <nominal-matching>
         <perform>rename-read12</perform>
-      </namematching>
+      </nominal-matching>
       <extension>
         <perform>extendModifiers</perform>
         <perform>extend-read12</perform>
@@ -297,13 +297,13 @@
     </branch>
     <branch>
       <input>read3</input>
-      <earlyfixes>
+      <preparation>
         <perform>recover-read3</perform>
         <perform>correct-read3</perform>
-      </earlyfixes>
-      <refactoring>
+      </preparation>
+      <structural-matching>
         <perform>refactorPackageNames</perform>
-      </refactoring>
+      </structural-matching>
     </branch>
   </target>
 

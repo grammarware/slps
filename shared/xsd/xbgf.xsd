@@ -789,10 +789,19 @@
   <xsd:element name="redefine">
     <xsd:annotation>
       <xsd:documentation>
-        A replace variant that works on production level. When this
+        A <ldf:keyword>replace</ldf:keyword> variant that works on production level. When this
         transformation is executed, all current productions for the
         nonterminal are dropped, and all the given ones are added
         to the grammar.
+      </xsd:documentation>
+      <xsd:documentation>
+        This transformation is nothing more than syntactic sugar
+        for an <ldf:keyword>undefine</ldf:keyword> followed directly
+        with <ldf:keyword>define</ldf:keyword>. Having it as a separate
+        type of transformation allows to more clearly distinguish
+        completing the grammar with absent definitions (usually as
+        initial correction step) and brutal nonterminal-level replacements
+        (semantic revising).
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>

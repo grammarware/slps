@@ -82,7 +82,6 @@
     <None Include="xbgf\extendWithAnnotations.xbgf" />
     <None Include="xbgf\extendWithTypeArguments.xbgf" />
     <None Include="xbgf\extract-impl3.xbgf" />
-    <None Include="xbgf\foo" />
     <None Include="xbgf\generalize-impl3.xbgf" />
     <None Include="xbgf\generalizeBlock.xbgf" />
     <None Include="xbgf\generalizeLabels.xbgf" />

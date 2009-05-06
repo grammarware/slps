@@ -6,7 +6,10 @@
 
   <xsd:annotation>
     <xsd:documentation>
-      LCF Configuration Format, where
+      LCF Configuration Format
+    </xsd:documentation>
+    <xsd:documentation>
+      where
       LCI = Language Convergence Infrastructure
 
       Part of SLPS = Software Language Processing Suite
@@ -23,16 +26,16 @@
 
   <xsd:group name="definition">
     <xsd:choice >
-      <xsd:element name="shortcut" type="lcf:shortcutType" />
-      <xsd:element name="generator" type="lcf:generatorType" />
-      <xsd:element name="tool" type="lcf:toolType" />
-      <xsd:element name="source" type="lcf:sourceType" />
-      <xsd:element name="target" type="lcf:targetType" />
-      <xsd:element name="testset" type="lcf:testsetType" />
+      <xsd:element name="shortcut" type="lcf:shortcut" />
+      <xsd:element name="generator" type="lcf:generator" />
+      <xsd:element name="tool" type="lcf:tool" />
+      <xsd:element name="source" type="lcf:source" />
+      <xsd:element name="target" type="lcf:target" />
+      <xsd:element name="testset" type="lcf:testset" />
     </xsd:choice>
   </xsd:group>
 
-  <xsd:complexType name="shortcutType">
+  <xsd:complexType name="shortcut">
     <xsd:annotation>
       <xsd:documentation>
         A shortcut in LCF is just a simple macro.
@@ -52,7 +55,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="generatorType">
+  <xsd:complexType name="generator">
     <xsd:annotation>
       <xsd:documentation>
         A method for automated generation of XBGF scripts.
@@ -71,13 +74,13 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="sourceType">
+  <xsd:complexType name="source">
     <xsd:annotation>
       <xsd:documentation>
         A source in LCF is the starting point for the grammar convergence.
         A source must have a name by which it will be referenced later.
         A source must have a defined extractor that provides LCI with a BGF.
-        A source may have a parser and an evaluator defined as commands - if they are present, they will be tested.
+        A source may have a parser and an evaluator defined as commands --- if they are present, they will be tested.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
@@ -116,14 +119,14 @@
       <xsd:element name="testing" minOccurs="0">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element name="set" type="lcf:xstring" />
+            <xsd:element name="set" type="lcf:xstring" maxOccurs="unbounded" />
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="targetType">
+  <xsd:complexType name="target">
     <xsd:annotation>
       <xsd:documentation>
         A target in LCF is the convergence point.
@@ -142,20 +145,20 @@
         <xsd:complexType>
           <xsd:sequence>
             <xsd:element name="input" type="xsd:string" />
-            <xsd:element name="earlyfixes" type="lcf:phaseType" minOccurs="0"/>
-            <xsd:element name="namematching" type="lcf:phaseType" minOccurs="0"/>
-            <xsd:element name="normalizing" type="lcf:phaseType" minOccurs="0"/>
+            <xsd:element name="preparation" type="lcf:phase" minOccurs="0"/>
+            <xsd:element name="nominal-matching" type="lcf:phase" minOccurs="0"/>
+            <xsd:element name="normalizing" type="lcf:phase" minOccurs="0"/>
+            <xsd:element name="structural-matching" type="lcf:phase" minOccurs="0"/>
             
-            <xsd:element name="refactoring" type="lcf:phaseType" minOccurs="0"/>
             <xsd:choice minOccurs="0" maxOccurs="unbounded">
-              <xsd:element name="extension" type="lcf:phaseType"/>
-              <xsd:element name="correction" type="lcf:phaseType"/>
-              <xsd:element name="relaxation" type="lcf:phaseType"/>
+              <xsd:element name="extension" type="lcf:phase"/>
+              <xsd:element name="correction" type="lcf:phase"/>
+              <xsd:element name="relaxation" type="lcf:phase"/>
             </xsd:choice>
             <!--
-            <xsd:element name="postextraction" type="lcf:phaseType" minOccurs="0"/>
-            <xsd:element name="synchronization" type="lcf:phaseType" minOccurs="0"/>
-            <xsd:element name="transformation" type="lcf:phaseType" minOccurs="0"/>
+            <xsd:element name="postextraction" type="lcf:phase" minOccurs="0"/>
+            <xsd:element name="synchronization" type="lcf:phase" minOccurs="0"/>
+            <xsd:element name="transformation" type="lcf:phase" minOccurs="0"/>
             -->
           </xsd:sequence>
         </xsd:complexType>
@@ -163,7 +166,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="phaseType">
+  <xsd:complexType name="phase">
     <xsd:sequence>
       <xsd:choice maxOccurs="unbounded">
         <xsd:element name="perform" type="xsd:string">
@@ -200,7 +203,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="testsetType">
+  <xsd:complexType name="testset">
     <xsd:annotation>
       <xsd:documentation>
         A testset in LCF is a set of code samples in the given language.
@@ -215,7 +218,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="toolType">
+  <xsd:complexType name="tool">
     <xsd:annotation>
       <xsd:documentation>
         A tool in LCF is an external script.
@@ -228,13 +231,13 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="name" type="lcf:tool"/>
+      <xsd:element name="name" type="lcf:toolType"/>
       <xsd:element name="grammar" type="lcf:xstring"/>
       <xsd:element name="tree" type="lcf:xstring" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:simpleType name="tool">
+  <xsd:simpleType name="toolType">
     <xsd:restriction base="xsd:token">
       <xsd:enumeration value="validation"/>
       <xsd:enumeration value="comparison"/>

@@ -200,24 +200,24 @@
     <name>java</name>
     <branch>
       <input>jaxb</input>
-      <namematching>
+      <nominal-matching>
         <perform>trimJaxb</perform>
         <automated>
           <method>case</method>
           <result>renameJaxb</result>
         </automated>
-      </namematching>
+      </nominal-matching>
     </branch>
     <branch>
       <input>om</input>
-      <namematching>
+      <nominal-matching>
         <perform>trimOm</perform>
         <automated>
           <method>case</method>
           <result>renameOm</result>
         </automated>
         <perform>preferJaxb</perform>
-      </namematching>
+      </nominal-matching>
     </branch>
   </target>
 
@@ -225,25 +225,25 @@
     <name>abstract</name>
     <branch>
       <input>java</input>
-      <namematching>
+      <nominal-matching>
         <perform>reroot</perform>
-      </namematching>
-      <refactoring>
+      </nominal-matching>
+      <structural-matching>
         <perform>unerase</perform>
-      </refactoring>
+      </structural-matching>
     </branch>
     <branch>
       <input>xsd</input>
-      <namematching>
+      <nominal-matching>
         <perform>trimXsd</perform>
         <automated>
           <method>case</method>
           <result>renameXsd</result>
         </automated>
-      </namematching>
-      <refactoring>
+      </nominal-matching>
+      <structural-matching>
         <perform>massageXsd</perform>
-      </refactoring>
+      </structural-matching>
     </branch>
   </target>
 
@@ -254,12 +254,12 @@
     </branch>
     <branch>
       <input>antlr</input>
-      <namematching>
+      <nominal-matching>
         <perform>renameAntlr</perform>
-      </namematching>
-      <refactoring>
+      </nominal-matching>
+      <structural-matching>
         <perform>preferDcg</perform>
-      </refactoring>
+      </structural-matching>
     </branch>
   </target>
 
@@ -267,18 +267,18 @@
     <name>concrete</name>
     <branch>
       <input>topdown</input>
-      <refactoring>
+      <structural-matching>
         <perform>removeLayers</perform>
-      </refactoring>
+      </structural-matching>
     </branch>
     <branch>
       <input>sdf</input>
-      <namematching>
+      <nominal-matching>
         <automated>
           <method>case</method>
           <result>renameSdf</result>
         </automated>
-      </namematching>
+      </nominal-matching>
     </branch>
   </target>
 
@@ -286,10 +286,10 @@
     <name>limit</name>
     <branch>
       <input>concrete</input>
-      <namematching>
+      <nominal-matching>
         <perform>reroot</perform>
-      </namematching>
-      <refactoring>
+      </nominal-matching>
+      <structural-matching>
         <perform>defineLex</perform>
         <automated>
           <method>stript</method>
@@ -297,17 +297,17 @@
         </automated>
         <perform>stripNewline</perform>
         <perform>permuteArgs</perform>
-      </refactoring>
+      </structural-matching>
     </branch>
     <branch>
       <input>abstract</input>
-      <refactoring>
+      <structural-matching>
         <perform>makeSignature</perform>
         <automated>
           <method>strips</method>
           <result>stripSelectors</result>
         </automated>
-      </refactoring>
+      </structural-matching>
     </branch>
   </target>
 

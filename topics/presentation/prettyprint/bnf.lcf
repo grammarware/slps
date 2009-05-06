@@ -65,16 +65,16 @@
     <name>grammarFormat</name>
     <branch>
       <input>bgf</input>
-      <namematching>
+      <nominal-matching>
         <perform>renameBgf</perform>
-      </namematching>
+      </nominal-matching>
       <relaxation>
         <perform>preferBnf</perform>
       </relaxation>
     </branch>
     <branch>
       <input>bnf</input>
-      <refactoring>
+      <structural-matching>
         <perform>stripWhitespace</perform>
         <perform>designate</perform>
         <automated>
@@ -82,7 +82,7 @@
           <result>stripTerminals</result>
         </automated>
         <perform>refactorBnf</perform>
-      </refactoring>
+      </structural-matching>
     </branch>
   </target>
 

@@ -38,9 +38,9 @@ def main(lcffile,gdt,prefix):
   synch[t.findtext('name')] = []
   for b in t.findall('branch'):
    start = b.findtext('input')
-   for p in b.findall('earlyfixes/perform'):
+   for p in b.findall('preparation/perform'):
     start += '.'+cutName(p.text)
-   for p in b.findall('namematching/perform'):
+   for p in b.findall('nominal-matching/perform'):
     start += '.'+cutName(p.text)
    for p in b.findall('normalizing/perform'):
     start += '.'+cutName(p.text)

@@ -78,6 +78,7 @@
     <None Include="..\presentation\prettyprint\xbgf\stripWhitespace.xbgf">
       <Link>xbgf\bnf\xbgf\stripWhitespace.xbgf</Link>
     </None>
+    <None Include="lcf\lcf.xldf" />
     <None Include="ldf\ldf.xldf" />
     <None Include="ldf\xldf\beautify.xldf" />
     <None Include="ldf\xldf\completeWithText.xldf" />
@@ -99,5 +100,8 @@
     <Content Include="..\..\shared\xsl\ldf2tex.xslt">
       <Link>ldf2tex.xslt</Link>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lcf\xldf\" />
   </ItemGroup>
 </Project>
