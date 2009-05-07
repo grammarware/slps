@@ -21,6 +21,8 @@ def main(lcffile,outdir):
  for el in ltree.findall('*'):
   if el.tag == 'target':
    newLcf.append(slicing.sliceTarget(xbgfDir,dirName+'xbgf/',el))
+  elif el.tag == 'testset':
+   pass
   else:
    newLcf.append(el)
  ET.ElementTree(newLcf).write(lcfName)

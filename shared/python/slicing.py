@@ -28,10 +28,12 @@ def sliceTarget(xbgfDir1,xbgfDir2,t):
   normFiles = ''
   nbr = ET.Element('branch')
   for e in branch.findall('*'):
+   #print 'Checking up on',e.tag,'...'
    if e.tag == 'input':
     nbr.append(e)
    elif e.tag in ('preparation','nominal-matching','normalizing'):
     needNormalizing = True
+    #print 'Gonna be normalized!!!'
     for step in e.findall('*'):
      if step.tag=='perform':
       normXbgf = appendXbgf(normXbgf,xbgfDir1+step.text+'.xbgf')
@@ -70,6 +72,15 @@ def sliceTarget(xbgfDir1,xbgfDir2,t):
        phase.append(p)
      #phase.append(step)
     nbr.append(phase)
+  # if no structural-matching and no resolution phases
+  if needNormalizing:
+   phase = ET.SubElement(nbr,'normalizing')
+   p = ET.SubElement(phase,'perform')
+   p.text = 'normalize-'+nbr.findtext('input')+'-'+nt.findtext('name')
+   needNormalizing = False
+   ET.ElementTree(normXbgf).write(xbgfDir2+p.text+'.xbgf')
+   print '-->',normFiles[:-3],'accumulated to normalisation'
+   normFiles = ''
   nt.append(nbr)
  return nt
 

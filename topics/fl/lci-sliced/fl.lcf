@@ -1,0 +1,189 @@
+<lcf:configuration xmlns:lcf="http://planet-sl.org/lcf"><shortcut>
+    <name>slps</name>
+    <expansion>../../..</expansion>
+  </shortcut>
+  <shortcut>
+    <name>fl</name>
+    <expansion>..</expansion>
+  </shortcut>
+  <shortcut>
+    <name>tools</name>
+    <expansion>
+      <expand>slps</expand>/shared/tools
+    </expansion>
+  </shortcut>
+  <shortcut>
+    <name>wrappers</name>
+    <expansion>
+      <expand>slps</expand>/shared/wrappers
+    </expansion>
+  </shortcut>
+
+  <tool>
+    <name>validation</name>
+    <grammar>
+      <expand>tools</expand>/checkxml bgf
+    </grammar>
+    <tree>
+      <expand>tools</expand>/checkbtf
+    </tree>
+  </tool>
+  <tool>
+    <name>comparison</name>
+    <grammar>
+      <expand>tools</expand>/gdt
+    </grammar>
+    <tree>
+      <expand>tools</expand>/tdt
+    </tree>
+  </tool>
+  <tool>
+    <name>transformation</name>
+    <grammar>
+      <expand>tools</expand>/xbgf
+    </grammar>
+    <tree>
+      <expand>tools</expand>/xbtf
+    </tree>
+  </tool>
+
+  <generator>
+    <name>case</name>
+    <command>
+      <expand>tools</expand>/casexbgf 3
+    </command>
+  </generator>
+  <generator>
+    <name>stript</name>
+    <command>
+      <expand>tools</expand>/striptxbgf
+    </command>
+  </generator>
+  <generator>
+    <name>strips</name>
+    <command>
+      <expand>tools</expand>/stripsxbgf
+    </command>
+  </generator>
+
+  <source>
+    <name>antlr</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/antlr2bgf <expand>fl</expand>/java1/FL.g
+      </extraction>
+      <parsing>
+        <expand>wrappers</expand>/runantlrparser
+      </parsing>
+      <evaluation>
+        <expand>wrappers</expand>/runantlrevaluator
+      </evaluation>
+    </grammar>
+    <testing>
+      <set>codesamples</set>
+    </testing>
+  </source>
+
+  <source>
+    <name>dcg</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/dcg2bgf <expand>fl</expand>/prolog1/Parser.pro
+      </extraction>
+      <parsing>
+        <expand>wrappers</expand>/runprologparser
+      </parsing>
+      <evaluation>
+        <expand>wrappers</expand>/runprologevaluator
+      </evaluation>
+    </grammar>
+    <testing>
+      <set>codesamples</set>
+    </testing>
+  </source>
+
+  <source>
+    <name>sdf</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/sdf2bgf <expand>fl</expand>/asfsdf/*.sdf
+      </extraction>
+      <parsing>
+        <expand>wrappers</expand>/runasfsdfparser
+      </parsing>
+      <evaluation>
+        <expand>wrappers</expand>/runasfsdfevaluator
+      </evaluation>
+    </grammar>
+    <tree>
+      <extraction>
+        <expand>tools</expand>/asfix2btf bgf/sdf.bgf
+      </extraction>
+      <evaluation>
+        <expand>wrappers</expand>/runbtfevaluator
+      </evaluation>
+    </tree>
+    <testing>
+      <set>codesamples</set>
+    </testing>
+  </source>
+
+  <source>
+    <name>xsd</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/xsd2bgf <expand>fl</expand>/xsd/fl.xsd
+      </extraction>
+      <parsing>
+        <expand>wrappers</expand>/runxsdparser
+      </parsing>
+      <evaluation>
+        <expand>wrappers</expand>/runxqueryevaluator
+      </evaluation>
+    </grammar>
+    <tree>
+      <extraction>
+        <expand>tools</expand>/xml2btf <expand>fl</expand>/xsd/fl.xsd
+      </extraction>
+    </tree>
+    <testing>
+      <set>xmlsamples</set>
+    </testing>
+  </source>
+
+  <source>
+    <name>om</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
+      </extraction>
+    </grammar>
+  </source>
+
+  <source>
+    <name>jaxb</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/java2bgf <expand>fl</expand>/java3 fl
+      </extraction>
+    </grammar>
+  </source>
+
+  
+
+  <target><name>java</name>
+    <branch><input>jaxb</input>
+      <normalizing><perform>normalize-jaxb-java</perform></normalizing></branch><branch><input>om</input>
+      <normalizing><perform>normalize-om-java</perform></normalizing></branch></target><target><name>abstract</name>
+    <branch><input>java</input>
+      <normalizing><perform>normalize-java-abstract</perform></normalizing><structural-matching><perform>unerase-1</perform><perform>unerase-2</perform><perform>unerase-3</perform><perform>unerase-4</perform><perform>unerase-5</perform><perform>unerase-6</perform></structural-matching></branch><branch><input>xsd</input>
+      <normalizing><perform>normalize-xsd-abstract</perform></normalizing><structural-matching><perform>massageXsd-1</perform><perform>massageXsd-2</perform><perform>massageXsd-3</perform></structural-matching></branch></target><target><name>topdown</name>
+    <branch><input>dcg</input>
+    </branch><branch><input>antlr</input>
+      <normalizing><perform>normalize-antlr-topdown</perform></normalizing><structural-matching><perform>preferDcg-1</perform><perform>preferDcg-2</perform><perform>preferDcg-3</perform><perform>preferDcg-4</perform><perform>preferDcg-5</perform><perform>preferDcg-6</perform><perform>preferDcg-7</perform><perform>preferDcg-8</perform><perform>preferDcg-9</perform><perform>preferDcg-10</perform><perform>preferDcg-11</perform></structural-matching></branch></target><target><name>concrete</name>
+    <branch><input>topdown</input>
+      <structural-matching><perform>removeLayers-1</perform><perform>removeLayers-2</perform></structural-matching></branch><branch><input>sdf</input>
+      <normalizing><perform>normalize-sdf-concrete</perform></normalizing></branch></target><target><name>limit</name>
+    <branch><input>concrete</input>
+      <normalizing><perform>normalize-concrete-limit</perform></normalizing><structural-matching><perform>defineLex-1</perform><perform>defineLex-2</perform><perform>defineLex-3</perform><perform>defineLex-4</perform><perform>stripTerminals-1</perform><perform>stripTerminals-2</perform><perform>stripTerminals-3</perform><perform>stripTerminals-4</perform><perform>stripTerminals-5</perform><perform>stripTerminals-6</perform><perform>stripNewline-1</perform><perform>stripNewline-2</perform><perform>permuteArgs-1</perform></structural-matching></branch><branch><input>abstract</input>
+      <structural-matching><perform>makeSignature-1</perform><perform>makeSignature-2</perform><perform>makeSignature-3</perform><perform>makeSignature-4</perform><perform>makeSignature-5</perform><perform>makeSignature-6</perform><perform>makeSignature-7</perform><perform>stripSelectors-1</perform><perform>stripSelectors-2</perform><perform>stripSelectors-3</perform><perform>stripSelectors-4</perform><perform>stripSelectors-5</perform><perform>stripSelectors-6</perform><perform>stripSelectors-7</perform></structural-matching></branch></target></lcf:configuration>
