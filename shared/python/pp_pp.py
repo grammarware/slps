@@ -3,6 +3,10 @@ import sys
 
 # post-processor for pretty-printer
 
+if len(sys.argv) > 1:
+ maxLen = int(sys.argv[1])
+else:
+ maxLen = 70
 mode = 0
 for line in sys.stdin:
  if mode == 1:
@@ -13,7 +17,7 @@ for line in sys.stdin:
    tokens = line.split(' ')
    lline = tokens[0]
    for token in tokens[1:]:
-    if len(lline + ' ' + token)>70:
+    if len(lline + ' ' + token)>maxLen:
      print lline
      lline = ' '*16 + token
     else:

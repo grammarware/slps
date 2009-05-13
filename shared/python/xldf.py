@@ -9,36 +9,40 @@ import xldfCommands
 #acceptedtags = ('{'+xsdns+'}complexType','{'+xsdns+'}element','{'+xsdns+'}simpleType','{'+xsdns+'}group')
 
 # Unified interface
-def xldf_perform_command(cmd,ltree):
+def xldf_perform_command(localpath,cmd,ltree):
  commandName = cmd.tag.replace(slpsns.xldf_(''),'')
  if commandName == 'transform-document':
-  xldf_transform_document(cmd,ltree)
+  xldf_transform_document(localpath,cmd,ltree)
   return
  try:
-  eval('xldfCommands.xldf_'+commandName.replace('-','_'))(cmd,ltree)
+  eval('xldfCommands.xldf_'+commandName.replace('-','_'))(localpath,cmd,ltree)
  except NameError,e:
   print '[----] Unknown XLDF command:',commandName
   print e
   sys.exit(1)
 
-def xldf_transform_document(cmd,tree):
+def xldf_transform_document(localpath,cmd,tree):
  print '[XLDF] transform(...,',cmd.findtext('file').split('/')[-1],') starts'
  try:
-  xtree = ET.parse(cmd.findtext('file'))
+  xtree = ET.parse(localpath+cmd.findtext('file'))
  except IOError,e:
-  print '[----] xldf:transform failed: file',cmd.findtext('file'),'not found'
+  print '[----] xldf:transform failed: file',localpath+cmd.findtext('file'),'not found'
   return
  for incmd in xtree.findall('*'):
-  xldf_perform_command(incmd,tree)
+  xldf_perform_command(localpath,incmd,tree)
  print '[XLDF] transform(...,',cmd.findtext('file').split('/')[-1],') is done'
  return
 
 def main(xldffile,inldffile,outldffile):
  grammar={}
+ if xldffile.find('/')<0:
+  localpath = ''
+ else:
+  localpath = '/'.join(xldffile.split('/')[:-1])+'/'
  xtree = ET.parse(xldffile)
  ltree = ET.parse(inldffile)
  for cmd in xtree.findall('*'):
-  xldf_perform_command(cmd,ltree)
+  xldf_perform_command(localpath,cmd,ltree)
  ltree.write(outldffile)
  return
 

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 2 ]; then
+	echo "Languedoc Include tool: extracts LDFs from XSDs, transforms them and presents includable TeX documents."
+	echo "Usage: ldinc <format> <start-marker>"
+	echo "Where start-marker is either START_CONTENT or START_CORE"
+	exit 1
+elif [ ! -d ${SLPS}/topics/languedoc/$1 ]; then
+	echo "Oops: directory $1 not found."
+	exit 1
+else
+	${SLPS}/shared/tools/xsd2ldf ${SLPS}/shared/xsd/$1.xsd $1.ldf
+	${SLPS}/shared/tools/xldf ${SLPS}/topics/languedoc/$1/$1.xldf $1.ldf $1.ready.ldf
+	xsltproc ${SLPS}/shared/xsl/ldf2tex.xslt $1.ready.ldf | python ${SLPS}/shared/python/pp_pp.py 70 > $1.not.tex
+	cat $1.not.tex | grep -v 'END_CONTENT' | grep -A 10000 $2 > $1.tex
+	rm -f $1.not.tex $1.ready.ldf $1.ldf xldf-tmp* printed_for_xldf.tmp
+fi

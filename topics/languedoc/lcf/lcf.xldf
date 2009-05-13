@@ -5,13 +5,33 @@
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <xldf:transform-grammar>
-    <target>simpleType-toolType</target>
+    <!-- TODO: can be automated! -->
+    <target>group-definition</target>
     <xbgf:vertical>
-      <nonterminal>toolType</nonterminal>
+      <nonterminal>definition</nonterminal>
     </xbgf:vertical>
+    <xbgf:unlabel>
+      <label>shortcut</label>
+    </xbgf:unlabel>
+    <xbgf:unlabel>
+      <label>generator</label>
+    </xbgf:unlabel>
+    <xbgf:unlabel>
+      <label>tool</label>
+    </xbgf:unlabel>
+    <xbgf:unlabel>
+      <label>source</label>
+    </xbgf:unlabel>
+    <xbgf:unlabel>
+      <label>target</label>
+    </xbgf:unlabel>
+    <xbgf:unlabel>
+      <label>testset</label>
+    </xbgf:unlabel>
+    <xbgf:horizontal>definition</xbgf:horizontal>
   </xldf:transform-grammar>
-
-  <xldf:transform-grammar>
+  
+   <xldf:transform-grammar>
     <target>complexType-source</target>
     <xbgf:extract>
       <bgf:production>
@@ -378,6 +398,168 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:disappear>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>branch</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <selectable>
+                <selector>input</selector>
+                <bgf:expression>
+                  <value>string</value>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <selectable>
+                    <selector>preparation</selector>
+                    <bgf:expression>
+                      <nonterminal>phase</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <selectable>
+                    <selector>nominal-matching</selector>
+                    <bgf:expression>
+                      <nonterminal>phase</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <selectable>
+                    <selector>structural-matching</selector>
+                    <bgf:expression>
+                      <nonterminal>phase</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <star>
+                <bgf:expression>
+                  <nonterminal>resolution</nonterminal>
+                </bgf:expression>
+              </star>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>target</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <selectable>
+                <selector>name</selector>
+                <bgf:expression>
+                  <value>string</value>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <plus>
+                <bgf:expression>
+                  <marked>
+                    <bgf:expression>
+                      <selectable>
+                        <selector>branch</selector>
+                        <bgf:expression>
+                          <nonterminal>branch</nonterminal>
+                        </bgf:expression>
+                      </selectable>
+                    </bgf:expression>
+                  </marked>
+                </bgf:expression>
+              </plus>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+  </xldf:transform-grammar>
+
+  <xldf:transform-grammar>
+    <target>complexType-phase</target>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>automated</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <selectable>
+                <selector>method</selector>
+                <bgf:expression>
+                  <value>string</value>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <selectable>
+                <selector>result</selector>
+                <bgf:expression>
+                  <value>string</value>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>phase</nonterminal>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <choice>
+                <bgf:expression>
+                  <selectable>
+                    <selector>perform</selector>
+                    <bgf:expression>
+                      <value>string</value>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+                <bgf:expression>
+                  <marked>
+                    <bgf:expression>
+                      <selectable>
+                        <selector>automated</selector>
+                        <bgf:expression>
+                          <nonterminal>automated</nonterminal>
+                        </bgf:expression>
+                      </selectable>
+                    </bgf:expression>
+                  </marked>
+                </bgf:expression>
+              </choice>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
   </xldf:transform-grammar>
   
+ <xldf:transform-grammar>
+    <target>simpleType-toolType</target>
+    <xbgf:vertical>
+      <nonterminal>toolType</nonterminal>
+    </xbgf:vertical>
+  </xldf:transform-grammar>
+
 </xldf:evolution-sequence>

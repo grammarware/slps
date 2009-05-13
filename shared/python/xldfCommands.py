@@ -6,9 +6,9 @@ import slpsns
 import elementtree.ElementTree as ET
 
 # Commands
-def xldf_insert(cmd,tree):
+def xldf_insert(localpath,cmd,tree):
  if cmd.findall('*')[0].findall('*')[0].tag != 'text':
-  xldf_insert_symbolic(cmd,tree)
+  xldf_insert_symbolic(localpath,cmd,tree)
   return
  welookfor = preparetext(cmd.findtext('*/*'))
  for cnt in tree.findall('.//content'):
@@ -54,7 +54,7 @@ def xldf_insert(cmd,tree):
  print '[----] xldf:insert failed, cannot find the designated target!'
  return
 
-def xldf_insert_symbolic(cmd,tree):
+def xldf_insert_symbolic(localpath,cmd,tree):
  welookfor = cmd.findall('*')[0].findall('*')[0]
  for cnt in tree.findall('.//content'):
   passed = False
@@ -99,7 +99,7 @@ def xldf_insert_symbolic(cmd,tree):
  print '[----] xldf:insertS failed, cannot find the designated target!'
  return
 
-def xldf_append(cmd,tree):
+def xldf_append(localpath,cmd,tree):
  found = findnode(tree,cmd.findtext('where'))
  if not found:
   print '[----] xldf:append failed: target id',cmd.findtext('where'),'not found'
@@ -135,7 +135,7 @@ def xldf_append(cmd,tree):
   print ')'
  return
 
-def xldf_place(cmd,tree):
+def xldf_place(localpath,cmd,tree):
  #found = tree.findall('//core[id="'+cmd.findtext('./section')+'"]')
  found = findnode(tree,cmd.findtext('section'))
  if not found:
@@ -164,7 +164,7 @@ def xldf_place(cmd,tree):
   print '[----] xldf:place failed: don''t know how to place subsections in',found2.tag
  return
 
-def xldf_drop(cmd,tree):
+def xldf_drop(localpath,cmd,tree):
  found = findnode(tree,cmd.findtext('section'))
  if not found:
   print '[----] xldf:drop failed: node',cmd.findtext('section'),'not found!'
@@ -173,7 +173,7 @@ def xldf_drop(cmd,tree):
  print '[XLDF] drop('+cmd.findtext('section')+')'
  return
 
-def xldf_combine(cmd,tree):
+def xldf_combine(localpath,cmd,tree):
  found = findnode(tree,cmd.findtext('section'))
  if not found:
   print '[----] xldf:combine failed: source node not found!'
@@ -191,7 +191,7 @@ def xldf_combine(cmd,tree):
  # print '[----] xldf:combine failed: don''t know how to place subsections in',found2.tag
  return
 
-def xldf_retitle(cmd,tree):
+def xldf_retitle(localpath,cmd,tree):
  if cmd.findall('from/title'):
   byid = False
   welookfor = cmd.findtext('from/title')
@@ -217,7 +217,7 @@ def xldf_retitle(cmd,tree):
   print '[XLDF] rename('+welookfor,',',cmd.findtext('to')+')'
  return
 
-def xldf_add_section(cmd,tree):
+def xldf_add_section(localpath,cmd,tree):
  success = False
  s = cmd.findall('*')[0]
  if s.tag in ('definitions','abbreviations','languageOverview'):
@@ -247,7 +247,7 @@ def xldf_add_section(cmd,tree):
   print '[----] xldf:add-section failed, double check or try add-subsection instead'
  return
 
-def xldf_remove_section(cmd,tree):
+def xldf_remove_section(localpath,cmd,tree):
  found = findnode(tree,cmd.findtext('id'))
  if found:
   if cmd.findall('from'):
@@ -259,7 +259,7 @@ def xldf_remove_section(cmd,tree):
  else:
   print '[----] xldf:remove-section couldn''t find id',cmd.findtext('id')
 
-def xldf_add_subsection(cmd,tree):
+def xldf_add_subsection(localpath,cmd,tree):
  success = False
  s = cmd.findall('*')[0]
  if s.tag in ('foreword','designGoals','scope','conformance','compliance','compatibility','notation','normativeReferences','documentStructure','whatsnew'):
@@ -279,7 +279,7 @@ def xldf_add_subsection(cmd,tree):
   print '[----] xldf:add-subsection failed, double check or try add-section instead'
  return
 
-def xldf_extract_subsection(cmd,tree):
+def xldf_extract_subsection(localpath,cmd,tree):
  where = findnode(tree,cmd.findtext('from'))
  if not where:
   print '[----] xldf:extract-subsection failed, can''t find id',cmd.findtext('to')
@@ -302,7 +302,7 @@ def xldf_extract_subsection(cmd,tree):
  print ')'
  return
 
-def xldf_add_figure(cmd,tree):
+def xldf_add_figure(localpath,cmd,tree):
  success = False
  s = cmd.findall('*')[0]
  found = findnode(tree,cmd.findtext('to'))
@@ -318,7 +318,7 @@ def xldf_add_figure(cmd,tree):
   print '[----] add-figure failed, double check or try add-section instead'
  return
 
-def xldf_transform_grammar(cmd,tree):
+def xldf_transform_grammar(localpath,cmd,tree):
  root = ET.Element(slpsns.xbgf_('sequence'),{})
  cx0 = 0
  for rule in cmd.findall('*')[1:]:
@@ -389,11 +389,11 @@ def xldf_transform_grammar(cmd,tree):
   print '[----] xldf:transform failed: no productions found in XBGF output'
  return
 
-def xldf_import_grammar(cmd,tree):
+def xldf_import_grammar(localpath,cmd,tree):
  try:
-  gtree = ET.parse(cmd.findtext('file'))
+  gtree = ET.parse(localpath+cmd.findtext('file'))
  except IOError,e:
-  print '[----] xldf:import failed: file',cmd.findtext('file'),'not found'
+  print '[----] xldf:import failed: file',localpath+cmd.findtext('file'),'not found'
   return
  found = findnode(tree,cmd.findtext('target'))
  if not found:
@@ -412,11 +412,11 @@ def xldf_import_grammar(cmd,tree):
    print '[----] xldf:import failed: no productions found in',cmd.findtext('file')
  return
 
-def xldf_import_sample(cmd,tree):
+def xldf_import_sample(localpath,cmd,tree):
  ending = ''
  if cmd.findall('prettyprinter'):
   inputfile = 'printed_for_xldf.tmp'
-  if os.system(cmd.findtext('prettyprinter')+' '+cmd.findtext('file')+' '+inputfile):
+  if os.system(localpath+cmd.findtext('prettyprinter')+' '+localpath+cmd.findtext('file')+' '+inputfile):
    print '[----] xldf:import failed: can''t execute the pretty-printer!'
    return
   ending = '- pretty-printed successfully'
