@@ -196,6 +196,41 @@
   </source
 -->
 
+	<target>
+	  <name>topdown</name>
+	  <branch>
+	    <input>dcg</input>
+	  </branch>
+	  <branch>
+	    <input>antlr</input>
+	    <nominal-matching>
+	      <perform>renameAntlr</perform>
+	    </nominal-matching>
+	    <structural-matching>
+	      <perform>preferDcg</perform>
+	    </structural-matching>
+	  </branch>
+	</target>
+
+	<target>
+	  <name>concrete</name>
+	  <branch>
+	    <input>topdown</input>
+	    <structural-matching>
+	      <perform>removeLayers</perform>
+	    </structural-matching>
+	  </branch>
+	  <branch>
+	    <input>sdf</input>
+	    <nominal-matching>
+	      <automated>
+	        <method>case</method>
+	        <result>renameSdf</result>
+	      </automated>
+	    </nominal-matching>
+	  </branch>
+	</target>
+
   <target>
     <name>java</name>
     <branch>
@@ -244,41 +279,6 @@
       <structural-matching>
         <perform>massageXsd</perform>
       </structural-matching>
-    </branch>
-  </target>
-
-  <target>
-    <name>topdown</name>
-    <branch>
-      <input>dcg</input>
-    </branch>
-    <branch>
-      <input>antlr</input>
-      <nominal-matching>
-        <perform>renameAntlr</perform>
-      </nominal-matching>
-      <structural-matching>
-        <perform>preferDcg</perform>
-      </structural-matching>
-    </branch>
-  </target>
-
-  <target>
-    <name>concrete</name>
-    <branch>
-      <input>topdown</input>
-      <structural-matching>
-        <perform>removeLayers</perform>
-      </structural-matching>
-    </branch>
-    <branch>
-      <input>sdf</input>
-      <nominal-matching>
-        <automated>
-          <method>case</method>
-          <result>renameSdf</result>
-        </automated>
-      </nominal-matching>
     </branch>
   </target>
 
