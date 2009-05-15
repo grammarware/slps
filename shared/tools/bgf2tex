@@ -1,0 +1,27 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -eq 1 ]; then
+    OUTPUT=/dev/stdout
+elif [ $# -ne 2 ]; then
+    echo "This tool pretty-prints BGF to an includeable TeX file."
+    echo "Usage: bgf2tex <input-bgf-document> [<output-tex>]"
+    echo "When output file is not specified, stdout is used."
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    OUTPUT=$2
+fi
+
+echo '\\begin{graybox}' > ${OUTPUT}
+echo '\\begin{lstlisting}[language=pp]' >> ${OUTPUT}
+xsltproc ${SLPS}/shared/xsl/bgf2bnf.xslt $1 >> ${OUTPUT}
+echo '\\end{lstlisting}' >> ${OUTPUT}
+echo '\\end{graybox}' >> ${OUTPUT}
