@@ -5,14 +5,12 @@ import elementtree.ElementTree as ET
 ldfns = 'http://planet-sl.org/ldf'
 bgfns = 'http://planet-sl.org/bgf'
 xbgfns= 'http://planet-sl.org/xbgf'
-#ldxns = 'http://planet-sl.org/ldx'
 xsdns = 'http://www.w3.org/2001/XMLSchema'
 htmlns= 'http://www.w3.org/1999/xhtml'
 
 ET._namespace_map[ldfns] = 'ldf'
 ET._namespace_map[bgfns] = 'bgf'
 ET._namespace_map[xbgfns]='xbgf'
-#ET._namespace_map[ldxns] = 'ldx'
 ET._namespace_map[xsdns] = 'xsd'
 ET._namespace_map[htmlns]='html'
 
@@ -30,7 +28,7 @@ def mapXSD2LDF(stree,dtree,grammar):
   el.text = nt.attrib['name']
   el = ET.SubElement(section,'description')
   el = ET.SubElement(el,'content')
-  for p in nt.findall('./{%s}annotation/{%s}documentation' % (xsdns,xsdns)):
+  for p in nt.findall('.//{%s}annotation/{%s}documentation' % (xsdns,xsdns)):
    pel = ET.SubElement(el,'text')
    pel.text = p.text
    # e.g. keywords

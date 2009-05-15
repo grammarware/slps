@@ -182,7 +182,11 @@ def xldf_combine(localpath,cmd,tree):
  if not found2:
   print '[----] xldf:combine failed: target node not found!'
   return
- target = found2.findall('content')[0]
+ target = found2.findall('content')
+ if target:
+  target = target[0]
+ else:
+  target = found2.findall('description/content')[0]
  for p in found.findall('*/content/*'):
   target.append(p)
  tree.getroot().remove(found)

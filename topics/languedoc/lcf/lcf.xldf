@@ -2,6 +2,7 @@
 <xldf:evolution-sequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
+  xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <xldf:transform-grammar>
@@ -492,6 +493,28 @@
       </bgf:production>
     </xbgf:anonymize>
   </xldf:transform-grammar>
+  <xldf:append>
+    <where>complexType-target</where>
+    <content>
+      <text>
+        During convergence process, LCI regularly compares the result of each
+        transformation step (XBGF file) of each branch to the reference points
+        of adjacent branches. Two diagrams are drawn as a result, one contains
+        only sources and targets with the edges signifying which target is based
+        upon which targets or sources; and one is a very detailed overview of
+        all the files that have been executed and all the numbers of nominal and
+        structural differences.
+      </text>
+      <text>
+        In the special measurement mode all the transformational scripts are sliced
+        in atomic steps before convergence. In this case, every step is followed by
+        grammar comparison. The convergence process is stopped prematurely if the number
+        of differences suddenly goes up.
+        Running LCI in this mode can take considerable time
+        (for six JLS grammars it is about an hour).
+      </text>
+    </content>
+  </xldf:append>
 
   <xldf:transform-grammar>
     <target>complexType-phase</target>
@@ -554,6 +577,19 @@
       </bgf:production>
     </xbgf:anonymize>
   </xldf:transform-grammar>
+  <xldf:append>
+    <where>complexType-phase</where>
+    <content>
+      <text>
+        The interface to generators is universal. We used it only with
+        <ldf:keyword>casexbgf</ldf:keyword>,
+        <ldf:keyword>striptxbgf</ldf:keyword> and
+        <ldf:keyword>stripsxbgf</ldf:keyword>, but
+        it is possible to define any number of generators outside LCI
+        and connect them here accordingly.
+      </text>
+    </content>
+  </xldf:append>
   
  <xldf:transform-grammar>
     <target>simpleType-toolType</target>
@@ -561,5 +597,9 @@
       <nonterminal>toolType</nonterminal>
     </xbgf:vertical>
   </xldf:transform-grammar>
+  <xldf:combine>
+    <section>simpleType-toolType</section>
+    <with>complexType-tool</with>
+  </xldf:combine>
 
 </xldf:evolution-sequence>

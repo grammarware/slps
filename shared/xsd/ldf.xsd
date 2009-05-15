@@ -312,7 +312,7 @@
         <xsd:annotation>
           <xsd:documentation>
             Whatever the authors deem to be important enough to be put on one of the first
-            pages. For example, in C# specifications Foreword is about the differences brought
+            pages. For example, in C\# specifications Foreword is about the differences brought
             to the language by the current standard, while in the Scheme specification
             Foreword discusses programming languages design and demonstrates its principles
             applied to the forthcoming document.
@@ -332,7 +332,7 @@
           </xsd:documentation>
           <xsd:documentation>
             For example:
-            "C# is intended to be a simple, modern, general-purpose, object-oriented
+            "C\# is intended to be a simple, modern, general-purpose, object-oriented
             programming language."
             (from ECMA 334 3rd edition, page xvii)
           </xsd:documentation>
