@@ -1,25 +1,25 @@
 all:
-	make app
-	make doc
+	make impl
+	make read
 	make test
 
 debug:
-	python ../../extraction/html2bgf/html2bgf.py app.html app2.bgf -v
-	python ../../extraction/html2bgf/getpre.py collect.kw doc.html parse.html
-	python ../../extraction/html2bgf/html2bgf.py parse.html doc2.bgf -v
+	python ../../extraction/html2bgf/html2bgf.py impl.html impl2.bgf -v
+	python ../../extraction/html2bgf/getpre.py collect.kw read.html parse.html
+	python ../../extraction/html2bgf/html2bgf.py parse.html read2.bgf -v
 
-app:
-	@echo "Extracting app2" > /dev/stderr
-	python ../../extraction/html2bgf/html2bgf.py app.html app2.bgf
+impl:
+	@echo "Extracting impl2" > /dev/stderr
+	python ../../extraction/html2bgf/html2bgf.py impl.html impl2.bgf
 
-doc:
-	@echo "Extracting doc2" > /dev/stderr
-	python ../../extraction/html2bgf/getpre.py collect.kw doc.html parse.html
-	python ../../extraction/html2bgf/html2bgf.py parse.html doc2.bgf
+read:
+	@echo "Extracting read2" > /dev/stderr
+	python ../../extraction/html2bgf/getpre.py collect.kw read.html parse.html
+	python ../../extraction/html2bgf/html2bgf.py parse.html read2.bgf
 
 test:
-	../../../shared/tools/checkxml bgf app2.bgf
-	../../../shared/tools/checkxml bgf doc2.bgf
+	../../../shared/tools/checkxml bgf impl2.bgf
+	../../../shared/tools/checkxml bgf read2.bgf
 
 clean:
 	rm -f *.bgf parse.html
