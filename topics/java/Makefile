@@ -21,31 +21,31 @@ test:
 	../../shared/tools/gdts jls3/read3.bgf lci/snapshot/read3.bgf
 
 rebuild:
-	curl -k http://java.sun.com/reads/books/jls/first_edition/html/19.read.html > jls1/impl.html
-	curl -k http://java.sun.com/reads/books/jls/second_edition/html/syntax.read.html > jls2/impl.html
-	curl -k http://java.sun.com/reads/books/jls/third_edition/html/syntax.html > jls3/impl.html
-	curl -k http://java.sun.com/reads/books/jls/first_edition/html/4.read.html   >jls1/read.html
-	curl -k http://java.sun.com/reads/books/jls/first_edition/html/6.read.html  >>jls1/read.html
-	curl -k http://java.sun.com/reads/books/jls/first_edition/html/7.read.html  >>jls1/read.html
-	curl -k http://java.sun.com/reads/books/jls/first_edition/html/8.read.html  >>jls1/read.html
-	curl -k http://java.sun.com/reads/books/jls/first_edition/html/9.read.html  >>jls1/read.html
-	curl -k http://java.sun.com/reads/books/jls/first_edition/html/10.read.html >>jls1/read.html
-	curl -k http://java.sun.com/reads/books/jls/first_edition/html/14.read.html >>jls1/read.html
-	curl -k http://java.sun.com/reads/books/jls/first_edition/html/15.read.html >>jls1/read.html
-	curl -k http://java.sun.com/reads/books/jls/second_edition/html/typesValues.read.html >jls2/read.html
-	curl -k http://java.sun.com/reads/books/jls/second_edition/html/names.read.html >>jls2/read.html
-	curl -k http://java.sun.com/reads/books/jls/second_edition/html/packages.read.html >>jls2/read.html
-	curl -k http://java.sun.com/reads/books/jls/second_edition/html/classes.read.html >>jls2/read.html
-	curl -k http://java.sun.com/reads/books/jls/second_edition/html/interfaces.read.html >>jls2/read.html
-	curl -k http://java.sun.com/reads/books/jls/second_edition/html/arrays.read.html >>jls2/read.html
-	curl -k http://java.sun.com/reads/books/jls/second_edition/html/statements.read.html >>jls2/read.html
-	curl -k http://java.sun.com/reads/books/jls/second_edition/html/expressions.read.html >>jls2/read.html
-	curl -k http://java.sun.com/reads/books/jls/third_edition/html/typesValues.html >jls3/read.html
-	curl -k http://java.sun.com/reads/books/jls/third_edition/html/names.html >>jls3/read.html
-	curl -k http://java.sun.com/reads/books/jls/third_edition/html/packages.html >>jls3/read.html
-	curl -k http://java.sun.com/reads/books/jls/third_edition/html/classes.html >>jls3/read.html
-	curl -k http://java.sun.com/reads/books/jls/third_edition/html/interfaces.html >>jls3/read.html
-	curl -k http://java.sun.com/reads/books/jls/third_edition/html/arrays.html >>jls3/read.html
-	curl -k http://java.sun.com/reads/books/jls/third_edition/html/statements.html >>jls3/read.html
-	curl -k http://java.sun.com/reads/books/jls/third_edition/html/expressions.html >>jls3/read.html
+	curl -k http://java.sun.com/docs/books/jls/first_edition/html/19.doc.html > jls1/impl.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/syntax.doc.html > jls2/impl.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/syntax.html > jls3/impl.html
+	curl -k http://java.sun.com/docs/books/jls/first_edition/html/4.doc.html   >jls1/read.html
+	curl -k http://java.sun.com/docs/books/jls/first_edition/html/6.doc.html  >>jls1/read.html
+	curl -k http://java.sun.com/docs/books/jls/first_edition/html/7.doc.html  >>jls1/read.html
+	curl -k http://java.sun.com/docs/books/jls/first_edition/html/8.doc.html  >>jls1/read.html
+	curl -k http://java.sun.com/docs/books/jls/first_edition/html/9.doc.html  >>jls1/read.html
+	curl -k http://java.sun.com/docs/books/jls/first_edition/html/10.doc.html >>jls1/read.html
+	curl -k http://java.sun.com/docs/books/jls/first_edition/html/14.doc.html >>jls1/read.html
+	curl -k http://java.sun.com/docs/books/jls/first_edition/html/15.doc.html >>jls1/read.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/typesValues.doc.html >jls2/read.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/names.doc.html >>jls2/read.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/packages.doc.html >>jls2/read.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/classes.doc.html >>jls2/read.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/interfaces.doc.html >>jls2/read.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/arrays.doc.html >>jls2/read.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/statements.doc.html >>jls2/read.html
+	curl -k http://java.sun.com/docs/books/jls/second_edition/html/expressions.doc.html >>jls2/read.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/typesValues.html >jls3/read.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/names.html >>jls3/read.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/packages.html >>jls3/read.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/classes.html >>jls3/read.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/interfaces.html >>jls3/read.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/arrays.html >>jls3/read.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/statements.html >>jls3/read.html
+	curl -k http://java.sun.com/docs/books/jls/third_edition/html/expressions.html >>jls3/read.html
 
