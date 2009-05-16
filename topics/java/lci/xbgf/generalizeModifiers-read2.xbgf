@@ -55,15 +55,6 @@
      ConstantModifiers ConstantModifer
   -->
 
-  <!-- First the deyaccification -->
-  <xbgf:deyaccify>Modifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>AbstractMethodModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>InterfaceModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>MethodModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>FieldModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>ConstructorModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>ConstantModifiers</xbgf:deyaccify>
-
   <!-- ISSUE PERMISSIVENESS
   Now unification of singulars-->
   <!-- RELAXATION -->
@@ -97,14 +88,7 @@
     <to>Modifier</to>
   </xbgf:unite>
 
-  <!-- Getting rid of plurals altogether -->
-  <xbgf:inline>Modifiers</xbgf:inline>
-  <xbgf:inline>AbstractMethodModifiers</xbgf:inline>
-  <xbgf:inline>InterfaceModifiers</xbgf:inline>
-  <xbgf:inline>MethodModifiers</xbgf:inline>
-  <xbgf:inline>FieldModifiers</xbgf:inline>
-  <xbgf:inline>ConstructorModifiers</xbgf:inline>
-  <xbgf:inline>ConstantModifiers</xbgf:inline>
+  <!-- Last bits -->
   <xbgf:massage>
     <bgf:expression>
       <optional>

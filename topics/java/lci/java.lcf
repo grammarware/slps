@@ -135,7 +135,8 @@
         <perform>rename-read2</perform>
       </nominal-matching>
       <structural-matching>
-        <perform>generalizeModifiers-read2</perform>
+        <perform>deyaccifyModifiers-read2</perform>
+        <perform>generalizeModifiers-read2</perform> <!-- should be moved to relaxation!!! -->
         <perform>generalizeNames</perform>
         <perform>deyaccifyStatements</perform>
         <perform>refactorTypes-read2</perform>

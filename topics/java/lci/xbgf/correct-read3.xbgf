@@ -32,7 +32,7 @@
 </em></pre></blockquote>
   -->
   <!-- GENERALITY -->
-  <!-- INITCORR -->
+  <!-- POSTEXTR -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>TypeParameters</nonterminal>
