@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xldf:evolution-sequence
+  xmlns:ldf="http://planet-sl.org/ldf"
+  xmlns:xldf="http://planet-sl.org/xldf"
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <xldf:retitle>
+    <from>
+      <title>document</title>
+    </from>
+    <to>Document</to>
+  </xldf:retitle>
+  
+  <xldf:retitle>
+    <from>
+      <title>titlePage</title>
+    </from>
+    <to>Title page</to>
+  </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>body</title>
+    </from>
+    <to>Standardisation bodies</to>
+  </xldf:retitle>
+  
+</xldf:evolution-sequence>

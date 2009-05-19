@@ -5,11 +5,14 @@
   <xldf:transform-document>
     <file>xldf/dropBgf.xldf</file>
   </xldf:transform-document>
- <!-- <xldf:transform-document>
+  <xldf:transform-document>
     <file>xldf/beautify.xldf</file>
-  </xldf:transform-document>-->
+  </xldf:transform-document>
   <xldf:transform-document>
     <file>xldf/completeWithText.xldf</file>
+  </xldf:transform-document>
+  <xldf:transform-document>
+    <file>xldf/reorganise.xldf</file>
   </xldf:transform-document>
   
 </xldf:evolution-sequence>
