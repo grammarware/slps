@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xldf:evolution-sequence
   xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf">
   
@@ -38,11 +39,81 @@
     <section>element-designate</section>
     <inside>group-decorative-transformation</inside>
   </xldf:place>
+  <xldf:add-subsection>
+    <example id="designate-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-designate</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>designate-example</target>
+    <file>../../transformation/xbgf/tests/designate.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>designate-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>designate-example</target>
+    <file>../../transformation/xbgf/tests/designate.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>designate-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>designate-example</target>
+    <file>../../transformation/xbgf/tests/designate.baseline</file>
+  </xldf:import-grammar>
   
   <xldf:place>
     <section>element-unlabel</section>
     <inside>group-decorative-transformation</inside>
   </xldf:place>
+  <xldf:add-subsection>
+    <example id="unlabel-example">
+      <content>
+        <text>
+          Unlike the previous one, this transformation relies on the fact that all labels
+          are unique within a grammar. This assumption allowed us to simplify the calling
+          syntax. So, given the input:
+        </text>
+      </content>
+    </example>
+    <to>element-unlabel</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>unlabel-example</target>
+    <file>../../transformation/xbgf/tests/unlabel.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>unlabel-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>unlabel-example</target>
+    <file>../../transformation/xbgf/tests/unlabel.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>unlabel-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>unlabel-example</target>
+    <file>../../transformation/xbgf/tests/unlabel.baseline</file>
+  </xldf:import-grammar>
   
   <xldf:place>
     <section>element-deanonymize</section>
@@ -58,17 +129,54 @@
     </xbgf:fold>
     <context>definitions-section</context>
   </xldf:transform-grammar>
+  <xldf:add-subsection>
+    <example id="deanonymize-example">
+      <content>
+        <text>
+          Selectors can be introduced one at a time or in batch, but each one must be
+          marked separately. For instance, given the input:
+      </text>
+      </content>
+    </example>
+    <to>element-deanonymize</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>deanonymize-example</target>
+    <file>../../transformation/xbgf/tests/deanonymize_multiple.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>deanonymize-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>deanonymize-example</target>
+    <file>../../transformation/xbgf/tests/deanonymize_multiple.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>deanonymize-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>deanonymize-example</target>
+    <file>../../transformation/xbgf/tests/deanonymize_multiple.baseline</file>
+  </xldf:import-grammar>
+  
   <xldf:append>
     <where>element-anonymize</where>
     <content>
       <text>
         Given the input BGF and a clear goal to strip all selectors,
-        it becomes trivial to generate a list of anonymize commands that,
+        it becomes trivial to generate a list of <ldf:keyword>anonymize</ldf:keyword> commands that,
         if executed on the same grammar, would produce a selector-free
         yet structurally equivalent grammar. We used such a generator
         called strips in the FL case study as the final stage to converge
         the abstract syntax (with selectors) with the concrete syntax (with
-        terminals).
+        terminals), see the section about generators.
       </text>
     </content>
   </xldf:append>
@@ -87,5 +195,39 @@
     </xbgf:fold>
     <context>definitions-section</context>
   </xldf:transform-grammar>
+
+  <xldf:add-subsection>
+    <example id="anonymize-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-anonymize</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>anonymize-example</target>
+    <file>../../transformation/xbgf/tests/anonymize_single.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>anonymize-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>anonymize-example</target>
+    <file>../../transformation/xbgf/tests/anonymize_single.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>anonymize-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>anonymize-example</target>
+    <file>../../transformation/xbgf/tests/anonymize_single.baseline</file>
+  </xldf:import-grammar>
   
 </xldf:evolution-sequence>

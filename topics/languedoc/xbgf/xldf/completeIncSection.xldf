@@ -250,7 +250,7 @@
       <text>
         The widening relation is defined as follows:
       </text>
-      <formula>x \textrm{ can be widened to } x?,\: x^+,\: x^\star</formula>
+      <formula>x \textrm{ can be widened to } x? \textrm{ or } x^+ \textrm{ or } x^\star</formula>
       <formula>x? \textrm{ can be widened to } x^\star</formula>
       <formula>x^+ \textrm{ can be widened to } x^\star</formula>
       <text>

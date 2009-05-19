@@ -252,7 +252,7 @@
       </text>
       <formula>x? \textrm{ can be narrowed to } x</formula>
       <formula>x^+ \textrm{ can be narrowed to } x</formula>
-      <formula>x^\star \textrm{ can be narrowed to } x,\: x?,\: x^+</formula>
+      <formula>x^\star \textrm{ can be narrowed to } x \textrm{ or } x? \textrm{ or } x^+</formula>
       <text>
         It is trivial to prove that for each case the expression on the right is included
         in the expression on the right, but not otherwise. For going the other way

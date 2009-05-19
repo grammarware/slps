@@ -4,7 +4,11 @@ build: bnfbgf.pdf tex
 	pdflatex -interaction=batchmode xbgf
 	pdflatex -interaction=batchmode xbgf
 
-tex:
+slices:
+	cp ../../presentation/prettyprint/xbgf/stripTerminals.xbgf sliced/
+	python ../../../shared/python/xbgfSlice.py sliced/stripTerminals.xbgf
+
+tex: slices
 	../../../shared/tools/xsd2ldf ../../../shared/xsd/xbgf.xsd xbgf.ldf
 	../../../shared/tools/xldf xbgf.xldf xbgf.ldf xbgf.ready.ldf
 	../../../shared/tools/ldf2tex xbgf.ready.ldf xbgf.tex
@@ -20,7 +24,7 @@ rebuild:
 clean:
 	rm -f xbgf*.bgf xbgf*.ldf xbgf.html xbgf.fo xbgf.pdf *.xbnf
 	rm -f bgf*.bgf ldf*.bgf ldf*.ldf ldf.fo ldf.pdf xldf-tmp*
-	rm -f *.aux *.log *.toc *.tex printed_for_xldf.tmp bnfbgf.pdf
+	rm -f *.aux *.log *.toc *.tex printed_for_xldf.tmp bnfbgf.pdf sliced/*.xbgf
 
 check:
 	ls -1 *.xbgf | xargs -n1 ${validator} xbgf

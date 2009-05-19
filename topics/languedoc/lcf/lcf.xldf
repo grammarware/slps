@@ -31,6 +31,31 @@
     </xbgf:unlabel>
     <xbgf:horizontal>definition</xbgf:horizontal>
   </xldf:transform-grammar>
+  <xldf:combine>
+    <section>group-definition</section>
+    <with>element-configuration</with>
+  </xldf:combine>
+  <xldf:retitle>
+    <from>
+      <title>configuration</title>
+    </from>
+    <to>Main configuration elements</to>
+  </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>shortcut</title>
+    </from>
+    <to>Shortcuts</to>
+  </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>generator</title>
+    </from>
+    <to>Generators</to>
+  </xldf:retitle>
+
   
    <xldf:transform-grammar>
     <target>complexType-source</target>
@@ -266,6 +291,12 @@
       </bgf:production>
     </xbgf:anonymize>
   </xldf:transform-grammar>
+  <xldf:retitle>
+    <from>
+      <title>source</title>
+    </from>
+    <to>Sources</to>
+  </xldf:retitle>
 
   <xldf:transform-grammar>
     <target>complexType-target</target>
@@ -515,6 +546,12 @@
       </text>
     </content>
   </xldf:append>
+  <xldf:retitle>
+    <from>
+      <title>target</title>
+    </from>
+    <to>Targets</to>
+  </xldf:retitle>
 
   <xldf:transform-grammar>
     <target>complexType-phase</target>
@@ -590,7 +627,20 @@
       </text>
     </content>
   </xldf:append>
+  <xldf:retitle>
+    <from>
+      <title>phase</title>
+    </from>
+    <to>Phases</to>
+  </xldf:retitle>
   
+  <xldf:retitle>
+    <from>
+      <title>testset</title>
+    </from>
+    <to>Test sets</to>
+  </xldf:retitle>
+
  <xldf:transform-grammar>
     <target>simpleType-toolType</target>
     <xbgf:vertical>
@@ -601,5 +651,11 @@
     <section>simpleType-toolType</section>
     <with>complexType-tool</with>
   </xldf:combine>
+  <xldf:retitle>
+    <from>
+      <title>tool</title>
+    </from>
+    <to>Tools</to>
+  </xldf:retitle>
 
 </xldf:evolution-sequence>

@@ -2,6 +2,6 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   <xbgf:unlabel>
-    <label>binary</label>
+    <label>intexpr</label>
   </xbgf:unlabel>
 </xbgf:sequence>

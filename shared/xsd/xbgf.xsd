@@ -326,8 +326,7 @@
         selectors can name arbitrary parts of any BGF expression.
         This command allows to add a selector to the existing production.
         To avoid disambiguations, the whole production is required
-        as an argument, with the newly introduced part being marked.
-        Selectors must be introduced one at a time.
+        as an argument, with the newly introduced part being marked.        
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -357,7 +356,7 @@
   <xsd:element name="disappear">
     <xsd:annotation>
       <xsd:documentation>
-        As project, but only allows for nillable elements (optional, star) to disappear.
+        As <ldf:keyword>project</ldf:keyword>, but only allows for nillable elements (optional, star) to disappear.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -413,7 +412,7 @@
   <xsd:element name="unlabel">
     <xsd:annotation>
       <xsd:documentation>
-        A reverse of designate that strips an existing production from a label.
+        A reverse of <ldf:keyword>designate</ldf:keyword> that strips an existing production from a label.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -591,7 +590,7 @@
     <xsd:annotation>
       <xsd:documentation>
         The argument production defines the intended result of the
-        transformation -- a production that has additional components
+        transformation --- a production that has additional components
         in the sequential composition, when compared to the correpsonding
         production in the input grammar with the same defined nonterminal
         and the same label, if any.
@@ -734,7 +733,7 @@
     <xsd:annotation>
       <xsd:documentation>
         The argument production defines the intended result of the
-        transformation -- a production that has the same components
+        transformation --- a production that has the same components
         in the sequential composition, but in a different order, when
         compared to the correpsonding production in the input grammar
         with the same defined nonterminal and the same label, if any.
@@ -751,7 +750,7 @@
     <xsd:annotation>
       <xsd:documentation>
         The argument production defines the intended result of the
-        transformation -- a production that has fewer components
+        transformation --- a production that has fewer components
         in the sequential composition, when compared to the correpsonding
         production in the input grammar with the same defined nonterminal
         and the same label, if any.
@@ -1025,10 +1024,7 @@
   <xsd:element name="concretize">
     <xsd:annotation>
       <xsd:documentation>
-        As inject, but works only with terminals.
-      </xsd:documentation>
-      <xsd:documentation>
-        Terminalize breaks concrete, but not abstract, semantics.
+        As <ldf:keyword>inject</ldf:keyword>, but works more carefully: allows to add only terminals.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -1131,7 +1127,8 @@
   <xsd:element name="abstractize">
     <xsd:annotation>
       <xsd:documentation>
-        As project, but works only with terminals.
+        As <ldf:keyword>project</ldf:keyword>, but works more carefully: checks that the part to be removed
+        consists of terminals.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -1144,7 +1141,7 @@
   <xsd:element name="anonymize">
     <xsd:annotation>
       <xsd:documentation>
-        A reverse of deanonymize that strips one (marked) selector
+        A reverse of <ldf:keyword>deanonymize</ldf:keyword> that strips one (marked) selector
         from an existing definition.
       </xsd:documentation>
     </xsd:annotation>

@@ -3,17 +3,28 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   <xbgf:anonymize>
-  <bgf:production>
-    <label>constant</label>
-    <nonterminal>expr</nonterminal>
-    <bgf:expression><marked><bgf:expression>
-      <selectable>
-        <selector>value</selector>
-        <bgf:expression>
-          <nonterminal>int</nonterminal>
-        </bgf:expression>
-      </selectable>
-    </bgf:expression></marked></bgf:expression>
-  </bgf:production>
-</xbgf:anonymize>
+    <bgf:production>
+      <label>unary</label>
+      <nonterminal>expr</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <selectable>
+                  <selector>op</selector>
+                  <bgf:expression>
+                    <nonterminal>unary_op</nonterminal>
+                  </bgf:expression>
+                </selectable>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>expr</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:anonymize>
 </xbgf:sequence>

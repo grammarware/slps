@@ -63,6 +63,40 @@
     </content>
   </xldf:append>
 
+  <xldf:add-subsection>
+    <example id="renameL-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-rename-label</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>renameL-example</target>
+    <file>../../transformation/xbgf/tests/renameL.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>renameL-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>renameL-example</target>
+    <file>../../transformation/xbgf/tests/renameL.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>renameL-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>renameL-example</target>
+    <file>../../transformation/xbgf/tests/renameL.baseline</file>
+  </xldf:import-grammar>
+
   <xldf:extract-subsection>
     <from>element-rename</from>
     <content>
@@ -106,6 +140,40 @@
       </text>
     </content>
   </xldf:append>
+
+  <xldf:add-subsection>
+    <example id="renameN-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-rename-nonterminal</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>renameN-example</target>
+    <file>../../transformation/xbgf/tests/renameN.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>renameN-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>renameN-example</target>
+    <file>../../transformation/xbgf/tests/renameN.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>renameN-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>renameN-example</target>
+    <file>../../transformation/xbgf/tests/renameN.baseline</file>
+  </xldf:import-grammar>
   
   <xldf:extract-subsection>
     <from>element-rename</from>
@@ -161,6 +229,40 @@
       </text>
     </content>
   </xldf:append>
+
+  <xldf:add-subsection>
+    <example id="renameS-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-rename-selector</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>renameS-example</target>
+    <file>../../transformation/xbgf/tests/renameS.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>renameS-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>renameS-example</target>
+    <file>../../transformation/xbgf/tests/renameS.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>renameS-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>renameS-example</target>
+    <file>../../transformation/xbgf/tests/renameS.baseline</file>
+  </xldf:import-grammar>
   
   <xldf:extract-subsection>
     <from>element-rename</from>
@@ -204,28 +306,41 @@
       </text>
     </content>
   </xldf:append>
+
+  <xldf:add-subsection>
+    <example id="renameT-example">
+      <content>
+        <text>Given the input:</text>
+      </content>
+    </example>
+    <to>element-rename-terminal</to>
+  </xldf:add-subsection>
+  <xldf:import-grammar>
+    <target>renameT-example</target>
+    <file>../../transformation/xbgf/tests/renameT.bgf</file>
+  </xldf:import-grammar>
+  <xldf:append>
+    <where>renameT-example</where>
+    <content>
+      <text>After using this transformation:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-sample>
+    <target>renameT-example</target>
+    <file>../../transformation/xbgf/tests/renameT.xbgf</file>
+    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+  </xldf:import-sample>
+  <xldf:append>
+    <where>renameT-example</where>
+    <content>
+      <text>Will look like this:</text>
+    </content>
+  </xldf:append>
+  <xldf:import-grammar>
+    <target>renameT-example</target>
+    <file>../../transformation/xbgf/tests/renameT.baseline</file>
+  </xldf:import-grammar>
   
-  <!--
-  
-  <xldf:add-section>
-    <core id="misc">
-      <title>Miscellaneous</title>
-      <author>Vadim Zaytsev</author>
-      <description>
-        <content>
-          <text>T.B.D.</text>
-        </content>
-      </description>
-    </core>
-  </xldf:add-section>
-  <xldf:place>
-    <section>element-dump</section>
-    <inside>misc</inside>
-  </xldf:place>
-  <xldf:place>
-    <section>element-reroot</section>
-    <inside>misc</inside>
-  </xldf:place>-->
   <xldf:remove-section>
     <!-- eliminate(strip) is implicit -->
     <id>element-strip</id>

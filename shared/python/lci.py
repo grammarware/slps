@@ -777,7 +777,7 @@ if __name__ == "__main__":
    print '----- Tree convergence phase finished. -----'
   else:
    print '[WARN] No testing performed.'
-  #dumpGraph(sys.argv[2])
+  dumpGraph(sys.argv[2])
   if problem:
    sysexit(100)
   log.close()
