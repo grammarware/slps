@@ -46,9 +46,11 @@ public class TestStats2LaTeX {
 			if (((Element)row.getContent(1)).getAttributeValue("value").equals("true")) {
 				ignored.add(type);
 			}
-			types.add(type);
-			methods.put(type, Integer.parseInt(((Element)row.getContent(5)).getAttributeValue("value")));
-			asserts.put(type, Integer.parseInt(((Element)row.getContent(7)).getAttributeValue("value")));
+			if (!types.equals("AttributesTest")) { 
+				types.add(type);
+				methods.put(type, Integer.parseInt(((Element)row.getContent(5)).getAttributeValue("value")));
+				asserts.put(type, Integer.parseInt(((Element)row.getContent(7)).getAttributeValue("value")));
+			}
 		}
 
 		Collections.sort(types);

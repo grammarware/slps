@@ -63,7 +63,15 @@ public aspect InterceptTestFailure {
 		return string;
 	}
 	
-	after(): execution(public static void CollectFailures*.main(..)) {
+	after(): execution(public static void CollectFailures.main(..)) {
+		outputNumbers("wrapped");
+	}
+	
+	after(): execution(public static void CollectFailuresXOM.main(..)) {
+		outputNumbers("original");
+	}
+	
+	private static void outputNumbers(String name) {
 		System.out.println(tests + " tests with " + assertionsTotal + " assertions");
 		System.out.println(failuresTotal + " failures; " + errorsTotal + " errors");
 		for (String method: assertionCount.keySet()) {
@@ -205,7 +213,7 @@ public aspect InterceptTestFailure {
 					totalErrorPerType.put(type, 0);
 				}
 			}
-			File file = new File("compliance.tex");
+			File file = new File(name + "-compliance.tex");
 			FileWriter writer = new FileWriter(file);
 			writer.write("\\begin{tabular}{|l|r|r|r|}\\hline\n");
 			//writer.write("\\typeHeading\t\t\t\t& ");
@@ -250,14 +258,14 @@ public aspect InterceptTestFailure {
 			writer.flush();
 			writer.close();
 			
-			writer = new FileWriter(new File("numbers.tex"));
+			writer = new FileWriter(new File(name + "-numbers.tex"));
 			
-			writer.write("\\def\\numOfTestMethods{" + tests + "}\n");
-			writer.write("\\def\\numOfAssertionsExecuted{" + assertionsTotal + "}\n");
-			writer.write("\\def\\numOfFailures{" + failuresTotal +  "}\n");
-			writer.write("\\def\\numOfErrors{" + errorsTotal + "}\n");
-			writer.write("\\def\\numOfSuccesses{" + (tests - (errorsTotal + failuresTotal)) + "}\n");
-			
+			writer.write("\\def\\" + name + "NumOfTestMethods{" + tests + "}\n");
+			writer.write("\\def\\" + name + "NumOfAssertionsExecuted{" + assertionsTotal + "}\n");
+			writer.write("\\def\\" + name + "NumOfFailures{" + failuresTotal +  "}\n");
+			writer.write("\\def\\" + name + "NumOfErrors{" + errorsTotal + "}\n");
+			writer.write("\\def\\" + name + "NumOfSuccesses{" + (tests - (errorsTotal + failuresTotal)) + "}\n");
+			writer.write("\\def\\" + name + "NumOfFeaturesCovered{" + features.size() + "}\n");
 			writer.flush();
 			writer.close();
 		}

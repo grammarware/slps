@@ -455,14 +455,14 @@ public class CollectMappings {
 		List<String> types = new ArrayList<String>(preCount.keySet());
 		Collections.sort(types);
 		FileWriter writer = new FileWriter(new File("unrissues.tex"));
-		writer.write("\\begin{tabular}{|l|r|r||r|r|r|r|r|}\\hline\n");
+		writer.write("\\begin{tabular}{|l|r|r||r|r|r|r|r|r|}\\hline\n");
 		writer.write("\\typeHeadingIssues & \\preHeading &\\postHeading &");
 		
 		writer.write("\\BaseURIHeading & ");
 		writer.write("\\EscapingHeading & ");
 		writer.write("\\NamespacingHeading & ");
 		writer.write("\\SerializationHeading & ");
-//		writer.write("\\ParsingHeading & ");
+		writer.write("\\ParsingHeading & ");
 		writer.write("\\DocTypeValidityHeading ");
 
 		
@@ -498,15 +498,17 @@ public class CollectMappings {
 			namespacingTotal += namespacing;
 			serializationTotal += serialization;
 			//Temporarily!! Ugly HACK!
-			doctypeTotal += parsing;
+			//doctypeTotal += parsing;
+			parsingTotal += parsing;
 			doctypeTotal += doctype;
 			
 			writer.write(" & " +  (baseuri == 0 ? "\\ZERO" : baseuri));
 			writer.write(" & " +  (escaping == 0 ? "\\ZERO" : escaping));
 			writer.write(" & " +  (namespacing == 0 ? "\\ZERO" : namespacing));
 			writer.write(" & " +  (serialization == 0 ? "\\ZERO" : serialization));
-//			writer.write(" & " +  (parsing == 0 ? "\\ZERO" : parsing));
-			writer.write(" & " +  ((doctype +parsing) == 0 ? "\\ZERO" : (doctype + parsing)));
+			writer.write(" & " +  (parsing == 0 ? "\\ZERO" : parsing));
+//			writer.write(" & " +  ((doctype +parsing) == 0 ? "\\ZERO" : (doctype + parsing)));
+			writer.write(" & " +  (doctype == 0 ? "\\ZERO" : doctype));
 			
 			writer.write("\\\\\\hline\n");
 		}
@@ -518,7 +520,7 @@ public class CollectMappings {
 		writer.write(" & " + escapingTotal);
 		writer.write(" & " + namespacingTotal);
 		writer.write(" & " + serializationTotal);
-//		writer.write(" & " + parsingTotal);
+		writer.write(" & " + parsingTotal);
 		writer.write(" & " + doctypeTotal + "\\\\\\hline");
 		
 		writer.write("\\end{tabular}\n");
