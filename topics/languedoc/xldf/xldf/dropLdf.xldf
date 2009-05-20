@@ -3,12 +3,6 @@
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <xldf:drop>
-    <section>element-evolution-sequence</section>
-  </xldf:drop>
-  <xldf:drop>
-    <section>group-document-transformation</section>
-  </xldf:drop>
-  <xldf:drop>
     <section>complexType-listOfTerms</section>
   </xldf:drop>
   <xldf:drop>

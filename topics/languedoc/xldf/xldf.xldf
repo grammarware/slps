@@ -8,5 +8,12 @@
   <xldf:transform-document>
     <file>xldf/dropLdf.xldf</file>
   </xldf:transform-document>
+  <xldf:transform-document>
+    <file>xldf/renameStr.xldf</file>
+  </xldf:transform-document>
+  <xldf:combine>
+    <section>group-relative</section>
+    <with>element-insert</with>
+  </xldf:combine>
 
 </xldf:evolution-sequence>

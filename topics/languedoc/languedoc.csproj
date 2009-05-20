@@ -97,6 +97,7 @@
     <None Include="xldf\xldf.xldf" />
     <None Include="xldf\xldf\dropLdf.xldf" />
     <None Include="xldf\xldf\dropXbgf.xldf" />
+    <None Include="xldf\xldf\renameStr.xldf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\shared\xsl\ldf2tex.xslt">
