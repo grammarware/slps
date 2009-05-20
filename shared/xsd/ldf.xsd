@@ -304,8 +304,6 @@
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="clause" type="ldf:simpleSection"/>
-      <xsd:element name="field" type="ldf:simpleSection"/>
       <!-- none of the above 
       <xsd:element name="core" type="ldf:simpleSection"/>
       -->
@@ -320,6 +318,127 @@
         <xsd:element name="author" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
       <xsd:element name="content" type="ldf:simpleText"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID" use="optional"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="simpleText">
+    <xsd:sequence>
+      <xsd:group ref="ldf:simpleTextElement" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:group name="simpleTextElement">
+    <xsd:choice>
+      <xsd:element name="empty" nillable="true">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="text" type="ldf:mixedType"/>
+      <xsd:element name="figure" type="ldf:simpleFigure"/>
+      <xsd:element name="table" type="ldf:simpleTable"/>
+      <xsd:element name="list" type="ldf:simpleList"/>
+      <xsd:element name="formula" type="xsd:string"/>
+      <xsd:element name="sample" type="xsd:string"/>
+      <xsd:element ref="bgf:production"/>
+      <!-- 	later redo with MathML -->
+      <!--<xsd:element ref="mml:math"/>-->
+    </xsd:choice>
+  </xsd:group>
+
+  <xsd:complexType name="simpleFigure">
+    <xsd:sequence>
+      <xsd:element name="caption" type="xsd:string"/>
+      <xsd:element name="type" type="xsd:string"/>
+      <xsd:element name="file" type="xsd:string"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID" use="optional"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="simpleTable">
+    <xsd:sequence>
+      <xsd:element name="header" type="ldf:tableRow" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="row" type="ldf:tableRow" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+ <xsd:complexType name="simpleList">
+    <xsd:sequence>
+      <xsd:element name="item" type="ldf:mixedType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:group name="frontList">
+    <xsd:choice>
+      <xsd:element name="definitions" type="ldf:listOfTerms">
+        <xsd:annotation>
+          <xsd:documentation>
+            This is a list of definitions for all basic terms needed to understand the document,
+            but not especially introduced in it. Typical examples include explaining what is
+            a "program", what is a "namespace", what is a "library", what is "behaviour".
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="abbreviations" type="ldf:listOfTerms">
+        <xsd:annotation>
+          <xsd:documentation>
+            Acronyms like IEEE, ISO or like CLI, BCL are frequently defined here in a separate definition list.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="languageOverview" type="ldf:listOfTerms">
+        <xsd:annotation>
+          <xsd:documentation>
+            Such an informal introduction to the language is not present in all standards.
+            However, some specifications contain a not claimed to be complete list of
+            language concepts with their definitions and perhaps even some examples.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:choice>
+  </xsd:group>
+
+  <xsd:group name="lexicalSection">
+    <xsd:annotation>
+      <xsd:documentation>
+        Sections describing lexical structure tend to be shorter, less structured inside,
+        and very limited in scope: there is usually one on whitespace, one on tokens,
+        one on literals, one on comments, etc.
+      </xsd:documentation>
+      <xsd:documentation>
+        See the section on grammar notation for more details about how broad even the smallest
+        aspects (e.g., about line continuations) can vary.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="lineContinuations" type="ldf:simpleSection"/>
+      <xsd:element name="whitespace" type="ldf:simpleSection"/>
+      <xsd:element name="tokens" type="ldf:simpleSection"/>
+      <xsd:element name="preprocessor" type="ldf:simpleSection"/>
+      <xsd:element name="literals" type="ldf:simpleSection"/>
+      <!-- none of the above -->
+      <xsd:element name="lexical" type="ldf:simpleSection"/>
+    </xsd:choice>
+  </xsd:group>
+
+  <xsd:complexType name="structuredSection">
+    <xsd:annotation>
+      <xsd:documentation>
+        The main bulk of the information the language document possesses
+        lies in its core sections: they have more structure than other sections
+        and than their own subsections, so we call them `structured sections'.
+      </xsd:documentation>
+      <xsd:documentation>
+        Beside the title, any section can include a list of authors that worked on it:
+        this way even if the whole document is attributed to a particular company
+        or a standardisation body, the main contributors can be attributed.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="title" type="xsd:string"/>
+      <xsd:sequence>
+        <xsd:element name="author" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:group ref="ldf:structuredSectionElement" maxOccurs="unbounded" />
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID" use="optional"/>
   </xsd:complexType>
@@ -359,77 +478,97 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  <xsd:complexType name="simpleList">
-    <xsd:sequence>
-      <xsd:element name="item" type="ldf:mixedType" maxOccurs="unbounded"/>
-    </xsd:sequence>
-  </xsd:complexType>
-
-  <xsd:complexType name="simpleText">
-    <xsd:sequence>
-      <xsd:group ref="ldf:simpleTextElement" maxOccurs="unbounded"/>
-    </xsd:sequence>
-  </xsd:complexType>
-
   <xsd:complexType name="tableRow">
     <xsd:sequence>
       <xsd:element name="cell" maxOccurs="unbounded" type="ldf:simpleText"/>
     </xsd:sequence>
   </xsd:complexType>
   
-  <xsd:complexType name="simpleTable">
-    <xsd:sequence>
-      <xsd:element name="header" type="ldf:tableRow" minOccurs="0" maxOccurs="unbounded"/>
-      <xsd:element name="row" type="ldf:tableRow" maxOccurs="unbounded"/>
-    </xsd:sequence>
-  </xsd:complexType>
-
-  <xsd:group name="simpleTextElement">
+   <xsd:group name="structuredSectionElement">
     <xsd:choice>
-      <xsd:element name="empty" nillable="true">
-        <xsd:complexType/>
+      <xsd:element name="placeholder" type="ldf:generated">
+        <xsd:annotation>
+          <xsd:documentation>
+            Some subsections can be generated, especially those that consist
+            of structured content that is possible to derive automatically
+            from the information stored in or collected from other sections.
+          </xsd:documentation>
+        </xsd:annotation>
       </xsd:element>
-      <xsd:element name="text" type="ldf:mixedType"/>
-      <xsd:element name="figure" type="ldf:simpleFigure"/>
-      <xsd:element name="table" type="ldf:simpleTable"/>
-      <xsd:element name="list" type="ldf:simpleList"/>
-      <xsd:element name="formula" type="xsd:string"/>
-      <xsd:element name="sample" type="xsd:string"/>
-      <xsd:element ref="bgf:production"/>
-      <!-- 	later redo with MathML -->
-      <!--<xsd:element ref="mml:math"/>-->
-    </xsd:choice>  
-  </xsd:group>
-
-  <xsd:complexType name="simpleFigure">
-    <xsd:sequence>
-      <xsd:element name="caption" type="xsd:string"/>
-      <xsd:element name="type" type="xsd:string"/>
-      <xsd:element name="file" type="xsd:string"/>
-    </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID" use="optional"/>
-  </xsd:complexType>
-
-  <xsd:complexType name="structuredSection">
-    <xsd:sequence>
-      <xsd:element name="title" type="xsd:string"/>
-      <xsd:sequence>
-        <xsd:element name="author" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:sequence>
-      <xsd:group ref="ldf:structuredSectionElement" maxOccurs="unbounded" />
-    </xsd:sequence>
-    <xsd:attribute name="id" type="xsd:ID" use="optional"/>
-  </xsd:complexType>
-
-  <xsd:group name="structuredSectionElement">
-    <xsd:choice>
-      <xsd:element name="placeholder" type="ldf:generated"/>
-      <xsd:group ref="ldf:normative"/>
-      <xsd:group ref="ldf:informative"/>
-      <xsd:element ref="bgf:production"/>
-      <xsd:element name="relationship" type="ldf:listOfInternalLinks"/>
+      <xsd:group ref="ldf:normative">
+        <xsd:annotation>
+          <xsd:documentation>
+            Normative sections are obligatory and usually contain strict content
+            that needs to be implemented by compiler developers or satisfied
+            by language end users in order to comply to this standard.
+          </xsd:documentation>
+          <xsd:documentation>
+            For instance, if a section with a grammar production is marked as
+            normative, this production must hold for the implemented language.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:group>
+      <xsd:group ref="ldf:informative">
+        <xsd:annotation>
+          <xsd:documentation>
+            Informative sections are supplementary and provide some useful information
+            that can be omitted or overridden if deemed appropriately.
+          </xsd:documentation>
+          <xsd:documentation>
+            For instance, if all sections with code samples are marked as informative,
+            we cannot rely on the set of examples extracted from the standard to be
+            the test set for the language. Apparently, we can still run some analyses
+            on the basis of this, but it is not legitimate to make any conclusions
+            about standard inconsistencies based on the informative sections, nor can
+            they be legitimately be used to resolve inner conflicts of the documentation.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:group>
+      <xsd:element ref="bgf:production">
+        <xsd:annotation>
+          <xsd:documentation>
+            Grammar productions can be easily extracted from the language document
+            for the purpose of grammar recovery, grammar adaptation, grammar convergence, etc.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="relationship" type="ldf:listOfInternalLinks">
+        <xsd:annotation>
+          <xsd:documentation>
+            Hardbound standards have been trying to be more hypertext
+            for decades. One of the ways was to attach a list of links
+            and backlinks to every section --- that way, one can easily
+            find any related language constructs when learning the
+            language or debugging a particular feature.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <!-- <xsd:group ref="ldf:top-section"/> -->
-      <xsd:element name="subtopic" type="ldf:structuredSection"/>
+      <xsd:element name="subtopic" type="ldf:structuredSection">
+        <xsd:annotation>
+          <xsd:documentation>
+            In big documents it is not uncommon to find one topic divided into
+            several subtopics, each one dedicated to a separate issue and each one
+            structured in the same way its parent section is.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="clause" type="ldf:simpleSection">
+        <xsd:annotation>
+          <xsd:documentation>
+            DSLs and 4GLs specification authors often find it easier to lay out
+            different clauses of one language construct in different sections.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="field" type="ldf:simpleSection">
+        <xsd:annotation>
+          <xsd:documentation>
+            When the language has a lof of parametrised constructs, it makes sense
+            to dedicate a special subsection for each field.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
     </xsd:choice>
   </xsd:group>
   
@@ -437,68 +576,87 @@
 
   <xsd:group name="normative">
     <xsd:choice>
-      <xsd:element name="purpose" type="ldf:simpleSection"/>
-      <xsd:element name="description" type="ldf:simpleSection"/>
-      <xsd:element name="location" type="ldf:simpleSection"/>
-      <xsd:element name="considerations" type="ldf:simpleSection"/>
-      <xsd:element name="defaults" type="ldf:simpleSection"/>
+      <xsd:element name="purpose" type="ldf:simpleSection">
+        <xsd:annotation>
+          <xsd:documentation>
+            A separate subsection named `purpose' is only encountered in some 4GL
+            language manuals (e.g., JCL). However, it is quite common for the first
+            paragraph of any new section of any language document to relay word
+            about the purpose of the language construct that is about to be introduced.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="description" type="ldf:simpleSection">
+        <xsd:annotation>
+          <xsd:documentation>
+            Description is the core of the parent section, containing the main details about the
+            defined topic.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="location" type="ldf:simpleSection">
+        <xsd:annotation>
+          <xsd:documentation>
+            Location section describes the context in which the introduced language construct
+            can be encountered and in which it should or should not be used.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="considerations" type="ldf:simpleSection">
+        <xsd:annotation>
+          <xsd:documentation>
+            A section on considerations usually lists some narrow places of
+            non-obvious usage, implementation details, incompatibility issues,
+            coding standards, common programming practices, etc.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="defaults" type="ldf:simpleSection">
+        <xsd:annotation>
+          <xsd:documentation>
+            It is quite common in the sections that describe an optional parameter
+            to tell the reader what will happen in the case nothing was specified.
+            `There is no default' can be as valid a definition as a real default value.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <!-- none of the above -->
-      <xsd:element name="normative" type="ldf:simpleSection"/>
+      <xsd:element name="normative" type="ldf:simpleSection">
+        <xsd:annotation>
+          <xsd:documentation>
+            Any other type of normative section.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
     </xsd:choice>
   </xsd:group>
 
   <xsd:group name="informative">
     <xsd:choice>
-      <xsd:element name="note" type="ldf:simpleSection"/>
-      <xsd:element name="example" type="ldf:simpleSection"/>
-      <!-- none of the above -->
-      <xsd:element name="informative" type="ldf:simpleSection"/>
-    </xsd:choice>
-  </xsd:group>
-
-  <xsd:group name="lexicalSection">
-    <xsd:annotation>
-      <xsd:documentation>
-        Sections describing lexical structure tend to be shorter, less structured inside,
-        and very limited in scope: there is usually one on whitespace, one on tokens,
-        one on literals, one on comments, etc.
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:choice>
-      <xsd:element name="lineContinuations" type="ldf:simpleSection"/>
-      <xsd:element name="whitespace" type="ldf:simpleSection"/>
-      <xsd:element name="tokens" type="ldf:simpleSection"/>
-      <xsd:element name="preprocessor" type="ldf:simpleSection"/>
-      <xsd:element name="literals" type="ldf:simpleSection"/>
-      <!-- none of the above -->
-      <xsd:element name="lexical" type="ldf:simpleSection"/>
-    </xsd:choice>
-  </xsd:group>
-
-  <xsd:group name="frontList">
-    <xsd:choice>
-      <xsd:element name="definitions" type="ldf:listOfTerms">
+      <xsd:element name="note" type="ldf:simpleSection">
         <xsd:annotation>
           <xsd:documentation>
-            This is a list of definitions for all basic terms needed to understand the document,
-            but not especially introduced in it. Typical examples include explaining what is
-            a "program", what is a "namespace", what is a "library", what is "behaviour".
+            A note (called `rationale' in ANSI Smalltalk standard) is a
+            subsection of secondary importance, contributing some information
+            on a minor point that can still be interesting and useful for some
+            readers. Notes usually tell the readers how to use certain language
+            constructs or tell compiler vendors how to implement them.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="abbreviations" type="ldf:listOfTerms">
+      <xsd:element name="example" type="ldf:simpleSection">
         <xsd:annotation>
           <xsd:documentation>
-            Acronyms like IEEE, ISO or like CLI, BCL are frequently defined here in a separate definition list.
+            A subsection with an example can contain a code sample as well
+            as some accompanying text.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="languageOverview" type="ldf:listOfTerms">
+      <!-- none of the above -->
+      <xsd:element name="informative" type="ldf:simpleSection">
         <xsd:annotation>
           <xsd:documentation>
-            Such an informal introduction to the language is not present in all standards.
-            However, some specifications contain a not claimed to be complete list of
-            language concepts with their definitions and perhaps even some examples.
+            Any other type of informative section.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
@@ -604,6 +762,12 @@
   </xsd:complexType-->
 
   <xsd:complexType name="mixedType" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>
+        Any unstructured element of the language document belongs to a so called
+        mixed type: i.e., it is plain text with some keywords marked.
+      </xsd:documentation>
+    </xsd:annotation>
     <xsd:sequence minOccurs="0" maxOccurs="unbounded">
       <xsd:any namespace="http://planet-sl.org/ldf" processContents="lax"/>
     </xsd:sequence>
@@ -614,6 +778,9 @@
     <xsd:annotation>
       <xsd:documentation>
         Keywords are usually printed in bolder font weight.
+        They need to be marked as such for two purposes: for presentation and for meta-information.
+        The former goal serves as a basis for typesetting and hyperlinking,
+        while the latter allows for correct indexing and searching facilities.
       </xsd:documentation>
     </xsd:annotation>
   </xsd:element>

@@ -18,6 +18,10 @@
     </from>
     <to>Title page</to>
   </xldf:retitle>
+  <xldf:combine>
+    <section>simpleType-status</section>
+    <with>complexType-titlePage</with>
+  </xldf:combine>
 
   <xldf:retitle>
     <from>
@@ -25,5 +29,132 @@
     </from>
     <to>Standardisation bodies</to>
   </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>generated</title>
+    </from>
+    <to>Placeholders for generated content</to>
+  </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>simpleSection</title>
+    </from>
+    <to>Simple sections</to>
+  </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>simpleText</title>
+    </from>
+    <to>Simple text</to>
+  </xldf:retitle>
+  <xldf:combine>
+    <section>group-simpleTextElement</section>
+    <with>complexType-simpleText</with>
+  </xldf:combine>
+
+  <xldf:retitle>
+    <from>
+      <title>simpleTable</title>
+    </from>
+    <to>Simple tables</to>
+  </xldf:retitle>
+  <xldf:combine>
+    <section>complexType-tableRow</section>
+    <with>complexType-simpleTable</with>
+  </xldf:combine>
+
+  <xldf:retitle>
+    <from>
+      <title>frontSection</title>
+    </from>
+    <to>Front matter</to>
+  </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>simpleFigure</title>
+    </from>
+    <to>Simple figures</to>
+  </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>frontList</title>
+    </from>
+    <to>Front matter lists</to>
+  </xldf:retitle>
+  <xldf:combine>
+    <section>complexType-listOfTerms</section>
+    <with>group-frontList</with>
+  </xldf:combine>
+
+  <xldf:retitle>
+    <from>
+      <title>simpleList</title>
+    </from>
+    <to>Simple lists</to>
+  </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>lexicalSection</title>
+    </from>
+    <to>Lexical part</to>
+  </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>structuredSection</title>
+    </from>
+    <to>Main sections</to>
+  </xldf:retitle>
+  <!--<xldf:combine>
+    <section>complexType-listOfInternalLinks</section>
+    <with>group-structuredSectionElement</with>
+  </xldf:combine>
   
+  <xldf:transform-grammar>
+    <target>group-structuredSectionElement</target>
+    <xbgf:inline>listOfInternalLinks</xbgf:inline>
+  </xldf:transform-grammar>-->
+  <xldf:combine>
+    <section>group-structuredSectionElement</section>
+    <with>complexType-structuredSection</with>
+  </xldf:combine>
+  <xldf:drop>
+    <section>complexType-listOfInternalLinks</section>
+  </xldf:drop>
+
+  <xldf:retitle>
+    <from>
+      <title>normative</title>
+    </from>
+    <to>Normative sections</to>
+  </xldf:retitle>
+
+  <xldf:retitle>
+    <from>
+      <title>informative</title>
+    </from>
+    <to>Informative sections</to>
+  </xldf:retitle>
+
+  <xldf:drop>
+    <section>complexType-runnableType</section>
+  </xldf:drop>
+
+  <xldf:retitle>
+    <from>
+      <title>keyword</title>
+    </from>
+    <to>Keywords and plain text</to>
+  </xldf:retitle>
+  <xldf:combine>
+    <section>complexType-mixedType</section>
+    <with>element-keyword</with>
+  </xldf:combine>
+
 </xldf:evolution-sequence>
