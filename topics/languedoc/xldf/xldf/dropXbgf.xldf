@@ -6,6 +6,9 @@
     <section>element-sequence</section>
   </xldf:drop>
   <xldf:drop>
+    <section>element-atomic</section>
+  </xldf:drop>
+  <xldf:drop>
     <section>group-transformation</section>
   </xldf:drop>
   <xldf:drop>

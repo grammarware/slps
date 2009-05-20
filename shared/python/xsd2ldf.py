@@ -26,10 +26,13 @@ def mapXSD2LDF(stree,dtree,grammar):
     pel.append(sub)
   gotit = []
   if nt.findall(slpsns.xsd_('choice')):
-   print 'Found a top level choice in',nt.get('name')
+   #print 'Found a top level choice in',nt.get('name')
    for alt in nt.findall(slpsns.xsd_('choice')+'/*'):
     if alt.findall(slpsns.xsd_('annotation')+'/'+slpsns.xsd_('documentation')):
-     #print alt.get('name'),'got text!'
+     name = alt.get('name')
+     if not name:
+      name = alt.get('ref').split(':')[-1]
+     #print name,'got text!'
      for p in alt.findall(slpsns.xsd_('annotation')+'/'+slpsns.xsd_('documentation')):
       pel = ET.SubElement(el,'text')
       pel.text = p.text
@@ -38,8 +41,9 @@ def mapXSD2LDF(stree,dtree,grammar):
        pel.append(sub)
      for prod in grammar[nt.get('name')]:
       if prod.findall('label'):
-       #print 'Checking up on',prod.findtext('label'),'vs',nt.get('name')
-       if prod.findtext('label') == alt.get('name'):
+       #print 'Checking up on',prod.findtext('label'),'vs',name
+       if prod.findtext('label') == name:
+        #print 'Got it!'
         el.append(prod)
         gotit.append(prod)
   # Need to decide whether to put productions inside description subsections

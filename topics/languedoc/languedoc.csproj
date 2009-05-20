@@ -80,9 +80,11 @@
     </None>
     <None Include="lcf\lcf.xldf" />
     <None Include="ldf\ldf.xldf" />
+    <None Include="ldf\prepare.xbgf" />
     <None Include="ldf\xldf\beautify.xldf" />
     <None Include="ldf\xldf\completeWithText.xldf" />
     <None Include="ldf\xldf\dropBgf.xldf" />
+    <None Include="ldf\xldf\reorganise.xldf" />
     <None Include="xbgf\xbgf.xldf" />
     <None Include="xbgf\xldf\completeDecorSection.xldf" />
     <None Include="xbgf\xldf\completeDecSection.xldf" />
