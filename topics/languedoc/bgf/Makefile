@@ -9,13 +9,12 @@ tex:
 	../../../shared/tools/xldf bgf.xldf bgf.ldf bgf.ready.ldf
 	../../../shared/tools/ldf2tex bgf.ready.ldf bgf.tex
 
-
 rebuild:
 	make clean
 	make build
 
 clean:
-	rm -f ldf*.bgf ldf*.ldf bgf.html bgf.fo bgf.pdf *.xbnf bgf*.bgf
+	rm -f bgf*.bgf bgf*.ldf bgf.html bgf.fo bgf.pdf
 	rm -f *.aux *.log *.toc *.tex printed_for_xldf.tmp
 
 check:

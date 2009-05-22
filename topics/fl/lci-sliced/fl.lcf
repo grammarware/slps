@@ -171,19 +171,19 @@
 
   
 
-  <target><name>java</name>
+	<target><name>topdown</name>
+	  <branch><input>dcg</input>
+	  </branch><branch><input>antlr</input>
+	    <normalizing><perform>normalize-antlr-topdown</perform></normalizing><structural-matching><perform>preferDcg-1</perform><perform>preferDcg-2</perform><perform>preferDcg-3</perform><perform>preferDcg-4</perform><perform>preferDcg-5</perform><perform>preferDcg-6</perform><perform>preferDcg-7</perform><perform>preferDcg-8</perform><perform>preferDcg-9</perform><perform>preferDcg-10</perform><perform>preferDcg-11</perform></structural-matching></branch></target><target><name>concrete</name>
+	  <branch><input>topdown</input>
+	    <structural-matching><perform>removeLayers-1</perform><perform>removeLayers-2</perform></structural-matching></branch><branch><input>sdf</input>
+	    <normalizing><perform>normalize-sdf-concrete</perform></normalizing></branch></target><target><name>java</name>
     <branch><input>jaxb</input>
       <normalizing><perform>normalize-jaxb-java</perform></normalizing></branch><branch><input>om</input>
       <normalizing><perform>normalize-om-java</perform></normalizing></branch></target><target><name>abstract</name>
     <branch><input>java</input>
       <normalizing><perform>normalize-java-abstract</perform></normalizing><structural-matching><perform>unerase-1</perform><perform>unerase-2</perform><perform>unerase-3</perform><perform>unerase-4</perform><perform>unerase-5</perform><perform>unerase-6</perform></structural-matching></branch><branch><input>xsd</input>
-      <normalizing><perform>normalize-xsd-abstract</perform></normalizing><structural-matching><perform>massageXsd-1</perform><perform>massageXsd-2</perform><perform>massageXsd-3</perform></structural-matching></branch></target><target><name>topdown</name>
-    <branch><input>dcg</input>
-    </branch><branch><input>antlr</input>
-      <normalizing><perform>normalize-antlr-topdown</perform></normalizing><structural-matching><perform>preferDcg-1</perform><perform>preferDcg-2</perform><perform>preferDcg-3</perform><perform>preferDcg-4</perform><perform>preferDcg-5</perform><perform>preferDcg-6</perform><perform>preferDcg-7</perform><perform>preferDcg-8</perform><perform>preferDcg-9</perform><perform>preferDcg-10</perform><perform>preferDcg-11</perform></structural-matching></branch></target><target><name>concrete</name>
-    <branch><input>topdown</input>
-      <structural-matching><perform>removeLayers-1</perform><perform>removeLayers-2</perform></structural-matching></branch><branch><input>sdf</input>
-      <normalizing><perform>normalize-sdf-concrete</perform></normalizing></branch></target><target><name>limit</name>
+      <normalizing><perform>normalize-xsd-abstract</perform></normalizing><structural-matching><perform>massageXsd-1</perform><perform>massageXsd-2</perform><perform>massageXsd-3</perform></structural-matching></branch></target><target><name>limit</name>
     <branch><input>concrete</input>
       <normalizing><perform>normalize-concrete-limit</perform></normalizing><structural-matching><perform>defineLex-1</perform><perform>defineLex-2</perform><perform>defineLex-3</perform><perform>defineLex-4</perform><perform>stripTerminals-1</perform><perform>stripTerminals-2</perform><perform>stripTerminals-3</perform><perform>stripTerminals-4</perform><perform>stripTerminals-5</perform><perform>stripTerminals-6</perform><perform>stripNewline-1</perform><perform>stripNewline-2</perform><perform>permuteArgs-1</perform></structural-matching></branch><branch><input>abstract</input>
       <structural-matching><perform>makeSignature-1</perform><perform>makeSignature-2</perform><perform>makeSignature-3</perform><perform>makeSignature-4</perform><perform>makeSignature-5</perform><perform>makeSignature-6</perform><perform>makeSignature-7</perform><perform>stripSelectors-1</perform><perform>stripSelectors-2</perform><perform>stripSelectors-3</perform><perform>stripSelectors-4</perform><perform>stripSelectors-5</perform><perform>stripSelectors-6</perform><perform>stripSelectors-7</perform></structural-matching></branch></target></lcf:configuration>

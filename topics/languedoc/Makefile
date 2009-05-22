@@ -3,6 +3,7 @@ build:
 	cd bgf ; make build
 	cd xldf ; make build
 	cd ldf ; make build
+	cd lcf ; make build
 
 rebuild:
 	cd xbgf ; make rebuild

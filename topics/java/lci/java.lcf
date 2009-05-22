@@ -39,7 +39,7 @@
     <name>impl1</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/syntax.kw <expand>java</expand>/jls1/app.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/syntax.kw <expand>java</expand>/jls1/impl.html
       </extraction>
     </grammar>
   </source>
@@ -47,7 +47,7 @@
     <name>read1</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/collect.kw <expand>java</expand>/jls1/doc.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls1/collect.kw <expand>java</expand>/jls1/read.html
       </extraction>
     </grammar>
   </source>
@@ -56,7 +56,7 @@
     <name>impl2</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/app.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/impl.html
       </extraction>
     </grammar>
   </source>
@@ -64,7 +64,7 @@
     <name>read2</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/collect.kw <expand>java</expand>/jls2/doc.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls2/collect.kw <expand>java</expand>/jls2/read.html
       </extraction>
     </grammar>
   </source>
@@ -73,7 +73,7 @@
     <name>impl3</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/app.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/impl.html
       </extraction>
     </grammar>
   </source>
@@ -81,7 +81,7 @@
     <name>read3</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/collect.kw <expand>java</expand>/jls3/doc.html
+        <expand>tools</expand>/html2bgf <expand>java</expand>/jls3/collect.kw <expand>java</expand>/jls3/read.html
       </extraction>
     </grammar>
   </source>
