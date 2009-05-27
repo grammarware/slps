@@ -213,7 +213,7 @@
 	  <branch>
 	    <input>antlr</input>
 	    <nominal-matching>
-	      <perform>renameAntlr</perform>
+	      <perform>rename-antlr</perform>
 	    </nominal-matching>
 	    <structural-matching>
 	      <perform>preferDcg</perform>
@@ -234,7 +234,7 @@
 	    <nominal-matching>
 	      <automated>
 	        <method>case</method>
-	        <result>renameSdf</result>
+	        <result>rename-sdf</result>
 	      </automated>
 	    </nominal-matching>
 	  </branch>
@@ -245,7 +245,7 @@
     <branch>
       <input>ecore</input>
       <nominal-matching>
-        <perform>renameECore</perform>
+        <perform>rename-ecore</perform>
       </nominal-matching>
       <structural-matching>
         <perform>extractOps</perform>
@@ -257,7 +257,7 @@
     <branch>
       <input>xsd</input>
       <nominal-matching>
-        <perform>trimXsd</perform>
+        <perform>trim-xsd</perform>
       </nominal-matching>
     </branch>
   </target>
@@ -267,20 +267,20 @@
       <branch>
         <input>jaxb</input>
         <nominal-matching>
-          <perform>trimJaxb</perform>
+          <perform>trim-jaxb</perform>
           <automated>
             <method>case</method>
-            <result>renameJaxb</result>
+            <result>rename-jaxb</result>
           </automated>
         </nominal-matching>
       </branch>
       <branch>
         <input>om</input>
         <nominal-matching>
-          <perform>trimOm</perform>
+          <perform>trim-om</perform>
           <automated>
             <method>case</method>
-            <result>renameOm</result>
+            <result>rename-om</result>
           </automated>
           <perform>preferJaxb</perform>
         </nominal-matching>
@@ -303,11 +303,11 @@
       <nominal-matching>
         <automated>
           <method>case</method>
-          <result>renameXsd</result>
+          <result>rename-model</result>
         </automated>
       </nominal-matching>
       <structural-matching>
-        <perform>massageXsd</perform>
+        <perform>massage-model</perform>
       </structural-matching>
     </branch>
   </target>
