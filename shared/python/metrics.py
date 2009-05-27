@@ -6,7 +6,7 @@ def mismatches(comparator,x,z):
  run = comparator+' '+x+' '+z+' | grep "only:" | grep -o "\[..*\]" | wc -w'
  if os.system(run+' > TMP-res'):
   nameDiffs = '0'
-  print 'ERROR1:',run
+  #print 'ERROR1:',run
  else:
   num = open('TMP-res','r')
   nameDiffs = num.readline().strip()
@@ -14,7 +14,7 @@ def mismatches(comparator,x,z):
  run = comparator+' '+x+' '+z+' | grep Fail'
  if os.system(run+' > TMP-res'):
   strDiffs = 0
-  print 'ERROR2:',run
+  #print 'ERROR2:',run
  else:
   num = open('TMP-res','r')
   strDiffs = 0

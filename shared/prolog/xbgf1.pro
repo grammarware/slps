@@ -678,6 +678,12 @@ massage_rules(','([X,*(','([Y,X]))]),','([*(','([X,Y])),X])).
 %massage_rules(?(','([*(X),*(Y)])),','([*(X),*(Y)])).
 %massage_rules(?(';'([X,Y])),';'([?(X),?(Y)])).
 
+% We can add a selectable epsilon anywhere
+massage_rules(','(L1),','(L2))
+ :-
+    append(L3,[s(_,true)|L4],L2),
+    append(L3,L4,L1).
+
 %
 % p([l(permute)], f, n(p))
 %

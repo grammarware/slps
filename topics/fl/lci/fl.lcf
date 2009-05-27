@@ -145,6 +145,15 @@
   </source>
 
   <source>
+    <name>ecore</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/ecore2bgf <expand>fl</expand>/ecore/fl.ecore
+      </extraction>
+    </grammar>
+  </source>
+
+  <source>
     <name>xsd</name>
     <grammar>
       <extraction>
@@ -232,31 +241,53 @@
 	</target>
 
   <target>
-    <name>java</name>
+    <name>model</name>
     <branch>
-      <input>jaxb</input>
+      <input>ecore</input>
       <nominal-matching>
-        <perform>trimJaxb</perform>
-        <automated>
-          <method>case</method>
-          <result>renameJaxb</result>
-        </automated>
+        <perform>renameECore</perform>
       </nominal-matching>
+      <structural-matching>
+        <perform>extractOps</perform>
+      </structural-matching>
+      <relaxation>
+        <perform>resolveAggregation</perform>
+      </relaxation>
     </branch>
     <branch>
-      <input>om</input>
+      <input>xsd</input>
       <nominal-matching>
-        <perform>trimOm</perform>
-        <automated>
-          <method>case</method>
-          <result>renameOm</result>
-        </automated>
-        <perform>preferJaxb</perform>
+        <perform>trimXsd</perform>
       </nominal-matching>
     </branch>
   </target>
 
-  <target>
+    <target>
+      <name>java</name>
+      <branch>
+        <input>jaxb</input>
+        <nominal-matching>
+          <perform>trimJaxb</perform>
+          <automated>
+            <method>case</method>
+            <result>renameJaxb</result>
+          </automated>
+        </nominal-matching>
+      </branch>
+      <branch>
+        <input>om</input>
+        <nominal-matching>
+          <perform>trimOm</perform>
+          <automated>
+            <method>case</method>
+            <result>renameOm</result>
+          </automated>
+          <perform>preferJaxb</perform>
+        </nominal-matching>
+      </branch>
+    </target>
+
+    <target>
     <name>abstract</name>
     <branch>
       <input>java</input>
@@ -268,9 +299,8 @@
       </structural-matching>
     </branch>
     <branch>
-      <input>xsd</input>
+      <input>model</input>
       <nominal-matching>
-        <perform>trimXsd</perform>
         <automated>
           <method>case</method>
           <result>renameXsd</result>

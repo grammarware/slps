@@ -15,19 +15,34 @@
   </xsl:template>
 
   <xsl:template match="eClassifiers">
+    <xsl:param name="ourEType" select="concat('#//',./@name)"/>
+    <xsl:param name="ourSuperType" select="substring(@eSuperTypes,4)"/>
     <xsl:choose>
       <xsl:when test="@abstract='true'">
         <bgf:production>
           <nonterminal>
             <xsl:value-of select="./@name"/>
           </nonterminal>
-          <bgf:expression>
-            <choice>
-              <xsl:call-template name="mapESuperTypes">
-                <xsl:with-param name="name" select="concat('#//',./@name)"/>
-              </xsl:call-template>
-            </choice>
-          </bgf:expression>
+          <xsl:choose>
+            <xsl:when test="//eClassifiers[@eSuperTypes=$ourEType]">
+              <bgf:expression>
+                <choice>
+                  <xsl:for-each select="//eClassifiers[@eSuperTypes=$ourEType]">
+                    <bgf:expression>
+                      <nonterminal>
+                        <xsl:value-of select="./@name" />
+                      </nonterminal>
+                    </bgf:expression>
+                  </xsl:for-each>
+                </choice>
+              </bgf:expression>
+            </xsl:when>
+            <xsl:otherwise>
+              <bgf:expression>
+                <epsilon/>
+              </bgf:expression>
+            </xsl:otherwise>
+          </xsl:choose>
         </bgf:production>
       </xsl:when>
       <xsl:when test="@name='DocumentRoot'"/>
@@ -39,9 +54,33 @@
           </nonterminal>
           <xsl:choose>
             <xsl:when test="count(eStructuralFeatures)=0">
-              <bgf:expression>
-                <epsilon/>
-              </bgf:expression>
+              <xsl:choose>
+                <xsl:when test="//eClassifiers[@eSuperTypes=$ourEType]">
+                  <bgf:expression>
+                    <choice>
+                      <xsl:for-each select="//eClassifiers[@eSuperTypes=$ourEType]">
+                        <bgf:expression>
+                          <nonterminal>
+                            <xsl:value-of select="./@name" />
+                          </nonterminal>
+                        </bgf:expression>
+                      </xsl:for-each>
+                    </choice>
+                  </bgf:expression>
+                </xsl:when>
+                <xsl:when test="//eClassifiers[@name=$ourSuperType and @abstract='true']">
+                  <bgf:expression>
+                    <sequence>
+                      <xsl:apply-templates select="//eClassifiers[@name=$ourSuperType]/eStructuralFeatures"/>
+                    </sequence>
+                  </bgf:expression>
+                </xsl:when>
+                <xsl:otherwise>
+                  <bgf:expression>
+                    <epsilon/>
+                  </bgf:expression>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:when>
             <xsl:when test="count(eStructuralFeatures)=1">
               <xsl:apply-templates select="./eStructuralFeatures"/>
@@ -84,17 +123,6 @@
         <any/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="mapESuperTypes">
-    <xsl:param name="name"/>
-    <xsl:for-each select="//eClassifiers[@eSuperTypes=$name]">
-      <bgf:expression>
-        <nonterminal>
-          <xsl:value-of select="./@name" />
-        </nonterminal>
-      </bgf:expression>
-    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="eLiterals">

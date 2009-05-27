@@ -51,14 +51,12 @@
     <None Include="..\..\..\shared\xsd\ldf.xsd">
       <Link>ldf.xsd</Link>
     </None>
-    <None Include="..\..\..\shared\xsd\ldx.xsd">
-      <Link>ldx.xsd</Link>
-    </None>
     <None Include="..\..\..\shared\xsd\xbgf.xsd">
       <Link>xbgf.xsd</Link>
     </None>
     <None Include="fl.lcf" />
     <None Include="xbgf\defineLex.xbgf" />
+    <None Include="xbgf\extractOps.xbgf" />
     <None Include="xbgf\makeSignature.xbgf" />
     <None Include="xbgf\massageXsd.xbgf" />
     <None Include="xbgf\permuteArgs.xbgf" />
@@ -66,11 +64,13 @@
     <None Include="xbgf\preferJaxb.xbgf" />
     <None Include="xbgf\removeLayers.xbgf" />
     <None Include="xbgf\renameAntlr.xbgf" />
+    <None Include="xbgf\renameECore.xbgf" />
     <None Include="xbgf\renameJaxb.xbgf" />
     <None Include="xbgf\renameOm.xbgf" />
     <None Include="xbgf\renameSdf.xbgf" />
     <None Include="xbgf\renameXsd.xbgf" />
     <None Include="xbgf\reroot.xbgf" />
+    <None Include="xbgf\resolveAggregation.xbgf" />
     <None Include="xbgf\stripNewline.xbgf" />
     <None Include="xbgf\stripSelectors.xbgf" />
     <None Include="xbgf\stripTerminals.xbgf" />

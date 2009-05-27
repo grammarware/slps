@@ -618,7 +618,7 @@ def diffAll(t,car,cdr):
   diffAll(t,cdr[:1],cdr[1:])
 
 def chainXBTF(testcase,steps,t):
- fr = testcase
+ re = fr = testcase
  for step in steps:
   if step==steps[-1]:
    # name it after the target
