@@ -42,6 +42,7 @@
     <Content Include="bgf2bnf.xslt" />
     <Content Include="bgf2sdf.xslt" />
     <Content Include="btf2btf.xslt" />
+    <Content Include="ecore2bgf.xslt" />
     <Content Include="ldf2bgf.xslt" />
     <Content Include="ldf2ldf_lift.xslt" />
     <Content Include="ldf2ldf_ns.xslt" />
