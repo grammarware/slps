@@ -148,7 +148,16 @@
     <name>ecore</name>
     <grammar>
       <extraction>
-        <expand>tools</expand>/ecore2bgf <expand>fl</expand>/ecore/fl.ecore
+        <expand>tools</expand>/ecore2bgf <expand>fl</expand>/emf1/fl.ecore
+      </extraction>
+    </grammar>
+  </source>
+
+  <source>
+    <name>emf</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/ecore2bgf <expand>fl</expand>/emf2/model/fl.ecore
       </extraction>
     </grammar>
   </source>
@@ -205,40 +214,40 @@
   </source
 -->
 
-	<target>
-	  <name>topdown</name>
-	  <branch>
-	    <input>dcg</input>
-	  </branch>
-	  <branch>
-	    <input>antlr</input>
-	    <nominal-matching>
-	      <perform>rename-antlr</perform>
-	    </nominal-matching>
-	    <structural-matching>
-	      <perform>preferDcg</perform>
-	    </structural-matching>
-	  </branch>
-	</target>
+  <target>
+    <name>topdown</name>
+    <branch>
+      <input>dcg</input>
+    </branch>
+    <branch>
+      <input>antlr</input>
+      <nominal-matching>
+        <perform>rename-antlr</perform>
+      </nominal-matching>
+      <structural-matching>
+        <perform>preferDcg</perform>
+      </structural-matching>
+    </branch>
+  </target>
 
-	<target>
-	  <name>concrete</name>
-	  <branch>
-	    <input>topdown</input>
-	    <structural-matching>
-	      <perform>removeLayers</perform>
-	    </structural-matching>
-	  </branch>
-	  <branch>
-	    <input>sdf</input>
-	    <nominal-matching>
-	      <automated>
-	        <method>case</method>
-	        <result>rename-sdf</result>
-	      </automated>
-	    </nominal-matching>
-	  </branch>
-	</target>
+  <target>
+    <name>concrete</name>
+    <branch>
+      <input>topdown</input>
+      <structural-matching>
+        <perform>removeLayers</perform>
+      </structural-matching>
+    </branch>
+    <branch>
+      <input>sdf</input>
+      <nominal-matching>
+        <automated>
+          <method>case</method>
+          <result>rename-sdf</result>
+        </automated>
+      </nominal-matching>
+    </branch>
+  </target>
 
   <target>
     <name>model</name>
@@ -255,6 +264,12 @@
       </relaxation>
     </branch>
     <branch>
+      <input>emf</input>
+      <nominal-matching>
+        <perform>rename-emf</perform>
+      </nominal-matching>
+    </branch>
+    <branch>
       <input>xsd</input>
       <nominal-matching>
         <perform>trim-xsd</perform>
@@ -262,32 +277,32 @@
     </branch>
   </target>
 
-    <target>
-      <name>java</name>
-      <branch>
-        <input>jaxb</input>
-        <nominal-matching>
-          <perform>trim-jaxb</perform>
-          <automated>
-            <method>case</method>
-            <result>rename-jaxb</result>
-          </automated>
-        </nominal-matching>
-      </branch>
-      <branch>
-        <input>om</input>
-        <nominal-matching>
-          <perform>trim-om</perform>
-          <automated>
-            <method>case</method>
-            <result>rename-om</result>
-          </automated>
-          <perform>preferJaxb</perform>
-        </nominal-matching>
-      </branch>
-    </target>
+  <target>
+    <name>java</name>
+    <branch>
+      <input>jaxb</input>
+      <nominal-matching>
+        <perform>trim-jaxb</perform>
+        <automated>
+          <method>case</method>
+          <result>rename-jaxb</result>
+        </automated>
+      </nominal-matching>
+    </branch>
+    <branch>
+      <input>om</input>
+      <nominal-matching>
+        <perform>trim-om</perform>
+        <automated>
+          <method>case</method>
+          <result>rename-om</result>
+        </automated>
+        <perform>preferJaxb</perform>
+      </nominal-matching>
+    </branch>
+  </target>
 
-    <target>
+  <target>
     <name>abstract</name>
     <branch>
       <input>java</input>

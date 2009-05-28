@@ -1,0 +1,13 @@
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:rename>
+    <nonterminal>
+      <from>ProgramType</from>
+      <to>Program</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:reroot>
+    <root>Program</root>
+  </xbgf:reroot>
+</xbgf:sequence>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd2ecore:XSD2EcoreMappingRoot xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsd2ecore="http://www.eclipse.org/emf/2002/XSD2Ecore" inputs="file:../xsd/fl.xsd#/"
+    outputs="fl.ecore#/" topToBottom="true">
+  <nested inputs="file:../xsd/fl.xsd#//Expr;XSDComplexTypeDefinition=1"
+      outputs="fl.ecore#//Expr"/>
+  <nested inputs="file:../xsd/fl.xsd#//Fragment;XSDElementDeclaration=1"
+      outputs="fl.ecore#//DocumentRoot/fragment"/>
+  <nested inputs="bundleentry://546/cache/www.w3.org/2001/XMLSchema.xsd#//string;XSDSimpleTypeDefinition=9"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//String"/>
+  <nested inputs="file:../xsd/fl.xsd#//Function;XSDComplexTypeDefinition"
+      outputs="fl.ecore#//Function">
+    <nested inputs="file:../xsd/fl.xsd#//Function;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="fl.ecore#//Function/name"/>
+    <nested inputs="file:../xsd/fl.xsd#//Function;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="fl.ecore#//Function/arg"/>
+    <nested inputs="file:../xsd/fl.xsd#//Function;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="fl.ecore#//Function/rhs"/>
+  </nested>
+  <nested inputs="file:../xsd/fl.xsd#//Program;XSDElementDeclaration/XSDComplexTypeDefinition"
+      outputs="fl.ecore#//ProgramType">
+    <nested inputs="file:../xsd/fl.xsd#//Program;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="fl.ecore#//ProgramType/function"/>
+  </nested>
+  <nested inputs="file:../xsd/fl.xsd#//Program;XSDElementDeclaration"
+      outputs="fl.ecore#//DocumentRoot/program"/>
+  <nested inputs="file:../xsd/fl.xsd#//Apply;XSDComplexTypeDefinition=6"
+      outputs="fl.ecore#//Apply">
+    <nested inputs="file:../xsd/fl.xsd#//Apply;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="fl.ecore#//Apply/name"/>
+    <nested inputs="file:../xsd/fl.xsd#//Apply;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="fl.ecore#//Apply/arg"/>
+  </nested>
+  <nested inputs="file:../xsd/fl.xsd#//Argument;XSDComplexTypeDefinition=3"
+      outputs="fl.ecore#//Argument">
+    <nested inputs="file:../xsd/fl.xsd#//Argument;XSDComplexTypeDefinition=3/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="fl.ecore#//Argument/name"/>
+  </nested>
+  <nested inputs="file:../xsd/fl.xsd#//Ops;XSDSimpleTypeDefinition"
+      outputs="fl.ecore#//Ops">
+    <nested inputs="file:../xsd/fl.xsd#//Ops;XSDSimpleTypeDefinition/XSDEnumerationFacet"
+        outputs="fl.ecore#//Ops/Equal"/>
+    <nested inputs="file:../xsd/fl.xsd#//Ops;XSDSimpleTypeDefinition/XSDEnumerationFacet=1"
+        outputs="fl.ecore#//Ops/Plus"/>
+    <nested inputs="file:../xsd/fl.xsd#//Ops;XSDSimpleTypeDefinition/XSDEnumerationFacet=2"
+        outputs="fl.ecore#//Ops/Minus"/>
+  </nested>
+  <nested inputs="file:../xsd/fl.xsd#//Binary;XSDComplexTypeDefinition=4"
+      outputs="fl.ecore#//Binary">
+    <nested inputs="file:../xsd/fl.xsd#//Binary;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="fl.ecore#//Binary/ops"/>
+    <nested inputs="file:../xsd/fl.xsd#//Binary;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="fl.ecore#//Binary/left"/>
+    <nested inputs="file:../xsd/fl.xsd#//Binary;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="fl.ecore#//Binary/right"/>
+  </nested>
+  <nested inputs="file:../xsd/fl.xsd#//IfThenElse;XSDComplexTypeDefinition=5"
+      outputs="fl.ecore#//IfThenElse">
+    <nested inputs="file:../xsd/fl.xsd#//IfThenElse;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="fl.ecore#//IfThenElse/ifExpr"/>
+    <nested inputs="file:../xsd/fl.xsd#//IfThenElse;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="fl.ecore#//IfThenElse/thenExpr"/>
+    <nested inputs="file:../xsd/fl.xsd#//IfThenElse;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="fl.ecore#//IfThenElse/elseExpr"/>
+  </nested>
+  <nested inputs="bundleentry://546/cache/www.w3.org/2001/XMLSchema.xsd#//int;XSDSimpleTypeDefinition=44"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//Int"/>
+  <nested inputs="file:../xsd/fl.xsd#//Literal;XSDComplexTypeDefinition=2"
+      outputs="fl.ecore#//Literal">
+    <nested inputs="file:../xsd/fl.xsd#//Literal;XSDComplexTypeDefinition=2/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="fl.ecore#//Literal/info"/>
+  </nested>
+</xsd2ecore:XSD2EcoreMappingRoot>

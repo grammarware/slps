@@ -61,12 +61,11 @@
     <None Include="xbgf\massage-model.xbgf" />
     <None Include="xbgf\permuteArgs.xbgf" />
     <None Include="xbgf\preferDcg.xbgf" />
-    <None Include="xbgf\preferJaxb-1.xbgf" />
-    <None Include="xbgf\preferJaxb-2.xbgf" />
     <None Include="xbgf\preferJaxb.xbgf" />
     <None Include="xbgf\removeLayers.xbgf" />
     <None Include="xbgf\rename-antlr.xbgf" />
     <None Include="xbgf\rename-ecore.xbgf" />
+    <None Include="xbgf\rename-emf.xbgf" />
     <None Include="xbgf\rename-jaxb.xbgf" />
     <None Include="xbgf\rename-model.xbgf" />
     <None Include="xbgf\rename-om.xbgf" />

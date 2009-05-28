@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/FactorialLanguage/src"
+    modelPluginID="FactorialLanguage" modelName="Fl" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false">
+  <foreignModel>fl.ecore</foreignModel>
+  <genPackages prefix="Fl" disposableProviderFactory="true" ecorePackage="fl.ecore#/">
+    <genClasses ecoreClass="fl.ecore#//Program">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//Program/function"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//Function">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fl.ecore#//Function/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//Function/argument"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//Function/definition"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//Argument">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fl.ecore#//Argument/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fl.ecore#//Exp"/>
+    <genClasses ecoreClass="fl.ecore#//LiteralExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fl.ecore#//LiteralExp/value"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//ArgumentExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fl.ecore#//ArgumentExp/argument"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//IfThenElseExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//IfThenElseExp/if"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//IfThenElseExp/then"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//IfThenElseExp/else"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//ApplyExp">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fl.ecore#//ApplyExp/function"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//ApplyExp/argument"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fl.ecore#//BinaryExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//BinaryExp/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//BinaryExp/right"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//PlusExp"/>
+    <genClasses ecoreClass="fl.ecore#//MinusExp"/>
+    <genClasses ecoreClass="fl.ecore#//EqualExp"/>
+  </genPackages>
+</genmodel:GenModel>

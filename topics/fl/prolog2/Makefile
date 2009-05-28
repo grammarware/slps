@@ -13,7 +13,8 @@ append.xbgf:
 		${xbgf}/trimXsd.xbgf \
 		${xbgf}/renameXsd.xbgf \
 		${xbgf}/massageXsd.xbgf \
-		${xbgf}/mkSignature.xbgf
+		${xbgf}/makeSignature.xbgf \
+		${xbgf}/stripSelectors.xbgf
 	${tools}/checkxml xbgf append.xbgf
 
 limit.bgf: append.xbgf

@@ -132,6 +132,7 @@
           <xsl:value-of select="@name"/>
         </selector>
         <bgf:expression>
+          <!-- something fishy
           <xsl:choose>
             <xsl:when test="@value">
               <terminal>
@@ -142,6 +143,8 @@
               <epsilon/>
             </xsl:otherwise>
           </xsl:choose>
+          -->
+          <epsilon/>
         </bgf:expression>
       </selectable>
     </bgf:expression>

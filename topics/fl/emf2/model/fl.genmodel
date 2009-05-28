@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/FL/src"
+    modelPluginID="FL" modelName="Fl" importerID="org.eclipse.xsd.ecore.importer"
+    complianceLevel="5.0" copyrightFields="false">
+  <foreignModel>../xsd/fl.xsd</foreignModel>
+  <genPackages prefix="Fl" resource="XML" disposableProviderFactory="true" ecorePackage="fl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fl.ecore#//Ops">
+      <genEnumLiterals ecoreEnumLiteral="fl.ecore#//Ops/Equal"/>
+      <genEnumLiterals ecoreEnumLiteral="fl.ecore#//Ops/Plus"/>
+      <genEnumLiterals ecoreEnumLiteral="fl.ecore#//Ops/Minus"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="fl.ecore#//OpsObject"/>
+    <genClasses ecoreClass="fl.ecore#//Apply">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fl.ecore#//Apply/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//Apply/arg"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//Argument">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fl.ecore#//Argument/name"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//Binary">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fl.ecore#//Binary/ops"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//Binary/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//Binary/right"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute fl.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fl.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fl.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//DocumentRoot/fragment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//DocumentRoot/program"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fl.ecore#//Expr"/>
+    <genClasses ecoreClass="fl.ecore#//Function">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fl.ecore#//Function/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fl.ecore#//Function/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//Function/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//IfThenElse">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//IfThenElse/ifExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//IfThenElse/thenExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//IfThenElse/elseExpr"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//Literal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fl.ecore#//Literal/info"/>
+    </genClasses>
+    <genClasses ecoreClass="fl.ecore#//ProgramType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fl.ecore#//ProgramType/function"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
