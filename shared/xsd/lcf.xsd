@@ -98,7 +98,15 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="name" type="xsd:string" />
+      <xsd:element name="name" type="xsd:ID" />
+      <xsd:element name="derived" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="from" type="xsd:IDREF"/>
+            <xsd:element name="using" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
       <xsd:element name="grammar">
         <xsd:complexType>
           <xsd:annotation>
@@ -164,11 +172,11 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="name" type="xsd:string" />
+      <xsd:element name="name" type="xsd:ID" />
       <xsd:element maxOccurs="unbounded" name="branch">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element name="input" type="xsd:string" />
+            <xsd:element name="input" type="xsd:IDREF" />
             <xsd:element name="preparation" type="lcf:phase" minOccurs="0"/>
             <xsd:element name="nominal-matching" type="lcf:phase" minOccurs="0"/>
             <xsd:element name="normalizing" type="lcf:phase" minOccurs="0"/>

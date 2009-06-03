@@ -154,7 +154,11 @@
   </source>
 
   <source>
-    <name>emf</name>
+    <name>ecore2</name>
+    <derived>
+      <from>xsd</from>
+      <using>xsd2ecore</using>
+    </derived>
     <grammar>
       <extraction>
         <expand>tools</expand>/ecore2bgf <expand>fl</expand>/emf2/model/fl.ecore
@@ -196,6 +200,10 @@
 
   <source>
     <name>jaxb</name>
+    <derived>
+      <from>xsd</from>
+      <using>xjc</using>
+    </derived>
     <grammar>
       <extraction>
         <expand>tools</expand>/java2bgf <expand>fl</expand>/java3 fl
@@ -264,7 +272,7 @@
       </relaxation>
     </branch>
     <branch>
-      <input>emf</input>
+      <input>ecore2</input>
       <nominal-matching>
         <perform>rename-emf</perform>
       </nominal-matching>

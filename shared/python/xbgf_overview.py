@@ -84,8 +84,8 @@ if __name__ == "__main__":
  sorted.sort()
  if sorted == ['read12','read123','jls1','jls12','jls123','jls2','jls3']:
   sorted = ['jls1','jls2','jls3','jls12','jls123','read12','read123']
- elif sorted == ['abstract','concrete','java','limit','topdown']:
-  sorted = ['topdown','concrete','java','abstract','limit']
+ elif sorted == ['abstract','concrete','java','limit','model','topdown']:
+  sorted = ['topdown','concrete','model','java','abstract','limit']
  print '\\begin{tabular}{l|'+('c|'*len(targets))+'|c}'
  for x in sorted:
   print '&\\textbf{'+x+'}',

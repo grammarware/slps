@@ -96,6 +96,7 @@ shutup = ' 1> /dev/null 2> /dev/null'
 #								  extension, correction, relaxation
 ttype = {}
 orderedsrc = []
+derived = {}
 shortcuts = {}
 actions = []
 autoactions = {}
@@ -144,7 +145,9 @@ def readConfiguration (cfg):
   testsets[xmlnode.findtext('name')]=expandxml(xmlnode.findall('command')[0],{})
  # sources
  for xmlnode in config.findall('//source'):
-  orderedsrc.append(xmlnode.findtext('name'));
+  orderedsrc.append(xmlnode.findtext('name'))
+  if xmlnode.findall('derived'):
+   derived[xmlnode.findtext('name')]=(xmlnode.findtext('derived/from'),xmlnode.findtext('derived/using'))
   extractor[xmlnode.findtext('name')]=expandxml(xmlnode.findall('grammar/extraction')[0],{})
   if xmlnode.findall('grammar/parsing'):
    parser[xmlnode.findtext('name')]=expandxml(xmlnode.findall('grammar/parsing')[0],{})
@@ -230,28 +233,32 @@ def expandxml(mixed,rep):
 def quote(a):
  return '"'+a+'"'
 
-def addarc(fromnode,tonode,q,labelnode):
- if [fromnode,tonode,q,labelnode] not in graphBig:
-  graphBig.append([fromnode,tonode,q,labelnode])
-
 def makeGraph():
  # first we generate a complete picture
  for x in targets.keys():
   for branch in targets[x]:
    graphSmall.append((branch[0],x))
    if len(branch)==1:
-    graphBig.append((branch,Chain(x),'',x))
+    graphBig.append((branch,Chain(x),'',x,''))
    else:
     for i in range(1,len(branch)-1):
-     graphBig.append((branch[:i],branch[:(i+1)],stripSpecifics(branch[i]),x))
-    graphBig.append((branch[:-1],Chain(x),stripSpecifics(branch[-1]),x))
+     if branch[i] in autoactions.keys():
+      gen = autoactions[branch[i]]
+     else:
+      gen = ''
+     graphBig.append((branch[:i],branch[:(i+1)],stripSpecifics(branch[i]),x,gen))
+    if branch[-1] in autoactions.keys():
+     gen = autoactions[branch[-1]]
+    else:
+     gen = ''
+    graphBig.append((branch[:-1],Chain(x),stripSpecifics(branch[-1]),x,gen))
 
 def distanceBetween(node,tgt):
  if node()==tgt:
   return '?'
  if len(targets[tgt])!=2:
   print '[WARN] Only binary branches supported for now.'
-  return '?'
+  return '??'
  if targets[tgt][0]().find(node())==0:
   return compareGrammars(node,targets[tgt][1])
  elif targets[tgt][1]().find(node())==0:
@@ -347,6 +354,8 @@ def dumpGraph(df):
    par += 'label="'+arc[2]+'" '
   if arc[1] in failed:
    par += 'color=red '
+  if arc[4]:
+   par += 'taillabel="'+arc[4]+'" labelfontname="Times-Italic" style=bold '
   if arc[1]() in targets.keys():
    pseudo = arc[0][:]
    pseudo.append(arc[2])
@@ -380,7 +389,9 @@ def dumpGraph(df):
   cx = distanceBetween(node,goal)
   #print '[----]',node,'(->',goal,') =',cx,'['+tmp+']'
   dot.write(' [color='+colour)
-  if cx != '?':
+  if cx == '??':
+   dot.write(', label="?"')
+  elif cx != '?':
    dot.write(', label="'+cx+'"')
    #currentFile.write(node.lastAction()+','+`eval(cx)`+'\n')
   if node.dotNodeName(goal) in dablNodezz:
@@ -390,7 +401,7 @@ def dumpGraph(df):
  #currentFile.close()
  dot.write('}')
  dot.close()
- run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf'
+ run = 'dot -Tpdf '+dot.name+' -o '+df+'_large.pdf 2>/dev/null'
  writeLog(run)
  if os.system(run):
   print '[WARN] Detailed diagram not generated'
@@ -403,6 +414,8 @@ def dumpGraph(df):
    dot.write(' [color=red]')
   elif x in almostFailed:
    dot.write(' [color=blue]')
+  if x in derived.keys():
+   dot.write(' [shape=egg]')
   dot.write(';')
  for x in orderedsrc:
   dot.write(quote(x))
@@ -410,6 +423,9 @@ def dumpGraph(df):
    dot.write(';')
   else:
    dot.write('->')
+ # "xsd"->"jaxb" [style=solid,label="xjc",color=grey,labelfloat,fontname="Times-Italic"];
+ for x in derived.keys():
+  dot.write('"'+derived[x][0]+'"->"'+x+'" [style=solid,label="'+derived[x][1]+'",color=grey,labelfloat,fontname="Times-Italic"];')
  dot.write('}')
  dot.write('node [shape=octagon]\n')
  for x in targets.keys():
@@ -426,7 +442,7 @@ def dumpGraph(df):
   dot.write(';\n')
  dot.write('}')
  dot.close()
- run = 'dot -Tpdf '+dot.name+' -o '+df+'_small.pdf'
+ run = 'dot -Tpdf '+dot.name+' -o '+df+'_small.pdf 2>/dev/null'
  writeLog(run)
  if os.system(run):
   print '[WARN] Abstract diagram not generated.'
@@ -760,7 +776,7 @@ def checkConsistency():
    sysexit(18)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.16'
+ print 'Language Covergence Infrastructure v1.17'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readConfiguration(sys.argv[1])
