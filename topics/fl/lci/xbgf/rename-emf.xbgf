@@ -7,7 +7,4 @@
       <to>Program</to>
     </nonterminal>
   </xbgf:rename>
-  <xbgf:reroot>
-    <root>Program</root>
-  </xbgf:reroot>
 </xbgf:sequence>

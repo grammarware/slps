@@ -132,7 +132,4 @@
     </bgf:production>
   </xbgf:deanonymize>
 
-  <xbgf:reroot>
-    <root>Program</root>
-  </xbgf:reroot>
 </xbgf:sequence>

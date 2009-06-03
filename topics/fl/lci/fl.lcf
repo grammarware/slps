@@ -21,6 +21,12 @@
       <expand>slps</expand>/shared/wrappers
     </expansion>
   </shortcut>
+  <shortcut>
+    <name>generators</name>
+    <expansion>
+      <expand>slps</expand>/shared/generators
+    </expansion>
+  </shortcut>
 
   <tool>
     <name>validation</name>
@@ -53,19 +59,25 @@
   <generator>
     <name>case</name>
     <command>
-      <expand>tools</expand>/casexbgf 3
+      <expand>generators</expand>/casexbgf 3
     </command>
   </generator>
   <generator>
     <name>stript</name>
     <command>
-      <expand>tools</expand>/striptxbgf
+      <expand>generators</expand>/striptxbgf
     </command>
   </generator>
   <generator>
     <name>strips</name>
     <command>
-      <expand>tools</expand>/stripsxbgf
+      <expand>generators</expand>/stripsxbgf
+    </command>
+  </generator>
+  <generator>
+    <name>reroot2top</name>
+    <command>
+      <expand>generators</expand>/reroot2top
     </command>
   </generator>
 
@@ -263,6 +275,10 @@
       <input>ecore</input>
       <nominal-matching>
         <perform>rename-ecore</perform>
+        <automated>
+          <method>reroot2top</method>
+          <result>reroot-upper</result>
+        </automated>
       </nominal-matching>
       <structural-matching>
         <perform>extractOps</perform>
@@ -275,6 +291,10 @@
       <input>ecore2</input>
       <nominal-matching>
         <perform>rename-emf</perform>
+        <automated>
+          <method>reroot2top</method>
+          <result>reroot-upper</result>
+        </automated>
       </nominal-matching>
     </branch>
     <branch>
@@ -314,11 +334,12 @@
     <name>abstract</name>
     <branch>
       <input>java</input>
-      <nominal-matching>
-        <perform>reroot</perform>
-      </nominal-matching>
       <structural-matching>
         <perform>unerase</perform>
+        <automated>
+          <method>reroot2top</method>
+          <result>reroot-lower</result>
+        </automated>
       </structural-matching>
     </branch>
     <branch>
@@ -339,10 +360,11 @@
     <name>limit</name>
     <branch>
       <input>concrete</input>
-      <nominal-matching>
-        <perform>reroot</perform>
-      </nominal-matching>
       <structural-matching>
+        <automated>
+          <method>reroot2top</method>
+          <result>reroot-lower</result>
+        </automated>
         <perform>defineLex</perform>
         <automated>
           <method>stript</method>

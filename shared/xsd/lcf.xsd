@@ -59,7 +59,7 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="name" type="xsd:string" />
+      <xsd:element name="name" type="xsd:ID" />
       <xsd:element name="expansion" type="lcf:xstring">
         <xsd:annotation>
           <xsd:documentation>
@@ -82,7 +82,7 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="name" type="xsd:string" />
+      <xsd:element name="name" type="xsd:ID" />
       <xsd:element name="command" type="lcf:xstring" />
     </xsd:sequence>
   </xsd:complexType>
@@ -227,7 +227,7 @@
           </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element name="method" type="xsd:string"/>
+              <xsd:element name="method" type="xsd:IDREF"/>
               <xsd:element name="result" type="xsd:string"/>
             </xsd:sequence>
           </xsd:complexType>
@@ -246,7 +246,7 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:ID"/>
       <xsd:element name="command" type="lcf:xstring"/>
     </xsd:sequence>
   </xsd:complexType>
@@ -298,7 +298,7 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="expand" type="xsd:string"  minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="expand" type="xsd:IDREF"  minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
 
