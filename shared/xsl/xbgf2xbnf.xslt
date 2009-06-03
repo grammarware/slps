@@ -188,7 +188,11 @@
   <xsl:template match="xbgf:reroot">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>
-    <xsl:value-of select="./root"/>
+    <xsl:value-of select="./root[1]"/>
+    <xsl:for-each select="./root[position()>1]">
+      <xsl:text>, </xsl:text>
+      <xsl:value-of select="."/>
+    </xsl:for-each>
     <xsl:text>);
 </xsl:text>
   </xsl:template>
