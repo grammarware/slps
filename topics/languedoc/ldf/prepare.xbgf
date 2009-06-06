@@ -87,7 +87,7 @@
   </xbgf:extract>
   <xbgf:anonymize>
     <bgf:production>
-      <label>relationship</label>
+      <label>references</label>
       <nonterminal>structuredSectionElement</nonterminal>
       <bgf:expression>
         <plus>

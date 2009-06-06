@@ -56,8 +56,8 @@
     <to>Generators</to>
   </xldf:retitle>
 
-  
-   <xldf:transform-grammar>
+
+  <xldf:transform-grammar>
     <target>complexType-source</target>
     <xbgf:extract>
       <bgf:production>
@@ -146,6 +146,31 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:extract>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>derived</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <selectable>
+                <selector>from</selector>
+                <bgf:expression>
+                  <value>string</value>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <selectable>
+                <selector>using</selector>
+                <bgf:expression>
+                  <value>string</value>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
     <xbgf:anonymize>
       <bgf:production>
         <nonterminal>source</nonterminal>
@@ -158,6 +183,18 @@
                   <value>string</value>
                 </bgf:expression>
               </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <selectable>
+                    <selector>derived</selector>
+                    <bgf:expression>
+                      <nonterminal>derived</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </optional>
             </bgf:expression>
             <bgf:expression>
               <marked>
@@ -213,6 +250,74 @@
               </selectable>
             </bgf:expression>
             <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <marked>
+                    <bgf:expression>
+                      <selectable>
+                        <selector>derived</selector>
+                        <bgf:expression>
+                          <nonterminal>derived</nonterminal>
+                        </bgf:expression>
+                      </selectable>
+                    </bgf:expression>
+                  </marked>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>grammar</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <selectable>
+                    <selector>tree</selector>
+                    <bgf:expression>
+                      <nonterminal>tree</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <selectable>
+                    <selector>testing</selector>
+                    <bgf:expression>
+                      <nonterminal>testing</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>source</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <selectable>
+                <selector>name</selector>
+                <bgf:expression>
+                  <value>string</value>
+                </bgf:expression>
+              </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>derived</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
               <nonterminal>grammar</nonterminal>
             </bgf:expression>
             <bgf:expression>
@@ -259,6 +364,13 @@
                   <value>string</value>
                 </bgf:expression>
               </selectable>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>derived</nonterminal>
+                </bgf:expression>
+              </optional>
             </bgf:expression>
             <bgf:expression>
               <nonterminal>grammar</nonterminal>
@@ -633,7 +745,7 @@
     </from>
     <to>Phases</to>
   </xldf:retitle>
-  
+
   <xldf:retitle>
     <from>
       <title>testset</title>
@@ -641,7 +753,7 @@
     <to>Test sets</to>
   </xldf:retitle>
 
- <xldf:transform-grammar>
+  <xldf:transform-grammar>
     <target>simpleType-toolType</target>
     <xbgf:vertical>
       <nonterminal>toolType</nonterminal>

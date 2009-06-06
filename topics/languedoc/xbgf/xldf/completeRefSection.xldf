@@ -377,7 +377,7 @@
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
-    <considerations>
+    <semantics>
       <content>
         <text>
           In fact, <ldf:keyword>distribute</ldf:keyword> is nothing more than an automated
@@ -391,7 +391,7 @@
           effect as it is capable of doing the reverse thing.
         </text>
       </content>
-    </considerations>
+    </semantics>
     <to>element-distribute</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
@@ -433,7 +433,7 @@
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
-    <considerations>
+    <semantics>
       <content>
         <text>
           Factor transformations tend to be quite frequently used in grammar convergence.
@@ -456,7 +456,7 @@
           <ldf:keyword>extract</ldf:keyword>).
         </text>
       </content>
-    </considerations>
+    </semantics>
     <to>element-factor</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
@@ -564,7 +564,7 @@
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
-    <considerations>
+    <semantics>
       <content>
         <text>
           Yaccification is a typical example of grammar adaptation activity.
@@ -582,7 +582,7 @@
           which works perfectly just given the nonterminal name.
         </text>
       </content>
-    </considerations>
+    </semantics>
     <to>element-yaccify</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
@@ -721,7 +721,7 @@
     <inside>group-refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
-    <considerations>
+    <semantics>
       <content>
         <text>
           There are times when <ldf:keyword>introduce</ldf:keyword> is just not enough.
@@ -738,7 +738,7 @@
           substitute any number of <ldf:keyword>introduce</ldf:keyword> transformations.
         </text>
       </content>
-    </considerations>
+    </semantics>
     <to>element-import</to>
   </xldf:add-subsection>
   <xldf:add-subsection>

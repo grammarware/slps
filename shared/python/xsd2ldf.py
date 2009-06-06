@@ -92,6 +92,8 @@ def main(xsdfile,bgffile,ldffile):
  for p in stree.findall('/'+slpsns.xsd_('annotation')+'/'+slpsns.xsd_('documentation'))[1:]:
   pel = ET.SubElement(el,'text')
   pel.text = p.text
+ if not el.findall('*'):
+  ET.SubElement(el,'empty')
 
  if stree.findall('/'+slpsns.xsd_('import')):
   el = ET.SubElement(section,'normativeReferences')

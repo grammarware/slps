@@ -270,7 +270,7 @@ def xldf_add_subsection(localpath,cmd,tree):
   tree.findall('//frontMatter')[0].append(s)
   print '[XLDF] add-subsection (',s.tag,', front matter, ...)'
   success = True
- elif s.tag in ('purpose','description','location','considerations','defaults','normative','note','example','informative'):
+ elif s.tag in ('synopsis','description','syntax','constraints','references','relationship','semantics','rationale','example','update','default','list','value','section'):
   found = findnode(tree,cmd.findtext('to'))
   if found:
    found.append(s)
