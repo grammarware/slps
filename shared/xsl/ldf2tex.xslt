@@ -352,25 +352,19 @@
         <xsl:when test="local-name() = 'placeholder'">
           <xsl:apply-templates select="."/>
         </xsl:when>
+        <xsl:when test="local-name() = 'synopsis'">
+          <!-- inline -->
+          <xsl:call-template name="process-SimpleSection">
+            <xsl:with-param name="section" select="."/>
+          </xsl:call-template>
+        </xsl:when>
         <xsl:otherwise>
-          <xsl:choose>
-            <xsl:when test="local-name($section) = 'subtopic'">
-              <xsl:call-template name="subsectionize">
-                <xsl:with-param name="target" select="."/>
-                <xsl:with-param name="level">
-                  <xsl:value-of select="$level"/>
-                </xsl:with-param>
-              </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:call-template name="subsectionize">
-                <xsl:with-param name="target" select="."/>
-                <xsl:with-param name="level">
-                  <xsl:value-of select="$level"/>
-                </xsl:with-param>
-              </xsl:call-template>
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:call-template name="subsectionize">
+            <xsl:with-param name="target" select="."/>
+            <xsl:with-param name="level">
+              <xsl:value-of select="$level"/>
+            </xsl:with-param>
+          </xsl:call-template>
           <xsl:call-template name="process-SimpleSection">
             <xsl:with-param name="section" select="."/>
           </xsl:call-template>

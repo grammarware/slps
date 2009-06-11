@@ -474,4 +474,15 @@
     <file>../../transformation/xbgf/tests/replace_choice_part.baseline</file>
   </xldf:import-grammar>
 
+  <xldf:change-role>
+    <scope>group-concrete-revising-transformation</scope>
+    <from>syntax</from>
+    <to>synopsis</to>
+  </xldf:change-role>
+  <xldf:change-role>
+    <scope>group-abstract-revising-transformation</scope>
+    <from>syntax</from>
+    <to>synopsis</to>
+  </xldf:change-role>
+  
 </xldf:evolution-sequence>

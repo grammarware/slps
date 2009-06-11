@@ -926,5 +926,11 @@
     <target>lassoc-example</target>
     <file>../../transformation/xbgf/tests/lassoc_p.baseline</file>
   </xldf:import-grammar>
-  
+
+  <xldf:change-role>
+    <scope>group-refactoring-transformation</scope>
+    <from>syntax</from>
+    <to>synopsis</to>
+  </xldf:change-role>
+
 </xldf:evolution-sequence>

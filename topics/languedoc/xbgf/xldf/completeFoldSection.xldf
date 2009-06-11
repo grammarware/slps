@@ -463,5 +463,11 @@
     <file>../../transformation/xbgf/tests/chain.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
+
+  <xldf:change-role>
+    <scope>group-folding-transformation</scope>
+    <from>syntax</from>
+    <to>synopsis</to>
+  </xldf:change-role>
   
 </xldf:evolution-sequence>

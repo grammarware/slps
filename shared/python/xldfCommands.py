@@ -5,6 +5,8 @@ import string
 import slpsns
 import elementtree.ElementTree as ET
 
+sectionRoles = ('synopsis','description','syntax','constraints','relationship','semantics','default','rationale','example','update','section')
+
 # Commands
 def xldf_insert(localpath,cmd,tree):
  if cmd.findall('*')[0].findall('*')[0].tag != 'text':
@@ -176,24 +178,40 @@ def xldf_drop(localpath,cmd,tree):
 def xldf_combine(localpath,cmd,tree):
  found = findnode(tree,cmd.findtext('section'))
  if not found:
-  print '[----] xldf:combine failed: source node not found!'
+  print '[----] xldf:combine failed: source node',cmd.findtext('section'),'not found!'
   return
  found2 = findnode(tree,cmd.findtext('with'))
  if not found2:
-  print '[----] xldf:combine failed: target node not found!'
+  print '[----] xldf:combine failed: target node',cmd.findtext('with'),'not found!'
   return
- target = found2.findall('content')
- if target:
-  target = target[0]
+ if found2.findall('content'):
+  # the target is a simple section, inline everything
+  t = found2.findall('content')[0]
+  for c in found.findall('*/content'):
+   content2content(c,t)
  else:
-  target = found2.findall('description/content')[0]
- for p in found.findall('*/content/*'):
-  target.append(p)
+  # the target is a structured section, align everything
+  for s in found.findall('*'):
+   if s.tag not in sectionRoles:
+    continue
+   if found2.findall(s.tag):
+    # the same role present, appending
+    print '[////] Concatenating',s.tag,'of',cmd.findtext('section'),'and',cmd.findtext('with')
+    content2content(s.findall('content')[0],found2.findall(s.tag+'/content')[0])
+   else:
+    # the same role absent, copying
+    print '[////] Copying',s.tag,'of',cmd.findtext('section'),'to',cmd.findtext('with')
+    found2.append(s)
+ # wtf?
  tree.getroot().remove(found)
  print '[XLDF] combine('+cmd.findtext('section')+',',cmd.findtext('with')+')'
  #else:
  # print '[----] xldf:combine failed: don''t know how to place subsections in',found2.tag
  return
+
+def content2content(f,t):
+ for e in f.findall('*'):
+  t.append(e)
 
 def xldf_retitle(localpath,cmd,tree):
  if cmd.findall('from/title'):
@@ -283,19 +301,53 @@ def xldf_add_subsection(localpath,cmd,tree):
   print '[----] xldf:add-subsection failed, double check or try add-section instead'
  return
 
+def xldf_change_role(localpath,cmd,tree):
+ where = findnode(tree,cmd.findtext('scope'))
+ if not where:
+  print '[----] xldf:change-role failed, can''t find id',cmd.findtext('scope')
+  return
+ if not where.findall(cmd.findtext('from')):
+  print '[----] xldf:change-role failed,',cmd.findtext('scope'),'lacks any',cmd.findtext('from')
+  return
+ if where.findall(cmd.findtext('to')):
+  # inline
+  for el in where.findall(cmd.findtext('from')+'/*'):
+   where.findall(cmd.findtext('to'))[0].append(el)
+  where.remove(where.findall(cmd.findtext('from'))[0])
+  print '[XLDF] xldf:change-role inlined',cmd.findtext('from'),'to',cmd.findtext('to'),'in',cmd.findtext('scope')
+ else:
+  # rename
+  where.findall(cmd.findtext('from'))[0].tag = cmd.findtext('to')
+  print '[XLDF] xldf:change-role renamed',cmd.findtext('from'),'to',cmd.findtext('to'),'in',cmd.findtext('scope')
+ return
+
 def xldf_extract_subsection(localpath,cmd,tree):
  where = findnode(tree,cmd.findtext('from'))
+ role = cmd.findtext('role')
+ if not role:
+  role = 'synopsis'
  if not where:
-  print '[----] xldf:extract-subsection failed, can''t find id',cmd.findtext('to')
+  print '[----] xldf:extract-subsection failed, can''t find id',cmd.findtext('from')
   return
- for e1 in where.findall('*/content/*'):
-  for e2 in cmd.findall('content/*'):
-   if xml_eq(e1,e2):
-    where.findall('*/content')[0].remove(e1)
+ for subsection in where.findall('*'):
+  for content in subsection.findall('content'):
+   for e1 in content.findall('*'):
+    for e2 in cmd.findall('content/*'):
+     if xml_eq(e1,e2):
+      try:
+       content.remove(e1)
+      except ValueError,e:
+       print '[----] xldf:extract-subsection failed to remove original node!'
+   if not len(content):
+    subsection.remove(content)
+    print '[XLDF] Normalisation: empty content removed.'
+  if subsection.tag in sectionRoles and not len(subsection):
+   print '[XLDF] Normalisation: empty',subsection.tag,'removed.'
+   where.remove(subsection)
  st = ET.SubElement(where,'subtopic')
  e = ET.SubElement(st,'title')
  e.text = cmd.findtext('title')
- e = ET.SubElement(st,'description')
+ e = ET.SubElement(st,role)
  e = ET.SubElement(e,'content')
  for e2 in cmd.findall('content/*'):
   e.append(e2)

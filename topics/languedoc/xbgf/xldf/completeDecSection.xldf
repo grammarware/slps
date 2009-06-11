@@ -36,6 +36,7 @@
     </content>
     <title>removeV</title>
     <id>element-remove-v</id>
+    <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
     <where>element-remove-v</where>
@@ -93,6 +94,7 @@
     </content>
     <title>removeH</title>
     <id>element-remove-h</id>
+    <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:transform-grammar>
     <target>element-remove-h</target>
@@ -357,5 +359,11 @@
     <target>downgrade-example</target>
     <file>../../transformation/xbgf/tests/downgrade.baseline</file>
   </xldf:import-grammar>
+
+  <xldf:change-role>
+    <scope>group-decreasing-transformation</scope>
+    <from>syntax</from>
+    <to>synopsis</to>
+  </xldf:change-role>
   
 </xldf:evolution-sequence>

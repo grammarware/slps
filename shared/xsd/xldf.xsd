@@ -39,6 +39,7 @@
       <xsd:element ref="xldf:add-section"/>
       <xsd:element ref="xldf:add-subsection"/>
       <xsd:element ref="xldf:append"/>
+      <xsd:element ref="xldf:change-role"/>
       <xsd:element ref="xldf:combine"/>
       <xsd:element ref="xldf:drop"/>
       <xsd:element ref="xldf:extract-subsection"/>
@@ -141,6 +142,24 @@
     </xsd:complexType>
   </xsd:element>
 
+  <xsd:element name="change-role">
+    <xsd:annotation>
+      <xsd:documentation>
+        Changes the role of a section (i.e., syntax section can become description).
+        If there is no section of the same role in scope, the original section becomes one.
+        If there was already a section with the same role in scope, the new section is
+        appended to it instead.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="scope" type="xsd:string"/>    <!-- IDREF -->
+        <xsd:element name="from" type="xldf:sectionRole"/>
+        <xsd:element name="to" type="xldf:sectionRole"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
   <xsd:element name="drop">
     <xsd:annotation>
       <xsd:documentation>
@@ -171,6 +190,7 @@
         <xsd:element name="id" type="xsd:string"/>
         <!--<xsd:element name="section" type="ldf:StructuredSection"/>-->
         <xsd:element name="to" type="xsd:string" minOccurs="0"/>
+        <xsd:element name="role" type="xldf:sectionRole" minOccurs="0" default="synopsis"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -341,5 +361,21 @@
       <xsd:element name="to" type="xsd:string"/>
     </xsd:choice>
   </xsd:group>
+
+  <xsd:simpleType name="sectionRole">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="synopsis"/>
+      <xsd:enumeration value="description"/>
+      <xsd:enumeration value="syntax"/>
+      <xsd:enumeration value="constraints"/>
+      <xsd:enumeration value="relationship"/>
+      <xsd:enumeration value="semantics"/>
+      <xsd:enumeration value="default"/>
+      <xsd:enumeration value="rationale"/>
+      <xsd:enumeration value="example"/>
+      <xsd:enumeration value="update"/>
+      <xsd:enumeration value="section"/>
+    </xsd:restriction>
+  </xsd:simpleType>
 
 </xsd:schema>

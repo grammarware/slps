@@ -600,7 +600,7 @@
           <xsd:documentation>
             A separate subsection named `purpose' is only encountered in some 4GL
             language manuals (e.g., JCL). However, it is quite common for the first
-            paragraph of any new section of any language document to relay word
+            paragraph of any new section of any language document to relay short word
             about the purpose of the language construct that is about to be introduced.
           </xsd:documentation>
         </xsd:annotation>
@@ -613,17 +613,12 @@
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="syntax">
+      <xsd:element name="syntax" type="ldf:simpleSection">
         <xsd:annotation>
           <xsd:documentation>
-            Syntax sections consist of one or more BGF productions.
+            Syntax sections consist of one or more BGF productions, possibly complemented by textual descriptions.
           </xsd:documentation>
         </xsd:annotation>
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
-          </xsd:sequence>
-        </xsd:complexType>
       </xsd:element>
       <xsd:element name="constraints" type="ldf:simpleSection">
         <xsd:annotation>

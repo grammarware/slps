@@ -15,16 +15,19 @@ def mapXSD2LDF(stree,dtree,grammar):
   #el.text = nt.tag.replace('{'+xsdns+'}','')+'-'+nt.attrib['name']
   el = ET.SubElement(section,'title')
   el.text = nt.attrib['name']
-  el = ET.SubElement(section,'description')
-  el = ET.SubElement(el,'content')
-  #for p in nt.findall('.//{%s}annotation/{%s}documentation' % (xsdns,xsdns)):
-  for p in nt.findall(slpsns.xsd_('annotation')+'/'+slpsns.xsd_('documentation')):
-   pel = ET.SubElement(el,'text')
-   pel.text = p.text
-   # e.g. keywords
-   for sub in p:
-    pel.append(sub)
+  if nt.findall(slpsns.xsd_('annotation')):
+   el = ET.SubElement(section,'synopsis')
+   el = ET.SubElement(el,'content')
+   #for p in nt.findall('.//{%s}annotation/{%s}documentation' % (xsdns,xsdns)):
+   for p in nt.findall(slpsns.xsd_('annotation')+'/'+slpsns.xsd_('documentation')):
+    pel = ET.SubElement(el,'text')
+    pel.text = p.text
+    # e.g. keywords
+    for sub in p:
+     pel.append(sub)
   gotit = []
+  el = ET.SubElement(section,'syntax')
+  el = ET.SubElement(el,'content')
   if nt.findall(slpsns.xsd_('choice')):
    #print 'Found a top level choice in',nt.get('name')
    for alt in nt.findall(slpsns.xsd_('choice')+'/*'):

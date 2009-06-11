@@ -164,9 +164,9 @@
         everything that is used to present, retrieve, transmit or store information
         in the world wide web has been or is being standardised by W3C.
         CSS~\cite{W3C-CSS}, XHTML~\cite{W3C-XHTML}, XML~\cite{W3C-XML},
-        XSLT~\cite{XSLT}, XML Schema~\cite{W3C-XSr,W3C-XS2,W3C-XS1},
-        XPath~\cite{XPath} and XQuery~\cite{XQuery} are W3C Working Drafts
-        and W3C Recommendations used in this thesis.
+        XSLT~\cite{XSLT}, XML Schema~\cite{W3C-XSD1,W3C-XSD2} and
+        XPath~\cite{XPath} are W3C Working Drafts and W3C Recommendations
+        used in this thesis.
       </text>
     </content>
   </xldf:append>

@@ -36,6 +36,7 @@
     </content>
     <title>addV</title>
     <id>element-add-v</id>
+    <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
     <where>element-add-v</where>
@@ -79,7 +80,7 @@
     <target>add-v-example</target>
     <file>../../transformation/xbgf/tests/add_vertical.baseline</file>
   </xldf:import-grammar>
-  
+
   <xldf:extract-subsection>
     <from>element-add</from>
     <content>
@@ -93,6 +94,7 @@
     </content>
     <title>addH</title>
     <id>element-add-h</id>
+    <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:transform-grammar>
     <target>element-add-h</target>
@@ -104,7 +106,7 @@
     </xbgf:fold>
     <context>definitions-section</context>
   </xldf:transform-grammar>
-  
+
   <xldf:append>
     <where>element-add-h</where>
     <content>
@@ -191,7 +193,7 @@
     <target>add-h2-example</target>
     <file>../../transformation/xbgf/tests/add_inside.baseline</file>
   </xldf:import-grammar>
-  
+
   <xldf:place>
     <section>element-appear</section>
     <inside>group-increasing-transformation</inside>
@@ -239,7 +241,7 @@
     <target>appear-example</target>
     <file>../../transformation/xbgf/tests/appear_q.baseline</file>
   </xldf:import-grammar>
-  
+
   <xldf:place>
     <section>element-widen</section>
     <inside>group-increasing-transformation</inside>
@@ -357,7 +359,7 @@
     <target>upgrade-example</target>
     <file>../../transformation/xbgf/tests/upgrade.baseline</file>
   </xldf:import-grammar>
-  
+
   <xldf:place>
     <section>element-unite</section>
     <inside>group-increasing-transformation</inside>
@@ -395,4 +397,11 @@
     <target>unite-example</target>
     <file>../../transformation/xbgf/tests/unite_normal.baseline</file>
   </xldf:import-grammar>
+
+  <xldf:change-role>
+    <scope>group-increasing-transformation</scope>
+    <from>syntax</from>
+    <to>synopsis</to>
+  </xldf:change-role>
+
 </xldf:evolution-sequence>

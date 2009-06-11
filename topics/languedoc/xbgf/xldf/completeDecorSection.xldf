@@ -229,5 +229,11 @@
     <target>anonymize-example</target>
     <file>../../transformation/xbgf/tests/anonymize_single.baseline</file>
   </xldf:import-grammar>
+
+  <xldf:change-role>
+    <scope>group-decorative-transformation</scope>
+    <from>syntax</from>
+    <to>synopsis</to>
+  </xldf:change-role>
   
 </xldf:evolution-sequence>

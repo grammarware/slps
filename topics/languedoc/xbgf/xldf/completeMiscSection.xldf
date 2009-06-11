@@ -47,6 +47,7 @@
     </content>
     <title>renameL</title>
     <id>element-rename-label</id>
+    <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
     <where>element-rename-label</where>
@@ -127,6 +128,7 @@
     </content>
     <title>renameN</title>
     <id>element-rename-nonterminal</id>
+    <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
     <where>element-rename-nonterminal</where>
@@ -217,6 +219,7 @@
     </content>
     <title>renameS</title>
     <id>element-rename-selector</id>
+    <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
     <where>element-rename-selector</where>
@@ -294,6 +297,7 @@
     </content>
     <title>renameT</title>
     <id>element-rename-terminal</id>
+    <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
     <where>element-rename-terminal</where>
