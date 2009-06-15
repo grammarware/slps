@@ -185,4 +185,10 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   
+
+  <xldf:combine>
+    <section>simpleType-sectionRole</section>
+    <with>element-change-role</with>
+  </xldf:combine>
+
 </xldf:evolution-sequence>

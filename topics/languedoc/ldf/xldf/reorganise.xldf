@@ -150,8 +150,16 @@
     <from>
       <title>keyword</title>
     </from>
-    <to>Keywords and plain text</to>
+    <to>Keywords, links and plain text</to>
   </xldf:retitle>
+  <xldf:combine>
+    <section>element-code</section>
+    <with>element-keyword</with>
+  </xldf:combine>
+  <xldf:combine>
+    <section>element-link</section>
+    <with>element-keyword</with>
+  </xldf:combine>
   <xldf:combine>
     <section>complexType-mixedType</section>
     <with>element-keyword</with>

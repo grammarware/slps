@@ -45,7 +45,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:designate>
-  <xbgf:unfold>
+<!--  <xbgf:unfold>
     <nonterminal>listOfInternalLinks</nonterminal>
   </xbgf:unfold>
   <xbgf:extract>
@@ -106,7 +106,7 @@
         </plus>
       </bgf:expression>
     </bgf:production>
-  </xbgf:anonymize>
+  </xbgf:anonymize>-->
   
 
 </xbgf:sequence>

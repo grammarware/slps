@@ -464,7 +464,7 @@
     <xsd:attribute name="id" type="xsd:ID" use="optional"/>
   </xsd:complexType>
 
-  <xsd:complexType name="listOfInternalLinks">
+  <!--<xsd:complexType name="listOfInternalLinks">
     <xsd:sequence>
       <xsd:element name="link" maxOccurs="unbounded">
         <xsd:complexType>
@@ -476,7 +476,7 @@
         </xsd:complexType>
       </xsd:element>
     </xsd:sequence>
-  </xsd:complexType>
+  </xsd:complexType>-->
 
   <xsd:complexType name="tableRow">
     <xsd:sequence>
@@ -532,7 +532,7 @@
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="references" type="ldf:listOfInternalLinks">
+      <xsd:element name="references" type="ldf:simpleList">
         <xsd:annotation>
           <xsd:documentation>
             Hardbound standards have been trying to be more hypertext
@@ -839,4 +839,34 @@
     </xsd:annotation>
   </xsd:element>
 
+  <xsd:element name="code" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>
+        Inlined pieces of code are usually printed in typewriter-like font.
+        They are frequently incomplete, mostly nothing more than simple literals,
+        and can only be checked to be correct tokens of the language in
+        a lexical sense.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:element name="link">
+    <xsd:annotation>
+      <xsd:documentation>
+        Internal links are pairs of text that will become clickable in hypertext
+        presentation forms or precede the reference itself when this is the only
+        option. The reference points to a section or a subsection of the same
+        document that the link should refer to. If the explicit text is omitted,
+        its default value is the name of the section being referenced.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <!--<xsd:element name="text" type="xsd:string"/>-->
+        <xsd:element name="text" type="xsd:string" minOccurs="0"/>
+        <xsd:element name="reference" type="xsd:IDREF"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
 </xsd:schema>

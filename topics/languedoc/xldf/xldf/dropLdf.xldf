@@ -74,5 +74,11 @@
   <xldf:drop>
     <section>element-keyword</section>
   </xldf:drop>
+  <xldf:drop>
+    <section>element-link</section>
+  </xldf:drop>
+   <xldf:drop>
+    <section>element-code</section>
+  </xldf:drop>
  
 </xldf:evolution-sequence>
