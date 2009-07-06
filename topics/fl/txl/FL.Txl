@@ -13,8 +13,10 @@ define expression
         [expression] [op] [expression]
     |   [id] [expression+]
     |   if [expression] then [expression] else [expression]
-    |   [expression] == [expression]
-    |   [primary]
+    |       [number]
+    |   [id]
+    |   ( [expression] )
+    
 end define
 
 define op
@@ -23,13 +25,6 @@ define op
     |   ==
 end define
 
-define primary 
-        [number]
-    |   [id]
-    |   ( [expression] )
-end define
-
-
 % Part 2.  Transformation rules
 rule main
     replace [expression]
@@ -37,7 +32,6 @@ rule main
     construct NewE [expression]
         E [resolveAddition]
           [resolveSubtraction]
-          [resolveBracketedExpressions]
     where not
         NewE [= E]
     by
@@ -57,11 +51,4 @@ rule resolveSubtraction
     by
         N1 [- N2]
 end rule 
-
-rule resolveBracketedExpressions
-    replace [primary]
-        ( N [number] )
-    by
-        N
-end rule
 
