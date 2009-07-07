@@ -49,6 +49,7 @@
     <Content Include="ldf2ldf_tail.xslt" />
     <Content Include="ldf2tex.xslt" />
     <Content Include="ldf2xhtml.xslt" />
+    <Content Include="txl2bgf.xslt" />
     <Content Include="xbgf2xbnf.xslt" />
     <Content Include="xhtml2fo.xslt" />
   </ItemGroup>
