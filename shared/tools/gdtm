@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ..
+LOCAL2=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 2 ]; then
+    echo "This is the shortest version of Grammar Diff Tool."
+    echo "Usage: gdtm <BGF-input1> <BGF-input2>"
+    exit 1
+else
+    for i in $*; do
+	if [ ! -r $i ]; then
+	    echo "Oops: $i not found or not readable."
+	    exit 1
+	fi
+    done
+	python ${LOCAL2}/python/diffShort.py $1 $2 ${LOCAL2}/tools/gdt
+fi

@@ -42,18 +42,18 @@
 
   <xsl:template name="sequenceOrNot">
     <xsl:param name="list"/>
-    <bgf:expression>
-      <xsl:choose>
-        <xsl:when test="count($list/literalOrType)=1">
-          <xsl:apply-templates select="$list/literalOrType"/>
-        </xsl:when>
-        <xsl:otherwise>
+    <xsl:choose>
+      <xsl:when test="count($list/literalOrType)=1">
+        <xsl:apply-templates select="$list/literalOrType"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <bgf:expression>
           <sequence>
             <xsl:apply-templates select="$list/literalOrType"/>
           </sequence>
-        </xsl:otherwise>
-      </xsl:choose>
-    </bgf:expression>
+        </bgf:expression>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="literalOrType">
@@ -62,25 +62,40 @@
       <xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater='+'">
         <bgf:expression>
           <plus>
-            <nonterminal>
-              <xsl:value-of select="type/typeSpec/typeid/id" />
-            </nonterminal>
+            <bgf:expression>
+              <nonterminal>
+                <xsl:value-of select="type/typeSpec/typeid/id" />
+              </nonterminal>
+            </bgf:expression>
           </plus>
         </bgf:expression>
       </xsl:when>
       <xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater='*'">
         <bgf:expression>
           <star>
-            <nonterminal>
-              <xsl:value-of select="type/typeSpec/typeid/id" />
-            </nonterminal>
+            <bgf:expression>
+              <nonterminal>
+                <xsl:value-of select="type/typeSpec/typeid/id" />
+              </nonterminal>
+            </bgf:expression>
           </star>
+        </bgf:expression>
+      </xsl:when>
+      <xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater='?'">
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>
+                <xsl:value-of select="type/typeSpec/typeid/id" />
+              </nonterminal>
+            </bgf:expression>
+          </optional>
         </bgf:expression>
       </xsl:when>
       <xsl:when test="literal">
         <bgf:expression>
           <terminal>
-            <xsl:value-of select="literal/unquotedLiteral/special" />
+            <xsl:value-of select="literal/unquotedLiteral/*" />
           </terminal>
         </bgf:expression>
       </xsl:when>
