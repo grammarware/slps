@@ -205,7 +205,7 @@
           $G_j^I$ takes another approach, just listing all the alternatives in the productions
           for Statement and Expression. In order to converge these two variants, a lot of inlining
           transformations are needed. This can also be apparent from the statistics table,
-          that demonstrates that targets that converge only `readable' grammars require up to
+          that demonstrates that targets that converge only ``readable'' grammars require up to
           ten inline transformations each, while each target that takes both readable and
           implementable grammars in, contains 70--100 <ldf:keyword>inline</ldf:keyword>
           transformations in convergence path.
@@ -353,7 +353,7 @@
     <content>
       <text>
         The grammar will be the same, but without the reflexive chain production
-        labelled as `bracket' previously:
+        labelled as ``bracket'' previously:
       </text>
     </content>
   </xldf:append>

@@ -425,9 +425,9 @@
   <xsd:element name="deyaccify" type="bgf:nonterminal">
     <xsd:annotation>
       <xsd:documentation>
-        Deyaccification is a widely used term that means `performing
+        Deyaccification is a widely used term that means ``performing
         activities of removing grammatical idiosyncrasies typical for
-        the tool called YACC'. YACC, or Yet Another Compiler Compiler,
+        the tool called YACC''. YACC, or Yet Another Compiler Compiler,
         was developed in the 1970s and has grown far beyond these boundaries
         since then. However, it somehow became common practice to remain
         within them even when grammar engineers do not use yacc as such
@@ -658,7 +658,7 @@
         with regard to the defined nonterminal. The argument production
         replace a production with the same defined nonterminal and label,
         if any, assuming that the defining expression uses an equivlent,
-        repeating expression form. The `l' in `lassoc' refers to the
+        repeating expression form. The ``l'' in ``lassoc'' refers to the
         intended effect at the level of derivation trees: the list of
         subtrees is to be converted into a nested binary tree in a
         left-associative manner.
@@ -684,7 +684,7 @@
       <xsd:documentation>
         There are two expression arguments: one to be matched,
         and another one that replaces the matched expression.
-        One of them must be in a `massage relation' to the other.
+        One of them must be in a ``massage relation'' to the other.
       </xsd:documentation>
       <xsd:documentation>
         The scope of
@@ -772,7 +772,7 @@
         with regard to the defined nonterminal. The argument production
         replace a production with the same defined nonterminal and label,
         if any, assuming that the defining expression uses an equivlent,
-        repeating expression form. The `r' in `rassoc' refers to the
+        repeating expression form. The ``r'' in ``rassoc'' refers to the
         intended effect at the level of derivation trees: the list of
         subtrees is to be converted into a nested binary tree in a
         right-associative manner.

@@ -213,8 +213,8 @@
       <text>
         Sequential composition of symbols is more complicated since
         it does not necessarily yield an EBNF modifier (those modifiers
-        are not expressive enough to denote `one or two' repetitions,
-        `two or more', etc). The following table shows the possible
+        are not expressive enough to denote ``one or two'' repetitions,
+        ``two or more'', etc). The following table shows the possible
         <ldf:keyword>massage</ldf:keyword> manipulations:
       </text>
       <table>
@@ -443,7 +443,7 @@
           expressions. The transformer then can easily assert that they are related by
           distribution: basically, it internally performs <ldf:keyword>distribute</ldf:keyword>
           on both of them and expects them to become identical. Hence, it is possible
-          to do `incomplete' factoring by pushing choices inwards but not to the innermost
+          to do ``incomplete'' factoring by pushing choices inwards but not to the innermost
           position.
         </text>
         <text>

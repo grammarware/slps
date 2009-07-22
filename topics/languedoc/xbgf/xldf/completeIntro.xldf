@@ -324,7 +324,7 @@
         </text>
         <text>
           First, we resolve the name mismatch and compensate for the lack of notion of
-          `root elements' in BNF:
+          ``root elements'' in BNF:
         </text>
       </content>
     </compatibility>

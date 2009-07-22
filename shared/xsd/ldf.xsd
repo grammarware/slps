@@ -66,7 +66,7 @@
   <xsd:complexType name="titlePage">
     <xsd:annotation>
       <xsd:documentation>
-        The `title page' can in reality be rendered as several pages, but it contains the basic
+        The ``title page'' can in reality be rendered as several pages, but it contains the basic
         information that helps to identify this particular language definition and to distinguish
         it from similar documents. From our experience, language standards are either marked as
         organisation-created or person-authored ones. In the former case, the document must contain
@@ -76,9 +76,9 @@
         authors that identify the specific standard.
       </xsd:documentation>
       <xsd:documentation>
-        The `topic' of the language document is its pure textual title without the reference number
-        and status: e.g., `Programming Language REXX',
-        `Information technology --- Programming languages --- Full BASIC', etc. Either version or edition
+        The ``topic'' of the language document is its pure textual title without the reference number
+        and status: e.g., ``Programming Language REXX'',
+        ``Information technology --- Programming languages --- Full BASIC'', etc. Either version or edition
         follows.
       </xsd:documentation>
     </xsd:annotation>
@@ -126,7 +126,7 @@
         According to W3C Process Document, each viable specification goes through the stages
         of Working Draft (WD), Candidate Recommendation (CR), Proposed Recommendation (PR),
         W3C Recommendation (REC), with possible continuation to Proposed Edited Recommendation
-        and decline to Rescinded Recommendation. There has also been a 'Note' status in the past
+        and decline to Rescinded Recommendation. There has also been a ``Note'' status in the past
         for internal drafts.
       </xsd:documentation>
       <xsd:documentation>
@@ -170,7 +170,7 @@
       <xsd:documentation>
         We summarise these and possibly other sets of statuses by the following enumeration.
         Conceptually it provides functionality for the same categories, but the concrete
-        wording may vary (i.e., `errata' vs `corrigenda', `obsolete' vs `rescinded').
+        wording may vary (i.e., ``errata'' vs ``corrigenda'', ``obsolete'' vs ``rescinded'').
         If necessary, the schema can be extended with more standard publication types
         or even adapted to fit completely in some specific standardisation body classification.
       </xsd:documentation>
@@ -425,7 +425,7 @@
       <xsd:documentation>
         The main bulk of the information the language document possesses
         lies in its core sections: they have more structure than other sections
-        and than their own subsections, so we call them `structured sections'.
+        and than their own subsections, so we call them ``structured sections''.
       </xsd:documentation>
       <xsd:documentation>
         Beside the title, any section can include a list of authors that worked on it:
@@ -598,7 +598,7 @@
       <xsd:element name="synopsis" type="ldf:simpleSection">
         <xsd:annotation>
           <xsd:documentation>
-            A separate subsection named `purpose' is only encountered in some 4GL
+            A separate subsection named ``purpose'' is only encountered in some 4GL
             language manuals (e.g., JCL). However, it is quite common for the first
             paragraph of any new section of any language document to relay short word
             about the purpose of the language construct that is about to be introduced.
@@ -653,7 +653,7 @@
           <xsd:documentation>
             It is quite common in the sections that describe an optional parameter
             to tell the reader what will happen in the case nothing was specified.
-            `There is no default' can be as valid a definition as a real default value.
+            ``There is no default'' can be as valid a definition as a real default value.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
@@ -708,7 +708,7 @@
           </xsd:documentation>
           <xsd:documentation>
             If this is done consistently and carefully, it is possible to generate
-            the global `What's new' section automatically.
+            the global ``What's new'' section automatically.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
