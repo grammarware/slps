@@ -56,12 +56,15 @@
     </None>
     <None Include="fl.lcf" />
     <None Include="xbgf\defineLex.xbgf" />
+    <None Include="xbgf\designateOps.xbgf" />
     <None Include="xbgf\extractOps.xbgf" />
     <None Include="xbgf\makeSignature.xbgf" />
     <None Include="xbgf\massage-model.xbgf" />
+    <None Include="xbgf\multipleNewlines.xbgf" />
     <None Include="xbgf\permuteArgs.xbgf" />
     <None Include="xbgf\preferDcg.xbgf" />
     <None Include="xbgf\preferJaxb.xbgf" />
+    <None Include="xbgf\preferSdf.xbgf" />
     <None Include="xbgf\removeLayers.xbgf" />
     <None Include="xbgf\rename-antlr.xbgf" />
     <None Include="xbgf\rename-ecore.xbgf" />
@@ -70,7 +73,9 @@
     <None Include="xbgf\rename-model.xbgf" />
     <None Include="xbgf\rename-om.xbgf" />
     <None Include="xbgf\rename-sdf.xbgf" />
-    <None Include="xbgf\reroot.xbgf" />
+    <None Include="xbgf\rename-txl.xbgf" />
+    <None Include="xbgf\reroot-lower.xbgf" />
+    <None Include="xbgf\reroot-upper.xbgf" />
     <None Include="xbgf\resolveAggregation.xbgf" />
     <None Include="xbgf\stripNewline.xbgf" />
     <None Include="xbgf\stripSelectors.xbgf" />

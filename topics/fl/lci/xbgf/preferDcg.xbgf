@@ -52,31 +52,4 @@
   <xbgf:vertical>
     <nonterminal>ops</nonterminal>
   </xbgf:vertical>
-  <xbgf:designate>
-    <bgf:production>
-      <label>equal</label>
-      <nonterminal>ops</nonterminal>
-      <bgf:expression>
-        <terminal>==</terminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:designate>
-    <bgf:production>
-      <label>plus</label>
-      <nonterminal>ops</nonterminal>
-      <bgf:expression>
-        <terminal>+</terminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
-  <xbgf:designate>
-    <bgf:production>
-      <label>minus</label>
-      <nonterminal>ops</nonterminal>
-      <bgf:expression>
-        <terminal>-</terminal>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:designate>
 </xbgf:sequence>

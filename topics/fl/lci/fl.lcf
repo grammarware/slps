@@ -157,6 +157,15 @@
   </source>
 
   <source>
+    <name>txl</name>
+    <grammar>
+      <extraction>
+        <expand>tools</expand>/txl2bgf <expand>fl</expand>/txl/FL.Txl
+      </extraction>
+    </grammar>
+  </source>
+  
+  <source>
     <name>ecore</name>
     <grammar>
       <extraction>
@@ -246,7 +255,34 @@
       </nominal-matching>
       <structural-matching>
         <perform>preferDcg</perform>
+        <perform>designateOps</perform>
       </structural-matching>
+    </branch>
+  </target>
+
+  <target>
+    <name>xframeworks</name>
+    <branch>
+      <input>sdf</input>
+      <nominal-matching>
+        <automated>
+          <method>case</method>
+          <result>rename-sdf</result>
+        </automated>
+      </nominal-matching>
+    </branch>
+    <branch>
+      <input>txl</input>
+      <nominal-matching>
+        <perform>rename-txl</perform>
+      </nominal-matching>
+      <structural-matching>
+        <perform>preferSdf</perform>
+        <perform>designateOps</perform>
+      </structural-matching>
+      <relaxation>
+        <perform>multipleNewlines</perform>
+      </relaxation>
     </branch>
   </target>
 
@@ -259,13 +295,7 @@
       </structural-matching>
     </branch>
     <branch>
-      <input>sdf</input>
-      <nominal-matching>
-        <automated>
-          <method>case</method>
-          <result>rename-sdf</result>
-        </automated>
-      </nominal-matching>
+      <input>xframeworks</input>
     </branch>
   </target>
 

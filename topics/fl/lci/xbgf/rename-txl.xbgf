@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<bgf:sequence xmlns:bgf="http://planet-sl.org/xbgf">
+  <bgf:rename>
+    <nonterminal>
+      <from>fun</from>
+      <to>function</to>
+    </nonterminal>
+  </bgf:rename>
+  <bgf:rename>
+    <nonterminal>
+      <from>expression</from>
+      <to>expr</to>
+    </nonterminal>
+  </bgf:rename>
+  <bgf:rename>
+    <nonterminal>
+      <from>op</from>
+      <to>ops</to>
+    </nonterminal>
+  </bgf:rename>
+  <bgf:rename>
+    <nonterminal>
+      <from>id</from>
+      <to>name</to>
+    </nonterminal>
+  </bgf:rename>
+  <bgf:rename>
+    <nonterminal>
+      <from>number</from>
+      <to>int</to>
+    </nonterminal>
+  </bgf:rename>
+</bgf:sequence>
