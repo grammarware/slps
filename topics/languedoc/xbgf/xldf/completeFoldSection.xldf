@@ -256,7 +256,7 @@
     <semantics>
       <content>
         <text>
-          As seen from the experience gained from Java Language Specification case,
+          As seen from the experience gained from Java Language Specification case study,
           it is highly unusual for extract to have limited scope. However, sometimes
           a limited impact is desired in order to avoid excessive subsequent unfoldings
           when the convergence requests for having several nonterminals with similar
@@ -316,7 +316,7 @@
           sequence that yields a reflexive chain production can be a step from concrete syntax definition
           to abstract syntax definition. Concrete syntax usually needs explicit bracketing constructions for
           recursive composition, and after stripping away terminals and merging layers, these bracketing
-          constructions become reflexive chain productions. The Factorial Language case has shown the need
+          constructions become reflexive chain productions. The Factorial Language case study has shown the need
           for it.
         </text>
       </content>
