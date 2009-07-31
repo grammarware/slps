@@ -491,8 +491,10 @@ def xldf_import_sample(localpath,cmd,tree):
   el.text = ''.join(sample.readlines())
   if found[-1][-1].tag != 'content':
    found[-1].append(el)
+   found[-1][-1].set('src',cmd.findtext('file'))
   else:
    found[-1][-1].append(el)
+   found[-1][-1][-1].set('src',cmd.findtext('file'))
   print '[XLDF] import(',cmd.findtext('target'),',',cmd.findtext('file').split('/')[-1],')',ending
  return
 

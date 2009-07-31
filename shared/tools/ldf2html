@@ -15,4 +15,6 @@ elif [ ! -r $1 ]; then
     exit 1
 else
     xsltproc ${SLPS}/shared/xsl/ldf2xhtml.xslt $1 | python ${SLPS}/shared/python/closemeta.py > $2
+    perl -pi -w -e 's/---/&#8212;/g;' $2
+    perl -pi -w -e 's/--/&#8211;/g;' $2
 fi

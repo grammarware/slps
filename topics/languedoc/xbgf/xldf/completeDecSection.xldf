@@ -36,11 +36,11 @@
       </bgf:production>
     </content>
     <title>removeV</title>
-    <id>remove-v</id>
+    <id>removeV</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
-    <where>remove-v</where>
+    <where>removeV</where>
     <content>
       <text>
         Vertical removal operates on the level of productions: it takes away one production
@@ -49,36 +49,36 @@
     </content>
   </xldf:append>
   <xldf:add-subsection>
-    <example id="remove-v-example">
+    <example id="removeV-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
-    <to>remove-v</to>
+    <to>removeV</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
-    <target>remove-v-example</target>
+    <target>removeV-example</target>
     <file>../../transformation/xbgf/tests/remove_vertical.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>remove-v-example</where>
+    <where>removeV-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>
-    <target>remove-v-example</target>
+    <target>removeV-example</target>
     <file>../../transformation/xbgf/tests/remove_vertical.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
-    <where>remove-v-example</where>
+    <where>removeV-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>remove-v-example</target>
+    <target>removeV-example</target>
     <file>../../transformation/xbgf/tests/remove_vertical.baseline</file>
   </xldf:import-grammar>
 
@@ -94,11 +94,11 @@
       </bgf:production>
     </content>
     <title>removeH</title>
-    <id>remove-h</id>
+    <id>removeH</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:transform-grammar>
-    <target>remove-h</target>
+    <target>removeH</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
       <in>
@@ -109,7 +109,7 @@
   </xldf:transform-grammar>
 
   <xldf:append>
-    <where>remove-h</where>
+    <where>removeH</where>
     <content>
       <text>
         Horizontal removal looks inside productions: it removes any marked part of an internal choice,
@@ -129,69 +129,69 @@
     </content>
   </xldf:append>
   <xldf:add-subsection>
-    <example id="remove-h1-example">
+    <example id="removeH1-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
-    <to>remove-h</to>
+    <to>removeH</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
-    <target>remove-h1-example</target>
+    <target>removeH1-example</target>
     <file>../../transformation/xbgf/tests/remove_horizontal.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>remove-h1-example</where>
+    <where>removeH1-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>
-    <target>remove-h1-example</target>
+    <target>removeH1-example</target>
     <file>../../transformation/xbgf/tests/remove_horizontal.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
-    <where>remove-h1-example</where>
+    <where>removeH1-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>remove-h1-example</target>
+    <target>removeH1-example</target>
     <file>../../transformation/xbgf/tests/remove_horizontal.baseline</file>
   </xldf:import-grammar>
   <xldf:add-subsection>
-    <example id="remove-h2-example">
+    <example id="removeH2-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
-    <to>remove-h</to>
+    <to>removeH</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
-    <target>remove-h2-example</target>
+    <target>removeH2-example</target>
     <file>../../transformation/xbgf/tests/remove_inside.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>remove-h2-example</where>
+    <where>removeH2-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>
-    <target>remove-h2-example</target>
+    <target>removeH2-example</target>
     <file>../../transformation/xbgf/tests/remove_inside.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
-    <where>remove-h2-example</where>
+    <where>removeH2-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>remove-h2-example</target>
+    <target>removeH2-example</target>
     <file>../../transformation/xbgf/tests/remove_inside.baseline</file>
   </xldf:import-grammar>
 

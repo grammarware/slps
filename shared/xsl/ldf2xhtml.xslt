@@ -2,7 +2,6 @@
     xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
     xmlns:bgf="http://planet-sl.org/bgf"
     xmlns:ldf="http://planet-sl.org/ldf"
-    xmlns:ldx="http://planet-sl.org/ldx"
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
@@ -32,6 +31,7 @@
           .label, .selector { color: green; }
           .marked { text-decoration:underline; }
           .nt { font-weight: bold; }
+          .t { color: red;  font-style:italic; }
 
           .note
           {
@@ -401,7 +401,20 @@
           <xsl:call-template name="subsectionize">
             <xsl:with-param name="target" select="."/>
             <xsl:with-param name="level">
-              <xsl:value-of select="$level"/>
+              <xsl:choose>
+                <xsl:when test="$level = 'h3'">
+                  <xsl:text>h4</xsl:text>
+                </xsl:when>
+                <xsl:when test="$level = 'h4'">
+                  <xsl:text>h5</xsl:text>
+                </xsl:when>
+                <xsl:when test="$level = 'h5'">
+                  <xsl:text>h6</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:text>h3</xsl:text>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:with-param>
           </xsl:call-template>
           <xsl:call-template name="process-SimpleSection">

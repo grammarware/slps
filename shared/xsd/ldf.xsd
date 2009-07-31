@@ -345,7 +345,14 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
-      <xsd:element name="sample" type="xsd:string"/>
+      <xsd:element name="sample">
+        <xsd:complexType mixed="true">
+          <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:any />
+          </xsd:sequence>
+          <xsd:attribute name="src" type="xsd:string"/>
+        </xsd:complexType>
+      </xsd:element>
       <xsd:element ref="bgf:production"/>
       <!-- 	later redo with MathML -->
       <!--<xsd:element ref="mml:math" />-->

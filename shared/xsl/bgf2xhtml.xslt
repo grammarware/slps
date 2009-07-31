@@ -17,16 +17,14 @@
   <xsl:template match="bgf:production">
     <xsl:element name="a" namespace="http://www.w3.org/1999/xhtml">
       <xsl:attribute name="name">
-        <xsl:text>production-</xsl:text>
         <xsl:value-of select="./nonterminal"/>
       </xsl:attribute>
     </xsl:element>
     <xsl:if test="./label">
       <xsl:element name="a" namespace="http://www.w3.org/1999/xhtml">
         <xsl:attribute name="name">
-          <xsl:text>production-</xsl:text>
           <xsl:value-of select="./nonterminal"/>
-          <xsl:text>-label-</xsl:text>
+          <xsl:text>-labelled-</xsl:text>
           <xsl:value-of select="./label"/>
         </xsl:attribute>
       </xsl:element>
@@ -92,9 +90,11 @@
   </xsl:template>
 
   <xsl:template match="terminal">
-    <xsl:text>"</xsl:text>
-    <xsl:value-of select="."/>
-    <xsl:text>"</xsl:text>
+    <span xmlns="http://www.w3.org/1999/xhtml" class="t">
+      <xsl:text>"</xsl:text>
+      <xsl:value-of select="."/>
+      <xsl:text>"</xsl:text>
+    </span>
   </xsl:template>
 
   <xsl:template match="value">
@@ -123,7 +123,7 @@
   <xsl:template match="nonterminal">
     <xsl:element name="a" namespace="http://www.w3.org/1999/xhtml">
       <xsl:attribute name="href">
-        <xsl:text>#production-</xsl:text>
+        <xsl:text>#</xsl:text>
         <xsl:value-of select="."/>
       </xsl:attribute>
       <span class="nt">

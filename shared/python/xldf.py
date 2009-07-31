@@ -33,6 +33,24 @@ def xldf_transform_document(localpath,cmd,tree):
  print '[XLDF] transform(...,',cmd.findtext('file').split('/')[-1],') is done'
  return
 
+def identify(e):
+ if 'id' in e.attrib:
+  return e.tag+'@'+e.get('id')
+ else:
+  return e.tag
+
+def normalise(tree):
+ for e in tree.findall('*'):
+  for e2 in e.findall('*'):
+   if len(e2.findall('content'))>1:
+    print '[????] In',identify(e),'/',identify(e2),'found double content!'
+    first = e2.findall('content')[0]
+    for e3 in e2.findall('content')[1:]:
+     for e4 in e3.findall('*'):
+      first.append(e4)
+     e2.remove(e3)
+ return
+
 def main(xldffile,inldffile,outldffile):
  grammar={}
  if xldffile.find('/')<0:
@@ -43,6 +61,7 @@ def main(xldffile,inldffile,outldffile):
  ltree = ET.parse(inldffile)
  for cmd in xtree.findall('*'):
   xldf_perform_command(localpath,cmd,ltree)
+ normalise(ltree)
  ltree.write(outldffile)
  return
 

@@ -46,11 +46,11 @@
       </bgf:production>
     </content>
     <title>renameL</title>
-    <id>rename-label</id>
+    <id>renameL</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
-    <where>rename-label</where>
+    <where>renameL</where>
     <content>
       <text>
         Renaming labels is a semantic preserving grammar transformation pretty-printed as <ldf:keyword>renameL</ldf:keyword>.
@@ -70,7 +70,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>rename-label</to>
+    <to>renameL</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>renameL-example</target>
@@ -127,11 +127,11 @@
       </bgf:production>
     </content>
     <title>renameN</title>
-    <id>rename-nonterminal</id>
+    <id>renameN</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
-    <where>rename-nonterminal</where>
+    <where>renameN</where>
     <content>
       <text>
         Similarly, this transformation can be used to rename nonterminals.
@@ -149,7 +149,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>rename-nonterminal</to>
+    <to>renameN</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>renameN-example</target>
@@ -218,11 +218,11 @@
       </bgf:production>
     </content>
     <title>renameS</title>
-    <id>rename-selector</id>
+    <id>renameS</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
-    <where>rename-selector</where>
+    <where>renameS</where>
     <content>
       <text>
         Selectors can also be renamed by a semantic preserving grammar transformation that is
@@ -239,7 +239,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>rename-selector</to>
+    <to>renameS</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>renameS-example</target>

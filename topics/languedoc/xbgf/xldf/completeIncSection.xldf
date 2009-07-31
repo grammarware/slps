@@ -36,11 +36,11 @@
       </bgf:production>
     </content>
     <title>addV</title>
-    <id>add-v</id>
+    <id>addV</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
-    <where>add-v</where>
+    <where>addV</where>
     <content>
       <text>
         Vertical addition operates on the level of productions: it adds one more production
@@ -49,36 +49,36 @@
     </content>
   </xldf:append>
   <xldf:add-subsection>
-    <example id="add-v-example">
+    <example id="addV-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
-    <to>add-v</to>
+    <to>addV</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
-    <target>add-v-example</target>
+    <target>addV-example</target>
     <file>../../transformation/xbgf/tests/add_vertical.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>add-v-example</where>
+    <where>addV-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>
-    <target>add-v-example</target>
+    <target>addV-example</target>
     <file>../../transformation/xbgf/tests/add_vertical.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
-    <where>add-v-example</where>
+    <where>addV-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>add-v-example</target>
+    <target>addV-example</target>
     <file>../../transformation/xbgf/tests/add_vertical.baseline</file>
   </xldf:import-grammar>
 
@@ -94,11 +94,11 @@
       </bgf:production>
     </content>
     <title>addH</title>
-    <id>add-h</id>
+    <id>addH</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:transform-grammar>
-    <target>add-h</target>
+    <target>addH</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
       <in>
@@ -109,7 +109,7 @@
   </xldf:transform-grammar>
 
   <xldf:append>
-    <where>add-h</where>
+    <where>addH</where>
     <content>
       <text>
         Horizontal addition looks inside productions: it adds any marked part of an internal choice
@@ -129,69 +129,69 @@
     </content>
   </xldf:append>
   <xldf:add-subsection>
-    <example id="add-h1-example">
+    <example id="addH1-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
-    <to>add-h</to>
+    <to>addH</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
-    <target>add-h1-example</target>
+    <target>addH1-example</target>
     <file>../../transformation/xbgf/tests/add_horizontal.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>add-h1-example</where>
+    <where>addH1-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>
-    <target>add-h1-example</target>
+    <target>addH1-example</target>
     <file>../../transformation/xbgf/tests/add_horizontal.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
-    <where>add-h1-example</where>
+    <where>addH1-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>add-h1-example</target>
+    <target>addH1-example</target>
     <file>../../transformation/xbgf/tests/add_horizontal.baseline</file>
   </xldf:import-grammar>
   <xldf:add-subsection>
-    <example id="add-h2-example">
+    <example id="addH2-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
-    <to>add-h</to>
+    <to>addH</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
-    <target>add-h2-example</target>
+    <target>addH2-example</target>
     <file>../../transformation/xbgf/tests/add_inside.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>add-h2-example</where>
+    <where>addH2-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>
-    <target>add-h2-example</target>
+    <target>addH2-example</target>
     <file>../../transformation/xbgf/tests/add_inside.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
   </xldf:import-sample>
   <xldf:append>
-    <where>add-h2-example</where>
+    <where>addH2-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>add-h2-example</target>
+    <target>addH2-example</target>
     <file>../../transformation/xbgf/tests/add_inside.baseline</file>
   </xldf:import-grammar>
 
