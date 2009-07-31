@@ -384,7 +384,7 @@ def xldf_transform_grammar(localpath,cmd,tree):
  ET.ElementTree(root).write('xldf-tmp.xbgf')
  found = findnode(tree,cmd.findtext('target'))
  if not found:
-  print '[----] xldf:transform failed: target id',cmd.findtext('where'),'not found'
+  print '[----] xldf:transform failed: target id',cmd.findtext('target'),'not found'
   return
  realprods = []
  contextprods = []

@@ -53,6 +53,9 @@ def mapXSD2LDF(stree,dtree,grammar):
         gotit.append(prod)
   # Need to decide whether to put productions inside description subsections
   #section.append(grammar[nt.attrib['name']])
+  if nt.attrib['name'] not in grammar.keys():
+   print '[----] The definition of',nt.attrib['name'],'not found in the grammar!'
+   return
   for prod in grammar[nt.attrib['name']]:
    if prod not in gotit:
     el.append(prod)

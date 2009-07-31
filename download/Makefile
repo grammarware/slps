@@ -1,6 +1,9 @@
 all:
 
-install: install-antlr install-fop install-msv install-et install-pp
+install: install-antlr install-fop install-msv install-et install-pp install-generateDS
+
+install-jastadd:
+	curl -k http://builds.jastadd.org/JastAdd/2009-06-10/jastadd2.jar > jastadd2.jar
 
 install-antlr:
 	curl -k http://www.antlr.org/download/antlrworks-1.1.7.jar > antlrworks-1.1.7.jar
@@ -27,17 +30,17 @@ install-fop:
 	mv fop-0.94 fop
 	make clean-temps
 
-install-msv:
-	curl -k https://msv.dev.java.net/files/documents/61/85936/msv.20080213.zip > msv.zip
-	unzip msv.zip
-	mkdir -p msv
-	mv msv-20080213/*.jar msv
-	make clean-temps
+install-generateDS:
+	svn co http://codespeak.net/svn/lxml/trunk lxml
+	python setup.py build --static-deps	
+	curl -k http://www.rexx.com/~dkuhlman/generateDS-1.17b.tar.gz > generateDS-1.17b.tar.gz
+	tar xzvf generateDS-1.17b.tar.gz
+	easy_install lxml
+	cd generateDS-1.17b ; python setup.py build
+	cd generateDS-1.17b ; python setup.py install
 
 clean-temps:
-	rm -f fop.tar
-	rm -f msv.zip
-	rm -rf msv-*
+	rm -rf fop.tar msv.zip generateDS-1.17b.tar* msv-*
 	rm -fr elementtree-1.2.7-20070827-preview
 	rm -rf pyparsing-1.5.0
 

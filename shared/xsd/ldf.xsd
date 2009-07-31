@@ -6,6 +6,7 @@
      targetNamespace="http://planet-sl.org/ldf">
 
   <xsd:import namespace="http://planet-sl.org/bgf" schemaLocation="bgf.xsd"/>
+  <xsd:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="fakemathml.xsd"/>
 
   <!-- info -->
   <xsd:annotation>
@@ -126,7 +127,7 @@
         According to W3C Process Document, each viable specification goes through the stages
         of Working Draft (WD), Candidate Recommendation (CR), Proposed Recommendation (PR),
         W3C Recommendation (REC), with possible continuation to Proposed Edited Recommendation
-        and decline to Rescinded Recommendation. There has also been a ``Note'' status in the past
+        and decline to Rescinded Recommendation. There has also been a ``Note'fma' status in the past
         for internal drafts.
       </xsd:documentation>
       <xsd:documentation>
@@ -337,11 +338,17 @@
       <xsd:element name="figure" type="ldf:simpleFigure"/>
       <xsd:element name="table" type="ldf:simpleTable"/>
       <xsd:element name="list" type="ldf:simpleList"/>
-      <xsd:element name="formula" type="xsd:string"/>
+      <xsd:element name="formula">
+        <xsd:complexType>
+          <xsd:sequence maxOccurs="unbounded">
+            <xsd:any namespace="http://www.w3.org/1998/Math/MathML"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
       <xsd:element name="sample" type="xsd:string"/>
       <xsd:element ref="bgf:production"/>
       <!-- 	later redo with MathML -->
-      <!--<xsd:element ref="mml:math"/>-->
+      <!--<xsd:element ref="mml:math" />-->
     </xsd:choice>
   </xsd:group>
 
@@ -827,6 +834,14 @@
     </xsd:sequence>
     <!--<xsd:anyAttribute namespace="##other" processContents="lax"/>-->
   </xsd:complexType>
+
+  <xsd:element name="formula">
+    <xsd:complexType>
+      <xsd:sequence maxOccurs="unbounded">
+        <xsd:any namespace="http://www.w3.org/1998/Math/MathML"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
 
   <xsd:element name="keyword" type="xsd:string">
     <xsd:annotation>

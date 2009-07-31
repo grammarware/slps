@@ -3,9 +3,11 @@
     xmlns:bgf="http://planet-sl.org/bgf"
     xmlns:ldf="http://planet-sl.org/ldf"
     xmlns:ldx="http://planet-sl.org/ldx"
+    xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <xsl:import href="bgf2bnf.xslt" />
+  <xsl:import href="mathml2tex.xslt" />
 
   <xsl:output
       method="text"
@@ -201,7 +203,8 @@
           <xsl:if test="local-name($text) != 'cell'">
             <xsl:text>$</xsl:text>
           </xsl:if>
-          <xsl:value-of select="."/>
+          <xsl:apply-templates select="mml:math/*"/>
+            <!--<xsl:value-of select="."/>-->
           <xsl:text>$</xsl:text>
           <xsl:if test="local-name($text) != 'cell'">
             <xsl:text>$</xsl:text>
@@ -417,6 +420,12 @@
 	      </xsl:text>
   </xsl:template>
 
+  <xsl:template match="code">
+    <xsl:text>\texttt{</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+  
   <!--
 	\begin{figure}[t!]
 	\begin{center}
@@ -445,7 +454,7 @@
     <xsl:value-of select="caption"/>
     <xsl:text>}</xsl:text>
     <xsl:if test="@id">
-      <xsl:text>\caption{</xsl:text>
+      <xsl:text>\label{</xsl:text>
       <xsl:value-of select="@id"/>
       <xsl:text>}</xsl:text>
     </xsl:if>
