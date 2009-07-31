@@ -10,7 +10,9 @@ def mapXSD2LDF(stree,dtree,grammar):
   if nt.tag not in acceptedtags:
    continue
   section = ET.SubElement(dtree,'core')
-  section.set('id',nt.tag.replace(slpsns.xsd_(''),'')+'-'+nt.attrib['name'])
+  #section.set('id',nt.tag.replace(slpsns.xsd_(''),'')+'-'+nt.attrib['name'])
+  # Dunno if it is a wise decision: replaced the "element-inline" naming scheme with just "inline". Probably will lead to name conflicts
+  section.set('id',nt.attrib['name'])
   #el = ET.SubElement(section,'id')
   #el.text = nt.tag.replace('{'+xsdns+'}','')+'-'+nt.attrib['name']
   el = ET.SubElement(section,'title')
