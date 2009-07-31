@@ -6,7 +6,7 @@
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
   <xldf:transform-grammar>
-    <target>element-document</target>
+    <target>document</target>
     <xbgf:anonymize>
       <bgf:production>
         <nonterminal>document</nonterminal>
@@ -157,7 +157,7 @@
   </xldf:transform-grammar>
 
   <xldf:transform-grammar>
-    <target>complexType-titlePage</target>
+    <target>titlePage</target>
     <xbgf:anonymize>
       <bgf:production>
         <nonterminal>titlePage</nonterminal>
@@ -258,7 +258,7 @@
   </xldf:transform-grammar>
 
   <xldf:transform-grammar>
-    <target>complexType-listOfTerms</target>
+    <target>listOfTerms</target>
     <xbgf:extract>
       <bgf:production>
         <nonterminal>term</nonterminal>

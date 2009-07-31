@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xldf:evolution-sequence
+  xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf"
@@ -13,12 +14,12 @@
     <to>Other refactoring transformations</to>
   </xldf:retitle>
   <xldf:place>
-    <section>element-massage</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>massage</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
 
   <xldf:append>
-    <where>element-massage</where>
+    <where>massage</where>
     <content>
       <text>
         The massage relation is defined as follows. First of all, a choice of any two
@@ -29,122 +30,407 @@
       <table>
         <header>
           <cell>
-            <formula>|</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:mo>|</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>\varepsilon</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:varepsilon/>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:mi>x</mml:mi>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x?</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </header>
         <row>
           <cell>
-            <formula>\varepsilon</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:varepsilon/>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>(\varepsilon)</formula>
+            <formula>
+              <mml:math>
+                <mml:mfenced>
+                  <mml:varepsilon/>
+                </mml:mfenced>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x?</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x?</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
-          </cell>
-        </row>
-        <row>
-          <cell>
-            <formula>x</formula>
-          </cell>
-          <cell>
-            <formula>x?</formula>
-          </cell>
-          <cell>
-            <formula>x</formula>
-          </cell>
-          <cell>
-            <formula>x?</formula>
-          </cell>
-          <cell>
-            <formula>x^+</formula>
-          </cell>
-          <cell>
-            <formula>x^\star</formula>
-          </cell>
-        </row>
-        <row>
-          <cell>
-            <formula>x?</formula>
-          </cell>
-          <cell>
-            <formula>x?</formula>
-          </cell>
-          <cell>
-            <formula>x?</formula>
-          </cell>
-          <cell>
-            <formula>(x?)</formula>
-          </cell>
-          <cell>
-            <formula>x^\star</formula>
-          </cell>
-          <cell>
-            <formula>x^\star</formula>
-          </cell>
-        </row>
-        <row>
-          <cell>
-            <formula>x^+</formula>
-          </cell>
-          <cell>
-            <formula>x^\star</formula>
-          </cell>
-          <cell>
-            <formula>x^+</formula>
-          </cell>
-          <cell>
-            <formula>x^\star</formula>
-          </cell>
-          <cell>
-            <formula>(x^+)</formula>
-          </cell>
-          <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </row>
         <row>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                    <mml:mi>x</mml:mi>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:mi>x</mml:mi>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>(x^\star)</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mfenced>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>?</mml:mo>
+                </mml:mfenced>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mfenced>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mfenced>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+        </row>
+        <row>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
+          </cell>
+          <cell>
+            <formula>
+              <mml:math>
+                <mml:mfenced>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mfenced>
+              </mml:math>
+            </formula>
           </cell>
         </row>
       </table>
@@ -155,58 +441,193 @@
       <table>
         <header>
           <cell>
-            <formula>y</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:mi>y</mml:mi>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>y?</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                    <mml:mi>y</mml:mi>
+                    <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>y^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>y</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>y^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>y</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </header>
         <row>
           <cell>
-            <formula>x?</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:mi>x</mml:mi>
+                  <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x?</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:mi>x</mml:mi>
+                  <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </row>
         <row>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </row>
         <row>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </row>
       </table>
@@ -223,21 +644,58 @@
             <empty/>
           </cell>
           <cell>
-            <formula>x</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:mi>x</mml:mi>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x?</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:mi>x</mml:mi>
+                  <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </header>
         <row>
           <cell>
-            <formula>x</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:mi>x</mml:mi>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
             <empty/>
@@ -249,12 +707,28 @@
             <empty/>
           </cell>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </row>
         <row>
           <cell>
-            <formula>x?</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:mi>x</mml:mi>
+                  <mml:mo>?</mml:mo>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
             <empty/>
@@ -263,53 +737,220 @@
             <empty/>
           </cell>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </row>
         <row>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
             <empty/>
           </cell>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
             <empty/>
           </cell>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </row>
         <row>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^+</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
           <cell>
-            <formula>x^\star</formula>
+            <formula>
+              <mml:math>
+                <mml:mrow>
+                  <mml:msup>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>*</mml:mo>
+                  </mml:msup>
+                </mml:mrow>
+              </mml:math>
+            </formula>
           </cell>
         </row>
       </table>
       <text>
         Associativity rules for <ldf:keyword>massage</ldf:keyword>:
       </text>
-      <formula>x (yx)? = (xy)? x</formula>
-      <formula>x (yx)^+ = (xy)^+ x</formula>
-      <formula>x (yx)^\star = (xy)^\star x</formula>
+      <formula>
+        <!--x (yx)? = (xy)? x-->
+        <mml:math>
+          <mml:mrow>
+            <mml:mrow>
+              <mml:mi>x</mml:mi>
+              <mml:mfenced>
+                <mml:mi>y</mml:mi>
+                <mml:mi>x</mml:mi>
+              </mml:mfenced>
+              <mml:mo>?</mml:mo>
+            </mml:mrow>
+            <mml:mo>=</mml:mo>
+            <mml:mrow>
+              <mml:mfenced>
+                <mml:mi>x</mml:mi>
+                <mml:mi>y</mml:mi>
+              </mml:mfenced>
+              <mml:mo>?</mml:mo>
+              <mml:mi>x</mml:mi>
+            </mml:mrow>
+          </mml:mrow>
+        </mml:math>
+      </formula>
+      <formula>
+        <!--x (yx)^+ = (xy)^+ x-->
+        <mml:math>
+          <mml:mrow>
+            <mml:mrow>
+              <mml:mi>x</mml:mi>
+              <mml:msup>
+                <mml:mfenced>
+                  <mml:mi>y</mml:mi>
+                  <mml:mi>x</mml:mi>
+                </mml:mfenced>
+                <mml:mo>+</mml:mo>
+              </mml:msup>
+            </mml:mrow>
+            <mml:mo>=</mml:mo>
+            <mml:mrow>
+              <mml:msup>
+                <mml:mfenced>
+                  <mml:mi>x</mml:mi>
+                  <mml:mi>y</mml:mi>
+                </mml:mfenced>
+                <mml:mo>+</mml:mo>
+              </mml:msup>
+              <mml:mi>x</mml:mi>
+            </mml:mrow>
+          </mml:mrow>
+        </mml:math>
+      </formula>
+      <formula>
+        <!--x (yx)^\star = (xy)^\star x-->
+        <mml:math>
+        <mml:mrow>
+          <mml:mrow>
+            <mml:mi>x</mml:mi>
+            <mml:msup>
+              <mml:mfenced>
+                <mml:mi>y</mml:mi>
+                <mml:mi>x</mml:mi>
+              </mml:mfenced>
+              <mml:mo>*</mml:mo>
+            </mml:msup>
+          </mml:mrow>
+          <mml:mo>=</mml:mo>
+          <mml:mrow>
+            <mml:msup>
+              <mml:mfenced>
+                <mml:mi>x</mml:mi>
+                <mml:mi>y</mml:mi>
+              </mml:mfenced>
+              <mml:mo>*</mml:mo>
+            </mml:msup>
+            <mml:mi>x</mml:mi>
+          </mml:mrow>
+        </mml:mrow>
+      </mml:math>
+    </formula>
     </content>
   </xldf:append>
   <xldf:add-subsection>
@@ -318,11 +959,131 @@
         <text>
           Distributivity rules for optionality modifier such as these:
         </text>
-        <formula>(x? y?)? = x? y?</formula>
-        <formula>(x^\star y?)? = x^\star y?</formula>
-        <formula>(x? y^\star)? = x? y^\star</formula>
-        <formula>(x^\star y^\star)? = x^\star y^\star</formula>
-        <formula>(x | y)? = x? | y?</formula>
+        <formula>
+          <!--(x? y?)? = x? y?-->
+          <mml:math>
+            <mml:mrow>
+              <mml:mfenced>
+                <mml:mi>x</mml:mi>
+                <mml:mo>?</mml:mo>
+                <mml:mi>y</mml:mi>
+                <mml:mo>?</mml:mo>
+              </mml:mfenced>
+              <mml:mo>?</mml:mo>
+            </mml:mrow>
+            <mml:mo>=</mml:mo>
+            <mml:mrow>
+              <mml:mi>x</mml:mi>
+              <mml:mo>?</mml:mo>
+              <mml:mi>y</mml:mi>
+              <mml:mo>?</mml:mo>
+            </mml:mrow>
+          </mml:math>
+        </formula>
+        <formula>
+          <!--(x^\star y?)? = x^\star y?-->
+          <mml:math>
+            <mml:mrow>
+              <mml:mfenced>
+                <mml:msup>
+                  <mml:mi>x</mml:mi>
+                  <mml:mo>*</mml:mo>
+                </mml:msup>
+                <mml:mi>y</mml:mi>
+                <mml:mo>?</mml:mo>
+              </mml:mfenced>
+              <mml:mo>?</mml:mo>
+            </mml:mrow>
+            <mml:mo>=</mml:mo>
+            <mml:mrow>
+              <mml:msup>
+                <mml:mi>x</mml:mi>
+                <mml:mo>*</mml:mo>
+              </mml:msup>
+              <mml:mi>y</mml:mi>
+              <mml:mo>?</mml:mo>
+            </mml:mrow>
+          </mml:math>
+        </formula>
+        <formula>
+          <!--(x? y^\star)? = x? y^\star-->
+          <mml:math>
+            <mml:mrow>
+              <mml:mfenced>
+                 <mml:mi>x</mml:mi>
+                <mml:mo>?</mml:mo>
+              <mml:msup>
+                  <mml:mi>y</mml:mi>
+                  <mml:mo>*</mml:mo>
+                </mml:msup>
+               </mml:mfenced>
+              <mml:mo>?</mml:mo>
+            </mml:mrow>
+            <mml:mo>=</mml:mo>
+            <mml:mrow>
+              <mml:mi>x</mml:mi>
+              <mml:mo>?</mml:mo>
+              <mml:msup>
+                <mml:mi>y</mml:mi>
+                <mml:mo>*</mml:mo>
+              </mml:msup>
+            </mml:mrow>
+          </mml:math>
+        </formula>
+        <formula>
+          <!--(x^\star y^\star)? = x^\star y^\star-->
+          <mml:math>
+            <mml:mrow>
+              <mml:mfenced>
+                <mml:msup>
+                  <mml:mi>x</mml:mi>
+                  <mml:mo>*</mml:mo>
+                </mml:msup>
+                <mml:msup>
+                  <mml:mi>y</mml:mi>
+                  <mml:mo>*</mml:mo>
+                </mml:msup>
+              </mml:mfenced>
+              <mml:mo>?</mml:mo>
+            </mml:mrow>
+            <mml:mo>=</mml:mo>
+            <mml:mrow>
+              <mml:msup>
+                <mml:mi>x</mml:mi>
+                <mml:mo>*</mml:mo>
+              </mml:msup>
+              <mml:msup>
+                <mml:mi>y</mml:mi>
+                <mml:mo>*</mml:mo>
+              </mml:msup>
+            </mml:mrow>
+          </mml:math>
+        </formula>
+        <formula>
+          <!--(x | y)? = x? | y?-->
+          <mml:math>
+            <mml:mrow>
+              <mml:mfenced>
+                  <mml:mi>x</mml:mi>
+                  <mml:mo>|</mml:mo>
+                  <mml:mi>y</mml:mi>
+              </mml:mfenced>
+              <mml:mo>?</mml:mo>
+            </mml:mrow>
+            <mml:mo>=</mml:mo>
+            <mml:mrow>
+              <mml:mrow>
+                <mml:mi>x</mml:mi>
+                <mml:mo>?</mml:mo>
+              </mml:mrow>
+              <mml:mo>|</mml:mo>
+              <mml:mrow>
+                <mml:mi>y</mml:mi>
+                <mml:mo>?</mml:mo>
+              </mml:mrow>
+            </mml:mrow>
+          </mml:math>
+        </formula>
         <text>
           are not explicitly covered by <ldf:keyword>massage</ldf:keyword> since it is
           possible to emulate them with a sequence of abovementioned patterns of
@@ -333,7 +1094,7 @@
         </text>
       </content>
     </example>
-    <to>element-massage</to>
+    <to>massage</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>massage-example</target>
@@ -373,8 +1134,8 @@
   </xldf:append>
 
   <xldf:place>
-    <section>element-distribute</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>distribute</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -392,7 +1153,7 @@
         </text>
       </content>
     </semantics>
-    <to>element-distribute</to>
+    <to>distribute</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
     <example id="distribute-example">
@@ -400,7 +1161,7 @@
         <text>For instance,</text>
       </content>
     </example>
-    <to>element-distribute</to>
+    <to>distribute</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>distribute-example</target>
@@ -429,8 +1190,8 @@
   </xldf:import-grammar>
 
   <xldf:place>
-    <section>element-factor</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>factor</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -457,7 +1218,7 @@
         </text>
       </content>
     </semantics>
-    <to>element-factor</to>
+    <to>factor</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
     <example id="factor-example">
@@ -465,7 +1226,7 @@
         <text>For instance,</text>
       </content>
     </example>
-    <to>element-factor</to>
+    <to>factor</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>factor-example</target>
@@ -494,11 +1255,11 @@
   </xldf:import-grammar>
 
   <xldf:place>
-    <section>element-deyaccify</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>deyaccify</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:append>
-    <where>element-deyaccify</where>
+    <where>deyaccify</where>
     <content>
       <text>
         Deyaccification uses several general patterns. Left recursion like this:
@@ -506,11 +1267,11 @@
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>element-deyaccify</target>
+    <target>deyaccify</target>
     <file>../../transformation/xbgf/tests/deyaccify_left.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>element-deyaccify</where>
+    <where>deyaccify</where>
     <content>
       <text>
         Becomes:
@@ -518,11 +1279,11 @@
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>element-deyaccify</target>
+    <target>deyaccify</target>
     <file>../../transformation/xbgf/tests/deyaccify_left.baseline</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>element-deyaccify</where>
+    <where>deyaccify</where>
     <content>
       <text>
         Right recursion like this:
@@ -530,11 +1291,11 @@
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>element-deyaccify</target>
+    <target>deyaccify</target>
     <file>../../transformation/xbgf/tests/deyaccify_right.bgf</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>element-deyaccify</where>
+    <where>deyaccify</where>
     <content>
       <text>
         Becomes:
@@ -542,11 +1303,11 @@
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>element-deyaccify</target>
+    <target>deyaccify</target>
     <file>../../transformation/xbgf/tests/deyaccify_right.baseline</file>
   </xldf:import-grammar>
   <xldf:append>
-    <where>element-deyaccify</where>
+    <where>deyaccify</where>
     <content>
       <text>
         In either case, it is checked if bar and wez are the same nonterminal.
@@ -555,13 +1316,13 @@
     </content>
   </xldf:append>
   <xldf:import-grammar>
-    <target>element-deyaccify</target>
+    <target>deyaccify</target>
     <file>../../transformation/xbgf/tests/deyaccify_right_plus.baseline</file>
   </xldf:import-grammar>
 
   <xldf:place>
-    <section>element-yaccify</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>yaccify</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -583,7 +1344,7 @@
         </text>
       </content>
     </semantics>
-    <to>element-yaccify</to>
+    <to>yaccify</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
     <example id="yaccify-example">
@@ -591,7 +1352,7 @@
         <text>For instance, this piece of grammar:</text>
       </content>
     </example>
-    <to>element-yaccify</to>
+    <to>yaccify</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>yaccify-example</target>
@@ -641,8 +1402,8 @@
   </xldf:import-grammar>
 
   <xldf:place>
-    <section>element-eliminate</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>eliminate</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="eliminate-example">
@@ -650,7 +1411,7 @@
         <text>For instance,</text>
       </content>
     </example>
-    <to>element-eliminate</to>
+    <to>eliminate</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>eliminate-example</target>
@@ -679,8 +1440,8 @@
   </xldf:import-grammar>
 
   <xldf:place>
-    <section>element-introduce</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>introduce</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="introduce-example">
@@ -688,7 +1449,7 @@
         <text>For instance,</text>
       </content>
     </example>
-    <to>element-introduce</to>
+    <to>introduce</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>introduce-example</target>
@@ -717,8 +1478,8 @@
   </xldf:import-grammar>
 
   <xldf:place>
-    <section>element-import</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>import</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -739,7 +1500,7 @@
         </text>
       </content>
     </semantics>
-    <to>element-import</to>
+    <to>import</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
     <example id="import-example">
@@ -747,7 +1508,7 @@
         <text>For instance,</text>
       </content>
     </example>
-    <to>element-import</to>
+    <to>import</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>import-example</target>
@@ -776,8 +1537,8 @@
   </xldf:import-grammar>
 
   <xldf:place>
-    <section>element-vertical</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>vertical</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="vertical-example">
@@ -785,7 +1546,7 @@
         <text>If the original production contained selectors:</text>
       </content>
     </example>
-    <to>element-vertical</to>
+    <to>vertical</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>vertical-example</target>
@@ -814,8 +1575,8 @@
   </xldf:import-grammar>
 
   <xldf:place>
-    <section>element-horizontal</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>horizontal</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="horizontal-example">
@@ -823,7 +1584,7 @@
         <text>If some or all of the original productions are labelled:</text>
       </content>
     </example>
-    <to>element-horizontal</to>
+    <to>horizontal</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>horizontal-example</target>
@@ -852,8 +1613,8 @@
   </xldf:import-grammar>
 
   <xldf:place>
-    <section>element-rassoc</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>rassoc</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="rassoc-example">
@@ -861,7 +1622,7 @@
         <text>For instance,</text>
       </content>
     </example>
-    <to>element-rassoc</to>
+    <to>rassoc</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>rassoc-example</target>
@@ -890,8 +1651,8 @@
   </xldf:import-grammar>
   
   <xldf:place>
-    <section>element-lassoc</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>lassoc</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="lassoc-example">
@@ -899,7 +1660,7 @@
         <text>For instance,</text>
       </content>
     </example>
-    <to>element-lassoc</to>
+    <to>lassoc</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>lassoc-example</target>
@@ -928,7 +1689,7 @@
   </xldf:import-grammar>
 
   <xldf:change-role>
-    <scope>group-refactoring-transformation</scope>
+    <scope>refactoring-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
   </xldf:change-role>

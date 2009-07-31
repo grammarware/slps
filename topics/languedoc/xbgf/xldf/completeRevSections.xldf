@@ -7,7 +7,7 @@
 
   <!-- beautify xbgf -->
   <xldf:transform-grammar>
-    <target>element-define</target>
+    <target>define</target>
     <xbgf:project>
       <bgf:production>
         <nonterminal>define</nonterminal>
@@ -38,7 +38,7 @@
     </xbgf:project>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-inject</target>
+    <target>inject</target>
     <xbgf:project>
       <bgf:production>
         <nonterminal>inject</nonterminal>
@@ -65,7 +65,7 @@
     </xbgf:project>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-project</target>
+    <target>project</target>
     <xbgf:project>
       <bgf:production>
         <nonterminal>project</nonterminal>
@@ -92,7 +92,7 @@
     </xbgf:project>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-redefine</target>
+    <target>redefine</target>
     <xbgf:project>
       <bgf:production>
         <nonterminal>redefine</nonterminal>
@@ -123,7 +123,7 @@
     </xbgf:project>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-replace</target>
+    <target>replace</target>
     <xbgf:project>
       <bgf:production>
         <nonterminal>replace</nonterminal>
@@ -174,11 +174,11 @@
   </xldf:retitle>
   
   <xldf:place>
-    <section>element-abstractize</section>
-    <inside>group-concrete-revising-transformation</inside>
+    <section>abstractize</section>
+    <inside>concrete-revising-transformation</inside>
   </xldf:place>
   <xldf:transform-grammar>
-    <target>element-abstractize</target>
+    <target>abstractize</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
       <in>
@@ -194,7 +194,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-abstractize</to>
+    <to>abstractize</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>abstractize-example</target>
@@ -223,11 +223,11 @@
   </xldf:import-grammar>
   
   <xldf:place>
-    <section>element-concretize</section>
-    <inside>group-concrete-revising-transformation</inside>
+    <section>concretize</section>
+    <inside>concrete-revising-transformation</inside>
   </xldf:place>
   <xldf:transform-grammar>
-    <target>element-concretize</target>
+    <target>concretize</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
       <in>
@@ -243,7 +243,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-concretize</to>
+    <to>concretize</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>concretize-example</target>
@@ -272,8 +272,8 @@
   </xldf:import-grammar>
   
   <xldf:place>
-    <section>element-permute</section>
-    <inside>group-concrete-revising-transformation</inside>
+    <section>permute</section>
+    <inside>concrete-revising-transformation</inside>
   </xldf:place>
 
   <xldf:add-subsection>
@@ -282,7 +282,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-permute</to>
+    <to>permute</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>permute-example</target>
@@ -319,26 +319,26 @@
   </xldf:retitle>
   
   <xldf:place>
-    <section>element-define</section>
-    <inside>group-abstract-revising-transformation</inside>
+    <section>define</section>
+    <inside>abstract-revising-transformation</inside>
   </xldf:place>
   
   <xldf:place>
-    <section>element-undefine</section>
-    <inside>group-abstract-revising-transformation</inside>
+    <section>undefine</section>
+    <inside>abstract-revising-transformation</inside>
   </xldf:place>
   
   <xldf:place>
-    <section>element-redefine</section>
-    <inside>group-abstract-revising-transformation</inside>
+    <section>redefine</section>
+    <inside>abstract-revising-transformation</inside>
   </xldf:place>
   
   <xldf:place>
-    <section>element-inject</section>
-    <inside>group-abstract-revising-transformation</inside>
+    <section>inject</section>
+    <inside>abstract-revising-transformation</inside>
   </xldf:place>
   <xldf:transform-grammar>
-    <target>element-inject</target>
+    <target>inject</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
       <in>
@@ -354,7 +354,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-inject</to>
+    <to>inject</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>inject-example</target>
@@ -384,11 +384,11 @@
 
 
   <xldf:place>
-    <section>element-project</section>
-    <inside>group-abstract-revising-transformation</inside>
+    <section>project</section>
+    <inside>abstract-revising-transformation</inside>
   </xldf:place>
   <xldf:transform-grammar>
-    <target>element-project</target>
+    <target>project</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
       <in>
@@ -404,7 +404,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-project</to>
+    <to>project</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>project-example</target>
@@ -433,8 +433,8 @@
   </xldf:import-grammar>
   
   <xldf:place>
-    <section>element-replace</section>
-    <inside>group-abstract-revising-transformation</inside>
+    <section>replace</section>
+    <inside>abstract-revising-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="replace-example">
@@ -446,7 +446,7 @@
         </text>
       </content>
     </example>
-    <to>element-replace</to>
+    <to>replace</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>replace-example</target>
@@ -475,12 +475,12 @@
   </xldf:import-grammar>
 
   <xldf:change-role>
-    <scope>group-concrete-revising-transformation</scope>
+    <scope>concrete-revising-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
   </xldf:change-role>
   <xldf:change-role>
-    <scope>group-abstract-revising-transformation</scope>
+    <scope>abstract-revising-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
   </xldf:change-role>

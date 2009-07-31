@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xldf:evolution-sequence
+  xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:ldf="http://planet-sl.org/ldf"
@@ -7,7 +8,7 @@
   
   <!-- beautify xbgf -->
   <xldf:transform-grammar>
-    <target>element-unfold</target>
+    <target>unfold</target>
     <xbgf:anonymize>
       <bgf:production>
         <nonterminal>unfold</nonterminal>
@@ -51,8 +52,8 @@
     <to>Folding and unfolding transformations</to>
   </xldf:retitle>
   <xldf:place>
-    <section>element-unfold</section>
-    <inside>group-folding-transformation</inside>
+    <section>unfold</section>
+    <inside>folding-transformation</inside>
   </xldf:place>
   <xldf:insert>
     <before>
@@ -83,7 +84,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-unfold</to>
+    <to>unfold</to>
   </xldf:add-subsection>
   
   <xldf:import-grammar>
@@ -114,7 +115,7 @@
 
   <!-- beautify xbgf -->
   <xldf:transform-grammar>
-    <target>element-fold</target>
+    <target>fold</target>
     <xbgf:anonymize>
       <bgf:production>
         <nonterminal>fold</nonterminal>
@@ -151,8 +152,8 @@
   </xldf:transform-grammar>
   
   <xldf:place>
-    <section>element-fold</section>
-    <inside>group-folding-transformation</inside>
+    <section>fold</section>
+    <inside>folding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="fold-example">
@@ -160,7 +161,7 @@
       <text>Very much like unfolding, folding can take place locally. For instance,</text>
     </content>
     </example>
-    <to>element-fold</to>
+    <to>fold</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>fold-example</target>
@@ -189,8 +190,8 @@
   </xldf:import-grammar>
   
   <xldf:place>
-    <section>element-inline</section>
-    <inside>group-folding-transformation</inside>
+    <section>inline</section>
+    <inside>folding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -199,10 +200,37 @@
           The <ldf:keyword>inline</ldf:keyword> transformation is by far the
           most used in Java Language Specification case study. One of the reasons
           is what we call layering: in particular expressions and statements
-          are introduced in the $G_j^R$ with a set of related nonterminals:
+          are introduced in the
+          <ldf:formula>
+            <mml:math>
+              <mml:mrow>
+                <mml:msup>
+                  <mml:msub>
+                    <mml:mi>G</mml:mi>
+                    <mml:mi>j</mml:mi>
+                  </mml:msub>
+                  <mml:mi>R</mml:mi>
+                </mml:msup>
+              </mml:mrow>
+            </mml:math>
+          </ldf:formula>
+          with a set of related nonterminals:
           LabeledStatement, IfThenElseStatement, WhileStatement, ForStatement, etc, and
           CastExpression, PreIncrementExpression, PreDecrementExpression, PostfixExpression, etc.
-          $G_j^I$ takes another approach, just listing all the alternatives in the productions
+          <ldf:formula>
+            <mml:math>
+              <mml:mrow>
+                <mml:msup>
+                  <mml:msub>
+                    <mml:mi>G</mml:mi>
+                    <mml:mi>j</mml:mi>
+                  </mml:msub>
+                  <mml:mi>I</mml:mi>
+                </mml:msup>
+              </mml:mrow>
+            </mml:math>
+          </ldf:formula>
+          takes another approach, just listing all the alternatives in the productions
           for Statement and Expression. In order to converge these two variants, a lot of inlining
           transformations are needed. This can also be apparent from the statistics table,
           that demonstrates that targets that converge only ``readable'' grammars require up to
@@ -212,7 +240,7 @@
         </text>
       </content>
     </semantics>
-    <to>element-inline</to>
+    <to>inline</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
     <example id="inline-example">
@@ -220,7 +248,7 @@
         <text>An example follows. When we have:</text>
       </content>
     </example>
-    <to>element-inline</to>
+    <to>inline</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>inline-example</target>
@@ -249,8 +277,8 @@
   </xldf:import-grammar>
   
   <xldf:place>
-    <section>element-extract</section>
-    <inside>group-folding-transformation</inside>
+    <section>extract</section>
+    <inside>folding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -264,7 +292,7 @@
         </text>
       </content>
     </semantics>
-    <to>element-extract</to>
+    <to>extract</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
     <example id="extract-example">
@@ -274,7 +302,7 @@
         </text>
       </content>
     </example>
-    <to>element-extract</to>
+    <to>extract</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>extract-example</target>
@@ -303,8 +331,8 @@
   </xldf:import-grammar>
 
   <xldf:place>
-    <section>element-abridge</section>
-    <inside>group-folding-transformation</inside>
+    <section>abridge</section>
+    <inside>folding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -321,7 +349,7 @@
         </text>
       </content>
     </semantics>
-    <to>element-abridge</to>
+    <to>abridge</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
     <example id="abridge-example">
@@ -331,7 +359,7 @@
         </text>
       </content>
     </example>
-    <to>element-abridge</to>
+    <to>abridge</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>abridge-example</target>
@@ -363,8 +391,8 @@
   </xldf:import-grammar>
   
   <xldf:place>
-    <section>element-detour</section>
-    <inside>group-folding-transformation</inside>
+    <section>detour</section>
+    <inside>folding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="detour-example">
@@ -377,7 +405,7 @@
         </text>
       </content>
     </example>
-    <to>element-detour</to>
+    <to>detour</to>
   </xldf:add-subsection>
   <xldf:import-sample>
     <target>detour-example</target>
@@ -386,8 +414,8 @@
   </xldf:import-sample>
   
   <xldf:place>
-    <section>element-unchain</section>
-    <inside>group-folding-transformation</inside>
+    <section>unchain</section>
+    <inside>folding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -401,7 +429,7 @@
         </text>
       </content>
     </semantics>
-    <to>element-unchain</to>
+    <to>unchain</to>
   </xldf:add-subsection>
   <xldf:add-subsection>
     <example id="unchain-example">
@@ -411,7 +439,7 @@
         </text>
       </content>
     </example>
-    <to>element-unchain</to>
+    <to>unchain</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>unchain-example</target>
@@ -442,8 +470,8 @@
   </xldf:import-grammar>
   
   <xldf:place>
-    <section>element-chain</section>
-    <inside>group-folding-transformation</inside>
+    <section>chain</section>
+    <inside>folding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="chain-example">
@@ -456,7 +484,7 @@
         </text>
       </content>
     </example>
-    <to>element-chain</to>
+    <to>chain</to>
   </xldf:add-subsection>
   <xldf:import-sample>
     <target>chain-example</target>
@@ -465,7 +493,7 @@
   </xldf:import-sample>
 
   <xldf:change-role>
-    <scope>group-folding-transformation</scope>
+    <scope>folding-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
   </xldf:change-role>

@@ -3,175 +3,175 @@
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <xldf:drop>
-    <section>element-sequence</section>
+    <section>sequence</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-atomic</section>
+    <section>atomic</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-transformation</section>
+    <section>transformation</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-folding-transformation</section>
+    <section>folding-transformation</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-refactoring-transformation</section>
+    <section>refactoring-transformation</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-increasing-transformation</section>
+    <section>increasing-transformation</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-decreasing-transformation</section>
+    <section>decreasing-transformation</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-concrete-revising-transformation</section>
+    <section>concrete-revising-transformation</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-abstract-revising-transformation</section>
+    <section>abstract-revising-transformation</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-decorative-transformation</section>
+    <section>decorative-transformation</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-add</section>
+    <section>add</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-appear</section>
+    <section>appear</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-chain</section>
+    <section>chain</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-deanonymize</section>
+    <section>deanonymize</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-define</section>
+    <section>define</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-disappear</section>
+    <section>disappear</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-downgrade</section>
+    <section>downgrade</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-designate</section>
+    <section>designate</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-unlabel</section>
+    <section>unlabel</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-deyaccify</section>
+    <section>deyaccify</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-distribute</section>
+    <section>distribute</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-dump</section>
+    <section>dump</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-extract</section>
+    <section>extract</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-factor</section>
+    <section>factor</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-fold</section>
+    <section>fold</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-horizontal</section>
+    <section>horizontal</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-inject</section>
+    <section>inject</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-inline</section>
+    <section>inline</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-introduce</section>
+    <section>introduce</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-import</section>
+    <section>import</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-lassoc</section>
+    <section>lassoc</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-massage</section>
+    <section>massage</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-narrow</section>
+    <section>narrow</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-permute</section>
+    <section>permute</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-project</section>
+    <section>project</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-rassoc</section>
+    <section>rassoc</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-redefine</section>
+    <section>redefine</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-remove</section>
+    <section>remove</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-rename</section>
+    <section>rename</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-replace</section>
+    <section>replace</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-reroot</section>
+    <section>reroot</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-abridge</section>
+    <section>abridge</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-detour</section>
+    <section>detour</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-strip</section>
+    <section>strip</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-concretize</section>
+    <section>concretize</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-unchain</section>
+    <section>unchain</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-undefine</section>
+    <section>undefine</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-unfold</section>
+    <section>unfold</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-unite</section>
+    <section>unite</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-abstractize</section>
+    <section>abstractize</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-anonymize</section>
+    <section>anonymize</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-vertical</section>
+    <section>vertical</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-widen</section>
+    <section>widen</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-yaccify</section>
+    <section>yaccify</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-upgrade</section>
+    <section>upgrade</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-scope</section>
+    <section>scope</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-eliminate</section>
+    <section>eliminate</section>
   </xldf:drop>
   
 </xldf:evolution-sequence>

@@ -3,82 +3,79 @@
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <xldf:drop>
-    <section>complexType-listOfTerms</section>
+    <section>listOfTerms</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-listOfInternalLinks</section>
+    <section>simpleList</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-simpleList</section>
+    <section>simpleText</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-simpleText</section>
+    <section>tableRow</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-tableRow</section>
+    <section>simpleTable</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-simpleTable</section>
+    <section>simpleTextElement</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-simpleTextElement</section>
+    <section>simpleFigure</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-simpleFigure</section>
+    <section>simpleSection</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-simpleSection</section>
+    <section>structuredSection</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-structuredSection</section>
+    <section>structuredSectionElement</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-structuredSectionElement</section>
+    <section>normative</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-normative</section>
+    <section>informative</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-informative</section>
+    <section>lexicalSection</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-lexicalSection</section>
+    <section>status</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-status</section>
+    <section>generated</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-generated</section>
+    <section>body</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-body</section>
+    <section>document</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-document</section>
+    <section>titlePage</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-titlePage</section>
+    <section>frontSection</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-frontSection</section>
+    <section>frontList</section>
   </xldf:drop>
   <xldf:drop>
-    <section>group-frontList</section>
+    <section>runnableType</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-runnableType</section>
+    <section>mixedType</section>
   </xldf:drop>
   <xldf:drop>
-    <section>complexType-mixedType</section>
+    <section>keyword</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-keyword</section>
-  </xldf:drop>
-  <xldf:drop>
-    <section>element-link</section>
+    <section>link</section>
   </xldf:drop>
    <xldf:drop>
-    <section>element-code</section>
+    <section>code</section>
   </xldf:drop>
  
 </xldf:evolution-sequence>

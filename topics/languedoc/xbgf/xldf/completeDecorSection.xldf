@@ -7,7 +7,7 @@
   
   <!-- beautify xbgf -->
   <xldf:transform-grammar>
-    <target>element-unlabel</target>
+    <target>unlabel</target>
     <xbgf:anonymize>
       <bgf:production>
         <nonterminal>unlabel</nonterminal>
@@ -36,8 +36,8 @@
   </xldf:retitle>
   
   <xldf:place>
-    <section>element-designate</section>
-    <inside>group-decorative-transformation</inside>
+    <section>designate</section>
+    <inside>decorative-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="designate-example">
@@ -45,7 +45,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-designate</to>
+    <to>designate</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>designate-example</target>
@@ -74,8 +74,8 @@
   </xldf:import-grammar>
   
   <xldf:place>
-    <section>element-unlabel</section>
-    <inside>group-decorative-transformation</inside>
+    <section>unlabel</section>
+    <inside>decorative-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="unlabel-example">
@@ -87,7 +87,7 @@
         </text>
       </content>
     </example>
-    <to>element-unlabel</to>
+    <to>unlabel</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>unlabel-example</target>
@@ -116,11 +116,11 @@
   </xldf:import-grammar>
   
   <xldf:place>
-    <section>element-deanonymize</section>
-    <inside>group-decorative-transformation</inside>
+    <section>deanonymize</section>
+    <inside>decorative-transformation</inside>
   </xldf:place>
   <xldf:transform-grammar>
-    <target>element-deanonymize</target>
+    <target>deanonymize</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
       <in>
@@ -138,7 +138,7 @@
       </text>
       </content>
     </example>
-    <to>element-deanonymize</to>
+    <to>deanonymize</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>deanonymize-example</target>
@@ -167,7 +167,7 @@
   </xldf:import-grammar>
   
   <xldf:append>
-    <where>element-anonymize</where>
+    <where>anonymize</where>
     <content>
       <text>
         Given the input BGF and a clear goal to strip all selectors,
@@ -182,11 +182,11 @@
   </xldf:append>
   
   <xldf:place>
-    <section>element-anonymize</section>
-    <inside>group-decorative-transformation</inside>
+    <section>anonymize</section>
+    <inside>decorative-transformation</inside>
   </xldf:place>
   <xldf:transform-grammar>
-    <target>element-anonymize</target>
+    <target>anonymize</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
       <in>
@@ -202,7 +202,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-anonymize</to>
+    <to>anonymize</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>anonymize-example</target>
@@ -231,7 +231,7 @@
   </xldf:import-grammar>
 
   <xldf:change-role>
-    <scope>group-decorative-transformation</scope>
+    <scope>decorative-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
   </xldf:change-role>

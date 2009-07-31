@@ -7,18 +7,18 @@
 
   <!--
   <xldf:place>
-    <section>element-rename</section>
-    <inside>group-refactoring-transformation</inside>
+    <section>rename</section>
+    <inside>refactoring-transformation</inside>
   </xldf:place>-->
   <xldf:transform-grammar>
-    <target>element-rename</target>
+    <target>rename</target>
     <xbgf:vertical>
       <nonterminal>rename</nonterminal>
     </xbgf:vertical>
   </xldf:transform-grammar>
   
   <xldf:extract-subsection>
-    <from>element-rename</from>
+    <from>rename</from>
     <content>
       <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
         <label>label</label>
@@ -46,11 +46,11 @@
       </bgf:production>
     </content>
     <title>renameL</title>
-    <id>element-rename-label</id>
+    <id>rename-label</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
-    <where>element-rename-label</where>
+    <where>rename-label</where>
     <content>
       <text>
         Renaming labels is a semantic preserving grammar transformation pretty-printed as <ldf:keyword>renameL</ldf:keyword>.
@@ -70,7 +70,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-rename-label</to>
+    <to>rename-label</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>renameL-example</target>
@@ -99,7 +99,7 @@
   </xldf:import-grammar>
 
   <xldf:extract-subsection>
-    <from>element-rename</from>
+    <from>rename</from>
     <content>
       <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
         <label>nonterminal</label>
@@ -127,11 +127,11 @@
       </bgf:production>
     </content>
     <title>renameN</title>
-    <id>element-rename-nonterminal</id>
+    <id>rename-nonterminal</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
-    <where>element-rename-nonterminal</where>
+    <where>rename-nonterminal</where>
     <content>
       <text>
         Similarly, this transformation can be used to rename nonterminals.
@@ -149,7 +149,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-rename-nonterminal</to>
+    <to>rename-nonterminal</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>renameN-example</target>
@@ -178,7 +178,7 @@
   </xldf:import-grammar>
   
   <xldf:extract-subsection>
-    <from>element-rename</from>
+    <from>rename</from>
     <content>
       <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
         <label>selector</label>
@@ -218,11 +218,11 @@
       </bgf:production>
     </content>
     <title>renameS</title>
-    <id>element-rename-selector</id>
+    <id>rename-selector</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
-    <where>element-rename-selector</where>
+    <where>rename-selector</where>
     <content>
       <text>
         Selectors can also be renamed by a semantic preserving grammar transformation that is
@@ -239,7 +239,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-rename-selector</to>
+    <to>rename-selector</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>renameS-example</target>
@@ -268,7 +268,7 @@
   </xldf:import-grammar>
   
   <xldf:extract-subsection>
-    <from>element-rename</from>
+    <from>rename</from>
     <content>
       <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
         <label>terminal</label>
@@ -296,11 +296,11 @@
       </bgf:production>
     </content>
     <title>renameT</title>
-    <id>element-rename-terminal</id>
+    <id>rename-terminal</id>
     <role>syntax</role>
   </xldf:extract-subsection>
   <xldf:append>
-    <where>element-rename-terminal</where>
+    <where>rename-terminal</where>
     <content>
       <text>
         Renaming terminals breaks string-oriented (concrete) semantics, but is still possible.
@@ -317,7 +317,7 @@
         <text>Given the input:</text>
       </content>
     </example>
-    <to>element-rename-terminal</to>
+    <to>rename-terminal</to>
   </xldf:add-subsection>
   <xldf:import-grammar>
     <target>renameT-example</target>
@@ -347,7 +347,7 @@
   
   <xldf:remove-section>
     <!-- eliminate(strip) is implicit -->
-    <id>element-strip</id>
+    <id>strip</id>
   </xldf:remove-section>
 
 </xldf:evolution-sequence>

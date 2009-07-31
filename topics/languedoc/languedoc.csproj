@@ -42,6 +42,9 @@
     <None Include="..\..\shared\xsd\bgf.xsd">
       <Link>bgf.xsd</Link>
     </None>
+    <None Include="..\..\shared\xsd\fakemathml.xsd">
+      <Link>fakemathml.xsd</Link>
+    </None>
     <None Include="..\..\shared\xsd\lcf.xsd">
       <Link>lcf.xsd</Link>
     </None>
@@ -100,8 +103,23 @@
     <None Include="xldf\xldf\renameStr.xldf" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\shared\xsl\bgf2bnf.xslt">
+      <Link>bgf2bnf.xslt</Link>
+    </Content>
+    <Content Include="..\..\shared\xsl\bgf2xhtml.xslt">
+      <Link>bgf2xhtml.xslt</Link>
+    </Content>
     <Content Include="..\..\shared\xsl\ldf2tex.xslt">
       <Link>ldf2tex.xslt</Link>
+    </Content>
+    <Content Include="..\..\shared\xsl\ldf2xhtml.xslt">
+      <Link>ldf2xhtml.xslt</Link>
+    </Content>
+    <Content Include="..\..\shared\xsl\mathml2tex.xslt">
+      <Link>mathml2tex.xslt</Link>
+    </Content>
+    <Content Include="..\..\shared\xsl\mathml2xhtml.xslt">
+      <Link>mathml2xhtml.xslt</Link>
     </Content>
   </ItemGroup>
   <ItemGroup>

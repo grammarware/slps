@@ -19,8 +19,8 @@
     <to>Title page</to>
   </xldf:retitle>
   <xldf:combine>
-    <section>simpleType-status</section>
-    <with>complexType-titlePage</with>
+    <section>status</section>
+    <with>titlePage</with>
   </xldf:combine>
 
   <xldf:retitle>
@@ -51,8 +51,8 @@
     <to>Simple text</to>
   </xldf:retitle>
   <xldf:combine>
-    <section>group-simpleTextElement</section>
-    <with>complexType-simpleText</with>
+    <section>simpleTextElement</section>
+    <with>simpleText</with>
   </xldf:combine>
 
   <xldf:retitle>
@@ -62,8 +62,8 @@
     <to>Simple tables</to>
   </xldf:retitle>
   <xldf:combine>
-    <section>complexType-tableRow</section>
-    <with>complexType-simpleTable</with>
+    <section>tableRow</section>
+    <with>simpleTable</with>
   </xldf:combine>
 
   <xldf:retitle>
@@ -87,8 +87,8 @@
     <to>Front matter lists</to>
   </xldf:retitle>
   <xldf:combine>
-    <section>complexType-listOfTerms</section>
-    <with>group-frontList</with>
+    <section>listOfTerms</section>
+    <with>frontList</with>
   </xldf:combine>
 
   <xldf:retitle>
@@ -121,11 +121,11 @@
     <xbgf:inline>listOfInternalLinks</xbgf:inline>
   </xldf:transform-grammar>-->
   <xldf:combine>
-    <section>group-structuredSectionElement</section>
-    <with>complexType-structuredSection</with>
+    <section>structuredSectionElement</section>
+    <with>structuredSection</with>
   </xldf:combine>
   <xldf:drop>
-    <section>complexType-listOfInternalLinks</section>
+    <section>math</section>
   </xldf:drop>
 
   <xldf:retitle>
@@ -143,7 +143,7 @@
   </xldf:retitle>
 
   <xldf:drop>
-    <section>complexType-runnableType</section>
+    <section>runnableType</section>
   </xldf:drop>
 
   <xldf:retitle>
@@ -153,16 +153,16 @@
     <to>Keywords, links and plain text</to>
   </xldf:retitle>
   <xldf:combine>
-    <section>element-code</section>
-    <with>element-keyword</with>
+    <section>code</section>
+    <with>keyword</with>
   </xldf:combine>
   <xldf:combine>
-    <section>element-link</section>
-    <with>element-keyword</with>
+    <section>link</section>
+    <with>keyword</with>
   </xldf:combine>
   <xldf:combine>
-    <section>complexType-mixedType</section>
-    <with>element-keyword</with>
+    <section>mixedType</section>
+    <with>keyword</with>
   </xldf:combine>
 
 </xldf:evolution-sequence>

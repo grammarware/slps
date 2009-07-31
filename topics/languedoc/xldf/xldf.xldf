@@ -12,8 +12,8 @@
     <file>xldf/renameStr.xldf</file>
   </xldf:transform-document>
   <xldf:combine>
-    <section>group-relative</section>
-    <with>element-insert</with>
+    <section>relative</section>
+    <with>insert</with>
   </xldf:combine>
 
 </xldf:evolution-sequence>

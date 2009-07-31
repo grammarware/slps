@@ -7,7 +7,7 @@
 
   <!-- beautify bgf -->
   <xldf:transform-grammar>
-    <target>group-scope</target>
+    <target>scope</target>
     <xbgf:vertical>
       <nonterminal>scope</nonterminal>
     </xbgf:vertical>
@@ -96,11 +96,11 @@
   </xldf:add-subsection>
 
   <xldf:combine>
-    <section>element-grammar</section>
+    <section>grammar</section>
     <with>notation-section</with>
   </xldf:combine>
   <xldf:transform-grammar>
-    <target>element-production</target>
+    <target>production</target>
     <xbgf:anonymize>
       <bgf:production>
         <nonterminal>production</nonterminal>
@@ -170,11 +170,11 @@
     </xbgf:anonymize>
   </xldf:transform-grammar>
    <xldf:combine>
-    <section>element-production</section>
+    <section>production</section>
     <with>notation-section</with>
   </xldf:combine>
   <xldf:transform-grammar>
-    <target>element-expression</target>
+    <target>expression</target>
     <xbgf:vertical>
       <nonterminal>expression</nonterminal>
     </xbgf:vertical>
@@ -205,30 +205,30 @@
     </xbgf:anonymize>
   </xldf:transform-grammar>
   <xldf:combine>
-    <section>element-expression</section>
+    <section>expression</section>
     <with>notation-section</with>
   </xldf:combine>
   <xldf:transform-grammar>
-    <target>simpleType-value</target>
+    <target>value</target>
     <xbgf:vertical>
       <nonterminal>value</nonterminal>
     </xbgf:vertical>
   </xldf:transform-grammar>
   <xldf:combine>
-    <section>simpleType-value</section>
+    <section>value</section>
     <with>notation-section</with>
   </xldf:combine>
   <xldf:drop>
-    <section>simpleType-label</section>
+    <section>label</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-nonterminal</section>
+    <section>nonterminal</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-selector</section>
+    <section>selector</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-terminal</section>
+    <section>terminal</section>
   </xldf:drop>
   
    <xldf:add-section>
@@ -555,17 +555,17 @@
   </xldf:add-section>
 
   <xldf:place>
-    <section>element-sequence</section>
+    <section>sequence</section>
     <inside>definitions-section</inside>
   </xldf:place>
 
   <xldf:place>
-    <section>element-atomic</section>
+    <section>atomic</section>
     <inside>definitions-section</inside>
   </xldf:place>
 
   <xldf:transform-grammar>
-    <target>group-transformation</target>
+    <target>transformation</target>
     <xbgf:vertical>
       <nonterminal>transformation</nonterminal>
     </xbgf:vertical>
@@ -582,12 +582,12 @@
     <xbgf:horizontal>transformation</xbgf:horizontal>
  </xldf:transform-grammar>
   <xldf:place>
-    <section>group-transformation</section>
+    <section>transformation</section>
     <inside>definitions-section</inside>
   </xldf:place>
  
   <xldf:place>
-    <section>group-scope</section>
+    <section>scope</section>
     <inside>definitions-section</inside>
   </xldf:place>
 

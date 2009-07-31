@@ -7,7 +7,7 @@
 
   <xldf:transform-grammar>
     <!-- TODO: can be automated! -->
-    <target>group-definition</target>
+    <target>definition</target>
     <xbgf:vertical>
       <nonterminal>definition</nonterminal>
     </xbgf:vertical>
@@ -32,8 +32,8 @@
     <xbgf:horizontal>definition</xbgf:horizontal>
   </xldf:transform-grammar>
   <xldf:combine>
-    <section>group-definition</section>
-    <with>element-configuration</with>
+    <section>definition</section>
+    <with>configuration</with>
   </xldf:combine>
   <xldf:retitle>
     <from>
@@ -58,7 +58,7 @@
 
 
   <xldf:transform-grammar>
-    <target>complexType-source</target>
+    <target>source</target>
     <xbgf:extract>
       <bgf:production>
         <nonterminal>grammar</nonterminal>
@@ -411,7 +411,7 @@
   </xldf:retitle>
 
   <xldf:transform-grammar>
-    <target>complexType-target</target>
+    <target>target</target>
     <xbgf:extract>
       <bgf:production>
         <nonterminal>resolution</nonterminal>
@@ -637,7 +637,7 @@
     </xbgf:anonymize>
   </xldf:transform-grammar>
   <xldf:append>
-    <where>complexType-target</where>
+    <where>target</where>
     <content>
       <text>
         During convergence process, LCI regularly compares the result of each
@@ -666,7 +666,7 @@
   </xldf:retitle>
 
   <xldf:transform-grammar>
-    <target>complexType-phase</target>
+    <target>phase</target>
     <xbgf:extract>
       <bgf:production>
         <nonterminal>automated</nonterminal>
@@ -727,7 +727,7 @@
     </xbgf:anonymize>
   </xldf:transform-grammar>
   <xldf:append>
-    <where>complexType-phase</where>
+    <where>phase</where>
     <content>
       <text>
         The interface to generators is universal. We used it only with
@@ -754,14 +754,14 @@
   </xldf:retitle>
 
   <xldf:transform-grammar>
-    <target>simpleType-toolType</target>
+    <target>toolType</target>
     <xbgf:vertical>
       <nonterminal>toolType</nonterminal>
     </xbgf:vertical>
   </xldf:transform-grammar>
   <xldf:combine>
-    <section>simpleType-toolType</section>
-    <with>complexType-tool</with>
+    <section>toolType</section>
+    <with>tool</with>
   </xldf:combine>
   <xldf:retitle>
     <from>

@@ -3,28 +3,28 @@
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <xldf:drop>
-    <section>element-grammar</section>
+    <section>grammar</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-production</section>
+    <section>production</section>
   </xldf:drop>
   <xldf:drop>
-    <section>element-expression</section>
+    <section>expression</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-value</section>
+    <section>value</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-label</section>
+    <section>label</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-nonterminal</section>
+    <section>nonterminal</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-selector</section>
+    <section>selector</section>
   </xldf:drop>
   <xldf:drop>
-    <section>simpleType-terminal</section>
+    <section>terminal</section>
   </xldf:drop>
   
 </xldf:evolution-sequence>

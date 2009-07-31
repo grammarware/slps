@@ -4,7 +4,7 @@
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <xldf:append>
-    <where>simpleType-body</where>
+    <where>body</where>
     <content>
       <text>
         <ldf:keyword>ANSI (American National Standards Institute)</ldf:keyword>

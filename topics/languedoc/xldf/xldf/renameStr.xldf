@@ -5,7 +5,7 @@
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <xldf:transform-grammar>
-    <target>element-add-figure</target>
+    <target>add-figure</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -16,7 +16,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-add-subsection</target>
+    <target>add-subsection</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -27,7 +27,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-combine</target>
+    <target>combine</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -38,7 +38,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-drop</target>
+    <target>drop</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -49,7 +49,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-extract-subsection</target>
+    <target>extract-subsection</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -78,7 +78,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-import-grammar</target>
+    <target>import-grammar</target>
     <xbgf:replace>
       <bgf:expression>
         <selectable>
@@ -99,7 +99,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-import-sample</target>
+    <target>import-sample</target>
     <xbgf:replace>
       <bgf:expression>
         <selectable>
@@ -120,7 +120,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-place</target>
+    <target>place</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -131,7 +131,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-retitle</target>
+    <target>retitle</target>
     <xbgf:replace>
       <bgf:expression>
         <selectable>
@@ -152,7 +152,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-remove-section</target>
+    <target>remove-section</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -163,7 +163,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>element-transform-grammar</target>
+    <target>transform-grammar</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -174,7 +174,7 @@
     </xbgf:replace>
   </xldf:transform-grammar>
   <xldf:transform-grammar>
-    <target>group-relative</target>
+    <target>relative</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -187,8 +187,8 @@
   
 
   <xldf:combine>
-    <section>simpleType-sectionRole</section>
-    <with>element-change-role</with>
+    <section>sectionRole</section>
+    <with>change-role</with>
   </xldf:combine>
 
 </xldf:evolution-sequence>
