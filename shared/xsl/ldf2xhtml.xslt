@@ -15,7 +15,7 @@
       doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
     />
 
-  <xsl:strip-space elements="sample"/>
+  <xsl:preserve-space elements="sample"/>
   <xsl:preserve-space elements="runnable"/>
 
 
@@ -28,10 +28,12 @@
         </title>
         <style type="text/css">
           h1, table { text-align: center; }
-          .label, .selector { color: green; }
-          .marked { text-decoration:underline; }
-          .nt { font-weight: bold; }
+          .label, .sel { color: green; }
+          .marked { background-color: #FFE5B4;}
+          .nt { color: blue; font-weight: bold; }
+          .cmd { color: teal; font-weight: bold; }
           .t { color: red;  font-style:italic; }
+          .meta { font-style:italic; font-family: Roman, "Times New Roman", serif; }
 
           .note
           {
@@ -552,7 +554,39 @@
     -->
     <xsl:choose>
       <xsl:when test=". = 'listofcontents'">
-        <xsl:text>\tableofcontents</xsl:text>
+        <h2 xmlns="http://www.w3.org/1999/xhtml">Table of contents</h2>
+        <ol xmlns="http://www.w3.org/1999/xhtml">
+          <xsl:for-each select="/*/*">
+            <xsl:if test="title">
+              <li>
+                <a>
+                  <xsl:attribute name="href">
+                    <xsl:text>#</xsl:text>
+                    <xsl:value-of select="@id"/>
+                  </xsl:attribute>
+                  <xsl:value-of select="title"/>
+                </a>
+                <xsl:if test="*/title">
+                  <ol>
+                    <xsl:for-each select="*">
+                      <xsl:if test="title">
+                        <li>
+                          <a>
+                            <xsl:attribute name="href">
+                              <xsl:text>#</xsl:text>
+                              <xsl:value-of select="@id"/>
+                            </xsl:attribute>
+                            <xsl:value-of select="title"/>
+                          </a>
+                        </li>
+                      </xsl:if>
+                    </xsl:for-each>
+                  </ol>
+                </xsl:if>
+              </li>
+            </xsl:if>
+          </xsl:for-each>
+        </ol>
       </xsl:when>
       <xsl:when test=". = 'listoftables'">
         <xsl:text>\listoftables</xsl:text>

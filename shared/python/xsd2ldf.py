@@ -92,7 +92,7 @@ def main(xsdfile,bgffile,ldffile):
  el.text = 'unknown'
  el = ET.SubElement(section,'date')
  # generate!!!
- el.text = '2008-02-21'
+ el.text = '2008-08-01'
 
  section = ET.SubElement(dtree,'frontMatter')
  el = ET.SubElement(section,'foreword')

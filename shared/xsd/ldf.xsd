@@ -2,7 +2,7 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
      xmlns:ldf="http://planet-sl.org/ldf"
      xmlns:bgf="http://planet-sl.org/bgf"
-     xmlns:xhtml="http://www.w3.org/1999/xhtml/datatypes/"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
      targetNamespace="http://planet-sl.org/ldf">
 
   <xsd:import namespace="http://planet-sl.org/bgf" schemaLocation="bgf.xsd"/>
@@ -178,10 +178,12 @@
     </xsd:annotation>
     <xsd:restriction base="xsd:token">
       <xsd:enumeration value="unknown"/>
-      <xsd:enumeration value="draft"/> <!-- working draft, committee draft -->
+      <xsd:enumeration value="draft"/>
+      <!-- working draft, committee draft -->
       <xsd:enumeration value="candidate"/>
       <xsd:enumeration value="proposed"/>
-      <xsd:enumeration value="approved"/> <!-- recommendation, international standard -->
+      <xsd:enumeration value="approved"/>
+      <!-- recommendation, international standard -->
       <xsd:enumeration value="revised"/>
       <xsd:enumeration value="obsolete"/>
       <xsd:enumeration value="withdrawn"/>
@@ -345,10 +347,19 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
+      <!--<xsd:element name="sample">
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+              <xsd:attribute name="src" type="xsd:string"/>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>-->
       <xsd:element name="sample">
         <xsd:complexType mixed="true">
           <xsd:sequence minOccurs="0" maxOccurs="unbounded">
-            <xsd:any />
+            <xsd:any namespace="http://www.w3.org/1999/xhtml" processContents="lax"/>
           </xsd:sequence>
           <xsd:attribute name="src" type="xsd:string"/>
         </xsd:complexType>
@@ -375,7 +386,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
- <xsd:complexType name="simpleList">
+  <xsd:complexType name="simpleList">
     <xsd:sequence>
       <xsd:element name="item" type="ldf:mixedType" maxOccurs="unbounded"/>
     </xsd:sequence>
@@ -497,8 +508,8 @@
       <xsd:element name="cell" maxOccurs="unbounded" type="ldf:simpleText"/>
     </xsd:sequence>
   </xsd:complexType>
-  
-   <xsd:group name="structuredSectionElement">
+
+  <xsd:group name="structuredSectionElement">
     <xsd:choice>
       <xsd:element name="placeholder" type="ldf:generated">
         <xsd:annotation>
@@ -597,7 +608,7 @@
       </xsd:element>
     </xsd:choice>
   </xsd:group>
-  
+
   <!-- tokens -->
 
   <xsd:group name="normative">
@@ -727,11 +738,11 @@
         </xsd:annotation>
       </xsd:element>
       <!-- none of the above -->
-      
+
     </xsd:choice>
   </xsd:group>
 
-    <!--xsd:complexType name="contentType">
+  <!--xsd:complexType name="contentType">
     <xsd:annotation>
       <xsd:documentation>
         A sections content is a list of different kinds of portions.
@@ -843,6 +854,14 @@
   </xsd:complexType>
 
   <xsd:element name="formula">
+    <xsd:annotation>
+      <xsd:documentation>
+        Formulae can be used in language documentation in many ways.
+        The internal representation format is MathML which is W3C Recommendation,
+        but the external representation can vary, in our case there are two:
+        \TeX\ and HTML.
+      </xsd:documentation>
+    </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence maxOccurs="unbounded">
         <xsd:any namespace="http://www.w3.org/1998/Math/MathML"/>
@@ -890,5 +909,5 @@
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
-  
+
 </xsd:schema>

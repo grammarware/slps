@@ -15,29 +15,15 @@
   </xsl:template>
 
   <xsl:template match="bgf:production">
-    <xsl:element name="a" namespace="http://www.w3.org/1999/xhtml">
-      <xsl:attribute name="name">
-        <xsl:value-of select="./nonterminal"/>
-      </xsl:attribute>
-    </xsl:element>
     <xsl:if test="./label">
-      <xsl:element name="a" namespace="http://www.w3.org/1999/xhtml">
-        <xsl:attribute name="name">
-          <xsl:value-of select="./nonterminal"/>
-          <xsl:text>-labelled-</xsl:text>
-          <xsl:value-of select="./label"/>
-        </xsl:attribute>
-      </xsl:element>
-      <xsl:text>[</xsl:text>
-      <span xmlns="http://www.w3.org/1999/xhtml" class="label">
-        <xsl:value-of select="./label"/>
-      </span>
-      <xsl:text>] </xsl:text>
+      <xsl:call-template name="displaylabel">
+        <xsl:with-param name="l" select="label"/>
+      </xsl:call-template>
     </xsl:if>
-    <span xmlns="http://www.w3.org/1999/xhtml" class="nt">
-      <xsl:value-of select="./nonterminal"/>
-    </span>
-    <xsl:text>:</xsl:text>
+    <xsl:call-template name="displaynt">
+      <xsl:with-param name="nt" select="nonterminal"/>
+    </xsl:call-template>
+     <xsl:text>:</xsl:text>
     <xsl:choose>
       <xsl:when test="./bgf:expression/choice">
         <xsl:for-each select="./bgf:expression/choice/bgf:expression">
@@ -63,7 +49,7 @@
   </xsl:template>
 
   <xsl:template match="bgf:expression">
-    <xsl:apply-templates select="./*"/>
+    <xsl:apply-templates select="*"/>
   </xsl:template>
 
   <xsl:template match="marked">
@@ -90,22 +76,22 @@
   </xsl:template>
 
   <xsl:template match="terminal">
-    <span xmlns="http://www.w3.org/1999/xhtml" class="t">
-      <xsl:text>"</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>"</xsl:text>
-    </span>
+    <xsl:call-template name="displayt">
+      <xsl:with-param name="t" select="."/>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="value">
-    <xsl:choose>
-      <xsl:when test=". = 'string'">
-        <xsl:text>STR</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>INT</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+    <span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+      <xsl:choose>
+        <xsl:when test=". = 'string'">
+          <xsl:text>str</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>int</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </span>
   </xsl:template>
 
   <xsl:template match="epsilon">
@@ -113,27 +99,24 @@
   </xsl:template>
 
   <xsl:template match="empty">
-    <xsl:text>EMPTY</xsl:text>
+    <span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+      <xsl:text>empty</xsl:text>
+    </span>
   </xsl:template>
 
   <xsl:template match="any">
-    <xsl:text>ANY</xsl:text>
-  </xsl:template>
-
+    <span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+      <xsl:text>any</xsl:text>
+    </span>  </xsl:template>
+  
   <xsl:template match="nonterminal">
-    <xsl:element name="a" namespace="http://www.w3.org/1999/xhtml">
-      <xsl:attribute name="href">
-        <xsl:text>#</xsl:text>
-        <xsl:value-of select="."/>
-      </xsl:attribute>
-      <span class="nt">
-        <xsl:value-of select="."/>
-      </span>
-    </xsl:element>
+    <xsl:call-template name="linknt">
+      <xsl:with-param name="nt" select="."/>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="selectable">
-    <span xmlns="http://www.w3.org/1999/xhtml" class="selector">
+    <span xmlns="http://www.w3.org/1999/xhtml" class="sel">
       <xsl:value-of select="selector"/>
     </span>
     <xsl:text>::</xsl:text>
@@ -186,6 +169,55 @@
         <xsl:apply-templates select="$expr"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="linknt">
+    <xsl:param name="nt"/>
+    <xsl:element name="a" namespace="http://www.w3.org/1999/xhtml">
+      <xsl:attribute name="href">
+        <xsl:text>#</xsl:text>
+        <xsl:value-of select="$nt"/>
+      </xsl:attribute>
+      <span class="nt">
+        <xsl:value-of select="$nt"/>
+      </span>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="displaynt">
+    <xsl:param name="nt"/>
+    <xsl:element name="a" namespace="http://www.w3.org/1999/xhtml">
+      <xsl:attribute name="name">
+        <xsl:value-of select="$nt"/>
+      </xsl:attribute>
+      <span class="nt">
+        <xsl:value-of select="$nt"/>
+      </span>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="displayt">
+    <xsl:param name="t"/>
+    <span xmlns="http://www.w3.org/1999/xhtml" class="t">
+      <xsl:text>"</xsl:text>
+      <xsl:value-of select="$t"/>
+      <xsl:text>"</xsl:text>
+    </span>
+  </xsl:template>
+
+  <xsl:template name="displaylabel">
+    <xsl:param name="l"/>
+    <xsl:text>[</xsl:text>
+    <xsl:element name="a" namespace="http://www.w3.org/1999/xhtml">
+      <xsl:attribute name="class">
+        <xsl:text>label</xsl:text>
+      </xsl:attribute>
+      <xsl:attribute name="name">
+        <xsl:value-of select="$l"/>
+      </xsl:attribute>
+      <xsl:value-of select="$l" />
+    </xsl:element>
+    <xsl:text>] </xsl:text>
   </xsl:template>
 
 </xsl:stylesheet>

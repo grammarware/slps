@@ -121,6 +121,9 @@
     <Content Include="..\..\shared\xsl\mathml2xhtml.xslt">
       <Link>mathml2xhtml.xslt</Link>
     </Content>
+    <Content Include="..\..\shared\xsl\xbgf2xhtml.xslt">
+      <Link>xbgf2xhtml.xslt</Link>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lcf\xldf\" />

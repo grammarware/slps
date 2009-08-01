@@ -1,6 +1,6 @@
 validator = ../../../shared/tools/checkxml
 
-build: bnfbgf.pdf tex
+build: bnfbgf.pdf tex html
 	pdflatex -interaction=batchmode xbgf
 	pdflatex -interaction=batchmode xbgf
 
@@ -8,10 +8,16 @@ slices:
 	cp ../../presentation/prettyprint/xbgf/stripTerminals.xbgf sliced/
 	python ../../../shared/python/xbgfSlice.py sliced/stripTerminals.xbgf
 
-tex: slices
+ldf: slices
 	../../../shared/tools/xsd2ldf ../../../shared/xsd/xbgf.xsd xbgf.ldf
 	../../../shared/tools/xldf xbgf.xldf xbgf.ldf xbgf.ready.ldf
+	
+tex: ldf
 	../../../shared/tools/ldf2tex xbgf.ready.ldf xbgf.tex
+	
+html: ldf
+	../../../shared/tools/repp xbgf.ready.ldf ../../../shared/tools/xbgf2html xbgf.hyper.ldf
+	../../../shared/tools/ldf2html xbgf.hyper.ldf xbgf.html
 
 bnfbgf.pdf:
 	cd ../../presentation/prettyprint ; make
