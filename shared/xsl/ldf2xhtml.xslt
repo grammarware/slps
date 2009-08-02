@@ -180,13 +180,9 @@
       <xsl:choose>
         <xsl:when test="local-name() = 'keyword'">
           <strong xmlns="http://www.w3.org/1999/xhtml">
-            <xsl:element name="a">
-              <xsl:attribute name="href">
-                <xsl:text>#</xsl:text>
-                <xsl:value-of select="."/>
-              </xsl:attribute>
-              <xsl:value-of select="."/>
-            </xsl:element>
+            <xsl:call-template name="linkIfExists">
+              <xsl:with-param name="target" select="text()"/>
+            </xsl:call-template>
           </strong>
         </xsl:when>
         <xsl:when test="local-name() = 'formula'">
@@ -203,6 +199,24 @@
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template name="linkIfExists">
+    <xsl:param name="target"/>
+    <xsl:choose>
+      <xsl:when test="//*[@id = $target]">
+        <xsl:element name="a">
+          <xsl:attribute name="href">
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="$target"/>
+          </xsl:attribute>
+          <xsl:value-of select="$target"/>
+        </xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$target"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <xsl:template name="process-text">
     <xsl:param name="text"/>
     <xsl:for-each select="$text/node()">

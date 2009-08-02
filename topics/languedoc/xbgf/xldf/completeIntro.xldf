@@ -72,7 +72,7 @@
           <item>
             <ldf:keyword>Disciplined grammar adaptation.</ldf:keyword>
             In order to adapt the baseline grammar to the working circumstances one needs it
-            to work in, it is useful to have a good support for grammar transformations~\cite{DeanCMS03,Adaptation,AgileWeb,PLEX}.
+            to work in, it is useful to have a good support for grammar transformations~\cite{AgileWeb,DeanCMS03,Adaptation,PLEX}.
             XBGF can be used to converge differently adapted grammars or as a standalone tool
             for applying grammar adaptation steps.
           </item>
