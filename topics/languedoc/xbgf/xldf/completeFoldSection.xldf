@@ -47,13 +47,13 @@
   <!-- compose a section on folding transformations -->
   <xldf:retitle>
     <from>
-      <title>folding-transformation</title>
+      <title>folding-unfolding-transformation</title>
     </from>
     <to>Folding and unfolding transformations</to>
   </xldf:retitle>
   <xldf:place>
     <section>unfold</section>
-    <inside>folding-transformation</inside>
+    <inside>folding-unfolding-transformation</inside>
   </xldf:place>
   <xldf:insert>
     <before>
@@ -153,7 +153,7 @@
   
   <xldf:place>
     <section>fold</section>
-    <inside>folding-transformation</inside>
+    <inside>folding-unfolding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="fold-example">
@@ -191,7 +191,7 @@
   
   <xldf:place>
     <section>inline</section>
-    <inside>folding-transformation</inside>
+    <inside>folding-unfolding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -278,7 +278,7 @@
   
   <xldf:place>
     <section>extract</section>
-    <inside>folding-transformation</inside>
+    <inside>folding-unfolding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -332,7 +332,7 @@
 
   <xldf:place>
     <section>abridge</section>
-    <inside>folding-transformation</inside>
+    <inside>folding-unfolding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -392,7 +392,7 @@
   
   <xldf:place>
     <section>detour</section>
-    <inside>folding-transformation</inside>
+    <inside>folding-unfolding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="detour-example">
@@ -415,7 +415,7 @@
   
   <xldf:place>
     <section>unchain</section>
-    <inside>folding-transformation</inside>
+    <inside>folding-unfolding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <semantics>
@@ -471,7 +471,7 @@
   
   <xldf:place>
     <section>chain</section>
-    <inside>folding-transformation</inside>
+    <inside>folding-unfolding-transformation</inside>
   </xldf:place>
   <xldf:add-subsection>
     <example id="chain-example">
@@ -493,7 +493,7 @@
   </xldf:import-sample>
 
   <xldf:change-role>
-    <scope>folding-transformation</scope>
+    <scope>folding-unfolding-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
   </xldf:change-role>

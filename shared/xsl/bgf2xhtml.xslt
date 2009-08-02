@@ -85,7 +85,7 @@
     <span xmlns="http://www.w3.org/1999/xhtml" class="meta">
       <xsl:choose>
         <xsl:when test=". = 'string'">
-          <xsl:text>str</xsl:text>
+          <xsl:text>string</xsl:text>
         </xsl:when>
         <xsl:otherwise>
           <xsl:text>int</xsl:text>

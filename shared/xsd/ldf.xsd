@@ -36,11 +36,10 @@
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="titlePage" type="ldf:titlePage"/>
-        <xsd:element name="placeholder" type="ldf:generated" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element name="frontMatter">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:group ref="ldf:frontSection" maxOccurs="unbounded"/>
+              <xsd:group ref="ldf:topSection" minOccurs="0" maxOccurs="unbounded"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
@@ -58,7 +57,23 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
-        <xsd:element name="core" type="ldf:structuredSection" maxOccurs="unbounded"/>
+        <xsd:choice>
+          <xsd:element name="core" type="ldf:structuredSection" maxOccurs="unbounded"/>
+          <xsd:element name="part" maxOccurs="unbounded">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="core" type="ldf:structuredSection" maxOccurs="unbounded"/>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+        <xsd:element name="backMatter" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:group ref="ldf:topSection" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
         <xsd:element name="annex" type="ldf:structuredSection" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
@@ -206,7 +221,7 @@
     </xsd:restriction>
   </xsd:simpleType>
 
-  <xsd:group name="frontSection">
+  <xsd:group name="topSection">
     <xsd:choice>
       <xsd:element name="foreword" type="ldf:simpleSection">
         <xsd:annotation>
@@ -304,6 +319,14 @@
           <xsd:documentation>
             A list of changes brought to the language by the current specification
             replacing the previous one.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="placeholder" type="ldf:generated">
+        <xsd:annotation>
+          <xsd:documentation>
+            Placeholders are used to designate places where generated content
+            should be inserted.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>

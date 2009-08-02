@@ -284,7 +284,7 @@ def xldf_remove_section(localpath,cmd,tree):
 def xldf_add_subsection(localpath,cmd,tree):
  success = False
  s = cmd.findall('*')[0]
- if s.tag in ('foreword','designGoals','scope','conformance','compliance','compatibility','notation','normativeReferences','documentStructure','whatsnew'):
+ if s.tag in ('foreword','designGoals','scope','conformance','compliance','compatibility','notation','normativeReferences','documentStructure','whatsnew','placeholder'):
   tree.findall('//frontMatter')[0].append(s)
   print '[XLDF] add-subsection (',s.tag,', front matter, ...)'
   success = True
@@ -306,19 +306,36 @@ def xldf_change_role(localpath,cmd,tree):
  if not where:
   print '[----] xldf:change-role failed, can''t find id',cmd.findtext('scope')
   return
+ if cmd.findtext('from') == 'frontMatter' and cmd.findtext('to') == 'backMatter':
+  if tree.findall('backMatter'):
+   back = tree.findall('backMatter')[0]
+  else:
+   allNodes = tree.findall('*')
+   cores = False
+   for i in range(0,len(allNodes)):
+    if not cores and allNodes[i].tag == 'core':
+     cores = True
+    if cores and allNodes[i].tag != 'core':
+     break
+   back = ET.Element('backMatter')
+   tree.findall('/')[0].insert(i,back)
+  back.append(where)
+  tree.findall('frontMatter')[0].remove(where)
+  print '[XLDF] change-role moved',cmd.findtext('scope'),'from',cmd.findtext('from'),'to',cmd.findtext('to')
+  return
  if not where.findall(cmd.findtext('from')):
-  print '[----] xldf:change-role failed,',cmd.findtext('scope'),'lacks any',cmd.findtext('from')
+  print '[----] change-role failed,',cmd.findtext('scope'),'lacks any',cmd.findtext('from')
   return
  if where.findall(cmd.findtext('to')):
   # inline
   for el in where.findall(cmd.findtext('from')+'/*'):
    where.findall(cmd.findtext('to'))[0].append(el)
   where.remove(where.findall(cmd.findtext('from'))[0])
-  print '[XLDF] xldf:change-role inlined',cmd.findtext('from'),'to',cmd.findtext('to'),'in',cmd.findtext('scope')
+  print '[XLDF] change-role inlined',cmd.findtext('from'),'to',cmd.findtext('to'),'in',cmd.findtext('scope')
  else:
   # rename
   where.findall(cmd.findtext('from'))[0].tag = cmd.findtext('to')
-  print '[XLDF] xldf:change-role renamed',cmd.findtext('from'),'to',cmd.findtext('to'),'in',cmd.findtext('scope')
+  print '[XLDF] change-role renamed',cmd.findtext('from'),'to',cmd.findtext('to'),'in',cmd.findtext('scope')
  return
 
 def xldf_extract_subsection(localpath,cmd,tree):

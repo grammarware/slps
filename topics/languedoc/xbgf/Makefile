@@ -18,6 +18,7 @@ tex: ldf
 html: ldf
 	../../../shared/tools/repp xbgf.ready.ldf ../../../shared/tools/xbgf2html xbgf.hyper.ldf
 	../../../shared/tools/ldf2html xbgf.hyper.ldf xbgf.html
+	perl -pi -w -e 's/~\\cite{AgileWeb,DeanCMS03,Adaptation,PLEX}//g;' xbgf.html
 
 bnfbgf.pdf:
 	cd ../../presentation/prettyprint ; make

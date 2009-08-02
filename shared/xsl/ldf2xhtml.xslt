@@ -34,6 +34,8 @@
           .cmd { color: teal; font-weight: bold; }
           .t { color: red;  font-style:italic; }
           .meta { font-style:italic; font-family: Roman, "Times New Roman", serif; }
+          h6 { text-align: right; }
+          .date { font-size: small; }
 
           .note
           {
@@ -65,45 +67,36 @@
             <xsl:value-of select="titlePage/edition"/>
             <xsl:text>ed</xsl:text>
           </xsl:if>
-        </h1>
-        <!-- body/number or author -->
-        <h2>
-          (c)
-          <xsl:choose>
-            <xsl:when test="titlePage/body">
-              <xsl:call-template name="uppercase">
-                <xsl:with-param name="string" select="titlePage/body"/>
-              </xsl:call-template>
-              <xsl:value-of select="titlePage/number"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="titlePage/author"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </h2>
-        <h2>
-          <!-- status -->
+        <!-- status -->
           <xsl:if test="titlePage/status != 'unknown'">
-            <xsl:value-of select="titlePage/status"/>
             <br/>
+            <xsl:value-of select="titlePage/status"/>
           </xsl:if>
           <!-- date -->
-          <xsl:value-of select="titlePage/date"/>
-        </h2>
+          <br/>
+          <span class="date">
+          <xsl:value-of select="titlePage/date"/></span></h1>
         <!-- titlePage done -->
-        <!-- placeholder: not completely implemented -->
-        <xsl:apply-templates select="placeholder"/>
+        <!-- placeholder: not completely implemented 
+        <xsl:apply-templates select="placeholder"/>-->
         <!--xsl:text>
 		%% START_CONTENT
 	  </xsl:text-->
         <!-- frontMatter -->
         <xsl:for-each select="frontMatter/*">
-          <xsl:call-template name="sectionize">
-            <xsl:with-param name="target" select="."/>
-          </xsl:call-template>
-          <xsl:call-template name="process-SimpleSection">
-            <xsl:with-param name="section" select="."/>
-          </xsl:call-template>
+          <xsl:choose>
+            <xsl:when test="local-name() = 'placeholder'">
+              <xsl:apply-templates select="."/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:call-template name="sectionize">
+                <xsl:with-param name="target" select="."/>
+              </xsl:call-template>
+              <xsl:call-template name="process-SimpleSection">
+                <xsl:with-param name="section" select="."/>
+              </xsl:call-template>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:for-each>
         <!-- lists -->
         <xsl:for-each select="lists/*">
@@ -120,13 +113,39 @@
             <xsl:with-param name="section" select="."/>
           </xsl:call-template>
         </xsl:for-each>
-        <!--xsl:text>
-		%% START_CORE
-	</xsl:text-->
         <xsl:apply-templates select="core"/>
-        <!--xsl:text>\appendix</xsl:text-->
+        <xsl:for-each select="backMatter/*">
+          <xsl:choose>
+            <xsl:when test="local-name() = 'placeholder'">
+              <xsl:apply-templates select="."/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:call-template name="sectionize">
+                <xsl:with-param name="target" select="."/>
+              </xsl:call-template>
+              <xsl:call-template name="process-SimpleSection">
+                <xsl:with-param name="section" select="."/>
+              </xsl:call-template>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each>
         <xsl:apply-templates select="annex"/>
-        <!--xsl:text>\end{document}	%% END_CONTENT</xsl:text-->
+        <hr/>
+        <!-- body/number or author -->
+        <h6>
+          (c)
+          <xsl:choose>
+            <xsl:when test="titlePage/body">
+              <xsl:call-template name="uppercase">
+                <xsl:with-param name="string" select="titlePage/body"/>
+              </xsl:call-template>
+              <xsl:value-of select="titlePage/number"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="titlePage/author"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </h6>
       </body>
     </html>
   </xsl:template>
@@ -259,6 +278,20 @@
   <xsl:template name="sectionize">
     <xsl:param name="target"/>
     <h2 xmlns="http://www.w3.org/1999/xhtml">
+      <!-- anchor -->
+      <a>
+        <xsl:attribute name="name">
+          <xsl:choose>
+            <xsl:when test="@id">
+              <xsl:value-of select="@id"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="local-name()"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+      </a>
+      <!-- text -->
       <xsl:choose>
         <xsl:when test="$target/title">
           <xsl:value-of select="$target/title"/>
@@ -293,13 +326,6 @@
           </xsl:choose>
         </xsl:otherwise>
       </xsl:choose>
-    <xsl:if test="@id">
-      <a xmlns="http://www.w3.org/1999/xhtml">
-        <xsl:attribute name="name">
-          <xsl:value-of select="@id"/>
-        </xsl:attribute>
-      </a>
-    </xsl:if>
     </h2>
   </xsl:template>
 
@@ -560,6 +586,81 @@
     </table>
   </xsl:template>
 
+  <xsl:template name="item-from-topSection">
+    <xsl:param name="section"/>
+    <li xmlns="http://www.w3.org/1999/xhtml">
+      <a>
+        <xsl:attribute name="href">
+          <xsl:text>#</xsl:text>
+          <xsl:choose>
+            <xsl:when test="$section/@id">
+              <xsl:value-of select="$section/@id"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="local-name($section)"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <xsl:choose>
+          <!-- can be replaced with a unified CamelCase2Whitespace -->
+          <xsl:when test="local-name($section) = 'lineContinuations'">
+            <xsl:text>Line continuations</xsl:text>
+          </xsl:when>
+          <xsl:when test="local-name($section) = 'designGoals'">
+            <xsl:text>Design goals</xsl:text>
+          </xsl:when>
+          <xsl:when test="local-name($section) = 'normativeReferences'">
+            <xsl:text>Normative references</xsl:text>
+          </xsl:when>
+          <xsl:when test="local-name($section) = 'documentStructure'">
+            <xsl:text>Document structure</xsl:text>
+          </xsl:when>
+          <xsl:when test="local-name($section) = 'whatsnew'">
+            <xsl:text>What's new</xsl:text>
+          </xsl:when>
+          <xsl:when test="local-name($section) = 'languageOverview'">
+            <xsl:text>Language overview</xsl:text>
+          </xsl:when>
+          <!-- end of CamelCase2Whitespace -->
+          <xsl:otherwise>
+            <xsl:call-template name="capitaliseLocalName">
+              <xsl:with-param name="section" select="$section"/>
+            </xsl:call-template>
+          </xsl:otherwise>
+        </xsl:choose>
+      </a>
+    </li>
+  </xsl:template>
+  <xsl:template name="item-from-coreSection">
+    <xsl:param name="section"/>
+    <li xmlns="http://www.w3.org/1999/xhtml">
+      <a>
+        <xsl:attribute name="href">
+          <xsl:text>#</xsl:text>
+          <xsl:value-of select="$section/@id"/>
+        </xsl:attribute>
+        <xsl:value-of select="$section/title"/>
+      </a>
+      <xsl:if test="$section/*/title">
+        <ol>
+          <xsl:for-each select="$section/*">
+            <xsl:if test="title">
+              <li>
+                <a>
+                  <xsl:attribute name="href">
+                    <xsl:text>#</xsl:text>
+                    <xsl:value-of select="@id"/>
+                  </xsl:attribute>
+                  <xsl:value-of select="title"/>
+                </a>
+              </li>
+            </xsl:if>
+          </xsl:for-each>
+        </ol>
+      </xsl:if>
+    </li>
+  </xsl:template>
+
   <xsl:template match="placeholder">
     <!--
       <xsd:enumeration value="index"/>
@@ -570,35 +671,31 @@
       <xsl:when test=". = 'listofcontents'">
         <h2 xmlns="http://www.w3.org/1999/xhtml">Table of contents</h2>
         <ol xmlns="http://www.w3.org/1999/xhtml">
-          <xsl:for-each select="/*/*">
-            <xsl:if test="title">
-              <li>
-                <a>
-                  <xsl:attribute name="href">
-                    <xsl:text>#</xsl:text>
-                    <xsl:value-of select="@id"/>
-                  </xsl:attribute>
-                  <xsl:value-of select="title"/>
-                </a>
-                <xsl:if test="*/title">
-                  <ol>
-                    <xsl:for-each select="*">
-                      <xsl:if test="title">
-                        <li>
-                          <a>
-                            <xsl:attribute name="href">
-                              <xsl:text>#</xsl:text>
-                              <xsl:value-of select="@id"/>
-                            </xsl:attribute>
-                            <xsl:value-of select="title"/>
-                          </a>
-                        </li>
-                      </xsl:if>
-                    </xsl:for-each>
-                  </ol>
+          <xsl:for-each select="//frontMatter/*|//backMatter/*|//core|//appendix">
+            <xsl:choose>
+              <xsl:when test="local-name() = 'foreword'
+                        or    local-name() = 'designGoals'
+                        or    local-name() = 'scope'
+                        or    local-name() = 'conformance'
+                        or    local-name() = 'compliance'
+                        or    local-name() = 'compatibility'
+                        or    local-name() = 'notation'
+                        or    local-name() = 'normativeReferences'
+                        or    local-name() = 'documentStructure'
+                        or    local-name() = 'whatsnew'">
+                <xsl:call-template name="item-from-topSection">
+                  <xsl:with-param name="section" select="."/>
+                </xsl:call-template>
+              </xsl:when>
+              <xsl:when test="local-name() = 'core'
+                        or    local-name() = 'appendix'">
+                <xsl:if test="title">
+                  <xsl:call-template name="item-from-coreSection">
+                    <xsl:with-param name="section" select="."/>
+                  </xsl:call-template>
                 </xsl:if>
-              </li>
-            </xsl:if>
+              </xsl:when>
+            </xsl:choose>
           </xsl:for-each>
         </ol>
       </xsl:when>

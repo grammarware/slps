@@ -13,9 +13,9 @@
     </xbgf:vertical>
   </xldf:transform-grammar>
 
-  <xldf:add-section>
+  <xldf:add-subsection>
     <placeholder>listofcontents</placeholder>
-  </xldf:add-section>
+  </xldf:add-subsection>
 
   <!-- design goals -->
   <xldf:add-subsection>
@@ -87,9 +87,9 @@
       <content>
         <text>
           BGF is a BNF-like Grammar Format, an XML dialect of Extended Backus Naur Form
-          that was used in the language convergence infrastructure. The grammar of
-          its abstract syntax, generated from the corresponding XML Schema, is presented
-          below in a slightly beautified form (all undefined nonterminals are strings):
+          that was used in the language convergence infrastructure.
+          Its abstract syntax grammar is automatically extracted from the corresponding
+          XML Schema and presented below:
         </text>
       </content>
     </notation>
@@ -99,137 +99,34 @@
     <section>grammar</section>
     <with>notation-section</with>
   </xldf:combine>
-  <xldf:transform-grammar>
-    <target>production</target>
-    <xbgf:anonymize>
-      <bgf:production>
-        <nonterminal>production</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <marked>
-                    <bgf:expression>
-                      <selectable>
-                        <selector>label</selector>
-                        <bgf:expression>
-                          <nonterminal>label</nonterminal>
-                        </bgf:expression>
-                      </selectable>
-                    </bgf:expression>
-                  </marked>
-                </bgf:expression>
-              </optional>
-            </bgf:expression>
-            <bgf:expression>
-              <selectable>
-                <selector>nonterminal</selector>
-                <bgf:expression>
-                  <nonterminal>nonterminal</nonterminal>
-                </bgf:expression>
-              </selectable>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>expression</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
-    </xbgf:anonymize>
-    <xbgf:anonymize>
-      <bgf:production>
-        <nonterminal>production</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <nonterminal>label</nonterminal>
-                </bgf:expression>
-              </optional>
-            </bgf:expression>
-            <bgf:expression>
-              <marked>
-                <bgf:expression>
-                  <selectable>
-                    <selector>nonterminal</selector>
-                    <bgf:expression>
-                      <nonterminal>nonterminal</nonterminal>
-                    </bgf:expression>
-                  </selectable>
-                </bgf:expression>
-              </marked>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>expression</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
-    </xbgf:anonymize>
-  </xldf:transform-grammar>
-   <xldf:combine>
+    <xldf:combine>
     <section>production</section>
     <with>notation-section</with>
   </xldf:combine>
-  <xldf:transform-grammar>
-    <target>expression</target>
-    <xbgf:vertical>
-      <nonterminal>expression</nonterminal>
-    </xbgf:vertical>
-    <xbgf:anonymize>
-      <bgf:production>
-        <label>selectable</label>
-        <nonterminal>expression</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <marked>
-                <bgf:expression>
-                  <selectable>
-                    <selector>selector</selector>
-                    <bgf:expression>
-                      <nonterminal>selector</nonterminal>
-                    </bgf:expression>
-                  </selectable>
-                </bgf:expression>
-              </marked>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>expression</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
-    </xbgf:anonymize>
-  </xldf:transform-grammar>
   <xldf:combine>
     <section>expression</section>
     <with>notation-section</with>
   </xldf:combine>
-  <xldf:transform-grammar>
-    <target>value</target>
-    <xbgf:vertical>
-      <nonterminal>value</nonterminal>
-    </xbgf:vertical>
-  </xldf:transform-grammar>
   <xldf:combine>
     <section>value</section>
     <with>notation-section</with>
   </xldf:combine>
-  <xldf:drop>
+  <xldf:combine>
     <section>label</section>
-  </xldf:drop>
-  <xldf:drop>
+    <with>notation-section</with>
+  </xldf:combine>
+  <xldf:combine>
     <section>nonterminal</section>
-  </xldf:drop>
-  <xldf:drop>
+    <with>notation-section</with>
+  </xldf:combine>
+  <xldf:combine>
     <section>selector</section>
-  </xldf:drop>
-  <xldf:drop>
+    <with>notation-section</with>
+  </xldf:combine>
+  <xldf:combine>
     <section>terminal</section>
-  </xldf:drop>
+    <with>notation-section</with>
+  </xldf:combine>
   
    <xldf:add-section>
     <core id="bnf">
@@ -237,7 +134,7 @@
       <description>
         <content>
           <text>
-            All BGFs and XBGFs are presented in a unified pretty-printed way.
+            All BGF and XBGF listings are presented in a unified pretty-printed way.
             The concrete syntax for it is presented below:
           </text>
         </content>
@@ -248,48 +145,6 @@
     <target>bnf</target>
     <file>../../presentation/prettyprint/bnf.bgf</file>
   </xldf:import-grammar>
-  <xldf:transform-grammar>
-    <target>bnf</target>
-    <xbgf:anonymize>
-      <bgf:production>
-        <nonterminal>production</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <marked>
-                    <bgf:expression>
-                      <selectable>
-                        <selector>label</selector>
-                        <bgf:expression>
-                          <nonterminal>label</nonterminal>
-                        </bgf:expression>
-                      </selectable>
-                    </bgf:expression>
-                  </marked>
-                </bgf:expression>
-              </optional>
-            </bgf:expression>
-            <bgf:expression>
-              <selectable>
-                <selector>nonterminal</selector>
-                <bgf:expression>
-                  <value>string</value>
-                </bgf:expression>
-              </selectable>
-            </bgf:expression>
-            <bgf:expression>
-              <terminal>:</terminal>
-            </bgf:expression>
-            <bgf:expression>
-              <nonterminal>right-hand-side</nonterminal>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
-    </xbgf:anonymize>
-  </xldf:transform-grammar>
   <xldf:combine>
     <section>bnf</section>
     <with>notation-section</with>
@@ -315,6 +170,9 @@
           In order to establish the relation between BGF that is being used
           in the actual working system and BNF that is being reported here,
           we apply the whole process of grammar convergence to these two grammars.
+          We presume to conclude that this BNF dialect
+          plus empty grammars plus root elements is the same as BGF language plus
+          indentation rules plus layout rules plus terminal symbols.
         </text>
         <text>
           BNF was defined as a base-line grammar for a pretty-printer and therefor
@@ -401,7 +259,7 @@
         Now we can remove all terminals from the grammar without disrupting
         its structure (i.e., various alternatives in symbol will not collide
         and vanish during normalisation phase). Since we do not want to make
-        a distinction and deem all terminals to be worthy of removal, the
+        a distinction and plan for all terminals to be removed, the
         following transformation script is generated by a special tool executed
         automatically from LCI (see the section about generators).
       </text>
@@ -530,6 +388,11 @@
       </text>
     </content>
   </xldf:append>
+  <xldf:change-role>
+    <scope>compatibility-section</scope>
+    <from>frontMatter</from>
+    <to>backMatter</to>
+  </xldf:change-role>
 
   <!-- list of definitions -->
   <xldf:add-section>
@@ -621,7 +484,7 @@
           </bgf:production>
           <text>
             When transformations need to happen very locally, the level of nonterminal
-            or production is insufficient and introduction of selector annotations is
+            or production is insufficient and introduction of selectable sub-expressions is
             too much extra effort. For this cases, XBGF uses markers that show at which
             point exactly should the transformation take place. Markers are pretty-printed
             as angle brackets.
