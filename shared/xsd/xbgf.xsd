@@ -496,7 +496,8 @@
   <xsd:element name="extract">
     <xsd:annotation>
       <xsd:documentation>
-        A new definition is introduced by extraction. The argument provided for this transformation
+        A new definition is introduced by extraction. The argument provided for this
+        transformation
         is a production that identifies both the fresh nonterminal to be introduced and the
         expression that is used both as a pattern for folding and as a right hand side of
         the added definition.

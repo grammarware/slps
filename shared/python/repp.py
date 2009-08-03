@@ -38,7 +38,7 @@ def repp(localpath,tree,prettyprinter):
  for e in ET.parse(inputfile).findall('/*/*'):
   #for e in ET.XML('<t>'+''.join(open(inputfile,'r').readlines())+'</t>').findall('*'):
   tree.append(createCleanElementFrom(e))
- print '[++++] Re-pretty-printed.'
+ print '[++++] Re-pretty-printed',tree.get('src')
  return
 
 
@@ -50,7 +50,7 @@ def main(inldffile,ppfile,outldffile):
   localpath = '/'.join(inldffile.split('/')[:-1])+'/'
  cx = 0
  for s in tree.findall('//sample'):
-  print '[????] Found',identify(s),'of',s.get('src')
+  #print '[????] Found',identify(s),'of',s.get('src')
   repp(localpath,s,ppfile)
   cx += 1
  print 'Total',cx,'samples processed'

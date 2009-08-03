@@ -221,6 +221,17 @@
     </xsd:restriction>
   </xsd:simpleType>
 
+  <xsd:simpleType name="figureType">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="PDF"/>
+      <xsd:enumeration value="PostScript"/>
+      <xsd:enumeration value="SVG"/>
+      <xsd:enumeration value="PNG"/>
+      <xsd:enumeration value="GIF"/>
+      <xsd:enumeration value="JPEG"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
   <xsd:group name="topSection">
     <xsd:choice>
       <xsd:element name="foreword" type="ldf:simpleSection">
@@ -395,9 +406,19 @@
 
   <xsd:complexType name="simpleFigure">
     <xsd:sequence>
+      <xsd:element name="shortcaption" type="xsd:string" minOccurs="0"/>
       <xsd:element name="caption" type="xsd:string"/>
-      <xsd:element name="type" type="xsd:string"/>
-      <xsd:element name="file" type="xsd:string"/>
+      <xsd:element name="source" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="type" type="ldf:figureType"/>
+            <xsd:choice>
+              <xsd:element name="localfile" type="xsd:string"/>
+              <xsd:element name="url" type="xsd:anyURI"/>
+            </xsd:choice>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID" use="optional"/>
   </xsd:complexType>

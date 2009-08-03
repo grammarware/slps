@@ -526,19 +526,18 @@
         <a>
           <xsl:attribute name="name">
             <xsl:value-of select="@id"/>
-
           </xsl:attribute>
         </a>
       </xsl:if>
       <center>
         <xsl:choose>
-          <xsl:when test="type = 'PNG'">
+          <xsl:when test="source[type = 'PNG']">
             <img>
               <xsl:attribute name="src">
-                <xsl:value-of select="file"/>
+                <xsl:value-of select="source[type = 'PNG']/*[2]"/>
               </xsl:attribute>
               <xsl:attribute name="alt">
-                <xsl:value-of select="caption"/>
+                <xsl:value-of select="shortcaption"/>
               </xsl:attribute>
             </img>
           </xsl:when>
@@ -547,6 +546,9 @@
           </xsl:otherwise>
         </xsl:choose>
         <br/>
+        <strong>
+          <xsl:text>Figure.</xsl:text>
+        </strong>
         <xsl:value-of select="caption"/>
       </center>
     </p>

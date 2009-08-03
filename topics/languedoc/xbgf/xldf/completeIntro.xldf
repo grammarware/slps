@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xldf:evolution-sequence
+  xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:ldf="http://planet-sl.org/ldf"
@@ -344,14 +345,21 @@
 
   <xldf:add-figure>
     <figure>
+      <shortcaption>Full convergence diagram for BNF and BGF.</shortcaption>
       <caption>
         Full convergence diagram for BNF and BGF. The top nodes are sources, the bottom node
         is the target, the arc labels are separate XBGF scripts, the nodes contain
         numbers of name mismatches and structural mismatches between each step and
         the synch point (marked as a double circle).
       </caption>
-      <type>PDF</type>
-      <file>bnfbgf.pdf</file>
+      <source>
+        <type>PDF</type>
+        <localfile>bnfbgf.pdf</localfile>
+      </source>
+      <source>
+        <type>PNG</type>
+        <localfile>bnfbgf.png</localfile>
+      </source>
     </figure>
     <to>compatibility-section</to>
   </xldf:add-figure>
@@ -362,7 +370,31 @@
       <text>
         Finally we run a grammar comparator to see what is left and notice
         one mismatch that is easily fixed with <ldf:keyword>massage</ldf:keyword>, as well as the right
-        hand side still having $(symbol^+)^+$ instead of just $symbol$. This
+        hand side still having
+        <ldf:formula>
+          <mml:math>
+            <mml:mrow>
+              <mml:msup>
+                <mml:mfenced>
+                  <mml:msup>
+                    <mml:mi>symbol</mml:mi>
+                    <mml:mo>+</mml:mo>
+                  </mml:msup>
+                </mml:mfenced>
+                <mml:mo>+</mml:mo>
+              </mml:msup>
+            </mml:mrow>
+          </mml:math>
+        </ldf:formula>
+        instead of just
+        <ldf:formula>
+          <mml:math>
+            <mml:mrow>
+              <mml:mi>symbol</mml:mi>
+            </mml:mrow>
+          </mml:math>
+        </ldf:formula>
+        . This
         corresponds to the design decision that treats top-level choices
         and top-level sequences differently in BNF to make them more appealing
         to the eye by avoiding unnecessary parenthesizing. The very specific

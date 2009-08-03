@@ -120,6 +120,14 @@
 		%% START_CORE
 	</xsl:text>
     <xsl:apply-templates select="core"/>
+    <xsl:for-each select="backMatter/*">
+      <xsl:call-template name="sectionize">
+        <xsl:with-param name="target" select="."/>
+      </xsl:call-template>
+      <xsl:call-template name="process-SimpleSection">
+        <xsl:with-param name="section" select="."/>
+      </xsl:call-template>
+    </xsl:for-each>
     <xsl:text>\appendix</xsl:text>
     <xsl:apply-templates select="annex"/>
     <xsl:text>\end{document}	%% END_CONTENT</xsl:text>
@@ -441,16 +449,22 @@
 	        \begin{figure}\begin{center}
 </xsl:text>
     <xsl:choose>
-      <xsl:when test="type = 'PDF'">
+      <xsl:when test="source[type = 'PDF']">
         <xsl:text>\includegraphics[width=0.5\textwidth]{</xsl:text>
-        <xsl:value-of select="file"/>
+        <xsl:value-of select="source[type = 'PDF']/localfile"/>
         <xsl:text>}</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>...don't know how to insert a figure...</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:text>\end{center}\caption{</xsl:text>
+    <xsl:text>\end{center}\caption</xsl:text>
+    <xsl:if test="shortcaption">
+      <xsl:text>[</xsl:text>
+      <xsl:value-of select="shortcaption"/>
+      <xsl:text>]</xsl:text>
+    </xsl:if>
+    <xsl:text>{</xsl:text>
     <xsl:value-of select="caption"/>
     <xsl:text>}</xsl:text>
     <xsl:if test="@id">
