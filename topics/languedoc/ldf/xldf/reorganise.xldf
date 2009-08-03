@@ -68,9 +68,9 @@
 
   <xldf:retitle>
     <from>
-      <title>frontSection</title>
+      <title>topSection</title>
     </from>
-    <to>Front matter</to>
+    <to>Front and back matter sections</to>
   </xldf:retitle>
 
   <xldf:retitle>
@@ -79,6 +79,11 @@
     </from>
     <to>Simple figures</to>
   </xldf:retitle>
+
+  <xldf:combine>
+    <section>figureType</section>
+    <with>simpleFigure</with>
+  </xldf:combine>
 
   <xldf:retitle>
     <from>

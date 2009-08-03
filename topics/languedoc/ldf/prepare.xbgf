@@ -4,7 +4,7 @@
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
   <xbgf:vertical>
-    <nonterminal>frontSection</nonterminal>
+    <nonterminal>topSection</nonterminal>
   </xbgf:vertical>
   <xbgf:vertical>
     <nonterminal>frontList</nonterminal>

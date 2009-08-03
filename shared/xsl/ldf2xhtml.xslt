@@ -113,7 +113,19 @@
             <xsl:with-param name="section" select="."/>
           </xsl:call-template>
         </xsl:for-each>
-        <xsl:apply-templates select="core"/>
+        <!--<xsl:apply-templates select="core"/>-->
+        <xsl:choose>
+          <xsl:when test="count(part) = 1">
+            <xsl:apply-templates select="part/core"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:for-each select="part">
+              <xsl:call-template name="treatPart">
+                <xsl:with-param name="part" select="."/>
+              </xsl:call-template>
+            </xsl:for-each>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:for-each select="backMatter/*">
           <xsl:choose>
             <xsl:when test="local-name() = 'placeholder'">
@@ -470,6 +482,32 @@
       <xsl:value-of select="$section/@id"/>
       <xsl:text>}</xsl:text>
     </xsl:if>-->
+  </xsl:template>
+
+  <xsl:template name="treatPart">
+    <xsl:param name="part"/>
+    <h1 xmlns="http://www.w3.org/1999/xhtml">
+      <!-- anchor -->
+      <a>
+        <xsl:attribute name="name">
+          <xsl:choose>
+            <xsl:when test="$part/@id">
+              <xsl:value-of select="$part/@id"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="local-name($part)"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+      </a>
+      <!-- text -->
+      <xsl:text>Part I. </xsl:text>
+      <!-- need to work on numbering -->
+      <xsl:if test="$part/title">
+        <xsl:value-of select="$part/title"/>
+      </xsl:if>
+    </h1>
+    <xsl:apply-templates select="$part/*"/>
   </xsl:template>
 
   <xsl:template match="core|annex">

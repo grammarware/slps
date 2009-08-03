@@ -107,16 +107,27 @@ def main(xsdfile,bgffile,ldffile):
   el = ET.SubElement(section,'normativeReferences')
   el = ET.SubElement(el,'content')
   el = ET.SubElement(el,'list')
+  part = ET.SubElement(dtree,'part')
   for p in stree.findall('/'+slpsns.xsd_('import')):
    pel = ET.SubElement(el,'item')
    pel.text = p.attrib['schemaLocation']
    istree = ET.parse('/'.join(xsdfile.split('/')[:-1])+'/'+p.attrib['schemaLocation'])
-   mapXSD2LDF(istree,dtree,grammar)
+   mapXSD2LDF(istree,part,grammar)
   print len(stree.findall('/'+slpsns.xsd_('import'))),'external schema(ta) imported.'
 
- mapXSD2LDF(stree,dtree,grammar)
-
- ET.ElementTree(dtree).write(ldffile)
+ if dtree.findall('part'):
+  part = dtree.findall('part')[0]
+ else:
+  part = ET.SubElement(dtree,'part')
+ mapXSD2LDF(stree,part,grammar)
+ # bit of normalisation
+ fullTree = ET.ElementTree(dtree)
+ for e in fullTree.findall('//content'):
+  if not len(e):
+   print '[++++] Empty content made explicit.'
+   ET.SubElement(e,'empty')
+ # serialise!
+ fullTree.write(ldffile)
  return
 
 def copymixedcontent (parent, name, stree, xpath):

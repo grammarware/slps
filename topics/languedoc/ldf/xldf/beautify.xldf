@@ -25,32 +25,16 @@
               </marked>
             </bgf:expression>
             <bgf:expression>
-              <star>
+              <selectable>
+                <selector>frontMatter</selector>
                 <bgf:expression>
-                  <selectable>
-                    <selector>placeholder</selector>
+                  <star>
                     <bgf:expression>
-                      <nonterminal>generated</nonterminal>
+                      <nonterminal>topSection</nonterminal>
                     </bgf:expression>
-                  </selectable>
+                  </star>
                 </bgf:expression>
-              </star>
-            </bgf:expression>
-            <bgf:expression>
-              <marked>
-                <bgf:expression>
-                  <selectable>
-                    <selector>frontMatter</selector>
-                    <bgf:expression>
-                      <plus>
-                        <bgf:expression>
-                          <nonterminal>frontSection</nonterminal>
-                        </bgf:expression>
-                      </plus>
-                    </bgf:expression>
-                  </selectable>
-                </bgf:expression>
-              </marked>
+              </selectable>
             </bgf:expression>
             <bgf:expression>
               <optional>
@@ -93,16 +77,61 @@
               </optional>
             </bgf:expression>
             <bgf:expression>
-              <plus>
+              <choice>
+                <bgf:expression>
+                  <plus>
+                    <bgf:expression>
+                      <selectable>
+                        <selector>core</selector>
+                        <bgf:expression>
+                          <nonterminal>structuredSection</nonterminal>
+                        </bgf:expression>
+                      </selectable>
+                    </bgf:expression>
+                  </plus>
+                </bgf:expression>
+                <bgf:expression>
+                  <plus>
+                    <bgf:expression>
+                      <marked>
+                        <bgf:expression>
+                          <selectable>
+                            <selector>part</selector>
+                            <bgf:expression>
+                              <plus>
+                                <bgf:expression>
+                                  <selectable>
+                                    <selector>core</selector>
+                                    <bgf:expression>
+                                      <nonterminal>structuredSection</nonterminal>
+                                    </bgf:expression>
+                                  </selectable>
+                                </bgf:expression>
+                              </plus>
+                            </bgf:expression>
+                          </selectable>
+                        </bgf:expression>
+                      </marked>
+                    </bgf:expression>
+                  </plus>
+                </bgf:expression>
+              </choice>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
                 <bgf:expression>
                   <selectable>
-                    <selector>core</selector>
+                    <selector>backMatter</selector>
                     <bgf:expression>
-                      <nonterminal>structuredSection</nonterminal>
+                      <star>
+                        <bgf:expression>
+                          <nonterminal>topSection</nonterminal>
+                        </bgf:expression>
+                      </star>
                     </bgf:expression>
                   </selectable>
                 </bgf:expression>
-              </plus>
+              </optional>
             </bgf:expression>
             <bgf:expression>
               <star>
@@ -122,11 +151,23 @@
     </xbgf:anonymize>
     <xbgf:extract>
       <bgf:production>
-        <nonterminal>frontMatter</nonterminal>
+        <nonterminal>anyTopSections</nonterminal>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>topSection</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:extract>
+      <bgf:production>
+        <nonterminal>lists</nonterminal>
         <bgf:expression>
           <plus>
             <bgf:expression>
-              <nonterminal>frontSection</nonterminal>
+              <nonterminal>frontList</nonterminal>
             </bgf:expression>
           </plus>
         </bgf:expression>
@@ -134,24 +175,14 @@
     </xbgf:extract>
     <xbgf:extract>
       <bgf:production>
-        <nonterminal>lists</nonterminal><bgf:expression>
-                      <plus>
-                        <bgf:expression>
-                          <nonterminal>frontList</nonterminal>
-                        </bgf:expression>
-                      </plus>
-                    </bgf:expression>
-      </bgf:production>
-    </xbgf:extract>
-    <xbgf:extract>
-      <bgf:production>
-        <nonterminal>lexicalPart</nonterminal><bgf:expression>
-                      <plus>
-                        <bgf:expression>
-                          <nonterminal>lexicalSection</nonterminal>
-                        </bgf:expression>
-                      </plus>
-                    </bgf:expression>
+        <nonterminal>lexicalPart</nonterminal>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <nonterminal>lexicalSection</nonterminal>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
       </bgf:production>
     </xbgf:extract>
   </xldf:transform-grammar>
@@ -266,9 +297,10 @@
           <sequence>
             <bgf:expression>
               <selectable>
-                <selector>name</selector><bgf:expression>
-              <value>string</value>
-            </bgf:expression>
+                <selector>name</selector>
+                <bgf:expression>
+                  <value>string</value>
+                </bgf:expression>
               </selectable>
             </bgf:expression>
             <bgf:expression>
@@ -345,9 +377,9 @@
       </bgf:production>
     </xbgf:anonymize>
   </xldf:transform-grammar>
-  
- 
- <!--
+
+
+  <!--
   <xldf:transform-grammar>
     <target>simpleType-body</target>
     <xbgf:vertical>

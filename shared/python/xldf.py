@@ -43,12 +43,16 @@ def normalise(tree):
  for e in tree.findall('*'):
   for e2 in e.findall('*'):
    if len(e2.findall('content'))>1:
-    print '[????] In',identify(e),'/',identify(e2),'found double content!'
+    print '[++++] In',identify(e),'/',identify(e2),'found double content!'
     first = e2.findall('content')[0]
     for e3 in e2.findall('content')[1:]:
      for e4 in e3.findall('*'):
       first.append(e4)
      e2.remove(e3)
+ for e in tree.findall('//content'):
+  if not len(e):
+   print '[++++] Empty content made explicit.'
+   ET.SubElement(e,'empty')
  return
 
 def main(xldffile,inldffile,outldffile):

@@ -171,7 +171,11 @@ def xldf_drop(localpath,cmd,tree):
  if not found:
   print '[----] xldf:drop failed: node',cmd.findtext('section'),'not found!'
   return
- tree.getroot().remove(found)
+ # houwtje-touwtje
+ try:
+  tree.getroot().remove(found)
+ except ValueError,e:
+  tree.findall('part')[0].remove(found)
  print '[XLDF] drop('+cmd.findtext('section')+')'
  return
 
@@ -196,14 +200,17 @@ def xldf_combine(localpath,cmd,tree):
     continue
    if found2.findall(s.tag):
     # the same role present, appending
-    print '[////] Concatenating',s.tag,'of',cmd.findtext('section'),'and',cmd.findtext('with')
+    #print '[////] Concatenating',s.tag,'of',cmd.findtext('section'),'and',cmd.findtext('with')
     content2content(s.findall('content')[0],found2.findall(s.tag+'/content')[0])
    else:
     # the same role absent, copying
-    print '[////] Copying',s.tag,'of',cmd.findtext('section'),'to',cmd.findtext('with')
+    #print '[////] Copying',s.tag,'of',cmd.findtext('section'),'to',cmd.findtext('with')
     found2.append(s)
  # wtf?
- tree.getroot().remove(found)
+ try:
+  tree.getroot().remove(found)
+ except ValueError,e:
+  tree.findall('part')[0].remove(found)
  print '[XLDF] combine('+cmd.findtext('section')+',',cmd.findtext('with')+')'
  #else:
  # print '[----] xldf:combine failed: don''t know how to place subsections in',found2.tag
@@ -258,7 +265,7 @@ def xldf_add_section(localpath,cmd,tree):
   print '[XLDF] add-section to lexical part'
   success = True
  elif s.tag in ('core','annex'):
-  tree.getroot().append(s)
+  tree.findall('part')[0].append(s)
   print '[XLDF] add-section to the',s.tag
   success = True
  elif s.tag == 'placeholder':

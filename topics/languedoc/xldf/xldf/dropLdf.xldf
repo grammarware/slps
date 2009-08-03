@@ -57,7 +57,7 @@
     <section>titlePage</section>
   </xldf:drop>
   <xldf:drop>
-    <section>frontSection</section>
+    <section>topSection</section>
   </xldf:drop>
   <xldf:drop>
     <section>frontList</section>
@@ -74,8 +74,14 @@
   <xldf:drop>
     <section>link</section>
   </xldf:drop>
-   <xldf:drop>
+  <xldf:drop>
     <section>code</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>formula</section>
+  </xldf:drop>
+  <xldf:drop>
+    <section>figureType</section>
   </xldf:drop>
  
 </xldf:evolution-sequence>

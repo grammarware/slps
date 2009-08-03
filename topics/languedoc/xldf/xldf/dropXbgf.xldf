@@ -12,7 +12,7 @@
     <section>transformation</section>
   </xldf:drop>
   <xldf:drop>
-    <section>folding-transformation</section>
+    <section>folding-unfolding-transformation</section>
   </xldf:drop>
   <xldf:drop>
     <section>refactoring-transformation</section>
