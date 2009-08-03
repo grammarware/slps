@@ -160,31 +160,45 @@
   <xsl:template match="xbgf:rename">
     <xsl:choose>
       <xsl:when test="local-name(*) = 'label'">
-        <xsl:text>renameL(</xsl:text>
+        <xsl:text>renameL([</xsl:text>
+        <xsl:value-of select="label/from"/>
+        <xsl:text>], [</xsl:text>
+        <xsl:value-of select="label/to"/>
+        <xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:when test="local-name(*) = 'nonterminal'">
         <xsl:text>renameN(</xsl:text>
+        <xsl:value-of select="nonterminal/from"/>
+        <xsl:text>, </xsl:text>
+        <xsl:value-of select="nonterminal/to"/>
       </xsl:when>
       <xsl:when test="local-name(*) = 'selector'">
         <xsl:text>renameS(</xsl:text>
+        <xsl:value-of select="selector/from"/>
+        <xsl:text>, </xsl:text>
+        <xsl:value-of select="selector/to"/>
       </xsl:when>
       <xsl:when test="local-name(*) = 'terminal'">
-        <xsl:text>renameT(</xsl:text>
+        <xsl:text>renameT("</xsl:text>
+        <xsl:value-of select="terminal/from"/>
+        <xsl:text>", "</xsl:text>
+        <xsl:value-of select="terminal/to"/>
+        <xsl:text>"</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="local-name()" />
         <xsl:text>-</xsl:text>
         <xsl:value-of select="local-name(*)" />
         <xsl:text>(</xsl:text>
+        <xsl:apply-templates select="./*/*[1]"/>
+        <xsl:text>, </xsl:text>
+        <xsl:apply-templates select="./*/*[2]"/>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates select="./*/*[1]"/>
-    <xsl:text>, </xsl:text>
-    <xsl:apply-templates select="./*/*[2]"/>
     <xsl:text>);
 </xsl:text>
   </xsl:template>
-
+  
   <xsl:template match="xbgf:reroot">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>

@@ -231,13 +231,20 @@
   <xsd:group name="decorative-transformation">
     <xsd:annotation>
       <xsd:documentation>
-        Last but not least, there are two pairs of refactorings that are
+        Last but not least, there are four refactorings that are
         very specific to the BGF itself. Not all grammar definition formalisms
         have labelled productions, but since we do, we also need two transformation
-        steps made possible: to designate an already available production with a
-        label, and to unlabel an existing labelled production. By anonymising
-        we refer to stripping selectors from subexpressions, and by deanonymising,
-        naturally, adding selectors.
+        steps made possible: to <ldf:keyword>designate</ldf:keyword> an already
+        available production with a label, and to <ldf:keyword>unlabel</ldf:keyword>
+        an existing labelled production. By
+        <ldf:link>
+          <text>anonymising</text>
+          <reference>anonymize</reference>
+        </ldf:link> we refer to stripping selectors from subexpressions, and by
+        <ldf:link>
+          <text>deanonymising</text>
+          <reference>deanonymize</reference>
+        </ldf:link>, naturally, adding selectors.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>
@@ -252,10 +259,10 @@
     <xsd:annotation>
       <xsd:documentation>
         Nonterminal definitions can be extended ("added to") vertically
-        and horizontally. In the former case, a given production is added
+        and horisontally. In the former case, a given production is added
         to an existing definition. In the latter case, a given branch is
         added to a given expression. The
-        horizontal mode is there for convenience only because it could be
+        horisontal mode is there for convenience only because it could be
         simulated by a sequence of extraction, vertical addition, and
         inlining. There are two operators that are very similar to the
         (vertical) add operator: define and introduce. The define operator
@@ -287,9 +294,10 @@
   <xsd:element name="appear">
     <xsd:annotation>
       <xsd:documentation>
-        An appear transformation takes a production as an input. Inside that production,
-        one subexpression should be marked. The marked expression must be nillable, i.e.,
-        reducible to an empty sequence.
+        The purpose of this transformation operator is to insert an nillable symbol (i.e.,
+        reducible to an empty sequence) at any place in any existing grammar production.
+        It takes a production as an input. Inside that production, one nillable subexpression
+        should be marked.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -303,7 +311,11 @@
     <xsd:annotation>
       <xsd:documentation>
         Just like <ldf:keyword>unchain</ldf:keyword> is a specific form of <ldf:keyword>inline</ldf:keyword>,
-        chaining is a disciplined form of extraction. The argument
+        chaining is a disciplined form of
+        <ldf:link>
+          <text>extraction</text>
+          <reference>extract</reference>
+        </ldf:link>. The argument
         production will be part of the resulting grammar; it is a chain
         production, i.e., a production with a nonterminal as its defining
         expression. That nonterminal is the one whose definition is to be
@@ -529,7 +541,7 @@
   <xsd:element name="factor">
     <xsd:annotation>
       <xsd:documentation>
-        Massage modulo factorization over choices. The transformation
+        Massage modulo factorisation over choices. The transformation
         is either attempted for all productions of a nonterminal or for a
         specific one appointed by its label.
       </xsd:documentation>
@@ -654,12 +666,8 @@
   <xsd:element name="lassoc">
     <xsd:annotation>
       <xsd:documentation>
-        The argument production is expected result of the transformation.
-        Its defining expression involves a pattern of binary recursion
-        with regard to the defined nonterminal. The argument production
-        replace a production with the same defined nonterminal and label,
-        if any, assuming that the defining expression uses an equivlent,
-        repeating expression form. The ``l'' in ``lassoc'' refers to the
+        The same as <ldf:keyword>rassoc</ldf:keyword>, but replaces an iterative production found in the grammar
+        by a left associative repeating equivalent. The ``l'' in ``lassoc'' refers to the
         intended effect at the level of derivation trees: the list of
         subtrees is to be converted into a nested binary tree in a
         left-associative manner.
@@ -768,15 +776,12 @@
   <xsd:element name="rassoc">
     <xsd:annotation>
       <xsd:documentation>
-        The argument production is expected result of the transformation.
-        Its defining expression involves a pattern of binary recursion
-        with regard to the defined nonterminal. The argument production
-        replace a production with the same defined nonterminal and label,
-        if any, assuming that the defining expression uses an equivlent,
-        repeating expression form. The ``r'' in ``rassoc'' refers to the
-        intended effect at the level of derivation trees: the list of
-        subtrees is to be converted into a nested binary tree in a
-        right-associative manner.
+        This transformation operator replaces an iterative production found in the grammar
+        by the argument production, which is a right associative repeating equivalent of
+        the former. Its defining expression involves a pattern of binary recursion
+        with regard to the defined nonterminal. The ``r'' in ``rassoc'' refers to the
+        intended effect at the level of derivation trees: the list of subtrees is to be
+        converted into a nested binary tree in a right-associative manner.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -818,7 +823,7 @@
         Productions can be removed from existing, vertical definitions.
         The remaining definition must not become empty, i.e., undefined.
         There is the undefine operator that can be applied in that case.
-        There is also a horizontal mode of removing branches from choices.
+        There is also a horisontal mode of removing branches from choices.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -1025,7 +1030,10 @@
   <xsd:element name="concretize">
     <xsd:annotation>
       <xsd:documentation>
-        As <ldf:keyword>inject</ldf:keyword>, but works more carefully: allows to add only terminals.
+        Just as <ldf:keyword>abstractize</ldf:keyword> is a preconditioned
+        version of <ldf:keyword>project</ldf:keyword>, this operator is a variation of
+        <ldf:keyword>inject</ldf:keyword>. The XBGF engine checks if the marked part only consists of
+        terminal symbols: if yes, injection happens; if not, the transformation is unapplicable.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -1038,7 +1046,11 @@
   <xsd:element name="unchain">
     <xsd:annotation>
       <xsd:documentation>
-        Unchaining is a disciplined form of inlining. The argument
+        Unchaining is a disciplined form of
+        <ldf:link>
+          <text>inlining</text>
+          <reference>inline</reference>
+        </ldf:link>. The argument
         production must occur in the input grammar, and it must be a chain
         production, i.e., a production with a nonterminal as its
         defining expression. The latter nonterminal is the one whose
@@ -1046,8 +1058,8 @@
         except in the chain production at hand.
       </xsd:documentation>
       <xsd:documentation>
-        The unchain transformation does not increase the expressivity nor
-        the power of the transformational language: technically, it is
+        The unchain transformation does not increase the expressivity
+        of the transformational language: technically, it is
         nothing more than an inline with a precondition. However, this
         particular precondition seems useful and not uncommon when dealing
         with layered grammars.
@@ -1128,8 +1140,10 @@
   <xsd:element name="abstractize">
     <xsd:annotation>
       <xsd:documentation>
-        As <ldf:keyword>project</ldf:keyword>, but works more carefully: checks that the part to be removed
-        consists of terminals.
+        As <ldf:keyword>project</ldf:keyword>, but with an additional precondition
+        that the part to be removed should consist of terminals. This is checked
+        automatically by the XBGF engine: if the precondition fails, the transformation
+        is unapplicable.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>

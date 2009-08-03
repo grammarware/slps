@@ -318,7 +318,7 @@
         </mml:math>
       </formula>
       <text>
-        It is trivial to prove that for each case the expression on the right is included
+        It is possible to prove that for each case the expression on the right is included
         in the expression on the right, but not otherwise. For going the other way
         <ldf:keyword>widen</ldf:keyword> transformation is used. For shaping
         an expression into a completely equivalent one, use <ldf:keyword>massage</ldf:keyword>.

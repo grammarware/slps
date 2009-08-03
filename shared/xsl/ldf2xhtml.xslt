@@ -216,6 +216,17 @@
             </xsl:call-template>
           </strong>
         </xsl:when>
+        <xsl:when test="local-name() = 'link'">
+          <strong xmlns="http://www.w3.org/1999/xhtml">
+            <a>
+              <xsl:attribute name="href">
+                <xsl:text>#</xsl:text>
+                <xsl:value-of select="reference"/>
+              </xsl:attribute>
+              <xsl:value-of select="text"/>
+            </a>
+          </strong>
+        </xsl:when>
         <xsl:when test="local-name() = 'formula'">
           <xsl:apply-templates select="mml:math/*"/>
         </xsl:when>

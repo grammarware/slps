@@ -949,7 +949,7 @@
       <xsd:sequence>
         <!--<xsd:element name="text" type="xsd:string"/>-->
         <xsd:element name="text" type="xsd:string" minOccurs="0"/>
-        <xsd:element name="reference" type="xsd:IDREF"/>
+        <xsd:element name="reference" type="xsd:string"/> <!--IDREF -->
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

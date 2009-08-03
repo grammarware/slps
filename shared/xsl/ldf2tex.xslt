@@ -191,6 +191,12 @@
           <xsl:value-of select="."/>
           <xsl:text>}</xsl:text>
         </xsl:when>
+        <xsl:when test="local-name() = 'link'">
+          <!-- \ref{} ??? -->
+          <xsl:text>\textbf{</xsl:text>
+          <xsl:value-of select="text"/>
+          <xsl:text>}</xsl:text>
+        </xsl:when>
         <!--
               <xsl:when test="namespace-uri() = 'http://planet-sl.org/ldf'">
                 <xsl:apply-templates select="."/>

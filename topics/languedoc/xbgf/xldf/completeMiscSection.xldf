@@ -304,9 +304,10 @@
     <content>
       <text>
         Renaming terminals breaks string-oriented (concrete) semantics, but is still possible.
-        This variant is pretty-printed as <ldf:keyword>renameT</ldf:keyword>, it is
-        essentially syntactic sugar for the specific combination of
-        <ldf:keyword>abstractize</ldf:keyword> and <ldf:keyword>concretize</ldf:keyword>.
+        This variant is pretty-printed as <ldf:keyword>renameT</ldf:keyword>, its behaviour
+        is essentially that of a sequential composition of <ldf:keyword>abstractize</ldf:keyword>
+        and <ldf:keyword>concretize</ldf:keyword>, but its meaning is different: it changes an
+        entity that is already present in the grammar, not removes or adds anything.
       </text>
     </content>
   </xldf:append>

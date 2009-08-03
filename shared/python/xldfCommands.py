@@ -151,7 +151,11 @@ def xldf_place(localpath,cmd,tree):
  if found2.tag=='core':
   found.tag = 'subtopic'
   found2.append(found)
-  tree.getroot().remove(found)
+  # houwtje-touwtje
+  try:
+   tree.getroot().remove(found)
+  except ValueError,e:
+   tree.findall('part')[0].remove(found)
   print '[XLDF] place('+cmd.findtext('section')+',',cmd.findtext('inside')+')'
  elif found2.tag in ('definitions','abbreviations','languageOverview'):
   el = ET.SubElement(found2,'term')
@@ -160,7 +164,11 @@ def xldf_place(localpath,cmd,tree):
   el2 = ET.SubElement(el,'definition')
   for el in found.findall('.//content/*'):
    el2.append(el)
-  tree.getroot().remove(found)
+  # houwtje-touwtje
+  try:
+   tree.getroot().remove(found)
+  except ValueError,e:
+   tree.findall('part')[0].remove(found)
   print '[XLDF] place('+cmd.findtext('section')+',',cmd.findtext('inside')+')'
  else:
   print '[----] xldf:place failed: don''t know how to place subsections in',found2.tag
@@ -283,7 +291,11 @@ def xldf_remove_section(localpath,cmd,tree):
    foundp = findnode(tree,cmd.findtext('from'))
    foundp.remove(found)
   else:
-   tree.getroot().remove(found)
+   # houwtje-touwtje
+   try:
+    tree.getroot().remove(found)
+   except ValueError,e:
+    tree.findall('part')[0].remove(found)
   print '[XLDF] remove-section is successful'
  else:
   print '[----] xldf:remove-section couldn''t find id',cmd.findtext('id')
@@ -320,12 +332,12 @@ def xldf_change_role(localpath,cmd,tree):
    allNodes = tree.findall('*')
    cores = False
    for i in range(0,len(allNodes)):
-    if not cores and allNodes[i].tag == 'core':
+    if not cores and allNodes[i].tag == 'part':
      cores = True
-    if cores and allNodes[i].tag != 'core':
+    if cores and allNodes[i].tag != 'part':
      break
    back = ET.Element('backMatter')
-   tree.findall('/')[0].insert(i,back)
+   tree.findall('/')[0].insert(i+1,back)
   back.append(where)
   tree.findall('frontMatter')[0].remove(where)
   print '[XLDF] change-role moved',cmd.findtext('scope'),'from',cmd.findtext('from'),'to',cmd.findtext('to')
