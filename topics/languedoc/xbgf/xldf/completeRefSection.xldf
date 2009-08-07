@@ -1555,7 +1555,7 @@
   <xldf:append>
     <where>vertical-example</where>
     <content>
-      <text>the, after using this transformation:</text>
+      <text>then, after using this transformation:</text>
     </content>
   </xldf:append>
   <xldf:import-sample>

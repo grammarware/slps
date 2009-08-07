@@ -259,13 +259,13 @@
       </xsd:documentation>
       <xsd:documentation>
         <ldf:keyword>validation</ldf:keyword>:
-        The validator makes sure that the BGFs are valid against their schema.
-        This includes extracted BGFs as well as all derived BGFs.
+        The validator makes sure that the BGF grammars are valid against their schema.
+        This includes extracted BGF files as well as all derived ones.
         If the validator is not defined, LCI works fine without it.
       </xsd:documentation>
       <xsd:documentation>
         <ldf:keyword>comparison</ldf:keyword>:
-        The diff tool takes two parameters and returns zero if both BGFs are deemed equal.
+        The diff tool takes two parameters and returns zero if both BGF files are deemed equal.
         If the diff tool is not defined, LCI can only work with one-branch targets.
       </xsd:documentation>
       <xsd:documentation>

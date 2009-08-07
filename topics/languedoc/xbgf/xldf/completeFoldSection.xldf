@@ -73,8 +73,7 @@
         happens as a part of sequences with <ldf:keyword>fold</ldf:keyword>,
         <ldf:keyword>downgrade</ldf:keyword>, <ldf:keyword>disappear</ldf:keyword>,
         <ldf:keyword>deyaccify</ldf:keyword>, <ldf:keyword>distribute</ldf:keyword>,
-        etc.---in which case it is only natural to try to limit the impact of every
-        step.
+        etc.---in which case it is only natural to limit the impact of every step.
       </text>
     </content>
   </xldf:insert>

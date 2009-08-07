@@ -220,7 +220,8 @@
         For instance, in the XBGF document the samples were originally in XBGF,
         but were pretty-printed with an external universal pretty-printer to get
         the nice EBNF-ish look (otherwise the reader would be overwhelmed with XML
-        listings).
+        listings). There were two different pretty-printers: one for the \TeX\ version
+        inlined in the thesis, and one for browsable HTML version available as \cite{XBGFManual}.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>

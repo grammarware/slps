@@ -437,17 +437,14 @@
   <xsd:element name="deyaccify" type="bgf:nonterminal">
     <xsd:annotation>
       <xsd:documentation>
-        Deyaccification is a widely used term that means ``performing
-        activities of removing grammatical idiosyncrasies typical for
-        the tool called YACC''. YACC, or Yet Another Compiler Compiler,
-        was developed in the 1970s and has grown far beyond these boundaries
-        since then. However, it somehow became common practice to remain
-        within them even when grammar engineers do not use yacc as such
-        at all.
+		Deyaccification is a widely used term that means converting recursive
+		definitions to iterative ones where possible. The name comes from
+		YACC, or Yet Another Compiler Compiler, a tool which underlying parsing
+		technology limits were enforcing the usage of recursive definitions back in the 1970s.
+		However, it somehow became common practice to remain within them
+		even when grammar engineers do not use yacc as such at all.
       </xsd:documentation>
       <xsd:documentation>
-        One of such limitations is the core target for this transformation:
-        yaccified constructions tend to prefer recursion over EBNF iteration.
         The name of a nonterminal must be provided as an argument, then
         the transformation engine checks if the grammar productions for this
         nonterminal fit into one of the yaccified patterns. If not, the error
@@ -456,8 +453,7 @@
         and recursion.
       </xsd:documentation>
       <xsd:documentation>
-        Both left- and right-recursive forms
-        can be factored with this transformation.
+        Both left- and right-recursive forms can be factored with this transformation.
       </xsd:documentation>
     </xsd:annotation>
   </xsd:element>
@@ -594,7 +590,8 @@
   <xsd:element name="horizontal" type="bgf:nonterminal">
     <xsd:annotation>
       <xsd:documentation>
-        Turn a definition based on multiple productions into a choice-based one.
+        Turn a definition based on multiple productions into a top choice-based one.
+		The action is a reverse of <ldf:keyword>vertical</ldf:keyword>.
       </xsd:documentation>
     </xsd:annotation>
   </xsd:element>
@@ -1173,7 +1170,27 @@
         Turn top-level choices into multiple productions. The transformation
         is either attempted for all productions of a nonterminal or for a
         specific one appointed by its label.
-      </xsd:documentation>
+		The action is a reverse of <ldf:keyword>horizontal</ldf:keyword>.
+    </xsd:documentation>
+	<xsd:documentation>
+		Occasionally we use terms ``vertical'' productions or nonterminals
+		and ``horisontal'' ones. By vertical nonterminals we mean those that
+		are defined by a list of productions, with every production lacking
+		a top-level choice. A horisontal nonterminal, on the other hand,
+		is defined by one production that is a top-level choice. Nonterminals
+		that employ both top-level choices and splitting into multiple productions
+		are neither horisontal nor vertical.
+	</xsd:documentation>
+	<xsd:documentation>
+		By default all operators prefer vertical productions. However,
+		in some cases like 
+        <ldf:link>
+          <text>factoring</text>
+          <reference>factor</reference>
+        </ldf:link>
+		it should not be expected from the transformation engine to look up
+		scattered definitions, so one horisontal production is expected instead.
+	</xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
       <xsd:group ref="xbgf:scope"/>
