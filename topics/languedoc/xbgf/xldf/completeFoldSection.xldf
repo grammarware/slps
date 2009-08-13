@@ -69,7 +69,7 @@
         Language Specification case study are restricted in scope by a nonterminal.
         The reason for such statistics is that when the language engineer wants to
         give up the nonterminal, he uses the <ldf:keyword>inline</ldf:keyword>
-        transformations. On the other hand, <ldf:keyword>unfold</ldf:keyword> usually
+        transformations. However, <ldf:keyword>unfold</ldf:keyword> usually
         happens as a part of sequences with <ldf:keyword>fold</ldf:keyword>,
         <ldf:keyword>downgrade</ldf:keyword>, <ldf:keyword>disappear</ldf:keyword>,
         <ldf:keyword>deyaccify</ldf:keyword>, <ldf:keyword>distribute</ldf:keyword>,

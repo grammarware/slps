@@ -1148,7 +1148,7 @@
         <text>
           This transformation is apparently non-injective, hence, it is impossible to have
           a complete inverse of it. A more general <ldf:keyword>factor</ldf:keyword>
-          transformation, on the other hand, is as capable of emulating <ldf:keyword>distribute</ldf:keyword>'s
+          transformation, however, is as capable of emulating <ldf:keyword>distribute</ldf:keyword>'s
           effect as it is capable of doing the reverse thing.
         </text>
       </content>
