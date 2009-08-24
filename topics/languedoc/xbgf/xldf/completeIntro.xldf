@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
@@ -7,19 +7,19 @@
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <!-- beautify bgf -->
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>scope</target>
     <xbgf:vertical>
       <nonterminal>scope</nonterminal>
     </xbgf:vertical>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <placeholder>listofcontents</placeholder>
-  </xldf:add-subsection>
+  </xldf:addSubsection>
 
   <!-- design goals -->
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <designGoals>
       <author>Vadim Zaytsev</author>
       <content>
@@ -80,9 +80,9 @@
         </list>
       </content>
     </designGoals>
-  </xldf:add-subsection>
+  </xldf:addSubsection>
 
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <notation id="notation-section">
       <author>Vadim Zaytsev</author>
       <content>
@@ -94,7 +94,7 @@
         </text>
       </content>
     </notation>
-  </xldf:add-subsection>
+  </xldf:addSubsection>
 
   <xldf:combine>
     <section>grammar</section>
@@ -129,7 +129,7 @@
     <with>notation-section</with>
   </xldf:combine>
   
-   <xldf:add-section>
+   <xldf:addSection>
     <core id="bnf">
       <title>...</title>
       <description>
@@ -141,11 +141,11 @@
         </content>
       </description>
     </core>
-  </xldf:add-section>
-  <xldf:import-grammar>
+  </xldf:addSection>
+  <xldf:importGrammar>
     <target>bnf</target>
     <file>../../presentation/prettyprint/bnf.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:combine>
     <section>bnf</section>
     <with>notation-section</with>
@@ -163,7 +163,7 @@
   </xldf:append>
 
   <!-- compatibility section is about converging BGF and BNF -->
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <compatibility id="compatibility-section">
       <author>Vadim Zaytsev</author>
       <content>
@@ -187,13 +187,13 @@
         </text>
       </content>
     </compatibility>
-  </xldf:add-subsection>
+  </xldf:addSubsection>
 
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>../../presentation/prettyprint/xbgf/renameBgf.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
 
   <xldf:append>
     <where>compatibility-section</where>
@@ -204,11 +204,11 @@
     </content>
   </xldf:append>
   
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>../../presentation/prettyprint/xbgf/preferBnf.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
 
   <xldf:append>
     <where>compatibility-section</where>
@@ -230,11 +230,11 @@
     </content>
   </xldf:append>
 
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>../../presentation/prettyprint/xbgf/stripWhitespace.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
 
   <xldf:append>
     <where>compatibility-section</where>
@@ -247,11 +247,11 @@
     </content>
   </xldf:append>
 
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>../../presentation/prettyprint/xbgf/designate.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
 
   <xldf:append>
     <where>compatibility-section</where>
@@ -267,83 +267,83 @@
     </content>
   </xldf:append>
 
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-1.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-2.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-3.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-4.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-5.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-6.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-7.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-8.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-9.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-10.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-11.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-12.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-13.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-14.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
-  <xldf:import-sample>
+  </xldf:importSample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>sliced/stripTerminals-15.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
 
-  <xldf:add-figure>
+  <xldf:addFigure>
     <figure>
       <shortcaption>Full convergence diagram for BNF and BGF.</shortcaption>
       <caption>
@@ -362,7 +362,7 @@
       </source>
     </figure>
     <to>compatibility-section</to>
-  </xldf:add-figure>
+  </xldf:addFigure>
 
   <xldf:append>
     <where>compatibility-section</where>
@@ -404,11 +404,11 @@
     </content>
   </xldf:append>
 
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>compatibility-section</target>
     <file>../../presentation/prettyprint/xbgf/refactorBnf.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
 
   <xldf:append>
     <where>compatibility-section</where>
@@ -420,14 +420,14 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:change-role>
+  <xldf:changeRole>
     <scope>compatibility-section</scope>
     <from>frontMatter</from>
     <to>backMatter</to>
-  </xldf:change-role>
+  </xldf:changeRole>
 
   <!-- list of definitions -->
-  <xldf:add-section>
+  <xldf:addSection>
     <definitions id="definitions-section">
       <author>Vadim Zaytsev</author>
       <term>
@@ -447,7 +447,7 @@
         </definition>
       </term>
     </definitions>
-  </xldf:add-section>
+  </xldf:addSection>
 
   <xldf:place>
     <section>sequence</section>
@@ -459,7 +459,7 @@
     <inside>definitions-section</inside>
   </xldf:place>
 
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>transformation</target>
     <xbgf:vertical>
       <nonterminal>transformation</nonterminal>
@@ -475,7 +475,7 @@
       </vertical>
     </xbgf:remove>
     <xbgf:horizontal>transformation</xbgf:horizontal>
- </xldf:transform-grammar>
+ </xldf:transformGrammar>
   <xldf:place>
     <section>transformation</section>
     <inside>definitions-section</inside>
@@ -486,7 +486,7 @@
     <inside>definitions-section</inside>
   </xldf:place>
 
-  <xldf:add-section>
+  <xldf:addSection>
     <core id="marked-production">
       <title>Marked</title>
       <description>
@@ -524,7 +524,7 @@
         </content>
       </description>
     </core>
-  </xldf:add-section>
+  </xldf:addSection>
   <xldf:place>
     <section>marked-production</section>
     <inside>definitions-section</inside>
@@ -540,4 +540,4 @@
 	<msup><mi>x</mi><mo>^\star</mo></msup>
 	</mrow>
 	</mml:math>-->
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>

@@ -291,12 +291,16 @@
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:text>}\label{</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@id">
+        <xsl:value-of select="@id"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="local-name()"/>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:text>}</xsl:text>
-    <xsl:if test="@id">
-      <xsl:text>\label{</xsl:text>
-      <xsl:value-of select="@id"/>
-      <xsl:text>}</xsl:text>
-    </xsl:if>
   </xsl:template>
 
   <xsl:template name="treatPart">

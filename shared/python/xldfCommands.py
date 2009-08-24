@@ -254,7 +254,7 @@ def xldf_retitle(localpath,cmd,tree):
   print '[XLDF] rename('+welookfor,',',cmd.findtext('to')+')'
  return
 
-def xldf_add_section(localpath,cmd,tree):
+def xldf_addSection(localpath,cmd,tree):
  success = False
  s = cmd.findall('*')[0]
  if s.tag in ('definitions','abbreviations','languageOverview'):
@@ -284,7 +284,7 @@ def xldf_add_section(localpath,cmd,tree):
   print '[----] xldf:add-section failed, double check or try add-subsection instead'
  return
 
-def xldf_remove_section(localpath,cmd,tree):
+def xldf_removeSection(localpath,cmd,tree):
  found = findnode(tree,cmd.findtext('id'))
  if found:
   if cmd.findall('from'):
@@ -300,7 +300,7 @@ def xldf_remove_section(localpath,cmd,tree):
  else:
   print '[----] xldf:remove-section couldn''t find id',cmd.findtext('id')
 
-def xldf_add_subsection(localpath,cmd,tree):
+def xldf_addSubsection(localpath,cmd,tree):
  success = False
  s = cmd.findall('*')[0]
  if s.tag in ('foreword','designGoals','scope','conformance','compliance','compatibility','notation','normativeReferences','documentStructure','whatsnew','placeholder'):
@@ -320,7 +320,7 @@ def xldf_add_subsection(localpath,cmd,tree):
   print '[----] xldf:add-subsection failed, double check or try add-section instead'
  return
 
-def xldf_change_role(localpath,cmd,tree):
+def xldf_changeRole(localpath,cmd,tree):
  where = findnode(tree,cmd.findtext('scope'))
  if not where:
   print '[----] xldf:change-role failed, can''t find id',cmd.findtext('scope')
@@ -357,7 +357,7 @@ def xldf_change_role(localpath,cmd,tree):
   print '[XLDF] change-role renamed',cmd.findtext('from'),'to',cmd.findtext('to'),'in',cmd.findtext('scope')
  return
 
-def xldf_extract_subsection(localpath,cmd,tree):
+def xldf_extractSubsection(localpath,cmd,tree):
  where = findnode(tree,cmd.findtext('from'))
  role = cmd.findtext('role')
  if not role:
@@ -394,7 +394,7 @@ def xldf_extract_subsection(localpath,cmd,tree):
  print ')'
  return
 
-def xldf_add_figure(localpath,cmd,tree):
+def xldf_addFigure(localpath,cmd,tree):
  success = False
  s = cmd.findall('*')[0]
  found = findnode(tree,cmd.findtext('to'))
@@ -410,7 +410,7 @@ def xldf_add_figure(localpath,cmd,tree):
   print '[----] add-figure failed, double check or try add-section instead'
  return
 
-def xldf_transform_grammar(localpath,cmd,tree):
+def xldf_transformGrammar(localpath,cmd,tree):
  root = ET.Element(slpsns.xbgf_('sequence'),{})
  cx0 = 0
  for rule in cmd.findall('*')[1:]:
@@ -481,7 +481,7 @@ def xldf_transform_grammar(localpath,cmd,tree):
   print '[----] xldf:transform failed: no productions found in XBGF output'
  return
 
-def xldf_import_grammar(localpath,cmd,tree):
+def xldf_importGrammar(localpath,cmd,tree):
  try:
   gtree = ET.parse(localpath+cmd.findtext('file'))
  except IOError,e:
@@ -504,7 +504,7 @@ def xldf_import_grammar(localpath,cmd,tree):
    print '[----] xldf:import failed: no productions found in',cmd.findtext('file')
  return
 
-def xldf_import_sample(localpath,cmd,tree):
+def xldf_importSample(localpath,cmd,tree):
  ending = ''
  if cmd.findall('prettyprinter'):
   inputfile = 'printed_for_xldf.tmp'

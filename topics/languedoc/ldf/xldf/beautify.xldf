@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>document</target>
     <xbgf:anonymize>
       <bgf:production>
@@ -185,9 +185,9 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:extract>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>titlePage</target>
     <xbgf:anonymize>
       <bgf:production>
@@ -286,9 +286,9 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:anonymize>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>listOfTerms</target>
     <xbgf:extract>
       <bgf:production>
@@ -376,15 +376,15 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:anonymize>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
 
   <!--
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>simpleType-body</target>
     <xbgf:vertical>
       <nonterminal>body</nonterminal>
     </xbgf:vertical>
-  </xldf:transform-grammar>-->
+  </xldf:transformGrammar>-->
 
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>

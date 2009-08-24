@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
-  <xldf:transform-grammar>
-    <target>add-figure</target>
+  <xldf:transformGrammar>
+    <target>addFigure</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -14,9 +14,9 @@
         <nonterminal>ID</nonterminal>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
-    <target>add-subsection</target>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
+    <target>addSubsection</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -25,8 +25,8 @@
         <nonterminal>ID</nonterminal>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
     <target>combine</target>
     <xbgf:replace>
       <bgf:expression>
@@ -36,8 +36,8 @@
         <nonterminal>ID</nonterminal>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
     <target>drop</target>
     <xbgf:replace>
       <bgf:expression>
@@ -47,9 +47,9 @@
         <nonterminal>ID</nonterminal>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
-    <target>extract-subsection</target>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
+    <target>extractSubsection</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -76,9 +76,9 @@
         </selectable>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
-    <target>import-grammar</target>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
+    <target>importGrammar</target>
     <xbgf:replace>
       <bgf:expression>
         <selectable>
@@ -97,9 +97,9 @@
         </selectable>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
-    <target>import-sample</target>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
+    <target>importSample</target>
     <xbgf:replace>
       <bgf:expression>
         <selectable>
@@ -118,8 +118,8 @@
         </selectable>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
     <target>place</target>
     <xbgf:replace>
       <bgf:expression>
@@ -129,8 +129,8 @@
         <nonterminal>ID</nonterminal>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
     <target>retitle</target>
     <xbgf:replace>
       <bgf:expression>
@@ -150,9 +150,9 @@
         </selectable>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
-    <target>remove-section</target>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
+    <target>removeSection</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -161,9 +161,9 @@
         <nonterminal>ID</nonterminal>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
-    <target>transform-grammar</target>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
+    <target>transformGrammar</target>
     <xbgf:replace>
       <bgf:expression>
         <value>string</value>
@@ -172,8 +172,8 @@
         <nonterminal>ID</nonterminal>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
     <target>relative</target>
     <xbgf:replace>
       <bgf:expression>
@@ -183,12 +183,12 @@
         <nonterminal>ID</nonterminal>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
   
 
   <xldf:combine>
     <section>sectionRole</section>
-    <with>change-role</with>
+    <with>changeRole</with>
   </xldf:combine>
 
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>

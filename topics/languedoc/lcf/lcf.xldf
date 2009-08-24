@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <!-- TODO: can be automated! -->
     <target>definition</target>
     <xbgf:vertical>
@@ -30,7 +30,7 @@
       <label>testset</label>
     </xbgf:unlabel>
     <xbgf:horizontal>definition</xbgf:horizontal>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
   <xldf:combine>
     <section>definition</section>
     <with>configuration</with>
@@ -57,7 +57,7 @@
   </xldf:retitle>
 
 
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>source</target>
     <xbgf:extract>
       <bgf:production>
@@ -402,7 +402,7 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:anonymize>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
   <xldf:retitle>
     <from>
       <title>source</title>
@@ -410,7 +410,7 @@
     <to>Sources</to>
   </xldf:retitle>
 
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>target</target>
     <xbgf:extract>
       <bgf:production>
@@ -635,7 +635,7 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:anonymize>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
   <xldf:append>
     <where>target</where>
     <content>
@@ -665,7 +665,7 @@
     <to>Targets</to>
   </xldf:retitle>
 
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>phase</target>
     <xbgf:extract>
       <bgf:production>
@@ -725,7 +725,7 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:anonymize>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
   <xldf:append>
     <where>phase</where>
     <content>
@@ -753,12 +753,12 @@
     <to>Test sets</to>
   </xldf:retitle>
 
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>toolType</target>
     <xbgf:vertical>
       <nonterminal>toolType</nonterminal>
     </xbgf:vertical>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
   <xldf:combine>
     <section>toolType</section>
     <with>tool</with>
@@ -770,4 +770,4 @@
     <to>Tools</to>
   </xldf:retitle>
 
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>

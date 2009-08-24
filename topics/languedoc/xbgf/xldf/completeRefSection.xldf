@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
@@ -953,7 +953,7 @@
     </formula>
     </content>
   </xldf:append>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="massage-example">
       <content>
         <text>
@@ -1095,32 +1095,32 @@
       </content>
     </example>
     <to>massage</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>massage-example</target>
     <file>../../transformation/xbgf/tests/massage_distr_ch.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>massage-example</where>
     <content>
       <text>After performing these transformation steps:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>massage-example</target>
     <file>../../transformation/xbgf/tests/massage_distr_ch.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>massage-example</where>
     <content>
       <text>The result will be:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>massage-example</target>
     <file>../../transformation/xbgf/tests/massage_distr_ch.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>massage-example</where>
     <content>
@@ -1137,7 +1137,7 @@
     <section>distribute</section>
     <inside>refactoring-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <semantics>
       <content>
         <text>
@@ -1154,46 +1154,46 @@
       </content>
     </semantics>
     <to>distribute</to>
-  </xldf:add-subsection>
-  <xldf:add-subsection>
+  </xldf:addSubsection>
+  <xldf:addSubsection>
     <example id="distribute-example">
       <content>
         <text>For instance,</text>
       </content>
     </example>
     <to>distribute</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>distribute-example</target>
     <file>../../transformation/xbgf/tests/distribute_nt.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>distribute-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>distribute-example</target>
     <file>../../transformation/xbgf/tests/distribute_nt.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>distribute-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>distribute-example</target>
     <file>../../transformation/xbgf/tests/distribute_nt.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>factor</section>
     <inside>refactoring-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <semantics>
       <content>
         <text>
@@ -1219,40 +1219,40 @@
       </content>
     </semantics>
     <to>factor</to>
-  </xldf:add-subsection>
-  <xldf:add-subsection>
+  </xldf:addSubsection>
+  <xldf:addSubsection>
     <example id="factor-example">
       <content>
         <text>For instance,</text>
       </content>
     </example>
     <to>factor</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>factor-example</target>
     <file>../../transformation/xbgf/tests/factor_local.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>factor-example</where>
     <content>
       <text>After using this transformation (note the order of expressions):</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>factor-example</target>
     <file>../../transformation/xbgf/tests/factor_local.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>factor-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>factor-example</target>
     <file>../../transformation/xbgf/tests/factor_local.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>deyaccify</section>
@@ -1266,10 +1266,10 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>deyaccify</target>
     <file>../../transformation/xbgf/tests/deyaccify_left.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>deyaccify</where>
     <content>
@@ -1278,10 +1278,10 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>deyaccify</target>
     <file>../../transformation/xbgf/tests/deyaccify_left.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>deyaccify</where>
     <content>
@@ -1290,10 +1290,10 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>deyaccify</target>
     <file>../../transformation/xbgf/tests/deyaccify_right.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>deyaccify</where>
     <content>
@@ -1302,10 +1302,10 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>deyaccify</target>
     <file>../../transformation/xbgf/tests/deyaccify_right.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>deyaccify</where>
     <content>
@@ -1315,16 +1315,16 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>deyaccify</target>
     <file>../../transformation/xbgf/tests/deyaccify_right_plus.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>yaccify</section>
     <inside>refactoring-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <semantics>
       <content>
         <text>
@@ -1345,143 +1345,143 @@
       </content>
     </semantics>
     <to>yaccify</to>
-  </xldf:add-subsection>
-  <xldf:add-subsection>
+  </xldf:addSubsection>
+  <xldf:addSubsection>
     <example id="yaccify-example">
       <content>
         <text>For instance, this piece of grammar:</text>
       </content>
     </example>
     <to>yaccify</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>yaccify-example</target>
     <file>../../transformation/xbgf/tests/yaccify_left_plus.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>yaccify-example</where>
     <content>
       <text>can either be yaccified with left recursion:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>yaccify-example</target>
     <file>../../transformation/xbgf/tests/yaccify_left_plus.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>yaccify-example</where>
     <content>
       <text>to look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>yaccify-example</target>
     <file>../../transformation/xbgf/tests/yaccify_left_plus.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>yaccify-example</where>
     <content>
       <text>or yaccified with right recursion:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>yaccify-example</target>
     <file>../../transformation/xbgf/tests/yaccify_right_plus.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>yaccify-example</where>
     <content>
       <text>to look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>yaccify-example</target>
     <file>../../transformation/xbgf/tests/yaccify_right_plus.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>eliminate</section>
     <inside>refactoring-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="eliminate-example">
       <content>
         <text>For instance,</text>
       </content>
     </example>
     <to>eliminate</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>eliminate-example</target>
     <file>../../transformation/xbgf/tests/eliminate.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>eliminate-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>eliminate-example</target>
     <file>../../transformation/xbgf/tests/eliminate.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>eliminate-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>eliminate-example</target>
     <file>../../transformation/xbgf/tests/eliminate.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>introduce</section>
     <inside>refactoring-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="introduce-example">
       <content>
         <text>For instance,</text>
       </content>
     </example>
     <to>introduce</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>introduce-example</target>
     <file>../../transformation/xbgf/tests/introduce.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>introduce-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>introduce-example</target>
     <file>../../transformation/xbgf/tests/introduce.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>introduce-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>introduce-example</target>
     <file>../../transformation/xbgf/tests/introduce.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>import</section>
     <inside>refactoring-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <semantics>
       <content>
         <text>
@@ -1501,197 +1501,197 @@
       </content>
     </semantics>
     <to>import</to>
-  </xldf:add-subsection>
-  <xldf:add-subsection>
+  </xldf:addSubsection>
+  <xldf:addSubsection>
     <example id="import-example">
       <content>
         <text>For instance,</text>
       </content>
     </example>
     <to>import</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>import-example</target>
     <file>../../transformation/xbgf/tests/import.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>import-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>import-example</target>
     <file>../../transformation/xbgf/tests/import.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>import-example</where>
     <content>
       <text>It will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>import-example</target>
     <file>../../transformation/xbgf/tests/import.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>vertical</section>
     <inside>refactoring-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="vertical-example">
       <content>
         <text>If the original production contained selectors:</text>
       </content>
     </example>
     <to>vertical</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>vertical-example</target>
     <file>../../transformation/xbgf/tests/vertical_s.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>vertical-example</where>
     <content>
       <text>then, after using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>vertical-example</target>
     <file>../../transformation/xbgf/tests/vertical_s.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>vertical-example</where>
     <content>
       <text>they are converted to labels:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>vertical-example</target>
     <file>../../transformation/xbgf/tests/vertical_s.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>horizontal</section>
     <inside>refactoring-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="horizontal-example">
       <content>
         <text>If some or all of the original productions are labelled:</text>
       </content>
     </example>
     <to>horizontal</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>horizontal-example</target>
     <file>../../transformation/xbgf/tests/horizontal_l.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>horizontal-example</where>
     <content>
       <text>the, after using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>horizontal-example</target>
     <file>../../transformation/xbgf/tests/horizontal_l.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>horizontal-example</where>
     <content>
       <text>each label is converted to a selector in a corresponding place:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>horizontal-example</target>
     <file>../../transformation/xbgf/tests/horizontal_l.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>rassoc</section>
     <inside>refactoring-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="rassoc-example">
       <content>
         <text>For instance,</text>
       </content>
     </example>
     <to>rassoc</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>rassoc-example</target>
     <file>../../transformation/xbgf/tests/rassoc_s.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>rassoc-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>rassoc-example</target>
     <file>../../transformation/xbgf/tests/rassoc_s.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>rassoc-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>rassoc-example</target>
     <file>../../transformation/xbgf/tests/rassoc_s.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   
   <xldf:place>
     <section>lassoc</section>
     <inside>refactoring-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="lassoc-example">
       <content>
         <text>For instance,</text>
       </content>
     </example>
     <to>lassoc</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>lassoc-example</target>
     <file>../../transformation/xbgf/tests/lassoc_p.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>lassoc-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>lassoc-example</target>
     <file>../../transformation/xbgf/tests/lassoc_p.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>lassoc-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>lassoc-example</target>
     <file>../../transformation/xbgf/tests/lassoc_p.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
-  <xldf:change-role>
+  <xldf:changeRole>
     <scope>refactoring-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
-  </xldf:change-role>
+  </xldf:changeRole>
 
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
@@ -18,13 +18,13 @@
     <section>add</section>
     <inside>increasing-transformation</inside>
   </xldf:place>
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>add</target>
     <xbgf:vertical>
       <nonterminal>add</nonterminal>
     </xbgf:vertical>
-  </xldf:transform-grammar>
-  <xldf:extract-subsection>
+  </xldf:transformGrammar>
+  <xldf:extractSubsection>
     <from>add</from>
     <content>
       <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
@@ -38,7 +38,7 @@
     <title>addV</title>
     <id>addV</id>
     <role>syntax</role>
-  </xldf:extract-subsection>
+  </xldf:extractSubsection>
   <xldf:append>
     <where>addV</where>
     <content>
@@ -48,41 +48,41 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="addV-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>addV</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>addV-example</target>
     <file>../../transformation/xbgf/tests/add_vertical.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>addV-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>addV-example</target>
     <file>../../transformation/xbgf/tests/add_vertical.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>addV-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>addV-example</target>
     <file>../../transformation/xbgf/tests/add_vertical.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
-  <xldf:extract-subsection>
+  <xldf:extractSubsection>
     <from>add</from>
     <content>
       <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
@@ -96,8 +96,8 @@
     <title>addH</title>
     <id>addH</id>
     <role>syntax</role>
-  </xldf:extract-subsection>
-  <xldf:transform-grammar>
+  </xldf:extractSubsection>
+  <xldf:transformGrammar>
     <target>addH</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
@@ -106,7 +106,7 @@
       </in>
     </xbgf:fold>
     <context>definitions-section</context>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
   <xldf:append>
     <where>addH</where>
@@ -128,78 +128,78 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="addH1-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>addH</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>addH1-example</target>
     <file>../../transformation/xbgf/tests/add_horizontal.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>addH1-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>addH1-example</target>
     <file>../../transformation/xbgf/tests/add_horizontal.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>addH1-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>addH1-example</target>
     <file>../../transformation/xbgf/tests/add_horizontal.baseline</file>
-  </xldf:import-grammar>
-  <xldf:add-subsection>
+  </xldf:importGrammar>
+  <xldf:addSubsection>
     <example id="addH2-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>addH</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>addH2-example</target>
     <file>../../transformation/xbgf/tests/add_inside.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>addH2-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>addH2-example</target>
     <file>../../transformation/xbgf/tests/add_inside.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>addH2-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>addH2-example</target>
     <file>../../transformation/xbgf/tests/add_inside.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>appear</section>
     <inside>increasing-transformation</inside>
   </xldf:place>
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>appear</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
@@ -208,40 +208,40 @@
       </in>
     </xbgf:fold>
     <context>definitions-section</context>
-  </xldf:transform-grammar>
-  <xldf:add-subsection>
+  </xldf:transformGrammar>
+  <xldf:addSubsection>
     <example id="appear-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>appear</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>appear-example</target>
     <file>../../transformation/xbgf/tests/appear_q.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>appear-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>appear-example</target>
     <file>../../transformation/xbgf/tests/appear_q.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>appear-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>appear-example</target>
     <file>../../transformation/xbgf/tests/appear_q.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>widen</section>
@@ -334,45 +334,45 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="widen-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>widen</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>widen-example</target>
     <file>../../transformation/xbgf/tests/widen_l.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>widen-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>widen-example</target>
     <file>../../transformation/xbgf/tests/widen_l.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>widen-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>widen-example</target>
     <file>../../transformation/xbgf/tests/widen_l.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>upgrade</section>
     <inside>increasing-transformation</inside>
   </xldf:place>
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>upgrade</target>
     <xbgf:replace>
       <bgf:expression>
@@ -396,83 +396,83 @@
         </sequence>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:add-subsection>
+  </xldf:transformGrammar>
+  <xldf:addSubsection>
     <example id="upgrade-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>upgrade</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>upgrade-example</target>
     <file>../../transformation/xbgf/tests/upgrade.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>upgrade-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>upgrade-example</target>
     <file>../../transformation/xbgf/tests/upgrade.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>upgrade-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>upgrade-example</target>
     <file>../../transformation/xbgf/tests/upgrade.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>unite</section>
     <inside>increasing-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="unite-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>unite</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>unite-example</target>
     <file>../../transformation/xbgf/tests/unite_normal.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>unite-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>unite-example</target>
     <file>../../transformation/xbgf/tests/unite_normal.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>unite-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>unite-example</target>
     <file>../../transformation/xbgf/tests/unite_normal.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
-  <xldf:change-role>
+  <xldf:changeRole>
     <scope>increasing-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
-  </xldf:change-role>
+  </xldf:changeRole>
 
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>

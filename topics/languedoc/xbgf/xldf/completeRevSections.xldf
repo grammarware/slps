@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
   <!-- beautify xbgf -->
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>define</target>
     <xbgf:project>
       <bgf:production>
@@ -36,8 +36,8 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:project>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
     <target>inject</target>
     <xbgf:project>
       <bgf:production>
@@ -63,8 +63,8 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:project>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
     <target>project</target>
     <xbgf:project>
       <bgf:production>
@@ -90,8 +90,8 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:project>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
     <target>redefine</target>
     <xbgf:project>
       <bgf:production>
@@ -121,8 +121,8 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:project>
-  </xldf:transform-grammar>
-  <xldf:transform-grammar>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
     <target>replace</target>
     <xbgf:project>
       <bgf:production>
@@ -163,7 +163,7 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:project>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
   <!-- compose a section on abstract revising transformations -->
   <xldf:retitle>
@@ -177,7 +177,7 @@
     <section>abstractize</section>
     <inside>concrete-revising-transformation</inside>
   </xldf:place>
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>abstractize</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
@@ -186,47 +186,47 @@
       </in>
     </xbgf:fold>
     <context>definitions-section</context>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="abstractize-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>abstractize</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>abstractize-example</target>
     <file>../../transformation/xbgf/tests/abstractize.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>abstractize-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>abstractize-example</target>
     <file>../../transformation/xbgf/tests/abstractize.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>abstractize-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>abstractize-example</target>
     <file>../../transformation/xbgf/tests/abstractize.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   
   <xldf:place>
     <section>concretize</section>
     <inside>concrete-revising-transformation</inside>
   </xldf:place>
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>concretize</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
@@ -235,80 +235,80 @@
       </in>
     </xbgf:fold>
     <context>definitions-section</context>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="concretize-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>concretize</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>concretize-example</target>
     <file>../../transformation/xbgf/tests/concretize.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>concretize-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>concretize-example</target>
     <file>../../transformation/xbgf/tests/concretize.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>concretize-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>concretize-example</target>
     <file>../../transformation/xbgf/tests/concretize.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   
   <xldf:place>
     <section>permute</section>
     <inside>concrete-revising-transformation</inside>
   </xldf:place>
 
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="permute-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>permute</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>permute-example</target>
     <file>../../transformation/xbgf/tests/permute.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>permute-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>permute-example</target>
     <file>../../transformation/xbgf/tests/permute.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>permute-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>permute-example</target>
     <file>../../transformation/xbgf/tests/permute.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <!-- compose a section on concrete revising transformations -->
   <xldf:retitle>
@@ -337,7 +337,7 @@
     <section>inject</section>
     <inside>abstract-revising-transformation</inside>
   </xldf:place>
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>inject</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
@@ -346,48 +346,48 @@
       </in>
     </xbgf:fold>
     <context>definitions-section</context>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
   
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="inject-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>inject</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>inject-example</target>
     <file>../../transformation/xbgf/tests/inject.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>inject-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>inject-example</target>
     <file>../../transformation/xbgf/tests/inject.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>inject-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>inject-example</target>
     <file>../../transformation/xbgf/tests/inject.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
 
   <xldf:place>
     <section>project</section>
     <inside>abstract-revising-transformation</inside>
   </xldf:place>
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>project</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
@@ -396,47 +396,47 @@
       </in>
     </xbgf:fold>
     <context>definitions-section</context>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="project-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>project</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>project-example</target>
     <file>../../transformation/xbgf/tests/project.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>project-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>project-example</target>
     <file>../../transformation/xbgf/tests/project.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>project-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>project-example</target>
     <file>../../transformation/xbgf/tests/project.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   
   <xldf:place>
     <section>replace</section>
     <inside>abstract-revising-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="replace-example">
       <content>
         <text>
@@ -447,42 +447,42 @@
       </content>
     </example>
     <to>replace</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>replace-example</target>
     <file>../../transformation/xbgf/tests/replace_choice_part.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>replace-example</where>
     <content>
       <text>After using this transformation (suppose we do not have <ldf:keyword>factor</ldf:keyword>):</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>replace-example</target>
     <file>../../transformation/xbgf/tests/replace_choice_part.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>replace-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>replace-example</target>
     <file>../../transformation/xbgf/tests/replace_choice_part.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
-  <xldf:change-role>
+  <xldf:changeRole>
     <scope>concrete-revising-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
-  </xldf:change-role>
-  <xldf:change-role>
+  </xldf:changeRole>
+  <xldf:changeRole>
     <scope>abstract-revising-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
-  </xldf:change-role>
+  </xldf:changeRole>
   
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>

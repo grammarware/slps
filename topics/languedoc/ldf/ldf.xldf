@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:xldf="http://planet-sl.org/xldf">
 
-  <xldf:transform-document>
+  <xldf:transformDocument>
     <file>xldf/dropBgf.xldf</file>
-  </xldf:transform-document>
-  <xldf:transform-document>
+  </xldf:transformDocument>
+  <xldf:transformDocument>
     <file>xldf/beautify.xldf</file>
-  </xldf:transform-document>
-  <xldf:transform-document>
+  </xldf:transformDocument>
+  <xldf:transformDocument>
     <file>xldf/completeWithText.xldf</file>
-  </xldf:transform-document>
-  <xldf:transform-document>
+  </xldf:transformDocument>
+  <xldf:transformDocument>
     <file>xldf/reorganise.xldf</file>
-  </xldf:transform-document>
+  </xldf:transformDocument>
   
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>

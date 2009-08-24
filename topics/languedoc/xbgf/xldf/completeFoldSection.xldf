@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf"
@@ -7,7 +7,7 @@
   xmlns:xldf="http://planet-sl.org/xldf">
   
   <!-- beautify xbgf -->
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>unfold</target>
     <xbgf:anonymize>
       <bgf:production>
@@ -42,7 +42,7 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:anonymize>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
   <!-- compose a section on folding transformations -->
   <xldf:retitle>
@@ -77,43 +77,43 @@
       </text>
     </content>
   </xldf:insert>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="unfold-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>unfold</to>
-  </xldf:add-subsection>
+  </xldf:addSubsection>
   
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>unfold-example</target>
     <file>../../transformation/xbgf/tests/unfold.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>unfold-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>unfold-example</target>
     <file>../../transformation/xbgf/tests/unfold.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>unfold-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>unfold-example</target>
     <file>../../transformation/xbgf/tests/unfold.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <!-- beautify xbgf -->
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>fold</target>
     <xbgf:anonymize>
       <bgf:production>
@@ -148,51 +148,51 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:anonymize>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
   
   <xldf:place>
     <section>fold</section>
     <inside>folding-unfolding-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="fold-example">
       <content>
       <text>Very much like unfolding, folding can take place locally. For instance,</text>
     </content>
     </example>
     <to>fold</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>fold-example</target>
     <file>../../transformation/xbgf/tests/fold_nt.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>fold-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>fold-example</target>
     <file>../../transformation/xbgf/tests/fold_nt.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>fold-example</where>
     <content>
       <text>Will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>fold-example</target>
     <file>../../transformation/xbgf/tests/fold_nt.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   
   <xldf:place>
     <section>inline</section>
     <inside>folding-unfolding-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <semantics>
       <content>
         <text>
@@ -240,46 +240,46 @@
       </content>
     </semantics>
     <to>inline</to>
-  </xldf:add-subsection>
-  <xldf:add-subsection>
+  </xldf:addSubsection>
+  <xldf:addSubsection>
     <example id="inline-example">
       <content>
         <text>An example follows. When we have:</text>
       </content>
     </example>
     <to>inline</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>inline-example</target>
     <file>../../transformation/xbgf/tests/inline.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>inline-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>inline-example</target>
     <file>../../transformation/xbgf/tests/inline.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>inline-example</where>
     <content>
       <text>It will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>inline-example</target>
     <file>../../transformation/xbgf/tests/inline.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   
   <xldf:place>
     <section>extract</section>
     <inside>folding-unfolding-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <semantics>
       <content>
         <text>
@@ -292,8 +292,8 @@
       </content>
     </semantics>
     <to>extract</to>
-  </xldf:add-subsection>
-  <xldf:add-subsection>
+  </xldf:addSubsection>
+  <xldf:addSubsection>
     <example id="extract-example">
       <content>
         <text>
@@ -302,38 +302,38 @@
       </content>
     </example>
     <to>extract</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>extract-example</target>
     <file>../../transformation/xbgf/tests/extract_subch.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>extract-example</where>
     <content>
       <text>After performing this transformation step:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>extract-example</target>
     <file>../../transformation/xbgf/tests/extract_subch.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>extract-example</where>
     <content>
       <text>The result will be:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>extract-example</target>
     <file>../../transformation/xbgf/tests/extract_subch.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>abridge</section>
     <inside>folding-unfolding-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <semantics>
       <content>
         <text>
@@ -349,8 +349,8 @@
       </content>
     </semantics>
     <to>abridge</to>
-  </xldf:add-subsection>
-  <xldf:add-subsection>
+  </xldf:addSubsection>
+  <xldf:addSubsection>
     <example id="abridge-example">
       <content>
         <text>
@@ -359,22 +359,22 @@
       </content>
     </example>
     <to>abridge</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>abridge-example</target>
     <file>../../transformation/xbgf/tests/abridge.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>abridge-example</where>
     <content>
       <text>After performing this transformation step:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>abridge-example</target>
     <file>../../transformation/xbgf/tests/abridge.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>abridge-example</where>
     <content>
@@ -384,16 +384,16 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>abridge-example</target>
     <file>../../transformation/xbgf/tests/abridge.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   
   <xldf:place>
     <section>detour</section>
     <inside>folding-unfolding-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="detour-example">
       <content>
         <text>
@@ -405,18 +405,18 @@
       </content>
     </example>
     <to>detour</to>
-  </xldf:add-subsection>
-  <xldf:import-sample>
+  </xldf:addSubsection>
+  <xldf:importSample>
     <target>detour-example</target>
     <file>../../transformation/xbgf/tests/detour.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   
   <xldf:place>
     <section>unchain</section>
     <inside>folding-unfolding-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <semantics>
       <content>
         <text>
@@ -429,8 +429,8 @@
       </content>
     </semantics>
     <to>unchain</to>
-  </xldf:add-subsection>
-  <xldf:add-subsection>
+  </xldf:addSubsection>
+  <xldf:addSubsection>
     <example id="unchain-example">
       <content>
         <text>
@@ -439,22 +439,22 @@
       </content>
     </example>
     <to>unchain</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>unchain-example</target>
     <file>../../transformation/xbgf/tests/unchain.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>unchain-example</where>
     <content>
       <text>After performing this transformation step:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>unchain-example</target>
     <file>../../transformation/xbgf/tests/unchain.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>unchain-example</where>
     <content>
@@ -463,16 +463,16 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>unchain-example</target>
     <file>../../transformation/xbgf/tests/unchain.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   
   <xldf:place>
     <section>chain</section>
     <inside>folding-unfolding-transformation</inside>
   </xldf:place>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="chain-example">
       <content>
         <text>
@@ -484,17 +484,17 @@
       </content>
     </example>
     <to>chain</to>
-  </xldf:add-subsection>
-  <xldf:import-sample>
+  </xldf:addSubsection>
+  <xldf:importSample>
     <target>chain-example</target>
     <file>../../transformation/xbgf/tests/chain.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
 
-  <xldf:change-role>
+  <xldf:changeRole>
     <scope>folding-unfolding-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
-  </xldf:change-role>
+  </xldf:changeRole>
   
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>

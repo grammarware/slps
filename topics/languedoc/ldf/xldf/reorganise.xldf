@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf"
   xmlns:bgf="http://planet-sl.org/bgf"
@@ -121,10 +121,10 @@
     <with>group-structuredSectionElement</with>
   </xldf:combine>
   
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>group-structuredSectionElement</target>
     <xbgf:inline>listOfInternalLinks</xbgf:inline>
-  </xldf:transform-grammar>-->
+  </xldf:transformGrammar>-->
   <xldf:combine>
     <section>structuredSectionElement</section>
     <with>structuredSection</with>
@@ -171,4 +171,4 @@
   </xldf:combine>
 
 
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>

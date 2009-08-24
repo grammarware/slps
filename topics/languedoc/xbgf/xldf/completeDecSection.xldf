@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xldf:evolution-sequence
+<xldf:evolutionSequence
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:ldf="http://planet-sl.org/ldf"
@@ -18,13 +18,13 @@
     <section>remove</section>
     <inside>decreasing-transformation</inside>
   </xldf:place>
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>remove</target>
     <xbgf:vertical>
       <nonterminal>remove</nonterminal>
     </xbgf:vertical>
-  </xldf:transform-grammar>
-  <xldf:extract-subsection>
+  </xldf:transformGrammar>
+  <xldf:extractSubsection>
     <from>remove</from>
     <content>
       <bgf:production>
@@ -38,7 +38,7 @@
     <title>removeV</title>
     <id>removeV</id>
     <role>syntax</role>
-  </xldf:extract-subsection>
+  </xldf:extractSubsection>
   <xldf:append>
     <where>removeV</where>
     <content>
@@ -48,41 +48,41 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="removeV-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>removeV</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>removeV-example</target>
     <file>../../transformation/xbgf/tests/remove_vertical.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>removeV-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>removeV-example</target>
     <file>../../transformation/xbgf/tests/remove_vertical.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>removeV-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>removeV-example</target>
     <file>../../transformation/xbgf/tests/remove_vertical.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
-  <xldf:extract-subsection>
+  <xldf:extractSubsection>
     <from>remove</from>
     <content>
       <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
@@ -96,8 +96,8 @@
     <title>removeH</title>
     <id>removeH</id>
     <role>syntax</role>
-  </xldf:extract-subsection>
-  <xldf:transform-grammar>
+  </xldf:extractSubsection>
+  <xldf:transformGrammar>
     <target>removeH</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
@@ -106,7 +106,7 @@
       </in>
     </xbgf:fold>
     <context>definitions-section</context>
-  </xldf:transform-grammar>
+  </xldf:transformGrammar>
 
   <xldf:append>
     <where>removeH</where>
@@ -128,78 +128,78 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="removeH1-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>removeH</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>removeH1-example</target>
     <file>../../transformation/xbgf/tests/remove_horizontal.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>removeH1-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>removeH1-example</target>
     <file>../../transformation/xbgf/tests/remove_horizontal.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>removeH1-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>removeH1-example</target>
     <file>../../transformation/xbgf/tests/remove_horizontal.baseline</file>
-  </xldf:import-grammar>
-  <xldf:add-subsection>
+  </xldf:importGrammar>
+  <xldf:addSubsection>
     <example id="removeH2-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>removeH</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>removeH2-example</target>
     <file>../../transformation/xbgf/tests/remove_inside.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>removeH2-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>removeH2-example</target>
     <file>../../transformation/xbgf/tests/remove_inside.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>removeH2-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>removeH2-example</target>
     <file>../../transformation/xbgf/tests/remove_inside.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
   <xldf:place>
     <section>disappear</section>
     <inside>decreasing-transformation</inside>
   </xldf:place>
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>disappear</target>
     <xbgf:fold>
       <nonterminal>marked-production</nonterminal>
@@ -208,40 +208,40 @@
       </in>
     </xbgf:fold>
     <context>definitions-section</context>
-  </xldf:transform-grammar>
-  <xldf:add-subsection>
+  </xldf:transformGrammar>
+  <xldf:addSubsection>
     <example id="disappear-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>disappear</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>disappear-example</target>
     <file>../../transformation/xbgf/tests/disappear_s.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>disappear-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>disappear-example</target>
     <file>../../transformation/xbgf/tests/disappear_s.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>disappear-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>disappear-example</target>
     <file>../../transformation/xbgf/tests/disappear_s.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   
   <xldf:place>
     <section>narrow</section>
@@ -325,45 +325,45 @@
       </text>
     </content>
   </xldf:append>
-  <xldf:add-subsection>
+  <xldf:addSubsection>
     <example id="narrow-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>narrow</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>narrow-example</target>
     <file>../../transformation/xbgf/tests/narrow_global.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>narrow-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>narrow-example</target>
     <file>../../transformation/xbgf/tests/narrow_global.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>narrow-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>narrow-example</target>
     <file>../../transformation/xbgf/tests/narrow_global.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   
   <xldf:place>
     <section>downgrade</section>
     <inside>decreasing-transformation</inside>
   </xldf:place>
-  <xldf:transform-grammar>
+  <xldf:transformGrammar>
     <target>downgrade</target>
     <xbgf:replace>
       <bgf:expression>
@@ -387,45 +387,45 @@
         </sequence>
       </bgf:expression>
     </xbgf:replace>
-  </xldf:transform-grammar>
-  <xldf:add-subsection>
+  </xldf:transformGrammar>
+  <xldf:addSubsection>
     <example id="downgrade-example">
       <content>
         <text>Given the input:</text>
       </content>
     </example>
     <to>downgrade</to>
-  </xldf:add-subsection>
-  <xldf:import-grammar>
+  </xldf:addSubsection>
+  <xldf:importGrammar>
     <target>downgrade-example</target>
     <file>../../transformation/xbgf/tests/downgrade.bgf</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
   <xldf:append>
     <where>downgrade-example</where>
     <content>
       <text>After using this transformation:</text>
     </content>
   </xldf:append>
-  <xldf:import-sample>
+  <xldf:importSample>
     <target>downgrade-example</target>
     <file>../../transformation/xbgf/tests/downgrade.xbgf</file>
     <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:import-sample>
+  </xldf:importSample>
   <xldf:append>
     <where>downgrade-example</where>
     <content>
       <text>The result will look like this:</text>
     </content>
   </xldf:append>
-  <xldf:import-grammar>
+  <xldf:importGrammar>
     <target>downgrade-example</target>
     <file>../../transformation/xbgf/tests/downgrade.baseline</file>
-  </xldf:import-grammar>
+  </xldf:importGrammar>
 
-  <xldf:change-role>
+  <xldf:changeRole>
     <scope>decreasing-transformation</scope>
     <from>syntax</from>
     <to>synopsis</to>
-  </xldf:change-role>
+  </xldf:changeRole>
   
-</xldf:evolution-sequence>
+</xldf:evolutionSequence>
