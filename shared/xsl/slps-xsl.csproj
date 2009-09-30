@@ -40,6 +40,7 @@
   -->
   <ItemGroup>
     <Content Include="bgf2bnf.xslt" />
+    <Content Include="bgf2dms.xslt" />
     <Content Include="bgf2sdf.xslt" />
     <Content Include="btf2btf.xslt" />
     <Content Include="ecore2bgf.xslt" />
