@@ -608,7 +608,9 @@ if __name__ == "__main__":
    print '----- Tree convergence phase finished. -----'
   else:
    print '[WARN] No testing performed.'
-  dumpGraph(sys.argv[2])
+  # DEBUG - no diagram
+  #dumpGraph(sys.argv[2])
+  print '[WARN] Diagram generation disabled.'
   if problem:
    sysexit(100)
   log.close()

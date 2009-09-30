@@ -36,7 +36,7 @@
           </item>
           <item>
             <ldf:keyword>Grammar convergence.</ldf:keyword>
-            An infrastructure for grammar convergence (see Chapter 3) contains three
+            An infrastructure for grammar convergence (see Chapter 4) contains three
             essential parts: grammar extractors, a grammar comparator and a grammar transformer.
             The latter component is needed for changing the source grammars so that
             they become structurally identical at the convergence point.

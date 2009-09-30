@@ -8,9 +8,20 @@
   <xldf:transformDocument>
     <file>xldf/beautify.xldf</file>
   </xldf:transformDocument>
-  <xldf:transformDocument>
+<!--  <xldf:transformDocument>
     <file>xldf/completeWithText.xldf</file>
   </xldf:transformDocument>
+-->
+<xldf:append>
+  <where>body</where>
+  <content>
+    <text>
+	  The comprehensive list of all standardisation bodies completed with descriptions
+	  of their work is given in \autoref{met-bodies}.
+    </text>
+   </content>
+</xldf:append>
+
   <xldf:transformDocument>
     <file>xldf/reorganise.xldf</file>
   </xldf:transformDocument>
