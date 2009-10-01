@@ -16,17 +16,25 @@
   <xsl:template match="/xbgf:sequence">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
       <body>
-        <xsl:apply-templates select="./xbgf:*"/>
+	<ul>
+	    <xsl:for-each select="./xbgf:*">
+	      <li>
+	      <xsl:apply-templates select="."/>
+		</li>
+	    </xsl:for-each>
+	</ul>
       </body>
     </html>
   </xsl:template>
 
   <xsl:template match="xbgf:atomic">
-    <xsl:text>[[
-</xsl:text>
-    <xsl:apply-templates select="./xbgf:*"/>
-    <xsl:text>]];
-</xsl:text>
+    <ul xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <xsl:for-each select="./xbgf:*">
+      <li>
+      <xsl:apply-templates select="."/>
+	</li>
+    </xsl:for-each>
+</ul>
   </xsl:template>
 
   <!-- optional context -->
