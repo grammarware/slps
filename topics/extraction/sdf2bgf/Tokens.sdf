@@ -11,7 +11,7 @@ exports
 		CharData
 	context-free syntax
 		sort2chardata(Sort)	-> CharData
-		strcon2chardata(StrCon)	-> CharData
+		strcon2chardata(StrCon)	-> Content
 		idcon2chardata(IdCon)	-> CharData
 
 hiddens

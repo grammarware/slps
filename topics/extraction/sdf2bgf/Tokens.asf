@@ -11,7 +11,15 @@ chardata(&Char1 &Chars1) := sort2chardata(sort(&Head1 &Middles1 &Last1))
 ===============================================================
 sort2chardata(sort(&Head1 &Middle1 &Middles1 &Last1)) = chardata(&Char1 &Middle1 &Chars1)
 
-[strcon-of-length-1]
+
+equations
+
+%%[strcon-of-length-1]
+%% Not working! But needed for &, <, >, etc.
+%%strcon2chardata(strcon(\" strchar(\&) \")) = entityref(& name(letter(a) namechar(letter(m)) namechar(letter(p))) ;)
+
+
+[default-strcon-of-length-1]
 strchar(&Chr1) := &StrChar1
 ========================================
 strcon2chardata(strcon(\" &StrChar1 \")) = chardata(&Chr1)
