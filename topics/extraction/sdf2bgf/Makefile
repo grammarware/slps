@@ -14,7 +14,7 @@ Main.tbl: *.sdf
 	else \
 		make tblcat; \
 	fi
-	sdf2table -m Main Main.def
+	sdf2table -m Main -i Main.def -o Main.tbl
 
 tblpack:
 	pack-sdf -i Main.sdf -I ${sdfl} -o Main.def
