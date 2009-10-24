@@ -101,6 +101,8 @@ trafoSymbol(&Z1) =
     <terminal>&C1</terminal>
   </bgf:expression>
 
+equations
+
 [plus]
 &E1 := trafoSymbol(&S1)
 ================
@@ -124,6 +126,55 @@ trafoSymbol(&S1?) =
   <bgf:expression>
     <optional>&E1</optional>
   </bgf:expression>
+
+[comma-separated-list-plus]
+trafoSymbol({&S1 &S2}+) =
+	trafoSymbol((&S1 (&S2 &S1)*))
+
+[comma-separated-list-star]
+trafoSymbol({&S1 &S2}*) =
+	trafoSymbol((&S1 (&S2 &S1)*)?)
+
+equations
+
+[alt]
+&E1 := trafoSymbol(&S1),
+&E2 := trafoSymbol(&S2)
+================
+trafoSymbol(&S1 | &S2) =
+  <bgf:expression>
+	<choice>
+	&E1
+	&E2
+	</choice>
+  </bgf:expression>
+
+
+[seq-0]
+&E1 := trafoSymbol(&S1),
+&E2 := trafoSymbol(&S2)
+================
+trafoSymbol((&S1 &S2)) =
+  <bgf:expression>
+	<sequence>
+	&E1
+	&E2
+	</sequence>
+  </bgf:expression>
+
+
+[seq-1]
+&E1 := trafoSymbol(&S1),
+&E2 := trafoSymbol((&S2 &S+1))
+================
+trafoSymbol((&S1 &S2 &S+1)) =
+  <bgf:expression>
+	<sequence>
+	&E1
+	&E2
+	</sequence>
+  </bgf:expression>
+
 
 [cons-to-label-only-cons]
 guessLabel({cons(&I1)}) = <label>idcon2chardata(&I1)</label>

@@ -46,6 +46,7 @@ module Main
 	"&Ps" [0-9]+ -> Productions
 	"&S"  [0-9]+ -> Symbol
 	"&S*" [0-9]+ -> Symbol*
+	"&S+" [0-9]+ -> Symbol+
 	"&Ss" [0-9]+ -> Symbols
 	"&Z"  [0-9]+ -> StrCon
 	"&I"  [0-9]+ -> IdCon
