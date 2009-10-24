@@ -39,13 +39,13 @@ catbuild:
 	@cat *.sdf >> FL.def
 	@AA=${PWD};cd ${sdfl};cat $${AA}/sdflib.list | xargs -n1 -J % cat % >>$${AA}/FL.def
 	@AA=${PWD};cd ${asfl};cat $${AA}/asflib.list | xargs -n1 -J % cat % >>$${AA}/FL.def
-	sdf2table -m FL FL.def
+	sdf2table -m FL -i FL.def -o FL.tbl
 
 packbuild:
 	@cp ${sdfl}/basic/*.sdf basic
 	@cp ${asfl}/basic/*.sdf basic
 	pack-sdf -i FL.sdf -o FL.def
-	sdf2table -m FL FL.def
+	sdf2table -m FL -i FL.def -o FL.tbl
 
 clean:
 	rm -f reduct.out
