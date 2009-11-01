@@ -1,1 +1,0 @@
-if true then x:=2 else y:=2
