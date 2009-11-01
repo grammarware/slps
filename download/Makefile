@@ -12,7 +12,7 @@ install-et:
 	curl -k http://effbot.org/media/downloads/elementtree-1.2.7-20070827-preview.zip > elementtree.zip
 	unzip elementtree.zip
 	rm -f elementtree.zip
-	sudo sh -c 'cd ${PWD}/elementtree-1.2.7-20070827-preview; python setup.py install; rm -rf build'
+	sudo sh -c 'cd elementtree-1.2.7-20070827-preview; python setup.py install; rm -rf build'
 	make clean-temps
 
 install-pp:

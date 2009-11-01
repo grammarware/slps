@@ -1,7 +1,7 @@
 include ../include.mk
 
 jar = javafl.jar
-cp = -cp $$CLASSPATH:${jar}
+cp = -cp $$CLASSPATH:../../../download/antlrworks-1.1.7.jar:${jar}
 
 build: ${jar}
 
