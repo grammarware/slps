@@ -1,18 +1,18 @@
-tree(T) --> tags(T).
-
-tag(xml(N)) -->
+tree(tree(N,L)) -->
+ spaces,
  string("<"),
  tagname(N),
  string(">"),
- tags(L),
+ trees(L),
  string("</"),
  tagname(N),
- string(">").
+ string(">"),
+ spaces.
 
-tags(tlist(H,T)) -->
- tag(H),
- tags(T).
-tags([]) --> [].
+trees([H|T]) -->
+ tree(H),
+ trees(T).
+trees([]) --> [].
 
 string([],X,X).
 string([H|T1],[H|T2],X) :- string(T1,T2,X).
@@ -22,7 +22,7 @@ spaces --> [].
 
 tagname(N) -->
  letter(H), letters(T),
- { atom_chars(N,[H|T]) }.
+ { atom_codes(N,[H|T]) }.
 
 letters([H|T]) --> letter(H), letters(T).
 letters([]) --> [].

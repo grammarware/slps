@@ -2,7 +2,8 @@
 
 main(File)
  :-
-    parseFile(File,tree,S).
+    parseFile(File,tree,S),
+    write(S), nl.
 
 parseFile(File,P,R)
  :-
