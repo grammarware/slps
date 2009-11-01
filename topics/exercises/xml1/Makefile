@@ -1,7 +1,7 @@
-all: 
+test:
 	swipl -f RunParser.pro -t "main('input.txt')"
 
-test:
+debug:
 	cat input.txt
 	swipl -s Parser.pro
 
