@@ -22,10 +22,39 @@ statement(assign(identifier(V),E)) -->
  expression(E).
 
 % Conditional statement
-%  (homework)
+statement(ifthenelse(E,S1,S2)) -->
+ keyword("if"),
+ expression(E),
+ keyword("then"),
+ statement(S1),
+ keyword("else"),
+ statement(S2).
 
 % Expressions
+% Number is a an expression
 expression(number(N)) --> number(N).
+
+% Boolean primitives are expressions
+expression(true) --> keyword("true").
+expression(false) --> keyword("false").
+
+% Comparison is a boolean expression: greater than
+expression(isgreaterthan(V,E)) -->
+ identifier(V),
+ keyword(">"),
+ expression(E).
+
+% Less than
+expression(islessthan(V,E)) -->
+ identifier(V),
+ keyword("<"),
+ expression(E).
+
+% Equals
+expression(equals(V,E)) -->
+ identifier(V),
+ keyword("=="),
+ expression(E).
 
 % Dealing with spaces
 spaces --> [0' ], spaces. %'
