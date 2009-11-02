@@ -19,42 +19,47 @@ statement(skip) -->
 statement(assign(identifier(V),E)) -->
  identifier(V),
  keyword(":="),
- expression(E).
+ aexpression(E).
 
 % Conditional statement
 statement(ifthenelse(E,S1,S2)) -->
  keyword("if"),
- expression(E),
+ bexpression(E),
  keyword("then"),
  statement(S1),
  keyword("else"),
  statement(S2).
 
 % Expressions
-% Number is a an expression
-expression(number(N)) --> number(N).
+% Number is a an arithmetic expression
+aexpression(number(N)) --> number(N).
 
-% Boolean primitives are expressions
-expression(true) --> keyword("true").
-expression(false) --> keyword("false").
+% Variable reference is a an arithmetic expression
+aexpression(identifier(V)) --> identifier(V).
 
-% Comparison is a boolean expression: greater than
-expression(isgreaterthan(V,E)) -->
- identifier(V),
- keyword(">"),
- expression(E).
+% A sum of arithmetic expressions is also an arithmetic expression
+aexpression(add(E1,E2)) -->
+ keyword("("),
+ aexpression(E1),
+ keyword("+"),
+ aexpression(E2),
+ keyword(")").
 
-% Less than
-expression(islessthan(V,E)) -->
- identifier(V),
- keyword("<"),
- expression(E).
+% Boolean primitives are boolean expressions
+bexpression(true) --> keyword("true").
+bexpression(false) --> keyword("false").
 
-% Equals
-expression(equals(V,E)) -->
- identifier(V),
- keyword("=="),
- expression(E).
+% Comparison is a boolean expression: equality
+bexpression(equals(E1,E2)) -->
+ aexpression(E1),
+ keyword("="),
+ aexpression(E2).
+
+% Comparison is a boolean expression: less than or equal to
+bexpression(lte(E1,E2)) -->
+ aexpression(E1),
+ keyword("≤"),
+ aexpression(E2).
 
 % Dealing with spaces
 spaces --> [0' ], spaces. %'
