@@ -1,5 +1,4 @@
 %% Evaluate arithmetic expressions
-
 % Number is evaluated to its value
 evala(number(V),_,V).
 
@@ -25,7 +24,6 @@ evala(mul(A1,A2),M,V) :-
   V is V1 * V2.
 
 %% Evaluate Boolean expressions
-
 % True is tt
 evalb(true,_,tt).
 
@@ -37,13 +35,19 @@ evalb(not(B),M,V) :-
  evalb(B,M,V1),
  not(V1,V).
 
+% Conjunction
+evalb(and(B1,B2),M,V) :-
+ evalb(B1,M,V1),
+ evalb(B2,M,V2),
+ and(V1,V2,V).
+
 % Test for equality
 evalb(equals(A1,A2),M,V) :-
   evala(A1,M,V1),
   evala(A2,M,V2),
   equals(V1,V2,V).
 
-% Test for equality
+% Test for being less than or equal
 evalb(lte(A1,A2),M,V) :-
   evala(A1,M,V1),
   evala(A2,M,V2),
@@ -56,4 +60,7 @@ lte(V1,V2,tt) :- V1 =< V2.
 lte(V1,V2,ff) :- \+ V1 =< V2.
 not(tt,ff).
 not(ff,tt).
+and(tt,tt,tt).
+and(ff,_,ff).
+and(_,ff,ff).
 
