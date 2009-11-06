@@ -13,26 +13,23 @@ execute(assign(identifier(X),A),M1,M2) :-
  evala(A,M1,Y),
  update(M1,X,Y,M2).
 
-% Conditional statement
-execute(ifthenelse(B,S1,S2),M1,M2) :-
- evalb(B,M1,X),
- (
-  X == tt,
-  execute(S1,M1,M2)
- ;
-  X == ff,
-  execute(S2,M1,M2)
- ).
+% Conditional statement with true condition
+execute(ifthenelse(B,S1,_),M1,M2) :-
+ evalb(B,M1,tt),
+ execute(S1,M1,M2).
 
-% Loop statement
+% Conditional statement with false condition
+execute(ifthenelse(B,_,S2),M1,M2) :-
+ evalb(B,M1,ff),
+ execute(S2,M1,M2).
+
+% Loop statement with true condition
 execute(while(B,S),M1,M3) :-
- evalb(B,M1,X),
- (
-  X == tt,
-  execute(S,M1,M2),
-  execute(while(B,S),M2,M3)
- ;
-  X == ff,
-  M3 = M1
- ).
+ evalb(B,M1,tt),
+ execute(S,M1,M2),
+ execute(while(B,S),M2,M3).
+
+% Loop statement with false condition
+execute(while(B,_),M,M) :-
+ evalb(B,M,ff).
 
