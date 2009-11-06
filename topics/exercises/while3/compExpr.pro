@@ -1,23 +1,59 @@
-% Evaluate Boolean expressions
+%% Evaluate arithmetic expressions
 
-evalb(true,_,tt).
+% Number is evaluated to its value
+evala(number(V),_,V).
 
-evalb(false,_,ff).
+% Variable reference is evaluated to its current value
+evala(identifier(X),M,Y) :- lookup(M,X,Y).
 
-evalb(equal(A1,A2),M,V) :-
+% Adddition
+evala(add(A1,A2),M,V) :-
   evala(A1,M,V1),
   evala(A2,M,V2),
-  equal(V1,V2,V).
+  V is V1 + V2.
 
+% Subtraction
+evala(sub(A1,A2),M,V) :-
+  evala(A1,M,V1),
+  evala(A2,M,V2),
+  V is V1 - V2.
 
-% Evaluate arithmetic expressions
+% Multiplication
+evala(mul(A1,A2),M,V) :-
+  evala(A1,M,V1),
+  evala(A2,M,V2),
+  V is V1 * V2.
 
-evala(const(V),_,V).
+%% Evaluate Boolean expressions
 
-evala(var(X),M,Y) :- lookup(M,X,Y).
+% True is tt
+evalb(true,_,tt).
 
+% False is ff
+evalb(false,_,ff).
 
-% Basic operations
+% Negation
+evalb(not(B),M,V) :-
+ evalb(B,M,V1),
+ not(V1,V).
 
-equal(V1,V2,tt) :- V1 == V2.
-equal(V1,V2,ff) :- \+ V1 == V2.
+% Test for equality
+evalb(equals(A1,A2),M,V) :-
+  evala(A1,M,V1),
+  evala(A2,M,V2),
+  equals(V1,V2,V).
+
+% Test for equality
+evalb(lte(A1,A2),M,V) :-
+  evala(A1,M,V1),
+  evala(A2,M,V2),
+  lte(V1,V2,V).
+
+%% Basic operations
+equals(V1,V2,tt) :- V1 == V2.
+equals(V1,V2,ff) :- \+ V1 == V2.
+lte(V1,V2,tt) :- V1 =< V2.
+lte(V1,V2,ff) :- \+ V1 =< V2.
+not(tt,ff).
+not(ff,tt).
+

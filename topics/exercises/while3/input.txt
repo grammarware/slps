@@ -1,0 +1,1 @@
+y:=2; if y = 3 then z := y else z := 1000
