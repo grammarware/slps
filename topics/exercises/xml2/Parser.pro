@@ -56,11 +56,10 @@ letters([H|T]) --> letter(H), letters(T).
 letters([]) --> [].
 letter(H,[H|T],T) :- H >= 0'a, H =< 0'z.
 
-value(V) -->
- char(H), chars(T),
- { atom_codes(V,[H|T]) }.
+value(Y)-->
+ string("'"),
+ string(V),
+ {\+member(39,V)},
+ {string_to_list(Y,V)},
+ string("'").
 
-chars([H|T]) --> char(H), chars(T).
-chars([]) --> [].
-char(H,[H|T],T) :- H >= 0'a, H =< 0'z.
-char(H,[H|T],T) :- H >= 0'0, H =< 0'9.
