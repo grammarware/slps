@@ -1,0 +1,1 @@
+lambda(f,lambda(g,lambda(x,apply(f,apply(g,x)))))

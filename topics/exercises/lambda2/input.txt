@@ -1,0 +1,1 @@
+apply(lambda(x,y),lambda(z,z))
