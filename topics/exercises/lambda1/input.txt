@@ -1,1 +1,1 @@
-lambda(f,lambda(g,lambda(x,apply(f,apply(g,x)))))
+lambda f . lambda g . lambda x . app f : app g : x

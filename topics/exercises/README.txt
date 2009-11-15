@@ -5,4 +5,8 @@ while4	- small step semantics for While (+ a DCG parser)
 xml1	- a DCG parser for XML subset (elements only)
 xml2	- a DCG parser for XML subset (elements and attributes)
 nb1	- abstract syntax for NB
-nb1	- typed NB abstract syntax
+nb2	- semantics and types for NB
+lambda1	- lambda calculus abstract and concrete syntax in Prolog
+lambda2	- obsolete
+lambda3 - lambda calculus abstract syntax, free variables, substitution, evaluation
+

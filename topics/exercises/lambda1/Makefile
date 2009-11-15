@@ -1,6 +1,5 @@
 test:
-	swipl -f syntax.pro -t "write(term(`cat input.txt`)),nl"
+	swipl -f run.pro -t "main('input.txt')"
 
-prompt:
-	swipl -s syntax.pro
-
+clean:
+	rm -rf *~
