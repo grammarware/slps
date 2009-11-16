@@ -1,0 +1,8 @@
+y:=2;
+x:=(y+4);
+if (y = 2 ^ x = 6)
+ then
+  z := y
+ else
+  z := 1000;
+while x≤10 do x := (x + 1)
