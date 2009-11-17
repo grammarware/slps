@@ -1,6 +1,5 @@
-
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C# Express 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "slps-xsl", "slps-xsl.csproj", "{11B9E6F0-2AB1-4AFA-954A-AB98B7B71390}"
 EndProject
 Global
