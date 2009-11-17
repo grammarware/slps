@@ -265,11 +265,14 @@ def dumpGraph(df):
   print '[PASS] Diagram generation completed.'
 
 def copyFile(x,y):
- xh=open(x,'r')
- yh=open(y,'w')
- yh.writelines(xh.readlines())
- xh.close()
- yh.close()
+ try:
+  xh=open(x,'r')
+  yh=open(y,'w')
+  yh.writelines(xh.readlines())
+  xh.close()
+  yh.close()
+ except IOError,e:
+  print '[FAIL] I/O error: either',x,'or',y,'is not accessible.'
 
 def extractAll():
  for bgf in extractor.keys():
