@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BNF dialect used in the Java Language Specification throughout the text (not in the appendix) -->
+<edd:dialect xmlns:edd="http://planet-sl.org/edd">
+  <production>
+    <defining>
+      <text>:</text>
+      <newline/>
+      <more-indentation/>
+    </defining>
+    <separator>
+      <newline/>
+      <same-indentation/>
+    </separator>
+    <terminator>
+      <newline/>
+      <newline/>
+      <less-indentation/>
+    </terminator>
+    <line-continuation>
+      <choice>
+        <more-indentation/>
+        <less-indentation/>
+      </choice>
+    </line-continuation>
+  </production>
+
+  <fragment/>
+
+  <optionality>
+    <symbol>
+      <text>opt</text>
+      <font>subscript</font>
+      <font>italic</font>
+    </symbol>
+  </optionality>
+
+  <nonterminal>
+    <font>italic</font>
+  </nonterminal>
+
+  <terminal/>
+</edd:dialect>

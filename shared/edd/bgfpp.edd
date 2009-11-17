@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EBNF dialect for pretty-printed BGF -->
+<edd:dialect xmlns:edd="http://planet-sl.org/edd">
+  <production>
+    <defining>
+      <text>:</text>
+      <newline/>
+      <more-indentation/>
+    </defining>
+    <separator>
+      <newline/>
+      <same-indentation/>
+    </separator>
+    <terminator>
+      <newline/>
+      <less-indentation/>
+    </terminator>
+    <line-continuation>
+      <newline/>
+      <more-indentation/>
+    </line-continuation>
+  </production>
+
+  <fragment>
+    <group>
+      <start>
+        <text>(</text>
+      </start>
+      <end>
+        <text>)</text>
+      </end>
+    </group>
+    <choice-symbol>
+      <text>|</text>
+    </choice-symbol>
+  </fragment>
+
+  <optionality>
+    <symbol>
+      <text>?</text>
+    </symbol>
+  </optionality>
+
+  <repetition>
+    <markup>
+      <symbol>
+        <text>*</text>
+      </symbol>
+    </markup>
+    <min>0</min>
+    <max>unbounded</max>
+  </repetition>
+
+  <repetition>
+    <markup>
+      <symbol>
+        <text>+</text>
+      </symbol>
+    </markup>
+    <min>1</min>
+    <max>unbounded</max>
+  </repetition>
+
+  <nonterminal/>
+
+  <terminal>
+    <markup>
+      <start>
+        <text>"</text>
+      </start>
+      <end>
+        <text>"</text>
+      </end>
+    </markup>
+  </terminal>
+
+</edd:dialect>

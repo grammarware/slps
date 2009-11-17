@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BNF dialect used in the appendix of Java Language Specification -->
+<edd:dialect xmlns:edd="http://planet-sl.org/edd">
+  <production>
+    <defining>
+      <text>:</text>
+      <newline/>
+      <more-indentation/>
+    </defining>
+    <separator>
+      <newline/>
+      <same-indentation/>
+    </separator>
+    <terminator>
+      <newline/>
+      <newline/>
+      <less-indentation/>
+    </terminator>
+    <line-continuation>
+      <choice>
+        <more-indentation/>
+        <less-indentation/>
+      </choice>
+    </line-continuation>
+  </production>
+
+  <fragment>
+    <group>
+      <start>
+        <text>(</text>
+      </start>
+      <end>
+        <text>)</text>
+      </end>
+    </group>
+    <choice-symbol>
+      <text>|</text>
+    </choice-symbol>
+  </fragment>
+
+  <optionality>
+    <start>
+      <text>[</text>
+    </start>
+    <end>
+      <text>]</text>
+    </end>
+  </optionality>
+
+  <repetition>
+    <markup>
+      <start>
+        <text>{</text>
+      </start>
+      <end>
+        <text>}</text>
+      </end>
+    </markup>
+    <min>0</min>
+    <max>unbounded</max>
+  </repetition>
+
+  <nonterminal>
+    <font>italic</font>
+  </nonterminal>
+
+  <terminal/>
+</edd:dialect>
