@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EBNF dialect for pretty-printed BGF -->
+
+<!--
+NT:
+        A B C
+        D E
+-->
 <edd:dialect xmlns:edd="http://planet-sl.org/edd">
   <production>
     <defining>
       <text>:</text>
       <newline/>
-      <more-indentation/>
+      <eight-spaces/>
     </defining>
     <separator>
       <newline/>
-      <same-indentation/>
+      <eight-spaces/>
     </separator>
     <terminator>
       <newline/>
-      <less-indentation/>
     </terminator>
     <line-continuation>
       <newline/>
-      <more-indentation/>
+      <eight-spaces/>
+      <eight-spaces/>
     </line-continuation>
   </production>
 
@@ -42,6 +48,7 @@
   </optionality>
 
   <repetition>
+    <name>star</name>
     <markup>
       <symbol>
         <text>*</text>
@@ -52,6 +59,7 @@
   </repetition>
 
   <repetition>
+    <name>plus</name>
     <markup>
       <symbol>
         <text>+</text>

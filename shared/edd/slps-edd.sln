@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EBNF Dialect Definitions", "EBNF Dialect Definitions", "{1B9DFCF5-3885-4B4F-875C-D0BA3334C456}"
+	ProjectSection(SolutionItems) = preProject
+		bgfpp.edd = bgfpp.edd
+		jls.edd = jls.edd
+		jlsapp.edd = jlsapp.edd
+		sdf.edd = sdf.edd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{AB0310DD-498B-4FCC-8B0F-6001901F420E}"
+	ProjectSection(SolutionItems) = preProject
+		..\xsd\edd.xsd = ..\xsd\edd.xsd
+		..\xsl\edd2dcg.xslt = ..\xsl\edd2dcg.xslt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

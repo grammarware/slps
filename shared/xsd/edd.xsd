@@ -42,6 +42,7 @@
 
   <xsd:complexType name="RepetitionStructure">
     <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="markup" type="edd:SymbolOrPair"/>
       <xsd:element name="min" type="edd:BorderType"/>
       <xsd:element name="max" type="edd:BorderType"/>
@@ -77,6 +78,7 @@
       <xsd:element name="less-indentation" nillable="true"/>
       <xsd:element name="same-indentation" nillable="true"/>
       <xsd:element name="more-indentation" nillable="true"/>
+      <xsd:element name="eight-spaces" nillable="true"/>
       <xsd:element name="anything" nillable="true"/>
     </xsd:choice>
   </xsd:complexType>

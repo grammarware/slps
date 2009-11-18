@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 3 ]; then
+    echo "This script wraps up the BTF evaluator"
+    echo "Usage: $0 <context-btf> <input-expression> <expected-value>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+swipl -q -f ${SLPS}/topics/fl/prolog3/TestEvaluator.pro -t main -- `cat $3` $1 `cat $2`
