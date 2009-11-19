@@ -1,0 +1,50 @@
+<xsd:schema
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:rgf="http://planet-sl.org/rgf"
+  targetNamespace="http://planet-sl.org/rgf">
+
+  <xsd:annotation>
+    <xsd:documentation>
+	Raw Grammar Format
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:element name="grammar">
+    <xsd:complexType>
+	<xsd:sequence>
+		<xsd:element name="entry"  maxOccurs="unbounded">
+    		<xsd:complexType>
+			<xsd:sequence>
+			<xsd:element name="key" type="xsd:string"/>
+			<xsd:element name="rhs"  maxOccurs="unbounded">
+    			<xsd:complexType>
+      				<xsd:group ref="rgf:symbol" maxOccurs="unbounded"/>
+    			</xsd:complexType>
+			</xsd:element>
+			</xsd:sequence>
+    		</xsd:complexType>
+		</xsd:element>
+	</xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:group name="symbol">
+    <xsd:choice>
+      <xsd:element name="nonterminal" type="xsd:string"/>
+      <xsd:element name="terminal" type="xsd:string"/>
+
+      <xsd:element name="meta-repetition" type="xsd:string"/>
+      <xsd:element name="meta-repetition-start" type="xsd:string"/>
+      <xsd:element name="meta-repetition-end" type="xsd:string"/>
+
+      <xsd:element name="meta-choice" nillable="true"/>
+      <xsd:element name="meta-group-start" nillable="true"/>
+      <xsd:element name="meta-group-end" nillable="true"/>
+      <xsd:element name="meta-optionality" nillable="true"/>
+      <xsd:element name="meta-optional-start" nillable="true"/>
+      <xsd:element name="meta-optional-end" nillable="true"/>
+    </xsd:choice>
+  </xsd:group>
+  
+</xsd:schema>
+
