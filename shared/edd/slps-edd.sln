@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 	ProjectSection(SolutionItems) = preProject
 		..\xsd\edd.xsd = ..\xsd\edd.xsd
 		..\xsl\edd2dcg.xslt = ..\xsl\edd2dcg.xslt
+		..\xsd\rgf.xsd = ..\xsd\rgf.xsd
+		..\xsl\rgf2bgf.xslt = ..\xsl\rgf2bgf.xslt
 	EndProjectSection
 EndProject
 Global

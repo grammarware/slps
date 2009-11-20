@@ -7,7 +7,7 @@
       encoding="UTF-8"
       omit-xml-declaration="yes"
       />
-  
+
   <xsl:template match="/edd:dialect">
     <xsl:text>grammar(g(Ps)) --> productions(Ps).
 productions([H|T]) --> production(H), productions(T).
@@ -74,8 +74,7 @@ symbolchoices([S]) --> symbols(S).
         <xsl:with-param name="predicate" select="'optionalitysymbol'"/>
         <xsl:with-param name="symbol" select="optionality/symbol"/>
       </xsl:call-template>
-      <xsl:text>symbol(opt(nt(N))) --> name(N), optionalitysymbol.
-symbol(opt(br(S))) --> groupstart, symbolchoices(S), groupend, optionalitysymbol.
+      <xsl:text>symbol(opt) --> optionalitysymbol.
 </xsl:text>
     </xsl:if>
     <!-- not implemented: optionality pair -->
@@ -96,11 +95,19 @@ symbol(r(R,br(S))) --> groupstart, symbolchoices(S), groupend, repetition(R).
     </xsl:for-each>
     <!-- terminals -->
     <xsl:if test="terminal">
-	<!-- double quote (34) hard coded; single quote is 39 -->
-	<xsl:text>symbol(t(Y)) --> terminalstart, string(V), {\+ member(34, V), string_to_list(Y,V)}, terminalend.
+      <!-- double quote (34) hard coded; single quote is 39 -->
+      <xsl:choose>
+        <xsl:when test="markup/start/text/text() = '&#34;'">
+          <!-- double quote -->
+          <xsl:text>symbol(t(Y)) --> terminalstart, string(V), {\+ member(34, V), string_to_list(Y,V)}, terminalend.
 terminalstart --> [34].
 terminalend --> [34].
 </xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:message>Unsupported terminal quoting!</xsl:message>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
     <!-- everything else -->
     <xsl:text>
@@ -150,8 +157,7 @@ writesymbolchoices([H1,H2|T]) :- writesymbols(H1), writechoicesymbol, writesymbo
 writesymbolchoices([S]) :- writesymbols(S).
 writechoicesymbol :- write('<meta-choice/>'), nl.
 writeoptionalitysymbol :- write('<meta-optionality/>'), nl.
-writesymbol(opt(nt(N))) :- writent(N), writeoptionalitysymbol.
-writesymbol(opt(br(S))) :- writegroupstart, writesymbolchoices(S), writegroupend, writeoptionalitysymbol.
+writesymbol(opt) :- writeoptionalitysymbol.
 writesymbol(r(R,nt(N))) :- writent(N), writerepetition(R).
 writesymbol(r(R,br(S))) :- writegroupstart, writesymbolchoices(S), writegroupend, writerepetition(R).
 writerepetition(R) :- write('<meta-repetition>'), write(R), write('</meta-repetition>'), nl.
@@ -218,9 +224,9 @@ eof([10|T],R) :- eof(T,R).]]>
       </xsl:when>
       <xsl:when test="local-name($bit) = 'optional'">
         <xsl:text>(</xsl:text>
-          <xsl:call-template name="transformSymbol">
-            <xsl:with-param name="symbol" select="$bit"/>
-          </xsl:call-template>
+        <xsl:call-template name="transformSymbol">
+          <xsl:with-param name="symbol" select="$bit"/>
+        </xsl:call-template>
         <xsl:text>; epsilon)</xsl:text>
       </xsl:when>
       <xsl:when test="local-name($bit) = 'newline'">
