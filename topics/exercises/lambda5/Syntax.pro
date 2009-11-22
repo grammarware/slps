@@ -11,7 +11,3 @@ val(false).
 type(bool).
 type(maps(T1,T2)) :- type(T1), type(T2).
 
-value(lam(X,T)) :- variable(X), term(T).
-value(var(X)) :- variable(X). % pragmatic extension to deal with open terms
-
-

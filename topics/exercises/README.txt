@@ -7,8 +7,9 @@ xml2	- a DCG parser for XML subset (elements and attributes)
 nb1	- abstract syntax for NB
 nb2	- semantics and types for NB
 lambda1	- lambda calculus abstract and concrete syntax in Prolog
-lambda2	- fixed point in lambda calculus
+lambda2	- obsolete
 lambda3 - lambda calculus abstract syntax, free variables, substitution, evaluation
-lambda4 - alpha conversion in lambda calculus
+lambda4	- fixed point in lambda calculus
 lambda5 - typed lambda calculus
+lambda6 - alpha conversion in lambda calculus
 
