@@ -3,7 +3,7 @@
 % type(Expression,DeclaredIn,DeclaredOut,Type), where Type = unit
 % type(Expression,Declared,Type), where Type = bool or nat
 
-%% StateDents have the 'unit' type
+%% StateDents have the 'unit' type, see slide 191
 type(slist(S1,S2),D1,D2,U) :-
  wtype(S1,D1,D3,unit),
  wtype(S2,D3,D2,U).

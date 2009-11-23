@@ -42,7 +42,7 @@
  Fix = lam(f,app(lam(x,app(var(f),lam(y,app(app(var(x),var(x)),var(y))))),lam(x,app(var(f),lam(y,app(app(var(x),var(x)),var(y))))))), % CBV
  F = lam(e,lam(x,if(iszero(var(x)),true,if(iszero(pred(var(x))),false,app(var(e),pred(pred(var(x)))))))),
  IsEven = app(Fix,F),
- manysteps(app(IsEven,3),Q4),
+ manysteps(app(IsEven,257),Q4),
  write(Q4), nl,
 
  halt.

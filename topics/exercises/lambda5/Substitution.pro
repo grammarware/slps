@@ -8,8 +8,8 @@ substitute(_,X,var(Y),var(Y)) :- \+ X == Y.
 substitute(N,X,app(M1,M2),app(M3,M4)) :-
   substitute(N,X,M1,M3),
   substitute(N,X,M2,M4).
-substitute(_,X,lam(X,M),lam(X,M)).
-substitute(N,X,lam(Y,M1),lam(Y,M2)) :-
+substitute(_,X,lam(X,T,M),lam(X,T,M)).
+substitute(N,X,lam(Y,T,M1),lam(Y,T,M2)) :-
   \+ X == Y,
   fv(N,Xs),
   \+ member(Y,Xs),
@@ -17,7 +17,7 @@ substitute(N,X,lam(Y,M1),lam(Y,M2)) :-
 
 % Special case for alpha conversion
 
-substitute(N,X,lam(Y,M1),lam(Z,M3)) :-
+substitute(N,X,lam(Y,T,M1),lam(Z,T,M3)) :-
   \+ X == Y,
   fv(N,Xs),
   member(Y,Xs),
