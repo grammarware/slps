@@ -3,7 +3,7 @@
 main(File) :-
  parseFile(File,program,S),
  write(S),nl,nl,
- type(S,[],M,T),
+ wtype(S,[],M,_),
  %execute(S,[],M),
  write(M),nl.
 
