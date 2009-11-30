@@ -13,4 +13,5 @@ lambda2	 - lambda caclulus with Church numbers
 lambda3  - lambda calculus abstract syntax, free variables, substitution, evaluation
 lambda4	 - untyped lambda calculus with alpha conversion & fixed point combinator
 lambda5  - typed lambda calculus with alpha conversion
+lambda6  - typed lambda calculus with alpha conversion & fixed point operator
 

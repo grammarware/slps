@@ -19,8 +19,8 @@
  hastype([],F,T3),
  write(T3), nl,
  IsEven = fix(F),
-% hastype([],IsEven,T4),
-% write(T4), nl,
-% manysteps(app(IsEven,3),Q),
-% write(Q), nl,
+ hastype([],IsEven,T4),
+ write(T4), nl,
+ manysteps(app(IsEven,3),Q),
+ write(Q), nl,
  halt.

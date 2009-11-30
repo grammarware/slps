@@ -13,6 +13,7 @@ fv(lam(X,_,M),FV) :-
   fv(M,FV1),
   subtract(FV1,[X],FV).
 
+fv(fix(X),FV) :- fv(X,FV).
 
 % Extension to deal with Prolog numbers and Booleans
 

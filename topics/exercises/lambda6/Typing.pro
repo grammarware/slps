@@ -35,5 +35,4 @@ hastype(G,if(T1,T2,T3),Type) :-
 
 % Fixed point combinator, see slide 189
 % Typing rule
-% hastype(G,fix(T),Type) :- ...
-
+hastype(G,fix(T),Type) :- hastype(G,T,maps(Type,Type)).
