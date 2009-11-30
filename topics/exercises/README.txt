@@ -4,6 +4,7 @@ while3	 - big step semantics for While (+ a DCG parser)
 while4	 - small step semantics for While (+ a DCG parser)
 while5   - typed While
 while6   - While evaluation in Haskell (incomplete)
+while7   - While evaluation in Haskell (complete)
 xml1	 - a DCG parser for XML subset (elements only)
 xml2	 - a DCG parser for XML subset (elements and attributes)
 nb1	 - abstract syntax for NB
@@ -14,4 +15,4 @@ lambda3  - lambda calculus abstract syntax, free variables, substitution, evalua
 lambda4	 - untyped lambda calculus with alpha conversion & fixed point combinator
 lambda5  - typed lambda calculus with alpha conversion
 lambda6  - typed lambda calculus with alpha conversion & fixed point operator
-
+haskell1 - simple exercises solved in Haskell
