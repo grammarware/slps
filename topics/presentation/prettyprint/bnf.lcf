@@ -40,7 +40,7 @@
   <generator>
     <name>stript</name>
     <command>
-      <expand>tools</expand>/striptxbgf
+      <expand>slps</expand>/shared/generators/striptxbgf
     </command>
   </generator>
 

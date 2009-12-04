@@ -1,5 +1,6 @@
 shared = ../../../../../shared
 tools = ${shared}/tools
+generators = ${shared}/generators
 xsd = ${shared}/xsd
 final = bgf1.bgf
 
@@ -16,7 +17,7 @@ append.xbgf:
 ${final}: append.xbgf
 	${tools}/xsd2bgf ${xsd}/bgf.xsd bgf0.bgf
 	${tools}/xbgf append1.xbgf bgf0.bgf bgf0s.bgf
-	${tools}/stripsxbgf bgf0s.bgf strip.xbgf
+	${generators}/stripsxbgf bgf0s.bgf strip.xbgf
 	${tools}/xbgf strip.xbgf bgf0s.bgf bgf1_.bgf
 	${tools}/xbgf append2.xbgf bgf1_.bgf bgf1.bgf
 

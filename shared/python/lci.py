@@ -612,8 +612,8 @@ if __name__ == "__main__":
   else:
    print '[WARN] No testing performed.'
   # DEBUG - no diagram
-  #dumpGraph(sys.argv[2])
-  print '[WARN] Diagram generation disabled.'
+  dumpGraph(sys.argv[2])
+  #print '[WARN] Diagram generation disabled.'
   if problem:
    sysexit(100)
   log.close()

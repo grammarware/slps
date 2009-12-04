@@ -196,7 +196,7 @@
         The following section gathers those transformations that would have been
         considered refactorings if we only used term-oriented semantics. From
         the string-oriented point of view they revise semantics and can be deemed
-        as neither grammar lenghtening nor grammar shortening transformations.
+        as neither grammar lengthening nor grammar shortening transformations.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>
@@ -605,7 +605,7 @@
       <xsd:documentation>
         The argument production defines the intended result of the
         transformation --- a production that has additional components
-        in the sequential composition, when compared to the correpsonding
+        in the sequential composition, when compared to the corresponding
         production in the input grammar with the same defined nonterminal
         and the same label, if any.
       </xsd:documentation>
@@ -745,7 +745,7 @@
         The argument production defines the intended result of the
         transformation --- a production that has the same components
         in the sequential composition, but in a different order, when
-        compared to the correpsonding production in the input grammar
+        compared to the corresponding production in the input grammar
         with the same defined nonterminal and the same label, if any.
       </xsd:documentation>
     </xsd:annotation>
@@ -761,7 +761,7 @@
       <xsd:documentation>
         The argument production defines the intended result of the
         transformation --- a production that has fewer components
-        in the sequential composition, when compared to the correpsonding
+        in the sequential composition, when compared to the corresponding
         production in the input grammar with the same defined nonterminal
         and the same label, if any.
       </xsd:documentation>

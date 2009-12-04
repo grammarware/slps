@@ -4,12 +4,12 @@
   <xbgf:vertical>
     <nonterminal>definition</nonterminal>
   </xbgf:vertical>
-  <xbgf:inline>shortcutType</xbgf:inline>
-  <xbgf:inline>toolType</xbgf:inline>
-  <xbgf:inline>sourceType</xbgf:inline>
-  <xbgf:inline>targetType</xbgf:inline>
-  <xbgf:inline>testsetType</xbgf:inline>
+  <xbgf:inline>shortcut</xbgf:inline>
+  <xbgf:inline>tool</xbgf:inline>
+  <xbgf:inline>source</xbgf:inline>
+  <xbgf:inline>target</xbgf:inline>
+  <xbgf:inline>testset</xbgf:inline>
   <xbgf:vertical>
-    <nonterminal>tool</nonterminal>
+    <nonterminal>toolType</nonterminal>
   </xbgf:vertical>
 </xbgf:sequence>

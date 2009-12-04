@@ -45,6 +45,12 @@
    \begin{lrbox}{\@tempboxa}\begin{minipage}{0.9\columnwidth}}{\end{minipage}\end{lrbox}%
    \colorbox[gray]{0.9}{\usebox{\@tempboxa}}
 }\makeatother
+\usepackage[unicode,bookmarks=false,pdfstartview={FitH},%
+            colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue,%
+            pdfauthor={LDF2TEX},backref=page,%
+            pdftitle={</xsl:text>
+		    <xsl:value-of select="titlePage/topic"/>
+<xsl:text>}]{hyperref}
 \begin{document}
     </xsl:text>
     <!-- title -->
@@ -196,6 +202,11 @@
           <xsl:text>\textbf{</xsl:text>
           <xsl:value-of select="text"/>
           <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="local-name() = 'formula'">
+          <xsl:text>$</xsl:text>
+          <xsl:apply-templates select="mml:math/*"/>
+          <xsl:text>$</xsl:text>
         </xsl:when>
         <!--
               <xsl:when test="namespace-uri() = 'http://planet-sl.org/ldf'">
