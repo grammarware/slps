@@ -5,7 +5,7 @@ foldB :: r -> r -> (r -> r -> r -> r) -> B -> r
 foldB r _ _ TrueB = r
 foldB _ r _ FalseB = r
 foldB r1 r2 f (IfB x y z) =
-	f (fold x) (fold y) (fold y)
+	f (fold x) (fold y) (fold z)
 	where fold = foldB r1 r2 f
 
 depth :: B -> Int
