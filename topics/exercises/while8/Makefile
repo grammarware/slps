@@ -1,10 +1,10 @@
 all:
-	ghc while.hs
-	./a.out
+	ghc --make Test.hs
+	./Test
 
 test:
-	ghci while.hs
+	ghci Test.hs
 
 clean:
-	rm -f *~ *.hi *.o a.out
+	rm -f *~ *.hi *.o Test
 

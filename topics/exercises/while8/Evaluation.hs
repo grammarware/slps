@@ -1,4 +1,4 @@
-module Eval where
+module Evaluation where
 
 import Syntax
 import Prelude hiding (lookup)

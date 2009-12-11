@@ -1,7 +1,7 @@
-module Exec where
+module Execution where
 
 import Syntax
-import Eval
+import Evaluation
 import Prelude hiding (lookup)
 
 update :: State -> Identifier -> Int -> State
@@ -11,6 +11,7 @@ update ((x1,v1):xvs) x2 v2 =
     then ((x1,v2):xvs)
     else ((x1,v1):(update xvs x2 v2))
 
+-- Denotational semantics of While, slides 541–544
 exec :: Statement -> State -> State
 exec (Seq s1 s2) = exec s2 . exec s1
 exec Skip = id
@@ -25,7 +26,3 @@ cond p g1 g2 st | p st      = g1 st
 
 fix :: (t -> t) -> t
 fix f = f (fix f)
-
-main =
-	do
-		print $ exec myWhile []

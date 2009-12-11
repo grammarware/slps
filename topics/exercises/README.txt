@@ -7,7 +7,8 @@ while3	 - big step semantics for While (+ a DCG parser)
 while4	 - small step semantics for While (+ a DCG parser)
 while5   - typed While in Prolog
 while6   - While evaluation in Haskell (incomplete)
-while7   - While evaluation in Haskell (complete)
+while7   - While evaluation in Haskell (complete, big step operational)
+while8   - While execution in Haskell (complete, denotational)
 
 xml1	 - a DCG parser for XML subset (elements only)
 xml2	 - a DCG parser for XML subset (elements and attributes)
