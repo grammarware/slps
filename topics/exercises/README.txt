@@ -18,8 +18,7 @@ b2       - parsing B in Haskell
 b3       - folding over expressions for B in Haskell
 nb1	 - abstract syntax for NB in Prolog
 nb2	 - semantics and types for NB in Prolog
-nb3      - parsing NB in Haskell
-nb4      - folding over expressions for NB in Haskell
+nb3      - parsing and folding NB in Haskell
 
 lambda1	 - lambda calculus abstract and concrete syntax in Prolog
 lambda2	 - lambda caclulus with Church numbers
