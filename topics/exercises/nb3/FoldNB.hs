@@ -51,8 +51,8 @@ maxN = foldNB
 	(\ x -> if x>1 then x-1 else 0)
 	(id)
 
-eval :: NB -> Int
-eval = foldNB
+evaln :: NB -> Int
+evaln = foldNB
 	1
 	0
 	(\ x y z -> if x/=0 then y else z)
@@ -61,14 +61,14 @@ eval = foldNB
 	(\ x -> if x>1 then x-1 else 0)
 	(\ x -> if x==0 then 1 else 0)
 
-data Answer = Num Int | Bool2 Bool deriving Show
+data Answer = Num Int | Bool Bool deriving Show
 
 evalnb :: NB -> Answer
 evalnb = foldNB
-	(Bool2 True)
-	(Bool2 False)
-	(\ (Bool2 x) y z -> if x then y else z)
+	(Bool True)
+	(Bool False)
+	(\ (Bool x) y z -> if x then y else z)
 	(Num 0)
 	(\ (Num x) -> Num (x+1) )
 	(\ (Num x) -> if x>1 then (Num (x-1)) else Num 0)
-	(\ (Num x) -> if x==0 then Bool2 True else Bool2 False)
+	(\ (Num x) -> if x==0 then Bool True else Bool False)
