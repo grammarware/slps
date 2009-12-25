@@ -1,0 +1,15 @@
+program:
+        fun+
+fun:
+        id id+ "=" expression newline
+expression:
+        expression op expression
+        id expression+
+        "if" expression "then" expression "else" expression
+        "(" expression ")"
+        id
+        number
+op:
+        "+"
+        "-"
+        "=="

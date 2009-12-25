@@ -1,3 +1,11 @@
+source = ../../fl/txl/FL.Txl
+target = tests/fl
+
 test:
-	../../../shared/tools/txl2bgf ../../fl/txl/FL.Txl fl.bgf
-	../../../shared/tools/bgf2bnf fl.bgf
+	make clean
+	../../../shared/tools/txl2bgf ${source} ${target}.bgf
+	../../../shared/tools/bgf2bnf ${target}.bgf ${target}.out
+	diff ${target}.out ${target}.baseline
+
+clean:
+	rm -f tests/*.bgf tests/*.out

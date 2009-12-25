@@ -15,7 +15,7 @@ elif [ $# -eq 2 ]; then
 elif [ $# -eq 1 ]; then
     xsltproc ${SLPS}/shared/xsl/ecore2bgf.xslt $1 > ${LOCAL}/`basename $1 .ecore`.bgf
 else
-    echo "This tool extracts a BGF grammar from an ECore model"
+    echo "This tool extracts a BGF grammar from an Ecore model"
     echo "Usage: ecore2bgf <ecore-model> [<output-grammar>]"
     exit 2
 fi

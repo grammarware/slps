@@ -1,0 +1,30 @@
+Program:
+        function::Function+
+Function:
+        name::STR argument::Argument+ definition::Exp
+Argument:
+        name::STR
+Exp:
+        LiteralExp
+        ArgumentExp
+        IfThenElseExp
+        ApplyExp
+        BinaryExp
+LiteralExp:
+        value::INT
+ArgumentExp:
+        argument::Argument
+IfThenElseExp:
+        if::Exp then::Exp else::Exp
+ApplyExp:
+        function::Function argument::Exp+
+BinaryExp:
+        PlusExp
+        MinusExp
+        EqualExp
+PlusExp:
+        left::Exp right::Exp
+MinusExp:
+        left::Exp right::Exp
+EqualExp:
+        left::Exp right::Exp

@@ -1,11 +1,22 @@
-Loading XML file 'tests/fl.bgf'.
-g( [], [
-  p([], program, +n(function)),
-  p([], function, ','([n('ID'), +n('ID'), t(=), n(expr), +n('NEWLINE')])),
-  p([], expr, ;([n(binary), n(apply), n(ifThenElse)])),
-  p([], binary, ','([n(atom), *(','([n(ops), n(atom)]))])),
-  p([], apply, ','([n('ID'), +n(atom)])),
-  p([], ifThenElse, ','([t(if), n(expr), t(then), n(expr), t(else), n(expr)])),
-  p([], atom, ;([n('ID'), n('INT'), ','([t('('), n(expr), t(')')])])),
-  p([], ops, ;([t(==), t(+), t(-)]))
-])
+program:
+        function+
+function:
+        ID ID+ "=" expr NEWLINE+
+expr:
+        binary
+        apply
+        ifThenElse
+binary:
+        atom (ops atom)*
+apply:
+        ID atom+
+ifThenElse:
+        "if" expr "then" expr "else" expr
+atom:
+        ID
+        INT
+        "(" expr ")"
+ops:
+        "=="
+        "+"
+        "-"

@@ -1,7 +1,6 @@
 <xsl:stylesheet version = '1.0'
     xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
     xmlns:bgf="http://planet-sl.org/bgf"
-    xmlns:ldf="http://planet-sl.org/ldf"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
@@ -15,8 +14,8 @@
   </xsl:template>
 
   <xsl:template match="eClassifiers">
-    <xsl:param name="ourEType" select="concat('#//',./@name)"/>
-    <xsl:param name="ourSuperType" select="substring(@eSuperTypes,4)"/>
+    <xsl:variable name="ourEType" select="concat('#//',./@name)"/>
+    <xsl:variable name="ourSuperType" select="substring(@eSuperTypes,4)"/>
     <xsl:choose>
       <xsl:when test="@abstract='true'">
         <bgf:production>
