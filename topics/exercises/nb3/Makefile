@@ -1,5 +1,5 @@
 test:
-	ghci -ihutton:. Test.hs
+	runhaskell -ihutton:. Test.hs
 
 clean:
 	rm -f *~ *.hi *.o

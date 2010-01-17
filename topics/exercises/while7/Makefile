@@ -1,6 +1,5 @@
 all:
-	ghc while.hs
-	./a.out
+	runhaskell while.hs
 
 test:
 	ghci while.hs

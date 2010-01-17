@@ -1,5 +1,7 @@
 module Main where
 
+import Data.Maybe
+
 -- assignment 5, part 1
 {-
 lookup(M,X,Y) :- append(_,[(X,Y)|_],M).
@@ -15,8 +17,8 @@ myupdate :: LookupTable -> Identifier -> Int -> LookupTable
 myupdate [] x v = [(x, v)]
 myupdate ((x1,v1):xvs) x2 v2 =
     if x1 == x2
-    then ((x1,v2):xvs)
-    else ((x1,v1):(myupdate xvs x2 v2))
+    then (x1,v2):xvs
+    else (x1,v1):myupdate xvs x2 v2
 
 -- assignment 5, part 2
 data Statement
@@ -73,19 +75,18 @@ evals (While b s) e = if evalb b e then evals (While b s) (evals s e) else e
 
 evala :: AExpression -> LookupTable -> Int
 evala (Number n) _ = n
-evala (Identifier i) e = maybe (error "Undefined variable") id (mylookup i e)
-evala (Add a1 a2) e = (evala a1 e) + (evala a2 e)
-evala (Sub a1 a2) e = (evala a1 e) - (evala a2 e)
-evala (Mul a1 a2) e = (evala a1 e) * (evala a2 e)
+evala (Identifier i) e = Data.Maybe.fromMaybe (error "Undefined variable") (mylookup i e)
+evala (Add a1 a2) e = evala a1 e + evala a2 e
+evala (Sub a1 a2) e = evala a1 e - evala a2 e
+evala (Mul a1 a2) e = evala a1 e * evala a2 e
 
 evalb :: BExpression -> LookupTable -> Bool
 evalb BTrue _ = True
 evalb BFalse _ = False
-evalb (Equals a1 a2) e = (evala a1 e) == (evala a2 e)
-evalb (LessThanOrEqual a1 a2) e = (evala a1 e) <= (evala a2 e)
+evalb (Equals a1 a2) e = evala a1 e == evala a2 e
+evalb (LessThanOrEqual a1 a2) e = evala a1 e <= evala a2 e
 evalb (Not b) e = not (evalb b e)
-evalb (And b1 b2) e = (evalb b1 e) && (evalb b2 e)
+evalb (And b1 b2) e = evalb b1 e && evalb b2 e
 
 main =
-	do
-		print (evals test [])
+	print (evals test [])

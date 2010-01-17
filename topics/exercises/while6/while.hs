@@ -1,3 +1,5 @@
+import Data.Maybe
+
 -- assignment 5, part 1
 {-
 lookup(M,X,Y) :- append(_,[(X,Y)|_],M).
@@ -67,10 +69,10 @@ evals Skip e = e
 
 evala :: AExpression -> LookupTable -> Int
 evala (Number n) _ = n
-evala (Identifier i) e = maybe (error "Undefined variable") id (mylookup i e)
-evala (Add a1 a2) e = (evala a1 e) + (evala a2 e)
-evala (Sub a1 a2) e = (evala a1 e) - (evala a2 e)
-evala (Mul a1 a2) e = (evala a1 e) * (evala a2 e)
+evala (Identifier i) e = Data.Maybe.fromMaybe (error "Undefined variable") (mylookup i e)
+evala (Add a1 a2) e = evala a1 e + evala a2 e
+evala (Sub a1 a2) e = evala a1 e - evala a2 e
+evala (Mul a1 a2) e = evala a1 e * evala a2 e
 
 -- evalb :: BExpression -> LookupTable -> Bool
 --- evalb ... = ...

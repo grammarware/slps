@@ -1,5 +1,5 @@
 test:
-	ghci foldB.hs
+	runhaskell foldB.hs
 
 clean:
 	rm -f *~

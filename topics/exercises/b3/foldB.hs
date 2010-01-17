@@ -12,7 +12,7 @@ depth :: B -> Int
 depth = foldB
 	1
 	1
-	(\ x y z -> 1 + (maximum [x, y, z]))
+	(\ x y z -> 1 + maximum [x, y, z])
 
 countT :: B -> Int
 countT = foldB
@@ -32,6 +32,6 @@ eval = foldB
 	False
 	(\ x y z -> if x then y else z)
 
-main = do
-          print (eval (IfB (IfB TrueB FalseB FalseB) FalseB FalseB))
+main = 
+	print (eval (IfB (IfB TrueB FalseB FalseB) FalseB FalseB))
 

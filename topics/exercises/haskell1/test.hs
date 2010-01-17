@@ -18,13 +18,13 @@ init1 :: [a] -> [a]
 init1 = reverse . tail . reverse
 
 init2 :: [a] -> [a]
-init2 = reverse . (drop 1) . reverse
+init2 = reverse . drop 1 . reverse
 
 init3 :: [a] -> [a]
 init3 xs = take (length xs - 1) xs
 
 init4 :: [a] -> [a]
-init4 xs = if length xs == 1 then [] else [head xs] ++ init4 (tail xs)
+init4 xs = if length xs == 1 then [] else head xs : init4 (tail xs)
 
 ---- Exercises block 3, slides 315–316, (2)
 -- take an array, return True if it's a palindrome
@@ -34,7 +34,7 @@ palindrome xs = reverse xs == xs
 ---- Exercises block 5, slides 360–362
 -- define scalar product of two arrrays
 scalar1 :: [Int] -> [Int] -> Int
-scalar1 xs ys = sum (zipWith (*) xs ys)
+scalar1 xs = sum . zipWith (*) xs
 
 scalar2 :: [Int] -> [Int] -> Int
 scalar2 xs ys | length xs == length ys = sum [(xs !! i)*(ys !! i) | i <- [0..(length xs - 1)]]

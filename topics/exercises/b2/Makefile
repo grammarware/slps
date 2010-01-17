@@ -1,4 +1,4 @@
 test:
-	ghci -ihutton:. parseB.hs
+	runhaskell -ihutton:. parseB.hs
 
 
