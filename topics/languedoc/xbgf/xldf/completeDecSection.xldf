@@ -6,112 +6,109 @@
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
-  <!-- compose a section on decreasing transformations -->
-  <xldf:retitle>
-    <from>
-      <title>decreasing-transformation</title>
-    </from>
-    <to>Grammar shortening transformations</to>
-  </xldf:retitle>
-  
-  <xldf:place>
-    <section>remove</section>
-    <inside>decreasing-transformation</inside>
-  </xldf:place>
-  <xldf:transformGrammar>
-    <target>remove</target>
-    <xbgf:vertical>
-      <nonterminal>remove</nonterminal>
-    </xbgf:vertical>
-  </xldf:transformGrammar>
-  <xldf:extractSubsection>
-    <from>remove</from>
-    <content>
-      <bgf:production>
-        <label>vertical</label>
-        <nonterminal>remove</nonterminal>
-        <bgf:expression>
-          <nonterminal>production</nonterminal>
-        </bgf:expression>
-      </bgf:production>
-    </content>
-    <title>removeV</title>
-    <id>removeV</id>
-    <role>syntax</role>
-  </xldf:extractSubsection>
-  <xldf:append>
-    <where>removeV</where>
-    <content>
-      <text>
+	<!-- compose a section on decreasing transformations -->
+	<xldf:retitle>
+		<from>
+			<title>decreasing-transformation</title>
+		</from>
+		<to>Grammar shortening transformations</to>
+	</xldf:retitle>
+	<xldf:place>
+		<section>remove</section>
+		<inside>decreasing-transformation</inside>
+	</xldf:place>
+	<xldf:transformGrammar>
+		<target>remove</target>
+		<xbgf:vertical>
+			<nonterminal>remove</nonterminal>
+		</xbgf:vertical>
+	</xldf:transformGrammar>
+	<xldf:extractSubsection>
+		<from>remove</from>
+		<content>
+			<bgf:production>
+				<label>vertical</label>
+				<nonterminal>remove</nonterminal>
+				<bgf:expression>
+					<nonterminal>production</nonterminal>
+				</bgf:expression>
+			</bgf:production>
+		</content>
+		<title>removeV</title>
+		<id>removeV</id>
+		<role>syntax</role>
+	</xldf:extractSubsection>
+	<xldf:append>
+		<where>removeV</where>
+		<content>
+			<text>
         Vertical removal operates on the level of productions: it takes away one production
         for some nonterminal leaving at least one more in the grammar.
       </text>
-    </content>
-  </xldf:append>
-  <xldf:addSubsection>
-    <example id="removeV-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>removeV</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>removeV-example</target>
-    <file>../../transformation/xbgf/tests/remove_vertical.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>removeV-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>removeV-example</target>
-    <file>../../transformation/xbgf/tests/remove_vertical.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>removeV-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>removeV-example</target>
-    <file>../../transformation/xbgf/tests/remove_vertical.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:extractSubsection>
-    <from>remove</from>
-    <content>
-      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
-        <label>horizontal</label>
-        <nonterminal>remove</nonterminal>
-        <bgf:expression>
-          <nonterminal>production</nonterminal>
-        </bgf:expression>
-      </bgf:production>
-    </content>
-    <title>removeH</title>
-    <id>removeH</id>
-    <role>syntax</role>
-  </xldf:extractSubsection>
-  <xldf:transformGrammar>
-    <target>removeH</target>
-    <xbgf:fold>
-      <nonterminal>marked-production</nonterminal>
-      <in>
-        <nonterminal>remove</nonterminal>
-      </in>
-    </xbgf:fold>
-    <context>definitions-section</context>
-  </xldf:transformGrammar>
-
-  <xldf:append>
-    <where>removeH</where>
-    <content>
-      <text>
+		</content>
+	</xldf:append>
+	<xldf:addSubsection>
+		<example id="removeV-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>removeV</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>removeV-example</target>
+		<file>../../transformation/xbgf/tests/remove_vertical.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>removeV-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>removeV-example</target>
+		<file>../../transformation/xbgf/tests/remove_vertical.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>removeV-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>removeV-example</target>
+		<file>../../transformation/xbgf/tests/remove_vertical.baseline</file>
+	</xldf:importGrammar>
+	<xldf:extractSubsection>
+		<from>remove</from>
+		<content>
+			<bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+				<label>horizontal</label>
+				<nonterminal>remove</nonterminal>
+				<bgf:expression>
+					<nonterminal>production</nonterminal>
+				</bgf:expression>
+			</bgf:production>
+		</content>
+		<title>removeH</title>
+		<id>removeH</id>
+		<role>syntax</role>
+	</xldf:extractSubsection>
+	<xldf:transformGrammar>
+		<target>removeH</target>
+		<xbgf:fold>
+			<nonterminal>marked-production</nonterminal>
+			<in>
+				<nonterminal>remove</nonterminal>
+			</in>
+		</xbgf:fold>
+		<context>definitions-section</context>
+	</xldf:transformGrammar>
+	<xldf:append>
+		<where>removeH</where>
+		<content>
+			<text>
         Horizontal removal looks inside productions: it removes any marked part of an internal choice,
         getting rid of the choice altogether if necessary (say, if the removed part was one of two
         alternatives). This allows to skip pre-transformational <ldf:keyword>vertical</ldf:keyword>
@@ -120,312 +117,310 @@
         However, it is useful to have a command at hand that is capable of removing alternatives
         from any particular place of any grammar production.
       </text>
-      <text>
+			<text>
         Markers must denote the part to be removed: i.e., the production with the marked part
         must be present in the grammar, and if it is, the result will contain a
         production without the marked part instead.
         Obviously, the markers itself do not end up in the grammar.
       </text>
-    </content>
-  </xldf:append>
-  <xldf:addSubsection>
-    <example id="removeH1-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>removeH</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>removeH1-example</target>
-    <file>../../transformation/xbgf/tests/remove_horizontal.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>removeH1-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>removeH1-example</target>
-    <file>../../transformation/xbgf/tests/remove_horizontal.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>removeH1-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>removeH1-example</target>
-    <file>../../transformation/xbgf/tests/remove_horizontal.baseline</file>
-  </xldf:importGrammar>
-  <xldf:addSubsection>
-    <example id="removeH2-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>removeH</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>removeH2-example</target>
-    <file>../../transformation/xbgf/tests/remove_inside.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>removeH2-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>removeH2-example</target>
-    <file>../../transformation/xbgf/tests/remove_inside.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>removeH2-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>removeH2-example</target>
-    <file>../../transformation/xbgf/tests/remove_inside.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:place>
-    <section>disappear</section>
-    <inside>decreasing-transformation</inside>
-  </xldf:place>
-  <xldf:transformGrammar>
-    <target>disappear</target>
-    <xbgf:fold>
-      <nonterminal>marked-production</nonterminal>
-      <in>
-        <nonterminal>disappear</nonterminal>
-      </in>
-    </xbgf:fold>
-    <context>definitions-section</context>
-  </xldf:transformGrammar>
-  <xldf:addSubsection>
-    <example id="disappear-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>disappear</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>disappear-example</target>
-    <file>../../transformation/xbgf/tests/disappear_s.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>disappear-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>disappear-example</target>
-    <file>../../transformation/xbgf/tests/disappear_s.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>disappear-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>disappear-example</target>
-    <file>../../transformation/xbgf/tests/disappear_s.baseline</file>
-  </xldf:importGrammar>
-  
-  <xldf:place>
-    <section>narrow</section>
-    <inside>decreasing-transformation</inside>
-  </xldf:place>
-  <xldf:append>
-    <where>narrow</where>
-    <content>
-      <text>
+		</content>
+	</xldf:append>
+	<xldf:addSubsection>
+		<example id="removeH1-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>removeH</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>removeH1-example</target>
+		<file>../../transformation/xbgf/tests/remove_horizontal.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>removeH1-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>removeH1-example</target>
+		<file>../../transformation/xbgf/tests/remove_horizontal.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>removeH1-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>removeH1-example</target>
+		<file>../../transformation/xbgf/tests/remove_horizontal.baseline</file>
+	</xldf:importGrammar>
+	<xldf:addSubsection>
+		<example id="removeH2-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>removeH</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>removeH2-example</target>
+		<file>../../transformation/xbgf/tests/remove_inside.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>removeH2-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>removeH2-example</target>
+		<file>../../transformation/xbgf/tests/remove_inside.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>removeH2-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>removeH2-example</target>
+		<file>../../transformation/xbgf/tests/remove_inside.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>disappear</section>
+		<inside>decreasing-transformation</inside>
+	</xldf:place>
+	<xldf:transformGrammar>
+		<target>disappear</target>
+		<xbgf:fold>
+			<nonterminal>marked-production</nonterminal>
+			<in>
+				<nonterminal>disappear</nonterminal>
+			</in>
+		</xbgf:fold>
+		<context>definitions-section</context>
+	</xldf:transformGrammar>
+	<xldf:addSubsection>
+		<example id="disappear-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>disappear</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>disappear-example</target>
+		<file>../../transformation/xbgf/tests/disappear_s.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>disappear-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>disappear-example</target>
+		<file>../../transformation/xbgf/tests/disappear_s.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>disappear-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>disappear-example</target>
+		<file>../../transformation/xbgf/tests/disappear_s.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>narrow</section>
+		<inside>decreasing-transformation</inside>
+	</xldf:place>
+	<xldf:append>
+		<where>narrow</where>
+		<content>
+			<text>
         The narrowing relation is defined as follows:
       </text>
-      <formula><!--x? \textrm{ can be narrowed to } x-->
-        <mml:math>
-          <mml:mrow>
-            <mml:mrow>
-              <mml:msup>
-                <mml:mi>x</mml:mi>
-                <mml:mo>?</mml:mo>
-              </mml:msup>
-            </mml:mrow>
-            <mml:mtext>can be narrowed to</mml:mtext>
-            <mml:mrow>
-              <mml:mi>x</mml:mi>
-            </mml:mrow>
-          </mml:mrow>
-        </mml:math>
-      </formula>
-      <formula><!--x^+ \textrm{ can be narrowed to } x-->
-        <mml:math>
-          <mml:mrow>
-            <mml:mrow>
-              <mml:msup>
-                <mml:mi>x</mml:mi>
-                <mml:mo>+</mml:mo>
-              </mml:msup>
-            </mml:mrow>
-            <mml:mtext>can be narrowed to</mml:mtext>
-            <mml:mrow>
-              <mml:mi>x</mml:mi>
-            </mml:mrow>
-          </mml:mrow>
-        </mml:math>
-      </formula>
-      <formula><!-- x^\star \textrm{ can be narrowed to } x \textrm{ or } x? \textrm{ or } x^+ -->
-        <mml:math>
-          <mml:mrow>
-            <mml:mrow>
-              <mml:msup>
-                <mml:mi>x</mml:mi>
-                <mml:mo>*</mml:mo>
-              </mml:msup>
-            </mml:mrow>
-            <mml:mtext>can be narrowed to</mml:mtext>
-            <mml:mrow>
-              <mml:mrow>
-                <mml:mi>x</mml:mi>
-              </mml:mrow>
-              <mml:mtext>or</mml:mtext>
-              <mml:mrow>
-                <mml:msup>
-                  <mml:mi>x</mml:mi>
-                  <mml:mo>?</mml:mo>
-                </mml:msup>
-              </mml:mrow>
-              <mml:mtext>or</mml:mtext>
-              <mml:mrow>
-                <mml:msup>
-                  <mml:mi>x</mml:mi>
-                  <mml:mo>+</mml:mo>
-                </mml:msup>
-              </mml:mrow>
-            </mml:mrow>
-          </mml:mrow>
-        </mml:math>
-      </formula>
-      <text>
+			<formula>
+<!--x? \textrm{ can be narrowed to } x-->
+				<mml:math>
+					<mml:mrow>
+						<mml:mrow>
+							<mml:msup>
+								<mml:mi>x</mml:mi>
+								<mml:mo>?</mml:mo>
+							</mml:msup>
+						</mml:mrow>
+						<mml:mtext>can be narrowed to</mml:mtext>
+						<mml:mrow>
+							<mml:mi>x</mml:mi>
+						</mml:mrow>
+					</mml:mrow>
+				</mml:math>
+			</formula>
+			<formula>
+<!--x^+ \textrm{ can be narrowed to } x-->
+				<mml:math>
+					<mml:mrow>
+						<mml:mrow>
+							<mml:msup>
+								<mml:mi>x</mml:mi>
+								<mml:mo>+</mml:mo>
+							</mml:msup>
+						</mml:mrow>
+						<mml:mtext>can be narrowed to</mml:mtext>
+						<mml:mrow>
+							<mml:mi>x</mml:mi>
+						</mml:mrow>
+					</mml:mrow>
+				</mml:math>
+			</formula>
+			<formula>
+<!-- x^\star \textrm{ can be narrowed to } x \textrm{ or } x? \textrm{ or } x^+ -->
+				<mml:math>
+					<mml:mrow>
+						<mml:mrow>
+							<mml:msup>
+								<mml:mi>x</mml:mi>
+								<mml:mo>*</mml:mo>
+							</mml:msup>
+						</mml:mrow>
+						<mml:mtext>can be narrowed to</mml:mtext>
+						<mml:mrow>
+							<mml:mrow>
+								<mml:mi>x</mml:mi>
+							</mml:mrow>
+							<mml:mtext>or</mml:mtext>
+							<mml:mrow>
+								<mml:msup>
+									<mml:mi>x</mml:mi>
+									<mml:mo>?</mml:mo>
+								</mml:msup>
+							</mml:mrow>
+							<mml:mtext>or</mml:mtext>
+							<mml:mrow>
+								<mml:msup>
+									<mml:mi>x</mml:mi>
+									<mml:mo>+</mml:mo>
+								</mml:msup>
+							</mml:mrow>
+						</mml:mrow>
+					</mml:mrow>
+				</mml:math>
+			</formula>
+			<text>
         It is possible to prove that for each case the expression on the right is included
         in the expression on the right, but not otherwise. For going the other way
         <ldf:keyword>widen</ldf:keyword> transformation is used. For shaping
         an expression into a completely equivalent one, use <ldf:keyword>massage</ldf:keyword>.
       </text>
-    </content>
-  </xldf:append>
-  <xldf:addSubsection>
-    <example id="narrow-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>narrow</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>narrow-example</target>
-    <file>../../transformation/xbgf/tests/narrow_global.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>narrow-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>narrow-example</target>
-    <file>../../transformation/xbgf/tests/narrow_global.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>narrow-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>narrow-example</target>
-    <file>../../transformation/xbgf/tests/narrow_global.baseline</file>
-  </xldf:importGrammar>
-  
-  <xldf:place>
-    <section>downgrade</section>
-    <inside>decreasing-transformation</inside>
-  </xldf:place>
-  <xldf:transformGrammar>
-    <target>downgrade</target>
-    <xbgf:replace>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>production</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>production</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>marked-production</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>production</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </xbgf:replace>
-  </xldf:transformGrammar>
-  <xldf:addSubsection>
-    <example id="downgrade-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>downgrade</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>downgrade-example</target>
-    <file>../../transformation/xbgf/tests/downgrade.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>downgrade-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>downgrade-example</target>
-    <file>../../transformation/xbgf/tests/downgrade.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>downgrade-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>downgrade-example</target>
-    <file>../../transformation/xbgf/tests/downgrade.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:changeRole>
-    <scope>decreasing-transformation</scope>
-    <from>syntax</from>
-    <to>synopsis</to>
-  </xldf:changeRole>
-  
+		</content>
+	</xldf:append>
+	<xldf:addSubsection>
+		<example id="narrow-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>narrow</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>narrow-example</target>
+		<file>../../transformation/xbgf/tests/narrow_global.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>narrow-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>narrow-example</target>
+		<file>../../transformation/xbgf/tests/narrow_global.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>narrow-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>narrow-example</target>
+		<file>../../transformation/xbgf/tests/narrow_global.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>downgrade</section>
+		<inside>decreasing-transformation</inside>
+	</xldf:place>
+	<xldf:transformGrammar>
+		<target>downgrade</target>
+		<xbgf:replace>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>production</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>production</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>marked-production</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>production</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</xbgf:replace>
+	</xldf:transformGrammar>
+	<xldf:addSubsection>
+		<example id="downgrade-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>downgrade</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>downgrade-example</target>
+		<file>../../transformation/xbgf/tests/downgrade.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>downgrade-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>downgrade-example</target>
+		<file>../../transformation/xbgf/tests/downgrade.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>downgrade-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>downgrade-example</target>
+		<file>../../transformation/xbgf/tests/downgrade.baseline</file>
+	</xldf:importGrammar>
+	<xldf:changeRole>
+		<scope>decreasing-transformation</scope>
+		<from>syntax</from>
+		<to>synopsis</to>
+	</xldf:changeRole>
 </xldf:evolutionSequence>

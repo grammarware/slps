@@ -1,175 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xldf:evolutionSequence
-  xmlns:bgf="http://planet-sl.org/bgf"
-  xmlns:ldf="http://planet-sl.org/ldf"
-  xmlns:xbgf="http://planet-sl.org/xbgf"
-  xmlns:xldf="http://planet-sl.org/xldf">
-  
-  <!-- beautify xbgf -->
-  <xldf:transformGrammar>
-    <target>unlabel</target>
-    <xbgf:anonymize>
-      <bgf:production>
-        <nonterminal>unlabel</nonterminal>
-        <bgf:expression>
-          <marked>
-            <bgf:expression>
-              <selectable>
-                <selector>label</selector>
-                <bgf:expression>
-                  <nonterminal>label</nonterminal>
-                </bgf:expression>
-              </selectable>
-            </bgf:expression>
-          </marked>
-        </bgf:expression>
-      </bgf:production>
-    </xbgf:anonymize>
-  </xldf:transformGrammar>
+	xmlns:bgf="http://planet-sl.org/bgf"
+	xmlns:ldf="http://planet-sl.org/ldf"
+	xmlns:xbgf="http://planet-sl.org/xbgf"
+	xmlns:xldf="http://planet-sl.org/xldf">
 
-  <!-- compose a section on decorative transformations -->
-  <xldf:retitle>
-    <from>
-      <title>decorative-transformation</title>
-    </from>
-    <to>Decorative transformations</to>
-  </xldf:retitle>
-  
-  <xldf:place>
-    <section>designate</section>
-    <inside>decorative-transformation</inside>
-  </xldf:place>
-  <xldf:addSubsection>
-    <example id="designate-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>designate</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>designate-example</target>
-    <file>../../transformation/xbgf/tests/designate.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>designate-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>designate-example</target>
-    <file>../../transformation/xbgf/tests/designate.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>designate-example</where>
-    <content>
-      <text>Will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>designate-example</target>
-    <file>../../transformation/xbgf/tests/designate.baseline</file>
-  </xldf:importGrammar>
-  
-  <xldf:place>
-    <section>unlabel</section>
-    <inside>decorative-transformation</inside>
-  </xldf:place>
-  <xldf:addSubsection>
-    <example id="unlabel-example">
-      <content>
-        <text>
+	<!-- beautify xbgf -->
+	<xldf:transformGrammar>
+		<target>unlabel</target>
+		<xbgf:anonymize>
+			<bgf:production>
+				<nonterminal>unlabel</nonterminal>
+				<bgf:expression>
+					<marked>
+						<bgf:expression>
+							<selectable>
+								<selector>label</selector>
+								<bgf:expression>
+									<nonterminal>label</nonterminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+					</marked>
+				</bgf:expression>
+			</bgf:production>
+		</xbgf:anonymize>
+	</xldf:transformGrammar>
+	<!-- compose a section on decorative transformations -->
+	<xldf:retitle>
+		<from>
+			<title>decorative-transformation</title>
+		</from>
+		<to>Decorative transformations</to>
+	</xldf:retitle>
+	<xldf:place>
+		<section>designate</section>
+		<inside>decorative-transformation</inside>
+	</xldf:place>
+	<xldf:addSubsection>
+		<example id="designate-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>designate</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>designate-example</target>
+		<file>../../transformation/xbgf/tests/designate.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>designate-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>designate-example</target>
+		<file>../../transformation/xbgf/tests/designate.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>designate-example</where>
+		<content>
+			<text>Will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>designate-example</target>
+		<file>../../transformation/xbgf/tests/designate.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>unlabel</section>
+		<inside>decorative-transformation</inside>
+	</xldf:place>
+	<xldf:addSubsection>
+		<example id="unlabel-example">
+			<content>
+				<text>
           Unlike the previous one, this transformation relies on the fact that all labels
           are unique within a grammar. This assumption allowed us to simplify the calling
           syntax. So, given the input:
         </text>
-      </content>
-    </example>
-    <to>unlabel</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>unlabel-example</target>
-    <file>../../transformation/xbgf/tests/unlabel.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>unlabel-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>unlabel-example</target>
-    <file>../../transformation/xbgf/tests/unlabel.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>unlabel-example</where>
-    <content>
-      <text>Will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>unlabel-example</target>
-    <file>../../transformation/xbgf/tests/unlabel.baseline</file>
-  </xldf:importGrammar>
-  
-  <xldf:place>
-    <section>deanonymize</section>
-    <inside>decorative-transformation</inside>
-  </xldf:place>
-  <xldf:transformGrammar>
-    <target>deanonymize</target>
-    <xbgf:fold>
-      <nonterminal>marked-production</nonterminal>
-      <in>
-        <nonterminal>deanonymize</nonterminal>
-      </in>
-    </xbgf:fold>
-    <context>definitions-section</context>
-  </xldf:transformGrammar>
-  <xldf:addSubsection>
-    <example id="deanonymize-example">
-      <content>
-        <text>
+			</content>
+		</example>
+		<to>unlabel</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>unlabel-example</target>
+		<file>../../transformation/xbgf/tests/unlabel.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>unlabel-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>unlabel-example</target>
+		<file>../../transformation/xbgf/tests/unlabel.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>unlabel-example</where>
+		<content>
+			<text>Will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>unlabel-example</target>
+		<file>../../transformation/xbgf/tests/unlabel.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>deanonymize</section>
+		<inside>decorative-transformation</inside>
+	</xldf:place>
+	<xldf:transformGrammar>
+		<target>deanonymize</target>
+		<xbgf:fold>
+			<nonterminal>marked-production</nonterminal>
+			<in>
+				<nonterminal>deanonymize</nonterminal>
+			</in>
+		</xbgf:fold>
+		<context>definitions-section</context>
+	</xldf:transformGrammar>
+	<xldf:addSubsection>
+		<example id="deanonymize-example">
+			<content>
+				<text>
           Selectors can be introduced one at a time or in batch, but each one must be
           marked separately. For instance, given the input:
       </text>
-      </content>
-    </example>
-    <to>deanonymize</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>deanonymize-example</target>
-    <file>../../transformation/xbgf/tests/deanonymize_multiple.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>deanonymize-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>deanonymize-example</target>
-    <file>../../transformation/xbgf/tests/deanonymize_multiple.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>deanonymize-example</where>
-    <content>
-      <text>Will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>deanonymize-example</target>
-    <file>../../transformation/xbgf/tests/deanonymize_multiple.baseline</file>
-  </xldf:importGrammar>
-  
-  <xldf:append>
-    <where>anonymize</where>
-    <content>
-      <text>
+			</content>
+		</example>
+		<to>deanonymize</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>deanonymize-example</target>
+		<file>../../transformation/xbgf/tests/deanonymize_multiple.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>deanonymize-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>deanonymize-example</target>
+		<file>../../transformation/xbgf/tests/deanonymize_multiple.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>deanonymize-example</where>
+		<content>
+			<text>Will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>deanonymize-example</target>
+		<file>../../transformation/xbgf/tests/deanonymize_multiple.baseline</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>anonymize</where>
+		<content>
+			<text>
         Given the input BGF and a clear goal to strip all selectors,
         it becomes trivial to generate a list of <ldf:keyword>anonymize</ldf:keyword> commands that,
         if executed on the same grammar, would produce a selector-free
@@ -178,62 +173,58 @@
         the abstract syntax (with selectors) with the concrete syntax (with
         terminals), see the section about generators.
       </text>
-    </content>
-  </xldf:append>
-  
-  <xldf:place>
-    <section>anonymize</section>
-    <inside>decorative-transformation</inside>
-  </xldf:place>
-  <xldf:transformGrammar>
-    <target>anonymize</target>
-    <xbgf:fold>
-      <nonterminal>marked-production</nonterminal>
-      <in>
-        <nonterminal>anonymize</nonterminal>
-      </in>
-    </xbgf:fold>
-    <context>definitions-section</context>
-  </xldf:transformGrammar>
-
-  <xldf:addSubsection>
-    <example id="anonymize-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>anonymize</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>anonymize-example</target>
-    <file>../../transformation/xbgf/tests/anonymize_single.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>anonymize-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>anonymize-example</target>
-    <file>../../transformation/xbgf/tests/anonymize_single.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>anonymize-example</where>
-    <content>
-      <text>Will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>anonymize-example</target>
-    <file>../../transformation/xbgf/tests/anonymize_single.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:changeRole>
-    <scope>decorative-transformation</scope>
-    <from>syntax</from>
-    <to>synopsis</to>
-  </xldf:changeRole>
-  
+		</content>
+	</xldf:append>
+	<xldf:place>
+		<section>anonymize</section>
+		<inside>decorative-transformation</inside>
+	</xldf:place>
+	<xldf:transformGrammar>
+		<target>anonymize</target>
+		<xbgf:fold>
+			<nonterminal>marked-production</nonterminal>
+			<in>
+				<nonterminal>anonymize</nonterminal>
+			</in>
+		</xbgf:fold>
+		<context>definitions-section</context>
+	</xldf:transformGrammar>
+	<xldf:addSubsection>
+		<example id="anonymize-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>anonymize</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>anonymize-example</target>
+		<file>../../transformation/xbgf/tests/anonymize_single.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>anonymize-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>anonymize-example</target>
+		<file>../../transformation/xbgf/tests/anonymize_single.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>anonymize-example</where>
+		<content>
+			<text>Will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>anonymize-example</target>
+		<file>../../transformation/xbgf/tests/anonymize_single.baseline</file>
+	</xldf:importGrammar>
+	<xldf:changeRole>
+		<scope>decorative-transformation</scope>
+		<from>syntax</from>
+		<to>synopsis</to>
+	</xldf:changeRole>
 </xldf:evolutionSequence>

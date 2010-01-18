@@ -6,112 +6,109 @@
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
-  <!-- compose a section on increasing transformations -->
-  <xldf:retitle>
-    <from>
-      <title>increasing-transformation</title>
-    </from>
-    <to>Grammar lengthening transformations</to>
-  </xldf:retitle>
-  
-  <xldf:place>
-    <section>add</section>
-    <inside>increasing-transformation</inside>
-  </xldf:place>
-  <xldf:transformGrammar>
-    <target>add</target>
-    <xbgf:vertical>
-      <nonterminal>add</nonterminal>
-    </xbgf:vertical>
-  </xldf:transformGrammar>
-  <xldf:extractSubsection>
-    <from>add</from>
-    <content>
-      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
-        <label>vertical</label>
-        <nonterminal>add</nonterminal>
-        <bgf:expression>
-          <nonterminal>production</nonterminal>
-        </bgf:expression>
-      </bgf:production>
-    </content>
-    <title>addV</title>
-    <id>addV</id>
-    <role>syntax</role>
-  </xldf:extractSubsection>
-  <xldf:append>
-    <where>addV</where>
-    <content>
-      <text>
+	<!-- compose a section on increasing transformations -->
+	<xldf:retitle>
+		<from>
+			<title>increasing-transformation</title>
+		</from>
+		<to>Grammar lengthening transformations</to>
+	</xldf:retitle>
+	<xldf:place>
+		<section>add</section>
+		<inside>increasing-transformation</inside>
+	</xldf:place>
+	<xldf:transformGrammar>
+		<target>add</target>
+		<xbgf:vertical>
+			<nonterminal>add</nonterminal>
+		</xbgf:vertical>
+	</xldf:transformGrammar>
+	<xldf:extractSubsection>
+		<from>add</from>
+		<content>
+			<bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+				<label>vertical</label>
+				<nonterminal>add</nonterminal>
+				<bgf:expression>
+					<nonterminal>production</nonterminal>
+				</bgf:expression>
+			</bgf:production>
+		</content>
+		<title>addV</title>
+		<id>addV</id>
+		<role>syntax</role>
+	</xldf:extractSubsection>
+	<xldf:append>
+		<where>addV</where>
+		<content>
+			<text>
         Vertical addition operates on the level of productions: it adds one more production
         for some nonterminal to any number of productions that are already present in the grammar.
       </text>
-    </content>
-  </xldf:append>
-  <xldf:addSubsection>
-    <example id="addV-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>addV</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>addV-example</target>
-    <file>../../transformation/xbgf/tests/add_vertical.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>addV-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>addV-example</target>
-    <file>../../transformation/xbgf/tests/add_vertical.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>addV-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>addV-example</target>
-    <file>../../transformation/xbgf/tests/add_vertical.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:extractSubsection>
-    <from>add</from>
-    <content>
-      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
-        <label>horizontal</label>
-        <nonterminal>add</nonterminal>
-        <bgf:expression>
-          <nonterminal>production</nonterminal>
-        </bgf:expression>
-      </bgf:production>
-    </content>
-    <title>addH</title>
-    <id>addH</id>
-    <role>syntax</role>
-  </xldf:extractSubsection>
-  <xldf:transformGrammar>
-    <target>addH</target>
-    <xbgf:fold>
-      <nonterminal>marked-production</nonterminal>
-      <in>
-        <nonterminal>add</nonterminal>
-      </in>
-    </xbgf:fold>
-    <context>definitions-section</context>
-  </xldf:transformGrammar>
-
-  <xldf:append>
-    <where>addH</where>
-    <content>
-      <text>
+		</content>
+	</xldf:append>
+	<xldf:addSubsection>
+		<example id="addV-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>addV</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>addV-example</target>
+		<file>../../transformation/xbgf/tests/add_vertical.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>addV-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>addV-example</target>
+		<file>../../transformation/xbgf/tests/add_vertical.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>addV-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>addV-example</target>
+		<file>../../transformation/xbgf/tests/add_vertical.baseline</file>
+	</xldf:importGrammar>
+	<xldf:extractSubsection>
+		<from>add</from>
+		<content>
+			<bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+				<label>horizontal</label>
+				<nonterminal>add</nonterminal>
+				<bgf:expression>
+					<nonterminal>production</nonterminal>
+				</bgf:expression>
+			</bgf:production>
+		</content>
+		<title>addH</title>
+		<id>addH</id>
+		<role>syntax</role>
+	</xldf:extractSubsection>
+	<xldf:transformGrammar>
+		<target>addH</target>
+		<xbgf:fold>
+			<nonterminal>marked-production</nonterminal>
+			<in>
+				<nonterminal>add</nonterminal>
+			</in>
+		</xbgf:fold>
+		<context>definitions-section</context>
+	</xldf:transformGrammar>
+	<xldf:append>
+		<where>addH</where>
+		<content>
+			<text>
         Horizontal addition looks inside productions: it adds any marked part of an internal choice
         by either introducing one or enhancing the existing one. This allows to skip
         pre-transformational <ldf:keyword>vertical</ldf:keyword> and post-transformational
@@ -120,359 +117,353 @@
         a command at hand that is capable of adding alternatives to any particular place
         of any grammar production.
       </text>
-      <text>
+			<text>
         Markers must denote the new part: i.e., the production without the marked part
         must be present in the grammar, and if it is, the result will contain a
         production with the marked part instead.
         Obviously, the markers itself do not end up in the grammar.
       </text>
-    </content>
-  </xldf:append>
-  <xldf:addSubsection>
-    <example id="addH1-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>addH</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>addH1-example</target>
-    <file>../../transformation/xbgf/tests/add_horizontal.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>addH1-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>addH1-example</target>
-    <file>../../transformation/xbgf/tests/add_horizontal.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>addH1-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>addH1-example</target>
-    <file>../../transformation/xbgf/tests/add_horizontal.baseline</file>
-  </xldf:importGrammar>
-  <xldf:addSubsection>
-    <example id="addH2-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>addH</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>addH2-example</target>
-    <file>../../transformation/xbgf/tests/add_inside.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>addH2-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>addH2-example</target>
-    <file>../../transformation/xbgf/tests/add_inside.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>addH2-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>addH2-example</target>
-    <file>../../transformation/xbgf/tests/add_inside.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:place>
-    <section>appear</section>
-    <inside>increasing-transformation</inside>
-  </xldf:place>
-  <xldf:transformGrammar>
-    <target>appear</target>
-    <xbgf:fold>
-      <nonterminal>marked-production</nonterminal>
-      <in>
-        <nonterminal>appear</nonterminal>
-      </in>
-    </xbgf:fold>
-    <context>definitions-section</context>
-  </xldf:transformGrammar>
-  <xldf:addSubsection>
-    <example id="appear-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>appear</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>appear-example</target>
-    <file>../../transformation/xbgf/tests/appear_q.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>appear-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>appear-example</target>
-    <file>../../transformation/xbgf/tests/appear_q.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>appear-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>appear-example</target>
-    <file>../../transformation/xbgf/tests/appear_q.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:place>
-    <section>widen</section>
-    <inside>increasing-transformation</inside>
-  </xldf:place>
-  <xldf:append>
-    <where>widen</where>
-    <content>
-      <text>
+		</content>
+	</xldf:append>
+	<xldf:addSubsection>
+		<example id="addH1-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>addH</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>addH1-example</target>
+		<file>../../transformation/xbgf/tests/add_horizontal.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>addH1-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>addH1-example</target>
+		<file>../../transformation/xbgf/tests/add_horizontal.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>addH1-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>addH1-example</target>
+		<file>../../transformation/xbgf/tests/add_horizontal.baseline</file>
+	</xldf:importGrammar>
+	<xldf:addSubsection>
+		<example id="addH2-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>addH</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>addH2-example</target>
+		<file>../../transformation/xbgf/tests/add_inside.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>addH2-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>addH2-example</target>
+		<file>../../transformation/xbgf/tests/add_inside.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>addH2-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>addH2-example</target>
+		<file>../../transformation/xbgf/tests/add_inside.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>appear</section>
+		<inside>increasing-transformation</inside>
+	</xldf:place>
+	<xldf:transformGrammar>
+		<target>appear</target>
+		<xbgf:fold>
+			<nonterminal>marked-production</nonterminal>
+			<in>
+				<nonterminal>appear</nonterminal>
+			</in>
+		</xbgf:fold>
+		<context>definitions-section</context>
+	</xldf:transformGrammar>
+	<xldf:addSubsection>
+		<example id="appear-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>appear</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>appear-example</target>
+		<file>../../transformation/xbgf/tests/appear_q.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>appear-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>appear-example</target>
+		<file>../../transformation/xbgf/tests/appear_q.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>appear-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>appear-example</target>
+		<file>../../transformation/xbgf/tests/appear_q.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>widen</section>
+		<inside>increasing-transformation</inside>
+	</xldf:place>
+	<xldf:append>
+		<where>widen</where>
+		<content>
+			<text>
         The widening relation is defined as follows:
       </text>
-      <formula>
-        <!--x \textrm{ can be widened to } x? \textrm{ or } x^+ \textrm{ or } x^\star-->
-        <mml:math>
-          <mml:mrow>
-            <mml:mrow>
-                <mml:mi>x</mml:mi>
-            </mml:mrow>
-            <mml:mtext>can be widened to</mml:mtext>
-            <mml:mrow>
-              <mml:mrow>
-                <mml:msup>
-                  <mml:mi>x</mml:mi>
-                  <mml:mo>?</mml:mo>
-                </mml:msup>
-              </mml:mrow>
-              <mml:mtext>or</mml:mtext>
-              <mml:mrow>
-                <mml:msup>
-                  <mml:mi>x</mml:mi>
-                  <mml:mo>+</mml:mo>
-                </mml:msup>
-              </mml:mrow>
-              <mml:mtext>or</mml:mtext>
-              <mml:mrow>
-                <mml:msup>
-                  <mml:mi>x</mml:mi>
-                  <mml:mo>*</mml:mo>
-                </mml:msup>
-              </mml:mrow>
-            </mml:mrow>
-          </mml:mrow>
-        </mml:math>
-      </formula>
-      <formula>
-        <!--x? \textrm{ can be widened to } x^\star-->
-        <mml:math>
-          <mml:mrow>
-            <mml:mrow>
-              <mml:msup>
-                <mml:mi>x</mml:mi>
-                <mml:mo>?</mml:mo>
-              </mml:msup>
-            </mml:mrow>
-            <mml:mtext>can be widened to</mml:mtext>
-            <mml:mrow>
-              <mml:msup>
-                <mml:mi>x</mml:mi>
-                <mml:mo>*</mml:mo>
-              </mml:msup>
-            </mml:mrow>
-          </mml:mrow>
-        </mml:math>
-      </formula>
-      <formula>
-        <!--x^+ \textrm{ can be widened to } x^\star-->
-        <mml:math>
-          <mml:mrow>
-            <mml:mrow>
-              <mml:msup>
-                <mml:mi>x</mml:mi>
-                <mml:mo>+</mml:mo>
-              </mml:msup>
-            </mml:mrow>
-            <mml:mtext>can be widened to</mml:mtext>
-            <mml:mrow>
-              <mml:msup>
-                <mml:mi>x</mml:mi>
-                <mml:mo>*</mml:mo>
-              </mml:msup>
-            </mml:mrow>
-          </mml:mrow>
-        </mml:math>
-      </formula>
-      <text>
+			<formula>
+<!--x \textrm{ can be widened to } x? \textrm{ or } x^+ \textrm{ or } x^\star-->
+				<mml:math>
+					<mml:mrow>
+						<mml:mrow>
+							<mml:mi>x</mml:mi>
+						</mml:mrow>
+						<mml:mtext>can be widened to</mml:mtext>
+						<mml:mrow>
+							<mml:mrow>
+								<mml:msup>
+									<mml:mi>x</mml:mi>
+									<mml:mo>?</mml:mo>
+								</mml:msup>
+							</mml:mrow>
+							<mml:mtext>or</mml:mtext>
+							<mml:mrow>
+								<mml:msup>
+									<mml:mi>x</mml:mi>
+									<mml:mo>+</mml:mo>
+								</mml:msup>
+							</mml:mrow>
+							<mml:mtext>or</mml:mtext>
+							<mml:mrow>
+								<mml:msup>
+									<mml:mi>x</mml:mi>
+									<mml:mo>*</mml:mo>
+								</mml:msup>
+							</mml:mrow>
+						</mml:mrow>
+					</mml:mrow>
+				</mml:math>
+			</formula>
+			<formula>
+<!--x? \textrm{ can be widened to } x^\star-->
+				<mml:math>
+					<mml:mrow>
+						<mml:mrow>
+							<mml:msup>
+								<mml:mi>x</mml:mi>
+								<mml:mo>?</mml:mo>
+							</mml:msup>
+						</mml:mrow>
+						<mml:mtext>can be widened to</mml:mtext>
+						<mml:mrow>
+							<mml:msup>
+								<mml:mi>x</mml:mi>
+								<mml:mo>*</mml:mo>
+							</mml:msup>
+						</mml:mrow>
+					</mml:mrow>
+				</mml:math>
+			</formula>
+			<formula>
+<!--x^+ \textrm{ can be widened to } x^\star-->
+				<mml:math>
+					<mml:mrow>
+						<mml:mrow>
+							<mml:msup>
+								<mml:mi>x</mml:mi>
+								<mml:mo>+</mml:mo>
+							</mml:msup>
+						</mml:mrow>
+						<mml:mtext>can be widened to</mml:mtext>
+						<mml:mrow>
+							<mml:msup>
+								<mml:mi>x</mml:mi>
+								<mml:mo>*</mml:mo>
+							</mml:msup>
+						</mml:mrow>
+					</mml:mrow>
+				</mml:math>
+			</formula>
+			<text>
         It is trivial to prove that for each case the expression on the left is included
         in the expression on the right, but not otherwise. For going the other way
         <ldf:keyword>narrow</ldf:keyword> transformation is used. For shaping
         an expression into a completely equivalent one, use <ldf:keyword>massage</ldf:keyword>.
       </text>
-    </content>
-  </xldf:append>
-  <xldf:addSubsection>
-    <example id="widen-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>widen</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>widen-example</target>
-    <file>../../transformation/xbgf/tests/widen_l.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>widen-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>widen-example</target>
-    <file>../../transformation/xbgf/tests/widen_l.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>widen-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>widen-example</target>
-    <file>../../transformation/xbgf/tests/widen_l.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:place>
-    <section>upgrade</section>
-    <inside>increasing-transformation</inside>
-  </xldf:place>
-  <xldf:transformGrammar>
-    <target>upgrade</target>
-    <xbgf:replace>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>production</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>production</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>marked-production</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <nonterminal>production</nonterminal>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </xbgf:replace>
-  </xldf:transformGrammar>
-  <xldf:addSubsection>
-    <example id="upgrade-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>upgrade</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>upgrade-example</target>
-    <file>../../transformation/xbgf/tests/upgrade.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>upgrade-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>upgrade-example</target>
-    <file>../../transformation/xbgf/tests/upgrade.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>upgrade-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>upgrade-example</target>
-    <file>../../transformation/xbgf/tests/upgrade.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:place>
-    <section>unite</section>
-    <inside>increasing-transformation</inside>
-  </xldf:place>
-  <xldf:addSubsection>
-    <example id="unite-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>unite</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>unite-example</target>
-    <file>../../transformation/xbgf/tests/unite_normal.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>unite-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>unite-example</target>
-    <file>../../transformation/xbgf/tests/unite_normal.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>unite-example</where>
-    <content>
-      <text>The result will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>unite-example</target>
-    <file>../../transformation/xbgf/tests/unite_normal.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:changeRole>
-    <scope>increasing-transformation</scope>
-    <from>syntax</from>
-    <to>synopsis</to>
-  </xldf:changeRole>
-
+		</content>
+	</xldf:append>
+	<xldf:addSubsection>
+		<example id="widen-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>widen</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>widen-example</target>
+		<file>../../transformation/xbgf/tests/widen_l.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>widen-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>widen-example</target>
+		<file>../../transformation/xbgf/tests/widen_l.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>widen-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>widen-example</target>
+		<file>../../transformation/xbgf/tests/widen_l.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>upgrade</section>
+		<inside>increasing-transformation</inside>
+	</xldf:place>
+	<xldf:transformGrammar>
+		<target>upgrade</target>
+		<xbgf:replace>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>production</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>production</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>marked-production</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>production</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</xbgf:replace>
+	</xldf:transformGrammar>
+	<xldf:addSubsection>
+		<example id="upgrade-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>upgrade</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>upgrade-example</target>
+		<file>../../transformation/xbgf/tests/upgrade.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>upgrade-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>upgrade-example</target>
+		<file>../../transformation/xbgf/tests/upgrade.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>upgrade-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>upgrade-example</target>
+		<file>../../transformation/xbgf/tests/upgrade.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>unite</section>
+		<inside>increasing-transformation</inside>
+	</xldf:place>
+	<xldf:addSubsection>
+		<example id="unite-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>unite</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>unite-example</target>
+		<file>../../transformation/xbgf/tests/unite_normal.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>unite-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>unite-example</target>
+		<file>../../transformation/xbgf/tests/unite_normal.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>unite-example</where>
+		<content>
+			<text>The result will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>unite-example</target>
+		<file>../../transformation/xbgf/tests/unite_normal.baseline</file>
+	</xldf:importGrammar>
+	<xldf:changeRole>
+		<scope>increasing-transformation</scope>
+		<from>syntax</from>
+		<to>synopsis</to>
+	</xldf:changeRole>
 </xldf:evolutionSequence>

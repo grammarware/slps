@@ -5,66 +5,65 @@
   xmlns:xbgf="http://planet-sl.org/xbgf"
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf">
-  
-  <!-- beautify xbgf -->
-  <xldf:transformGrammar>
-    <target>unfold</target>
-    <xbgf:anonymize>
-      <bgf:production>
-        <nonterminal>unfold</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <marked>
-                <bgf:expression>
-                  <selectable>
-                    <selector>nonterminal</selector>
-                    <bgf:expression>
-                      <nonterminal>nonterminal</nonterminal>
-                    </bgf:expression>
-                  </selectable>
-                </bgf:expression>
-              </marked>
-            </bgf:expression>
-            <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <selectable>
-                    <selector>in</selector>
-                    <bgf:expression>
-                      <nonterminal>scope</nonterminal>
-                    </bgf:expression>
-                  </selectable>
-                </bgf:expression>
-              </optional>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
-    </xbgf:anonymize>
-  </xldf:transformGrammar>
 
-  <!-- compose a section on folding transformations -->
-  <xldf:retitle>
-    <from>
-      <title>folding-unfolding-transformation</title>
-    </from>
-    <to>Folding and unfolding transformations</to>
-  </xldf:retitle>
-  <xldf:place>
-    <section>unfold</section>
-    <inside>folding-unfolding-transformation</inside>
-  </xldf:place>
-  <xldf:insert>
-    <before>
-      <text>
+	<!-- beautify xbgf -->
+	<xldf:transformGrammar>
+		<target>unfold</target>
+		<xbgf:anonymize>
+			<bgf:production>
+				<nonterminal>unfold</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>nonterminal</selector>
+										<bgf:expression>
+											<nonterminal>nonterminal</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<optional>
+								<bgf:expression>
+									<selectable>
+										<selector>in</selector>
+										<bgf:expression>
+											<nonterminal>scope</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</optional>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</xbgf:anonymize>
+	</xldf:transformGrammar>
+<!-- compose a section on folding transformations -->
+	<xldf:retitle>
+		<from>
+			<title>folding-unfolding-transformation</title>
+		</from>
+		<to>Folding and unfolding transformations</to>
+	</xldf:retitle>
+	<xldf:place>
+		<section>unfold</section>
+		<inside>folding-unfolding-transformation</inside>
+	</xldf:place>
+	<xldf:insert>
+		<before>
+			<text>
         The definition that is being unfolded is assumed to be horisontal,
         i.e. to consist of one single production. See the section on refactorings
         for more information about horisontal and vertical definitions.
       </text>
-    </before>
-    <content>
-      <text>
+		</before>
+		<content>
+			<text>
         Almost all the <ldf:keyword>unfold</ldf:keyword> transformations used in Java
         Language Specification case study are restricted in scope by a nonterminal.
         The reason for such statistics is that when the language engineer wants to
@@ -75,160 +74,132 @@
         <ldf:keyword>deyaccify</ldf:keyword>, <ldf:keyword>distribute</ldf:keyword>,
         etc.---in which case it is only natural to limit the impact of every step.
       </text>
-    </content>
-  </xldf:insert>
-  <xldf:addSubsection>
-    <example id="unfold-example">
-      <content>
-        <text>Given the input:</text>
-      </content>
-    </example>
-    <to>unfold</to>
-  </xldf:addSubsection>
-  
-  <xldf:importGrammar>
-    <target>unfold-example</target>
-    <file>../../transformation/xbgf/tests/unfold.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>unfold-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>unfold-example</target>
-    <file>../../transformation/xbgf/tests/unfold.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>unfold-example</where>
-    <content>
-      <text>Will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>unfold-example</target>
-    <file>../../transformation/xbgf/tests/unfold.baseline</file>
-  </xldf:importGrammar>
-
-  <!-- beautify xbgf -->
-  <xldf:transformGrammar>
-    <target>fold</target>
-    <xbgf:anonymize>
-      <bgf:production>
-        <nonterminal>fold</nonterminal>
-        <bgf:expression>
-          <sequence>
-            <bgf:expression>
-              <marked>
-                <bgf:expression>
-                  <selectable>
-                    <selector>nonterminal</selector>
-                    <bgf:expression>
-                      <nonterminal>nonterminal</nonterminal>
-                    </bgf:expression>
-                  </selectable>
-                </bgf:expression>
-              </marked>
-            </bgf:expression>
-            <bgf:expression>
-              <optional>
-                <bgf:expression>
-                  <selectable>
-                    <selector>in</selector>
-                    <bgf:expression>
-                      <nonterminal>scope</nonterminal>
-                    </bgf:expression>
-                  </selectable>
-                </bgf:expression>
-              </optional>
-            </bgf:expression>
-          </sequence>
-        </bgf:expression>
-      </bgf:production>
-    </xbgf:anonymize>
-  </xldf:transformGrammar>
-  
-  <xldf:place>
-    <section>fold</section>
-    <inside>folding-unfolding-transformation</inside>
-  </xldf:place>
-  <xldf:addSubsection>
-    <example id="fold-example">
-      <content>
-      <text>Very much like unfolding, folding can take place locally. For instance,</text>
-    </content>
-    </example>
-    <to>fold</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>fold-example</target>
-    <file>../../transformation/xbgf/tests/fold_nt.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>fold-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>fold-example</target>
-    <file>../../transformation/xbgf/tests/fold_nt.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>fold-example</where>
-    <content>
-      <text>Will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>fold-example</target>
-    <file>../../transformation/xbgf/tests/fold_nt.baseline</file>
-  </xldf:importGrammar>
-  
-  <xldf:place>
-    <section>inline</section>
-    <inside>folding-unfolding-transformation</inside>
-  </xldf:place>
-  <xldf:addSubsection>
-    <semantics>
-      <content>
-        <text>
+		</content>
+	</xldf:insert>
+	<xldf:addSubsection>
+		<example id="unfold-example">
+			<content>
+				<text>Given the input:</text>
+			</content>
+		</example>
+		<to>unfold</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>unfold-example</target>
+		<file>../../transformation/xbgf/tests/unfold.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>unfold-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>unfold-example</target>
+		<file>../../transformation/xbgf/tests/unfold.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>unfold-example</where>
+		<content>
+			<text>Will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>unfold-example</target>
+		<file>../../transformation/xbgf/tests/unfold.baseline</file>
+	</xldf:importGrammar>
+<!-- beautify xbgf -->
+	<xldf:transformGrammar>
+		<target>fold</target>
+		<xbgf:anonymize>
+			<bgf:production>
+				<nonterminal>fold</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>nonterminal</selector>
+										<bgf:expression>
+											<nonterminal>nonterminal</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<optional>
+								<bgf:expression>
+									<selectable>
+										<selector>in</selector>
+										<bgf:expression>
+											<nonterminal>scope</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</optional>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</xbgf:anonymize>
+	</xldf:transformGrammar>
+	<xldf:place>
+		<section>fold</section>
+		<inside>folding-unfolding-transformation</inside>
+	</xldf:place>
+	<xldf:addSubsection>
+		<example id="fold-example">
+			<content>
+				<text>Very much like unfolding, folding can take place locally. For instance,</text>
+			</content>
+		</example>
+		<to>fold</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>fold-example</target>
+		<file>../../transformation/xbgf/tests/fold_nt.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>fold-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>fold-example</target>
+		<file>../../transformation/xbgf/tests/fold_nt.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>fold-example</where>
+		<content>
+			<text>Will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>fold-example</target>
+		<file>../../transformation/xbgf/tests/fold_nt.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>inline</section>
+		<inside>folding-unfolding-transformation</inside>
+	</xldf:place>
+	<xldf:addSubsection>
+		<semantics>
+			<content>
+				<text>
           The <ldf:keyword>inline</ldf:keyword> transformation is by far the
           most used in Java Language Specification case study. One of the reasons
           is what we call layering: in particular expressions and statements
           are introduced in the
-          <ldf:formula>
-            <mml:math>
-              <mml:mrow>
-                <mml:msup>
-                  <mml:msub>
-                    <mml:mi>G</mml:mi>
-                    <mml:mi>j</mml:mi>
-                  </mml:msub>
-                  <mml:mi>R</mml:mi>
-                </mml:msup>
-              </mml:mrow>
-            </mml:math>
-          </ldf:formula>
+          <ldf:formula><mml:math><mml:mrow><mml:msup><mml:msub><mml:mi>G</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mi>R</mml:mi></mml:msup></mml:mrow></mml:math></ldf:formula>
           with a set of related nonterminals:
           LabeledStatement, IfThenElseStatement, WhileStatement, ForStatement, etc, and
           CastExpression, PreIncrementExpression, PreDecrementExpression, PostfixExpression, etc.
-          <ldf:formula>
-            <mml:math>
-              <mml:mrow>
-                <mml:msup>
-                  <mml:msub>
-                    <mml:mi>G</mml:mi>
-                    <mml:mi>j</mml:mi>
-                  </mml:msub>
-                  <mml:mi>I</mml:mi>
-                </mml:msup>
-              </mml:mrow>
-            </mml:math>
-          </ldf:formula>
+          <ldf:formula><mml:math><mml:mrow><mml:msup><mml:msub><mml:mi>G</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mi>I</mml:mi></mml:msup></mml:mrow></mml:math></ldf:formula>
           takes another approach, just listing all the alternatives in the productions
           for Statement and Expression. In order to converge these two variants, a lot of inlining
           transformations are needed. This can also be apparent from the statistics table,
@@ -237,106 +208,104 @@
           takes both readable and implementable grammars in, contains 67--100 <ldf:keyword>inline</ldf:keyword>
           transformations in convergence path.
         </text>
-      </content>
-    </semantics>
-    <to>inline</to>
-  </xldf:addSubsection>
-  <xldf:addSubsection>
-    <example id="inline-example">
-      <content>
-        <text>An example follows. When we have:</text>
-      </content>
-    </example>
-    <to>inline</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>inline-example</target>
-    <file>../../transformation/xbgf/tests/inline.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>inline-example</where>
-    <content>
-      <text>After using this transformation:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>inline-example</target>
-    <file>../../transformation/xbgf/tests/inline.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>inline-example</where>
-    <content>
-      <text>It will look like this:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>inline-example</target>
-    <file>../../transformation/xbgf/tests/inline.baseline</file>
-  </xldf:importGrammar>
-  
-  <xldf:place>
-    <section>extract</section>
-    <inside>folding-unfolding-transformation</inside>
-  </xldf:place>
-  <xldf:addSubsection>
-    <semantics>
-      <content>
-        <text>
+			</content>
+		</semantics>
+		<to>inline</to>
+	</xldf:addSubsection>
+	<xldf:addSubsection>
+		<example id="inline-example">
+			<content>
+				<text>An example follows. When we have:</text>
+			</content>
+		</example>
+		<to>inline</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>inline-example</target>
+		<file>../../transformation/xbgf/tests/inline.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>inline-example</where>
+		<content>
+			<text>After using this transformation:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>inline-example</target>
+		<file>../../transformation/xbgf/tests/inline.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>inline-example</where>
+		<content>
+			<text>It will look like this:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>inline-example</target>
+		<file>../../transformation/xbgf/tests/inline.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>extract</section>
+		<inside>folding-unfolding-transformation</inside>
+	</xldf:place>
+	<xldf:addSubsection>
+		<semantics>
+			<content>
+				<text>
           As seen from the experience gained from Java Language Specification case study,
           it is highly unusual for extract to have limited scope. However, sometimes
           a limited impact is desired in order to avoid excessive subsequent unfoldings
           when the convergence requests for having several nonterminals with similar
           definitions.
         </text>
-      </content>
-    </semantics>
-    <to>extract</to>
-  </xldf:addSubsection>
-  <xldf:addSubsection>
-    <example id="extract-example">
-      <content>
-        <text>
+			</content>
+		</semantics>
+		<to>extract</to>
+	</xldf:addSubsection>
+	<xldf:addSubsection>
+		<example id="extract-example">
+			<content>
+				<text>
           Extraction also works vertically. Given the input:
         </text>
-      </content>
-    </example>
-    <to>extract</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>extract-example</target>
-    <file>../../transformation/xbgf/tests/extract_subch.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>extract-example</where>
-    <content>
-      <text>After performing this transformation step:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>extract-example</target>
-    <file>../../transformation/xbgf/tests/extract_subch.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>extract-example</where>
-    <content>
-      <text>The result will be:</text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>extract-example</target>
-    <file>../../transformation/xbgf/tests/extract_subch.baseline</file>
-  </xldf:importGrammar>
-
-  <xldf:place>
-    <section>abridge</section>
-    <inside>folding-unfolding-transformation</inside>
-  </xldf:place>
-  <xldf:addSubsection>
-    <semantics>
-      <content>
-        <text>
+			</content>
+		</example>
+		<to>extract</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>extract-example</target>
+		<file>../../transformation/xbgf/tests/extract_subch.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>extract-example</where>
+		<content>
+			<text>After performing this transformation step:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>extract-example</target>
+		<file>../../transformation/xbgf/tests/extract_subch.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>extract-example</where>
+		<content>
+			<text>The result will be:</text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>extract-example</target>
+		<file>../../transformation/xbgf/tests/extract_subch.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>abridge</section>
+		<inside>folding-unfolding-transformation</inside>
+	</xldf:place>
+	<xldf:addSubsection>
+		<semantics>
+			<content>
+				<text>
           Reflexive chain productions are rarely encountered explicitly in the base-line grammars,
           but sometimes series of transformations result in them, and usually they are not needed.
           An example of a transformation
@@ -346,155 +315,150 @@
           constructions become reflexive chain productions. The Factorial Language case study has shown the need
           for it.
         </text>
-      </content>
-    </semantics>
-    <to>abridge</to>
-  </xldf:addSubsection>
-  <xldf:addSubsection>
-    <example id="abridge-example">
-      <content>
-        <text>
+			</content>
+		</semantics>
+		<to>abridge</to>
+	</xldf:addSubsection>
+	<xldf:addSubsection>
+		<example id="abridge-example">
+			<content>
+				<text>
           Consider this abstract syntax:
         </text>
-      </content>
-    </example>
-    <to>abridge</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>abridge-example</target>
-    <file>../../transformation/xbgf/tests/abridge.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>abridge-example</where>
-    <content>
-      <text>After performing this transformation step:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>abridge-example</target>
-    <file>../../transformation/xbgf/tests/abridge.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>abridge-example</where>
-    <content>
-      <text>
+			</content>
+		</example>
+		<to>abridge</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>abridge-example</target>
+		<file>../../transformation/xbgf/tests/abridge.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>abridge-example</where>
+		<content>
+			<text>After performing this transformation step:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>abridge-example</target>
+		<file>../../transformation/xbgf/tests/abridge.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>abridge-example</where>
+		<content>
+			<text>
         The grammar will be the same, but without the reflexive chain production
         labelled as ``bracket'' previously:
       </text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>abridge-example</target>
-    <file>../../transformation/xbgf/tests/abridge.baseline</file>
-  </xldf:importGrammar>
-  
-  <xldf:place>
-    <section>detour</section>
-    <inside>folding-unfolding-transformation</inside>
-  </xldf:place>
-  <xldf:addSubsection>
-    <example id="detour-example">
-      <content>
-        <text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>abridge-example</target>
+		<file>../../transformation/xbgf/tests/abridge.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>detour</section>
+		<inside>folding-unfolding-transformation</inside>
+	</xldf:place>
+	<xldf:addSubsection>
+		<example id="detour-example">
+			<content>
+				<text>
           In the same way it was removed in the previous example,
           the bracketing production can be added to the grammar.
           The transformation that reverts the impact of the previous
           <ldf:keyword>abridge</ldf:keyword>, looks like this:
         </text>
-      </content>
-    </example>
-    <to>detour</to>
-  </xldf:addSubsection>
-  <xldf:importSample>
-    <target>detour-example</target>
-    <file>../../transformation/xbgf/tests/detour.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  
-  <xldf:place>
-    <section>unchain</section>
-    <inside>folding-unfolding-transformation</inside>
-  </xldf:place>
-  <xldf:addSubsection>
-    <semantics>
-      <content>
-        <text>
+			</content>
+		</example>
+		<to>detour</to>
+	</xldf:addSubsection>
+	<xldf:importSample>
+		<target>detour-example</target>
+		<file>../../transformation/xbgf/tests/detour.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:place>
+		<section>unchain</section>
+		<inside>folding-unfolding-transformation</inside>
+	</xldf:place>
+	<xldf:addSubsection>
+		<semantics>
+			<content>
+				<text>
           Chain productions are not commonly encountered in grammars of mainstream
           programming languages. However, when converging grammars that hail from
           different kinds of sources (i.e., different extraction processes) it can
           be frequently needed to align grammars that use chain productions with
           grammars that use labelled ones.
         </text>
-      </content>
-    </semantics>
-    <to>unchain</to>
-  </xldf:addSubsection>
-  <xldf:addSubsection>
-    <example id="unchain-example">
-      <content>
-        <text>
+			</content>
+		</semantics>
+		<to>unchain</to>
+	</xldf:addSubsection>
+	<xldf:addSubsection>
+		<example id="unchain-example">
+			<content>
+				<text>
           Consider this grammar:
         </text>
-      </content>
-    </example>
-    <to>unchain</to>
-  </xldf:addSubsection>
-  <xldf:importGrammar>
-    <target>unchain-example</target>
-    <file>../../transformation/xbgf/tests/unchain.bgf</file>
-  </xldf:importGrammar>
-  <xldf:append>
-    <where>unchain-example</where>
-    <content>
-      <text>After performing this transformation step:</text>
-    </content>
-  </xldf:append>
-  <xldf:importSample>
-    <target>unchain-example</target>
-    <file>../../transformation/xbgf/tests/unchain.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:append>
-    <where>unchain-example</where>
-    <content>
-      <text>
+			</content>
+		</example>
+		<to>unchain</to>
+	</xldf:addSubsection>
+	<xldf:importGrammar>
+		<target>unchain-example</target>
+		<file>../../transformation/xbgf/tests/unchain.bgf</file>
+	</xldf:importGrammar>
+	<xldf:append>
+		<where>unchain-example</where>
+		<content>
+			<text>After performing this transformation step:</text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>unchain-example</target>
+		<file>../../transformation/xbgf/tests/unchain.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>unchain-example</where>
+		<content>
+			<text>
         The auxiliary nonterminal symbol is gone, as is the chain production:
       </text>
-    </content>
-  </xldf:append>
-  <xldf:importGrammar>
-    <target>unchain-example</target>
-    <file>../../transformation/xbgf/tests/unchain.baseline</file>
-  </xldf:importGrammar>
-  
-  <xldf:place>
-    <section>chain</section>
-    <inside>folding-unfolding-transformation</inside>
-  </xldf:place>
-  <xldf:addSubsection>
-    <example id="chain-example">
-      <content>
-        <text>
+		</content>
+	</xldf:append>
+	<xldf:importGrammar>
+		<target>unchain-example</target>
+		<file>../../transformation/xbgf/tests/unchain.baseline</file>
+	</xldf:importGrammar>
+	<xldf:place>
+		<section>chain</section>
+		<inside>folding-unfolding-transformation</inside>
+	</xldf:place>
+	<xldf:addSubsection>
+		<example id="chain-example">
+			<content>
+				<text>
           In the same way it was removed in the previous example,
           the chain production can be added to the grammar.
           The transformation that reverts the impact of the previous
           <ldf:keyword>unchain</ldf:keyword>, looks like this:
         </text>
-      </content>
-    </example>
-    <to>chain</to>
-  </xldf:addSubsection>
-  <xldf:importSample>
-    <target>chain-example</target>
-    <file>../../transformation/xbgf/tests/chain.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-
-  <xldf:changeRole>
-    <scope>folding-unfolding-transformation</scope>
-    <from>syntax</from>
-    <to>synopsis</to>
-  </xldf:changeRole>
-  
+			</content>
+		</example>
+		<to>chain</to>
+	</xldf:addSubsection>
+	<xldf:importSample>
+		<target>chain-example</target>
+		<file>../../transformation/xbgf/tests/chain.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:changeRole>
+		<scope>folding-unfolding-transformation</scope>
+		<from>syntax</from>
+		<to>synopsis</to>
+	</xldf:changeRole>
 </xldf:evolutionSequence>

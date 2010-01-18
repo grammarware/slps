@@ -6,36 +6,32 @@
   xmlns:ldf="http://planet-sl.org/ldf"
   xmlns:xldf="http://planet-sl.org/xldf">
 
-  <!-- beautify bgf -->
-  <xldf:transformGrammar>
-    <target>scope</target>
-    <xbgf:vertical>
-      <nonterminal>scope</nonterminal>
-    </xbgf:vertical>
-  </xldf:transformGrammar>
-
-  <xldf:addSubsection>
-    <placeholder>listofcontents</placeholder>
-  </xldf:addSubsection>
-
-  <!-- design goals -->
-  <xldf:addSubsection>
-    <designGoals>
-      <author>Vadim Zaytsev</author>
-      <content>
-        <text>
+<!-- beautify bgf -->
+	<xldf:transformGrammar>
+		<target>scope</target>
+		<xbgf:vertical>
+			<nonterminal>scope</nonterminal>
+		</xbgf:vertical>
+	</xldf:transformGrammar>
+	<xldf:addSubsection>
+		<placeholder>listofcontents</placeholder>
+	</xldf:addSubsection>
+<!-- design goals -->
+	<xldf:addSubsection>
+		<designGoals>
+			<author>Vadim Zaytsev</author>
+			<content>
+				<text>
           XBGF operator suite was developed mainly for grammar convergence
           activities.
         </text>
-        <list>
-          <item>
-            <ldf:keyword>Grammar recovery.</ldf:keyword>
+				<list>
+					<item><ldf:keyword>Grammar recovery.</ldf:keyword>
             In order to recover a working grammar from a real grammar artifact one needs
             to perform various activities such as grammar extraction, grammar beautification,
             deyaccification, error fixing, etc,---all of them are present in XBGF.
           </item>
-          <item>
-            <ldf:keyword>Grammar convergence.</ldf:keyword>
+					<item><ldf:keyword>Grammar convergence.</ldf:keyword>
             An infrastructure for grammar convergence (see Chapter 4) contains three
             essential parts: grammar extractors, a grammar comparator and a grammar transformer.
             The latter component is needed for changing the source grammars so that
@@ -43,8 +39,7 @@
             XBGF suite can be used as a framework for programmable grammar transformations,
             it provides all the required expressive power.
           </item>
-          <item>
-            <ldf:keyword>Language documentation.</ldf:keyword>
+					<item><ldf:keyword>Language documentation.</ldf:keyword>
             It is possible and quite expected that the grammar that is shown in the language
             standard, programmer's manual or any similar document is not exactly the same
             as the one used for creating a compiler. For instance, Java Language Specification
@@ -54,120 +49,112 @@
             both making their relationship more explicit and reducing maintenance effort and
             increasing reliability.
           </item>
-          <item>
-            <ldf:keyword>Language evolution.</ldf:keyword>
+					<item><ldf:keyword>Language evolution.</ldf:keyword>
             A language rarely stays as it was developed on its first day. If any language is being
             used in practice for some time, new constructs are added to it to respond to the needs
             of the end users (programmers). XBGF suite has multiple operators for expressing
             language extensions and revisions, they can be used to document the changes between
             versions and dialects of the language.
           </item>
-          <item>
-            <ldf:keyword>Language design.</ldf:keyword>
+					<item><ldf:keyword>Language design.</ldf:keyword>
             DSL design is not a rare activity nowadays, and it is quite common to develop
             the language gradually, regularly synchronising with the needs and knowledge
             of domain experts. XBGF suite allows to document these steps as transformation
             steps departing from the base-line grammar or even an empty grammar and finally
             reaching the language ready to be deployed.
           </item>
-          <item>
-            <ldf:keyword>Disciplined grammar adaptation.</ldf:keyword>
+					<item><ldf:keyword>Disciplined grammar adaptation.</ldf:keyword>
             In order to adapt the baseline grammar to the working circumstances one needs it
             to work in, it is useful to have a good support for grammar transformations~\cite{AgileWeb,DeanCMS03,Adaptation,PLEX}.
             XBGF can be used to converge differently adapted grammars or as a standalone tool
             for applying grammar adaptation steps.
           </item>
-        </list>
-      </content>
-    </designGoals>
-  </xldf:addSubsection>
-
-  <xldf:addSubsection>
-    <notation id="notation-section">
-      <author>Vadim Zaytsev</author>
-      <content>
-        <text>
+				</list>
+			</content>
+		</designGoals>
+	</xldf:addSubsection>
+	<xldf:addSubsection>
+		<notation id="notation-section">
+			<author>Vadim Zaytsev</author>
+			<content>
+				<text>
           BGF is a BNF-like Grammar Format, an XML dialect of Extended Backus Naur Form
           that was used in the language convergence infrastructure.
           Its abstract syntax grammar is automatically extracted from the corresponding
           XML Schema and presented below:
         </text>
-      </content>
-    </notation>
-  </xldf:addSubsection>
-
-  <xldf:combine>
-    <section>grammar</section>
-    <with>notation-section</with>
-  </xldf:combine>
-    <xldf:combine>
-    <section>production</section>
-    <with>notation-section</with>
-  </xldf:combine>
-  <xldf:combine>
-    <section>expression</section>
-    <with>notation-section</with>
-  </xldf:combine>
-  <xldf:combine>
-    <section>value</section>
-    <with>notation-section</with>
-  </xldf:combine>
-  <xldf:combine>
-    <section>label</section>
-    <with>notation-section</with>
-  </xldf:combine>
-  <xldf:combine>
-    <section>nonterminal</section>
-    <with>notation-section</with>
-  </xldf:combine>
-  <xldf:combine>
-    <section>selector</section>
-    <with>notation-section</with>
-  </xldf:combine>
-  <xldf:combine>
-    <section>terminal</section>
-    <with>notation-section</with>
-  </xldf:combine>
-  
-   <xldf:addSection>
-    <core id="bnf">
-      <title>...</title>
-      <description>
-        <content>
-          <text>
+			</content>
+		</notation>
+	</xldf:addSubsection>
+	<xldf:combine>
+		<section>grammar</section>
+		<with>notation-section</with>
+	</xldf:combine>
+	<xldf:combine>
+		<section>production</section>
+		<with>notation-section</with>
+	</xldf:combine>
+	<xldf:combine>
+		<section>expression</section>
+		<with>notation-section</with>
+	</xldf:combine>
+	<xldf:combine>
+		<section>value</section>
+		<with>notation-section</with>
+	</xldf:combine>
+	<xldf:combine>
+		<section>label</section>
+		<with>notation-section</with>
+	</xldf:combine>
+	<xldf:combine>
+		<section>nonterminal</section>
+		<with>notation-section</with>
+	</xldf:combine>
+	<xldf:combine>
+		<section>selector</section>
+		<with>notation-section</with>
+	</xldf:combine>
+	<xldf:combine>
+		<section>terminal</section>
+		<with>notation-section</with>
+	</xldf:combine>
+	<xldf:addSection>
+		<core id="bnf">
+			<title>...</title>
+			<description>
+				<content>
+					<text>
             All BGF and XBGF listings are presented in a unified pretty-printed way.
             The concrete syntax for it is presented below:
           </text>
-        </content>
-      </description>
-    </core>
-  </xldf:addSection>
-  <xldf:importGrammar>
-    <target>bnf</target>
-    <file>../../presentation/prettyprint/bnf.bgf</file>
-  </xldf:importGrammar>
-  <xldf:combine>
-    <section>bnf</section>
-    <with>notation-section</with>
-  </xldf:combine>
-
-  <xldf:append>
-    <where>notation-section</where>
-    <content>
-      <text>
+				</content>
+			</description>
+		</core>
+	</xldf:addSection>
+	<xldf:importGrammar>
+		<target>bnf</target>
+		<file>../../presentation/prettyprint/bnf.bgf</file>
+	</xldf:importGrammar>
+	<xldf:combine>
+		<section>bnf</section>
+		<with>notation-section</with>
+	</xldf:combine>
+	<xldf:append>
+		<where>notation-section</where>
+		<content>
+			<text>
         Any XBGF command is pretty-printed as the name of the transformation
         and all the parameters (productions, expressions, etc) in brackets,
         followed by a semicolon.
       </text>
-    </content>
-  </xldf:append>
-
-  <!-- compatibility section is about converging BGF and BNF -->
-  <xldf:addSubsection>
-    <compatibility id="compatibility-section">
-      <author>Vadim Zaytsev</author>
-      <content>
-        <text>
+		</content>
+	</xldf:append>
+<!-- compatibility section is about converging BGF and BNF -->
+	<xldf:addSubsection>
+		<compatibility id="compatibility-section">
+			<author>Vadim Zaytsev</author>
+			<content>
+				<text>
           In order to establish the relation between BGF that is being used
           in the actual working system and BNF that is being reported here,
           we apply the whole process of grammar convergence to these two grammars.
@@ -175,45 +162,41 @@
           plus empty grammars plus root elements is the same as BGF language plus
           indentation rules plus layout rules plus terminal symbols.
         </text>
-        <text>
+				<text>
           BNF was defined as a base-line grammar for a pretty-printer and therefor
           defines concrete syntax. BGF is extracted from the corresponding XML Schema
           and contains abstract syntax annotated with selectors. We choose to converge
           them closer to abstract syntax (BGF).
         </text>
-        <text>
+				<text>
           First, we resolve the name mismatch and compensate for the lack of notion of
           ``root elements'' in BNF:
         </text>
-      </content>
-    </compatibility>
-  </xldf:addSubsection>
-
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>../../presentation/prettyprint/xbgf/renameBgf.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-
-  <xldf:append>
-    <where>compatibility-section</where>
-    <content>
-      <text>
+			</content>
+		</compatibility>
+	</xldf:addSubsection>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>../../presentation/prettyprint/xbgf/renameBgf.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>compatibility-section</where>
+		<content>
+			<text>
         The only remaining transformations applied to the BGF grammar are these:
       </text>
-    </content>
-  </xldf:append>
-  
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>../../presentation/prettyprint/xbgf/preferBnf.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-
-  <xldf:append>
-    <where>compatibility-section</where>
-    <content>
-      <text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>../../presentation/prettyprint/xbgf/preferBnf.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>compatibility-section</where>
+		<content>
+			<text>
         As we can see, the first of these transformations, <ldf:keyword>narrow</ldf:keyword>,
         shortens the grammar, but
         its semantics only means that we do not want to have empty samples
@@ -223,40 +206,36 @@
         trivial refactorings (verticalisations are already performed in the
         example from the previous section).
       </text>
-      <text>
+			<text>
         The BNF source undergoes the following transformation for stripping
         it from lexical details:
       </text>
-    </content>
-  </xldf:append>
-
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>../../presentation/prettyprint/xbgf/stripWhitespace.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-
-  <xldf:append>
-    <where>compatibility-section</where>
-    <content>
-      <text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>../../presentation/prettyprint/xbgf/stripWhitespace.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>compatibility-section</where>
+		<content>
+			<text>
         Before the rest of the concrete syntax (i.e., the terminals)
         is stripped away, we need to add some labels that correspond
         to the selectors of its BGF counterpart:
       </text>
-    </content>
-  </xldf:append>
-
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>../../presentation/prettyprint/xbgf/designate.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-
-  <xldf:append>
-    <where>compatibility-section</where>
-    <content>
-      <text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>../../presentation/prettyprint/xbgf/designate.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>compatibility-section</where>
+		<content>
+			<text>
         Now we can remove all terminals from the grammar without disrupting
         its structure (i.e., various alternatives in symbol will not collide
         and vanish during normalisation phase). Since we do not want to make
@@ -264,235 +243,203 @@
         following transformation script is generated by a special tool executed
         automatically from LCI (see the section about generators).
       </text>
-    </content>
-  </xldf:append>
-
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-1.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-2.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-3.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-4.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-5.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-6.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-7.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-8.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-9.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-10.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-11.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-12.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-13.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-14.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>sliced/stripTerminals-15.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-
-  <xldf:addFigure>
-    <figure>
-      <shortcaption>Full convergence diagram for BNF and BGF.</shortcaption>
-      <caption>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-1.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-2.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-3.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-4.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-5.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-6.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-7.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-8.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-9.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-10.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-11.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-12.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-13.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-14.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>sliced/stripTerminals-15.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:addFigure>
+		<figure>
+			<shortcaption>Full convergence diagram for BNF and BGF.</shortcaption>
+			<caption>
         Full convergence diagram for BNF and BGF. The top nodes are sources, the bottom node
         is the target, the arc labels are separate XBGF scripts, the nodes contain
         numbers of name mismatches and structural mismatches between each step and
         the synch point (marked as a double circle).
       </caption>
-      <source>
-        <type>PDF</type>
-        <localfile>bnfbgf.pdf</localfile>
-      </source>
-      <source>
-        <type>PNG</type>
-        <localfile>bnfbgf.png</localfile>
-      </source>
-    </figure>
-    <to>compatibility-section</to>
-  </xldf:addFigure>
-
-  <xldf:append>
-    <where>compatibility-section</where>
-    <content>
-      <text>
+			<source>
+				<type>PDF</type>
+				<localfile>bnfbgf.pdf</localfile>
+			</source>
+			<source>
+				<type>PNG</type>
+				<localfile>bnfbgf.png</localfile>
+			</source>
+		</figure>
+		<to>compatibility-section</to>
+	</xldf:addFigure>
+	<xldf:append>
+		<where>compatibility-section</where>
+		<content>
+			<text>
         Finally we run a grammar comparator to see what is left and notice
         one mismatch that is easily fixed with <ldf:keyword>massage</ldf:keyword>, as well as the right
         hand side still having
-        <ldf:formula>
-          <mml:math>
-            <mml:mrow>
-              <mml:msup>
-                <mml:mfenced>
-                  <mml:msup>
-                    <mml:mi>symbol</mml:mi>
-                    <mml:mo>+</mml:mo>
-                  </mml:msup>
-                </mml:mfenced>
-                <mml:mo>+</mml:mo>
-              </mml:msup>
-            </mml:mrow>
-          </mml:math>
-        </ldf:formula>
+ <ldf:formula><mml:math><mml:mrow><mml:msup><mml:mfenced><mml:msup><mml:mi>symbol</mml:mi><mml:mo>+</mml:mo></mml:msup></mml:mfenced><mml:mo>+</mml:mo></mml:msup></mml:mrow></mml:math></ldf:formula>
         instead of just
-        <ldf:formula>
-          <mml:math>
-            <mml:mrow>
-              <mml:mi>symbol</mml:mi>
-            </mml:mrow>
-          </mml:math>
-        </ldf:formula>
-        . This
+        <ldf:formula><mml:math><mml:mrow><mml:mi>symbol</mml:mi></mml:mrow></mml:math></ldf:formula>. This
         corresponds to the design decision that treats top-level choices
         and top-level sequences differently in BNF to make them more appealing
         to the eye by avoiding unnecessary parenthesizing. The very specific
         <ldf:keyword>upgrade</ldf:keyword> command is run twice here to fold
         first the sequence and then the choice.
       </text>
-    </content>
-  </xldf:append>
-
-  <xldf:importSample>
-    <target>compatibility-section</target>
-    <file>../../presentation/prettyprint/xbgf/refactorBnf.xbgf</file>
-    <prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
-  </xldf:importSample>
-
-  <xldf:append>
-    <where>compatibility-section</where>
-    <content>
-      <text>
+		</content>
+	</xldf:append>
+	<xldf:importSample>
+		<target>compatibility-section</target>
+		<file>../../presentation/prettyprint/xbgf/refactorBnf.xbgf</file>
+		<prettyprinter>../../../shared/tools/xbgf2xbnf</prettyprinter>
+	</xldf:importSample>
+	<xldf:append>
+		<where>compatibility-section</where>
+		<content>
+			<text>
         After that, the grammars fully converge. The conclusion is that BNF language
         plus empty grammars plus root elements is the same as BGF language plus
         indentation rules plus layout rules plus terminal symbols.
       </text>
-    </content>
-  </xldf:append>
-  <xldf:changeRole>
-    <scope>compatibility-section</scope>
-    <from>frontMatter</from>
-    <to>backMatter</to>
-  </xldf:changeRole>
-
-  <!-- list of definitions -->
-  <xldf:addSection>
-    <definitions id="definitions-section">
-      <author>Vadim Zaytsev</author>
-      <term>
-        <name>grammar</name>
-        <definition>
-          <text>A set of interdependent productions.</text>
-          <bgf:production>
-            <nonterminal>grammar</nonterminal>
-            <bgf:expression>
-              <star>
-                <bgf:expression>
-                  <nonterminal>production</nonterminal>
-                </bgf:expression>
-              </star>
-            </bgf:expression>
-          </bgf:production>
-        </definition>
-      </term>
-    </definitions>
-  </xldf:addSection>
-
-  <xldf:place>
-    <section>sequence</section>
-    <inside>definitions-section</inside>
-  </xldf:place>
-
-  <xldf:place>
-    <section>atomic</section>
-    <inside>definitions-section</inside>
-  </xldf:place>
-
-  <xldf:transformGrammar>
-    <target>transformation</target>
-    <xbgf:vertical>
-      <nonterminal>transformation</nonterminal>
-    </xbgf:vertical>
-     <xbgf:remove>
-      <vertical>
-        <bgf:production>
-          <nonterminal>transformation</nonterminal>
-          <bgf:expression>
-            <nonterminal>strip</nonterminal>
-          </bgf:expression>
-        </bgf:production>
-      </vertical>
-    </xbgf:remove>
-    <xbgf:horizontal>transformation</xbgf:horizontal>
- </xldf:transformGrammar>
-  <xldf:place>
-    <section>transformation</section>
-    <inside>definitions-section</inside>
-  </xldf:place>
- 
-  <xldf:place>
-    <section>scope</section>
-    <inside>definitions-section</inside>
-  </xldf:place>
-
-  <xldf:addSection>
-    <core id="marked-production">
-      <title>Marked</title>
-      <description>
-        <author>Vadim Zaytsev</author>
-        <content>
-          <text>
+		</content>
+	</xldf:append>
+	<xldf:changeRole>
+		<scope>compatibility-section</scope>
+		<from>frontMatter</from>
+		<to>backMatter</to>
+	</xldf:changeRole>
+<!-- list of definitions -->
+	<xldf:addSection>
+		<definitions id="definitions-section">
+			<author>Vadim Zaytsev</author>
+			<term>
+				<name>grammar</name>
+				<definition>
+					<text>A set of interdependent productions.</text>
+					<bgf:production>
+						<nonterminal>grammar</nonterminal>
+						<bgf:expression>
+							<star>
+								<bgf:expression>
+									<nonterminal>production</nonterminal>
+								</bgf:expression>
+							</star>
+						</bgf:expression>
+					</bgf:production>
+				</definition>
+			</term>
+		</definitions>
+	</xldf:addSection>
+	<xldf:place>
+		<section>sequence</section>
+		<inside>definitions-section</inside>
+	</xldf:place>
+	<xldf:place>
+		<section>atomic</section>
+		<inside>definitions-section</inside>
+	</xldf:place>
+	<xldf:transformGrammar>
+		<target>transformation</target>
+		<xbgf:vertical>
+			<nonterminal>transformation</nonterminal>
+		</xbgf:vertical>
+		<xbgf:remove>
+			<vertical>
+				<bgf:production>
+					<nonterminal>transformation</nonterminal>
+					<bgf:expression>
+						<nonterminal>strip</nonterminal>
+					</bgf:expression>
+				</bgf:production>
+			</vertical>
+		</xbgf:remove>
+		<xbgf:horizontal>transformation</xbgf:horizontal>
+	</xldf:transformGrammar>
+	<xldf:place>
+		<section>transformation</section>
+		<inside>definitions-section</inside>
+	</xldf:place>
+	<xldf:place>
+		<section>scope</section>
+		<inside>definitions-section</inside>
+	</xldf:place>
+	<xldf:addSection>
+		<core id="marked-production">
+			<title>Marked</title>
+			<description>
+				<author>Vadim Zaytsev</author>
+				<content>
+					<text>
             Some of the grammar transformations, namely
             <ldf:keyword>addH</ldf:keyword>,
             <ldf:keyword>removeH</ldf:keyword>,
@@ -508,29 +455,28 @@
             <ldf:keyword>deanonymize</ldf:keyword>,
             accept only marked productions as their arguments. 
           </text>
-          <bgf:production>
-            <nonterminal>marked-production</nonterminal>
-            <bgf:expression>
-              <nonterminal>production</nonterminal>
-            </bgf:expression>
-          </bgf:production>
-          <text>
+					<bgf:production>
+						<nonterminal>marked-production</nonterminal>
+						<bgf:expression>
+							<nonterminal>production</nonterminal>
+						</bgf:expression>
+					</bgf:production>
+					<text>
             When transformations need to happen very locally, the level of nonterminal
             or production is insufficient and introduction of selectable sub-expressions is
             too much extra effort. For this cases, XBGF uses markers that show at which
             point exactly should the transformation take place. Markers are pretty-printed
             as angle brackets.
           </text>
-        </content>
-      </description>
-    </core>
-  </xldf:addSection>
-  <xldf:place>
-    <section>marked-production</section>
-    <inside>definitions-section</inside>
-  </xldf:place>
-  
-  <!-- <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"
+				</content>
+			</description>
+		</core>
+	</xldf:addSection>
+	<xldf:place>
+		<section>marked-production</section>
+		<inside>definitions-section</inside>
+	</xldf:place>
+<!-- <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML"
 	          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	          xsi:schemaLocation="http://www.w3.org/1998/Math/MathML
 	            http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd">
