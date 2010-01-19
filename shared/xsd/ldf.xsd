@@ -963,7 +963,7 @@
   <xsd:element name="code" type="xsd:string">
     <xsd:annotation>
       <xsd:documentation>
-        Inlined pieces of code are usually printed in typewriter-like font.
+        Inlined pieces of code are usually printed in a typewriter-like font.
         They are frequently incomplete, mostly nothing more than simple literals,
         and can only be checked to be correct tokens of the language in
         a lexical sense.
