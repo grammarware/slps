@@ -1,8 +1,9 @@
--- Abstract truth values
+-- A complete lattice of truth values
 
-module TT where
+module While.ProgramAnalysis.TT where
 
-import Ordering
+import Prelude hiding (Ord, (<=))
+import While.ProgramAnalysis.Domains
 
 
 -- The data type for truth values
@@ -16,14 +17,14 @@ data TT = BottomTT
 
 -- Ordering on truth values
 
-instance Ord TT
+instance POrd TT
  where
   BottomTT <= _     = True
   _        <= TopTT = True
   b1       <= b2    = b1 == b2
 
 
--- The complete lattice of truth values
+-- Least and greatest elements, and LUBs
 
 instance Bottom TT
  where

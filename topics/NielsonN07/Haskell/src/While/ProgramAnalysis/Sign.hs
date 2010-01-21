@@ -1,10 +1,10 @@
--- Abstract numbers (signs)
+-- The complete lattice of abstract numbers for signs
 
-module Sign where
+module While.ProgramAnalysis.Sign where
 
-import Prelude
-import Ordering
-import TT
+import Prelude hiding (Ord, (<=))
+import While.ProgramAnalysis.Domains
+import While.ProgramAnalysis.TT
 
 
 -- The data type for signs
@@ -17,14 +17,14 @@ data Sign = BottomSign
 
 -- Ordering on signs
 
-instance Ord Sign
+instance POrd Sign
  where
   BottomSign  <= _       = True
   _           <= TopSign = True
   s1          <= s2      = s1 == s2
 
 
--- The complete lattice of signs
+-- Least and greatest elements, and LUBs
 
 instance Bottom Sign
  where
@@ -131,14 +131,14 @@ instance OrdTT Sign
   _          .<=. _          = TT
 
 
--- Expose all values
+-- Expose all values of Sign
 
-instance Values Sign
+instance Enumerate Sign
  where
-  values = [BottomSign, Zero, Pos, Neg, TopSign]
+  enumerate = [BottomSign, Zero, Pos, Neg, TopSign]
 
 
--- Test for proper values
+-- Test for proper values of Sign
 
 instance Proper Sign
  where

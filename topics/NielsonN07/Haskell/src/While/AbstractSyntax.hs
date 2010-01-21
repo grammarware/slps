@@ -1,4 +1,4 @@
-module WhileSyntax where
+module While.AbstractSyntax where
 
 import Prelude hiding (Num, True, False)
 
@@ -57,7 +57,10 @@ while (!(x<=1)) do {
 -}
 
 factorial
- = Seq (Assign "y" (Num 1))
-       (While (Not (Leq (Var "x") (Num 1)))
-              (Seq (Assign "y" (Mul (Var "y") (Var "x")))
-                   (Assign "x" (Sub (Var "x") (Num 1)))))
+ = Seq
+    (Assign "y" (Num 1))
+    (While
+     (Not (Leq (Var "x") (Num 1)))
+     (Seq
+      (Assign "y" (Mul (Var "y") (Var "x")))
+      (Assign "x" (Sub (Var "x") (Num 1)))))
