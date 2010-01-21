@@ -1,7 +1,7 @@
-module While.ProgramAnalysis.Fix where
+module ProgramAnalysis.Fix where
 
-import While.DenotationalSemantics.Fix
-import While.ProgramAnalysis.Domains
+import DenotationalSemantics.Fix
+import ProgramAnalysis.Domains
 
 
 -- Equality-based fixed-point combinator

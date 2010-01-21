@@ -1,9 +1,9 @@
 -- A complete lattice of truth values
 
-module While.ProgramAnalysis.TT where
+module ProgramAnalysis.TT where
 
 import Prelude hiding (Ord, (<=))
-import While.ProgramAnalysis.Domains
+import ProgramAnalysis.Domains
 
 
 -- The data type for truth values

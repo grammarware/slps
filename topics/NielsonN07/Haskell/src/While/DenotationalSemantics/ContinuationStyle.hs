@@ -2,11 +2,11 @@ module While.DenotationalSemantics.ContinuationStyle where
 
 import qualified Prelude
 import Prelude hiding (lookup, not, and)
+import DenotationalSemantics.State
 import While.AbstractSyntax
 import While.DenotationalSemantics.Meanings (Meanings(Meanings))
 import qualified While.DenotationalSemantics.Meanings as CS
 import While.DenotationalSemantics.Values
-import While.DenotationalSemantics.State
 
 
 -- Continuations and functions on them
@@ -23,7 +23,7 @@ type Fix s = (ContF s -> ContF s) -> ContF s
 -- Parametric, continuation-style denotational semantics
 
 cs :: Values n b
-   -> State n s
+   -> State Var n s
    -> Cond b s
    -> Fix s
    -> Meanings (s -> n) (s -> b) (ContF s)

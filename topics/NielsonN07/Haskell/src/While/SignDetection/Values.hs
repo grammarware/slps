@@ -1,13 +1,13 @@
-module While.ProgramAnalysis.Values where
+module While.SignDetection.Values where
 
 import Prelude hiding (Num, not, and)
 import qualified Prelude
+import ProgramAnalysis.Domains
+import ProgramAnalysis.TT (TT(TT, FF), (.==.), (.<=.))
+import qualified ProgramAnalysis.TT as TT
 import While.AbstractSyntax
 import While.DenotationalSemantics.Values
-import While.ProgramAnalysis.Domains
-import While.ProgramAnalysis.TT (TT(TT, FF), (.==.), (.<=.))
-import qualified While.ProgramAnalysis.TT as TT
-import While.ProgramAnalysis.Sign
+import While.SignDetection.Sign
 
 
 -- Abstract interpretation

@@ -1,23 +1,23 @@
 -- This is a variation on module While.ProgramAnalysis.Main1.
 -- The sign-detection analysis is carried out with increased precision.
 
-module While.ProgramAnalysis.Main2 where
+module While.SignDetection.Main2 where
 
 import Prelude hiding (Ord, (<=), lookup)
+import DenotationalSemantics.State
 import While.AbstractSyntax (Var, factorial)
 import While.DenotationalSemantics.Meanings
 import While.DenotationalSemantics.Interpreter
 import While.DenotationalSemantics.Values
-import While.DenotationalSemantics.State
 import While.DenotationalSemantics.DirectStyle
-import While.ProgramAnalysis.Domains
-import While.ProgramAnalysis.TT
-import While.ProgramAnalysis.Sign
-import While.ProgramAnalysis.Map (Map, maps, keys, atomic)
-import qualified While.ProgramAnalysis.Map as Map
-import While.ProgramAnalysis.Values
-import While.ProgramAnalysis.Fix
-import While.ProgramAnalysis.Main1 hiding (analysis, main)
+import ProgramAnalysis.Domains
+import ProgramAnalysis.TT
+import ProgramAnalysis.Map (Map, maps, keys, atomic)
+import qualified ProgramAnalysis.Map as Map
+import ProgramAnalysis.Fix
+import While.SignDetection.Sign
+import While.SignDetection.Values
+import While.SignDetection.Main1 hiding (analysis, main)
 
 
 -- Assembly of the semantics

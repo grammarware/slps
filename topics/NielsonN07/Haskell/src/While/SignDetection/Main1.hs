@@ -2,22 +2,22 @@
 -- The semantics provides a sign-detection analysis.
 -- We model states as partially ordered maps from variables to numbers.
 
-module While.ProgramAnalysis.Main1 where
+module While.SignDetection.Main1 where
 
 import Prelude hiding (lookup)
+import DenotationalSemantics.State
+import ProgramAnalysis.Domains
+import ProgramAnalysis.TT
+import ProgramAnalysis.Map (Map)
+import qualified ProgramAnalysis.Map as Map
+import ProgramAnalysis.Fix
 import While.AbstractSyntax (Var, factorial)
 import While.DenotationalSemantics.Meanings
 import While.DenotationalSemantics.Interpreter
 import While.DenotationalSemantics.Values
-import While.DenotationalSemantics.State
 import While.DenotationalSemantics.DirectStyle
-import While.ProgramAnalysis.Domains
-import While.ProgramAnalysis.TT
-import While.ProgramAnalysis.Sign
-import While.ProgramAnalysis.Map (Map)
-import qualified While.ProgramAnalysis.Map as Map
-import While.ProgramAnalysis.Values
-import While.ProgramAnalysis.Fix
+import While.SignDetection.Sign
+import While.SignDetection.Values
 
 
 -- Domains for standard semantics in direct style

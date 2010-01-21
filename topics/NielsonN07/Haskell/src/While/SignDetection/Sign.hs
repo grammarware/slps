@@ -1,10 +1,10 @@
 -- The complete lattice of abstract numbers for signs
 
-module While.ProgramAnalysis.Sign where
+module While.SignDetection.Sign where
 
 import Prelude hiding (Ord, (<=))
-import While.ProgramAnalysis.Domains
-import While.ProgramAnalysis.TT
+import ProgramAnalysis.Domains
+import ProgramAnalysis.TT
 
 
 -- The data type for signs

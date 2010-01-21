@@ -1,9 +1,9 @@
 -- Maps as partial orders with values subject to partial order too
 
-module While.ProgramAnalysis.Map (Map, lookup, update, maps, keys, atomic) where
+module ProgramAnalysis.Map (Map, lookup, update, maps, keys, atomic) where
 
 import Prelude hiding (Ord, (<=), lookup)
-import While.ProgramAnalysis.Domains
+import ProgramAnalysis.Domains
 
 
 -- Partially ordered functions as lists of key-value pairs

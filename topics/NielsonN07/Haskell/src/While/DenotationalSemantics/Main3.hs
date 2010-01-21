@@ -6,13 +6,13 @@
 module While.DenotationalSemantics.Main1 where
 
 import Data.Maybe
+import DenotationalSemantics.State
+import DenotationalSemantics.Fix
 import While.AbstractSyntax (Var, factorial)
 import While.DenotationalSemantics.Meanings
 import While.DenotationalSemantics.Interpreter
 import While.DenotationalSemantics.Values
-import While.DenotationalSemantics.State
 import While.DenotationalSemantics.DirectStyleMaybe
-import While.DenotationalSemantics.Fix
 
 
 -- Domains for standard semantics in direct style

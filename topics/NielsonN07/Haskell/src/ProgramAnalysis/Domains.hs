@@ -1,6 +1,6 @@
 -- Partial orders & Co.
 
-module While.ProgramAnalysis.Domains where
+module ProgramAnalysis.Domains where
 
 import Prelude hiding (Ord, (<=))
 

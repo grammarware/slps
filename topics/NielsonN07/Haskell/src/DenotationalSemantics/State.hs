@@ -1,15 +1,15 @@
-module While.DenotationalSemantics.State where
+module DenotationalSemantics.State where
 
 import Prelude hiding (lookup)
-import While.AbstractSyntax (Var)
 
-data State n s
+data Eq x
+  => State x n s
    = State {
-       lookup :: Var -> s -> n 
-     , update :: Var -> n -> s -> s
+       lookup :: x -> s -> n 
+     , update :: x -> n -> s -> s
      } 
 
-statesAsFunctions :: State n (Var -> n)
+statesAsFunctions :: Eq x => State x n (x -> n)
 statesAsFunctions
  = State {
      lookup = flip ($)
@@ -19,7 +19,7 @@ statesAsFunctions
          else s x'
    } 
 
-statesAsListsOfPairs :: State n [(Var,n)]
+statesAsListsOfPairs :: Eq x => State x n [(x,n)]
 statesAsListsOfPairs
  = State {
     lookup = \x ((x',n):s) ->

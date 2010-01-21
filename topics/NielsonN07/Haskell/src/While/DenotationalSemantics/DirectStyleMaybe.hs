@@ -2,11 +2,11 @@ module While.DenotationalSemantics.DirectStyleMaybe where
 
 import qualified Prelude
 import Prelude hiding (lookup, not, and)
+import DenotationalSemantics.State
 import While.AbstractSyntax
 import While.DenotationalSemantics.Meanings (Meanings(Meanings))
 import qualified While.DenotationalSemantics.Meanings as DS
 import While.DenotationalSemantics.Values
-import While.DenotationalSemantics.State
 
 
 -- Types of auxiliary operators
@@ -20,7 +20,7 @@ type Fix s
 -- Parametric, direct-style denotational semantics
 
 ds :: Values n b
-   -> State n s
+   -> State Var n s
    -> Cond b s
    -> Fix s
    -> Meanings (s -> n) (s -> b) (s -> Maybe s)

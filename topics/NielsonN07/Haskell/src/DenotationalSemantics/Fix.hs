@@ -1,6 +1,6 @@
 -- Some reusable definitions for computing fixed points
 
-module While.DenotationalSemantics.Fix where
+module DenotationalSemantics.Fix where
 
 import Data.Maybe
 
