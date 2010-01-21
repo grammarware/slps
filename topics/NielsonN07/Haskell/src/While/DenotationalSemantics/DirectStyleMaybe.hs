@@ -4,8 +4,7 @@ import qualified Prelude
 import Prelude hiding (lookup, not, and)
 import DenotationalSemantics.State
 import While.AbstractSyntax
-import While.DenotationalSemantics.Meanings (Meanings(Meanings))
-import qualified While.DenotationalSemantics.Meanings as DS
+import While.DenotationalSemantics.Meanings
 import While.DenotationalSemantics.Values
 
 
@@ -28,24 +27,24 @@ ds :: Values n b
 ds v z cond fix = Meanings {
 
   -- Arithmetic expressions
-    DS.num = \n     _ -> num v n
-  , DS.var = \x     s -> lookup z x s
-  , DS.add = \a1 a2 s -> add v (a1 s) (a2 s)  
-  , DS.mul = \a1 a2 s -> mul v (a1 s) (a2 s)  
-  , DS.sub = \a1 a2 s -> sub v (a1 s) (a2 s)  
+    numM = \n     _ -> num v n
+  , varM = \x     s -> lookup z x s
+  , addM = \a1 a2 s -> add v (a1 s) (a2 s)  
+  , mulM = \a1 a2 s -> mul v (a1 s) (a2 s)  
+  , subM = \a1 a2 s -> sub v (a1 s) (a2 s)  
 
   -- Boolean expressions
-  , DS.true  = \      _ -> true v
-  , DS.false = \      _ -> false v
-  , DS.eq    = \a1 a2 s -> eq v (a1 s) (a2 s)  
-  , DS.leq   = \a1 a2 s -> leq v (a1 s) (a2 s)  
-  , DS.not   = \b     s -> not v (b s) 
-  , DS.and   = \b1 b2 s -> and v (b1 s) (b2 s)  
+  , trueM  = \      _ -> true v
+  , falseM = \      _ -> false v
+  , eqM    = \a1 a2 s -> eq v (a1 s) (a2 s)  
+  , leqM   = \a1 a2 s -> leq v (a1 s) (a2 s)  
+  , notM   = \b     s -> not v (b s) 
+  , andM   = \b1 b2 s -> and v (b1 s) (b2 s)  
 
   -- Statements
-  , DS.assign = \x ma s -> Just $ update z x (ma s) s
-  , DS.skip   = Just
-  , DS.seq    = \ms1 ms2 s -> ms1 s >>= ms2
-  , DS.ifElse = \mb ms1 ms2 -> cond mb ms1 ms2
-  , DS.while  = \mb ms -> fix (\f -> cond mb (\s -> ms s >>= f) Just)
+  , assignM = \x ma s -> Just $ update z x (ma s) s
+  , skipM   = Just
+  , seqM    = \ms1 ms2 s -> ms1 s >>= ms2
+  , ifElseM = \mb ms1 ms2 -> cond mb ms1 ms2
+  , whileM  = \mb ms -> fix (\f -> cond mb (\s -> ms s >>= f) Just)
 }

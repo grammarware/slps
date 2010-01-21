@@ -11,22 +11,22 @@ data Meanings
 
    = Meanings {
 
-    num :: Num -> ma
-  , var :: Var -> ma
-  , add :: ma -> ma -> ma
-  , mul :: ma -> ma -> ma
-  , sub :: ma -> ma -> ma
+    numM :: Num -> ma
+  , varM :: Var -> ma
+  , addM :: ma -> ma -> ma
+  , mulM :: ma -> ma -> ma
+  , subM :: ma -> ma -> ma
   
-  , true  :: mb
-  , false :: mb
-  , eq    :: ma -> ma -> mb
-  , leq   :: ma -> ma -> mb
-  , not   :: mb -> mb
-  , and   :: mb -> mb -> mb
+  , trueM  :: mb
+  , falseM :: mb
+  , eqM    :: ma -> ma -> mb
+  , leqM   :: ma -> ma -> mb
+  , notM   :: mb -> mb
+  , andM   :: mb -> mb -> mb
 
-  , assign :: Var -> ma -> ms
-  , skip   :: ms
-  , seq    :: ms -> ms -> ms
-  , ifElse :: mb -> ms -> ms -> ms
-  , while  :: mb -> ms -> ms
+  , assignM :: Var -> ma -> ms
+  , skipM   :: ms
+  , seqM    :: ms -> ms -> ms
+  , ifElseM :: mb -> ms -> ms -> ms
+  , whileM  :: mb -> ms -> ms
 }
