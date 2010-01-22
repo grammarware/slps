@@ -24,7 +24,9 @@ newtype ( Eq k
 
 -- States as partially ordered maps
 
-statesAsPOrdMaps :: (Eq k, Bottom v) => StateAlg k v (Map k v)
+statesAsPOrdMaps :: (Eq k, Bottom v)
+                 => StateAlg k v (Map k v)
+
 statesAsPOrdMaps = StateAlg {
    State.lookup = lookup
  , State.update = update
