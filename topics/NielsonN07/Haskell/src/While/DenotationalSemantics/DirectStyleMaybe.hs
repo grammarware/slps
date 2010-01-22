@@ -1,50 +1,45 @@
+-- Parametric, direct-style denotational semantics
+-- We use a Maybe type for the result of state transformers.
+
 module While.DenotationalSemantics.DirectStyleMaybe where
 
 import qualified Prelude
-import Prelude hiding (lookup, not, and)
-import DenotationalSemantics.State
+import Prelude hiding (id, seq, lookup, not, and)
+import SemanticsLib.Main
 import While.AbstractSyntax
-import While.DenotationalSemantics.Meanings
-import While.DenotationalSemantics.Values
+import While.Fold
+import While.DenotationalSemantics.DirectStyle (STrafoAlg(STrafoAlg), id, seq, cond, fix)
 
 
--- Types of auxiliary operators
+-- Construction of direct-style meanings
 
-type Cond b s
- = (s -> b) -> (s -> Maybe s) -> (s -> Maybe s) -> (s -> Maybe s)
-type Fix s
- = ((s -> Maybe s) -> (s -> Maybe s)) -> (s -> Maybe s)
+ds :: BooleanAlg b
+   -> NumberAlg n b
+   -> StateAlg Var n s
+   -> STrafoAlg (s -> Maybe s) (s -> b)
+   -> WhileAlg (s -> n) (s -> b) (s -> Maybe s)
 
-
--- Parametric, direct-style denotational semantics
-
-ds :: Values n b
-   -> State Var n s
-   -> Cond b s
-   -> Fix s
-   -> Meanings (s -> n) (s -> b) (s -> Maybe s)
-
-ds v z cond fix = Meanings {
+ds bA nA sA tA = WhileAlg {
 
   -- Arithmetic expressions
-    numM = \n     _ -> num v n
-  , varM = \x     s -> lookup z x s
-  , addM = \a1 a2 s -> add v (a1 s) (a2 s)  
-  , mulM = \a1 a2 s -> mul v (a1 s) (a2 s)  
-  , subM = \a1 a2 s -> sub v (a1 s) (a2 s)  
+    numF = \n     _ -> from nA n
+  , varF = \x     s -> lookup sA x s
+  , addF = \a1 a2 s -> add nA (a1 s) (a2 s)  
+  , mulF = \a1 a2 s -> mul nA (a1 s) (a2 s)  
+  , subF = \a1 a2 s -> sub nA (a1 s) (a2 s)  
 
   -- Boolean expressions
-  , trueM  = \      _ -> true v
-  , falseM = \      _ -> false v
-  , eqM    = \a1 a2 s -> eq v (a1 s) (a2 s)  
-  , leqM   = \a1 a2 s -> leq v (a1 s) (a2 s)  
-  , notM   = \b     s -> not v (b s) 
-  , andM   = \b1 b2 s -> and v (b1 s) (b2 s)  
+  , trueF  = \      _ -> true bA
+  , falseF = \      _ -> false bA
+  , eqF    = \a1 a2 s -> eq nA (a1 s) (a2 s)  
+  , leqF   = \a1 a2 s -> leq nA (a1 s) (a2 s)  
+  , notF   = \b     s -> not bA (b s) 
+  , andF   = \b1 b2 s -> and bA (b1 s) (b2 s)  
 
   -- Statements
-  , assignM = \x ma s -> Just $ update z x (ma s) s
-  , skipM   = Just
-  , seqM    = \ms1 ms2 s -> ms1 s >>= ms2
-  , ifM     = \mb ms1 ms2 -> cond mb ms1 ms2
-  , whileM  = \mb ms -> fix (\f -> cond mb (\s -> ms s >>= f) Just)
+  , assignF = \x ma s     -> Just $ update sA x (ma s) s
+  , skipF   =                id tA
+  , seqF    = \ms1 ms2    -> seq tA ms1 ms2
+  , ifF     = \mb ms1 ms2 -> cond tA mb ms1 ms2
+  , whileF  = \mb ms      -> fix tA (\f -> cond tA mb (seq tA ms f) (id tA))
 }

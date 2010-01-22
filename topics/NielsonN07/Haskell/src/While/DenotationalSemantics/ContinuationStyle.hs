@@ -1,55 +1,55 @@
 module While.DenotationalSemantics.ContinuationStyle where
 
 import qualified Prelude
-import Prelude hiding (lookup, not, and)
-import DenotationalSemantics.State
+import Prelude hiding (id, seq, lookup, not, and)
+import SemanticsLib.Main
 import While.AbstractSyntax
-import While.DenotationalSemantics.Meanings
-import While.DenotationalSemantics.Values
+import While.Fold
 
 
--- Continuations and functions on them
+-- Continuation transformers
+
+data CTrafoAlg t c
+   = CTrafoAlg {
+    id   :: t 
+  , seq  :: t -> t -> t
+  , cond :: c -> t -> t -> t
+  , fix  :: (t -> t) -> t
+}
+
+
+-- Construction of continuation-style meanings
 
 type Cont s = s -> s
-type ContF s = Cont s -> Cont s
+type ContT s = Cont s -> Cont s
 
--- Types of auxiliary operators
+cs :: BooleanAlg b
+   -> NumberAlg n b
+   -> StateAlg Var n s
+   -> CTrafoAlg (ContT s) (s -> b)
+   -> WhileAlg (s -> n) (s -> b) (ContT s)
 
-type Cond b s = (s -> b) -> Cont s -> Cont s -> Cont s
-type Fix s = (ContF s -> ContF s) -> ContF s
-
-
--- Parametric, continuation-style denotational semantics
-
-cs :: Values n b
-   -> State Var n s
-   -> Cond b s
-   -> Fix s
-   -> Meanings (s -> n) (s -> b) (ContF s)
-
-cs v z cond fix = Meanings {
+cs bA nA sA tA = WhileAlg {
 
   -- Arithmetic expressions
-    numM = \n     _ -> num v n
-  , varM = \x     s -> lookup z x s
-  , addM = \a1 a2 s -> add v (a1 s) (a2 s)  
-  , mulM = \a1 a2 s -> mul v (a1 s) (a2 s)  
-  , subM = \a1 a2 s -> sub v (a1 s) (a2 s)  
+    numF = \n     _ -> from nA n
+  , varF = \x     s -> lookup sA x s
+  , addF = \a1 a2 s -> add nA (a1 s) (a2 s)  
+  , mulF = \a1 a2 s -> mul nA (a1 s) (a2 s)  
+  , subF = \a1 a2 s -> sub nA (a1 s) (a2 s)  
 
   -- Boolean expressions
-  , trueM  = \      _ -> true v
-  , falseM = \      _ -> false v
-  , eqM    = \a1 a2 s -> eq v (a1 s) (a2 s)  
-  , leqM   = \a1 a2 s -> leq v (a1 s) (a2 s)  
-  , notM   = \b     s -> not v (b s) 
-  , andM   = \b1 b2 s -> and v (b1 s) (b2 s)  
+  , trueF  = \      _ -> true bA
+  , falseF = \      _ -> false bA
+  , eqF    = \a1 a2 s -> eq nA (a1 s) (a2 s)  
+  , leqF   = \a1 a2 s -> leq nA (a1 s) (a2 s)  
+  , notF   = \b     s -> not bA (b s) 
+  , andF   = \b1 b2 s -> and bA (b1 s) (b2 s)  
 
   -- Statements
-  , assignM = \x ma c s -> c (update z x (ma s) s)
-  , skipM   =              id
-  , seqM    = \ms1 ms2  -> ms1 . ms2
-  , ifM     = \mb ms1 ms2 c ->
-      cond mb (ms1 c) (ms2 c)
-  , whileM  = \mb ms -> 
-      fix (\f c -> cond mb (ms (f c)) c)
+  , assignF = \x ma c s   -> c $ update sA x (ma s) s
+  , skipF   =                id tA
+  , seqF    = \ms1 ms2    -> seq tA ms1 ms2
+  , ifF     = \mb ms1 ms2 -> cond tA mb ms1 ms2
+  , whileF  = \mb ms      -> fix tA (\f -> cond tA mb (seq tA ms f) (id tA))
 }

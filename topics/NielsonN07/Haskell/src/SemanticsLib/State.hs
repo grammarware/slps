@@ -1,19 +1,28 @@
-module DenotationalSemantics.State where
+-- The domain of states
+-- Aka variable assignments
+
+module SemanticsLib.State (
+    StateAlg(StateAlg)
+  , lookup
+  , update
+  , statesAsFunctions
+  , statesAsData
+) where
 
 import Prelude hiding (lookup)
 
 data Eq x
-  => State x n s
-   = State {
+  => StateAlg x n s
+   = StateAlg {
        lookup :: x -> s -> n 
      , update :: x -> n -> s -> s
      } 
 
 statesAsFunctions :: Eq x
-                  => State x n (x -> n)
+                  => StateAlg x n (x -> n)
 
 statesAsFunctions
- = State {
+ = StateAlg {
      lookup = flip ($)
    , update = \x n s x' ->
        if (x==x')
@@ -22,10 +31,10 @@ statesAsFunctions
    } 
 
 statesAsData :: Eq x
-             => State x n [(x,n)]
+             => StateAlg x n [(x,n)]
 
 statesAsData
- = State {
+ = StateAlg {
     lookup = \x ((x',n):s) ->
       let rec = lookup statesAsData x
        in if x' == x

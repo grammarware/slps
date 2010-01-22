@@ -1,8 +1,13 @@
 -- Some reusable definitions for computing fixed points
 
-module DenotationalSemantics.Fix where
+module SemanticsLib.Fix (
+    fixProperty
+  , fixMaybe
+  , fixEq
+) where
 
 import Data.Maybe
+import SemanticsLib.Domain
 
 
 -- Fixed-point property-based fixed-point combinator
@@ -34,3 +39,29 @@ repetitions b f x = [ f'i i x | i <- [0..] ]
  where
   f'i 0 = const b
   f'i i = f (f'i (i-1))
+
+
+-- Equality-based fixed-point combinator
+
+fixEq :: (Bottom x, Eq x)
+      => ((x -> x) -> x -> x) -> x -> x
+
+fixEq f x = iterate (const bottom)
+ where 
+  iterate r = let r' = f r  in
+               if (r x == r' x) 
+                 then r x
+                 else iterate r'
+
+
+-- An alternative formulation of fixEq
+
+fixEq' :: (Bottom x, Eq x)
+       => ((x -> x) -> x -> x) -> x -> x
+
+fixEq' f x = findEq (repetitions bottom f x)
+ where
+  findEq (h:h':t)
+   = if h==h'
+       then h
+       else findEq (h':t)

@@ -1,6 +1,13 @@
 -- Partial orders & Co.
 
-module ProgramAnalysis.Domains where
+module SemanticsLib.Domain (
+    POrd, (<=)
+  , Bottom, bottom, isBottom
+  , Top, top, isTop
+  , Lub, lub, lubs
+  , Enumerate, enumerate
+  , Proper, proper
+) where
 
 import Prelude hiding (Ord, (<=))
 

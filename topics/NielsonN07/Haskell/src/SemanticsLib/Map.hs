@@ -1,9 +1,16 @@
 -- Maps as partial orders with values subject to partial order too
 
-module ProgramAnalysis.Map (Map, lookup, update, keys, maps, atomic) where
+module SemanticsLib.Map (
+    Map
+  , lookup, update
+  , statesAsPOrdMaps
+  , keys, maps, atomic
+) where
 
 import Prelude hiding (Ord, (<=), lookup)
-import ProgramAnalysis.Domains
+import SemanticsLib.State (StateAlg(StateAlg))
+import qualified SemanticsLib.State as State
+import SemanticsLib.Domain
 
 
 -- A po-set of functions as lists of key-value pairs
@@ -13,6 +20,15 @@ newtype ( Eq k
         )
           => Map k v 
            = Map { getMap :: [(k,v)] }
+
+
+-- States as partially ordered maps
+
+statesAsPOrdMaps :: (Eq k, Bottom v) => StateAlg k v (Map k v)
+statesAsPOrdMaps = StateAlg {
+   State.lookup = lookup
+ , State.update = update
+}
 
 
 -- Show instance for maps

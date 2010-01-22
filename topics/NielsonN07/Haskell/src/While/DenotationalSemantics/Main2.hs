@@ -1,15 +1,15 @@
 -- Standard semantics of While in direct style.
 -- We model states as lists of variable-number pairs.
 
-module While.DenotationalSemantics.Main1 where
+module While.DenotationalSemantics.Main2 where
 
-import DenotationalSemantics.State
-import DenotationalSemantics.Fix
+import qualified Prelude
+import Prelude hiding (id, seq)
+import SemanticsLib.Main
 import While.AbstractSyntax (Var, Stm, factorial)
-import While.DenotationalSemantics.Meanings
-import While.DenotationalSemantics.Interpreter
-import While.DenotationalSemantics.Values
+import While.Fold
 import While.DenotationalSemantics.DirectStyle
+import While.DenotationalSemantics.Main1 (strafos)
 
 
 -- Domains for standard semantics in direct style
@@ -25,13 +25,11 @@ type MS = S -> S
 -- Assembly of the semantics
 
 execute :: Stm -> MS
-execute = fold alg 
+execute = foldStm alg 
  where 
-  alg :: Meanings MA MB MS
-  alg = ds standardValues statesAsData cond fixProperty
-   where
-    cond :: Cond B S
-    cond mb ms1 ms2 s = if mb s then ms1 s else ms2 s
+  alg :: WhileAlg MA MB MS
+  alg = ds standardBooleans standardNumbers statesAsData strafos
+
 
 main = 
  do

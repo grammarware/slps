@@ -3,15 +3,14 @@
 -- We also model partiality of state transformers explicitly.
 -- The chosen fixed point combinator is iteration-based.
 
-module While.DenotationalSemantics.Main1 where
+module While.DenotationalSemantics.Main3 where
 
-import Data.Maybe
-import DenotationalSemantics.State
-import DenotationalSemantics.Fix
+import qualified Prelude
+import Prelude hiding (id, seq)
+import SemanticsLib.Main
 import While.AbstractSyntax (Var, Stm, factorial)
-import While.DenotationalSemantics.Meanings
-import While.DenotationalSemantics.Interpreter
-import While.DenotationalSemantics.Values
+import While.Fold
+import While.DenotationalSemantics.DirectStyle (STrafoAlg(STrafoAlg), id, seq, cond, fix)
 import While.DenotationalSemantics.DirectStyleMaybe
 
 
@@ -25,16 +24,25 @@ type MB = S -> B
 type MS = S -> Maybe S
 
 
+-- Algebra for state transformers
+
+strafos :: STrafoAlg MS MB
+strafos  = STrafoAlg {
+    id   = Just
+  , seq  = \st1 st2 s -> st1 s >>= st2
+  , cond = \mb ms1 ms2 s -> if mb s then ms1 s else ms2 s
+  , fix  = fixMaybe
+}
+
+
 -- Assembly of the semantics
 
 execute :: Stm -> MS
-execute = fold alg 
+execute = foldStm alg 
  where 
-  alg :: Meanings MA MB MS
-  alg = ds standardValues statesAsData cond fixMaybe
-   where
-    cond :: Cond B S
-    cond mb ms1 ms2 s = if mb s then ms1 s else ms2 s
+  alg :: WhileAlg MA MB MS
+  alg = ds standardBooleans standardNumbers statesAsData strafos
+
 
 main = 
  do

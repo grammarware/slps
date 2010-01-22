@@ -3,38 +3,28 @@
 
 module While.SignDetection.Main2 where
 
-import Prelude hiding (Ord, (<=), lookup)
-import DenotationalSemantics.State
+import qualified Prelude
+import Prelude hiding (id, seq, (<=))
+import SemanticsLib.Main
+import qualified SemanticsLib.Map as Map
 import While.AbstractSyntax (Var, Stm, factorial)
-import While.DenotationalSemantics.Meanings
-import While.DenotationalSemantics.Interpreter
-import While.DenotationalSemantics.Values
+import While.Fold
 import While.DenotationalSemantics.DirectStyle
-import ProgramAnalysis.Domains
-import ProgramAnalysis.TT
-import ProgramAnalysis.Map (Map, maps, keys, atomic)
-import qualified ProgramAnalysis.Map as Map
-import ProgramAnalysis.Fix
-import While.SignDetection.Sign
-import While.SignDetection.Values
 import While.SignDetection.Main1 hiding (analyse, main)
 
 
--- Assembly of the semantics
+-- Algebra for state transformers
 
-analyse :: Stm -> MS
-analyse = fold alg
- where
-  alg :: Meanings MA MB MS
-  alg = ds abstractValues statesAsPOrdMaps cond fixEq
-   where
-    cond mb ms1 ms2 s
-      = case mb s of
-          TT       -> ms1 s
-          FF       -> ms2 s
-          TopTT    ->       ms1 (lubs (feasibleStates TT mb s))
-                      `lub` ms2 (lubs (feasibleStates FF mb s))
-          BottomTT -> bottom
+strafos' :: STrafoAlg MS MB
+strafos'  = strafos {
+  cond = \mb ms1 ms2 s ->
+           case mb s of
+             TT       -> ms1 s
+             FF       -> ms2 s
+             TopTT    ->       ms1 (lubs (feasibleStates TT mb s))
+                         `lub` ms2 (lubs (feasibleStates FF mb s))
+             BottomTT -> bottom
+}
 
 
 -- Obtain feasible states
@@ -47,6 +37,15 @@ feasibleStates b f s = [ s' |
                             , atomic (keys s) s'
                        ]
 
+
+-- Assembly of the semantics
+
+analyse :: Stm -> MS
+analyse = foldStm alg 
+ where 
+  alg :: WhileAlg MA MB MS
+  alg = ds ttBooleans signNumbers statesAsPOrdMaps strafos'
+ 
 
 main = 
  do

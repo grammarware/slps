@@ -1,10 +1,15 @@
 -- The complete lattice of abstract numbers for signs
 
-module While.SignDetection.Sign where
+module SemanticsLib.Sign (
+    Sign(BottomSign, Zero, Pos, Neg, TopSign)
+  , signNumbers
+) where
+
 
 import Prelude hiding (Ord, (<=))
-import ProgramAnalysis.Domains
-import ProgramAnalysis.TT
+import SemanticsLib.Number
+import SemanticsLib.Domain
+import SemanticsLib.TT
 
 
 -- The data type for signs
@@ -15,30 +20,17 @@ data Sign = BottomSign
  deriving (Eq, Show)
 
 
--- Ordering on signs
+-- Signs as numbers
 
-instance POrd Sign
- where
-  BottomSign  <= _       = True
-  _           <= TopSign = True
-  s1          <= s2      = s1 == s2
-
-
--- Least and greatest elements, and LUBs
-
-instance Bottom Sign
- where
-  bottom = BottomSign
-
-instance Top Sign
- where
-  top = TopSign
-
-instance Lub Sign
- where
-  s1 `lub` s2 = if s1 <= s2 then s2 else
-                if s2 <= s1 then s1 else
-                top
+signNumbers :: NumberAlg Sign TT
+signNumbers  = NumberAlg {
+   from = fromInteger
+ , add = (+)
+ , mul = (*)
+ , sub = (-)
+ , eq  = (.==.)
+ , leq = (.<=.)
+}
 
 
 -- Signs as Haskell-like numbers
@@ -129,6 +121,32 @@ instance OrdTT Sign
   Pos        .<=. Neg        = FF
   Zero       .<=. Neg        = FF
   _          .<=. _          = TT
+
+
+-- Ordering on signs
+
+instance POrd Sign
+ where
+  BottomSign  <= _       = True
+  _           <= TopSign = True
+  s1          <= s2      = s1 == s2
+
+
+-- Least and greatest elements, and LUBs
+
+instance Bottom Sign
+ where
+  bottom = BottomSign
+
+instance Top Sign
+ where
+  top = TopSign
+
+instance Lub Sign
+ where
+  s1 `lub` s2 = if s1 <= s2 then s2 else
+                if s2 <= s1 then s1 else
+                top
 
 
 -- Expose all values of Sign
