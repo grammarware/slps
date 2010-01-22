@@ -1,0 +1,13 @@
+i = -i:.:${r}
+
+all:
+	@echo "Want to do \"make test\"?"
+
+%.test:
+	@echo Testing $*.hs
+	@ghci -v0 ${i} $*.hs < ${r}/../include/Main.in > $*.out
+	@diff -b $*.out $*.ref
+	@rm $*.out
+
+%.ghci:
+	ghci ${i} $*.hs
