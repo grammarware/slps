@@ -14,7 +14,7 @@ import While.DenotationalSemantics.DirectStyle (STrafoAlg(STrafoAlg), id, seq, c
 import While.DenotationalSemantics.DirectStyleMaybe
 
 
--- Domains for standard semantics in direct style
+-- Semantic domains
 
 type N = Integer
 type B = Bool
@@ -26,8 +26,8 @@ type MS = S -> Maybe S
 
 -- Algebra for state transformers
 
-strafos :: STrafoAlg MS MB
-strafos  = STrafoAlg {
+maybeSTrafos :: STrafoAlg MS MB
+maybeSTrafos  = STrafoAlg {
     id   = Just
   , seq  = \st1 st2 s -> st1 s >>= st2
   , cond = \mb ms1 ms2 s -> if mb s then ms1 s else ms2 s
@@ -37,17 +37,17 @@ strafos  = STrafoAlg {
 
 -- Assembly of the semantics
 
-execute :: Stm -> MS
-execute = foldStm alg 
- where 
-  alg :: WhileAlg MA MB MS
-  alg = ds standardBooleans standardNumbers statesAsData strafos
+whileAlg :: WhileAlg MA MB MS
+whileAlg = ds standardBooleans 
+              standardNumbers
+              statesAsData
+              maybeSTrafos
 
 
 main = 
  do
     let s = [("x",5)]
-    print $ execute factorial s
+    print $ foldStm whileAlg factorial s
 
 {-
 

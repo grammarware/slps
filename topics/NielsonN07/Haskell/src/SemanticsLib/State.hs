@@ -12,40 +12,40 @@ module SemanticsLib.State (
 import Prelude hiding (lookup)
 
 data Eq x
-  => StateAlg x n s
+  => StateAlg x v s
    = StateAlg {
-       lookup :: x -> s -> n 
-     , update :: x -> n -> s -> s
+       lookup :: x -> s -> v 
+     , update :: x -> v -> s -> s
      } 
 
 statesAsFunctions :: Eq x
-                  => StateAlg x n (x -> n)
+                  => StateAlg x v (x -> v)
 
 statesAsFunctions
  = StateAlg {
      lookup = flip ($)
-   , update = \x n s x' ->
+   , update = \x v s x' ->
        if (x==x')
-         then n
+         then v
          else s x'
    } 
 
 statesAsData :: Eq x
-             => StateAlg x n [(x,n)]
+             => StateAlg x v [(x,v)]
 
 statesAsData
  = StateAlg {
-    lookup = \x ((x',n):s) ->
+    lookup = \x ((x',v):s) ->
       let rec = lookup statesAsData x
        in if x' == x
-            then n
+            then v
             else rec s 
 
-   , update = \x n s ->
-       let rec = update statesAsData x n
+   , update = \x v s ->
+       let rec = update statesAsData x v
         in if null s
-             then [(x,n)]
+             then [(x,v)]
              else if fst (head s) == x
-               then (x,n) : tail s
+               then (x,v) : tail s
                else head s : rec (tail s)
    }

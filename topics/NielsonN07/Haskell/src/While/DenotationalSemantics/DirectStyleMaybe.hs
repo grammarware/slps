@@ -22,19 +22,19 @@ ds :: BooleanAlg b
 ds bA nA sA tA = WhileAlg {
 
   -- Arithmetic expressions
-    numF = \n     _ -> from nA n
-  , varF = \x     s -> lookup sA x s
-  , addF = \a1 a2 s -> add nA (a1 s) (a2 s)  
-  , mulF = \a1 a2 s -> mul nA (a1 s) (a2 s)  
-  , subF = \a1 a2 s -> sub nA (a1 s) (a2 s)  
+    numF = \n       _ -> from nA n
+  , varF = \x       s -> lookup sA x s
+  , addF = \ma1 ma2 s -> add nA (ma1 s) (ma2 s)  
+  , mulF = \ma1 ma2 s -> mul nA (ma1 s) (ma2 s)  
+  , subF = \ma1 ma2 s -> sub nA (ma1 s) (ma2 s)  
 
   -- Boolean expressions
-  , trueF  = \      _ -> true bA
-  , falseF = \      _ -> false bA
-  , eqF    = \a1 a2 s -> eq nA (a1 s) (a2 s)  
-  , leqF   = \a1 a2 s -> leq nA (a1 s) (a2 s)  
-  , notF   = \b     s -> not bA (b s) 
-  , andF   = \b1 b2 s -> and bA (b1 s) (b2 s)  
+  , trueF  = \        _ -> true bA
+  , falseF = \        _ -> false bA
+  , eqF    = \ma1 ma2 s -> eq nA (ma1 s) (ma2 s)  
+  , leqF   = \ma1 ma2 s -> leq nA (ma1 s) (ma2 s)  
+  , notF   = \mb      s -> not bA (mb s) 
+  , andF   = \mb1 mb2 s -> and bA (mb1 s) (mb2 s)  
 
   -- Statements
   , assignF = \x ma s     -> Just $ update sA x (ma s) s

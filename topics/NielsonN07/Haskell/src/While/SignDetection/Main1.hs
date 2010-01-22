@@ -13,7 +13,7 @@ import While.Fold
 import While.DenotationalSemantics.DirectStyle
 
 
--- Domains for standard semantics in direct style
+-- Semantic domains for analysis
 
 type N = Sign
 type B = TT
@@ -41,18 +41,18 @@ strafos  = STrafoAlg {
 
 -- Assembly of the semantics
 
-analyse :: Stm -> MS
-analyse = foldStm alg 
- where 
-  alg :: WhileAlg MA MB MS
-  alg = ds ttBooleans signNumbers statesAsPOrdMaps strafos
+whileAlg :: WhileAlg MA MB MS
+whileAlg = ds ttBooleans
+              signNumbers
+              statesAsPOrdMaps
+              strafos
 
 
 main = 
  do
     let xpos = Map.update "x" Pos bottom
     print xpos
-    print $ analyse factorial xpos
+    print $ foldStm whileAlg factorial xpos
 
 {-
 

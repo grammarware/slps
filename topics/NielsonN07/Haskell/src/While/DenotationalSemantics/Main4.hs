@@ -12,7 +12,7 @@ import While.Fold
 import While.DenotationalSemantics.ContinuationStyle
 
 
--- Domains for standard semantics in direct style
+-- Semantic domains
 
 type N = Integer
 type B = Bool
@@ -34,17 +34,17 @@ ctrafos  = CTrafoAlg {
 
 -- Assembly of the semantics
 
-execute :: Stm -> MS
-execute = foldStm alg 
- where 
-  alg :: WhileAlg MA MB MS
-  alg = cs standardBooleans standardNumbers statesAsData ctrafos
+whileAlg :: WhileAlg MA MB MS
+whileAlg = cs standardBooleans
+              standardNumbers
+              statesAsData
+              ctrafos
 
 
 main = 
  do
     let s = [("x",5)]
-    print $ execute factorial (Prelude.id) s
+    print $ foldStm whileAlg factorial (Prelude.id) s
 
 {-
 

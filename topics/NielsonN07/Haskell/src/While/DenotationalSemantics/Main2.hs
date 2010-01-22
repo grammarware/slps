@@ -9,10 +9,10 @@ import SemanticsLib.Main
 import While.AbstractSyntax (Var, Stm, factorial)
 import While.Fold
 import While.DenotationalSemantics.DirectStyle
-import While.DenotationalSemantics.Main1 (strafos)
+import While.DenotationalSemantics.Main1 (standardSTrafos)
 
 
--- Domains for standard semantics in direct style
+-- Semantic domains
 
 type N = Integer
 type B = Bool
@@ -24,17 +24,17 @@ type MS = S -> S
 
 -- Assembly of the semantics
 
-execute :: Stm -> MS
-execute = foldStm alg 
- where 
-  alg :: WhileAlg MA MB MS
-  alg = ds standardBooleans standardNumbers statesAsData strafos
+whileAlg :: WhileAlg MA MB MS
+whileAlg = ds standardBooleans
+              standardNumbers
+              statesAsData
+              standardSTrafos
 
 
 main = 
  do
     let s = [("x",5)]
-    print $ execute factorial s
+    print $ foldStm whileAlg factorial s
 
 {-
 

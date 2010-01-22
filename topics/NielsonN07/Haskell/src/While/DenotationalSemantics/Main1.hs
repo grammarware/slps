@@ -11,11 +11,11 @@ import While.Fold
 import While.DenotationalSemantics.DirectStyle
 
 
--- Domains for standard semantics in direct style
+-- Semantic domains
 
-type N = Integer
-type B = Bool
-type S = Var -> N
+type N  = Integer
+type B  = Bool
+type S  = Var -> N
 type MA = S -> N
 type MB = S -> B
 type MS = S -> S
@@ -23,7 +23,7 @@ type MS = S -> S
 
 -- Polymorphic algebra for state transformers
 
-strafos  = STrafoAlg {
+standardSTrafos = STrafoAlg {
     id   = Prelude.id
   , seq  = flip (.)
   , cond = \mb ms1 ms2 s -> if mb s then ms1 s else ms2 s
@@ -33,17 +33,17 @@ strafos  = STrafoAlg {
 
 -- Assembly of the semantics
 
-execute :: Stm -> MS
-execute = foldStm alg 
- where 
-  alg :: WhileAlg MA MB MS
-  alg = ds standardBooleans standardNumbers statesAsFunctions strafos
+whileAlg :: WhileAlg MA MB MS
+whileAlg = ds standardBooleans
+              standardNumbers
+              statesAsFunctions
+              standardSTrafos
 
 
 main = 
  do
     let s x = if x=="x" then 5 else undefined
-    print $ execute factorial s "y"
+    print $ foldStm whileAlg factorial s "y"
 
 {-
 

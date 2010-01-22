@@ -15,7 +15,9 @@ import SemanticsLib.TT
 -- The data type for signs
 
 data Sign = BottomSign
-          | Zero | Pos | Neg
+          | Zero
+          | Pos
+          | Neg
           | TopSign
  deriving (Eq, Show)
 

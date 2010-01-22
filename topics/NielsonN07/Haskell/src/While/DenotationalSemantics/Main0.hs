@@ -10,13 +10,15 @@ import While.AbstractSyntax
 type State = Var -> Num
 
 aexp :: Aexp -> State -> Num
+bexp :: Bexp -> State -> Bool
+stm  :: Stm  -> State -> State
+
 aexp (Num n)     s = n
 aexp (Var x)     s = s x
 aexp (Add a1 a2) s = aexp a1 s + aexp a2 s
 aexp (Mul a1 a2) s = aexp a1 s * aexp a2 s
 aexp (Sub a1 a2) s = aexp a1 s - aexp a2 s
 
-bexp :: Bexp -> State -> Bool
 bexp True        s = Prelude.True
 bexp False       s = Prelude.False
 bexp (Eq a1 a2)  s = aexp a1 s == aexp a2 s

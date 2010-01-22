@@ -45,9 +45,6 @@ class POrd x => Lub x
  where
   lub :: x -> x -> x
 
-
--- LUBs for "sets"
-
 lubs :: (Lub x, Bottom x) => [x] -> x
 lubs = foldr lub bottom
 
