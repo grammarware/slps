@@ -9,16 +9,19 @@ import While.AbstractSyntax
 import While.DenotationalSemantics.Meanings
 import While.DenotationalSemantics.Values
 
-
+-- State transformers
 type ST s = s -> s
+
+-- Types of auxiliary operators
 type Cond b s = (s -> b) -> ST s -> ST s -> ST s
 type Fix s = (ST s -> ST s) -> ST s
 
+-- Construction of direct-style meanings
 ds :: Values n b
    -> State Var n s
    -> Cond b s
    -> Fix s
-   -> Meanings (s -> n) (s -> b) (s -> s)
+   -> Meanings (s -> n) (s -> b) (ST s)
 
 ds v z cond fix = Meanings {
 

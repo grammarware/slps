@@ -1,15 +1,14 @@
 -- Maps as partial orders with values subject to partial order too
 
-module ProgramAnalysis.Map (Map, lookup, update, maps, keys, atomic) where
+module ProgramAnalysis.Map (Map, lookup, update, keys, maps, atomic) where
 
 import Prelude hiding (Ord, (<=), lookup)
 import ProgramAnalysis.Domains
 
 
--- Partially ordered functions as lists of key-value pairs
+-- A po-set of functions as lists of key-value pairs
 
 newtype ( Eq k
-        , POrd v
         , Bottom v
         )
           => Map k v 
@@ -18,20 +17,14 @@ newtype ( Eq k
 
 -- Show instance for maps
 
-instance (Eq k, POrd v, Bottom v, Show k, Show v) => Show (Map k v)
+instance (Eq k, Bottom v, Show k, Show v) => Show (Map k v)
  where
   show = show . getMap
 
 
--- Return the domain of the function
-
-keys :: (Eq k, POrd v, Bottom v) => Map k v -> [k]
-keys = map fst . getMap
-
-
 -- Function application
 
-lookup :: (Eq k, POrd v, Bottom v)
+lookup :: (Eq k, Bottom v)
        => k -> Map k v -> v
 
 lookup _ (Map []) = bottom
@@ -43,7 +36,7 @@ lookup k (Map ((k',v):m))
 
 -- Point-wise function modification
 
-update :: (Eq k, POrd v, Bottom v)
+update :: (Eq k, Bottom v)
        => k -> v -> Map k v -> Map k v
 
 update k v m
@@ -60,7 +53,7 @@ update k v m
 
 -- The bottom element of maps
 
-instance (Eq k, POrd v, Bottom v)
+instance (Eq k, Bottom v)
       => Bottom (Map k v)
  where
   bottom = Map []
@@ -68,7 +61,7 @@ instance (Eq k, POrd v, Bottom v)
 
 -- Equality on maps
 
-instance (Eq k, POrd v, Bottom v)
+instance (Eq k, Bottom v)
       => Eq (Map k v)
  where
   m1 == m2 = m1 <= m2 && m2 <= m1
@@ -76,7 +69,7 @@ instance (Eq k, POrd v, Bottom v)
 
 -- Partial order on maps
 
-instance (Eq k, POrd v, Bottom v)
+instance (Eq k, Bottom v)
       => POrd (Map k v)
  where
   (Map [])        <= _  = True
@@ -86,7 +79,7 @@ instance (Eq k, POrd v, Bottom v)
 
 -- Pointwise LUB for maps
 
-instance (Eq k, POrd v, Bottom v, Lub v)
+instance (Eq k, Bottom v, Lub v)
       => Lub (Map k v)
  where
   (Map [])        `lub` m' = m'
@@ -96,9 +89,15 @@ instance (Eq k, POrd v, Bottom v, Lub v)
     m'' = (Map m) `lub` m'
 
 
+-- Return the domain of the function
+
+keys :: (Eq k, Bottom v) => Map k v -> [k]
+keys = map fst . getMap
+
+
 -- Return all possible maps within bounds
 
-maps :: (Eq k, POrd v, Bottom v, Enumerate v)
+maps :: (Eq k, Bottom v, Enumerate v)
      => [k] -> [Map k v]
 
 maps [] = [bottom]
@@ -108,9 +107,9 @@ maps (k:ks) = concat (map f enumerate)
   ms = maps ks
 
 
--- Test for maps that only use proper values for the given keys
+-- Require values to be proper for all given keys
 
-atomic :: (Eq k, POrd v, Bottom v, Proper v)
+atomic :: (Eq k, Bottom v, Proper v)
        => [k] -> Map k v -> Bool
 
 atomic ks m = and $ map f ks

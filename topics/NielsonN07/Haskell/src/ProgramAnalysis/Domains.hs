@@ -14,27 +14,27 @@ class Eq x => POrd x
 
 -- Least elements
 
-class Bottom x
+class POrd x => Bottom x
  where
   bottom :: x
 
-isBottom :: (Eq x, Bottom x) => x -> Bool
+isBottom :: Bottom x => x -> Bool
 isBottom = (==bottom)
 
 
 -- Greatest elements
 
-class Top x
+class POrd x => Top x
  where
   top :: x
 
-isTop :: (Eq x, Top x) => x -> Bool
+isTop :: Top x => x -> Bool
 isTop = (==top)
 
 
 -- Least upper bounds
 
-class Lub x
+class POrd x => Lub x
  where
   lub :: x -> x -> x
 
@@ -44,6 +44,7 @@ class Lub x
 lubs :: (Lub x, Bottom x) => [x] -> x
 lubs = foldr lub bottom
 
+{-
 
 -- Bottom of functions based on bottom for co-domain
 
@@ -58,6 +59,21 @@ instance Lub y => Lub (x -> y)
  where
   lub f g x = f x `lub` f x
 
+
+-- We cannot define a partial order for function types!
+
+instance POrd (x -> y)
+ where
+  (<=) = undefined
+
+
+-- We cannot define equality for function types!
+
+instance Eq (x -> y)
+ where
+  (==) = undefined
+
+-}
 
 -- Abstract values that are obtainable from concrete values
 

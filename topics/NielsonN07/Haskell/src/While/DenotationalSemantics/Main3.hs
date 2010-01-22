@@ -8,7 +8,7 @@ module While.DenotationalSemantics.Main1 where
 import Data.Maybe
 import DenotationalSemantics.State
 import DenotationalSemantics.Fix
-import While.AbstractSyntax (Var, factorial)
+import While.AbstractSyntax (Var, Stm, factorial)
 import While.DenotationalSemantics.Meanings
 import While.DenotationalSemantics.Interpreter
 import While.DenotationalSemantics.Values
@@ -27,16 +27,19 @@ type MS = S -> Maybe S
 
 -- Assembly of the semantics
 
-semantics :: Meanings MA MB MS
-semantics = ds standardValues statesAsData cond fixMaybe
- where
-  cond :: Cond B S
-  cond mb ms1 ms2 s = if mb s then ms1 s else ms2 s
+execute :: Stm -> MS
+execute = fold alg 
+ where 
+  alg :: Meanings MA MB MS
+  alg = ds standardValues statesAsData cond fixMaybe
+   where
+    cond :: Cond B S
+    cond mb ms1 ms2 s = if mb s then ms1 s else ms2 s
 
 main = 
  do
     let s = [("x",5)]
-    print $ interpret semantics factorial s
+    print $ execute factorial s
 
 {-
 

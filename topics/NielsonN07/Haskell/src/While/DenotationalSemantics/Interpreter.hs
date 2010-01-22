@@ -1,4 +1,4 @@
--- Interpret syntax by denotational algebra
+-- Interpret syntax according to denotational algebra
 
 module While.DenotationalSemantics.Interpreter where
 
@@ -6,8 +6,8 @@ import Prelude hiding (Num, True, False, not, and, seq)
 import While.AbstractSyntax
 import While.DenotationalSemantics.Meanings
 
-interpret :: Meanings ma mb ms -> Stm -> ms
-interpret m = sI
+fold :: Meanings ma mb ms -> Stm -> ms
+fold m = sI
  where
   aI (Num n)      = numM m n
   aI (Var x)      = varM m x

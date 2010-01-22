@@ -11,7 +11,7 @@ import ProgramAnalysis.TT
 import ProgramAnalysis.Map (Map)
 import qualified ProgramAnalysis.Map as Map
 import ProgramAnalysis.Fix
-import While.AbstractSyntax (Var, factorial)
+import While.AbstractSyntax (Var, Stm, factorial)
 import While.DenotationalSemantics.Meanings
 import While.DenotationalSemantics.Interpreter
 import While.DenotationalSemantics.Values
@@ -40,23 +40,26 @@ statesAsPOrdMaps
 
 -- Assembly of the semantics
 
-analysis :: Meanings MA MB MS
-analysis = ds abstractValues statesAsPOrdMaps cond fixEq
+analyse :: Stm -> MS
+analyse = fold alg
  where
-  cond :: Cond B S
-  cond mb ms1 ms2 s
-    = case mb s of
-        TT       -> ms1 s
-        FF       -> ms2 s
-        TopTT    -> ms1 s `lub` ms2 s
-        BottomTT -> bottom
+  alg :: Meanings MA MB MS
+  alg = ds abstractValues statesAsPOrdMaps cond fixEq
+   where
+    cond :: Cond B S
+    cond mb ms1 ms2 s
+      = case mb s of
+          TT       -> ms1 s
+          FF       -> ms2 s
+          TopTT    -> ms1 s `lub` ms2 s
+          BottomTT -> bottom
 
 
 main = 
  do
     let xpos = Map.update "x" Pos bottom
     print xpos
-    print $ interpret analysis factorial xpos
+    print $ analyse factorial xpos
 
 {-
 
