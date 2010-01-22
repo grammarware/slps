@@ -45,6 +45,6 @@ ds v z cond fix = Meanings {
   , assignM = \x ma s -> Just $ update z x (ma s) s
   , skipM   = Just
   , seqM    = \ms1 ms2 s -> ms1 s >>= ms2
-  , ifElseM = \mb ms1 ms2 -> cond mb ms1 ms2
+  , ifM     = \mb ms1 ms2 -> cond mb ms1 ms2
   , whileM  = \mb ms -> fix (\f -> cond mb (\s -> ms s >>= f) Just)
 }

@@ -1,3 +1,5 @@
+{-# LANGUAGE StandaloneDeriving #-}
+
 module While.AbstractSyntax where
 
 import Prelude hiding (Num, True, False)
@@ -21,7 +23,6 @@ data {- a <- -} Aexp
  | Add Aexp Aexp
  | Mul Aexp Aexp
  | Sub Aexp Aexp
- deriving (Show)
 
 
 -- Boolean expressions
@@ -33,7 +34,6 @@ data {- b <- -} Bexp
  | Leq Aexp Aexp
  | Not Bexp
  | And Bexp Bexp
- deriving (Show)
 
 
 -- Statements
@@ -42,9 +42,13 @@ data {- s <- -} Stm
  = Assign Var Aexp
  | Skip
  | Seq Stm Stm
- | IfElse Bexp Stm Stm
+ | If Bexp Stm Stm
  | While Bexp Stm
- deriving (Show)
+
+
+deriving instance Show Aexp
+deriving instance Show Bexp
+deriving instance Show Stm
 
 {- 
 

@@ -9,7 +9,9 @@ data Eq x
      , update :: x -> n -> s -> s
      } 
 
-statesAsFunctions :: Eq x => State x n (x -> n)
+statesAsFunctions :: Eq x
+                  => State x n (x -> n)
+
 statesAsFunctions
  = State {
      lookup = flip ($)
@@ -19,17 +21,19 @@ statesAsFunctions
          else s x'
    } 
 
-statesAsListsOfPairs :: Eq x => State x n [(x,n)]
-statesAsListsOfPairs
+statesAsData :: Eq x
+             => State x n [(x,n)]
+
+statesAsData
  = State {
     lookup = \x ((x',n):s) ->
-      let rec = lookup statesAsListsOfPairs x
+      let rec = lookup statesAsData x
        in if x' == x
             then n
             else rec s 
 
    , update = \x n s ->
-       let rec = update statesAsListsOfPairs x n
+       let rec = update statesAsData x n
         in if null s
              then [(x,n)]
              else if fst (head s) == x

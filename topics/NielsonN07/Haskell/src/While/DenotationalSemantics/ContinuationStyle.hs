@@ -45,9 +45,11 @@ cs v z cond fix = Meanings {
   , andM   = \b1 b2 s -> and v (b1 s) (b2 s)  
 
   -- Statements
-  , assignM = \x ma c s      -> c (update z x (ma s) s)
-  , skipM   =                   id
-  , seqM    = \ms1 ms2       -> ms1 . ms2
-  , ifElseM = \mb ms1 ms2 c  -> cond mb (ms1 c) (ms2 c)
-  , whileM  = \mb ms         -> fix (\f c -> cond mb (ms (f c)) c)
+  , assignM = \x ma c s -> c (update z x (ma s) s)
+  , skipM   =              id
+  , seqM    = \ms1 ms2  -> ms1 . ms2
+  , ifM     = \mb ms1 ms2 c ->
+      cond mb (ms1 c) (ms2 c)
+  , whileM  = \mb ms -> 
+      fix (\f c -> cond mb (ms (f c)) c)
 }

@@ -1,3 +1,5 @@
+-- Parametric, direct-style denotational semantics
+
 module While.DenotationalSemantics.DirectStyle where
 
 import qualified Prelude
@@ -8,15 +10,9 @@ import While.DenotationalSemantics.Meanings
 import While.DenotationalSemantics.Values
 
 
--- Types of auxiliary operators
-
-type Cond b s
- = (s -> b) -> (s -> s) -> (s -> s) -> (s -> s)
-type Fix s
- = ((s -> s) -> (s -> s)) -> (s -> s)
-
-
--- Parametric, direct-style denotational semantics
+type ST s = s -> s
+type Cond b s = (s -> b) -> ST s -> ST s -> ST s
+type Fix s = (ST s -> ST s) -> ST s
 
 ds :: Values n b
    -> State Var n s
@@ -42,10 +38,10 @@ ds v z cond fix = Meanings {
   , andM   = \b1 b2 s -> and v (b1 s) (b2 s)  
 
   -- Statements
-  , assignM = \x ma s -> update z x (ma s) s
-  , skipM   = id
-  , seqM    = \ms1 ms2 -> ms2 . ms1
-  , ifElseM = \mb ms1 ms2 -> cond mb ms1 ms2
-  , whileM  = \mb ms ->
-         fix (\f -> cond mb (f . ms) id)
+  , assignM = \x ma s     -> update z x (ma s) s
+  , skipM   =                id
+  , seqM    = \ms1 ms2    -> ms2 . ms1
+  , ifM     = \mb ms1 ms2 -> cond mb ms1 ms2
+  , whileM  = \mb ms      ->
+      fix (\f -> cond mb (f . ms) id)
 }

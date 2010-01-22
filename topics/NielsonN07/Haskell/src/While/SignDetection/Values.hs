@@ -14,8 +14,6 @@ import While.SignDetection.Sign
 
 abstractValues :: Values Sign TT
 abstractValues = Values {
-
-  -- Numbers
     num = fromInteger
   , add = (+)
   , mul = (*)
@@ -23,7 +21,6 @@ abstractValues = Values {
   , eq  = (.==.)
   , leq = (.<=.)
 
-  -- Booleans 
   , true  = TT
   , false = FF
   , not   = TT.not

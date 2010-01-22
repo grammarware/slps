@@ -56,7 +56,7 @@ main =
  do
     let xpos = Map.update "x" Pos bottom
     print xpos
-    print $ stm analysis factorial xpos
+    print $ interpret analysis factorial xpos
 
 {-
 

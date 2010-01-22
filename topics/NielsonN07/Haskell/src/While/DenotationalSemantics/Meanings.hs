@@ -5,10 +5,9 @@ import While.AbstractSyntax
 
 -- Composition functions for meanings
 data Meanings 
-       ma -- Meanings of arithmetic expressions
-       mb -- Meanings of Boolean expressions
-       ms -- Meanings of statements
-
+      ma -- ... of arithmetic expressions
+      mb -- ... of Boolean expressions
+      ms -- ... of statements
    = Meanings {
 
     numM :: Num -> ma
@@ -27,6 +26,6 @@ data Meanings
   , assignM :: Var -> ma -> ms
   , skipM   :: ms
   , seqM    :: ms -> ms -> ms
-  , ifElseM :: mb -> ms -> ms -> ms
+  , ifM     :: mb -> ms -> ms -> ms
   , whileM  :: mb -> ms -> ms
 }

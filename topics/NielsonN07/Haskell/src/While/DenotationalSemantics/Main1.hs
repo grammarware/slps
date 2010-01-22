@@ -33,7 +33,7 @@ semantics = ds standardValues statesAsFunctions cond fixProperty
 main = 
  do
     let s x = if x=="x" then 5 else undefined
-    print $ stm semantics factorial s "y"
+    print $ interpret semantics factorial s "y"
 
 {-
 

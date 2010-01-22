@@ -12,8 +12,6 @@ data Values
        b   -- Booleans
        
    = Values {
-
-  -- Numbers
     num   :: Num -> n
   , add   :: n -> n -> n
   , mul   :: n -> n -> n
@@ -21,12 +19,10 @@ data Values
   , eq    :: n -> n -> b
   , leq   :: n -> n -> b
 
-  -- Booleans 
   , true  :: b
   , false :: b
   , not   :: b -> b
   , and   :: b -> b -> b
-
 }
 
 

@@ -25,7 +25,7 @@ type MS = ContF S
 -- Assembly of the semantics
 
 semantics :: Meanings MA MB MS
-semantics = cs standardValues statesAsListsOfPairs cond fixProperty
+semantics = cs standardValues statesAsData cond fixProperty
  where
   cond :: Cond B S
   cond mb ms1 ms2 s = if mb s then ms1 s else ms2 s
@@ -33,7 +33,7 @@ semantics = cs standardValues statesAsListsOfPairs cond fixProperty
 main = 
  do
     let s = [("x",5)]
-    print $ stm semantics factorial id s
+    print $ interpret semantics factorial id s
 
 {-
 

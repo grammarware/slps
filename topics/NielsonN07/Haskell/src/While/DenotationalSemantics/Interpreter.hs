@@ -6,30 +6,24 @@ import Prelude hiding (Num, True, False, not, and, seq)
 import While.AbstractSyntax
 import While.DenotationalSemantics.Meanings
 
+interpret :: Meanings ma mb ms -> Stm -> ms
+interpret m = sI
+ where
+  aI (Num n)      = numM m n
+  aI (Var x)      = varM m x
+  aI (Add a1 a2)  = addM m (aI a1) (aI a2)
+  aI (Mul a1 a2)  = mulM m (aI a1) (aI a2)
+  aI (Sub a1 a2)  = subM m (aI a1) (aI a2)
 
--- Interpret arithmetic expressions
-aexp :: Meanings ma mb ms -> Aexp -> ma
-aexp m (Num n)      = numM m n
-aexp m (Var x)      = varM m x
-aexp m (Add a1 a2)  = addM m (aexp m a1) (aexp m a2)
-aexp m (Mul a1 a2)  = mulM m (aexp m a1) (aexp m a2)
-aexp m (Sub a1 a2)  = subM m (aexp m a1) (aexp m a2)
+  bI True        = trueM m
+  bI False       = falseM m
+  bI (Eq a1 a2)  = eqM m (aI a1) (aI a2)
+  bI (Leq a1 a2) = leqM m (aI a1) (aI a2)
+  bI (Not b1)    = notM m (bI b1)
+  bI (And b1 b2) = andM m (bI b1) (bI b2)
 
--- Interpret Boolean expressions
-bexp :: Meanings ma mb ms -> Bexp -> mb
-bexp m True        = trueM m
-bexp m False       = falseM m
-bexp m (Eq a1 a2)  = eqM m (aexp m a1) (aexp m a2)
-bexp m (Leq a1 a2) = leqM m (aexp m a1) (aexp m a2)
-bexp m (Not b)     = notM m (bexp m b)
-bexp m (And b1 b2) = andM m (bexp m b1) (bexp m b2)
-
--- Interpret statements
-stm :: Meanings ma mb ms -> Stm -> ms
-stm m (Assign x a) = assignM m x (aexp m a)
-stm m Skip         = skipM m
-stm m (Seq s1 s2)  = seqM m (stm m s1) (stm m s2)
-stm m (IfElse b s1 s2)
- = ifElseM m (bexp m b) (stm m s1) (stm m s2)
-stm m (While b s)
- = whileM m (bexp m b) (stm m s)
+  sI (Assign x a)  = assignM m x (aI a)
+  sI Skip          = skipM m
+  sI (Seq s1 s2)   = seqM m (sI s1) (sI s2)
+  sI (If b1 s1 s2) = ifM m (bI b1) (sI s1) (sI s2)
+  sI (While b s)   = whileM m (bI b) (sI s)

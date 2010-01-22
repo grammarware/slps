@@ -49,10 +49,10 @@ main =
  do
     let xpos = Map.update "x" Pos bottom
     print xpos
-    print $ stm analysis factorial xpos
+    print $ interpret analysis factorial xpos
     let xany = Map.update "x" TopSign bottom
     print xany
-    print $ stm analysis factorial xany
+    print $ interpret analysis factorial xany
 
 {-
 
