@@ -21,21 +21,22 @@ strafos'  = strafos {
            case mb s of
              TT       -> ms1 s
              FF       -> ms2 s
-             TopTT    ->       ms1 (lubs (feasibleStates TT mb s))
-                         `lub` ms2 (lubs (feasibleStates FF mb s))
+             TopTT    ->       ms1 (leastState TT mb s)
+                         `lub` ms2 (leastState FF mb s)
              BottomTT -> bottom
 }
 
 
--- Obtain feasible states
+-- Least feasible state for then/else branch
 
-feasibleStates :: B -> MB -> S -> [S]
-feasibleStates b f s = [ s' |   
-                              s' <- maps (keys s)
-                            , s' <= s
-                            , b  <= f s'
-                            , atomic (keys s) s'
-                       ]
+leastState :: B -> MB -> S -> S
+leastState b f s
+ = lubs [ s' |   
+               s' <- maps (keys s)
+             , s' <= s
+             , b  <= f s'
+             , atomic (keys s) s'
+             ]
 
 
 -- Assembly of the semantics
