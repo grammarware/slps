@@ -1,0 +1,4 @@
+[("x",Zero)]
+[("x",Zero),("y",One)]
+[("x",One),("y-1",Zero),("x+1",Pos),("(x+1)-1",ZeroPos)]
+[("x",Pos),("y",Pos),("z",ZeroPos)]

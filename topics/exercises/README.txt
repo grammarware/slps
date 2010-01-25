@@ -11,6 +11,7 @@ while6   - While evaluation in Haskell (incomplete)
 while7   - While evaluation in Haskell (complete, big step operational)
 while8   - While execution in Haskell (complete, denotational)
 ewhile   - Extended While execution in Haskell (complete, denotational)
+while_sign - sign detection in While (uses Nielson07 topic)
 
 xml1	 - a DCG parser for XML subset (elements only)
 xml2	 - a DCG parser for XML subset (elements and attributes)

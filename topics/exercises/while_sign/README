@@ -1,0 +1,4 @@
+If make fails, the most probable reason is that GCHi can’t find the Nielson07 sources. By default it is assumed that the whole SLPS is checked out – if that is not the case, modify Makefile to provide the correct path values.
+
+If you have no Nielson07 sources at all, they can be obtained here:
+	svn co https://slps.svn.sourceforge.net/svnroot/slps/topics/NielsonN07
