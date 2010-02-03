@@ -631,6 +631,7 @@ massage_rules(+(*(X)),*(X)).
 massage_rules(*(?(X)),*(X)).
 massage_rules(*(+(X)),*(X)).
 massage_rules(*(*(X)),*(X)).
+
 %% All possible choice combinations
 % true|...
 %massage_rules(?(';'([X|L1])),';'([L2])) :- append(L3,L1,L2), length(L3,2),member(X, L3),member(true,L3).
@@ -639,34 +640,116 @@ massage_rules(*(*(X)),*(X)).
 % Not general enough but a good explanation of what follows
 %
 % massage_rules(?(X),';'(L)) :- length(L,2),member(  X, L),member(true,L).
-%
-
+% x? -> x | ε
+% massage_rules(?(X),';'(L)) :- length(L,2),member(?(X),L),member(true,L).
+% x? -> x? | ε
 massage_rules(?(X),';'(L))
  :-
     append(L1,[true|L2],L),
     append(L1,L2,L3),
     normalizeG(';'(L3),Y),
-    eqX(X,Y).
+    (
+    eqX(X,Y)
+    ;
+    eqX(?(X),Y)
+    ).
 
-massage_rules(?(X),';'(L)) :- length(L,2),member(?(X),L),member(true,L).
-massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(true,L).
-massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(true,L).
+% massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(true,L).
+% x* -> x+ | ε
+% massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(true,L).
+% x* -> x* | ε
+massage_rules(*(X),';'(L))
+ :-
+    append(L1,[true|L2],L),
+    append(L1,L2,L3),
+    normalizeG(';'(L3),Y),
+    (
+    eqX(+(X),Y)
+    ;
+    eqX(*(X),Y)
+    ).
+
 % x|...
-massage_rules(X,';'([s(_,X),s(_,X)])).
-massage_rules(?(X),';'(L)) :- length(L,2),member(?(X),L),member(X,L).
-massage_rules(+(X),';'(L)) :- length(L,2),member(+(X),L),member(X,L).
-massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(X,L).
-% x?|...
-massage_rules(*(X),';'(L)) :- length(L,2),member(+(X),L),member(?(X),L).
-massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(?(X),L).
-% x+|...
-massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(+(X),L).
+
+%massage_rules(X,';'([s(_,X),s(_,X)])).
+% x -> s::x | ...
+massage_rules(X,Y)
+ :-
+    normalizeG(Y,';'(L)),
+    listofselectors(X,L).
+
+% massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(X,L).
+% massage_rules(*(X),';'(L)) :- length(L,2),member(*(X),L),member(?(X),L).
+massage_rules(*(X),';'(L))
+ :-
+    append(L1,[*(X)|L2],L),
+    append(L1,L2,L3),
+    normalizeG(';'(L3),Y),
+    (
+    eqX(X,Y)
+    ;
+    eqX(?(X),Y)
+    ;
+    eqX(+(X),Y)
+    ).
+
+% massage_rules(*(X),';'(L)) :- length(L,2),member(?(X),L),member(+(X),L).
+massage_rules(*(X),';'(L))
+ :-
+    append(L1,[+(X)|L2],L),
+    append(L1,L2,L3),
+    normalizeG(';'(L3),Y),
+    eqX(?(X),Y).
+
+% massage_rules(?(X),';'(L)) :- length(L,2),member(?(X),L),member(X,L).
+massage_rules(?(X),';'(L))
+ :-
+    append(L1,[X|L2],L),
+    append(L1,L2,L3),
+    normalizeG(';'(L3),Y),
+    eqX(?(X),Y).
+
+% massage_rules(+(X),';'(L)) :- length(L,2),member(+(X),L),member(X,L).
+massage_rules(+(X),';'(L))
+ :-
+    append(L1,[X|L2],L),
+    append(L1,L2,L3),
+    normalizeG(';'(L3),Y),
+    eqX(+(X),Y).
+
+
 %% All possible sequential combinations
-massage_rules(*(X),','([*(X),*(X)])).
-massage_rules(+(X),','(L)) :- length(L,2),member(  X, L),member(*(X),L).
-massage_rules(+(X),','(L)) :- length(L,2),member(+(X),L),member(?(X),L).
-massage_rules(*(X),','(L)) :- length(L,2),member(*(X),L),member(?(X),L).
-massage_rules(+(X),','(L)) :- length(L,2),member(+(X),L),member(*(X),L).
+% massage_rules(*(X),','([*(X),*(X)])).
+massage_rules(*(X),Y)
+ :-
+    normalizeG(Y,','(L)),
+    listofthesame(*(X),L).
+
+% massage_rules(+(X),','(L)) :- length(L,2),member(+(X),L),member(?(X),L).
+% massage_rules(+(X),','(L)) :- length(L,2),member(+(X),L),member(*(X),L).
+massage_rules(+(X),','(L))
+ :-
+    append(L1,[+(X)|L2],L),
+    append(L1,L2,L3),
+    normalizeG(','(L3),Y),
+    (eqX(?(X),Y);eqX(*(X),Y)).
+
+% massage_rules(+(X),','(L)) :- length(L,2),member(  X, L),member(*(X),L).
+massage_rules(+(X),','(L))
+ :-
+    append(L1,[X|L2],L),
+    append(L1,L2,L3),
+    normalizeG(','(L3),Y),
+    eqX(*(X),Y).
+
+% massage_rules(*(X),','(L)) :- length(L,2),member(*(X),L),member(?(X),L).
+massage_rules(*(X),','(L))
+ :-
+    append(L1,[?(X)|L2],L),
+    append(L1,L2,L3),
+    normalizeG(','(L3),Y),
+    eqX(*(X),Y).
+
 %% Miscellaneous
 massage_rules(','([X,?(','([Y,X]))]),','([?(','([X,Y])),X])).
 massage_rules(','([X,+(','([Y,X]))]),','([+(','([X,Y])),X])).
@@ -683,6 +766,12 @@ massage_rules(','(L1),','(L2))
  :-
     append(L3,[s(_,true)|L4],L2),
     append(L3,L4,L1).
+
+listofselectors(_,[]).
+listofselectors(X,[Y|L]) :- eqX(s(_,X),Y), listofselectors(X,L).
+
+listofthesame(_,[]).
+listofthesame(X,[Y|L]) :- eqX(X,Y), listofthesame(X,L).
 
 %
 % p([l(permute)], f, n(p))
