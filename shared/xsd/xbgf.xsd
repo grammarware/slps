@@ -133,6 +133,7 @@
       <xsd:element ref="xbgf:import"/>
       <xsd:element ref="xbgf:vertical"/>
       <xsd:element ref="xbgf:horizontal"/>
+      <xsd:element ref="xbgf:equate"/>
       <!-- do we need them? -->
       <xsd:element ref="xbgf:rassoc"/>
       <xsd:element ref="xbgf:lassoc"/>
@@ -1134,6 +1135,20 @@
       <xsd:sequence>
         <xsd:element name="add" type="bgf:nonterminal"/>
         <xsd:element name="to" type="bgf:nonterminal"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="equate">
+    <xsd:annotation>
+      <xsd:documentation>
+        Two nonterminals, say x and y, are merged, if their definitions are identical.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="align" type="bgf:nonterminal"/>
+        <xsd:element name="with" type="bgf:nonterminal"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

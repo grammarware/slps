@@ -248,4 +248,14 @@
 </xsl:text>
   </xsl:template>
 
+  <xsl:template match="xbgf:equate">
+    <xsl:value-of select="local-name()" />
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="align/text()"/>
+    <xsl:text>, </xsl:text>
+    <xsl:apply-templates select="with/text()"/>
+    <xsl:text>);
+</xsl:text>
+  </xsl:template>
+
 </xsl:stylesheet>

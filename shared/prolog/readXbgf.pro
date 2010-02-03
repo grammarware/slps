@@ -373,6 +373,14 @@ xml2xbgf(T,unite(N1,N2))
     content(Add,N1),
     content(To,N2).
 
+xml2xbgf(T,equate(N1,N2))
+ :-
+    self(name(xbgf:equate),T),
+    child(name(align),T,Align),
+    child(name(with),T,With),
+    content(Align,N1),
+    content(With,N2).
+
 xml2xbgf(T,upgrade(P1,P2))
  :-
     self(name(xbgf:upgrade),T),

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
+	<xbgf:equate>
+		<align>foo</align>
+		<with>bar</with>
+	</xbgf:equate>
+</xbgf:sequence>
