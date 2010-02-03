@@ -1674,4 +1674,9 @@
 		<from>syntax</from>
 		<to>synopsis</to>
 	</xldf:changeRole>
+	<!-- the most recent addition to XBGF -->
+	<xldf:place>
+		<section>equate</section>
+		<inside>refactoring-transformation</inside>
+	</xldf:place>
 </xldf:evolutionSequence>
