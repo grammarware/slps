@@ -1,6 +1,15 @@
 all:
 
-install: install-antlr install-fop install-msv install-et install-pp install-generateDS
+install: install-antlr install-fop install-msv install-et install-pp install-generateDS install-gdk
+
+install-gdk:
+	curl -k http://gdk.sourceforge.net/gdk-1.4.4.tar.gz > gdk-1.4.4.tar.gz
+	gzip -d gdk-1.4.4.tar.gz
+	tar -xf gdk-1.4.4.tar
+	cd gdk-1.4.4 && ./configure
+	cd gdk-1.4.4 && make
+	cd gdk-1.4.4 && make check
+	cd gdk-1.4.4 && sudo make install
 
 install-jastadd:
 	curl -k http://builds.jastadd.org/JastAdd/2009-06-10/jastadd2.jar > jastadd2.jar

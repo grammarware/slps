@@ -1,0 +1,5 @@
+module csharp
+imports Syntax GEN-csharp-Main Priorities
+exports
+context-free start-symbols
+Compilation-unit

@@ -1,0 +1,24 @@
+module Lex-csharp-extra
+
+exports
+  sorts
+	Plus Minus Less-than Greater-than Ampersand Bar
+
+exports
+ lexical syntax
+
+	"+"			->	Plus
+	"-"			->	Minus
+	"<"			->	Less-than
+	">"			->	Greater-than
+	"&"			->	Ampersand
+	"|"			->	Bar
+
+lexical restrictions
+	Plus			-/-	[\+\=]
+	Minus			-/-	[\-\=]
+	Less-than		-/-	[\<\=]
+	Greater-than		-/-	[\>\=]
+	Ampersand		-/-	[\&\=]
+	Bar			-/-	[\|\=]
+

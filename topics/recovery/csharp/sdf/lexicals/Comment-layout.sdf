@@ -1,0 +1,27 @@
+module Comment-layout
+
+imports Layout
+
+%%wished: hiddens
+%%needed (for pp):
+exports
+ sorts Asterisk Comment LineComment
+
+exports
+ lexical syntax
+	"/*" ( ~[\*] | Asterisk )* "*/"		-> Comment
+	[\*]					-> Asterisk
+	"//" ~[\n]* [\n]			-> LineComment
+%% shading the preprocessor
+%%	"#" ~[\n]* [\n]				-> LineComment
+
+	Comment					-> LAYOUT {prefer}
+	LineComment				-> LAYOUT {prefer}
+
+ lexical restrictions
+	Asterisk -/- [\/]
+
+ context-free restrictions
+%%	LAYOUT?     -/- [\/]
+	LAYOUT?     -/- [\/].[\*]
+	LAYOUT?     -/- [\/].[\/]

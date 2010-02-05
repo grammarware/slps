@@ -1,0 +1,98 @@
+module Lex-csharp
+
+imports
+	Comment-layout
+	Lex-csharp-extra
+%%	Lex-pp
+
+exports
+  sorts
+	Identifier Literal
+
+hiddens
+  sorts
+	Boolean-literal Null-literal
+	Quote-escape-sequence Hexadecimal-escape-sequence Escape-sequence
+	Unicode-character-escape-sequence Character Character-literal
+	Regular-string-character Verbatim-string-character String-literal
+	Integer-literal Real-literal Exponent-part Real-type-suffix
+
+%% The sort Comment is defined separately in the module Comment-layout.sdf
+
+exports
+ lexical syntax
+
+%% C# Language Specification, section A.1.3, pages 335-335
+%%%	[\/][\/] ~[\n]* [\n]					-> Comment
+%%%	[\/][\*] ~[\*]* [\*]+ (~[\/\*] ~[\*]* [\*]+)* [\/]	-> Comment
+
+%% C# Language Specification, section A.1.6, pages 336-337
+	[A-Za-z\_][A-Za-z01-9\_]*				-> Identifier
+
+%% C# Language Specification, section A.1.8, pages 338-339
+
+	"true" | "false"					-> Boolean-literal
+	"null"							-> Null-literal
+        [FfDdMm]                                        	-> Real-type-suffix
+	[\"][\"]						-> Quote-escape-sequence
+	[x][01-9a-fA-F]([01-9a-fA-F]([01-9a-fA-F][01-9a-fA-F]?)?)?
+								-> Hexadecimal-escape-sequence
+
+%% Optimisation by VVZ:
+%% Simple-escape-sequence + Hexadecimal-escape-sequence + Unicode-character-escape-sequence =
+
+	[\'\"\\0abfnrtv]
+	| Hexadecimal-escape-sequence
+	| Unicode-character-escape-sequence			-> Escape-sequence
+
+	~[\'\\\n]
+	| ( [\\] Escape-sequence )				-> Character
+	[\'] Character [\']					-> Character-literal
+
+	~[\"\\\n]
+	| ( [\\] Escape-sequence )				-> Regular-string-character
+
+	~[\"]
+	| Quote-escape-sequence					-> Verbatim-string-character
+
+	[\"] Regular-string-character* [\"]			-> String-literal
+	[\@][\"] Verbatim-string-character* [\"]		-> String-literal
+
+%% C# Language Specification, section A.1.3, pages 335-335
+%%	[\{\}\[\]\(\)\.\,\:\;\+\-\*\/\%\&\|\^\!\~\=\<\>\?]	-> Operator-or-punctuator
+
+	[01-9]+([uUlL]|"UL"|"Ul"|"uL"|"ul"|"LU"|"Lu"|"lU"|"lu")?-> Integer-literal
+	("0x"|"0X")[01-9a-fA-F]+([uUlL]|"UL"|"Ul"|"uL"|"ul"|"LU"|"Lu"|"lU"|"lu")?
+								-> Integer-literal
+	[01-9]*[\.][01-9]+Exponent-part? Real-type-suffix?	-> Real-literal
+	[01-9]+ Exponent-part Real-type-suffix?			-> Real-literal
+	[01-9]+ Real-type-suffix				-> Real-literal
+	[eE][\+\-]?[01-9]+					-> Exponent-part
+
+%% C# Language Specification, section A.1.5, page 336
+	[u][01-9a-fA-F][01-9a-fA-F][01-9a-fA-F][01-9a-fA-F]	-> Unicode-character-escape-sequence
+	[U][01-9a-fA-F][01-9a-fA-F][01-9a-fA-F][01-9a-fA-F]
+	[01-9a-fA-F][01-9a-fA-F][01-9a-fA-F][01-9a-fA-F]	-> Unicode-character-escape-sequence
+
+
+context-free syntax
+        "null"                                                  -> Identifier {reject}
+        "true"							-> Identifier {reject}
+        "false"							-> Identifier {reject}
+
+%% C# Language Specification, section A.1.8, pages 338-339
+	Boolean-literal 
+	| Integer-literal 
+	| Real-literal 
+	| Character-literal 
+	| String-literal 
+	| Null-literal						-> Literal
+
+
+lexical restrictions
+	Identifier				-/-	[A-Za-z01-9\_] 
+	Literal					-/-	[A-Za-z01-9\_]
+	Integer-literal				-/-	[A-Za-z01-9\_]
+	Hexadecimal-escape-sequence		-/-	[01-9A-Fa-f]
+	Unicode-character-escape-sequence	-/-	[01-9A-Fa-f]
+

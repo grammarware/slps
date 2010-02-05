@@ -1,0 +1,20 @@
+module KEYWORDS add
+ imports Lex-csharp
+
+updated context-free syntax
+	Expression "||" Expression				-> Expression {left}
+	Expression "&&" Expression				-> Expression {left}
+	Expression Bar Expression				-> Expression {left}
+	Expression "^" Expression				-> Expression {left}
+	Expression Ampersand Expression				-> Expression {left}
+	Expression Expression-equality-operator Expression	-> Expression {right}
+	Expression Expression-relational-operator Expression	-> Expression {non-assoc}
+	Expression Expression-shift-operator Expression		-> Expression {non-assoc}
+	Expression Plus Expression				-> Expression {left}
+	Expression Minus Expression				-> Expression {left}
+	Expression "*" Expression				-> Expression {left}
+	Expression "/" Expression				-> Expression {left}
+	Expression "%" Expression				-> Expression {left}
+
+	"(" Type ")" Unary-expression				-> Unary-expression {avoid}
+

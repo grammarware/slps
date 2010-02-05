@@ -1,0 +1,80 @@
+%% NOT CONNECTED
+%%			DOES NOT WORK!
+module Lex-pp
+
+imports Layout Comment-layout
+
+exports	sorts
+	Pp-directive
+	Pp-if-section Pp-elif-section Pp-else-section Pp-endif Pp-expression Pp-unary-expression
+	Pp-start-region Pp-end-region Pp-message Pp-new-line Conditional-symbol Line-indicator
+	Conditional-section Skipped-section-part Input-section-part Input-element
+
+exports lexical syntax
+%%	conditional-symbol
+	[A-Za-z\_][A-Za-z01-9\_]*		-> Conditional-symbol
+	"true"					-> Conditional-symbol {reject}
+	"false"					-> Conditional-symbol {reject}
+
+%%	pp-declaration:
+	[\ \t]* "#" [\ \t]* "define" [\ \t]+ Conditional-symbol Pp-new-line
+						-> Pp-directive
+	[\ \t]* "#" [\ \t]* "undef" [\ \t]+ Conditional-symbol Pp-new-line
+						-> Pp-directive
+
+%%	pp-conditional:
+	Pp-if-section Pp-elif-section* Pp-else-section? Pp-endif
+						-> Pp-directive
+	[\ \t]* "#" [\ \t]* "if" [\ \t]+ Pp-expression Pp-new-line Conditional-section?
+						-> Pp-if-section
+	[\ \t]* "#" [\ \t]* "elif" [\ \t]+ Pp-expression Pp-new-line Conditional-section?
+						-> Pp-elif-section
+	[\ \t]* "#" [\ \t]* "else" Pp-new-line Conditional-section?
+						-> Pp-else-section
+	[\ \t]* "#" [\ \t]* "endif" Pp-new-line -> Pp-endif
+
+%%	pp-line:
+	[\ \t]* "#" [\ \t]* "line" [\ \t]* Line-indicator Pp-new-line
+						-> Pp-directive
+	[01-9]+					-> Line-indicator
+	[01-9]+ [\ \t]+ [\"] ~[\"\n]* [\"]	-> Line-indicator
+	"default"				-> Line-indicator
+
+%%	pp-diagnostic:
+	[\ \t]* "#" [\ \t]* "error"   [\ \t]* Pp-message-> Pp-directive
+	[\ \t]* "#" [\ \t]* "warning" [\ \t]* Pp-message-> Pp-directive
+
+%%	pp-region:
+	Pp-start-region Conditional-section? Pp-end-region	-> Pp-directive
+	[\ \t]* "#" [\ \t]* "region"    [\ \t]* Pp-message	-> Pp-start-region
+	[\ \t]* "#" [\ \t]* "endregion" [\ \t]* Pp-message	-> Pp-end-region
+
+	[\ \t]* LineComment? [\n]		-> Pp-new-line
+	~[\n]* [\n]				-> Pp-message
+
+%%	sections:
+	Input-section-part+			-> Conditional-section
+	Skipped-section-part+			-> Conditional-section
+	Input-element+ [\n]			-> Input-section-part
+	Pp-directive				-> Input-section-part
+	[\ \t]*					-> Input-element
+	Comment					-> Input-element
+%%	Token					-> Input-element
+	([\ \t]* ~[\#] ~[\n]*)? [\n]		-> Skipped-section-part
+	Pp-directive				-> Skipped-section-part
+
+%%	pp-expression:
+	[\ \t]* Pp-expression [\ \t]* "||" [\ \t]* Pp-expression [\ \t]*	-> Pp-expression
+	[\ \t]* Pp-expression [\ \t]* "&&" [\ \t]* Pp-expression [\ \t]*	-> Pp-expression
+	[\ \t]* Pp-expression [\ \t]* "==" [\ \t]* Pp-expression [\ \t]*	-> Pp-expression
+	[\ \t]* Pp-expression [\ \t]* "!=" [\ \t]* Pp-expression [\ \t]*	-> Pp-expression
+	Pp-unary-expression			-> Pp-expression
+	"!" [\ \t]* Pp-unary-expression		-> Pp-unary-expression
+	"true"					-> Pp-unary-expression
+	"false"					-> Pp-unary-expression
+	Conditional-symbol			-> Pp-unary-expression
+	"(" [\ \t]* Pp-expression [\ \t]* ")"	-> Pp-unary-expression
+
+lexical restrictions
+	Conditional-symbol -/- [A-Za-z01-9\_]
+
