@@ -32,3 +32,5 @@ lambda5  - typed lambda calculus with alpha conversion in Prolog
 lambda6  - typed lambda calculus with alpha conversion & fixed point operator
 
 shapes   - the Shapes Problem (object encoding) in Prolog
+ccs      - the Calculus of Communicating Systems in Prolog (JobShop)
+clp      - Constraint Logic Programming in Prolog (palindrom dates)
