@@ -646,7 +646,9 @@
   ExceptionTypeList vs QualifiedIdentifierList -->
   <!-- GENERALITY -->
   <!-- RELAXATION -->
-  <xbgf:undefine>ExceptionTypeList</xbgf:undefine>
+  <xbgf:undefine>
+    <nonterminal>ExceptionTypeList</nonterminal>
+  </xbgf:undefine>
   <!-- RELAXATION -->
   <xbgf:unite>
     <add>ExceptionTypeList</add>

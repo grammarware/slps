@@ -274,7 +274,9 @@
 
   <!-- Getting rid of all of them -->
   <!-- BREFACTOR -->
-  <xbgf:undefine>StatementNoShortIf</xbgf:undefine>
+  <xbgf:undefine>
+    <nonterminal>StatementNoShortIf</nonterminal>
+  </xbgf:undefine>
   <xbgf:eliminate>ForStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>WhileStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>LabeledStatementNoShortIf</xbgf:eliminate>

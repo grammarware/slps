@@ -347,10 +347,11 @@ xml2xbgf(T,unchain(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
-xml2xbgf(T,undefine(N))
+xml2xbgf(T,undefine(Ns2))
  :-
     self(name(xbgf:undefine),T),
-    content(T,N).
+    children(name(nonterminal),T,Ns1),
+    maplist(content,Ns1,Ns2).
 
 xml2xbgf(T,redefine(Ps2))
  :-

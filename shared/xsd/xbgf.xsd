@@ -1084,11 +1084,10 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
-      <xsd:simpleContent>
-        <xsd:extension base="bgf:nonterminal">
-          <xsd:attribute name="tag" type="xsd:string"/>
-        </xsd:extension>
-      </xsd:simpleContent>
+      <xsd:sequence>
+        <xsd:element name="nonterminal" type="bgf:nonterminal" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="tag" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 

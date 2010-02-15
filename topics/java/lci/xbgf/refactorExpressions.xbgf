@@ -725,21 +725,16 @@ vs
     </xbgf:vertical>
   </xbgf:atomic>
   <!-- BREFACTOR -->
-  <xbgf:undefine>MultiplicativeExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:undefine>AdditiveExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:undefine>ShiftExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:undefine>RelationalExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:undefine>EqualityExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:undefine>AndExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:undefine>ExclusiveOrExpression</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:undefine>InclusiveOrExpression</xbgf:undefine>
+  <xbgf:undefine>
+    <nonterminal>MultiplicativeExpression</nonterminal>
+    <nonterminal>AdditiveExpression</nonterminal>
+    <nonterminal>ShiftExpression</nonterminal>
+    <nonterminal>RelationalExpression</nonterminal>
+    <nonterminal>EqualityExpression</nonterminal>
+    <nonterminal>AndExpression</nonterminal>
+    <nonterminal>ExclusiveOrExpression</nonterminal>
+    <nonterminal>InclusiveOrExpression</nonterminal>
+  </xbgf:undefine>
   <xbgf:eliminate>ConditionalAndExpression</xbgf:eliminate>
 
   <!-- And now "Expression1" -->
@@ -823,9 +818,10 @@ vs
 
   <!-- last effort for Expression1-->
   <!-- BREFACTOR -->
-  <xbgf:undefine>LeftHandSide</xbgf:undefine>
-  <!-- BREFACTOR -->
-  <xbgf:undefine>Assignment</xbgf:undefine>
+  <xbgf:undefine>
+    <nonterminal>LeftHandSide</nonterminal>
+    <nonterminal>Assignment</nonterminal>
+  </xbgf:undefine>
   <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>

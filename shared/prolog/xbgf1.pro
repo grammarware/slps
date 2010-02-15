@@ -109,7 +109,7 @@ ps2n(Ps1,N)
 redefine(Ps1,G1,G2)
  :-
     ps2n(Ps1,N),
-    undefine(N,G1,G3),
+    undefine1(N,G1,G3),
     define(Ps1,G3,G2).
 
 
@@ -1379,8 +1379,13 @@ unchain(P1,g(Rs,Ps1),g(Rs,Ps4))
 %
 % Undefine a nonterminal, i.e., remove all productions
 %
+undefine([],g(Rs1,Ps1),g(Rs1,Ps1)).
+undefine([N|Ns],g(Rs1,Ps1),g(Rs3,Ps3))
+ :-
+    undefine1(N,g(Rs1,Ps1),g(Rs2,Ps2)),
+    undefine(Ns,g(Rs2,Ps2),g(Rs3,Ps3)).
 
-undefine(N,g(Rs1,Ps1),g(Rs2,Ps2))
+undefine1(N,g(Rs1,Ps1),g(Rs2,Ps2))
  :-
     definedNs(Ps1,Defined),
     require(

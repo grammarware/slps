@@ -38,6 +38,68 @@
     </xbgf:project>
   </xldf:transformGrammar>
   <xldf:transformGrammar>
+    <target>undefine</target>
+    <xbgf:anonymize>
+      <bgf:production>
+        <nonterminal>undefine</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <plus>
+              <bgf:expression> <marked>
+                <bgf:expression>
+                  <selectable>
+                    <selector>nonterminal</selector>
+                    <bgf:expression>
+                      <nonterminal>nonterminal</nonterminal>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </marked> </bgf:expression>
+              </plus>
+            </bgf:expression>
+            <bgf:expression>
+                  <selectable>
+                    <selector>tag</selector>
+                    <bgf:expression>
+                      <value>string</value>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:anonymize>
+    <xbgf:project>
+      <bgf:production>
+        <nonterminal>undefine</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <plus>
+                <bgf:expression>
+                  <nonterminal>nonterminal</nonterminal>
+                </bgf:expression>
+              </plus>
+            </bgf:expression>
+            <bgf:expression>
+              <marked>
+                <bgf:expression>
+                  <selectable>
+                    <selector>tag</selector>
+                    <bgf:expression>
+                      <value>string</value>
+                    </bgf:expression>
+                  </selectable>
+                </bgf:expression>
+              </marked>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:project>
+  </xldf:transformGrammar>
+  <xldf:transformGrammar>
     <target>inject</target>
     <xbgf:project>
       <bgf:production>

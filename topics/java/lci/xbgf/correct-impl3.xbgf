@@ -187,7 +187,9 @@ Annotation:
   <!--   undefine lexical term -->
   <!-- GENERALITY -->
   <!-- RELAXATION -->
-  <xbgf:undefine>Identifier</xbgf:undefine>
+  <xbgf:undefine>
+    <nonterminal>Identifier</nonterminal>
+  </xbgf:undefine>
 
   <!-- ISSUE CORRECT SPECERROR -->
   <!-- not right because VariableDeclarator starts with Identifier:

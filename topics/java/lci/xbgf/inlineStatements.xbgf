@@ -136,7 +136,9 @@
   <xbgf:inline>IfThenStatement</xbgf:inline>
   <!-- GENERALITY -->
   <!-- RELAXATION -->
-  <xbgf:undefine>StatementNoShortIf</xbgf:undefine>
+  <xbgf:undefine>
+    <nonterminal>StatementNoShortIf</nonterminal>
+  </xbgf:undefine>
   <xbgf:eliminate>WhileStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>IfThenElseStatementNoShortIf</xbgf:eliminate>
   <xbgf:eliminate>ForStatementNoShortIf</xbgf:eliminate>

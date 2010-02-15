@@ -5,7 +5,7 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <xsl:import href="bgf2bnf.xslt" />
-  
+
   <xsl:output
       method="text"
       encoding="UTF-8"
@@ -39,7 +39,7 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
-  
+
   <!-- chain, define, ... -->
 
   <xsl:template match="xbgf:*">
@@ -91,7 +91,19 @@
 </xsl:text>
   </xsl:template>
 
-  <xsl:template match="xbgf:deyaccify|xbgf:eliminate|xbgf:horizontal|xbgf:inline|xbgf:undefine">
+  <xsl:template match="xbgf:undefine">
+    <xsl:value-of select="local-name()" />
+    <xsl:text>(</xsl:text>
+    <xsl:value-of select="*[1]/text()"/>
+    <xsl:for-each select="*[position()>1]">
+      <xsl:text>, </xsl:text>
+      <xsl:value-of select="text()"/>
+    </xsl:for-each>
+    <xsl:text>);
+</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="xbgf:deyaccify|xbgf:eliminate|xbgf:horizontal|xbgf:inline">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>
     <xsl:value-of select="text()"/>
@@ -198,7 +210,7 @@
     <xsl:text>);
 </xsl:text>
   </xsl:template>
-  
+
   <xsl:template match="xbgf:reroot">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>

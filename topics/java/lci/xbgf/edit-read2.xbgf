@@ -8,7 +8,9 @@
      { [ ExplicitConstructorInvocation ] [ BlockStatements ] }
   -->
   <!-- RELAXATION -->
-  <xbgf:undefine>ConstructorBody</xbgf:undefine>
+  <xbgf:undefine>
+    <nonterminal>ConstructorBody</nonterminal>
+  </xbgf:undefine>
   <!-- RELAXATION -->
   <xbgf:unite>
     <add>ConstructorBody</add>
