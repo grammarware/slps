@@ -7,6 +7,10 @@
   xmlns:xldf="http://planet-sl.org/xldf">
 
 <!-- beautify bgf -->
+	<xldf:hyperlinkify>
+		<goal>frontMatter/normativeReferences/content/list/item</goal>
+		<uri>http://slps.svn.sourceforge.net/viewvc/slps/shared/xsd/bgf.xsd</uri>
+	</xldf:hyperlinkify>
 	<xldf:transformGrammar>
 		<target>scope</target>
 		<xbgf:vertical>

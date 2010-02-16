@@ -8,6 +8,20 @@ import elementtree.ElementTree as ET
 sectionRoles = ('synopsis','description','syntax','constraints','relationship','semantics','default','rationale','example','update','section')
 
 # Commands
+def xldf_hyperlinkify(localpath,cmd,tree):
+ where = tree.findall(cmd.findtext('goal'))
+ if where:
+  el = ET.SubElement(where[0],'link')
+  ET.SubElement(el,'text').text = where[0].text
+  ET.SubElement(el,'external').text = cmd.findtext('uri')
+  #el.attrib['href'] = cmd.findtext('uri')
+  #el.text = where[0].text
+  where[0].text = ''
+  print '[XLDF] hyperlinkify(',cmd.findtext('goal'),',',cmd.findtext('uri'),')'
+ else:
+  print '[----] xldf:hyperlinkify: goal',cmd.findtext('goal'),'not found'
+ return
+
 def xldf_insert(localpath,cmd,tree):
  if cmd.findall('*')[0].findall('*')[0].tag != 'text':
   xldf_insert_symbolic(localpath,cmd,tree)

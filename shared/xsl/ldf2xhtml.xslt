@@ -220,8 +220,15 @@
           <strong xmlns="http://www.w3.org/1999/xhtml">
             <a>
               <xsl:attribute name="href">
-                <xsl:text>#</xsl:text>
-                <xsl:value-of select="reference"/>
+			      <xsl:choose>
+			        <xsl:when test="reference">
+		                <xsl:text>#</xsl:text>
+		                <xsl:value-of select="reference"/>
+					</xsl:when>
+					<xsl:otherwise>
+		                <xsl:value-of select="external"/>
+					</xsl:otherwise>
+			      </xsl:choose>
               </xsl:attribute>
               <xsl:value-of select="text"/>
             </a>

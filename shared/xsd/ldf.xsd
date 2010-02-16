@@ -890,7 +890,7 @@
         <xsd:annotation>
           <xsd:documentation>
             The value that the sample should yield if parsed and
-            evalutated in the specified language.
+            evaluated in the specified language.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
@@ -985,7 +985,10 @@
       <xsd:sequence>
         <!--<xsd:element name="text" type="xsd:string"/>-->
         <xsd:element name="text" type="xsd:string" minOccurs="0"/>
-        <xsd:element name="reference" type="xsd:string"/> <!--IDREF -->
+        <xsd:choice>
+          <xsd:element name="reference" type="xsd:string"/> <!--IDREF -->
+          <xsd:element name="external" type="xsd:anyURI"/> <!--IDREF -->
+        </xsd:choice>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

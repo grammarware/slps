@@ -43,6 +43,7 @@
       <xsd:element ref="xldf:combine"/>
       <xsd:element ref="xldf:drop"/>
       <xsd:element ref="xldf:extractSubsection"/>
+      <xsd:element ref="xldf:hyperlinkify"/>
       <xsd:element ref="xldf:insert"/>
       <xsd:element ref="xldf:importGrammar"/>
       <xsd:element ref="xldf:importSample"/>
@@ -191,6 +192,20 @@
         <!--<xsd:element name="section" type="ldf:StructuredSection"/>-->
         <xsd:element name="to" type="xsd:string" minOccurs="0"/>
         <xsd:element name="role" type="xldf:sectionRole" minOccurs="0" default="synopsis"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+<xsd:element name="hyperlinkify">
+    <xsd:annotation>
+      <xsd:documentation>
+        Turns a document part referenced by an XPath expression into a hyperlink.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="goal" type="xsd:string"/>
+        <xsd:element name="uri" type="xsd:anyURI"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
