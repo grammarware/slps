@@ -68,17 +68,13 @@ instance Num Sign
 
   BottomSign * _          = bottom
   _          * BottomSign = bottom
-  TopSign    * _          = top
-  _          * TopSign    = top
-  Zero       * Zero       = Zero
-  Zero       * Pos        = Zero
-  Zero       * Neg        = Zero
-  Pos        * Zero       = Zero
+  Zero       * _          = Zero
+  _          * Zero       = Zero
   Pos        * Pos        = Pos
-  Pos        * Neg        = Neg
-  Neg        * Zero       = Zero
-  Neg        * Pos        = Neg
   Neg        * Neg        = Pos
+  Pos        * Neg        = Neg
+  Neg        * Pos        = Neg
+  _          * _          = top
 
   BottomSign - _          = bottom
   _          - BottomSign = bottom
