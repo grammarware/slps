@@ -15,7 +15,11 @@ elif [ ! -r $1 ]; then
 	exit 1
 else
 	rm -f $2
-	xpath $1 `cat ${SLPS}/topics/presentation/metrics/listtops.xpath` 1> $2.tmp 2> /dev/null
+	if [ `uname` = 'Linux' ] ; then
+		xpath -e `cat ${SLPS}/topics/presentation/metrics/listtops.xpath` $1 1> $2.tmp 2> /dev/null
+	else
+		xpath $1 `cat ${SLPS}/topics/presentation/metrics/listtops.xpath` 1> $2.tmp 2> /dev/null
+	fi
 	python ${SLPS}/shared/python/reroot2nts.py $2.tmp $2
 	rm -f $2.tmp
 fi

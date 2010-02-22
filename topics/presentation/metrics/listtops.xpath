@@ -1,1 +1,1 @@
-/*/*/nonterminal[not(text()=/*/*/*//nonterminal/text()) and not(text()=../preceding-sibling::*/nonterminal/text())]
+/*/*/nonterminal[not(text()=/*/*/*//nonterminal/text())][not(text()=../preceding-sibling::*/nonterminal/text())]
