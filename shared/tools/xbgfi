@@ -16,9 +16,13 @@ elif [ ! -r $1 ]; then
     exit 1
 else
     /bin/echo -n "Number of lines: "
-    wc -l $1
+    wc -l $1 | awk '{print $1}'
     /bin/echo -n "Number of transformations: "
-    xpath $1 `cat ${SLPS}/topics/presentation/metrics/transformations.xpath` 2> /dev/null
+	if [ `uname` == "Linux" ] ; then
+        xpath -e `cat ${SLPS}/topics/presentation/metrics/transformations.xpath` $1 2> /dev/null
+    else
+        xpath $1 `cat ${SLPS}/topics/presentation/metrics/transformations.xpath` 2> /dev/null
+	fi
     /bin/echo -n "Number of unsafe optimizations: "
     grep -c BREFACTOR $1
     /bin/echo -n "Number of issues (1): "

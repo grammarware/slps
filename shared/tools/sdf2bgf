@@ -11,6 +11,9 @@ if [ $# -le 1 ]; then
     echo "This extractor gives a BGF for a list of SDF modules"
     echo "Usage: sdf2bgf <SDF-module> [<SDF-module> ...] <BGF-output>"
     exit 1
+elif [ -z `which asfe` ] || [ -z `which sglr` ] || [ -z `which unparsePT` ]; then
+    echo 'Need these tools in path: sglr, asfe, unparsePT.'
+    exit 2
 else
     # Build extractor if needed
     cd ${XTR}

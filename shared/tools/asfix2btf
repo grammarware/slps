@@ -13,6 +13,9 @@ if [ $# -ne 3 ]; then
 elif [ ! -r $2 ]; then
     echo "Oops: $2 not found or not readable."
     exit 1
+elif [ -z `which asfe` ] || [ -z `which sglr` ] || [ -z `which unparsePT` ]; then
+    echo 'Need these tools in path: sglr, asfe, unparsePT.'
+    exit 2
 else
     # Build extractor if needed
     cd ${SLPS}/topics/extraction/asfix2btf
