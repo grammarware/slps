@@ -265,7 +265,7 @@
  with
    p([], 'ExtendsInterfaces', ;([','([t(extends), n('InterfaceType')]), ','([n('ExtendsInterfaces'), t((',')), n('InterfaceType')])]))
  -->
-  <xbgf:deyaccify>ExtendsInterfaces</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ExtendsInterfaces</nonterminal></xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>TypeList</nonterminal>
     <in>
@@ -374,7 +374,7 @@
      vs.
       - [], ,([n(ModifiersOpt), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])
   -->
-  <xbgf:horizontal>TypeDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>TypeDeclaration</nonterminal></xbgf:horizontal>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -467,7 +467,7 @@
   with
     p([], 'SwitchLabels', ;([n('SwitchLabel'), ','([n('SwitchLabels'), n('SwitchLabel')])])),
   -->
-  <xbgf:deyaccify>SwitchLabels</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>SwitchLabels</nonterminal></xbgf:deyaccify>
 
   <!-- 
    - Fail: ImportDeclaration.
@@ -481,7 +481,7 @@
   -->
   <xbgf:inline>SingleTypeImportDeclaration</xbgf:inline>
   <xbgf:inline>TypeImportOnDemandDeclaration</xbgf:inline>
-  <xbgf:horizontal>ImportDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ImportDeclaration</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -590,7 +590,7 @@
      vs.
       - [], ,([t({), ?(,([n(VariableInitializer), *(,([t((,)), n(VariableInitializer)])), ?(t((,)))])), t(})])
   -->
-  <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>VariableInitializers</nonterminal></xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
 
   <!-- 
@@ -599,7 +599,7 @@
      vs.
       - [], ,([t({), *(n(ClassBodyDeclaration)), t(})])
   -->
-  <xbgf:deyaccify>ClassBodyDeclarations</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ClassBodyDeclarations</nonterminal></xbgf:deyaccify>
   <xbgf:inline>ClassBodyDeclarations</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -628,7 +628,7 @@
      vs.
       - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
   -->
-  <xbgf:deyaccify>InterfaceMemberDeclarations</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>InterfaceMemberDeclarations</nonterminal></xbgf:deyaccify>
   <xbgf:inline>InterfaceMemberDeclarations</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -657,8 +657,8 @@
      vs.
       - [], ,([?(,([t(package), n(QualifiedIdentifier), t((;))])), *(n(ImportDeclaration)), *(n(TypeDeclaration))])
   -->
-  <xbgf:deyaccify>ImportDeclarations</xbgf:deyaccify>
-  <xbgf:deyaccify>TypeDeclarations</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ImportDeclarations</nonterminal></xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>TypeDeclarations</nonterminal></xbgf:deyaccify>
   <xbgf:inline>ImportDeclarations</xbgf:inline>
   <xbgf:inline>TypeDeclarations</xbgf:inline>
   <xbgf:inline>PackageDeclaration</xbgf:inline>
@@ -712,7 +712,7 @@
   <xbgf:inline>ConstantDeclaration</xbgf:inline>
   <xbgf:inline>FieldDeclaration</xbgf:inline>
   <xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
-  <xbgf:horizontal>MethodHeader</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>MethodHeader</nonterminal></xbgf:horizontal>
   <xbgf:inline>MethodHeader</xbgf:inline>
 
   <!-- 
@@ -733,7 +733,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <xbgf:deyaccify>Modifiers</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>Modifiers</nonterminal></xbgf:deyaccify>
   <xbgf:inline>Modifiers</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -764,7 +764,7 @@
      vs.
       - [], ;([t((;)), ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
   -->
-  <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>InterfaceBodyDeclaration</nonterminal></xbgf:horizontal>
   <xbgf:distribute>
     <nonterminal>InterfaceBodyDeclaration</nonterminal>
   </xbgf:distribute>
@@ -980,7 +980,7 @@
         <nonterminal>InterfaceMemberDecl</nonterminal>
       </in>
     </xbgf:unfold>
-    <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
+    <xbgf:deyaccify><nonterminal>MethodDeclarator</nonterminal></xbgf:deyaccify>
     <xbgf:inline>MethodDeclarator</xbgf:inline>
   </xbgf:atomic>
 
@@ -1344,7 +1344,7 @@
      vs.
       - [], ,([n(FormalParameters), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
   -->
-  <xbgf:deyaccify>FormalParameterList</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>FormalParameterList</nonterminal></xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>FormalParameters</nonterminal>
@@ -1471,7 +1471,7 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:disappear>
-    <xbgf:horizontal>ArrayInitializer</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>ArrayInitializer</nonterminal></xbgf:horizontal>
   </xbgf:atomic>
   <xbgf:factor>
     <bgf:expression>
@@ -1790,7 +1790,7 @@
      vs.
       - [], ;([t((;)), ,([?(t(static)), n(Block)]), ,([n(ModifiersOpt), n(MethodOrFieldDecl)]), ,([n(ModifiersOpt), t(void), n(Identifier), n(MethodDeclaratorRest)]), ,([n(ModifiersOpt), n(Identifier), n(ConstructorDeclaratorRest)]), ,([n(ModifiersOpt), n(ClassOrInterfaceDeclaration)])])
   -->
-  <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ClassMemberDeclaration</nonterminal></xbgf:horizontal>
   <xbgf:inline>ClassMemberDeclaration</xbgf:inline>
   <xbgf:inline>StaticInitializer</xbgf:inline>
   <xbgf:inline>ConstructorDeclaration</xbgf:inline>
@@ -1962,7 +1962,7 @@ Block:
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ExplicitConstructorInvocation</nonterminal></xbgf:eliminate>
   <xbgf:fold>
     <nonterminal>Block</nonterminal>
   </xbgf:fold>
@@ -2123,7 +2123,7 @@ Block:
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(VariableDeclaratorRest)])
   -->
   <xbgf:atomic>
-    <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>ClassBodyDeclaration</nonterminal></xbgf:horizontal>
     <xbgf:factor>
       <bgf:expression>
         <choice>

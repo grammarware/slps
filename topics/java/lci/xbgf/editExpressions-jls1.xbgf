@@ -10,14 +10,14 @@
      vs.
       - [], ;([,([t((), n(Expression), t())]), ,([t(this), ?(n(Arguments))]), ,([t(super), n(SuperSuffix)]), n(Literal), ,([t(new), n(Creator)]), ,([n(QualifiedIdentifier), ?(n(IdentifierSuffix))]), ,([n(BasicType), n(BracketsOpt), t(.), t(class)]), ,([t(void), t(.), t(class)])])
   -->
-  <xbgf:horizontal>ArrayCreationExpression</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ArrayCreationExpression</nonterminal></xbgf:horizontal>
   <xbgf:inline>ArrayCreationExpression</xbgf:inline>
-  <xbgf:horizontal>PrimaryNoNewArray</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>PrimaryNoNewArray</nonterminal></xbgf:horizontal>
   <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
 
-  <xbgf:deyaccify>Dims</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>Dims</nonterminal></xbgf:deyaccify>
   <xbgf:inline>Dims</xbgf:inline>
-  <xbgf:deyaccify>DimExprs</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>DimExprs</nonterminal></xbgf:deyaccify>
   <xbgf:inline>DimExprs</xbgf:inline>
   <xbgf:inline>DimExpr</xbgf:inline>
 
@@ -65,14 +65,14 @@
   </xbgf:fold>
 
   <xbgf:inline>ClassInstanceCreationExpression</xbgf:inline>
-  <xbgf:horizontal>FieldAccess</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>FieldAccess</nonterminal></xbgf:horizontal>
   <xbgf:inline>FieldAccess</xbgf:inline>
-  <xbgf:horizontal>MethodInvocation</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>MethodInvocation</nonterminal></xbgf:horizontal>
   <xbgf:inline>MethodInvocation</xbgf:inline>
   <!--  
   <xbgf:inline>ArrayAccess</xbgf:inline>
 -->
-  <xbgf:horizontal>Primary</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>Primary</nonterminal></xbgf:horizontal>
 
   <!-- 
   Multiple cases like this one:
@@ -82,7 +82,7 @@
      vs.
        - [], ,([t(new), n(QualifiedIdentifier), n(Arguments)])
  -->
-  <xbgf:deyaccify>ArgumentList</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ArgumentList</nonterminal></xbgf:deyaccify>
   <xbgf:inline>ArgumentList</xbgf:inline>
   <xbgf:fold>
     <nonterminal>Arguments</nonterminal>
@@ -218,7 +218,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
-  <xbgf:eliminate>ArrayAccess</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ArrayAccess</nonterminal></xbgf:eliminate>
 
   <!-- ISSUE EXTEND 
       - [], ,([n(QualifiedIdentifier), n(Arguments)])

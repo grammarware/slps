@@ -351,7 +351,7 @@
      vs.
       - [], ,([n(ModifiersOpt), n(MemberDecl)])
   -->
-  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ClassBodyDeclaration</nonterminal></xbgf:horizontal>
   <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
   </xbgf:distribute>

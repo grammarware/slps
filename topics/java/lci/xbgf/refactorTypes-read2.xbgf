@@ -72,11 +72,11 @@
 
   <!-- 
   First composing BasicType out of PrimitiveType, NumericType, FloatingPointType & IntegralType -->
-  <xbgf:horizontal>IntegralType</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>IntegralType</nonterminal></xbgf:horizontal>
   <xbgf:inline>IntegralType</xbgf:inline>
-  <xbgf:horizontal>FloatingPointType</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>FloatingPointType</nonterminal></xbgf:horizontal>
   <xbgf:inline>FloatingPointType</xbgf:inline>
-  <xbgf:horizontal>NumericType</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>NumericType</nonterminal></xbgf:horizontal>
   <xbgf:inline>NumericType</xbgf:inline>
   <xbgf:vertical>
     <nonterminal>BasicType</nonterminal>
@@ -93,7 +93,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
-  <xbgf:eliminate>ArrayType</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ArrayType</nonterminal></xbgf:eliminate>
   <xbgf:inline>ReferenceType</xbgf:inline>
 
   <!-- ISSUE PERMISSIVENESS
@@ -475,7 +475,7 @@
     <add>InterfaceTypeList</add>
     <to>TypeList</to>
   </xbgf:unite>
-  <xbgf:deyaccify>TypeList</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>TypeList</nonterminal></xbgf:deyaccify>
 
   <!-- Introducing brackets brutally, too hard to derive -->
   <!-- RELAXATION -->

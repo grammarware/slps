@@ -11,7 +11,7 @@
       - [], ,([t(try), n(Block), n(Catches)])
 -->
   <xbgf:atomic>
-    <xbgf:horizontal>Statement</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>Statement</nonterminal></xbgf:horizontal>
     <xbgf:factor>
       <bgf:expression>
         <choice>
@@ -103,7 +103,7 @@
       - [], ,([n(ModifiersOpt), n(MethodOrFieldDecl)])
   -->
   <xbgf:atomic>
-    <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>ClassBodyDeclaration</nonterminal></xbgf:horizontal>
     <xbgf:factor>
       <bgf:expression>
         <choice>

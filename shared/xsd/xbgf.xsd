@@ -439,7 +439,7 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="deyaccify" type="bgf:nonterminal">
+  <xsd:element name="deyaccify">
     <xsd:annotation>
       <xsd:documentation>
 		Deyaccification is a widely used term that means converting recursive
@@ -461,6 +461,11 @@
         Both left- and right-recursive forms can be factored with this transformation.
       </xsd:documentation>
     </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="nonterminal" type="bgf:nonterminal"/>
+      </xsd:sequence>
+    </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="distribute">
@@ -493,7 +498,7 @@
     <xsd:complexType/>
   </xsd:element>
 
-  <xsd:element name="eliminate" type="bgf:nonterminal">
+  <xsd:element name="eliminate">
     <xsd:annotation>
       <xsd:documentation>
         An unused definition (at most used within the definition itself)
@@ -504,6 +509,11 @@
         a production of a vertical definition) is  to be removed.
       </xsd:documentation>
     </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="nonterminal" type="bgf:nonterminal"/>
+      </xsd:sequence>
+    </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="extract">
@@ -592,13 +602,18 @@
     </xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="horizontal" type="bgf:nonterminal">
+  <xsd:element name="horizontal">
     <xsd:annotation>
       <xsd:documentation>
         Turn a definition based on multiple productions into a top choice-based one.
-		The action is a reverse of <ldf:keyword>vertical</ldf:keyword>.
+        The action is a reverse of <ldf:keyword>vertical</ldf:keyword>.
       </xsd:documentation>
     </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="nonterminal" type="bgf:nonterminal"/>
+      </xsd:sequence>
+    </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="inject">

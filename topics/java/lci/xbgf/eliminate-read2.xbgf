@@ -3,8 +3,8 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <xbgf:eliminate>ArrayAccess</xbgf:eliminate>
-  <xbgf:eliminate>MethodInvocation</xbgf:eliminate>
-  <xbgf:eliminate>ClassInstanceCreationExpression</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ArrayAccess</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>MethodInvocation</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ClassInstanceCreationExpression</nonterminal></xbgf:eliminate>
 
 </xbgf:sequence>

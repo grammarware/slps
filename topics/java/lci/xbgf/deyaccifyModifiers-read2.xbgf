@@ -4,13 +4,13 @@
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
   <!-- First the deyaccification -->
-  <xbgf:deyaccify>Modifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>AbstractMethodModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>InterfaceModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>MethodModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>FieldModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>ConstructorModifiers</xbgf:deyaccify>
-  <xbgf:deyaccify>ConstantModifiers</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>Modifiers</nonterminal></xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>AbstractMethodModifiers</nonterminal></xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>InterfaceModifiers</nonterminal></xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>MethodModifiers</nonterminal></xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>FieldModifiers</nonterminal></xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ConstructorModifiers</nonterminal></xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ConstantModifiers</nonterminal></xbgf:deyaccify>
 
    <!-- Getting rid of plurals altogether -->
   <xbgf:inline>Modifiers</xbgf:inline>

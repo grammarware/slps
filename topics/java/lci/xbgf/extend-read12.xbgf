@@ -1255,7 +1255,7 @@
       - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
 
   -->
-  <xbgf:horizontal>FormalParameters</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>FormalParameters</nonterminal></xbgf:horizontal>
   <xbgf:unfold>
     <nonterminal>FormalParameters</nonterminal>
     <in>
@@ -1525,8 +1525,8 @@
   <xbgf:unlabel>
     <label>InterfaceType</label>
   </xbgf:unlabel>
-  <xbgf:horizontal>ClassOrInterfaceType</xbgf:horizontal>
-  <xbgf:horizontal>SurgeryOnTypeName</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ClassOrInterfaceType</nonterminal></xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>SurgeryOnTypeName</nonterminal></xbgf:horizontal>
   <xbgf:fold>
     <nonterminal>ClassOrInterfaceType</nonterminal>
   </xbgf:fold>

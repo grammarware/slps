@@ -3,7 +3,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <xbgf:deyaccify>PackageName</xbgf:deyaccify>
-  <xbgf:deyaccify>PackageOrTypeName</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>PackageName</nonterminal></xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>PackageOrTypeName</nonterminal></xbgf:deyaccify>
 
 </xbgf:sequence>

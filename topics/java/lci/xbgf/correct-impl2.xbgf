@@ -205,11 +205,11 @@
   </xbgf:define>
 
   <!-- ISSUE CORRECT SPECERROR unused non-terminal -->
-  <xbgf:eliminate>ArgumentsOpt</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ArgumentsOpt</nonterminal></xbgf:eliminate>
   <!-- ISSUE CORRECT SPECERROR unused non-terminal -->
-  <xbgf:eliminate>VoidMethodDeclaratorRest</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>VoidMethodDeclaratorRest</nonterminal></xbgf:eliminate>
   <!-- ISSUE CORRECT SPECERROR unused non-terminal -->
-  <xbgf:eliminate>VariableDeclaratorsRest</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>VariableDeclaratorsRest</nonterminal></xbgf:eliminate>
 
   <!--   undefine lexical term -->
   <!-- GENERALITY -->

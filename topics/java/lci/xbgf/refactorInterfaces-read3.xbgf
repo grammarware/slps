@@ -111,7 +111,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  <xbgf:deyaccify>ExtendsInterfaces</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ExtendsInterfaces</nonterminal></xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>TypeList</nonterminal>
     <in>
@@ -170,7 +170,7 @@
      vs.
       - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
   -->
-  <xbgf:deyaccify>InterfaceMemberDeclarations</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>InterfaceMemberDeclarations</nonterminal></xbgf:deyaccify>
   <xbgf:inline>InterfaceMemberDeclarations</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -261,7 +261,7 @@
      vs.
       - [], ;([n(Annotation), ,([n(Annotations), n(Annotation)])])
   -->
-  <xbgf:deyaccify>Annotations</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>Annotations</nonterminal></xbgf:deyaccify>
 
   <!-- 
    - Fail: AnnotationTypeDeclaration.
@@ -433,7 +433,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
-  <xbgf:horizontal>Annotation</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>Annotation</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -655,7 +655,7 @@
     <to>QualifiedIdentifierList</to>
   </xbgf:unite>
   <xbgf:inline>Throws</xbgf:inline>
-  <xbgf:eliminate>ExceptionType</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ExceptionType</nonterminal></xbgf:eliminate>
 
   <!--
   can't match right away because one is left recursion and the other one is right
@@ -665,7 +665,7 @@
      vs.
       - [], ;([n('ElementValue'), ,([n('ElementValues'), t((',')), n('ElementValue')])])
   -->
-  <xbgf:deyaccify>ElementValues</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ElementValues</nonterminal></xbgf:deyaccify>
   <xbgf:massage>
     <bgf:expression>
       <sequence>
@@ -734,7 +734,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:yaccify>
-  <xbgf:horizontal>ElementValues</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ElementValues</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -839,7 +839,7 @@
       <nonterminal>InterfaceBodyDeclaration</nonterminal>
     </in>
   </xbgf:unfold>
-  <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>-->
+  <xbgf:horizontal><nonterminal>InterfaceBodyDeclaration</nonterminal></xbgf:horizontal>-->
   <xbgf:massage>
     <bgf:expression>
       <optional>

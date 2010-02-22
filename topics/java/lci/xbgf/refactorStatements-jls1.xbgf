@@ -35,7 +35,7 @@
      vs.
       - [], *(n(SwitchBlockStatementGroup))
   -->
-  <xbgf:deyaccify>SwitchBlockStatementGroups</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>SwitchBlockStatementGroups</nonterminal></xbgf:deyaccify>
   <xbgf:inline>SwitchBlockStatementGroups</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -130,7 +130,7 @@
   <xbgf:inline>IfThenStatement</xbgf:inline>
   <xbgf:inline>IfThenElseStatement</xbgf:inline>
   <xbgf:inline>LabeledStatement</xbgf:inline>
-  <xbgf:horizontal>StatementWithoutTrailingSubstatement</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>StatementWithoutTrailingSubstatement</nonterminal></xbgf:horizontal>
   <xbgf:inline>StatementWithoutTrailingSubstatement</xbgf:inline>
   <xbgf:inline>EmptyStatement</xbgf:inline>
   <xbgf:inline>SwitchStatement</xbgf:inline>
@@ -140,7 +140,7 @@
   <xbgf:inline>ReturnStatement</xbgf:inline>
   <xbgf:inline>SynchronizedStatement</xbgf:inline>
   <xbgf:inline>ThrowStatement</xbgf:inline>
-  <xbgf:horizontal>TryStatement</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>TryStatement</nonterminal></xbgf:horizontal>
   <xbgf:inline>TryStatement</xbgf:inline>
   <xbgf:inline>Finally</xbgf:inline>
 
@@ -164,7 +164,7 @@
       <nonterminal>Statement</nonterminal>
     </in>
   </xbgf:replace>
-  <xbgf:horizontal>Statement</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>Statement</nonterminal></xbgf:horizontal>
   <xbgf:atomic>
     <xbgf:factor>
       <bgf:expression>
@@ -277,10 +277,10 @@
   <xbgf:undefine>
     <nonterminal>StatementNoShortIf</nonterminal>
   </xbgf:undefine>
-  <xbgf:eliminate>ForStatementNoShortIf</xbgf:eliminate>
-  <xbgf:eliminate>WhileStatementNoShortIf</xbgf:eliminate>
-  <xbgf:eliminate>LabeledStatementNoShortIf</xbgf:eliminate>
-  <xbgf:eliminate>IfThenElseStatementNoShortIf</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ForStatementNoShortIf</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>WhileStatementNoShortIf</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>LabeledStatementNoShortIf</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>IfThenElseStatementNoShortIf</nonterminal></xbgf:eliminate>
 
   <!-- 
    - Fail: BlockStatements.
@@ -293,7 +293,7 @@
       - [], ,([t({), n(BlockStatements), t(})])
    ...
   -->
-  <xbgf:deyaccify>BlockStatements</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>BlockStatements</nonterminal></xbgf:deyaccify>
   <xbgf:atomic>
     <xbgf:inline>BlockStatements</xbgf:inline>
     <xbgf:massage>
@@ -394,7 +394,7 @@
    vs
     p([], 'MoreStatementExpressions', *(','([t((',')), n('StatementExpression')]))),
   -->
-  <xbgf:deyaccify>StatementExpressionList</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>StatementExpressionList</nonterminal></xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>MoreStatementExpressions</nonterminal>
@@ -457,7 +457,7 @@
      vs.
       - [], +n(CatchClause)
   -->
-  <xbgf:deyaccify>Catches</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>Catches</nonterminal></xbgf:deyaccify>
 
   <!-- 
    - Fail: VariableDeclarators.
@@ -465,7 +465,7 @@
      vs.
       - [], ,([n(VariableDeclarator), *(,([t((,)), n(VariableDeclarator)]))])
   -->
-  <xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>VariableDeclarators</nonterminal></xbgf:deyaccify>
 
   <!-- 
    - Fail: VariableDeclaratorId.
@@ -473,7 +473,7 @@
      vs.
       - [], ,([n(Identifier), n(BracketsOpt)])
   -->
-  <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>VariableDeclaratorId</nonterminal></xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>BracketsOpt</nonterminal>
@@ -503,7 +503,7 @@
    with
      p([], 'VariableDeclaratorRest', ','([n('BracketsOpt'), ?(','([t(=), n('VariableInitializer')]))])),
   -->
-  <xbgf:horizontal>VariableDeclarator</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>VariableDeclarator</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>

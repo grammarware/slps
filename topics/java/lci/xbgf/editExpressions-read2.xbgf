@@ -36,9 +36,9 @@
      vs.
       - [], ;([n(PrimaryNoNewArray), n(ArrayCreationExpression)])
  -->
-  <xbgf:horizontal>PrimaryNoNewArray</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>PrimaryNoNewArray</nonterminal></xbgf:horizontal>
   <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
-  <xbgf:horizontal>FieldAccess</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>FieldAccess</nonterminal></xbgf:horizontal>
   <xbgf:inline>FieldAccess</xbgf:inline>
 
   <xbgf:atomic>
@@ -173,10 +173,10 @@
         </bgf:production>
       </vertical>
     </xbgf:remove>
-    <xbgf:eliminate>ArrayCreationExpression</xbgf:eliminate>
-    <xbgf:eliminate>DimExprs</xbgf:eliminate>
-    <xbgf:eliminate>DimExpr</xbgf:eliminate>
-    <xbgf:eliminate>Dims</xbgf:eliminate>
+    <xbgf:eliminate><nonterminal>ArrayCreationExpression</nonterminal></xbgf:eliminate>
+    <xbgf:eliminate><nonterminal>DimExprs</nonterminal></xbgf:eliminate>
+    <xbgf:eliminate><nonterminal>DimExpr</nonterminal></xbgf:eliminate>
+    <xbgf:eliminate><nonterminal>Dims</nonterminal></xbgf:eliminate>
     <xbgf:introduce>
       <bgf:production>
         <nonterminal>ArrayCreatorRest</nonterminal>
@@ -288,7 +288,7 @@
      vs.
       - [], ;([n(StatementExpressionList), ,([?(t(final)), n(Type), n(VariableDeclarators)])])
   -->
-  <xbgf:deyaccify>StatementExpressionList</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>StatementExpressionList</nonterminal></xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>MoreStatementExpressions</nonterminal>
@@ -318,7 +318,7 @@
      vs.
       - [], ,([t({), ?(n(VariableInitializers)), ?(t((,))), t(})])
   -->
-  <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>VariableInitializers</nonterminal></xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
 
   <xbgf:atomic>
@@ -475,7 +475,7 @@
         </bgf:production>
       </vertical>
     </xbgf:add>
-    <xbgf:horizontal>IdentifierSuffix</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>IdentifierSuffix</nonterminal></xbgf:horizontal>
     <xbgf:factor>
       <bgf:expression>
         <choice>

@@ -36,7 +36,7 @@ Later should be a massage (AB|AB?)->AB?
       </choice>
     </bgf:expression>
   </xbgf:massage>
-  <xbgf:horizontal>Expression1</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>Expression1</nonterminal></xbgf:horizontal>
   <xbgf:distribute>
     <nonterminal>Expression1</nonterminal>
   </xbgf:distribute>

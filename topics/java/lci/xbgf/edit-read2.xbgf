@@ -16,8 +16,8 @@
     <add>ConstructorBody</add>
     <to>MethodBody</to>
   </xbgf:unite>
-  <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
-  <xbgf:eliminate>ArgumentList</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ExplicitConstructorInvocation</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ArgumentList</nonterminal></xbgf:eliminate>
 
   <!-- ISSUE PERMISSIVENESS
    Some productions use a more general QualifiedIdentifierList instead of TypeList
@@ -1410,7 +1410,7 @@
         </bgf:expression>
       </bgf:production>
     </xbgf:disappear>
-    <xbgf:horizontal>ArrayInitializer</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>ArrayInitializer</nonterminal></xbgf:horizontal>
     <xbgf:factor>
       <bgf:expression>
         <choice>

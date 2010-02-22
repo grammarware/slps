@@ -156,7 +156,7 @@ vs
   <!-- Defining PrefixOp; smart extract needed -->
   <xbgf:inline>PreIncrementExpression</xbgf:inline>
   <xbgf:inline>PreDecrementExpression</xbgf:inline>
-  <xbgf:horizontal>UnaryExpressionNotPlusMinus</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>UnaryExpressionNotPlusMinus</nonterminal></xbgf:horizontal>
   <xbgf:inline>UnaryExpressionNotPlusMinus</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>Expression3</nonterminal>
@@ -193,7 +193,7 @@ vs
       </bgf:production>
     </vertical>
   </xbgf:remove>
-  <xbgf:deyaccify>PostfixExpression</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>PostfixExpression</nonterminal></xbgf:deyaccify>
   <!-- RELAXATION -->
   <xbgf:add>
     <horizontal>
@@ -735,7 +735,7 @@ vs
     <nonterminal>ExclusiveOrExpression</nonterminal>
     <nonterminal>InclusiveOrExpression</nonterminal>
   </xbgf:undefine>
-  <xbgf:eliminate>ConditionalAndExpression</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ConditionalAndExpression</nonterminal></xbgf:eliminate>
 
   <!-- And now "Expression1" -->
   <xbgf:extract>
@@ -759,7 +759,7 @@ vs
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <xbgf:horizontal>ConditionalExpression</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ConditionalExpression</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>

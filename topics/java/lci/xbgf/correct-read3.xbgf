@@ -150,7 +150,7 @@
      ','([t('('), n('ReferenceType'), t(')'), n('UnaryExpressionNotPlusMinus')]),
      ','([t('('), n('PrimitiveType'), ?(n('Dims')), t(')'), n('UnaryExpression')])])),
   -->
-  <xbgf:horizontal>CastExpression</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>CastExpression</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>

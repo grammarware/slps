@@ -37,8 +37,8 @@
      vs.
       - [], ,([t(import), n(PackageOrTypeName), t(.), t(*), t((;))])
   -->
-  <xbgf:deyaccify>PackageName</xbgf:deyaccify>
-  <xbgf:deyaccify>PackageOrTypeName</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>PackageName</nonterminal></xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>PackageOrTypeName</nonterminal></xbgf:deyaccify>
   <xbgf:unfold>
     <nonterminal>PackageName</nonterminal>
     <in>
@@ -198,7 +198,7 @@
       </bgf:production>
     </vertical>
   </xbgf:add>
-  <xbgf:horizontal>ClassInstanceCreationExpression</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ClassInstanceCreationExpression</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>

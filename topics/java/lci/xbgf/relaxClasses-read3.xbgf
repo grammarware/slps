@@ -174,7 +174,7 @@
     </in>
   </xbgf:narrow>
 
-  <xbgf:horizontal>ResultType</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ResultType</nonterminal></xbgf:horizontal>
   <xbgf:inline>ResultType</xbgf:inline>
 
   <xbgf:vertical>
@@ -187,7 +187,7 @@
      vs.
       - [], ;([n(Identifier), ,([n(VariableDeclaratorId), t([), t(])])])
    -->
-  <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>VariableDeclaratorId</nonterminal></xbgf:deyaccify>
 
   <!-- TODO WTF -->
   <!-- RELAXATION -->
@@ -394,7 +394,7 @@
       - [], ,([*(n(Modifier)), n(ClassDeclaration)])
       - [], ,([*(n(Modifier)), n(GenericMethodOrConstructorDecl)])
   -->
-  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ClassBodyDeclaration</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -650,7 +650,7 @@ Block:
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  <xbgf:eliminate>ExplicitConstructorInvocation</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ExplicitConstructorInvocation</nonterminal></xbgf:eliminate>
 
   <xbgf:fold>
     <nonterminal>Block</nonterminal>
@@ -683,7 +683,7 @@ Block:
      vs.
       - [], ,([t(<), n(TypeParameterList), t(>)])
   -->
-  <xbgf:deyaccify>TypeParameterList</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>TypeParameterList</nonterminal></xbgf:deyaccify>
   <xbgf:inline>TypeParameterList</xbgf:inline>
 
   <!-- to fix the remaining appears -->

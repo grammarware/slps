@@ -19,7 +19,7 @@
       
       NB: The following two folds are virtually chain transformations, but performed for an existing definition.
   -->
-  <xbgf:horizontal>ClassOrInterfaceType</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ClassOrInterfaceType</nonterminal></xbgf:horizontal>
   <!-- GENERALITY -->
   <!-- RELAXATION -->
   <xbgf:replace>
@@ -70,7 +70,7 @@
       <nonterminal>AbstractMethodDeclaration</nonterminal>
     </in>
   </xbgf:fold>
-  <xbgf:horizontal>ResultType</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ResultType</nonterminal></xbgf:horizontal>
   <xbgf:inline>ResultType</xbgf:inline>
   <xbgf:distribute>
     <nonterminal>MethodHeader</nonterminal>
@@ -177,7 +177,7 @@
       - [], ;([,([n(PrimitiveType), t([), t(])]), ,([n(Name), t([), t(])]), ,([n(ArrayType), t([), t(])])])
   -->
   <xbgf:atomic>
-    <xbgf:horizontal>Type</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>Type</nonterminal></xbgf:horizontal>
     <xbgf:unfold>
       <nonterminal>Type</nonterminal>
       <in>
@@ -189,7 +189,7 @@
     </xbgf:vertical>
   </xbgf:atomic>
   <xbgf:atomic>
-    <xbgf:horizontal>ReferenceType</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>ReferenceType</nonterminal></xbgf:horizontal>
     <xbgf:unfold>
       <nonterminal>ReferenceType</nonterminal>
       <in>

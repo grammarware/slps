@@ -163,7 +163,7 @@
       <add>MultiplicativeExpression</add>
       <to>Expression2</to>
     </xbgf:unite>
-    <xbgf:horizontal>Expression2</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>Expression2</nonterminal></xbgf:horizontal>
   </xbgf:atomic>
 
   <!-- Introducing another layering scheme: Expression3 -->
@@ -181,7 +181,7 @@
     </in>
   </xbgf:replace>
 
-  <xbgf:horizontal>Expression3</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>Expression3</nonterminal></xbgf:horizontal>
   <!--  Huge factoring for fishing out infix operators -->
   <xbgf:factor>
     <bgf:expression>
@@ -787,7 +787,7 @@
      vs.
       - [], ,([n(Expression1), ?(,([n(AssignmentOperator), n(Expression1)]))])
   -->
-  <xbgf:horizontal>AssignmentExpression</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>AssignmentExpression</nonterminal></xbgf:horizontal>
   <xbgf:unfold>
     <nonterminal>AssignmentExpression</nonterminal>
     <in>
@@ -801,7 +801,7 @@
      vs.
       - [], ,([n(Expression2), ?(n(Expression1Rest))])
   -->
-  <xbgf:horizontal>Expression1</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>Expression1</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -930,7 +930,7 @@
   <!-- Prefixes -->
   <xbgf:inline>PreIncrementExpression</xbgf:inline>
   <xbgf:inline>PreDecrementExpression</xbgf:inline>
-  <xbgf:horizontal>UnaryExpressionNotPlusMinus</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>UnaryExpressionNotPlusMinus</nonterminal></xbgf:horizontal>
   <xbgf:inline>UnaryExpressionNotPlusMinus</xbgf:inline>
   <!--
   <xbgf:distribute>
@@ -1133,7 +1133,7 @@
   -->
   <xbgf:inline>PostIncrementExpression</xbgf:inline>
   <xbgf:inline>PostDecrementExpression</xbgf:inline>
-  <xbgf:horizontal>PostfixExpression</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>PostfixExpression</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -1226,7 +1226,7 @@
     <xbgf:vertical>
       <nonterminal>PostfixExpression</nonterminal>
     </xbgf:vertical>
-    <xbgf:deyaccify>PostfixExpression</xbgf:deyaccify>
+    <xbgf:deyaccify><nonterminal>PostfixExpression</nonterminal></xbgf:deyaccify>
     <xbgf:inline>TMP</xbgf:inline>
   </xbgf:atomic>
 
@@ -1260,7 +1260,7 @@
   <xbgf:vertical>
     <nonterminal>Assignment</nonterminal>
   </xbgf:vertical>
-  <xbgf:deyaccify>Assignment</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>Assignment</nonterminal></xbgf:deyaccify>
   <xbgf:atomic>
     <xbgf:extract>
       <bgf:production>
@@ -1656,7 +1656,7 @@
   <!-- end of "replace" -->
 
   <xbgf:inline>Assignment</xbgf:inline>
-  <xbgf:eliminate>LeftHandSide</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>LeftHandSide</nonterminal></xbgf:eliminate>
   <xbgf:factor>
     <bgf:expression>
       <choice>

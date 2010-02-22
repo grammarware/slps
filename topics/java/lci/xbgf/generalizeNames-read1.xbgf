@@ -52,6 +52,6 @@ vs
     <to>Name</to>
   </xbgf:unite>
 
-  <xbgf:deyaccify>Name</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>Name</nonterminal></xbgf:deyaccify>
 
 </xbgf:sequence>

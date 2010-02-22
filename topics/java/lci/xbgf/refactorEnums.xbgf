@@ -24,7 +24,7 @@
      vs.
       - [], ,([t((), ?(n(ArgumentList)), t())])
   -->
-  <xbgf:deyaccify>ArgumentList</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ArgumentList</nonterminal></xbgf:deyaccify>
   <xbgf:inline>ArgumentList</xbgf:inline>
 
   <!-- 

@@ -105,7 +105,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  <xbgf:deyaccify>ExtendsInterfaces</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ExtendsInterfaces</nonterminal></xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>TypeList</nonterminal>
     <in>
@@ -120,7 +120,7 @@
      vs.
       - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
   -->
-  <xbgf:deyaccify>InterfaceMemberDeclarations</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>InterfaceMemberDeclarations</nonterminal></xbgf:deyaccify>
   <xbgf:inline>InterfaceMemberDeclarations</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -311,7 +311,7 @@
      ClassOrInterfaceDeclaration
 -->
 
-    <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>InterfaceBodyDeclaration</nonterminal></xbgf:horizontal>
 
     <xbgf:factor>
       <bgf:expression>

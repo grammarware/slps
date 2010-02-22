@@ -36,9 +36,9 @@
      vs.
       - [], ;([n(PrimaryNoNewArray), n(ArrayCreationExpression)])
  -->
-  <xbgf:horizontal>PrimaryNoNewArray</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>PrimaryNoNewArray</nonterminal></xbgf:horizontal>
   <xbgf:inline>PrimaryNoNewArray</xbgf:inline>
-  <xbgf:horizontal>FieldAccess</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>FieldAccess</nonterminal></xbgf:horizontal>
   <xbgf:inline>FieldAccess</xbgf:inline>
   <xbgf:vertical>
     <nonterminal>Primary</nonterminal>
@@ -171,10 +171,10 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
-  <xbgf:eliminate>ArrayCreationExpression</xbgf:eliminate>
-  <xbgf:eliminate>DimExprs</xbgf:eliminate>
-  <xbgf:eliminate>DimExpr</xbgf:eliminate>
-  <xbgf:eliminate>Dims</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ArrayCreationExpression</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>DimExprs</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>DimExpr</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>Dims</nonterminal></xbgf:eliminate>
   <xbgf:introduce>
     <bgf:production>
       <nonterminal>ArrayCreatorRest</nonterminal>
@@ -369,7 +369,7 @@
      vs.
       - [], ;([n(StatementExpressionList), ,([?(t(final)), n(Type), n(VariableDeclarators)])])
   -->
-  <xbgf:deyaccify>StatementExpressionList</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>StatementExpressionList</nonterminal></xbgf:deyaccify>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>Expressions</nonterminal>
@@ -399,7 +399,7 @@
      vs.
       - [], ,([t({), ?(n(VariableInitializers)), ?(t((,))), t(})])
   -->
-  <xbgf:deyaccify>VariableInitializers</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>VariableInitializers</nonterminal></xbgf:deyaccify>
   <xbgf:inline>VariableInitializers</xbgf:inline>
 
   <!-- ISSUE PERMISSIVENESS
@@ -711,7 +711,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
-  <xbgf:eliminate>ArrayAccess</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ArrayAccess</nonterminal></xbgf:eliminate>
   <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
@@ -723,7 +723,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
-  <xbgf:eliminate>MethodInvocation</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>MethodInvocation</nonterminal></xbgf:eliminate>
   <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>
@@ -735,7 +735,7 @@
       </bgf:production>
     </vertical>
   </xbgf:remove>
-  <xbgf:eliminate>ClassInstanceCreationExpression</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ClassInstanceCreationExpression</nonterminal></xbgf:eliminate>
   <!-- RELAXATION -->
   <xbgf:remove>
     <vertical>

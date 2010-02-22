@@ -42,10 +42,10 @@
   </xbgf:add>
 
   <!-- finishing touches -->
-  <xbgf:eliminate>FormalParameterList</xbgf:eliminate>
-  <xbgf:eliminate>LastFormalParameter</xbgf:eliminate>
-  <xbgf:eliminate>NonWildTypeArguments</xbgf:eliminate>
-  <xbgf:eliminate>ReferenceTypeList</xbgf:eliminate>
-  <xbgf:eliminate>TypeDeclSpecifier</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>FormalParameterList</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>LastFormalParameter</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>NonWildTypeArguments</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ReferenceTypeList</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>TypeDeclSpecifier</nonterminal></xbgf:eliminate>
 
 </xbgf:sequence>

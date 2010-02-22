@@ -254,7 +254,7 @@ CreatedName:
       - [], ,([t((), ;([n(Expression), n(Type)]), t()), n(Expression3)])
       - [], ,([n(PrefixOp), n(Expression3)])
   -->
-  <xbgf:horizontal>Expression3</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>Expression3</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -443,7 +443,7 @@ CreatedName:
       </bgf:expression>
     </bgf:production>
   </xbgf:disappear>
-  <xbgf:eliminate>Selector</xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>Selector</nonterminal></xbgf:eliminate>
 
   <!-- EXTENSION -->
   <xbgf:add>
@@ -492,7 +492,7 @@ CreatedName:
       <nonterminal>Expression3</nonterminal>
     </in>
   </xbgf:unfold>
-  <xbgf:horizontal>Expression3</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>Expression3</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>

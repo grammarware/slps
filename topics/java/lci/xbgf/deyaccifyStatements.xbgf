@@ -9,7 +9,7 @@
      vs.
       - [], ;([n(SwitchBlockStatementGroup), ,([n(SwitchBlockStatementGroups), n(SwitchBlockStatementGroup)])])
   -->
-  <xbgf:deyaccify>SwitchBlockStatementGroups</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>SwitchBlockStatementGroups</nonterminal></xbgf:deyaccify>
   <xbgf:inline>SwitchBlockStatementGroups</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -50,7 +50,7 @@
      vs.
       - [], ;([n(CatchClause), ,([n(Catches), n(CatchClause)])])
   -->
-  <xbgf:deyaccify>Catches</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>Catches</nonterminal></xbgf:deyaccify>
 
   <!-- 
    - Fail: BlockStatements.
@@ -58,6 +58,6 @@
      vs.
       - [], ;([n(BlockStatement), ,([n(BlockStatements), n(BlockStatement)])])
   -->
-  <xbgf:deyaccify>BlockStatements</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>BlockStatements</nonterminal></xbgf:deyaccify>
 
 </xbgf:sequence>

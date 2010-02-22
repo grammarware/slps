@@ -3,7 +3,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <xbgf:horizontal>AssertStatement</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>AssertStatement</nonterminal></xbgf:horizontal>
   <xbgf:inline>AssertStatement</xbgf:inline>
   <xbgf:inline>BasicForStatement</xbgf:inline>
   <xbgf:inline>EnhancedForStatement</xbgf:inline>
@@ -16,7 +16,7 @@
                ;([,([t(assert), n(Expression), t((;))]),
                   ,([t(assert), n(Expression), t(:), n(Expression), t((;))])]),
 -->
-  <xbgf:horizontal>Statement</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>Statement</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -450,7 +450,7 @@
      vs.
       - [], ,([n(VariableModifiers), n(Type), n(VariableDeclarators), t((;))])
   -->
-  <xbgf:deyaccify>VariableModifiers</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>VariableModifiers</nonterminal></xbgf:deyaccify>
   <xbgf:inline>VariableModifiers</xbgf:inline>
   <!-- RELAXATION -->
   <xbgf:remove>

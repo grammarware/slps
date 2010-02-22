@@ -75,7 +75,7 @@
      vs.
       - [], ;([n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
   -->
-  <xbgf:horizontal>TypeDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>TypeDeclaration</nonterminal></xbgf:horizontal>
   <xbgf:extract>
     <bgf:production>
       <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -104,7 +104,7 @@
      vs.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
   -->
-  <xbgf:deyaccify>ClassBodyDeclarations</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ClassBodyDeclarations</nonterminal></xbgf:deyaccify>
   <xbgf:inline>ClassBodyDeclarations</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -227,7 +227,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
-  <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ClassMemberDeclaration</nonterminal></xbgf:horizontal>
 
   <!-- 
    - Fail: NormalClassDeclaration.
@@ -245,7 +245,7 @@
   -->
   <xbgf:inline>InstanceInitializer</xbgf:inline>
   <xbgf:inline>StaticInitializer</xbgf:inline>
-  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ClassBodyDeclaration</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -445,7 +445,7 @@
      Identifier "(" [ FormalParameterList ] ")"
      MethodDeclarator "[" "]"
   -->
-  <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>MethodDeclarator</nonterminal></xbgf:deyaccify>
   <xbgf:inline>MethodDeclarator</xbgf:inline>
 
   <!--   BREFACTOR 
@@ -504,7 +504,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <xbgf:deyaccify>Dims</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>Dims</nonterminal></xbgf:deyaccify>
   <xbgf:unfold>
     <nonterminal>Dims</nonterminal>
     <in>

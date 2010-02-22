@@ -71,11 +71,11 @@
      vs.
       - [], ;([n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
   -->
-  <xbgf:horizontal>TypeDeclaration</xbgf:horizontal>
-  <xbgf:horizontal>ClassBodyDeclaration</xbgf:horizontal>
-  <xbgf:horizontal>ClassMemberDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>TypeDeclaration</nonterminal></xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ClassBodyDeclaration</nonterminal></xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ClassMemberDeclaration</nonterminal></xbgf:horizontal>
   <xbgf:atomic>
-    <xbgf:horizontal>InterfaceBodyDeclaration</xbgf:horizontal>
+    <xbgf:horizontal><nonterminal>InterfaceBodyDeclaration</nonterminal></xbgf:horizontal>
     <xbgf:extract>
       <bgf:production>
         <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
@@ -151,7 +151,7 @@
      vs.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
   -->
-  <xbgf:deyaccify>ClassBodyDeclarations</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ClassBodyDeclarations</nonterminal></xbgf:deyaccify>
   <xbgf:inline>ClassBodyDeclarations</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -246,7 +246,7 @@
   <xbgf:inline>ConstructorDeclaration</xbgf:inline>
   <xbgf:inline>MethodDeclaration</xbgf:inline>
   <xbgf:inline>ConstructorDeclarator</xbgf:inline>
-  <xbgf:horizontal>ResultType</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ResultType</nonterminal></xbgf:horizontal>
   <xbgf:inline>ResultType</xbgf:inline>
   <xbgf:inline>MethodHeader</xbgf:inline>
 
@@ -330,7 +330,7 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:extract>
-  <xbgf:deyaccify>FormalParameterList</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>FormalParameterList</nonterminal></xbgf:deyaccify>
   <xbgf:inline>FormalParameterList</xbgf:inline>
   <xbgf:extract>
     <bgf:production>
@@ -363,7 +363,7 @@
    ','([n('ModifiersOpt'), t(void), n('Identifier'), n('FormalParameters'), ?(','([t(throws), n('TypeList')])), n('MethodBody')])),
 
   -->
-  <xbgf:deyaccify>MethodDeclarator</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>MethodDeclarator</nonterminal></xbgf:deyaccify>
   <xbgf:fold>
     <nonterminal>BracketsOpt</nonterminal>
     <in>
@@ -485,7 +485,7 @@
         </bgf:production>
       </vertical>
     </xbgf:remove>
-    <xbgf:eliminate>FieldDeclaration</xbgf:eliminate>
+    <xbgf:eliminate><nonterminal>FieldDeclaration</nonterminal></xbgf:eliminate>
   </xbgf:atomic>
 
 </xbgf:sequence>

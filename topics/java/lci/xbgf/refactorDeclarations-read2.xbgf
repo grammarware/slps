@@ -3,7 +3,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <xbgf:deyaccify>VariableDeclarators</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>VariableDeclarators</nonterminal></xbgf:deyaccify>
 
   <!-- 
    - Fail: VariableDeclarator.
@@ -11,8 +11,8 @@
      vs.
       - [], ;([n(VariableDeclaratorId), ,([n(VariableDeclaratorId), t(=), n(VariableInitializer)])])
   -->
-  <xbgf:deyaccify>VariableDeclaratorId</xbgf:deyaccify>
-  <xbgf:horizontal>VariableDeclarator</xbgf:horizontal>
+  <xbgf:deyaccify><nonterminal>VariableDeclaratorId</nonterminal></xbgf:deyaccify>
+  <xbgf:horizontal><nonterminal>VariableDeclarator</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>
@@ -137,7 +137,7 @@
       - [], ,([?(n(PackageDeclaration)), ?(n(ImportDeclarations)), ?(n(TypeDeclarations))])
   -->
   <xbgf:inline>PackageDeclaration</xbgf:inline>
-  <xbgf:deyaccify>ImportDeclarations</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>ImportDeclarations</nonterminal></xbgf:deyaccify>
   <xbgf:inline>ImportDeclarations</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -159,7 +159,7 @@
       </star>
     </bgf:expression>
   </xbgf:massage>
-  <xbgf:deyaccify>TypeDeclarations</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>TypeDeclarations</nonterminal></xbgf:deyaccify>
   <xbgf:inline>TypeDeclarations</xbgf:inline>
   <xbgf:massage>
     <bgf:expression>
@@ -198,7 +198,7 @@
       - [], ;([,([t(import), n(QualifiedIdentifier), t((;))]),
                ,([t(import), n(QualifiedIdentifier), t(.), t(*), t((;))])])
   -->
-  <xbgf:horizontal>ImportDeclaration</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>ImportDeclaration</nonterminal></xbgf:horizontal>
   <xbgf:factor>
     <bgf:expression>
       <choice>

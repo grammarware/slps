@@ -404,11 +404,11 @@
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), t((), ?(n(FormalParameterDecls)), t()), n(BracketsOpt), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(ConstantDeclaratorRest), *(,([t((,)), n(ConstantDeclarator)])), t((;))])
   -->
-  <xbgf:horizontal>InterfaceMemberDecl</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>InterfaceMemberDecl</nonterminal></xbgf:horizontal>
   <xbgf:inline>InterfaceMemberDecl</xbgf:inline>
   <xbgf:inline>InterfaceMethodOrFieldDecl</xbgf:inline>
   <xbgf:inline>VoidInterfaceMethodDeclaratorRest</xbgf:inline>
-  <xbgf:horizontal>InterfaceMethodOrFieldRest</xbgf:horizontal>
+  <xbgf:horizontal><nonterminal>InterfaceMethodOrFieldRest</nonterminal></xbgf:horizontal>
   <xbgf:inline>InterfaceMethodOrFieldRest</xbgf:inline>
   <xbgf:inline>InterfaceMethodDeclaratorRest</xbgf:inline>
   <xbgf:inline>ConstantDeclaratorsRest</xbgf:inline>

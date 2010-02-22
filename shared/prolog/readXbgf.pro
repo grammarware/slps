@@ -64,7 +64,8 @@ xml2xbgf(T,unlabel(L))
 xml2xbgf(T,deyaccify(N))
  :-
     self(name(xbgf:deyaccify),T),
-    content(T,N).
+    child(name(nonterminal),T,T1),
+    content(T1,N).
 
 xml2xbgf(T,abstractize(P2))
  :-
@@ -116,7 +117,8 @@ xml2xbgf(T,dump)
 xml2xbgf(T,eliminate(N))
  :-
     self(name(xbgf:eliminate),T),
-    content(T,N).
+    child(name(nonterminal),T,T1),
+    content(T1,N).
 
 xml2xbgf(T,G)
  :-
@@ -149,8 +151,10 @@ xml2xbgf(T,G)
 xml2xbgf(T,horizontal(N))
  :-
     self(name(xbgf:horizontal),T),
-    content(T,N).
+    child(name(nonterminal),T,T1),
+    content(T1,N).
 
+% Unused / undocumented / deprecated ?
 xml2xbgf(T,id)
  :-
     self(name(xbgf:id),T).

@@ -62,6 +62,6 @@ vs
     <to>QualifiedIdentifier</to>
   </xbgf:unite>
 
-  <xbgf:deyaccify>QualifiedIdentifier</xbgf:deyaccify>
+  <xbgf:deyaccify><nonterminal>QualifiedIdentifier</nonterminal></xbgf:deyaccify>
 
 </xbgf:sequence>

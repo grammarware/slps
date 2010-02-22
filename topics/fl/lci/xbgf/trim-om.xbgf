@@ -1,3 +1,5 @@
 <xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:eliminate>Visitor</xbgf:eliminate>
+  <xbgf:eliminate>
+    <nonterminal>Visitor</nonterminal>
+  </xbgf:eliminate>
 </xbgf:sequence>
