@@ -427,7 +427,7 @@
 				</bgf:production>
 			</vertical>
 		</xbgf:remove>
-		<xbgf:horizontal>transformation</xbgf:horizontal>
+		<xbgf:horizontal><nonterminal>transformation</nonterminal></xbgf:horizontal>
 	</xldf:transformGrammar>
 	<xldf:place>
 		<section>transformation</section>

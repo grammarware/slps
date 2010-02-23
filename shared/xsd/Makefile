@@ -1,32 +1,45 @@
-validator = ../../download/msv/msv.jar
-viewer = ../tools/showxsd
+validator = /usr/bin/xmllint --noout --schema
+mapper = ../tools/xsd2bgf
 
 build:
 
 test:
+	make testbgf
+	make testxbgf
+	make testbtf
+	make testxbtf
+	#make testldf
+	make testxldf
+	make testlcf
+	#make testedd
+	#make testrgf
 	make check
 
+testbgf:
+	${validator} bgf.xsd ../../topics/fl/lci/snapshot/*.bgf
+
+testxbgf:
+	${validator} xbgf.xsd ../../topics/fl/lci/xbgf/*.xbgf
+
+testbtf:
+	${validator} btf.xsd ../../topics/fl/lci/xmlsamples/*.btf
+
+testxbtf:
+
+testlcf:
+	${validator} lcf.xsd ../../topics/*/*/*.lcf
+
+testldf:
+	${validator} ldf.xsd ../../topics/languedoc/*/*.ldf
+
+testxldf:
+	${validator} xldf.xsd ../../topics/languedoc/*/xldf/*.xldf
+
+testedd:
+	${validator} edd.xsd ../edd/*.edd
+
 check:
-	@make check1 arg=bgf.xsd
-	@make check1 arg=xbgf.xsd
-	@make check1 arg=xbgf.xsd
-	@make check1 arg=btf.xsd
-	@make check1 arg=ldf.xsd
-
-check-old:
-	@for file in *.xsd ; \
-	do \
-		echo Validating $$file ... ; \
-		java -jar ${validator} $$file ; \
-		echo Translating $$file to BGF ... ; \
-		${viewer} $$file > /dev/null ;\
-	done
-
-check1:
-	@echo Validating $$arg ...
-	@java -jar ${validator} $$arg
-	@echo Translating $$arg to BGF ...
-	@${viewer} $$arg > /dev/null
+	ls -1 *.xsd | xargs -n1 -I _ ${mapper} _ tmp.bgf
 
 clean:
 	rm -rf bin obj
