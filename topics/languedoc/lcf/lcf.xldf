@@ -29,7 +29,9 @@
     <xbgf:unlabel>
       <label>testset</label>
     </xbgf:unlabel>
-    <xbgf:horizontal>definition</xbgf:horizontal>
+    <xbgf:horizontal>
+    	<nonterminal>definition</nonterminal>
+    </xbgf:horizontal>
   </xldf:transformGrammar>
   <xldf:combine>
     <section>definition</section>

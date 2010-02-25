@@ -5,7 +5,6 @@ build:
 
 test:
 	${tools}/lci fl.lcf architecture
-	@rm -f architecture*.dot
 
 check:
 	${validator} lcf fl.lcf

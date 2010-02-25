@@ -1,10 +1,10 @@
 module UnaryExpressionPriorities
-
 imports GEN-csharp-Default
 
 exports
  context-free priorities
-	Primary-expression -> Unary-expression					>
-	{non-assoc: Expression-unary-operator Unary-expression -> Unary-expression
-	"(" Type ")" Unary-expression -> Unary-expression}
+  Primary-expression -> Unary-expression				>
+  {non-assoc:
+   Expression-unary-operator Unary-expression -> Unary-expression
+   (" Type ")" Unary-expression -> Unary-expression}
 

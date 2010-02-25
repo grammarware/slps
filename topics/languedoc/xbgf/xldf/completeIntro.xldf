@@ -326,7 +326,7 @@
 	</xldf:importSample>
 	<xldf:addFigure>
 		<figure>
-			<shortcaption>Full convergence diagram for BNF and BGF.</shortcaption>
+			<shortcaption>Full convergence diagram for BNF and BGF</shortcaption>
 			<caption>
         Full convergence diagram for BNF and BGF. The top nodes are sources, the bottom node
         is the target, the arc labels are separate XBGF scripts, the nodes contain

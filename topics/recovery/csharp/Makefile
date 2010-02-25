@@ -25,3 +25,7 @@ grammars/Final.lll: grammars/WithExpression.lll trafo/modularise.trafo
 
 clean:
 	rm -f *.lll grammars/*.lll sdf/GEN-*.sdf doc/*.html
+
+count:
+	@cat trafo/*.trafo | grep -v '#%' | grep -v '"%"' | grep -v "%to" | grep -c '%'
+

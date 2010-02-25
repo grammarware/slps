@@ -1,13 +1,19 @@
 validator = ../../../shared/tools/checkxml
 
-build: tex
+build: tex html
 	pdflatex -interaction=batchmode ldf
 	pdflatex -interaction=batchmode ldf
 
-tex:
+ldf:
 	../../../shared/tools/xsd2ldf ../../../shared/xsd/ldf.xsd ldf.ldf prepare.xbgf 
 	../../../shared/tools/xldf ldf.xldf ldf.ldf ldf.ready.ldf
+	
+tex: ldf
 	../../../shared/tools/ldf2tex ldf.ready.ldf ldf.tex
+
+html: ldf
+	../../../shared/tools/repp ldf.ready.ldf ../../../shared/tools/xbgf2html ldf.hyper.ldf
+	../../../shared/tools/ldf2html ldf.hyper.ldf ldf.html
 
 rebuild:
 	make clean

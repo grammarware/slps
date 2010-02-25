@@ -1,22 +1,21 @@
 module ExpressionPriorities
-
 imports GEN-csharp-Default
 
 exports
  context-free priorities
-	Unary-expression -> Expression						>
-	{left: Expression "*" Expression -> Expression
-	Expression "/" Expression -> Expression
-	Expression "%" Expression -> Expression}                                >
-	{left: Expression Plus Expression -> Expression
-	Expression Minus Expression -> Expression}                              >
-	Expression Expression-shift-operator Expression -> Expression           >
-	{Expression Expression-relational-operator Expression -> Expression
-	Expression "is" Built-in-type -> Expression}				>
-	Expression Expression-equality-operator Expression -> Expression        >
-	Expression Ampersand Expression -> Expression                           >
-	Expression "^" Expression -> Expression                                 >
-	Expression Bar Expression -> Expression                                 >
-	Expression "&&" Expression -> Expression                                >
-	Expression "||" Expression -> Expression                                >
-	Expression "?" Expression ":" Expression -> Expression
+  Unary-expression -> Expression					>
+  {left: Expression "*" Expression -> Expression
+   Expression "/" Expression -> Expression
+   Expression "%" Expression -> Expression}                             >
+  {left: Expression Plus Expression -> Expression
+   Expression Minus Expression -> Expression}                           >
+  Expression Expression-shift-operator Expression -> Expression         >
+  {Expression Expression-relational-operator Expression -> Expression
+   Expression "is" Built-in-type -> Expression}				>
+  Expression Expression-equality-operator Expression -> Expression      >
+  Expression Ampersand Expression -> Expression                         >
+  Expression "^" Expression -> Expression                               >
+  Expression Bar Expression -> Expression                               >
+  Expression "&&" Expression -> Expression                              >
+  Expression "||" Expression -> Expression                              >
+  Expression "?" Expression ":" Expression -> Expression

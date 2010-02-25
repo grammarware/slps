@@ -182,8 +182,11 @@ guessLabel({cons(&I1)}) = <label>idcon2chardata(&I1)</label>
 [cons-to-label-cons-etc]
 guessLabel({cons(&I1),&Acs2}) = <label>idcon2chardata(&I1)</label>
 
-[cons-to-label-empty]
+[cons-to-label-empty-1]
 guessLabel() = 
+
+[cons-to-label-empty-2]
+guessLabel({}) = 
 
 [default-cons-to-label-no-cons]
 guessLabel({&A1}) = 
