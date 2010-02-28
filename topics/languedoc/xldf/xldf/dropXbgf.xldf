@@ -150,6 +150,9 @@
     <section>unite</section>
   </xldf:drop>
   <xldf:drop>
+    <section>equate</section>
+  </xldf:drop>
+  <xldf:drop>
     <section>abstractize</section>
   </xldf:drop>
   <xldf:drop>

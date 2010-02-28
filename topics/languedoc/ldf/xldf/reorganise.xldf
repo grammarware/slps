@@ -170,5 +170,12 @@
     <with>keyword</with>
   </xldf:combine>
 
+  <xldf:retitle>
+    <from>
+      <title>formula</title>
+    </from>
+    <to>Formul\ae</to>
+  </xldf:retitle>
+
 
 </xldf:evolutionSequence>

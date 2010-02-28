@@ -93,8 +93,6 @@
                 <bgf:expression>
                   <plus>
                     <bgf:expression>
-                      <marked>
-                        <bgf:expression>
                           <selectable>
                             <selector>part</selector>
                             <bgf:expression>
@@ -111,8 +109,6 @@
                             </bgf:expression>
                           </selectable>
                         </bgf:expression>
-                      </marked>
-                    </bgf:expression>
                   </plus>
                 </bgf:expression>
               </choice>

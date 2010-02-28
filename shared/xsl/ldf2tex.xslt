@@ -240,7 +240,7 @@
 					<xsl:apply-templates select="."/>
 					<xsl:text>\end{lstlisting}\end{graybox}
 	
-	      </xsl:text>
+	      \noindent </xsl:text>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:apply-templates select="."/>
@@ -356,7 +356,7 @@
 					<xsl:apply-templates select="."/>
 					<xsl:text>\end{lstlisting}\end{graybox}
 	
-	      </xsl:text>
+	      \noindent </xsl:text>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:call-template name="process-text">
@@ -453,7 +453,7 @@
 		<xsl:value-of select="."/>
 		<xsl:text>\end{lstlisting}\end{graybox}
 	
-	      </xsl:text>
+	      \noindent </xsl:text>
 	</xsl:template>
 	<xsl:template match="code">
 		<xsl:text>\texttt{</xsl:text>

@@ -30,8 +30,8 @@
       <xsd:documentation>
         XLDF transformation suite does not include any sophisticated grammar
         manipulations, in that sense it complements XBGF rather than extends it.
-        All grammar transformations are supposed to be be handled by XBGF either
-        prior to language document transformations or as a part of them.
+        All grammar transformations in XBGF that did not take place beforehand, can be
+		executed as a part of language document transformations.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>

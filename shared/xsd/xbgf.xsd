@@ -10,7 +10,7 @@
       BGF transformation operator suite
     </xsd:documentation>
     <xsd:documentation>
-		This chapter describes the transformational suite for BGF and all the details about it.
+		This chapter describes the transformational suite for BGF.
 		Most of the information present here is located in the XML Schema definition of the
 		language, part of the SLPS project. The rest was introduced by the language documentation
 		transformation commands in the process of automated generation of the manual in its

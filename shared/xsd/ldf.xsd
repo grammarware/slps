@@ -84,7 +84,7 @@
       <xsd:documentation>
         The ``title page'' can in reality be rendered as several pages, but it contains the basic
         information that helps to identify this particular language definition and to distinguish
-        it from similar documents. From our experience, language standards are either marked as
+        it from similar documents. In our experience, language standards are either marked as
         organisation-created or person-authored ones. In the former case, the document must contain
         the name of the organisation and the standard reference number within it (e.g, ISO 10279).
         In the latter case, one or more authors are specified. It is also possible to mark some sections
@@ -494,8 +494,9 @@
         <xsd:annotation>
           <xsd:documentation>
             Such an informal introduction to the language is not present in all standards.
-            However, some specifications contain a not claimed to be complete list of
-            language concepts with their definitions and perhaps even some examples.
+            However, some specifications contain a list of language concepts with their
+			definitions and perhaps even some examples.
+			The list is usually not claimed to be exhaustive.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
@@ -506,8 +507,8 @@
     <xsd:annotation>
       <xsd:documentation>
         Sections describing lexical structure tend to be shorter, less structured inside,
-        and very limited in scope: there is usually one on whitespace, one on tokens,
-        one on literals, one on comments, etc.
+        and very limited in scope: there is usually one lexical section dedicated to whitespace,
+		one lexical section about tokens, one about literals, one about comments, etc.
       </xsd:documentation>
       <xsd:documentation>
         See the section on grammar notation for more details about how broad even the smallest
@@ -640,9 +641,9 @@
       <xsd:element name="references" type="ldf:simpleList">
         <xsd:annotation>
           <xsd:documentation>
-            Hardbound standards have been trying to be more hypertext
-            for decades. One of the ways was to attach a list of links
-            and backlinks to every section --- that way, one can easily
+            Even hardbound standards contain hypertext-like elements.
+			One of them is attaching a list of links
+            and backlinks to every section---that way, one can easily
             find any related language constructs when learning the
             language or debugging a particular feature.
           </xsd:documentation>
@@ -695,7 +696,7 @@
     <xsd:annotation>
       <xsd:documentation>
         Normative sections form the core of the language standard: for each core section they belong to,
-        they define the purpose of the language construct, provide a description, some syntax definition,
+        they define the purpose of the language construct, provide a description, a syntax definition,
         list use constraints and other semantic details, etc.
       </xsd:documentation>
     </xsd:annotation>
@@ -705,8 +706,8 @@
           <xsd:documentation>
             A separate subsection named ``purpose'' is only encountered in some 4GL
             language manuals (e.g., JCL). However, it is quite common for the first
-            paragraph of any new section of any language document to relay short word
-            about the purpose of the language construct that is about to be introduced.
+            paragraph of any new section of any language document to briefly introduce
+            the purpose of the language construct that is about to be described.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
