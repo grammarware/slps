@@ -9,7 +9,8 @@ module SemanticsLib.Domain (
   , Proper, proper
 ) where
 
-import Prelude hiding (Ord, (<=))
+import Prelude hiding ((<=))
+import qualified Data.Set
 
 
 -- A type class for partial orders
@@ -91,3 +92,18 @@ class Proper x
 class Enumerate x
  where
   enumerate :: [x]
+
+
+-- Instances for sets
+
+instance Ord a => POrd (Data.Set.Set a)
+ where
+  (<=) = Data.Set.isSubsetOf
+
+instance Ord a => Bottom (Data.Set.Set a)
+ where
+  bottom = Data.Set.empty
+
+instance Ord a => Lub (Data.Set.Set a)
+ where
+  lub = Data.Set.union

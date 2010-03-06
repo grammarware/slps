@@ -2,6 +2,7 @@
 
 module SemanticsLib.Map (
     Map
+  , fromList, toList
   , lookup, update
   , statesAsPOrdMaps
   , keys, maps, atomic
@@ -20,6 +21,15 @@ newtype ( Eq k
         )
           => Map k v 
            = Map { getMap :: [(k,v)] }
+
+
+-- List interface
+
+fromList :: (Eq k, Bottom v) => [(k,v)] -> Map k v
+fromList = foldr (\(k,v) m -> update k v m) bottom 
+
+toList :: (Eq k, Bottom v) => Map k v -> [(k,v)] 
+toList = getMap
 
 
 -- States as partially ordered maps
