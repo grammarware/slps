@@ -4,6 +4,7 @@ module SemanticsLib.Fix (
     fixProperty
   , fixMaybe
   , fixEq
+  , fixEq2
 ) where
 
 import Data.Maybe
@@ -43,10 +44,19 @@ repetitions b f x = [ f'i i x | i <- [0..] ]
 
 -- Equality-based fixed-point combinator
 
-fixEq :: (Bottom x, Eq x)
-      => ((x -> x) -> x -> x) -> x -> x
+fixEq :: (Bottom x, Eq x) => (x -> x) -> x
+fixEq f = iterate bottom
+ where
+  iterate x = let x' = f x in
+               if (x==x')
+                then x
+                else iterate x'
 
-fixEq f x = iterate (const bottom)
+
+-- Second-order equality-based fixed-point combinator
+
+fixEq2 :: (Bottom x, Eq x) => ((x -> x) -> x -> x) -> x -> x
+fixEq2 f x = iterate (const bottom)
  where 
   iterate r = let r' = f r  in
                if (r x == r' x) 
@@ -54,12 +64,10 @@ fixEq f x = iterate (const bottom)
                  else iterate r'
 
 
--- An alternative formulation of fixEq
+-- An alternative formulation of fixEq2
 
-fixEq' :: (Bottom x, Eq x)
-       => ((x -> x) -> x -> x) -> x -> x
-
-fixEq' f x = findEq (repetitions bottom f x)
+fixEq2' :: (Bottom x, Eq x) => ((x -> x) -> x -> x) -> x -> x
+fixEq2' f x = findEq (repetitions bottom f x)
  where
   findEq (h:h':t)
    = if h==h'

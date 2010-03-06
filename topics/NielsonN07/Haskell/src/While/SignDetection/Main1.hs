@@ -35,7 +35,7 @@ strafos  = STrafoAlg {
                FF       -> ms2 s
                TopTT    -> ms1 s `lub` ms2 s
                BottomTT -> bottom
-  , fix  = fixEq
+  , fix  = fixEq2
 }
 
 
