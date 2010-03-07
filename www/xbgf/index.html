@@ -30,13 +30,13 @@
 
         </style></head><body><h1>
       BGF transformation operator suite
-     v.1.0<br></br><span class="date">2010-02-16</span></h1><h2><a name="foreword"></a>Foreword</h2>
-		This chapter describes the transformational suite for BGF and all the details about it.
+     v.1.0<br></br><span class="date">2010-03-07</span></h1><h2><a name="foreword"></a>Foreword</h2>
+		This chapter describes the transformational suite for BGF.
 		Most of the information present here is located in the XML Schema definition of the
 		language, part of the SLPS project. The rest was introduced by the language documentation
 		transformation commands in the process of automated generation of the manual in its
 		present form.
-    <h2><a name="normativeReferences"></a>Normative references</h2><ul><li><strong><a href="http://slps.svn.sourceforge.net/viewvc/slps/shared/xsd/bgf.xsd">bgf.xsd</a></strong></li></ul><h2>Table of contents</h2><ol><li><a href="#foreword">Foreword</a></li><li><a href="#normativeReferences">Normative references</a></li><li><a href="#designGoals">Design goals</a></li><li><a href="#notation-section">Notation</a></li><li><a href="#folding-unfolding-transformation">Folding and unfolding transformations</a><ol><li><a href="#unfold">unfold</a></li><li><a href="#fold">fold</a></li><li><a href="#inline">inline</a></li><li><a href="#extract">extract</a></li><li><a href="#abridge">abridge</a></li><li><a href="#detour">detour</a></li><li><a href="#unchain">unchain</a></li><li><a href="#chain">chain</a></li></ol></li><li><a href="#refactoring-transformation">Other refactoring transformations</a><ol><li><a href="#massage">massage</a></li><li><a href="#distribute">distribute</a></li><li><a href="#factor">factor</a></li><li><a href="#deyaccify">deyaccify</a></li><li><a href="#yaccify">yaccify</a></li><li><a href="#eliminate">eliminate</a></li><li><a href="#introduce">introduce</a></li><li><a href="#import">import</a></li><li><a href="#vertical">vertical</a></li><li><a href="#horizontal">horizontal</a></li><li><a href="#rassoc">rassoc</a></li><li><a href="#lassoc">lassoc</a></li><li><a href="#equate">equate</a></li></ol></li><li><a href="#increasing-transformation">Grammar lengthening transformations</a><ol><li><a href="#add">add</a></li><li><a href="#appear">appear</a></li><li><a href="#widen">widen</a></li><li><a href="#upgrade">upgrade</a></li><li><a href="#unite">unite</a></li></ol></li><li><a href="#decreasing-transformation">Grammar shortening transformations</a><ol><li><a href="#remove">remove</a></li><li><a href="#disappear">disappear</a></li><li><a href="#narrow">narrow</a></li><li><a href="#downgrade">downgrade</a></li></ol></li><li><a href="#concrete-revising-transformation">Refactorings in term-oriented semantics</a><ol><li><a href="#abstractize">abstractize</a></li><li><a href="#concretize">concretize</a></li><li><a href="#permute">permute</a></li></ol></li><li><a href="#abstract-revising-transformation">Semantics revising transformations</a><ol><li><a href="#define">define</a></li><li><a href="#undefine">undefine</a></li><li><a href="#redefine">redefine</a></li><li><a href="#inject">inject</a></li><li><a href="#project">project</a></li><li><a href="#replace">replace</a></li></ol></li><li><a href="#decorative-transformation">Decorative transformations</a><ol><li><a href="#designate">designate</a></li><li><a href="#unlabel">unlabel</a></li><li><a href="#deanonymize">deanonymize</a></li><li><a href="#anonymize">anonymize</a></li></ol></li><li><a href="#dump">dump</a></li><li><a href="#rename">rename</a><ol><li><a href="#renameL">renameL</a></li><li><a href="#renameN">renameN</a></li><li><a href="#renameS">renameS</a></li><li><a href="#rename-terminal">renameT</a></li></ol></li><li><a href="#reroot">reroot</a></li><li><a href="#compatibility-section">Compatibility</a></li></ol><h2><a name="designGoals"></a>Design goals</h2>
+    <h2><a name="normativeReferences"></a>Normative references</h2><ul><li><strong><a href="http://slps.svn.sourceforge.net/viewvc/slps/shared/xsd/bgf.xsd">bgf.xsd</a></strong></li></ul><h2>Table of contents</h2><ol><li><a href="#foreword">Foreword</a></li><li><a href="#normativeReferences">Normative references</a></li><li><a href="#designGoals">Design goals</a></li><li><a href="#notation-section">Notation</a></li><li><a href="#folding-unfolding-transformation">Folding and unfolding transformations</a><ol><li><a href="#unfold">unfold</a></li><li><a href="#fold">fold</a></li><li><a href="#inline">inline</a></li><li><a href="#extract">extract</a></li><li><a href="#abridge">abridge</a></li><li><a href="#detour">detour</a></li><li><a href="#unchain">unchain</a></li><li><a href="#chain">chain</a></li></ol></li><li><a href="#refactoring-transformation">Other refactoring transformations</a><ol><li><a href="#massage">massage</a></li><li><a href="#distribute">distribute</a></li><li><a href="#factor">factor</a></li><li><a href="#deyaccify">deyaccify</a></li><li><a href="#yaccify">yaccify</a></li><li><a href="#eliminate">eliminate</a></li><li><a href="#introduce">introduce</a></li><li><a href="#import">import</a></li><li><a href="#vertical">vertical</a></li><li><a href="#horizontal">horizontal</a></li><li><a href="#rassoc">rassoc</a></li><li><a href="#lassoc">lassoc</a></li><li><a href="#equate">equate</a></li></ol></li><li><a href="#increasing-transformation">Language increasing transformations</a><ol><li><a href="#add">add</a></li><li><a href="#appear">appear</a></li><li><a href="#widen">widen</a></li><li><a href="#upgrade">upgrade</a></li><li><a href="#unite">unite</a></li></ol></li><li><a href="#decreasing-transformation">Language decreasing transformations</a><ol><li><a href="#remove">remove</a></li><li><a href="#disappear">disappear</a></li><li><a href="#narrow">narrow</a></li><li><a href="#downgrade">downgrade</a></li></ol></li><li><a href="#concrete-revising-transformation">Refactorings in term-oriented semantics</a><ol><li><a href="#abstractize">abstractize</a></li><li><a href="#concretize">concretize</a></li><li><a href="#permute">permute</a></li></ol></li><li><a href="#abstract-revising-transformation">Semantics revising transformations</a><ol><li><a href="#define">define</a></li><li><a href="#undefine">undefine</a></li><li><a href="#redefine">redefine</a></li><li><a href="#inject">inject</a></li><li><a href="#project">project</a></li><li><a href="#replace">replace</a></li></ol></li><li><a href="#decorative-transformation">Decorative transformations</a><ol><li><a href="#designate">designate</a></li><li><a href="#unlabel">unlabel</a></li><li><a href="#deanonymize">deanonymize</a></li><li><a href="#anonymize">anonymize</a></li></ol></li><li><a href="#dump">dump</a></li><li><a href="#rename">rename</a><ol><li><a href="#renameL">renameL</a></li><li><a href="#renameN">renameN</a></li><li><a href="#renameS">renameS</a></li><li><a href="#rename-terminal">renameT</a></li></ol></li><li><a href="#reroot">reroot</a></li><li><a href="#compatibility-section">Compatibility</a></li></ol><h2><a name="designGoals"></a>Design goals</h2>
 				
           XBGF operator suite was developed mainly for grammar convergence
           activities.
@@ -289,9 +289,9 @@
         <strong><a href="#deyaccify">deyaccify</a></strong>, <strong><a href="#distribute">distribute</a></strong>,
         etc.&#8212;in which case it is only natural to limit the impact of every step.
       
-        The definition that is being unfolded is assumed to be horisontal,
+        The definition that is being unfolded is assumed to be horizontal,
         i.e. to consist of one single production. See the section on refactorings
-        for more information about horisontal and vertical definitions.
+        for more information about horizontal and vertical definitions.
       <h4>Syntax</h4>
 <pre><a name="unfold"><span xmlns="" class="nt">unfold</span></a>:
         <a href="#nonterminal"><span xmlns="" class="nt">nonterminal</span></a> <span class="sel">in</span>::<a href="#scope"><span xmlns="" class="nt">scope</span></a>?
@@ -331,7 +331,7 @@ After using this transformation:
         of the argument nonterminal.
       
         Since this transformation strives to preserve the language, it needs
-        a horisontal definition to work. When only one of several existing
+        a horizontal definition to work. When only one of several existing
         definitions is used for folding, it would actually increase the semantics
         of the language after transformation&#8212;the corresponding XBGF command
         is called <strong><a href="#upgrade">upgrade</a></strong>.
@@ -365,7 +365,7 @@ After using this transformation:
 </pre>
 <a name="inline"></a><h3>inline</h3>
         When this transformation is performed, an existing definition is eliminated by inlining.
-        This means that the argument nonterminal identifies the (horisontal) definition
+        This means that the argument nonterminal identifies the (horizontal) definition
         that is to be unfolded and stripped away from the grammar.
       
         The semantics of <strong><a href="#inline">inline</a></strong> is that of a sequential composition of
@@ -1270,7 +1270,7 @@ After using this transformation (note the order of expressions):
         Both left- and right-recursive forms can be factored with this transformation.
       <h4>Syntax</h4>
 <pre><a name="deyaccify"><span xmlns="" class="nt">deyaccify</span></a>:
-        <a href="#nonterminal"><span xmlns="" class="nt">nonterminal</span></a>
+        <span class="sel">nonterminal</span>::<a href="#nonterminal"><span xmlns="" class="nt">nonterminal</span></a>
 </pre>
   
         Deyaccification uses several general patterns. Left recursion like this:
@@ -1384,7 +1384,7 @@ or yaccified with right recursion:
         a production of a vertical definition) is  to be removed.
       <h4>Syntax</h4>
 <pre><a name="eliminate"><span xmlns="" class="nt">eliminate</span></a>:
-        <a href="#nonterminal"><span xmlns="" class="nt">nonterminal</span></a>
+        <span class="sel">nonterminal</span>::<a href="#nonterminal"><span xmlns="" class="nt">nonterminal</span></a>
 </pre>
   <a name="eliminate-example"></a><h4>Example</h4>
 				For instance,
@@ -1450,10 +1450,9 @@ After using this transformation:
 </pre>
   <h4>Semantics</h4>
 				
-          There are times when <strong><a href="#introduce">introduce</a></strong> is just not enough.
-          The simplest of such a situations is a case when we want to introduce two
+          Consider a scenario where we want to introduce two
           productions, each defining a fresh nonterminal symbol, and each using the other.
-          Without <strong><a href="#import">import</a></strong> the only way to do it was to run one
+          Without <strong><a href="#import">import</a></strong> the only way to do so would be to run one
           <strong><a href="#introduce">introduce</a></strong> and one <strong><a href="#define">define</a></strong>,
           which is semantically wrong since we are sure that before the first nonterminal
           is introduced, the second one was fresh. So, instead we take the interdependent
@@ -1462,6 +1461,7 @@ After using this transformation:
 				
           Technically, <strong><a href="#import">import</a></strong> can be used any time to
           substitute any number of <strong><a href="#introduce">introduce</a></strong> transformations.
+		Whether	this is a desired use pattern or not, is left at the discretion of the language engineer.
         
 			<a name="import-example"></a><h4>Example</h4>
 				For instance,
@@ -1495,18 +1495,12 @@ After using this transformation:
 		The action is a reverse of <strong><a href="#horizontal">horizontal</a></strong>.
     
 		Occasionally we use terms &#8220;vertical&#8221; productions or nonterminals
-		and &#8220;horisontal&#8221; ones. By vertical nonterminals we mean those that
+		and &#8220;horizontal&#8221; ones. By vertical nonterminals we mean those that
 		are defined by a list of productions, with every production lacking
-		a top-level choice. A horisontal nonterminal, on the other hand,
+		a top-level choice. A horizontal nonterminal, on the other hand,
 		is defined by one production that is a top-level choice. Nonterminals
 		that employ both top-level choices and splitting into multiple productions
-		are neither horisontal nor vertical.
-	
-		By default all operators prefer vertical productions. However,
-		in some cases like 
-        <strong><a href="#factor">factoring</a></strong>
-		it should not be expected from the transformation engine to look up
-		scattered definitions, so one horisontal production is expected instead.
+		are neither horizontal nor vertical.
 	<h4>Syntax</h4>
 <pre><a name="vertical"><span xmlns="" class="nt">vertical</span></a>:
         <a href="#scope"><span xmlns="" class="nt">scope</span></a>
@@ -1529,10 +1523,10 @@ then, after using this transformation:
 </pre>
 <a name="horizontal"></a><h3>horizontal</h3>
         Turn a definition based on multiple productions into a top choice-based one.
-		The action is a reverse of <strong><a href="#vertical">vertical</a></strong>.
+        The action is a reverse of <strong><a href="#vertical">vertical</a></strong>.
       <h4>Syntax</h4>
 <pre><a name="horizontal"><span xmlns="" class="nt">horizontal</span></a>:
-        <a href="#nonterminal"><span xmlns="" class="nt">nonterminal</span></a>
+        <span class="sel">nonterminal</span>::<a href="#nonterminal"><span xmlns="" class="nt">nonterminal</span></a>
 </pre>
   <a name="horizontal-example"></a><h4>Example</h4>
 				If some or all of the original productions are labelled:
@@ -1619,7 +1613,7 @@ After using this transformation:
 <pre><a name="equate"><span xmlns="" class="nt">equate</span></a>:
         <span class="sel">align</span>::<a href="#nonterminal"><span xmlns="" class="nt">nonterminal</span></a> <span class="sel">with</span>::<a href="#nonterminal"><span xmlns="" class="nt">nonterminal</span></a>
 </pre>
-  <h2><a name="increasing-transformation"></a>Grammar lengthening transformations</h2>
+  <h2><a name="increasing-transformation"></a>Language increasing transformations</h2>
         Here is a list of the XBGF transformations that
         lenghten the grammar (increase semantics).
       <pre><a name="increasing-transformation"><span xmlns="" class="nt">increasing-transformation</span></a>:
@@ -1631,13 +1625,13 @@ After using this transformation:
 </pre>
   <a name="add"></a><h3>add</h3>
         Nonterminal definitions can be extended ("added to") vertically
-        and horisontally. In the former case, a given production is added
+        and horizontally. In the former case, a given production is added
         to an existing definition. In the latter case, a given branch is
         added to a given expression. The
-        horisontal mode is there for convenience only because it could be
+        horizontal mode is there for convenience only because it could be
         simulated by a sequence of extraction, vertical addition, and
         inlining. There are two operators that are very similar to the
-        (vertical) add operator: define and introduce. The define operator
+        (vertical) add operator: <strong><a href="#define">define</a></strong> and <strong><a href="#introduce">introduce</a></strong>. The define operator
         should be used when an the definition of an undefined nonterminal
         is added. The introduce operator should be used when a fresh
         nonterminal is to be defined.
@@ -1821,7 +1815,9 @@ After using this transformation:
         <span class="sel">fun</span>::(<a href="#function"><span xmlns="" class="nt">function</span></a>+)
 </pre>
 <a name="upgrade"></a><h3>upgrade</h3>
-        Replaces an expression by a nonterminal that can be evaluated to it.
+		Upgrading is a special variation of replacement and a slightly more
+		powerful and liberal form of <strong><a href="#fold">folding</a></strong>.
+        This operator replaces an expression by a nonterminal that can be evaluated to it.
         The first parameter is the scope production with an expression marked.
         The second parameter is one of that nonterminal's definitions,
         which right hand side equals that expression.
@@ -1892,7 +1888,7 @@ After using this transformation:
   <pre><a name="foo"><span xmlns="" class="nt">foo</span></a>:
         <span class="t">"d"</span>
 </pre>
-<h2><a name="decreasing-transformation"></a>Grammar shortening transformations</h2>
+<h2><a name="decreasing-transformation"></a>Language decreasing transformations</h2>
         Here is a list of the XBGF transformations that
         shorten the grammar (decrease semantics).
       <pre><a name="decreasing-transformation"><span xmlns="" class="nt">decreasing-transformation</span></a>:
@@ -1905,7 +1901,7 @@ After using this transformation:
         Productions can be removed from existing, vertical definitions.
         The remaining definition must not become empty, i.e., undefined.
         There is the undefine operator that can be applied in that case.
-        There is also a horisontal mode of removing branches from choices.
+        There is also a horizontal mode of removing branches from choices.
       <a name="removeV"></a><h3>removeV</h3>
 <h5>Syntax</h5>
 <pre>[<a class="label" name="vertical">vertical</a>] <a name="remove"><span xmlns="" class="nt">remove</span></a>:
@@ -1989,7 +1985,7 @@ After using this transformation:
         <span class="t">"-"</span>? <a href="#int"><span xmlns="" class="nt">int</span></a>
 </pre>
 <a name="disappear"></a><h3>disappear</h3>
-        As <strong><a href="#project">project</a></strong>, but only allows for nillable elements (optional, star) to disappear.
+        This operator behaves like <strong><a href="#project">project</a></strong>, but only allows for nillable elements (optional, star) to disappear.
       <h4>Syntax</h4>
 <pre><a name="disappear"><span xmlns="" class="nt">disappear</span></a>:
         <a href="#marked-production"><span xmlns="" class="nt">marked-production</span></a>
@@ -2157,7 +2153,7 @@ After using this transformation:
         As <strong><a href="#project">project</a></strong>, but with an additional precondition
         that the part to be removed should consist of terminals. This is checked
         automatically by the XBGF engine: if the precondition fails, the transformation
-        is unapplicable.
+        is inapplicable.
       <h4>Syntax</h4>
 <pre><a name="abstractize"><span xmlns="" class="nt">abstractize</span></a>:
         <a href="#marked-production"><span xmlns="" class="nt">marked-production</span></a>
@@ -2248,7 +2244,7 @@ After using this transformation:
         <a href="#replace"><span xmlns="" class="nt">replace</span></a>
 </pre>
   <a name="define"></a><h3>define</h3>
-        An undefined nonterminal is resolved. The nonterminal must be in
+        An undefined nonterminal is resolved by this operator. The nonterminal must be in
         use. The introduce operator should be used when a fresh nonterminal
         is to be defined. The add operator should be used when an existing
         definition is to be extended.
@@ -2257,7 +2253,7 @@ After using this transformation:
         <a href="#production"><span xmlns="" class="nt">production</span></a>+
 </pre>
 <a name="undefine"></a><h3>undefine</h3>
-        Undefine a nonterminal, i.e., remove all productions. The
+        This operator allows to undefine a nonterminal, i.e., remove all its productions. The
         nonterminal must have using occurrences elsewhere than just in
         its own definition. If there are no such using occurrences, then
         the less disruptive eliminate operator is to be used.
@@ -2266,7 +2262,7 @@ After using this transformation:
         <a href="#nonterminal"><span xmlns="" class="nt">nonterminal</span></a>+
 </pre>
 <a name="redefine"></a><h3>redefine</h3>
-        A <strong><a href="#replace">replace</a></strong> variant that works on production level. When this
+        Redefine is a <strong><a href="#replace">replace</a></strong> variant that works on production level. When this
         transformation is executed, all current productions for the
         nonterminal are dropped, and all the given ones are added
         to the grammar.
@@ -2407,7 +2403,7 @@ After using this transformation:
         <a href="#int"><span xmlns="" class="nt">int</span></a>
 </pre>
 <a name="unlabel"></a><h3>unlabel</h3>
-        A reverse of <strong><a href="#designate">designate</a></strong> that strips an existing production from a label.
+        This is a reverse of <strong><a href="#designate">designate</a></strong> that strips an existing production from a label.
       <h4>Syntax</h4>
 <pre><a name="unlabel"><span xmlns="" class="nt">unlabel</span></a>:
         <a href="#label"><span xmlns="" class="nt">label</span></a>
@@ -2457,7 +2453,7 @@ After using this transformation:
         <span class="sel">first</span>::<span class="t">"a"</span> <span class="sel">second</span>::<span class="t">"a"</span> <span class="sel">third</span>::<span class="t">"a"</span>
 </pre>
 <a name="anonymize"></a><h3>anonymize</h3>
-        A reverse of <strong><a href="#deanonymize">deanonymize</a></strong> that strips one (marked) selector
+        This operator is the reverse of <strong><a href="#deanonymize">deanonymize</a></strong> that strips one (marked) selector
         from an existing definition.
       <h4>Syntax</h4>
         Given the input BGF and a clear goal to strip all selectors,
@@ -2493,7 +2489,7 @@ After using this transformation:
         <a href="#unary_op"><span xmlns="" class="nt">unary_op</span></a> <a href="#expr"><span xmlns="" class="nt">expr</span></a>
 </pre>
 <h2><a name="dump"></a>dump</h2>
-        A debugging tool for XBGF. When the <strong><a href="#dump">dump</a></strong> command is encountered,
+        This is a debugging tool for XBGF. When the <strong><a href="#dump">dump</a></strong> command is encountered,
         the transformation sequence stops and the grammar in its
         current state is dumped to the file xbgf.log.
       
@@ -2866,7 +2862,7 @@ After using this transformation:
  [<a class="label" name="int">int</a>] <a name="value"><span class="nt">value</span></a>:
         <span class="marked">&lt;<span class="t">"INT"</span>&gt;</span>
 );
-</li></ul></pre><p><center><img src="bnfbgf.png" alt="Full convergence diagram for BNF and BGF."></img><br></br><strong>Figure.</strong>
+</li></ul></pre><p><center><img src="bnfbgf.png" alt="Full convergence diagram for BNF and BGF"></img><br></br><strong>Figure.</strong>
         Full convergence diagram for BNF and BGF. The top nodes are sources, the bottom node
         is the target, the arc labels are separate XBGF scripts, the nodes contain
         numbers of name mismatches and structural mismatches between each step and
