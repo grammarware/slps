@@ -57,9 +57,9 @@
 	<xldf:insert>
 		<before>
 			<text>
-        The definition that is being unfolded is assumed to be horisontal,
+        The definition that is being unfolded is assumed to be horizontal,
         i.e. to consist of one single production. See the section on refactorings
-        for more information about horisontal and vertical definitions.
+        for more information about horizontal and vertical definitions.
       </text>
 		</before>
 		<content>

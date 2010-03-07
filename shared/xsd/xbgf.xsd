@@ -264,13 +264,13 @@
     <xsd:annotation>
       <xsd:documentation>
         Nonterminal definitions can be extended ("added to") vertically
-        and horisontally. In the former case, a given production is added
+        and horizontally. In the former case, a given production is added
         to an existing definition. In the latter case, a given branch is
         added to a given expression. The
-        horisontal mode is there for convenience only because it could be
+        horizontal mode is there for convenience only because it could be
         simulated by a sequence of extraction, vertical addition, and
         inlining. There are two operators that are very similar to the
-        (vertical) add operator: define and introduce. The define operator
+        (vertical) add operator: <ldf:keyword>define</ldf:keyword> and <ldf:keyword>introduce</ldf:keyword>. The define operator
         should be used when an the definition of an undefined nonterminal
         is added. The introduce operator should be used when a fresh
         nonterminal is to be defined.
@@ -356,7 +356,7 @@
   <xsd:element name="define">
     <xsd:annotation>
       <xsd:documentation>
-        An undefined nonterminal is resolved. The nonterminal must be in
+        An undefined nonterminal is resolved by this operator. The nonterminal must be in
         use. The introduce operator should be used when a fresh nonterminal
         is to be defined. The add operator should be used when an existing
         definition is to be extended.
@@ -373,7 +373,7 @@
   <xsd:element name="disappear">
     <xsd:annotation>
       <xsd:documentation>
-        As <ldf:keyword>project</ldf:keyword>, but only allows for nillable elements (optional, star) to disappear.
+        This operator behaves like <ldf:keyword>project</ldf:keyword>, but only allows for nillable elements (optional, star) to disappear.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -429,7 +429,7 @@
   <xsd:element name="unlabel">
     <xsd:annotation>
       <xsd:documentation>
-        A reverse of <ldf:keyword>designate</ldf:keyword> that strips an existing production from a label.
+        This is a reverse of <ldf:keyword>designate</ldf:keyword> that strips an existing production from a label.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -485,7 +485,7 @@
   <xsd:element name="dump">
     <xsd:annotation>
       <xsd:documentation>
-        A debugging tool for XBGF. When the <ldf:keyword>dump</ldf:keyword> command is encountered,
+        This is a debugging tool for XBGF. When the <ldf:keyword>dump</ldf:keyword> command is encountered,
         the transformation sequence stops and the grammar in its
         current state is dumped to the file xbgf.log.
       </xsd:documentation>
@@ -584,7 +584,7 @@
       </xsd:documentation>
       <xsd:documentation>
         Since this transformation strives to preserve the language, it needs
-        a horisontal definition to work. When only one of several existing
+        a horizontal definition to work. When only one of several existing
         definitions is used for folding, it would actually increase the semantics
         of the language after transformation---the corresponding XBGF command
         is called <ldf:keyword>upgrade</ldf:keyword>.
@@ -638,7 +638,7 @@
     <xsd:annotation>
       <xsd:documentation>
         When this transformation is performed, an existing definition is eliminated by inlining.
-        This means that the argument nonterminal identifies the (horisontal) definition
+        This means that the argument nonterminal identifies the (horizontal) definition
         that is to be unfolded and stripped away from the grammar.
       </xsd:documentation>
       <xsd:documentation>
@@ -811,7 +811,7 @@
   <xsd:element name="redefine">
     <xsd:annotation>
       <xsd:documentation>
-        A <ldf:keyword>replace</ldf:keyword> variant that works on production level. When this
+        Redefine is a <ldf:keyword>replace</ldf:keyword> variant that works on production level. When this
         transformation is executed, all current productions for the
         nonterminal are dropped, and all the given ones are added
         to the grammar.
@@ -840,7 +840,7 @@
         Productions can be removed from existing, vertical definitions.
         The remaining definition must not become empty, i.e., undefined.
         There is the undefine operator that can be applied in that case.
-        There is also a horisontal mode of removing branches from choices.
+        There is also a horizontal mode of removing branches from choices.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -1092,7 +1092,7 @@
   <xsd:element name="undefine">
     <xsd:annotation>
       <xsd:documentation>
-        Undefine a nonterminal, i.e., remove all productions. The
+        This operator allows to undefine a nonterminal, i.e., remove all its productions. The
         nonterminal must have using occurrences elsewhere than just in
         its own definition. If there are no such using occurrences, then
         the less disruptive eliminate operator is to be used.
@@ -1118,9 +1118,9 @@
         of the argument nonterminal.
       </xsd:documentation>
       <xsd:documentation>
-        The definition that is being unfolded is assumed to be horisontal,
+        The definition that is being unfolded is assumed to be horizontal,
         i.e. to consist of one single production. See the section on refactorings
-        for more information about horisontal and vertical definitions.
+        for more information about horizontal and vertical definitions.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -1173,7 +1173,7 @@
         As <ldf:keyword>project</ldf:keyword>, but with an additional precondition
         that the part to be removed should consist of terminals. This is checked
         automatically by the XBGF engine: if the precondition fails, the transformation
-        is unapplicable.
+        is inapplicable.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
@@ -1186,7 +1186,7 @@
   <xsd:element name="anonymize">
     <xsd:annotation>
       <xsd:documentation>
-        A reverse of <ldf:keyword>deanonymize</ldf:keyword> that strips one (marked) selector
+        This operator is the reverse of <ldf:keyword>deanonymize</ldf:keyword> that strips one (marked) selector
         from an existing definition.
       </xsd:documentation>
     </xsd:annotation>
@@ -1207,13 +1207,14 @@
     </xsd:documentation>
 	<xsd:documentation>
 		Occasionally we use terms ``vertical'' productions or nonterminals
-		and ``horisontal'' ones. By vertical nonterminals we mean those that
+		and ``horizontal'' ones. By vertical nonterminals we mean those that
 		are defined by a list of productions, with every production lacking
-		a top-level choice. A horisontal nonterminal, on the other hand,
+		a top-level choice. A horizontal nonterminal, on the other hand,
 		is defined by one production that is a top-level choice. Nonterminals
 		that employ both top-level choices and splitting into multiple productions
-		are neither horisontal nor vertical.
+		are neither horizontal nor vertical.
 	</xsd:documentation>
+	<!--
 	<xsd:documentation>
 		By default all operators prefer vertical productions. However,
 		in some cases like 
@@ -1222,8 +1223,9 @@
           <reference>factor</reference>
         </ldf:link>
 		it should not be expected from the transformation engine to look up
-		scattered definitions, so one horisontal production is expected instead.
+		scattered definitions, so one horizontal production is expected instead.
 	</xsd:documentation>
+	-->
     </xsd:annotation>
     <xsd:complexType>
       <xsd:group ref="xbgf:scope"/>
@@ -1281,7 +1283,12 @@
   <xsd:element name="upgrade">
     <xsd:annotation>
       <xsd:documentation>
-        Replaces an expression by a nonterminal that can be evaluated to it.
+		Upgrading is a special variation of replacement and a slightly more
+		powerful and liberal form of <ldf:link>
+          <text>folding</text>
+          <reference>fold</reference>
+        </ldf:link>.
+        This operator replaces an expression by a nonterminal that can be evaluated to it.
         The first parameter is the scope production with an expression marked.
         The second parameter is one of that nonterminal's definitions,
         which right hand side equals that expression.

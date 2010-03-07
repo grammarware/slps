@@ -1471,10 +1471,9 @@
 		<semantics>
 			<content>
 				<text>
-          There are times when <ldf:keyword>introduce</ldf:keyword> is just not enough.
-          The simplest of such a situations is a case when we want to introduce two
+          Consider a scenario where we want to introduce two
           productions, each defining a fresh nonterminal symbol, and each using the other.
-          Without <ldf:keyword>import</ldf:keyword> the only way to do it was to run one
+          Without <ldf:keyword>import</ldf:keyword> the only way to do so would be to run one
           <ldf:keyword>introduce</ldf:keyword> and one <ldf:keyword>define</ldf:keyword>,
           which is semantically wrong since we are sure that before the first nonterminal
           is introduced, the second one was fresh. So, instead we take the interdependent
@@ -1483,6 +1482,7 @@
 				<text>
           Technically, <ldf:keyword>import</ldf:keyword> can be used any time to
           substitute any number of <ldf:keyword>introduce</ldf:keyword> transformations.
+		Whether	this is a desired use pattern or not, is left at the discretion of the language engineer.
         </text>
 			</content>
 		</semantics>
@@ -1674,7 +1674,7 @@
 		<from>syntax</from>
 		<to>synopsis</to>
 	</xldf:changeRole>
-	<!-- the most recent addition to XBGF -->
+<!-- the most recent addition to XBGF -->
 	<xldf:place>
 		<section>equate</section>
 		<inside>refactoring-transformation</inside>

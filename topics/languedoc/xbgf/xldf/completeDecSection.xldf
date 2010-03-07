@@ -11,7 +11,7 @@
 		<from>
 			<title>decreasing-transformation</title>
 		</from>
-		<to>Grammar shortening transformations</to>
+		<to>Language decreasing transformations</to>
 	</xldf:retitle>
 	<xldf:place>
 		<section>remove</section>
