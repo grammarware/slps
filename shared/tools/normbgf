@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ $# -ne 2 ]; then
+	echo "This tool normalizes a BGF by performing an intentionally vacuous grammar transformation with normalization."
+    echo "Usage: normbgf <BGF-input> <BGF-output>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+	`dirname $0`/xbgf `dirname $0`/../../topics/presentation/normalize/empty.xbgf $1 $2 > /dev/null
+	mv xbgf.log $2
+fi
