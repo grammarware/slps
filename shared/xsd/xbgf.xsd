@@ -143,7 +143,7 @@
     <xsd:annotation>
       <xsd:documentation>
         Here is a list of the XBGF transformations that
-        lenghten the grammar (increase semantics).
+        lengthen the grammar (increase semantics).
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>
@@ -216,7 +216,7 @@
         performing volatile replacements.
       </xsd:documentation>
       <xsd:documentation>
-        Whenever a transformation from this group is used in a conergence
+        Whenever a transformation from this group is used in a convergence
         path, it signals either about a construction point where the grammar
         engineer is having a temporary shortcut to be substituted later
         with a longer sequence of more accurate manipulations, or an inevitable
@@ -241,15 +241,10 @@
         have labelled productions, but since we do, we also need two transformation
         steps made possible: to <ldf:keyword>designate</ldf:keyword> an already
         available production with a label, and to <ldf:keyword>unlabel</ldf:keyword>
-        an existing labelled production. By
-        <ldf:link>
-          <text>anonymising</text>
-          <reference>anonymize</reference>
-        </ldf:link> we refer to stripping selectors from subexpressions, and by
-        <ldf:link>
-          <text>deanonymising</text>
-          <reference>deanonymize</reference>
-        </ldf:link>, naturally, adding selectors.
+        an existing labelled production.
+	We strip selectors from subexpressions with
+	<ldf:keyword>anonymize</ldf:keyword> and add
+	them, naturally, with <ldf:keyword>deanonymize</ldf:keyword>.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:choice>

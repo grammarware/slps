@@ -428,7 +428,7 @@
 				</row>
 			</table>
 			<text>
-        Second, a composition of two EBNF modifers can be massaged to one modifier according
+        Second, a composition of two EBNF modifiers can be massaged to one modifier according
         to the table below:
       </text>
 			<table>
@@ -1134,7 +1134,7 @@
 			<content>
 				<text>
           In fact, <ldf:keyword>distribute</ldf:keyword> is nothing more than an automated
-          version of <ldf:keyword>factor</ldf:keyword> that agressively pushes all the choices
+          version of <ldf:keyword>factor</ldf:keyword> that aggressively pushes all the choices
           that can be found in a production outwards.
         </text>
 				<text>
