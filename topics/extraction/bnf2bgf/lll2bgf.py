@@ -1,17 +1,48 @@
 #!/usr/bin/python
-# BEWARE OF QUICK AND DIRTY COPY-PASTE PROGRAMMING
 import sys
 
-grammar = {}
-order = []
+# for debugging purposes search for 'BREAKPOINT' and insert the name of the interested nonterminal symbol
+
+# these terminals get wrapped with writespace added on both sides
+wrappedTerminals = ('(',')','{','}','*','+','?',':',';')
+
+# these terminals are screened by giving them internal names (basically we fold them before processing and unfold afterwards)
+screenedTerminals = \
+	(
+		(';','SEMICOLON'),
+		(':','COLON'),
+		('**','DOUBLESTAR'),
+		('*','STAR'),
+		('++','DOUBLEPLUS'),
+		('+','PLUS'),
+		('?','QUESTION'),
+		('(','LEFTPARENTHESIS'),
+		(')','RIGHTPARENTHESIS'),
+		('{','LEFTCURLYBRACKET'),
+		('}','RIGHTCURLYBRACKET')
+	)
+
+# these special symbols get transformed into HTML entities
+htmlEntities = \
+	(
+		('&','amp'),
+		('<','lt'),
+		('>','gt')
+	)
 
 def bgffriendly(s):
-	return s.replace('<','&lt;').replace('>','&gt;').replace('&','&amp;')
+	r = s
+	for x,y in screenedTerminals:
+		r = r.replace(x,'&'+y+';')
+	return r
 	
 def preparelll(s):
-	return s.replace('";"','TERMINAL_SEMICOLON').replace('":"','TERMINAL_COLON').replace('"?"','TERMINAL_QUESTION')\
-			.replace('"("','TERMINAL_LEFTBRACKET').replace('")"','TERMINAL_RIGHTBRACKET').replace(')',' ) ')\
-			.replace('(',' ( ').replace(';',' ; ').replace(':',' : ').replace('?',' ? ')
+	r = s
+	for x,y in screenedTerminals:
+		r = r.replace('"'+x+'"','TERMINAL'+y)
+	for x in wrappedTerminals:
+		r = r.replace(x,' '+x+' ')
+	return r
 
 def serialiseExpression(ts,debug):
 	#print ts
@@ -19,7 +50,7 @@ def serialiseExpression(ts,debug):
 	i = 0
 	while i<len(ts):
 		if debug:
-			print 'Processing',ts[i],'(',i,')'
+			print 'Processing token',ts[i],'(',i,')'
 		if ts[i][0] == '"':
 			s.append('<bgf:expression><terminal>'+bgffriendly(ts[i][1:-1])+'</terminal></bgf:expression>')
 			i += 1
@@ -33,17 +64,12 @@ def serialiseExpression(ts,debug):
 			s[-1]='<bgf:expression><plus>'+s[-1]+'</plus></bgf:expression>'
 			i += 1
 		elif ts[i][0].isalpha():
-			if ts[i]=='TERMINAL_COLON':
-				s.append('<bgf:expression><terminal>:</terminal></bgf:expression>')
-			elif ts[i]=='TERMINAL_SEMICOLON':
-				s.append('<bgf:expression><terminal>;</terminal></bgf:expression>')
-			elif ts[i]=='TERMINAL_LEFTBRACKET':
-				s.append('<bgf:expression><terminal>(</terminal></bgf:expression>')
-			elif ts[i]=='TERMINAL_RIGHTBRACKET':
-				s.append('<bgf:expression><terminal>)</terminal></bgf:expression>')
-			elif ts[i]=='TERMINAL_QUESTION':
-				s.append('<bgf:expression><terminal>?</terminal></bgf:expression>')
-			else:
+			flag = False
+			for x,y in screenedTerminals:
+				if not flag and ts[i]=='TERMINAL'+y:
+					s.append('<bgf:expression><terminal>'+x+'</terminal></bgf:expression>')
+					flag = True
+			if not flag:
 				s.append('<bgf:expression><nonterminal>'+ts[i]+'</nonterminal></bgf:expression>')
 			i += 1
 		elif ts[i] == '{':
@@ -55,9 +81,11 @@ def serialiseExpression(ts,debug):
 			symbol    = serialiseExpression([ts[i+1]],debug)
 			separator = serialiseExpression([ts[i+2]],debug)
 			if ts[i+4] == '+':
-				s.append('<bgf:expression><sequence>'+symbol+'<bgf:expression><star><bgf:expression><sequence>'+separator+symbol+'</sequence></bgf:expression></star></bgf:expression></sequence></bgf:expression>')
+				s.append('<bgf:expression><sequence>'+symbol+'<bgf:expression><star><bgf:expression><sequence>'+separator+symbol+
+						'</sequence></bgf:expression></star></bgf:expression></sequence></bgf:expression>')
 			elif ts[i+4] == '*':
-				s.append('<bgf:expression><optional><bgf:expression><sequence>'+symbol+'<bgf:expression><star><bgf:expression><sequence>'+separator+symbol+'</sequence></bgf:expression></star></bgf:expression></sequence></bgf:expression></optional></bgf:expression>')
+				s.append('<bgf:expression><optional><bgf:expression><sequence>'+symbol+'<bgf:expression><star><bgf:expression><sequence>'+
+						separator+symbol+'</sequence></bgf:expression></star></bgf:expression></sequence></bgf:expression></optional></bgf:expression>')
 			i += 5
 		elif ts[i] == '(':
 			rbr = i+ts[i:].index(')')
@@ -87,7 +115,7 @@ def serialiseExpression(ts,debug):
 		return '<bgf:expression><choice>'+''.join(choices)+'</choice></bgf:expression>'
 	print 'Warning: default output'
 	return '\n\t'.join(s)
-	
+
 def serialiseFormula(name,tokens):
 	print 'Processing',name,'...'
 	if name=='BREAKPOINT':
