@@ -10,11 +10,15 @@ wrappedTerminals = ('(',')','{','}','*','+','?',':',';')
 screenedTerminals = \
 	(
 		(';','SEMICOLON'),
+		('::','DOUBLECOLON'),
 		(':','COLON'),
 		('**','DOUBLESTAR'),
+		('*=','MULTIPLICATIONASSIGNMENT'),
 		('*','STAR'),
 		('++','DOUBLEPLUS'),
+		('+=','ADDITIONASSIGNMENT'),
 		('+','PLUS'),
+		('??','DOUBLEQUESTION'),
 		('?','QUESTION'),
 		('(','LEFTPARENTHESIS'),
 		(')','RIGHTPARENTHESIS'),
@@ -32,7 +36,7 @@ htmlEntities = \
 
 def bgffriendly(s):
 	r = s
-	for x,y in screenedTerminals:
+	for x,y in htmlEntities:
 		r = r.replace(x,'&'+y+';')
 	return r
 	

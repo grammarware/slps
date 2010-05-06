@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+if [ $# -lt 2 ]; then
+    echo "This tool produces a BGF grammar from a grammar copy-pasted from a PDF"
+    echo "Usage:"
+    echo "        pdf2bgf [<keywords-list>] <input-lll> <output-bgf>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ $# -eq 2 ]; then
+	python ${SLPS}/topics/extraction/bnf2bgf/pdf2lll.py $1 intermediate.lll
+    python ${SLPS}/topics/extraction/bnf2bgf/lll2bgf.py intermediate.lll $2
+	rm -f intermediate.lll
+fi
