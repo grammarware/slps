@@ -2,11 +2,19 @@
 # -*- coding: utf-8 -*-
 import sys
 
+nt2t = 0
+
 lines = []
 grammar = {}
 double = {}
 current = ''
 keys=[]
+reported = ['identifier','keyword','literal']
+
+
+#bannedLines = ('44','45','46',"Annex A","SPECIFICATION","A.2.")
+bannedLines = []
+knownTerminals = []
 
 def assignNewCurrent(c):
 	global current
@@ -14,63 +22,28 @@ def assignNewCurrent(c):
 		keys.append(c)
 	current = c
 
-forbiddedLines = ('44','45','46',"Annex A","SPECIFICATION","A.2.")
-
-knownNonterminals = ('identifier','literal','right-shift-assignment','right-shift','keyword')
-
-knownTerminalsBefore = \
-	(
-		'.',',','++','--','-','!','~','/','%','??','?','<<',':','::',
-		'[',']','(',')','{','}','<','>',
-		'&','^','|','&&','||',
-		'+=','-=','*=','/=','%=','&=','|=','^=','<<=','<=','>=','==','!=','='
-	)
+def readBannedLinesList(f):
+	lst = open(f,'r')
+	for line in lst.readlines():
+		if line.strip():
+			bannedLines.append(line.strip())
+	lst.close()
+	
+def readTerminalsList(f):
+	lst = open(f,'r')
+	for kw in ' '.join(lst.readlines()).split():
+		knownTerminals.append(kw)
+	lst.close()
+	print knownTerminals
 
 knownPostfixes = ('+','*','?')
 
-knownTerminalsAfter = \
-	(
-		';'
-	)
-	# * +
-	
 knownReplacements = \
 	(
-		('opt',' ?'),
+		('opt',' OPTIONALITYMETASYMBOL'),
 		('–','"-"')
 	)
 
-screenedTerminals = \
-	(
-		(';','SEMICOLON'),
-		(':','COLON'),
-		('**','DOUBLESTAR'),
-		('*=','MULTIPLICATIONASSIGNMENT'),
-		('*','STAR'),
-		('++','DOUBLEPLUS'),
-		('+=','ADDITIONASSIGNMENT'),
-		('+','PLUS'),
-		('?','QUESTION'),
-		('(','LEFTPARENTHESIS'),
-		(')','RIGHTPARENTHESIS'),
-		('{','LEFTCURLYBRACKET'),
-		('}','RIGHTCURLYBRACKET')
-	)
-
-# these special symbols get transformed into HTML entities
-htmlEntities = \
-	(
-		('&','amp'),
-		('<','lt'),
-		('>','gt')
-	)
-
-fresh = 0
-# 0 - the first production
-# 1 - the first line of a production
-# 2 - more lines in a production
-# 3 - the first line in a one-of production
-# 4 - more lines in a one-of production
 oneof = False
 
 def processline(line):
@@ -103,16 +76,12 @@ def processline(line):
 	return
 
 def processLineTokens(rline):
-	tokens = rline.split()
-	for i in range(0,len(tokens)):
-		if tokens[i] in knownTerminalsBefore:
-			tokens[i] = '"'+tokens[i]+'"'
-	iline = ' '.join(tokens)
+	iline = rline[:]
 	for x,y in knownReplacements:
 		iline = iline.replace(x,y)
 	tokens = iline.split()
 	for i in range(0,len(tokens)):
-		if tokens[i] in knownTerminalsAfter:
+		if tokens[i] in knownTerminals:
 			tokens[i] = '"'+tokens[i]+'"'
 	return tokens
 
@@ -123,7 +92,7 @@ def readLines(f):
 	for line in pdf.readlines():
 		cx += 1
 		include = True
-		for x in forbiddedLines:
+		for x in bannedLines:
 			if line.find(x)>-1:
 				include = False
 		if include:
@@ -151,34 +120,49 @@ def writeGrammar(f):
 		lll.write(';\n\n')
 	lll.close()
 
+def massageGrammarRule(context,nt):
+	global nt2t
+	for i in range(0,len(context[nt])):
+		tokens = context[nt][i].split()
+		# special case: a postfix metasymbol (e.g., *) occurs in the beggining of the line
+		if tokens[0] in knownPostfixes:
+			tokens[0] = '"'+tokens[0]+'"'
+		# special case: arithmetic operations versus context metasymbols
+		if len(tokens) == 3 and tokens[1] == '*' and tokens[0]+' "/" '+tokens[2] in context[nt]:
+			print 'A suspicious metasymbol * converted to an arithmetic operator'
+			tokens[1] = '"*"'
+		if len(tokens) == 3 and tokens[1] == '+' and tokens[0]+' "-" '+tokens[2] in context[nt]:
+			print 'A suspicious metasymbol + converted to an arithmetic operator'
+			tokens[1] = '"+"'
+		for j in range(0,len(tokens)):
+			# putting back the optionality metasymbol
+			if tokens[j] == 'OPTIONALITYMETASYMBOL':
+				tokens[j] = '?'
+				continue
+			# NOT converting undefined nonterminals to terminals
+			# REPORTING undefined nonterminals
+			if tokens[j][0] != '"'\
+			and tokens[j] not in grammar.keys()\
+			and tokens[j] not in reported:
+				print 'Warning: nonterminal',tokens[j],'undefined!'
+				reported.append(tokens[j])
+				#if tokens[j] not in knownNonterminals:
+				#	tokens[j]='"'+tokens[j]+'"'
+				#	nt2t += 1
+		context[nt][i] = ' '.join(tokens)
+	return
+
 def massageGrammar():
-	#print len(keys),'vs',len(grammar.keys())
-	nt2t = 0
+	global nt2t
+	# massaging the main grammar
 	for nt in grammar.keys():
-		for i in range(0,len(grammar[nt])):
-			tokens = grammar[nt][i].split()
-			# special case: a postfix metasymbol (e.g., *) occurs in the beggining of the line
-			if tokens[0] in knownPostfixes:
-				tokens[0] = '"'+tokens[0]+'"'
-			# special case: arithmetic operations versus grammar metasymbols
-			if len(tokens) == 3 and tokens[1] == '*' and tokens[0]+' "/" '+tokens[2] in grammar[nt]:
-				print 'A suspicious metasymbol * converted to an arithmetic operator'
-				tokens[1] = '"*"'
-			if len(tokens) == 3 and tokens[1] == '+' and tokens[0]+' "-" '+tokens[2] in grammar[nt]:
-				print 'A suspicious metasymbol + converted to an arithmetic operator'
-				tokens[1] = '"+"'
-			# converting undefined nonterminals to terminals
-			for j in range(0,len(tokens)):
-				if tokens[j][0] != '"'\
-				and tokens[j] not in grammar.keys()\
-				and tokens[j] not in knownPostfixes:
-					#print 'Warning: nonterminal',tokens[j],'undefined!'
-					if tokens[j] not in knownNonterminals:
-						tokens[j]='"'+tokens[j]+'"'
-						nt2t += 1
-			grammar[nt][i] = ' '.join(tokens)
+		massageGrammarRule(grammar,nt)
+	# massaging the double rules (for matching purposes)
+	for nt in double.keys():
+		massageGrammarRule(double,nt)
 	if nt2t:
 		print 'Warning:',nt2t,'undefined nonterminals were converted to terminals.'
+	# matching double rules
 	for nt in double.keys():
 		if double[nt]!=grammar[nt]:
 			print 'Warning: double definition of',nt
@@ -188,11 +172,20 @@ def massageGrammar():
 				if s not in grammar[nt]:
 					grammar[nt].append(s)
 			print 'Opted for the union of them:',grammar[nt]
+	# add keywords!!!
+	if 'keyword' not in grammar.keys():
+		keys.append('keyword')
+		grammar['keyword'] = []
+		for kw in knownTerminals:
+			if kw.isalpha():
+				grammar['keyword'].append(kw)
 	return
 
 if __name__ == "__main__":
 	print 'PDF (rather txt copy-pasted from a PDF) pre-processor: produces an LLL grammar suitable to be fed into an LLL2BGF extractor.'
-	if len(sys.argv) == 3:
+	if len(sys.argv) == 5:
+		readBannedLinesList(sys.argv[3])
+		readTerminalsList(sys.argv[4])
 		readLines(sys.argv[1])
 		readGrammar(lines)
 		massageGrammar()
@@ -200,5 +193,5 @@ if __name__ == "__main__":
 		sys.exit(0)
 	else:
 		print 'Usage:'
-		print ' ',sys.argv[0],'''<input-txt> <output-lll>'''
+		print ' ',sys.argv[0],'''<input-txt> <output-lll> <list-of-banned-lines> <list-of-known-keywords>'''
 		sys.exit(1)
