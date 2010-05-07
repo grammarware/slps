@@ -9,18 +9,30 @@ grammar = {}
 double = {}
 current = ''
 keys=[]
-reported = ['identifier','keyword','literal']
+ignored = ['identifier','keyword','literal','string-literal']
+reported = []
+punctuators = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 
 
 #bannedLines = ('44','45','46',"Annex A","SPECIFICATION","A.2.")
 bannedLines = []
 knownTerminals = []
 
+def quote(x):
+	return '"'+x+'"'
+
+def unquote(x):
+	if x[0]=='"' and x[-1]=='"':
+		return x[1:-1]
+	else:
+		return x
+
 def assignNewCurrent(c):
 	global current
-	if c not in keys:
-		keys.append(c)
-	current = c
+	d = performReplacements(c)
+	if d not in keys:
+		keys.append(d)
+	current = d
 
 def readBannedLinesList(f):
 	lst = open(f,'r')
@@ -34,56 +46,91 @@ def readTerminalsList(f):
 	for kw in ' '.join(lst.readlines()).split():
 		knownTerminals.append(kw)
 	lst.close()
-	print knownTerminals
+	#print knownTerminals
+	for kw in knownTerminals:
+		if not kw.isalpha():
+			try:
+				punctuators[len(kw)-1].append(kw)
+			except IndexError,e:
+				print 'index error with',kw,len(kw)
+	punctuators.reverse()
+	print 'Punctuators:',punctuators
 
 knownPostfixes = ('+','*','?')
 
 knownReplacements = \
 	(
 		('opt',' OPTIONALITYMETASYMBOL'),
-		('–','"-"')
+		('–','"-"'),
+		('˜','"~"'),
+		('ﬁ','fi'),
+		('[',' ['),
+		('(',' ('),
+		(']',' ]'),
+		(')',' )'),
 	)
 
 oneof = False
 
 def processline(line):
-	global oneof
 	global current
+	global oneof
 	rline = line.strip()
 	if rline == '':
 		return ''
 	if rline[-1]==':' and rline[-2].isalpha():
 		oneof = False
-		assignNewCurrent(rline[:-1])
+		# getting rid of leading stuff (perhaps labels)
+		assignNewCurrent(rline[:-1].split()[-1])
 		if current in grammar.keys():
 			#print 'Warning: double declaration of',current
 			double[current] = grammar[current][:]
-		grammar[current]=[]
+		grammar[current] = []
 		return
 	if rline.find('one of')>0:
 		oneof = True
-		assignNewCurrent(rline.replace('one of','').strip()[:-1])
+		assignNewCurrent(rline.replace('one of','').strip()[:-1].split()[-1])
 		if current in grammar.keys():
 			#print 'Warning: double declaration of',current,': the first one',grammar[current],'discarded'
 			double[current] = grammar[current][:]
-		grammar[current]=[]
+		grammar[current] = []
 		return
 	if oneof:
-		for t in processLineTokens(rline):
-			grammar[current].append(t)
+		for t in rline.split():
+			grammar[current].append(' '.join(processLineTokens(t)))
+		#for t in processLineTokens(rline):
+		#	grammar[current].append(t)
 	else:
 		grammar[current].append(' '.join(processLineTokens(rline)))
 	return
 
-def processLineTokens(rline):
-	iline = rline[:]
+def performReplacements(line):
 	for x,y in knownReplacements:
-		iline = iline.replace(x,y)
+		line = line.replace(x,y)
+	return line
+
+def processLineTokens(rline):
+	iline = performReplacements(rline)
 	tokens = iline.split()
 	for i in range(0,len(tokens)):
 		if tokens[i] in knownTerminals:
-			tokens[i] = '"'+tokens[i]+'"'
+			tokens[i] = quote(tokens[i])
+		tokens[i] = splitLeading(tokens[i],punctuators)
 	return tokens
+	
+def splitLeading(t,arrays):
+	for ps in arrays:
+		for p in ps:
+			if t.find(p)==0:
+				t = quote(p)+' '+' '.join(processLineTokens(t[len(p):]))
+	return t
+
+def splitTrailing(t,array):
+	for p in array:
+		if t.find(p)>-1 and t.find(p)==len(t)-len(p):
+			#print 'Found',p,'in',t,'at',t.find(p),'- result at {'+(t[:-len(p)])+' "'+p+'"'+'}'
+			t = t[:-len(p)]+' '+quote(p)
+	return t
 
 def readLines(f):
 	print 'Reading the PDF lines...'
@@ -126,7 +173,7 @@ def massageGrammarRule(context,nt):
 		tokens = context[nt][i].split()
 		# special case: a postfix metasymbol (e.g., *) occurs in the beggining of the line
 		if tokens[0] in knownPostfixes:
-			tokens[0] = '"'+tokens[0]+'"'
+			tokens[0] = quote(tokens[0])
 		# special case: arithmetic operations versus context metasymbols
 		if len(tokens) == 3 and tokens[1] == '*' and tokens[0]+' "/" '+tokens[2] in context[nt]:
 			print 'A suspicious metasymbol * converted to an arithmetic operator'
@@ -143,9 +190,26 @@ def massageGrammarRule(context,nt):
 			# REPORTING undefined nonterminals
 			if tokens[j][0] != '"'\
 			and tokens[j] not in grammar.keys()\
+			and tokens[j] not in ignored\
 			and tokens[j] not in reported:
-				print 'Warning: nonterminal',tokens[j],'undefined!'
-				reported.append(tokens[j])
+				ts = splitLeading(tokens[j],[knownTerminals])
+				if unquote(ts.split()[-1]) in grammar.keys():
+					# false positive in nonterminal -> terminal conversion
+					tss = ts.split()
+					tss[-1] = unquote(tss[-1])
+					ts = ' '.join(tss)
+				if ts.find(' ')>-1 and (ts.split()[-1] in grammar.keys() or ts.split()[-1] in ignored):
+					print 'L-Splitting',tokens[j],'into',ts
+					tokens[j] = ts
+				else:
+					print 'NOT L-splitting',tokens[j],'into',ts
+					ts = splitTrailing(tokens[j],knownTerminals)
+					if ts.find(' ')>-1 and (ts.split()[0] in grammar.keys() or ts.split()[-1] in ignored):
+						print 'T-Splitting',tokens[j],'into',ts
+						tokens[j] = ts
+					else:
+						print 'Warning: nonterminal',tokens[j],'undefined, but used in',nt
+						reported.append(tokens[j])
 				#if tokens[j] not in knownNonterminals:
 				#	tokens[j]='"'+tokens[j]+'"'
 				#	nt2t += 1

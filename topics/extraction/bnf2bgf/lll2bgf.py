@@ -15,6 +15,7 @@ screenedTerminals = \
 		('**','DOUBLESTAR'),
 		('*=','MULTIPLICATIONASSIGNMENT'),
 		('*','STAR'),
+		('.*','DOTSTAR'),
 		('++','DOUBLEPLUS'),
 		('+=','ADDITIONASSIGNMENT'),
 		('+','PLUS'),
@@ -23,7 +24,8 @@ screenedTerminals = \
 		('(','LEFTPARENTHESIS'),
 		(')','RIGHTPARENTHESIS'),
 		('{','LEFTCURLYBRACKET'),
-		('}','RIGHTCURLYBRACKET')
+		('}','RIGHTCURLYBRACKET'),
+		('->*','ARROWSTAR')
 	)
 
 # these special symbols get transformed into HTML entities
