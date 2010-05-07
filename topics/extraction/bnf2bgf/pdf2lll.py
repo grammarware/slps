@@ -241,7 +241,7 @@ def massageGrammar():
 		grammar['keyword'] = []
 		for kw in knownTerminals:
 			if kw.isalpha():
-				grammar['keyword'].append(kw)
+				grammar['keyword'].append(quote(kw))
 	return
 
 if __name__ == "__main__":
