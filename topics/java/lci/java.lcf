@@ -7,7 +7,7 @@
   </shortcut>
   <shortcut>
     <name>java</name>
-    <expansion>..</expansion>
+    <expansion>../../grammars/java</expansion>
   </shortcut>
   <shortcut>
     <name>tools</name>

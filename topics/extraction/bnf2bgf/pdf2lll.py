@@ -54,7 +54,7 @@ def readTerminalsList(f):
 			except IndexError,e:
 				print 'index error with',kw,len(kw)
 	punctuators.reverse()
-	print 'Punctuators:',punctuators
+	#print 'Punctuators:',punctuators
 
 knownPostfixes = ('+','*','?')
 
@@ -202,7 +202,6 @@ def massageGrammarRule(context,nt):
 					print 'L-Splitting',tokens[j],'into',ts
 					tokens[j] = ts
 				else:
-					print 'NOT L-splitting',tokens[j],'into',ts
 					ts = splitTrailing(tokens[j],knownTerminals)
 					if ts.find(' ')>-1 and (ts.split()[0] in grammar.keys() or ts.split()[-1] in ignored):
 						print 'T-Splitting',tokens[j],'into',ts
