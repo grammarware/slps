@@ -62,12 +62,14 @@ knownReplacements = \
 	(
 		('opt',' OPTIONALITYMETASYMBOL'),
 		('–','"-"'),
+		('ñ','"-"'),
 		('˜','"~"'),
 		('ﬁ','fi'),
 		('[',' ['),
 		('(',' ('),
 		(']',' ]'),
-		(')',' )'),
+		(')',' )')
+#		('oneof',' one of'),
 	)
 
 oneof = False
@@ -90,6 +92,14 @@ def processline(line):
 	if rline.find('one of')>0:
 		oneof = True
 		assignNewCurrent(rline.replace('one of','').strip()[:-1].split()[-1])
+		if current in grammar.keys():
+			#print 'Warning: double declaration of',current,': the first one',grammar[current],'discarded'
+			double[current] = grammar[current][:]
+		grammar[current] = []
+		return
+	if rline.find('oneof')>0:
+		oneof = True
+		assignNewCurrent(rline.replace('oneof','').strip()[:-1].split()[-1])
 		if current in grammar.keys():
 			#print 'Warning: double declaration of',current,': the first one',grammar[current],'discarded'
 			double[current] = grammar[current][:]
