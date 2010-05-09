@@ -11,7 +11,43 @@
     />
  
   <xsl:template match="/bgf:grammar">
-    <xsl:apply-templates select="./bgf:*"/>
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Browsable Grammar</title>
+		<style type="text/css">
+		          h1, table { text-align: center; }
+		          .label, .sel { color: green; }
+		          .marked { background-color: #FFE5B4;}
+		          .nt { color: blue; font-weight: bold; }
+		          .t { color: red;  font-style:italic; }
+		          .meta { color: green; font-style:italic; font-family: Roman, "Times New Roman", serif; }
+		          h6 { text-align: right; }
+		          .date { font-size: small; }
+
+		          .note
+		          {
+		          text-align: right;
+		          font-weight: bold;
+		          margin: 0px;
+		          }
+		          .frame, pre
+		          {
+		          border: 1px solid black;
+		          border-spacing: 2px;
+		          border-collapse: collapse;
+		          background-color: #ECECEC;
+		          }
+
+		        </style>
+		</head>
+      <body>
+	    <xsl:for-each select="./bgf:*">
+			<pre>
+		      <xsl:apply-templates select="."/>
+			</pre>
+		</xsl:for-each>
+      </body>
+    </html>
   </xsl:template>
 
   <xsl:template match="bgf:production">
@@ -62,17 +98,23 @@
 
   <xsl:template match="plus">
     <xsl:apply-templates select="./*"/>
-    <xsl:text>+</xsl:text>
+	<span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+	    <xsl:text>+</xsl:text>
+    </span>
   </xsl:template>
 
   <xsl:template match="star">
     <xsl:apply-templates select="./*"/>
-    <xsl:text>*</xsl:text>
+	<span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+	    <xsl:text>*</xsl:text>
+    </span>
   </xsl:template>
 
   <xsl:template match="optional">
     <xsl:apply-templates select="./*"/>
-    <xsl:text>?</xsl:text>
+	<span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+	    <xsl:text>?</xsl:text>
+    </span>
   </xsl:template>
 
   <xsl:template match="terminal">

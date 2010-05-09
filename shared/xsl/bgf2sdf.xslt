@@ -52,9 +52,14 @@ exports
   <xsl:template match="bgf:production">
     <xsl:choose>
       <xsl:when test="./bgf:expression/choice">
-        <xsl:for-each select="./bgf:expression/choice/bgf:expression">
           <xsl:text>
         </xsl:text>
+          <xsl:call-template name="no-parenthesis">
+            <xsl:with-param name="expr" select="./bgf:expression/choice/bgf:expression[1]"/>
+          </xsl:call-template>
+        <xsl:for-each select="./bgf:expression/choice/bgf:expression[position()>1]">
+          <xsl:text>
+		| </xsl:text>
           <xsl:call-template name="no-parenthesis">
             <xsl:with-param name="expr" select="."/>
           </xsl:call-template>
@@ -77,6 +82,8 @@ exports
       <xsl:value-of select="./label"/>
       <xsl:text>)}</xsl:text>
     </xsl:if>
+      <xsl:text>
+</xsl:text>
   </xsl:template>
 
   <xsl:template match="bgf:expression">

@@ -27,7 +27,7 @@
     <xsl:choose>
       <xsl:when test="./bgf:expression/choice">
         <xsl:for-each select="./bgf:expression/choice/bgf:expression">
-          <xsl:value-of select="./nonterminal"/>
+          <xsl:value-of select="../../../nonterminal"/>
           <xsl:text> = </xsl:text>
           <xsl:call-template name="no-parenthesis">
             <xsl:with-param name="expr" select="."/>
@@ -108,7 +108,14 @@
   </xsl:template>
 
   <xsl:template match="nonterminal">
-    <xsl:value-of select="."/>
+    <xsl:choose>
+      <xsl:when test="text() = 'identifier'">
+        <xsl:text>IDENTIFIER</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	    <xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="selectable">
