@@ -1,0 +1,16 @@
+all:
+	make 1.jls -f Makefile.java.zoo
+	make 2.jls -f Makefile.java.zoo
+	make 3.jls -f Makefile.java.zoo
+
+%.jls:
+	cp ../topics/grammars/java/jls$*/extracted-implementable-grammar.bgf zoo/java/jls$*-impl.bgf
+	make jls$*-impl.formats -f Makefile.java.zoo
+	cp ../topics/grammars/java/jls$*/extracted-readable-grammar.bgf zoo/java/jls$*-read.bgf
+	make jls$*-read.formats -f Makefile.java.zoo
+
+%.formats:
+	../shared/tools/bgf2html zoo/java/$*.bgf zoo/java/$*.html
+	../shared/tools/bgf2bnf zoo/java/$*.bgf zoo/java/$*.bnf
+	../shared/tools/bgf2dms zoo/java/$*.bgf zoo/java/$*.dms
+	../shared/tools/bgf2sdf zoo/java/$*.bgf zoo/java/$*.sdf

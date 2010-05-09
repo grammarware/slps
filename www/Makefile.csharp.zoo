@@ -1,0 +1,34 @@
+all:
+	make ecma-334-1 -f Makefile.csharp.zoo
+	make ecma-334-2 -f Makefile.csharp.zoo
+	make ecma-334-3 -f Makefile.csharp.zoo
+	make ecma-334-4 -f Makefile.csharp.zoo
+	make iso-23270-2003-extracted -f Makefile.csharp.zoo
+	make iso-23270-2003-recovered -f Makefile.csharp.zoo
+	make iso-23270-2006 -f Makefile.csharp.zoo
+	make msft-ls-1.0 -f Makefile.csharp.zoo
+	make msft-ls-1.2 -f Makefile.csharp.zoo
+	make msft-ls-3.0 -f Makefile.csharp.zoo
+	make msft-ls-4.0 -f Makefile.csharp.zoo
+
+%:
+	cp ../topics/grammars/csharp/$*/extracted-grammar.bgf zoo/csharp/$*.bgf
+	cp ../topics/grammars/csharp/$*/intermediate.lll zoo/csharp/$*.lll
+	../shared/tools/bgf2html zoo/csharp/$*.bgf zoo/csharp/$*.html
+	../shared/tools/bgf2bnf zoo/csharp/$*.bgf zoo/csharp/$*.bnf
+	../shared/tools/bgf2dms zoo/csharp/$*.bgf zoo/csharp/$*.dms
+	../shared/tools/bgf2sdf zoo/csharp/$*.bgf zoo/csharp/$*.sdf
+
+iso-23270-2003-extracted:
+	cp ../topics/grammars/csharp/iso-23270-2003/extracted-grammar.bgf zoo/csharp/iso-23270-2003.bgf
+	../shared/tools/bgf2html zoo/csharp/iso-23270-2003.bgf zoo/csharp/iso-23270-2003.html
+	../shared/tools/bgf2bnf zoo/csharp/iso-23270-2003.bgf zoo/csharp/iso-23270-2003.bnf
+	../shared/tools/bgf2dms zoo/csharp/iso-23270-2003.bgf zoo/csharp/iso-23270-2003.dms
+	../shared/tools/bgf2sdf zoo/csharp/iso-23270-2003.bgf zoo/csharp/iso-23270-2003.sdf
+
+iso-23270-2003-recovered:
+	cp ../topics/grammars/csharp/iso-23270-2003/recovered-grammar.bgf zoo/csharp/iso-23270-2003-recovered.bgf
+	../shared/tools/bgf2html zoo/csharp/iso-23270-2003-recovered.bgf zoo/csharp/iso-23270-2003-recovered.html
+	../shared/tools/bgf2bnf zoo/csharp/iso-23270-2003-recovered.bgf zoo/csharp/iso-23270-2003-recovered.bnf
+	../shared/tools/bgf2dms zoo/csharp/iso-23270-2003-recovered.bgf zoo/csharp/iso-23270-2003-recovered.dms
+	../shared/tools/bgf2sdf zoo/csharp/iso-23270-2003-recovered.bgf zoo/csharp/iso-23270-2003-recovered.sdf

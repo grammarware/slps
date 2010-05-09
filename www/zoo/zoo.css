@@ -1,0 +1,15 @@
+h1 {text-align:center;}
+dt {font-weight: bold;}
+img {border:0;}
+.last {width: 100%; text-align: right;}
+.last img {border:0; width: 88px; height: 31px;}
+.last img#linkedin {border:0; width: 160px; height: 33px;}
+br {clear: both;}
+.container {text-align:center; width:300px;}
+ul.linklist li span,.links {text-align:center; font-family: "Courier New", Courier, mono; font-weight: bold;}
+ul.linklist li span a, .links a {text-decoration: none;}
+a:hover {text-decoration: underline;}
+body{background-color:#9C9; color:#033;}
+a:link{color:#039;}
+a:visited{color:#006;}
+ul li {list-style:disc;}

@@ -1,0 +1,10 @@
+all:
+	make iso-14882-1998 -f Makefile.cpp.zoo
+
+%:
+	cp ../topics/grammars/cpp/$*/extracted-grammar.bgf zoo/cpp/$*.bgf
+	cp ../topics/grammars/cpp/$*/intermediate.lll zoo/cpp/$*.lll
+	../shared/tools/bgf2html zoo/cpp/$*.bgf zoo/cpp/$*.html
+	../shared/tools/bgf2bnf zoo/cpp/$*.bgf zoo/cpp/$*.bnf
+	../shared/tools/bgf2dms zoo/cpp/$*.bgf zoo/cpp/$*.dms
+	../shared/tools/bgf2sdf zoo/cpp/$*.bgf zoo/cpp/$*.sdf
