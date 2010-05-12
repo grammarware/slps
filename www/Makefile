@@ -14,4 +14,4 @@ build:
 	make -f Makefile.cpp.zoo
 	make -f Makefile.csharp.zoo
 	make -f Makefile.java.zoo
-	xsltproc ../shared/xsl/zoo2xhtml.xslt config.zoo > zoo/index.html
+	xsltproc --stringparam date `date +"%d/%m/%Y"` ../shared/xsl/zoo2xhtml.xslt config.zoo > zoo/index.html

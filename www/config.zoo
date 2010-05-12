@@ -9,11 +9,11 @@
 			<date>December 1999</date>
 			<specific>Annex A, pages 402–416</specific>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>iso-9899-1999</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -22,7 +22,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>ISO C 2005</name>
@@ -30,11 +30,11 @@
 			<date>May 2005</date>
 			<specific>Annex A, pages 403–417</specific>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>iso-9899-tc2</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -43,7 +43,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>ISO C 2007</name>
@@ -51,11 +51,11 @@
 			<date>September 2007</date>
 			<specific>Annex A, pages 403–418</specific>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>iso-9899-tc3</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -64,7 +64,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 	</language>
 	<language>
@@ -76,11 +76,11 @@
 			<date>September 1998</date>
 			<specific>Annex A, pages 667–684</specific>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>iso-14882-1998</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -89,7 +89,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 	</language>
 	<language>
@@ -109,11 +109,11 @@
 				<name>PDF</name>
 			</link>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>ecma-334-1</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -122,7 +122,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>ECMA C# 2002</name>
@@ -138,11 +138,11 @@
 				<name>PDF</name>
 			</link>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>ecma-334-2</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -151,7 +151,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>ECMA C# 2005</name>
@@ -166,11 +166,11 @@
 				<name>PDF</name>
 			</link>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>ecma-334-3</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -179,7 +179,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>ECMA C# 2006</name>
@@ -194,11 +194,11 @@
 				<name>PDF</name>
 			</link>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>ecma-334-4</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -207,7 +207,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>ISO C# 2003</name>
@@ -236,8 +236,8 @@
 					<name>Slides</name>
 				</link>
 			</item>
-			<item>
-				<name>Recovery tools</name>
+			<toolset>
+				<name>Recovery</name>
 				<link>
 					<uri>http://gdk.sourceforge.net/</uri>
 					<name>GDK</name>
@@ -246,9 +246,9 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
-			<item>
-				<name>Transformation scripts</name>
+			</toolset>
+			<toolset>
+				<name>Transformation</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/recovery/csharp/trafo/deyaccify.trafo?view=markup</uri>
 					<name>deyaccify</name>
@@ -273,7 +273,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/recovery/csharp/trafo/modularise.trafo?view=markup</uri>
 					<name>modularise</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>ISO C# 2006</name>
@@ -288,11 +288,11 @@
 				<name>PDF.ZIP</name>
 			</link>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>iso-23270-2006</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -301,7 +301,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>Microsoft C# 1.0</name>
@@ -312,11 +312,11 @@
 				<name>DOC</name>
 			</link>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>msft-ls-1.0</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -325,7 +325,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>Microsoft C# 1.2</name>
@@ -336,11 +336,11 @@
 				<name>DOC</name>
 			</link>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>msft-ls-1.2</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -349,7 +349,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>Microsoft C# 3.0</name>
@@ -360,11 +360,11 @@
 				<name>DOC</name>
 			</link>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>msft-ls-3.0</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -373,7 +373,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>Microsoft C# 4.0</name>
@@ -384,11 +384,11 @@
 				<name>DOC</name>
 			</link>
 			<grammar>
-				<name>Extracted grammar</name>
+				<name>Extracted</name>
 				<handle>msft-ls-4.0</handle>
 			</grammar>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
 					<name>PDF⇒LLL</name>
@@ -397,7 +397,7 @@
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
 					<name>LLL⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 	</language>
 	<language>
@@ -416,11 +416,11 @@
 				<name>PDF</name>
 			</link>
 			<grammar>
-				<name>Readable grammar</name>
+				<name>Readable</name>
 				<handle>jls1-read</handle>
 			</grammar>
 			<grammar>
-				<name>Implementable grammar</name>
+				<name>Implementable</name>
 				<handle>jls1-impl</handle>
 			</grammar>
 			<item>
@@ -461,13 +461,13 @@
 					<name>Slides</name>
 				</link>
 			</item>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/html2bgf.py?view=markup</uri>
 					<name>HTML⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>J2SE 1.2 “Playground”</name>
@@ -482,11 +482,11 @@
 				<name>PDF</name>
 			</link>
 			<grammar>
-				<name>Readable grammar</name>
+				<name>Readable</name>
 				<handle>jls2-read</handle>
 			</grammar>
 			<grammar>
-				<name>Implementable grammar</name>
+				<name>Implementable</name>
 				<handle>jls2-impl</handle>
 			</grammar>
 			<item>
@@ -527,13 +527,13 @@
 					<name>Slides</name>
 				</link>
 			</item>
-			<item>
-				<name>Extraction tools</name>
+			<toolset>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/html2bgf.py?view=markup</uri>
 					<name>HTML⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 		<version>
 			<name>J2SE 5.0 “Tiger”</name>
@@ -548,11 +548,11 @@
 				<name>PDF</name>
 			</link>
 			<grammar>
-				<name>Readable grammar</name>
+				<name>Readable</name>
 				<handle>jls3-read</handle>
 			</grammar>
 			<grammar>
-				<name>Implementable grammar</name>
+				<name>Implementable</name>
 				<handle>jls3-impl</handle>
 			</grammar>
 			<item>
@@ -593,13 +593,13 @@
 					<name>Slides</name>
 				</link>
 			</item>
-			<item>
+			<toolset>
 				<name>Extraction tools</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/html2bgf.py?view=markup</uri>
 					<name>HTML⇒BGF</name>
 				</link>
-			</item>
+			</toolset>
 		</version>
 	</language>
 </zoo>

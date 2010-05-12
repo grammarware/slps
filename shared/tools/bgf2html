@@ -1,0 +1,24 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -eq 1 ]; then
+    OUTPUT=/dev/stdout
+elif [ $# -ne 2 ]; then
+    echo "This tool transforms BGF grammars to hypertext EBNF."
+    echo "Usage: bgf2html <input-bgf-grammar> [<output-hypertex>]"
+    echo "When output file is not specified, stdout is used."
+    exit 1
+else
+    OUTPUT=$2
+fi
+if [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+xsltproc ${SLPS}/shared/xsl/bgf2xhtml.xslt $1 | grep -v 'DOCTYPE' > ${OUTPUT}
