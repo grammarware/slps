@@ -91,6 +91,27 @@
 				</link>
 			</toolset>
 		</version>
+		<version>
+			<name>ISO C++ 2008</name>
+			<source>ISO/IEC SC22/WG21 N2723=08-0233 Working Draft, <em>Standard for Programming Language C++</em></source>
+			<date>August 2008</date>
+			<specific>Annex A, pages 1089–1101</specific>
+			<grammar>
+				<name>Extracted</name>
+				<handle>iso-n2723</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
+					<name>PDF⇒LLL</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
+					<name>LLL⇒BGF</name>
+				</link>
+			</toolset>
+		</version>
 	</language>
 	<language>
 		<handle>csharp</handle>

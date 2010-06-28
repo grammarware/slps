@@ -1,5 +1,6 @@
 all:
 	make iso-14882-1998 -f Makefile.cpp.zoo
+	make iso-n2723 -f Makefile.cpp.zoo
 
 %:
 	cp ../topics/grammars/cpp/$*/extracted-grammar.bgf zoo/cpp/$*.bgf

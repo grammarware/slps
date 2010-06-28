@@ -160,7 +160,7 @@ def readLines(f):
 				lines.append(line)
 	pdf.close()
 
-def readGrammar(f):
+def readGrammar(lines):
 	print 'Reading the PDF contents...'
 	for line in lines:
 		#print line

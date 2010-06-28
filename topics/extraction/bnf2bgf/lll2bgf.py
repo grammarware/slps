@@ -125,6 +125,7 @@ def serialiseExpression(ts,debug):
 def serialiseFormula(name,tokens):
 	# Useful yet annoying
 	#print 'Processing',name,'...'
+	# Replace BREAKPOINT with the name of a nonterminal you like to debug
 	if name=='BREAKPOINT':
 		print tokens
 		return '<bgf:production><nonterminal>'+name+'</nonterminal>'+serialiseExpression(tokens,True)+'</bgf:production>'
