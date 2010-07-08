@@ -1,15 +1,15 @@
 all:
-	make ecma-334-1 -f Makefile.csharp.zoo
-	make ecma-334-2 -f Makefile.csharp.zoo
-	make ecma-334-3 -f Makefile.csharp.zoo
-	make ecma-334-4 -f Makefile.csharp.zoo
-	make iso-23270-2003-extracted -f Makefile.csharp.zoo
-	make iso-23270-2003-recovered -f Makefile.csharp.zoo
-	make iso-23270-2006 -f Makefile.csharp.zoo
-	make msft-ls-1.0 -f Makefile.csharp.zoo
-	make msft-ls-1.2 -f Makefile.csharp.zoo
-	make msft-ls-3.0 -f Makefile.csharp.zoo
-	make msft-ls-4.0 -f Makefile.csharp.zoo
+	make ecma-334-1 -f _dev/Makefile.csharp.zoo
+	make ecma-334-2 -f _dev/Makefile.csharp.zoo
+	make ecma-334-3 -f _dev/Makefile.csharp.zoo
+	make ecma-334-4 -f _dev/Makefile.csharp.zoo
+	make iso-23270-2003-extracted -f _dev/Makefile.csharp.zoo
+	make iso-23270-2003-recovered -f _dev/Makefile.csharp.zoo
+	make iso-23270-2006 -f _dev/Makefile.csharp.zoo
+	make msft-ls-1.0 -f _dev/Makefile.csharp.zoo
+	make msft-ls-1.2 -f _dev/Makefile.csharp.zoo
+	make msft-ls-3.0 -f _dev/Makefile.csharp.zoo
+	make msft-ls-4.0 -f _dev/Makefile.csharp.zoo
 
 %:
 	cp ../topics/grammars/csharp/$*/extracted-grammar.bgf zoo/csharp/$*.bgf

@@ -11,7 +11,7 @@
 			</title>
 				<link href="zoo.css" rel="stylesheet" type="text/css"/>
 			</head>
-			<body>
+			<body style="background-color:#9C9;">
 				<h1>
 				Software Language Processing Suite
 				<br/>

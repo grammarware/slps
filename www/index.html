@@ -1,68 +1,80 @@
-<HTML>
-<HEAD>
-<TITLE>Software Language Processing Suite</TITLE>
-</HEAD>
-
-<BODY bgcolor="#99CCFF">
-
-<H1>Software Language Processing Suite</H1>
-
-<a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=228107&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
-
-<H3>Mission</H3>
-
-<H2>The project facilitates exposition and comparison of approaches and
-techniques on language processing in a way that is relevant for CS
-students, teachers, scientists, and practitioners.</H2>
-
-<P>
-
-<HR>
-
-<H3>Links</H3>
-
-<UL>
-  <LI> <A HREF=https://sourceforge.net/projects/slps>Project page at SourceForge</A>
-  <LI> <A HREF=http://slps.svn.sourceforge.net/viewvc/slps/>View subversion repository<A>
-  <LI> <A HREF=https://lists.sourceforge.net/lists/listinfo/slps-cafe>Mailing list slps-cafe@lists.sourceforge.net</A>
-  <LI> <A HREF=https://lists.sourceforge.net/lists/listinfo/slps-contributors>Mailing list slps-contributors@lists.sourceforge.net</A>
-  <LI> <A HREF=http://planet-sl.org/>Software Language Engineering Conference</A>
-</UL>
-
-<P>
-
-<HR>
-
-<H3>FAQ</H3>
-
-<DL>
-
-<DT><B>What's the layout of the suite?</B><DT>
-
-<DD>The topics directory holds all the language processing samples
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:bgf="http://planet-sl.org/bgf" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Software Language Processing Suite</title>
+		<link href="../slps.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body style="background-color:#9CF;">
+		<h1>
+			Software Language Processing Suite
+			<br/>
+			<a href="http://sourceforge.net">
+				<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=228107&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" />
+			</a>
+		</h1>
+		<h2>Mission</h2>
+		<h3>
+			The project facilitates exposition and comparison of approaches and
+			techniques on language processing in a way that is relevant for CS
+			students, teachers, scientists, and practitioners.
+		</h3>
+		<hr />
+		<h2>Pages</h2>
+		<ul>
+			<li>
+				<a href="https://sourceforge.net/projects/slps">Project page at SourceForge</a>
+			</li>
+			<li>
+				<a href="http://slps.svn.sourceforge.net/viewvc/slps/">Subversion repository</a>
+			</li>
+			<li>
+				<a href="xbgf/">XBGF Language Manual</a>
+			</li>
+			<li>
+				<a href="zoo/">SLPS Grammar Zoo (C, C++, C#, Java)</a>
+			</li>
+			<li>
+				<a href="zoo/java/links.html">Java grammars link repository</a>
+			</li>
+		</ul>
+		<h2>Links</h2>
+		<ul>
+			<li>
+				<a href="https://lists.sourceforge.net/lists/listinfo/slps-cafe">Mailing list slps-cafe@lists.sourceforge.net</a>
+			</li>
+			<li>
+				<a href="https://lists.sourceforge.net/lists/listinfo/slps-contributors">Mailing list slps-contributors@lists.sourceforge.ne</a>
+			</li>
+			<li>
+				<a href="http://planet-sl.org/">Software Language Engineering Conference</a>
+			</li>
+		</ul>
+		<hr />
+		<h2>FAQ</h2>
+		<dl>
+			<dt>What's the layout of the suite?</dt>
+			<dd>The topics directory holds all the language processing samples
 (aka themes, topics, etc.). Typically, subdirectories of each topic
 directory group different "implementations" (aka alternative
 approaches, possibly with differing complementary capabilities).  The
 typical contributor will operate in the directory of one topic,
 perhaps only in the directory of one implementation. For instance, the
-"fl" topic (fl -- Factorial Language) comprises different
+"fl" topic (fl — Factorial Language) comprises different
 implementations of the fl language that cover components such as
 parser, pretty printer, evaluator, type checker, and optimizer.  There
 are different implementations for Java, Haskell, Prolog, and various
 language processing technologies. A topic may also hold a "shared"
 subdirectory that is meant to hold resources that are reused across
-the different implementations. Next to the <I>topics</I> container,
-there are also the following directories: <I>www</I> -- SLPS web
-content; <I>shared</I> -- SLPS libraries and infrastructure not
-currently assigned to a topic; <I>tools</I> -- executable files (such
+the different implementations. Next to the <i>topics</i> container,
+there are also the following directories: <i>www</i> — SLPS web
+content; <i>shared</i> — SLPS libraries and infrastructure not
+currently assigned to a topic; <i>tools</i> — executable files (such
 as scripts) to cover recurring actions in working with SLPS
-topics.</DD>
-
-<P>
-
-<DT><B>How to use (install, build, run) the suite?</B></DT>
-
-<DD>There is no useful way of building or running the suite as a
+topics.</dd>
+			<dt>How to use (install, build, run) the suite?</dt>
+			<dd>There is no useful way of building or running the suite as a
 whole.  The different implementations are provided by different people
 and rely quite intrinsically on specific libraries and tools that may
 require specific effort to get an implementation to work. As a general
@@ -72,27 +84,18 @@ independently. The use of README files and Makefiles is recommended to
 this end. The colllective build and testing of an entire topic (with
 several implementations) is often not practical because it would just
 require too many third-party libraries and tools to be set up in a
-challenging manner.</DD>
-
-<P>
-
-<DT><B>How to become a contributor?</B></DT>
-
-<DD>Contributors are more than welcome. If you want to become a proper
+challenging manner.</dd>
+			<dt>How to become a contributor?</dt>
+			<dd>Contributors are more than welcome. If you want to become a proper
 contributor (with svn access), please submit a short request to the
 slps-contributors mailing list or use SourceForge
 functionality. Clearly, you need a SourceForge account to be a
 contributor. This project uses the BSD license. If you merely want to
 discuss issues with existing examples or just offer a quick fix or the
 sketch of a new example, then please consider using one of the mailing
-lists identified above.</DD>
-
-</DL>
-
-<P>
-
-<HR>
-
+lists identified above.</dd>
+		</dl>
+		<hr />
 <!-- Start of StatCounter Code -->
 <script type="text/javascript">
 sc_project=3709270; 
@@ -104,6 +107,6 @@ sc_security="9a69ae83";
 <script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a href="http://www.statcounter.com/" target="_blank"><img class="statcounter" src="http://c45.statcounter.com/3709270/0/9a69ae83/1/" alt="site stats" ></a></div></noscript>
 <!-- End of StatCounter Code -->
 
-</BODY>
+</body>
 
-</HTML>
+</html>

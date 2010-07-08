@@ -10,7 +10,7 @@ br {clear: both;}
 ul.linklist li span,.links {text-align:center; font-family: "Courier New", Courier, mono; font-weight: bold;}
 ul.linklist li span a, .links a {text-decoration: none;}
 a:hover {text-decoration: underline;}
-body{background-color:#9C9; color:#033;}
+body{color:#033;}
 a:link{color:#039;}
 a:visited{color:#006;}
 ul li {list-style:disc;}

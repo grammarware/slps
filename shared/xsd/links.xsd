@@ -16,15 +16,7 @@
                     <xsd:element name="title" type="xsd:string"/>
                     <xsd:element name="author" type="xsd:string" maxOccurs="unbounded"/>
                     <xsd:element name="link" type="xsd:anyURI"/>
-                    <xsd:element name="version">
-                      <xsd:simpleType>
-                        <xsd:restriction base="xsd:int">
-                          <xsd:enumeration value="1"/>
-                          <xsd:enumeration value="2"/>
-                          <xsd:enumeration value="3"/>
-                        </xsd:restriction>
-                      </xsd:simpleType>
-                    </xsd:element>
+                    <xsd:element name="version" type="xsd:string"/>
                     <xsd:element name="form" type="xsd:string"/>
                     <xsd:element name="comment" type="xsd:string"/>
                   </xsd:sequence>
@@ -34,6 +26,7 @@
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 
