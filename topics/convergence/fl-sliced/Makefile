@@ -6,23 +6,24 @@ build:
 	time make csv
 	
 slice:
-	../../../shared/python/sliceXbgfs.py ../lci/java.lcf .
+	../../../shared/python/sliceXbgfs.py ../fl/fl.lcf .
 
 test:
-	../../../shared/tools/lci java.lcf architecture
-
+	../../../shared/tools/lci fl.lcf architecture
+	
 csv:
-	../../../shared/python/lcf2csv.py java.lcf ../../../shared/tools/gdt csv
+	../../../shared/python/lcf2csv.py fl.lcf ../../../shared/tools/gdt csv
 
 check:
-	${validator} lcf java.lcf
+	${validator} lcf fl.lcf
 	ls -1 xbgf/*.xbgf | xargs -n1 ${validator} xbgf
 	ls -1  bgf/*.bgf  | xargs -n1 ${validator} bgf
 
 clean:
 	rm -f *~
-	rm -f bgf/* xbgf/* *.txt
+	rm -f bgf/* xbgf/* *.txt TMP-res
 	rm -rf bin obj
 	rm -f *.user *.suo
 	rm -f architecture*
-	rm -f java.log
+	rm -f fl.log
+

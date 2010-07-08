@@ -4,7 +4,7 @@
   </shortcut>
   <shortcut>
     <name>fl</name>
-    <expansion>..</expansion>
+    <expansion>../../fl</expansion>
   </shortcut>
   <shortcut>
     <name>tools</name>
