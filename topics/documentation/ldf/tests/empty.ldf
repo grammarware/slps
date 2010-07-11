@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ldf:document xmlns:ldf="http://planet-sl.org/ldf">
+	<ldf:title-page>
+		<ldf:metainfo/>
+		<ldf:status>unknown</ldf:status>
+		<version>1.0</version>
+		<date>today</date>
+	</ldf:title-page>
+	<content>
+		<ldf:part>
+			<role>core-part</role>
+			<ldf:metainfo/>
+			<content>
+				<ldf:placeholder>index</ldf:placeholder>
+			</content>
+		</ldf:part>
+	</content>
+</ldf:document>
