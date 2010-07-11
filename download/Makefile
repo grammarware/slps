@@ -2,6 +2,10 @@ all:
 
 install: install-antlr install-fop install-msv install-et install-pp install-generateDS install-gdk
 
+install-xig:
+	#curl -k http://labsewiki.isti.cnr.it/data/media/projects/taxi/taxi.exe
+	curl -k http://downloads.sourceforge.net/project/xml-xig/xml-xig/xml-xig%200.1/xml-xig-0.1.1.jar?use_mirror=citylan&ts=1278861268 >xml-xig-0.1.1.jar
+
 install-gdk:
 	curl -k http://gdk.sourceforge.net/gdk-1.4.4.tar.gz > gdk-1.4.4.tar.gz
 	gzip -d gdk-1.4.4.tar.gz
