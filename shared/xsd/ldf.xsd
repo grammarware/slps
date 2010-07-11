@@ -178,7 +178,7 @@
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="title" type="xsd:string"/>
-				<xsd:choice>
+				<xsd:choice minOccurs="0">
 					<xsd:element name="version" type="xsd:string"/>
 					<xsd:element name="edition" type="xsd:string"/>
 				</xsd:choice>
