@@ -1,5 +1,6 @@
-<xbgf:sequence
-  xmlns:bgf="http://planet-sl.org/bgf"
-  xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:horizontal>decs</xbgf:horizontal>
+<?xml version="1.0"?>
+<xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
+	<xbgf:horizontal>
+		<nonterminal>decs</nonterminal>
+	</xbgf:horizontal>
 </xbgf:sequence>
