@@ -1460,11 +1460,15 @@ unite(N1,N2,G1,G2)
 %
 equate(N1,N2,g(Rs1,Ps1),g(Rs2,Ps2))
  :-
-    findN(Ps1,N1,N1Ps1),
+    splitN(Ps1,N1,N1Ps1,N1Ps1a,N1Ps1b),
     findN(Ps1,N2,N2Ps),
-	xbgf1:renameN(N1,N2,g(Rs1,N1Ps1),g(_,N1Ps2)),
-    checkforidentity(N1Ps2,N2Ps),
-    xbgf1:unite(N1,N2,g(Rs1,Ps1),g(Rs2,Ps2)).
+    xbgf1:renameN(N1,N2,g(Rs1,N1Ps1),g(_,N1Ps2)),
+    require(
+		(xbgf1:checkforidentity(N1Ps2,N2Ps)),
+		'Definitions of nonterminals ~q and ~q must be equal.',
+		[N1,N2]),
+    concat([N1Ps1a,N1Ps1b],N1Ps3),
+    transform(try(xbgf1:renameN_rules(N1,N2)),g(Rs1,N1Ps3),g(Rs2,Ps2)).
 
 checkforidentity([],[]).
 checkforidentity([P1|Ps1],Ps2)
@@ -1473,7 +1477,7 @@ checkforidentity([P1|Ps1],Ps2)
 	checkforidentity(Ps1,Ps3).
 
 removeproduction(P1,[P2|Ps2],Ps2) :- eqP(P1,P2).
-removeproduction(P1,[P2|Ps2],Ps3) :- [P2|removeproduction(P1,Ps2,Ps3)].
+removeproduction(P1,[P2|Ps2],[P2|Ps3]) :- removeproduction(P1,Ps2,Ps3).
 
 %
 % p([l(verticalL)], f, n(l))

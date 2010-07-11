@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Software Language Processing Suite</title>
-		<link href="../slps.css" rel="stylesheet" type="text/css" />
+		<link href="slps.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body style="background-color:#9CF;">
 		<h1>
@@ -38,6 +38,9 @@
 			<li>
 				<a href="zoo/java/links.html">Java grammars link repository</a>
 			</li>
+			<li>
+				<a href="faq.html">FAQ (outdated)</a>
+			</li>
 		</ul>
 		<h2>Links</h2>
 		<ul>
@@ -52,48 +55,129 @@
 			</li>
 		</ul>
 		<hr />
-		<h2>FAQ</h2>
+		<h2>Structure</h2>
 		<dl>
-			<dt>What's the layout of the suite?</dt>
-			<dd>The topics directory holds all the language processing samples
-(aka themes, topics, etc.). Typically, subdirectories of each topic
-directory group different "implementations" (aka alternative
-approaches, possibly with differing complementary capabilities).  The
-typical contributor will operate in the directory of one topic,
-perhaps only in the directory of one implementation. For instance, the
-"fl" topic (fl — Factorial Language) comprises different
-implementations of the fl language that cover components such as
-parser, pretty printer, evaluator, type checker, and optimizer.  There
-are different implementations for Java, Haskell, Prolog, and various
-language processing technologies. A topic may also hold a "shared"
-subdirectory that is meant to hold resources that are reused across
-the different implementations. Next to the <i>topics</i> container,
-there are also the following directories: <i>www</i> — SLPS web
-content; <i>shared</i> — SLPS libraries and infrastructure not
-currently assigned to a topic; <i>tools</i> — executable files (such
-as scripts) to cover recurring actions in working with SLPS
-topics.</dd>
-			<dt>How to use (install, build, run) the suite?</dt>
-			<dd>There is no useful way of building or running the suite as a
-whole.  The different implementations are provided by different people
-and rely quite intrinsically on specific libraries and tools that may
-require specific effort to get an implementation to work. As a general
-rule, each implementation subdirectory of a topic directory should be
-documented up to the point that one can build and run it more or less
-independently. The use of README files and Makefiles is recommended to
-this end. The colllective build and testing of an entire topic (with
-several implementations) is often not practical because it would just
-require too many third-party libraries and tools to be set up in a
-challenging manner.</dd>
-			<dt>How to become a contributor?</dt>
-			<dd>Contributors are more than welcome. If you want to become a proper
-contributor (with svn access), please submit a short request to the
-slps-contributors mailing list or use SourceForge
-functionality. Clearly, you need a SourceForge account to be a
-contributor. This project uses the BSD license. If you merely want to
-discuss issues with existing examples or just offer a quick fix or the
-sketch of a new example, then please consider using one of the mailing
-lists identified above.</dd>
+			<dt>topics</dt>
+			<dd>
+				<dl>
+					<dt>fl</dt>
+					<dd>
+						The Factorial Language that is used in the SLPS for prototyping various tools
+						and approaches. Every subdirectory there is a different implementation of FL:
+						Java, Haskell, Prolog, etc.
+					</dd>
+					<dt>convergence</dt>
+					<dd>
+						Grammar convergence scenarios: Factorial Language, Java Language Specification, etc.
+					</dd>
+					<dt>extraction</dt>
+					<dd>
+						Grammar extractors.
+					</dd>
+					<dt>recovery</dt>
+					<dd>
+						Grammar recovery attempts that go beyond simple extraction: Grammar Recovery Kit, C#, etc.
+					</dd>
+					<dt>grammars</dt>
+					<dd>
+						Extracted grammars that form the <a href="zoo/">SLPS Zoo</a>.
+						Java grammars are also located here.
+					</dd>
+					<dt>metasyntax</dt>
+					<dd>
+						BNF-like Grammar Format definitions and similar topics. Work in progress.
+					</dd>
+					<dt>presentation</dt>
+					<dd>
+						Mappers from BGF to elsewhere: pretty-printers, grammar analyses, metrics, normalisations, etc.
+					</dd>
+					<dt>transformation</dt>
+					<dd>
+						Grammar transformation and language document transformation, complete with test sets.
+					</dd>
+					<dt>exercises</dt>
+					<dd>
+						Lab exercises for the course Programming Paradigms and Formal Semantics.
+					</dd>
+					<dt>documentation</dt>
+					<dd>
+						Files needed for Language Documentation.
+					</dd>
+					<dt>documents</dt>
+					<dd>
+						Language documents. Work in progress.
+					</dd>
+					<dt>NielsonN07</dt>
+					<dd>
+						Some encodings of semantics derived from Nielson and Nielson, 2007 (and prior versions).
+						In particular, the denotational semantics of While language.
+					</dd>
+					<dt>while</dt>
+					<dd>
+						While language. Outdated.
+					</dd>
+					<dt>apimigration</dt>
+					<dd>
+						API migration. Work in progress.
+					</dd>
+					<dt>java</dt>
+					<dd>
+						Outdated.
+					</dd>
+				</dl>
+			</dd>
+			<dt>shared</dt>
+			<dd>
+				<dl>
+					<dt>xsd</dt>
+					<dd>
+						XML Schema definitions for various DSLs used in SLPS: BTF, BGF, XBGF, LDF, XLDF, LCF, etc.
+					</dd>
+					<dt>xsl</dt>
+					<dd>
+						eXtensible Stylesheet Language transformations for mappers and extractors.
+						Mostly populated with BGF-to-elsewhere mappings, but also Ecore-to-BGF, TXL-to-BGF and LDF-to-elsewhere ones are found here.
+					</dd>
+					<dt>prolog</dt>
+					<dd>
+						Prolog sources for some extractors and for the XBGF engine (as well as any other future Prolog sources).
+					</dd>
+					<dt>python</dt>
+					<dd>
+						Python sources for many different SLPS tools, of which the most interesting ones are perhaps LCI and XLDF.
+					</dd>
+					<dt>tools</dt>
+					<dd>
+						Shell scripts that wrap SLPS tools in a user-friendly way. People who use SLPS frequently are advised to
+						add this directory to their system PATH.
+					</dd>
+					<dt>generators</dt>
+					<dd>
+						Shell wrappers for BGF-to-XBGF generators.
+					</dd>
+					<dt>wrappers</dt>
+					<dd>
+						Shell wrappers for running parsers and evaluators in order to generalize
+						their interface for the LCI. These wrappers are rarely, if ever, executed by a human.
+					</dd>
+					<dt>edd</dt>
+					<dd>
+						EBNF Dialect Definitions. Work in progress.
+					</dd>
+				</dl>
+			</dd>
+			<dt>download</dt>
+			<dd>
+				Automated installers for third party software which is needed for SLPS stuff to work.
+				ANTLR, FOP, JastAdd, MSV, ElementTree, GDK, PyParsing, etc.
+			</dd>
+			<dt>www</dt>
+			<dd>
+				Web content for this page, the FAQ, the Zoo, the XBGF manual, etc.
+				The makefile is configured to be easily used by <a href="mailto:zaytsev.vadim@googlemail.com">VZ</a>
+				and <a href="mailto:rlaemmel@acm.org">RL</a>, so it seems
+				more reasonable to contact one of them if you want anything changed there.
+			</dd>
 		</dl>
 		<hr />
 <!-- Start of StatCounter Code -->
