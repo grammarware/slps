@@ -17,5 +17,5 @@ elif [ ! -r ${SLPS}/shared/xsd/$1.xsd ]; then
     echo "Oops: schema for $1 not found or not readable."
     exit 1
 else
-    xmllint --noout --schema ${SLPS}/shared/xsd/$1.xsd $2
+    /usr/local/bin/xmllint --noout --schema ${SLPS}/shared/xsd/$1.xsd $2
 fi

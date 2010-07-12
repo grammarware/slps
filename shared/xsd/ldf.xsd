@@ -849,12 +849,12 @@
 	<xsd:element name="link">
 		<xsd:annotation>
 			<xsd:documentation>
-        Internal links are pairs of text that will become clickable in hypertext
-        presentation forms or precede the reference itself when this is the only
-        option. The reference points to a section or a subsection of the same
-        document that the link should refer to. If the explicit text is omitted,
-        its default value is the name of the section being referenced.
-      </xsd:documentation>
+			  Internal links are pairs of text that will become clickable in hypertext
+			  presentation forms or precede the reference itself when this is the only
+			  option. The reference points to a section or a subsection of the same
+			  document that the link should refer to. If the explicit text is omitted,
+			  its default value is the name of the section being referenced.
+			</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexType>
 			<xsd:sequence>
