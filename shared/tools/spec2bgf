@@ -1,0 +1,27 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ $# -eq 2 ]; then
+    rm -f $2
+	/usr/local/bin/xsltproc ${SLPS}/topics/extraction/w3c/spec2bgf.xslt $1 > $1.tmp
+	perl -pi -w -e 's/<unknown>\)\*<\/unknown>/<unknown>\)<\/unknown><postfix-star\/>/g;' $1.tmp
+	perl -pi -w -e 's/<unknown>\)\?<\/unknown>/<unknown>\)<\/unknown><postfix-optional\/>/g;' $1.tmp
+	perl -pi -w -e 's/<unknown>\(<\/unknown>/<sequence><bgf:expression>/g;' $1.tmp
+	perl -pi -w -e 's/<unknown>\)<\/unknown>/<\/bgf:expression><\/sequence>/g;' $1.tmp
+	/usr/local/bin/xsltproc ${SLPS}/topics/extraction/w3c/postfix2confix.xslt $1.tmp > $2.tmp
+	/usr/local/bin/xsltproc ${SLPS}/topics/extraction/w3c/cleanup.xslt $2.tmp > $2
+	rm -f $1.tmp $2.tmp
+else
+    echo "This tool transforms an XML document used by World Wide Web Consortium and produces a BGF grammar"
+    echo "Usage: spec2bgf <input-xml-document> <output-grammar>"
+    exit 2
+fi
+
