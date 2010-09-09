@@ -8,6 +8,6 @@ For regular convergence of Java grammars, go to:
 	topics/convergence/java/*
 For a sliced scenario of convergence of Java grammars, go to:
 	topics/convergence/java-sliced/*
-For the scientific paper presenting the results of Java convergence, go to:
+For the scientific paper(s) presenting the results of Java convergence, go to:
 	http://www.uni-koblenz.de/~laemmel/jls/
 
