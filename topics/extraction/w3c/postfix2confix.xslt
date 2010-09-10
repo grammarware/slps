@@ -25,12 +25,12 @@
 	<xsl:template match="bgf:expression">
 		<bgf:expression>
 			<xsl:choose>
-				<xsl:when test="choice">
+				<xsl:when test="choice and count(*) = 1">
 					<choice>
 						<xsl:apply-templates select="choice/*"/>
 					</choice>
 				</xsl:when>
-				<xsl:when test="sequence">
+				<xsl:when test="sequence and count(*) = 1">
 					<sequence>
 						<xsl:apply-templates select="sequence/*"/>
 					</sequence>
@@ -40,18 +40,18 @@
 						<xsl:choose>
 							<xsl:when test="local-name(following-sibling::*[1]) = 'postfix-optional'">
 								<optional>
-									<xsl:copy-of select="."/>
+									<xsl:apply-templates select="."/>
 								</optional>
 							</xsl:when>
 							<xsl:when test="local-name(following-sibling::*[1]) = 'postfix-star'">
 								<star>
-									<xsl:copy-of select="."/>
+									<xsl:apply-templates select="."/>
 								</star>
 							</xsl:when>
 							<xsl:when test="local-name(.) = 'postfix-optional'"/>
 							<xsl:when test="local-name(.) = 'postfix-star'"/>
 							<xsl:otherwise>
-								<xsl:copy-of select="."/>
+								<xsl:apply-templates select="."/>
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:for-each>
@@ -64,5 +64,10 @@
 	</xsl:template>
 	<xsl:template match="nonterminal|terminal|unknown">
 		<xsl:copy-of select="."/>
+	</xsl:template>
+	<xsl:template match="sequence">
+		<sequence>
+			<xsl:apply-templates select="*"/>
+		</sequence>
 	</xsl:template>
 </xsl:stylesheet>

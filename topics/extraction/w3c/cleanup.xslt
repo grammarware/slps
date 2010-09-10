@@ -46,7 +46,7 @@
 				</xsl:when>
 				<xsl:when test="count(*) &gt; 1 and unknown = '|'">
 					<choice>
-						<xsl:for-each select="*">
+						<xsl:for-each select="*[local-name(.)!='unknown']">
 							<bgf:expression>
 								<xsl:apply-templates select="."/>
 							</bgf:expression>
@@ -65,6 +65,48 @@
 	</xsl:template>
 	<xsl:template match="nonterminal|terminal">
 		<xsl:copy-of select="."/>
+	</xsl:template>
+	<xsl:template match="optional">
+		<optional>
+			<xsl:choose>
+				<xsl:when test="bgf:expression|sequence">
+					<xsl:apply-templates select="*"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<bgf:expression>
+						<xsl:apply-templates select="*"/>
+					</bgf:expression>
+				</xsl:otherwise>
+			</xsl:choose>
+		</optional>
+	</xsl:template>
+	<xsl:template match="plus">
+		<plus>
+			<xsl:choose>
+				<xsl:when test="bgf:expression|sequence">
+					<xsl:apply-templates select="*"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<bgf:expression>
+						<xsl:apply-templates select="*"/>
+					</bgf:expression>
+				</xsl:otherwise>
+			</xsl:choose>
+		</plus>
+	</xsl:template>
+	<xsl:template match="star">
+		<star>
+			<xsl:choose>
+				<xsl:when test="bgf:expression|sequence">
+					<xsl:apply-templates select="*"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<bgf:expression>
+						<xsl:apply-templates select="*"/>
+					</bgf:expression>
+				</xsl:otherwise>
+			</xsl:choose>
+		</star>
 	</xsl:template>
 	<xsl:template match="unknown">
 <!--			<xsl:value-of select="."/> -->

@@ -14,6 +14,8 @@ elif [ $# -eq 2 ]; then
 	/usr/local/bin/xsltproc ${SLPS}/topics/extraction/w3c/spec2bgf.xslt $1 > $1.tmp
 	perl -pi -w -e 's/<unknown>\)\*<\/unknown>/<unknown>\)<\/unknown><postfix-star\/>/g;' $1.tmp
 	perl -pi -w -e 's/<unknown>\)\?<\/unknown>/<unknown>\)<\/unknown><postfix-optional\/>/g;' $1.tmp
+	perl -pi -w -e 's/<unknown>\?\)\?<\/unknown>/<postfix-optional\/><unknown>\)<\/unknown><postfix-optional\/>/g;' $1.tmp
+	perl -pi -w -e "s/<unknown>\(\'.\'<\/unknown>/<unknown>\(<\/unknown><terminal>.<\/terminal>/g;" $1.tmp
 	perl -pi -w -e 's/<unknown>\(<\/unknown>/<sequence><bgf:expression>/g;' $1.tmp
 	perl -pi -w -e 's/<unknown>\)<\/unknown>/<\/bgf:expression><\/sequence>/g;' $1.tmp
 	/usr/local/bin/xsltproc ${SLPS}/topics/extraction/w3c/postfix2confix.xslt $1.tmp > $2.tmp

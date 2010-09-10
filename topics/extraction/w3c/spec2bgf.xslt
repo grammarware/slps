@@ -5,6 +5,7 @@
 		<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
 			<xsl:for-each select="//scrap">
 				<xsl:comment>
+					<xsl:text>Scrap </xsl:text>
 					<xsl:value-of select="head"/>
 				</xsl:comment>
 				<xsl:for-each select=".//prod">
@@ -73,11 +74,17 @@
 	<xsl:template name="map-one-symbol">
 		<xsl:param name="node"/>
 		<xsl:choose>
+			<xsl:when test="$node = '?'">
+				<postfix-optional/>
+			</xsl:when>
 <!-- terminal -->
 			<xsl:when test="substring($node,1,1) = &quot;'&quot;">
 				<terminal>
 					<xsl:value-of select="substring-before(substring($node,2),&quot;'&quot;)"/>
 				</terminal>
+				<xsl:call-template name="map-multiple-symbols">
+					<xsl:with-param name="list" select="substring-after(substring($node,2),&quot;'&quot;)"/>
+				</xsl:call-template>
 			</xsl:when>
 			<xsl:when test="substring($node,1,1) = ' '">
 				<leading-space>

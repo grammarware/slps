@@ -140,11 +140,7 @@
                         <!-- TODO -->
                         <ldf:metainfo/>
                         <content>
-                          <xsl:for-each select="*[local-name() != 'head']">
-                            <text>
-                              <xsl:apply-templates select="node()"/>
-                            </text>
-                          </xsl:for-each>
+                          <xsl:apply-templates select="*[local-name() != 'head']"/>
                         </content>
                       </ldf:simple-section>
                     </content>
@@ -240,6 +236,15 @@
       </xsl:for-each>
     </list>
   </xsl:template>
+  <xsl:template match="ulist">
+    <list>
+      <xsl:for-each select="item">
+        <item>
+          <xsl:apply-templates select="p/node()"/>
+        </item>
+      </xsl:for-each>
+    </list>
+  </xsl:template>
   <!-- processing keywords -->
   <xsl:template match="term">
     <ldf:keyword>
@@ -263,4 +268,113 @@
     <xsl:value-of select="//*[@id=$id]/head"/>
   </xsl:template>
 
+  <!--
+  <scrap>
+<head>Location Paths</head>
+<prodgroup pcw5="1" pcw2="10" pcw4="18">
+<prod id="NT-LocationPath">
+<lhs>LocationPath</lhs>
+<rhs><nt def="NT-RelativeLocationPath">RelativeLocationPath</nt></rhs>
+<rhs>| <nt def="NT-AbsoluteLocationPath">AbsoluteLocationPath</nt></rhs>
+</prod>
+<prod id="NT-AbsoluteLocationPath">
+<lhs>AbsoluteLocationPath</lhs>
+<rhs>'/' <nt def="NT-RelativeLocationPath">RelativeLocationPath</nt>?</rhs>
+<rhs>| <nt def="NT-AbbreviatedAbsoluteLocationPath">AbbreviatedAbsoluteLocationPath</nt></rhs>
+</prod>
+<prod id="NT-RelativeLocationPath">
+<lhs>RelativeLocationPath</lhs>
+<rhs><nt def="NT-Step">Step</nt></rhs>
+<rhs>| <nt def="NT-RelativeLocationPath">RelativeLocationPath</nt> '/' <nt def="NT-Step">Step</nt></rhs>
+<rhs>| <nt def="NT-AbbreviatedRelativeLocationPath">AbbreviatedRelativeLocationPath</nt></rhs>
+</prod>
+</prodgroup>
+</scrap>
+-->
+  <xsl:template match="scrap">
+    <ldf:normative-role>syntax</ldf:normative-role>
+    <ldf:simple-section>
+      <role>abstract</role>
+      <!-- TODO -->
+      <ldf:metainfo>
+        <title>
+          <xsl:value-of select="head"/>
+        </title>
+      </ldf:metainfo>
+      <content>
+        <xsl:apply-templates select="prodgroup/prod"/>
+      </content>
+    </ldf:simple-section>
+  </xsl:template>
+  <xsl:template match="prod">
+    <!--
+      not needed anymore:
+      <ldf:anchor id="{@id}"/>
+    -->
+    <bgf:production>
+      <nonterminal>
+        <xsl:value-of select="lhs"/>
+      </nonterminal>
+      <xsl:choose>
+        <xsl:when test="count(rhs) = 1">
+          <xsl:apply-templates select="rhs"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <bgf:expression>
+            <choice>
+              <xsl:apply-templates select="rhs"/>
+            </choice>
+          </bgf:expression>
+        </xsl:otherwise>
+      </xsl:choose>
+    </bgf:production>
+  </xsl:template>
+  <xsl:template match="rhs">
+    <debug>
+      <xsl:for-each select="node()">
+        <x>
+          <xsl:value-of select="."/>
+        </x>
+      </xsl:for-each>
+    </debug>
+    <xsl:choose>
+      <xsl:when test="count(*) = 1 and text() = ''">
+        <one/>
+        <xsl:apply-templates select="node()"/>
+      </xsl:when>
+      <xsl:when test="count(*) = 1 and text() = '|'">
+        <two/>
+        <xsl:apply-templates select="node()[2]"/>
+      </xsl:when>
+      <xsl:when test="count(node()) > 2 and node()[1] = '|'">
+        <three/>
+        <bgf:expression>
+          <sequence>
+            <xsl:apply-templates select="node()[position()>1]"/>
+          </sequence>
+        </bgf:expression>
+      </xsl:when>
+      <xsl:otherwise>
+        <four/>
+        <bgf:expression>
+          <sequence>
+            <xsl:apply-templates select="node()"/>
+          </sequence>
+        </bgf:expression>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template match="nt">
+    <nonterminal>
+      <xsl:value-of select="."/>
+    </nonterminal>
+  </xsl:template>
+  <!--
+  <rhs>
+    <nt def="NT-RelativeLocationPath">RelativeLocationPath</nt>
+  </rhs>
+  <rhs>
+    | <nt def="NT-AbsoluteLocationPath">AbsoluteLocationPath</nt>
+  </rhs>
+-->
 </xsl:stylesheet>
