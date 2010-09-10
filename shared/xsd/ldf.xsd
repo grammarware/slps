@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ldf="http://planet-sl.org/ldf" xmlns:bgf="http://planet-sl.org/bgf" xmlns:xhtml="http://www.w3.org/1999/xhtml" targetNamespace="http://planet-sl.org/ldf">
+  <!--
   <xsd:import namespace="http://planet-sl.org/bgf" schemaLocation="bgf.xsd"/>
   <xsd:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="fakemathml.xsd"/>
+  -->
   <!-- info -->
   <xsd:annotation>
     <xsd:documentation>
@@ -696,7 +698,6 @@
       <xsd:attribute name="id" type="xsd:ID"/>
     </xsd:complexType>
   </xsd:element>
-  <xsd:element name="code" type="xsd:string"/>
   <xsd:complexType name="textual-content">
     <xsd:sequence>
       <xsd:group ref="ldf:text-element" maxOccurs="unbounded"/>
@@ -737,7 +738,9 @@
           <xsd:attribute name="source" type="xsd:string"/>
         </xsd:complexType>
       </xsd:element>
+      <!-- UNCOMMENT HERE
       <xsd:element ref="bgf:production"/>
+      -->
       <!-- 	later redo with MathML -->
       <!--<xsd:element ref="mml:math" />-->
     </xsd:choice>

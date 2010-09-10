@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- $Id: REC-xpath-19991116.xml,v 1.1 1999/11/16 15:01:35 hugo Exp $ -->
 <!DOCTYPE spec PUBLIC "-//W3C//DTD Specification V2.0//EN"
-                      "/XML/1998/06/xmlspec-v20.dtd" [
+                      "xmlspec-v20.dtd" [
 <!ENTITY XML "http://www.w3.org/TR/REC-xml">
 <!ENTITY XMLNames "http://www.w3.org/TR/REC-xml-names">
 <!ENTITY year "1999">
