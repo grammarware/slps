@@ -98,7 +98,7 @@
 												[<a href="http://slps.svn.sourceforge.net/viewvc/slps/shared/xsl/bgf2bnf.xslt?view=markup">BGF&#x21D2;BNF</a>]
 											</span>
 										</li>
-										<xsl:if test="not(../../handle='java')">
+										<xsl:if test="not(../../handle='java') and not(../../handle='xpath')">
 											<li>
 												<xsl:text>Grammar Deployment Kit:</xsl:text>
 												<span class="links">

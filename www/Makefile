@@ -14,6 +14,7 @@ build:
 	make -f _dev/Makefile.cpp.zoo
 	make -f _dev/Makefile.csharp.zoo
 	make -f _dev/Makefile.java.zoo
+	make -f _dev/Makefile.xpath.zoo
 	xsltproc --stringparam date `date +"%d/%m/%Y"` ../shared/xsl/zoo2xhtml.xslt _dev/config.zoo > zoo/index.html
 	xsltproc ../shared/xsl/links2html.xslt _dev/java-grammars.xml | python ../shared/python/closemeta.py > zoo/java/links.html
 

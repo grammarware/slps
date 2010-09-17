@@ -1,0 +1,9 @@
+all:
+	make v1 -f _dev/Makefile.xpath.zoo
+
+%:
+	cp ../topics/grammars/xpath/extracted-grammar-$*.bgf zoo/xpath/$*.bgf
+	../shared/tools/bgf2html zoo/xpath/$*.bgf zoo/xpath/$*.html
+	../shared/tools/bgf2bnf zoo/xpath/$*.bgf zoo/xpath/$*.bnf
+	../shared/tools/bgf2dms zoo/xpath/$*.bgf zoo/xpath/$*.dms
+	../shared/tools/bgf2sdf zoo/xpath/$*.bgf zoo/xpath/$*.sdf

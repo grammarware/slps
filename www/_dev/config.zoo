@@ -623,4 +623,44 @@
 			</toolset>
 		</version>
 	</language>
+	<language>
+		<handle>xpath</handle>
+		<name>XPath</name>
+		<version>
+			<name>XPath 1.0</name>
+			<source><em>XML Path Language (XPath)</em>, Version 1.0, W3C Recommendation</source>
+			<date>16 November 1999</date>
+			<link>
+				<uri>http://www.w3.org/TR/1999/REC-xpath-19991116.xml</uri>
+				<name>XML</name>
+			</link>
+			<link>
+				<uri>http://www.w3.org/TR/1999/REC-xpath-19991116/</uri>
+				<name>HTML</name>
+			</link>
+			<grammar>
+				<name>Extracted</name>
+				<handle>v1</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/w3c/spec2bgf.xslt?view=markup</uri>
+					<name>XSLT1</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/w3c/postfix2confix.xslt?view=markup</uri>
+					<name>XSLT2</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/w3c/cleanup.xslt?view=markup</uri>
+					<name>XSLT3</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/xpath/xpath1.normalize.xbgf?view=markup</uri>
+					<name>XBGF</name>
+				</link>
+			</toolset>
+		</version>
+	</language>
 </zoo>
