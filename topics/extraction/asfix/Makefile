@@ -1,4 +1,4 @@
-metaenv = `which asfe | xargs dirname`/..
+metaenv = /opt/meta
 sdfl = ${metaenv}/share/sdf-library/library
 asfl = ${metaenv}/share/asf-library/library
 
@@ -14,16 +14,15 @@ Main.tbl: *.sdf
 	else \
 		make tblcat; \
 	fi
+	sdf2table -m Main -i Main.def -o Main.tbl
 
 tblpack:
 	pack-sdf -i Main.sdf -I ${sdfl} -o Main.def
-	sdf2table -m Main Main.def
 
 tblcat:
 	@echo "definition" > Main.def
 	@AA=${PWD};cd ${sdfl};cat $${AA}/sdflib.list | xargs -n1 -J % cat % >>$${AA}/Main.def
 	@cat Main.sdf Tokens.sdf AsFixTokens.sdf AsFixToBGF.sdf >> Main.def
-	sdf2table -m Main Main.def
 
 test:
 	@echo "main(" > asfix.trm

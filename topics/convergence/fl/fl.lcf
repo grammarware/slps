@@ -7,7 +7,9 @@
   </shortcut>
   <shortcut>
     <name>fl</name>
-    <expansion>../../fl</expansion>
+    <expansion>
+	  <expand>slps</expand>/topics/fl
+	</expansion>
   </shortcut>
   <shortcut>
     <name>tools</name>
