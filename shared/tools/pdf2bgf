@@ -22,8 +22,8 @@ elif [ ! -r $4 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    python ${SLPS}/topics/extraction/bnf2bgf/pdf2lll.py $1 intermediate.lll $3 $4
-    python ${SLPS}/topics/extraction/bnf2bgf/lll2bgf.py intermediate.lll $2
+    /usr/bin/python ${SLPS}/topics/extraction/bnf2bgf/pdf2lll.py $1 intermediate.lll $3 $4
+    /usr/bin/python ${SLPS}/topics/extraction/bnf2bgf/lll2bgf.py intermediate.lll $2
     #rm -f intermediate.lll
 fi
 

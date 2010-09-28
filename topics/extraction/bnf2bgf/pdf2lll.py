@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import sys
+from pydbgr.api import debug
 
 nt2t = 0
 
-lines = []
+#lines = []
 grammar = {}
 double = {}
 current = ''
@@ -74,12 +75,10 @@ knownReplacements = \
 
 oneof = False
 
-def processline(line):
-	global current
-	global oneof
+def processline(line,current,oneof):
 	rline = line.strip()
 	if rline == '':
-		return ''
+		return current,oneof
 	if rline[-1]==':' and rline[-2].isalpha():
 		oneof = False
 		# getting rid of leading stuff (perhaps labels)
@@ -88,7 +87,7 @@ def processline(line):
 			#print 'Warning: double declaration of',current
 			double[current] = grammar[current][:]
 		grammar[current] = []
-		return
+		return current,oneof
 	if rline.find('one of')>0:
 		oneof = True
 		assignNewCurrent(rline.replace('one of','').strip()[:-1].split()[-1])
@@ -96,7 +95,7 @@ def processline(line):
 			#print 'Warning: double declaration of',current,': the first one',grammar[current],'discarded'
 			double[current] = grammar[current][:]
 		grammar[current] = []
-		return
+		return current,oneof
 	if rline.find('oneof')>0:
 		oneof = True
 		assignNewCurrent(rline.replace('oneof','').strip()[:-1].split()[-1])
@@ -104,7 +103,7 @@ def processline(line):
 			#print 'Warning: double declaration of',current,': the first one',grammar[current],'discarded'
 			double[current] = grammar[current][:]
 		grammar[current] = []
-		return
+		return current,oneof
 	if oneof:
 		for t in rline.split():
 			grammar[current].append(' '.join(processLineTokens(t)))
@@ -112,7 +111,7 @@ def processline(line):
 		#	grammar[current].append(t)
 	else:
 		grammar[current].append(' '.join(processLineTokens(rline)))
-	return
+	return current,oneof
 
 def performReplacements(line):
 	for x,y in knownReplacements:
@@ -142,8 +141,9 @@ def splitTrailing(t,array):
 			t = t[:-len(p)]+' '+quote(p)
 	return t
 
-def readLines(f):
-	print 'Reading the PDF lines...'
+def dumpUnbannedLines(f):
+	lines = []
+	print 'Reading the PDF lines...',
 	pdf = open(f,'r')
 	cx = 0
 	for line in pdf.readlines():
@@ -153,18 +153,37 @@ def readLines(f):
 			if line.find(x)>-1:
 				include = False
 		if include:
-			if line[0] == ' ' and line[1] == ' ':
-				lines[-1] = lines[-1][:-1] + line
-				print 'Line continuation encountered on line', cx
-			else:
-				lines.append(line)
+			lines.append((cx,line))
+	print len(lines),'out of',cx,'will be used.'
 	pdf.close()
+	return lines
+
+def joinLineContinuations(lines,lead):
+	print 'Searching for line continuations...'
+	
+	
+	
+	plines = []
+	print 'Searching for line continuations...'
+	for line in lines:
+		cx, s = line
+		s = s[len(lead):]
+		if len(s)>2 and s[0] == ' ' and s[1] == ' ':
+			plines[-1] = plines[-1][:-1] + s
+			print 'Line continuation encountered on line', cx
+		else:
+			plines.append(s)
+	return plines
 
 def readGrammar(lines):
+	global current
+	global oneof
 	print 'Reading the PDF contents...'
+	#current = ''
+	#oneof = False
 	for line in lines:
-		#print line
-		processline(line)
+		#debug()
+		current,oneof = processline(line,current,oneof)
 
 def writeGrammar(f):
 	lll = open(f,'w')
@@ -254,12 +273,35 @@ def massageGrammar():
 				grammar['keyword'].append(quote(kw))
 	return
 
+def commonStart(s1,s2):
+	x = ''
+	for i in range(0,min(len(s1),len(s2))):
+		if s1[i]==s2[i]:
+			x += s1[i]
+		else:
+			break
+	return x
+
+def guessLeadingSymbols(lines):
+	x = lines[0][1]
+	for l in lines[1:]:
+		if l[1].strip() == '':
+			continue
+		x = commonStart(x,l[1])
+		if x == '':
+			print 'No lead'
+			return ''
+	print 'Warning: leading "'+x+'" detected, will be ignored.'
+	return x
+
 if __name__ == "__main__":
 	print 'PDF (rather txt copy-pasted from a PDF) pre-processor: produces an LLL grammar suitable to be fed into an LLL2BGF extractor.'
 	if len(sys.argv) == 5:
 		readBannedLinesList(sys.argv[3])
 		readTerminalsList(sys.argv[4])
-		readLines(sys.argv[1])
+		lines = dumpUnbannedLines(sys.argv[1])
+		lead = guessLeadingSymbols(lines)
+		lines = joinLineContinuations(lines,lead)
 		readGrammar(lines)
 		massageGrammar()
 		writeGrammar(sys.argv[2])
