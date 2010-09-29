@@ -32,12 +32,12 @@ function main match [</xsl:text>
 		<xsl:value-of select="./nonterminal"/>
 		<xsl:text>
 		</xsl:text>
-<!-- what to do with labels? TODO -->
+<!-- what to do with labels? TODO 
 		<xsl:if test="./label">
 			<xsl:text>[</xsl:text>
 			<xsl:value-of select="./label"/>
 			<xsl:text>] </xsl:text>
-		</xsl:if>
+		</xsl:if>-->
 		<xsl:choose>
 			<xsl:when test="./bgf:expression/choice">
 				<xsl:for-each select="./bgf:expression/choice/bgf:expression">
