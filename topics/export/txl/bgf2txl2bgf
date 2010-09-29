@@ -1,0 +1,9 @@
+#!/bin/sh
+
+$1/bgf2txl $2/$3 $3.txl
+$1/txl2bgf $3.txl $3.back.bgf
+$1/gdt $2/$3 $3.back.bgf
+if [ $? -ne 0 ]
+then
+	exit 255
+fi
