@@ -263,7 +263,13 @@
   </target>
 
   <target>
-    <name>xframeworks</name>
+    <name>unlayered</name>
+    <branch>
+      <input>topdown</input>
+      <structural-matching>
+        <perform>removeLayers</perform>
+      </structural-matching>
+    </branch>
     <branch>
       <input>sdf</input>
       <nominal-matching>
@@ -272,6 +278,19 @@
           <result>rename-sdf</result>
         </automated>
       </nominal-matching>
+    </branch>
+  </target>
+
+  <target>
+    <name>concrete</name>
+    <branch>
+      <input>unlayered</input>
+      <structural-matching>
+        <automated>
+          <method>reroot2top</method>
+          <result>reroot-lower</result>
+        </automated>
+      </structural-matching>
     </branch>
     <branch>
       <input>txl</input>
@@ -285,19 +304,6 @@
       <relaxation>
         <perform>multipleNewlines</perform>
       </relaxation>
-    </branch>
-  </target>
-
-  <target>
-    <name>concrete</name>
-    <branch>
-      <input>topdown</input>
-      <structural-matching>
-        <perform>removeLayers</perform>
-      </structural-matching>
-    </branch>
-    <branch>
-      <input>xframeworks</input>
     </branch>
   </target>
 
@@ -393,10 +399,6 @@
     <branch>
       <input>concrete</input>
       <structural-matching>
-        <automated>
-          <method>reroot2top</method>
-          <result>reroot-lower</result>
-        </automated>
         <perform>defineLex</perform>
         <automated>
           <method>stript</method>
