@@ -1,0 +1,28 @@
+#!/bin/sh
+# Takes in:
+#           <unknown>(</unknown>
+# Returns:
+#           <sequence><bgf:expression>
+# And takes in:
+#           <unknown>)</unknown>
+# Returns:
+#           </bgf:expression></sequence>
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 255
+elif [ $# -eq 2 ]; then
+    cp $1 $2
+	perl -pi -w -e 's/<unknown>\(<\/unknown>/<sequence><bgf:expression>/g;' $2
+	perl -pi -w -e 's/<unknown>\)<\/unknown>/<\/bgf:expression><\/sequence>/g;' $2
+else
+    echo "Internal tool: use at your own risk! Turns parentheses to BGF sequences."
+    echo "Usage: markgroups <input> <output>"
+    exit 1
+fi

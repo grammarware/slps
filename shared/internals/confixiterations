@@ -1,0 +1,30 @@
+#!/bin/sh
+# Takes in:
+#           ...<postfix-optional>
+# Returns:
+#           <optional>...</optional>
+# And takes in:
+#           ...<postfix-star>
+# Returns:
+#           <star>...</star>
+# And takes in:
+#           ...<postfix-plus>
+# Returns:
+#           <plus>...</plus>
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 255
+elif [ $# -eq 2 ]; then
+	/usr/local/bin/xsltproc ${SLPS}/topics/transformation/normalization/postfix2confix.xslt $1 > $2
+else
+    echo "Internal tool: use at your own risk! Turns postfix iteration constructs to confix ones."
+    echo "Usage: confixiterations <input> <output>"
+    exit 1
+fi

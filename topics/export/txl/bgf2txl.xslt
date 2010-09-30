@@ -99,7 +99,7 @@ function main match [</xsl:text>
 		</xsl:choose>
 	</xsl:template>
 	<xsl:template match="epsilon">
-		<xsl:text>EPSILON</xsl:text>
+		<xsl:text>[empty]</xsl:text>
 	</xsl:template>
 	<xsl:template match="empty">
 		<xsl:text>EMPTY</xsl:text>
@@ -141,13 +141,13 @@ function main match [</xsl:text>
 	</xsl:template>
 <!-- inner choices - BNF bar -->
 	<xsl:template match="choice">
-		<xsl:text>(</xsl:text>
+		<!--<xsl:text>(</xsl:text> -->
 		<xsl:apply-templates select="./bgf:expression[1]/*"/>
 		<xsl:for-each select="./bgf:expression[position()&gt;1]">
 			<xsl:text> | </xsl:text>
 			<xsl:apply-templates select="./*"/>
 		</xsl:for-each>
-		<xsl:text>)</xsl:text>
+		<!--<xsl:text>)</xsl:text>-->
 	</xsl:template>
 	<xsl:template name="no-parenthesis">
 		<xsl:param name="expr"/>

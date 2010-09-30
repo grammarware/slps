@@ -12,24 +12,14 @@ if [ ! -r $1 ]; then
 elif [ $# -eq 2 ]; then
     rm -f $2
 	txl $1 ${SLPS}/topics/extraction/txl/TXLGrammar/Txl/txl.txl -xml > grammar.xml
-	perl -pi -w -e 's/repeat statement/repeat_statement/g;' grammar.xml
-	perl -pi -w -e 's/repeat compound/repeat_compound/g;' grammar.xml
-	perl -pi -w -e 's/repeat literalOrType/repeat_literalOrType/g;' grammar.xml
-	perl -pi -w -e 's/repeat literalOrVariable/repeat_literalOrVariable/g;' grammar.xml
-	perl -pi -w -e 's/repeat barLiteralsAndTypes/repeat_barLiteralsAndTypes/g;' grammar.xml
-	perl -pi -w -e 's/opt typeRepeater/opt_typeRepeater/g;' grammar.xml
-	xsltproc ${SLPS}/topics/extraction/txl/txl2bgf.xslt grammar.xml > $2
-	rm -f grammar.xml
+	`dirname $0`/../internals/fixtxlxml grammar.xml grammar2.xml
+	xsltproc ${SLPS}/topics/extraction/txl/txl2bgf.xslt grammar2.xml > $2
+	echo 'rm -f grammar.xml grammar2.xml'
 elif [ $# -eq 1 ]; then
 	txl $1 ${SLPS}/topics/extraction/txl/TXLGrammar/Txl/txl.txl -xml > grammar.xml
-	perl -pi -w -e 's/repeat statement/repeat_statement/g;' grammar.xml
-	perl -pi -w -e 's/repeat compound/repeat_compound/g;' grammar.xml
-	perl -pi -w -e 's/repeat literalOrType/repeat_literalOrType/g;' grammar.xml
-	perl -pi -w -e 's/repeat literalOrVariable/repeat_literalOrVariable/g;' grammar.xml
-	perl -pi -w -e 's/repeat barLiteralsAndTypes/repeat_barLiteralsAndTypes/g;' grammar.xml
-	perl -pi -w -e 's/opt typeRepeater/opt_typeRepeater/g;' grammar.xml
-	xsltproc ${SLPS}/topics/extraction/txl/txl2bgf.xslt grammar.xml > ${LOCAL}/`basename $1 .txl`.bgf
-	rm -f grammar.xml
+	`dirname $0`/../internals/fixtxlxml grammar.xml grammar2.xml
+	xsltproc ${SLPS}/topics/extraction/txl/txl2bgf.xslt grammar2.xml > ${LOCAL}/`basename $1 .txl`.bgf
+	rm -f grammar.xml grammar2.xml
 else
     echo "This tool extracts a BGF grammar from a TXL grammar"
     echo "Usage: txl2bgf <txl-grammar> [<output-grammar>]"

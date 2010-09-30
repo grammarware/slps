@@ -1,4 +1,4 @@
-bgfdir = ../../storage/bgf/tests
+bgfdir = ../../storage/bgf/tests.small
 tooldir = ../../../shared/tools
 
 test:
