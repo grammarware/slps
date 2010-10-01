@@ -108,6 +108,11 @@
 					<epsilon/>
 				</bgf:expression>
 			</xsl:when>
+			<xsl:when test="type/typeSpec/typeid/id = 'any'">
+				<bgf:expression>
+					<any/>
+				</bgf:expression>
+			</xsl:when>
 			<!-- fallback -->
 			<xsl:otherwise>
 				<bgf:expression>

@@ -105,7 +105,7 @@ function main match [</xsl:text>
 		<xsl:text>EMPTY</xsl:text>
 	</xsl:template>
 	<xsl:template match="any">
-		<xsl:text>ANY</xsl:text>
+		<xsl:text>[any]</xsl:text>
 	</xsl:template>
 	<xsl:template match="nonterminal">
 		<xsl:if test="local-name(../..) != 'plus' and local-name(../..) != 'star'">

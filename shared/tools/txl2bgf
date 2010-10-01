@@ -10,19 +10,18 @@ if [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 elif [ $# -eq 2 ]; then
-    rm -f $2
-	txl $1 ${SLPS}/topics/extraction/txl/TXLGrammar/Txl/txl.txl -xml > grammar.xml
-	`dirname $0`/../internals/fixtxlxml grammar.xml grammar2.xml
-	xsltproc ${SLPS}/topics/extraction/txl/txl2bgf.xslt grammar2.xml > $2
-	echo 'rm -f grammar.xml grammar2.xml'
+	OUTPUT=$2
 elif [ $# -eq 1 ]; then
-	txl $1 ${SLPS}/topics/extraction/txl/TXLGrammar/Txl/txl.txl -xml > grammar.xml
-	`dirname $0`/../internals/fixtxlxml grammar.xml grammar2.xml
-	xsltproc ${SLPS}/topics/extraction/txl/txl2bgf.xslt grammar2.xml > ${LOCAL}/`basename $1 .txl`.bgf
-	rm -f grammar.xml grammar2.xml
+	OUTPUT=${LOCAL}/`basename $1 .txl`.bgf
 else
     echo "This tool extracts a BGF grammar from a TXL grammar"
     echo "Usage: txl2bgf <txl-grammar> [<output-grammar>]"
     exit 2
 fi
 
+txl $1 ${SLPS}/topics/extraction/txl/TXLGrammar/Txl/txl.txl -xml > grammar.xml
+`dirname $0`/../internals/fixtxlxml grammar.xml grammar2.xml
+xsltproc ${SLPS}/topics/extraction/txl/txl2bgf.xslt grammar2.xml > tmp.bgf
+xsltproc ${SLPS}/topics/transformation/normalization/subdefs/inline.xslt tmp.bgf > tmp.xbgf
+${SLPS}/shared/tools/xbgf tmp.xbgf tmp.bgf ${OUTPUT}
+rm -f tmp.bgf tmp.xbgf grammar.xml grammar2.xml

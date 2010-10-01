@@ -20,4 +20,7 @@ else
     OUTPUT=$2
 fi
 
-xsltproc ${SLPS}/topics/export/txl/bgf2txl.xslt $1> ${OUTPUT}
+xsltproc ${SLPS}/topics/transformation/normalization/subdefs/extract.xslt $1> tmp.xbgf
+${SLPS}/shared/tools/xbgf tmp.xbgf $1 tmp.bgf
+xsltproc ${SLPS}/topics/export/txl/bgf2txl.xslt tmp.bgf > ${OUTPUT}
+rm -f tmp.bgf tmp.xbgf

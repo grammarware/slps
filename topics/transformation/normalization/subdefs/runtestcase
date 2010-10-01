@@ -1,0 +1,27 @@
+#!/bin/sh
+
+xsltproc extract.xslt $2/$3 > tmp.xbgf
+if [ $? -ne 0 ]
+then
+	exit 255
+fi
+$1/xbgf tmp.xbgf $2/$3 tmp.1.bgf
+if [ $? -ne 0 ]
+then
+	exit 255
+fi
+xsltproc inline.xslt tmp.1.bgf > tmp.xbgf
+if [ $? -ne 0 ]
+then
+	exit 255
+fi
+$1/xbgf tmp.xbgf tmp.1.bgf tmp.2.bgf
+if [ $? -ne 0 ]
+then
+	exit 255
+fi
+$1/gdt tmp.2.bgf $2/$3
+if [ $? -ne 0 ]
+then
+	exit 255
+fi
