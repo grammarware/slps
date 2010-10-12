@@ -5,7 +5,7 @@ bgf = ../../../shared/xsd/bgf.xsd
 xbgf = ../../../shared/xsd/xbgf.xsd
 btf = ../../../shared/xsd/btf.xsd
 apps = ../../transformation/xbgf/apps
-validator = ../../../shared/tools/checkxml
+validator = ../../../shared/tools/validate
 xml2btf = ../../../shared/tools/xml2btf
 
 build:

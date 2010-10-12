@@ -33,10 +33,10 @@
   <tool>
     <name>validation</name>
     <grammar>
-      <expand>tools</expand>/checkxml bgf
+      <expand>tools</expand>/validate bgf
     </grammar>
     <tree>
-      <expand>tools</expand>/checkbtf
+      <expand>tools</expand>/validate btf
     </tree>
   </tool>
   <tool>

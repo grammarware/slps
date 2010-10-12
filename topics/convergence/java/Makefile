@@ -1,4 +1,5 @@
 tools = ../../../shared/tools
+validator = ${tools}/validate
 
 build:
 
@@ -6,9 +7,9 @@ test:
 	${tools}/lci java.lcf architecture
 
 check:
-	${tools}/checkxml lcf java.lcf
-	ls -1 xbgf/*.xbgf | xargs -n1 ${tools}/checkxml xbgf
-	ls -1  bgf/*.bgf  | xargs -n1 ${tools}/checkxml bgf
+	${validator} lcf java.lcf
+	ls -1 xbgf/*.xbgf | xargs -n1 ${validator} xbgf
+	ls -1  bgf/*.bgf  | xargs -n1 ${validator} bgf
 
 debug:
 	${tools}/bgf2bnf snapshot/impl1.bgf 1.bnf

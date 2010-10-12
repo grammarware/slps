@@ -35,7 +35,7 @@ test:
 	cat fac.trm | sglr -p Main.tbl | asfe -e Main.eqs | unparsePT > myfactorial1.btf
 	xsltproc ../../../shared/xsl/btf2btf.xslt myfactorial1.btf > myfactorial.btf
 	cp ../xml2btf/tests/factorial.btf .
-	ls -1 *.btf | xargs -n1 checkxml btf
+	ls -1 *.btf | xargs -n1 validate btf
  
 clean:
 	rm -f reduct.out

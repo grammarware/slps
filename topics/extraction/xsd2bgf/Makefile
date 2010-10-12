@@ -3,7 +3,7 @@ bgf = ../../../shared/xsd/bgf.xsd
 xbgf = ../../../shared/xsd/xbgf.xsd
 xsd2bgf = ../../../shared/tools/xsd2bgf
 showbgf = ../../../shared/tools/showbgf
-validate = ../../../shared/tools/checkxml
+validate = ../../../shared/tools/validate
 
 build:
 

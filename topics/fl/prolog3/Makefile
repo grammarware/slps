@@ -15,19 +15,19 @@ append.xbgf:
 		${xbgf}/stripTerminals.xbgf \
 		${xbgf}/permuteArgs.xbgf \
 		${xbgf}/reroot.xbgf
-	${tools}/checkxml xbgf append.xbgf
+	${tools}/validate xbgf append.xbgf
 
 limit.bgf: append.xbgf
 	${tools}/sdf2bgf ${sdf}/*.sdf source.bgf
-	${tools}/checkxml bgf source.bgf
+	${tools}/validate bgf source.bgf
 	${tools}/xbgf append.xbgf source.bgf limit.bgf
-	${tools}/checkxml bgf limit.bgf
+	${tools}/validate bgf limit.bgf
 
 limit.btf: append.xbgf
 	${tools}/asfix2btf ${sdf} ${fl}/shared/factorial.txt source.btf
-	${tools}/checkbtf source.btf
+	${tools}/validate btf source.btf
 	${tools}/xbtf append.xbgf source.btf limit.btf
-	${tools}/checkbtf limit.btf
+	${tools}/validate btf limit.btf
 
 rebuild:
 	make clean

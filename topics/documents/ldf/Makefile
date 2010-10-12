@@ -1,4 +1,4 @@
-validator = ../../../shared/tools/checkxml
+validator = ../../../shared/tools/validate
 
 build: tex html
 	pdflatex -interaction=batchmode ldf

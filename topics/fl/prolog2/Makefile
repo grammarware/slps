@@ -15,19 +15,19 @@ append.xbgf:
 		${xbgf}/massageXsd.xbgf \
 		${xbgf}/makeSignature.xbgf \
 		${xbgf}/stripSelectors.xbgf
-	${tools}/checkxml xbgf append.xbgf
+	${tools}/validate xbgf append.xbgf
 
 limit.bgf: append.xbgf
 	${tools}/xsd2bgf ${schema} source.bgf
-	${tools}/checkxml bgf source.bgf
+	${tools}/validate bgf source.bgf
 	${tools}/xbgf append.xbgf source.bgf limit.bgf
-	${tools}/checkxml bgf limit.bgf
+	${tools}/validate bgf limit.bgf
 
 limit.btf: append.xbgf
 	${tools}/xml2btf ${schema} ${xfactorial} source.btf
-	${tools}/checkbtf source.btf
+	${tools}/validate btf source.btf
 	${tools}/xbtf append.xbgf source.btf limit.btf
-	${tools}/checkbtf limit.btf
+	${tools}/validate btf limit.btf
 
 rebuild:
 	make clean

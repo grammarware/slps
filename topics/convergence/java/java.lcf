@@ -19,7 +19,7 @@
   <!--tool>
     <name>validation</name>
     <grammar>
-      <expand>tools</expand>/checkxml bgf
+      <expand>tools</expand>/validate bgf
     </grammar>
   </tool-->
   <tool>
