@@ -1,1 +1,18 @@
-<?xml version="1.0"?><bgf:grammar xmlns:bgf="http://planet-sl.org/bgf"><bgf:production><label>foo</label><nonterminal>bar</nonterminal><bgf:expression><choice><bgf:expression><choice><bgf:expression><empty/></bgf:expression><bgf:expression><any/></bgf:expression></choice></bgf:expression><bgf:expression><terminal>x</terminal></bgf:expression></choice></bgf:expression></bgf:production></bgf:grammar>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xns1:grammar xmlns:xns1="http://planet-sl.org/bgf">
+  <xns1:production>
+    <label>foo</label>
+    <nonterminal>bar</nonterminal>
+    <xns1:expression>
+      <choice>
+	<xns1:expression>
+	  <any/>
+	</xns1:expression>
+	<xns1:expression>
+	  <terminal>x</terminal>
+	</xns1:expression>
+      </choice>
+    </xns1:expression>
+  </xns1:production>
+</xns1:grammar>

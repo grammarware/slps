@@ -1,1 +1,10 @@
-<?xml version="1.0"?><bgf:grammar xmlns:bgf="http://planet-sl.org/bgf"><bgf:production><nonterminal>bar</nonterminal><bgf:expression><optional><bgf:expression><plus><bgf:expression><epsilon/></bgf:expression></plus></bgf:expression></optional></bgf:expression></bgf:production></bgf:grammar>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xns1:grammar xmlns:xns1="http://planet-sl.org/bgf">
+  <xns1:production>
+    <nonterminal>bar</nonterminal>
+    <xns1:expression>
+      <epsilon/>
+    </xns1:expression>
+  </xns1:production>
+</xns1:grammar>

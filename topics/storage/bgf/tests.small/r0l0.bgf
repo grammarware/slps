@@ -1,1 +1,3 @@
-<?xml version="1.0"?><bgf:grammar xmlns:bgf="http://planet-sl.org/bgf"></bgf:grammar>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xns1:grammar xmlns:xns1="http://planet-sl.org/bgf"/>
