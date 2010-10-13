@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:bgf="http://planet-sl.org/bgf">
+	<!-- an ugly replacement for a noop/id/skip command that is lacking in xbgf now -->
+	<xbgf:introduce>
+		<bgf:production>
+			<nonterminal>temporary_nonterminal_name_which_is_unique</nonterminal>
+			<bgf:expression>
+				<epsilon/>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:introduce>
+	<xbgf:eliminate>
+		<nonterminal>temporary_nonterminal_name_which_is_unique</nonterminal>
+	</xbgf:eliminate>
+</xbgf:sequence>

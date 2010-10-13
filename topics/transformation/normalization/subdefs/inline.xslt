@@ -4,7 +4,7 @@
 	<xsl:template match="/bgf:grammar">
 		<xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
 			<xsl:for-each select="bgf:production">
-				<xsl:if test="contains(nonterminal,'-grp-')">
+				<xsl:if test="contains(nonterminal,'_grp_')">
 					<xbgf:inline>
 						<xsl:value-of select="nonterminal"/>
 					</xbgf:inline>

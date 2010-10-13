@@ -21,7 +21,7 @@
 				<bgf:production>
 					<nonterminal>
 						<xsl:value-of select="$name"/>
-						<xsl:text>-grp-</xsl:text>
+						<xsl:text>_grp_</xsl:text>
 						<xsl:value-of select="position()"/>
 					</nonterminal>
 					<bgf:expression>
