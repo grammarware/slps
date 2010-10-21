@@ -14,24 +14,6 @@ if [ $# -ne 1 ]; then
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
-elif [ `uname` == "Linux" ] ; then
-    echo -n "Total productions:   "
-    xpath -e `cat ${SLPS}/topics/presentation/metrics/productions.xpath` $1 2> /dev/null
-    echo -n "Total nonterminals:  "
-    xpath -e `cat ${SLPS}/topics/presentation/metrics/nonterminals.xpath` $1 2> /dev/null
-    echo -n "Top nonterminals:    "
-    xpath -e `cat ${SLPS}/topics/presentation/metrics/top.xpath` $1 2> /dev/null
-    echo -n "Bottom nonterminals: "
-    xpath -e `cat ${SLPS}/topics/presentation/metrics/bottom.xpath` $1 2> /dev/null
-    echo
 else
-    /bin/echo -n "Total productions:   "
-    xpath $1 `cat ${SLPS}/topics/presentation/metrics/productions.xpath` 2> /dev/null
-    /bin/echo -n "Total nonterminals:  "
-    xpath $1 `cat ${SLPS}/topics/presentation/metrics/nonterminals.xpath` 2> /dev/null
-    /bin/echo -n "Top nonterminals:    "
-    xpath $1 `cat ${SLPS}/topics/presentation/metrics/top.xpath` 2> /dev/null
-    /bin/echo -n "Bottom nonterminals: "
-    xpath $1 `cat ${SLPS}/topics/presentation/metrics/bottom.xpath` 2> /dev/null
-    echo
+    xsltproc ${SLPS}/topics/presentation/metrics/bgf-overview.xslt $1
 fi
