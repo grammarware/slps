@@ -5,27 +5,39 @@
 	<xsl:variable name="bgf" select="document($grammar)/bgf:grammar"/>
 	<xsl:template match="/spec">
 		<ldf:document xmlns:ldf="http://planet-sl.org/ldf">
-			<ldf:title-page>
+			<metadata>
 				<xsl:if test="header/w3c-doctype">
-					<ldf:body>w3c</ldf:body>
+					<body>w3c</body>
 					<number>
 						<xsl:value-of select="header/w3c-designation"/>
 					</number>
 				</xsl:if>
-				<ldf:metainfo>
-					<xsl:copy-of select="header/title"/>
-					<xsl:for-each select="header/authlist/author">
-						<author>
+				<xsl:for-each select="header/authlist/author">
+					<author>
+						<name>
 							<xsl:value-of select="name"/>
-						</author>
-					</xsl:for-each>
-				</ldf:metainfo>
+						</name>
+						<xsl:if test="affiliation">
+							<affiliation>
+								<xsl:value-of select="affiliation"/>
+							</affiliation>
+						</xsl:if>
+						<xsl:if test="email">
+							<email>
+								<xsl:value-of select="email"/>
+							</email>
+						</xsl:if>
+					</author>
+				</xsl:for-each>
+				<topic>
+					<xsl:value-of select="header/title"/>
+				</topic>
 				<xsl:choose>
 					<xsl:when test="header/w3c-doctype = 'W3C Recommendation'">
-						<ldf:status>approved</ldf:status>
+						<status>approved</status>
 					</xsl:when>
 					<xsl:otherwise>
-						<ldf:status>unknown</ldf:status>
+						<status>unknown</status>
 					</xsl:otherwise>
 				</xsl:choose>
 				<xsl:choose>
@@ -42,7 +54,7 @@
 					</xsl:otherwise>
 				</xsl:choose>
 				<xsl:for-each select="header/prevlocs/loc">
-					<ldf:previous>
+					<previous>
 						<title>
 							<xsl:choose>
 								<xsl:when test="substring(text(),1,7) = 'http://'">
@@ -56,7 +68,7 @@
 						<uri>
 							<xsl:value-of select="@href"/>
 						</uri>
-					</ldf:previous>
+					</previous>
 				</xsl:for-each>
 				<date>
 					<xsl:value-of select="header/pubdate/day"/>
@@ -65,95 +77,188 @@
 					<xsl:text> </xsl:text>
 					<xsl:value-of select="header/pubdate/year"/>
 				</date>
-			</ldf:title-page>
-			<content>
-				<ldf:part>
+			</metadata>
+			<part>
+				<metadata>
 					<role>front-matter</role>
-					<ldf:metainfo/>
+				</metadata>
+				<section>
+					<metadata>
+						<role>abstract</role>
+						<title>Abstract</title>
+					</metadata>
 					<content>
-						<ldf:simple-section>
-							<role>scope</role>
-							<ldf:metainfo>
-								<title>Status of this document</title>
-							</ldf:metainfo>
-							<content>
-								<xsl:for-each select="header/status/p">
-									<text>
-										<xsl:apply-templates select="node()"/>
-									</text>
-								</xsl:for-each>
-							</content>
-						</ldf:simple-section>
-						<ldf:simple-section>
-							<role>abstract</role>
-							<ldf:metainfo/>
-							<content>
-								<xsl:for-each select="header/abstract/p">
-									<text>
-										<xsl:apply-templates select="node()"/>
-									</text>
-								</xsl:for-each>
-							</content>
-						</ldf:simple-section>
-<!-- skipped: langusage, revisiondesc -->
-						<ldf:placeholder>list-of-contents</ldf:placeholder>
-					</content>
-				</ldf:part>
-				<ldf:part>
-					<role>core-part</role>
-					<ldf:metainfo/>
-					<content>
-						<xsl:for-each select="body/div1">
-							<xsl:choose>
-								<xsl:when test="head = 'Introduction'">
-									<ldf:simple-section>
-										<role>foreword</role>
-										<ldf:metainfo>
-											<xsl:if test="@id">
-												<id>
-													<xsl:value-of select="@id"/>
-												</id>
-											</xsl:if>
-											<title>
-												<xsl:value-of select="head"/>
-											</title>
-										</ldf:metainfo>
-										<content>
-											<xsl:apply-templates select="*[local-name() != 'head']"/>
-										</content>
-									</ldf:simple-section>
-								</xsl:when>
-								<xsl:otherwise>
-									<ldf:structured-section>
-										<ldf:metainfo>
-											<xsl:if test="@id">
-												<id>
-													<xsl:value-of select="@id"/>
-												</id>
-											</xsl:if>
-											<title>
-												<xsl:value-of select="head"/>
-											</title>
-										</ldf:metainfo>
-										<content>
-											<ldf:normative-role>description</ldf:normative-role>
-											<ldf:simple-section>
-												<role>abstract</role>
-<!-- TODO -->
-												<ldf:metainfo/>
-												<content>
-													<xsl:apply-templates select="*[local-name() != 'head']"/>
-												</content>
-											</ldf:simple-section>
-										</content>
-									</ldf:structured-section>
-								</xsl:otherwise>
-							</xsl:choose>
+						<xsl:for-each select="header/abstract/p">
+							<para>
+								<xsl:apply-templates select="node()"/>
+							</para>
 						</xsl:for-each>
 					</content>
-				</ldf:part>
-			</content>
+				</section>
+				<section>
+					<metadata>
+						<role>scope</role>
+						<title>Status of this document</title>
+<!-- TODO: should be added later with improving transformations. The information is useful but not automatically extractable -->
+					</metadata>
+					<content>
+						<xsl:for-each select="header/status/p">
+							<para>
+								<xsl:apply-templates select="node()"/>
+							</para>
+						</xsl:for-each>
+					</content>
+				</section>
+<!-- skipped: langusage, revisiondesc -->
+				<section>
+					<metadata>
+						<role>list-of-contents</role>
+						<title>Table of contents</title>
+					</metadata>
+					<placeholder/>
+<!-- TODO: should be added later with improving transformations. The information is useful but not automatically extractable -->
+				</section>
+			</part>
+			<xsl:if test="body">
+				<part>
+					<metadata>
+						<role>core-part</role>
+					</metadata>
+					<xsl:apply-templates select="body/div1"/>
+				</part>
+			</xsl:if>
+			<xsl:if test="back">
+				<part>
+					<metadata>
+						<role>back-matter</role>
+					</metadata>
+					<xsl:apply-templates select="back/div1|back/inform-div1"/>
+				</part>
+			</xsl:if>
 		</ldf:document>
+	</xsl:template>
+	<xsl:template match="div1|inform-div1">
+		<xsl:choose>
+			<xsl:when test="head = 'Introduction' or head = 'Conformance'">
+				<section>
+					<metadata>
+						<xsl:if test="@id">
+							<id>
+								<xsl:value-of select="@id"/>
+							</id>
+						</xsl:if>
+						<xsl:choose>
+							<xsl:when test="head = 'Introduction'">
+								<role>foreword</role>
+							</xsl:when>
+							<xsl:when test="head = 'Conformance'">
+								<role>conformance</role>
+							</xsl:when>
+						</xsl:choose>
+						<title>
+							<xsl:value-of select="head"/>
+						</title>
+					</metadata>
+					<content>
+						<xsl:apply-templates select="*[local-name() != 'head']"/>
+					</content>
+				</section>
+			</xsl:when>
+			<xsl:when test="head = 'References'">
+				<section>
+					<metadata>
+						<xsl:if test="@id">
+							<id>
+								<xsl:value-of select="@id"/>
+							</id>
+						</xsl:if>
+						<role>references</role>
+						<xsl:if test="local-name() = 'inform-div1'">
+							<type>informative</type>
+						</xsl:if>
+						<title>
+							<xsl:value-of select="head"/>
+						</title>
+					</metadata>
+					<xsl:apply-templates select="div2"/>
+				</section>
+			</xsl:when>
+			<xsl:otherwise>
+				<section>
+					<metadata>
+						<xsl:if test="@id">
+							<id>
+								<xsl:value-of select="@id"/>
+							</id>
+						</xsl:if>
+						<role>top-section</role>
+						<title>
+							<xsl:value-of select="head"/>
+						</title>
+					</metadata>
+					<xsl:if test="p|ulist|slist|blist">
+<!-- if there is pure content, not just subsections, then create a special section for it -->
+<!-- TODO: any other variations, beside head|scrap|div2|p|ulist? -->
+						<subsection>
+							<metadata>
+								<role>description</role>
+								<xsl:choose>
+									<xsl:when test="local-name() = 'inform-div1'">
+										<type>informative</type>
+									</xsl:when>
+									<xsl:otherwise>
+										<type>normative</type>
+									</xsl:otherwise>
+								</xsl:choose>
+							</metadata>
+							<content>
+								<xsl:apply-templates select="p|ulist|slist|blist"/>
+							</content>
+						</subsection>
+					</xsl:if>
+					<xsl:apply-templates select="scrap"/>
+					<xsl:apply-templates select="div2"/>
+				</section>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	<xsl:template match="div2|div3|div4|div5">
+		<subsection>
+			<metadata>
+				<xsl:if test="@id">
+					<id>
+						<xsl:value-of select="@id"/>
+					</id>
+				</xsl:if>
+				<role>subtopic</role>
+				<title>
+					<xsl:value-of select="head"/>
+				</title>
+			</metadata>
+			<xsl:if test="p|ulist|slist|blist">
+<!-- if there is pure content, not just subsections, then create a special section for it -->
+<!-- TODO: any other variations, beside head|scrap|div2|p|ulist? -->
+				<subsection>
+					<metadata>
+						<role>description</role>
+						<xsl:choose>
+							<xsl:when test="local-name(..) = 'inform-div1'">
+								<type>informative</type>
+							</xsl:when>
+							<xsl:otherwise>
+								<type>normative</type>
+							</xsl:otherwise>
+						</xsl:choose>
+					</metadata>
+					<content>
+						<xsl:apply-templates select="p|ulist|slist|blist"/>
+					</content>
+				</subsection>
+			</xsl:if>
+			<xsl:apply-templates select="scrap"/>
+<!-- TODO: div3 etc!!! -->
+			<xsl:apply-templates select="div3|div4|div5"/>
+		</subsection>
 	</xsl:template>
 <!-- neglecting xlink, show, actuate properties-->
 	<xsl:template match="loc">
@@ -168,9 +273,9 @@
 	</xsl:template>
 <!-- processing text -->
 	<xsl:template match="p">
-		<text>
+		<para>
 			<xsl:apply-templates select="node()"/>
-		</text>
+		</para>
 	</xsl:template>
 <!-- processing references -->
 	<xsl:template match="bibref">
@@ -247,6 +352,18 @@
 			</xsl:for-each>
 		</list>
 	</xsl:template>
+	<xsl:template match="blist">
+		<list>
+			<xsl:for-each select="bibl">
+				<item>
+					<xsl:if test="@id">
+						<anchor id="{@id}"/>
+					</xsl:if>
+					<xsl:apply-templates select="node()"/>
+				</item>
+			</xsl:for-each>
+		</list>
+	</xsl:template>
 <!-- processing keywords -->
 	<xsl:template match="term">
 		<ldf:keyword>
@@ -292,19 +409,22 @@
 </scrap>
 -->
 	<xsl:template match="scrap">
-		<ldf:normative-role>syntax</ldf:normative-role>
-		<ldf:simple-section>
-			<role>abstract</role>
-<!-- TODO -->
-			<ldf:metainfo>
+		<subsection>
+			<metadata>
+				<role>syntax</role>
+				<type>normative</type>
 				<title>
 					<xsl:value-of select="head"/>
 				</title>
-			</ldf:metainfo>
+			</metadata>
 			<content>
-				<xsl:apply-templates select="prodgroup/prod"/>
+				<xsl:for-each select="prod|prodgroup/prod">
+					<xsl:call-template name="copy-production">
+						<xsl:with-param name="id" select="@id"/>
+					</xsl:call-template>
+				</xsl:for-each>
 			</content>
-		</ldf:simple-section>
+		</subsection>
 	</xsl:template>
 	<xsl:template name="copy-production">
 		<xsl:param name="id"/>
