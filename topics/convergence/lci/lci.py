@@ -620,4 +620,5 @@ if __name__ == "__main__":
  else:
   print 'Usage:'
   print ' ',sys.argv[0],'<configuration file>','<diagram prefix>'
-  sysexit(1)
+  sys.exit(1)
+

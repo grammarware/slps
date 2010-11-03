@@ -14,5 +14,5 @@ elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    python ${SLPS}/shared/python/lci.py $1 $2
+    python ${SLPS}/topics/convergence/lci/lci.py $1 $2
 fi
