@@ -44,7 +44,7 @@ step( (seq(S1,S2),M1),
 % Assignment
 
 step( (assign(X,A),M1),
-      (skip,M2))
+      M2)
  :-
     evala(A,M1,Y),
     update(M1,X,Y,M2).

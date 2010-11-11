@@ -93,5 +93,4 @@ not(tt,ff).
 not(ff,tt).
 
 and(tt,tt,tt).
-and(ff,_,ff).
-and(_,ff,ff).
+and(X1,X2,ff) :- \+ X1 == tt, \+ X2 == tt.
