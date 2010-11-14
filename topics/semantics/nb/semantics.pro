@@ -1,29 +1,29 @@
 % Transitive closure of small-step transition relation
 
-eval(E,V,T) :-
- evalstep(E,V,T),
- isfinal(V).
+eval(E,V) :-
+ evalstep(E,V),
+ value(V).
 
-eval(E1,V,T) :-
- evalstep(E1,E2,T),
- eval(E2,V,T).
+eval(E1,V) :-
+ evalstep(E1,E2),
+ eval(E2,V).
 
 
 % Small-step transition relation
 
-evalstep(true,tt,bool).
-evalstep(false,ff,bool).
-evalstep(zero,0,nat).
-evalstep(succ(E1),succ(E2),nat) :- evalstep(E1,E2,nat).
-evalstep(pred(zero),zero,nat).
-evalstep(pred(succ(N)),N,nat).
-evalstep(pred(E1),pred(E2),nat) :- evalstep(E1,E2,nat).
-evalstep(iszero(zero),tt,bool).
-evalstep(iszero(T1),iszero(T2),bool) :- evalstep(T1,T2,nat).
-evalstep(iszero(succ(_)),ff,bool).
-evalstep(if(tt,T2,_),T2,_).
-evalstep(if(ff,_,T3),T3,_).
-evalstep(if(T1,T2,T3),if(T4,T2,T3),_) :- evalstep(T1,T4,bool).
+evalstep(true,tt).
+evalstep(false,ff).
+evalstep(zero,0).
+evalstep(succ(E1),succ(E2)) :- evalstep(E1,E2).
+evalstep(pred(zero),zero).
+evalstep(pred(succ(N)),N).
+evalstep(pred(E1),pred(E2)) :- evalstep(E1,E2).
+evalstep(iszero(zero),tt).
+evalstep(iszero(T1),iszero(T2)) :- evalstep(T1,T2).
+evalstep(iszero(succ(_)),ff).
+evalstep(if(tt,T2,_),T2).
+evalstep(if(ff,_,T3),T3).
+evalstep(if(T1,T2,T3),if(T4,T2,T3)) :- evalstep(T1,T4).
 
 
 % Values (normal forms)

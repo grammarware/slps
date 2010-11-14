@@ -1,1 +1,2 @@
-if(iszero(zero),iszero(succ(zero)),true)
+if(iszero(zero),iszero(succ(zero)),true).
+
