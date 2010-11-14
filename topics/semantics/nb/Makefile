@@ -1,11 +1,9 @@
-test:
-	swipl -f semantics.pro -t "eval(`cat input1.txt`,V,T),write(V),write(':'),write(T),nl"
-	swipl -f semantics.pro -t "eval(`cat input2.txt`,V,T),write(V),write(':'),write(T),nl"
+none:
 
-types:
-	swipl -f types.pro -t "type(`cat input1.txt`,T),write(T),nl"
-	swipl -f types.pro -t "type(`cat input2.txt`,T),write(T),nl"
+test:
+	swipl -f main.pro -- 'sample1.nb'
+	swipl -f main.pro -- 'sample2.nb'
 
 prompt:
-	swipl -s types.pro
+	swipl -f main.pro
 

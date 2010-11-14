@@ -1,4 +1,3 @@
-% see slides #109, #113
 term(true).
 term(false).
 term(zero).
