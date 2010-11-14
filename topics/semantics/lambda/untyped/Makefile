@@ -1,3 +1,5 @@
+none:
+
 test:
-	swipl -f main.pro
+	swipl -q -f main.pro
 
