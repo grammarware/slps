@@ -1,6 +1,6 @@
 :- ['syntax.pro'].
 :- ['semantics.pro'].
-:- ['types.pro'].
+:- ['typing.pro'].
 
 % Read, typecheck and reduce
 
