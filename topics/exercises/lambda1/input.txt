@@ -1,1 +1,0 @@
-lambda f . lambda g . lambda x . app f : app g : x
