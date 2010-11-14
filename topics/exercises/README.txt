@@ -1,6 +1,7 @@
-This area is currently subject to consolidation efforts.
 Most of this stuff has been used in a course by Laemmel/Zaytsev.
+This area is currently subject to consolidation efforts.
 Some of the files are being moved into more general places.
+See topics/semantics and topics/NielsonN07
 
 hutton     - examples from Graham Hutton's "Programming in Haskell"
 haskell1   - simple exercises solved in Haskell
