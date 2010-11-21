@@ -1,4 +1,4 @@
-:- ensure_loaded('../shared/manysteps.pro').
+:- ensure_loaded('../../shared/manysteps.pro').
 
 eval(succ(T1),succ(T2)) :- eval(T1,T2).
 eval(pred(zero),zero).

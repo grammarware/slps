@@ -1,9 +1,8 @@
 :- ['term.pro'].
 :- ['value.pro'].
 :- ['eval.pro'].
-:- ['welltyped.pro'].
 
-% Read, typecheck and reduce
+% Read and evaluate
 
 main(Input)
  :-
@@ -11,8 +10,6 @@ main(Input)
     read(Term),
     seen,
     format('Input term: ~w~n',[Term]),
-    welltyped(Term, Type),    
-    format('Type of term: ~w~n',[Type]),
     manysteps(Term,Value),
     format('Value of term: ~w~n',[Value]).
 
