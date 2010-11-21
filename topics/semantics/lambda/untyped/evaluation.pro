@@ -15,5 +15,5 @@ onestep(app(lam(X,T1),V),T2) :-
 % Reflexive, transitive closure
 
 manysteps(V,V) :- value(V).
-manysteps(T1,T3) :- onestep(T1,T2), manysteps(T2,T3).
+manysteps(T1,V) :- onestep(T1,T2), manysteps(T2,V).
 

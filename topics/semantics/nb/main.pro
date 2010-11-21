@@ -1,6 +1,6 @@
 :- ['term.pro'].
 :- ['value.pro'].
-:- ['semantics.pro'].
+:- ['eval.pro'].
 :- ['typing.pro'].
 
 % Read, typecheck and reduce

@@ -2,7 +2,7 @@
 :- ['value.pro'].
 :- ['substitution.pro'].
 :- ['fv.pro'].
-:- ['semantics.pro'].
+:- ['evaluation.pro'].
 
 :-
  % Church numerals 0 and 1 
