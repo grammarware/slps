@@ -1,4 +1,5 @@
 :- ['syntax.pro'].
+:- ['value.pro'].
 :- ['semantics.pro'].
 :- ['typing.pro'].
 
@@ -13,9 +14,8 @@ main(Input)
     type(Term, Type),    
     format('Type of term: ~w~n',[Type]),
     eval(Term,Value),
-    format('Value of term: ~w~n',[Value]),
-    halt.
+    format('Value of term: ~w~n',[Value]).
 
 :-
     current_prolog_flag(argv,Argv),
-    ( append(_,['--',Input],Argv), main(Input); true ).
+    ( append(_,['--',Input],Argv), main(Input), halt; true ).
