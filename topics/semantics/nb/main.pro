@@ -13,7 +13,7 @@ main(Input)
     format('Input term: ~w~n',[Term]),
     type(Term, Type),    
     format('Type of term: ~w~n',[Type]),
-    eval(Term,Value),
+    manysteps(Term,Value),
     format('Value of term: ~w~n',[Value]).
 
 :-
