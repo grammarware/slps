@@ -1,0 +1,13 @@
+% We illustrate Church Booleans and numerals.
+% That is, we use a conditional (TEST) to select either C0 or C1.
+
+app(app(app(
+ % TEST (if-then-else)
+ lam(l,lam(m,lam(n,app(app(var(l),var(m)),var(n))))),
+ % Church Boolean True
+ lam(t,lam(f,var(t)))),
+ % Church Numeral 0
+ lam(s,lam(z,var(z)))),
+ % Church Numeral 1
+ lam(s,lam(z,app(var(s),var(z))))).
+

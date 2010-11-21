@@ -1,0 +1,25 @@
+% The iseven predicate.
+% This version leverages a CBV fixed point combinator.
+% Hence, this version can only be used with the untyped lambda calculus.
+% Clearly, we use an applied version (with natural numbers and Booleans).
+
+app(app(
+
+ % CBV fixed point combinator
+ lam(f,app(
+            lam(x,app(var(f),lam(y,app(app(var(x),var(x)),var(y))))),
+            lam(x,app(var(f),lam(y,app(app(var(x),var(x)),var(y))))))),
+
+ % iseven
+ lam(e,lam(x,if(
+               iszero(var(x)),
+               true,
+               if(
+                 iszero(pred(var(x))),
+                 false,
+                 app(var(e),pred(pred(var(x))))))))),
+
+ % Argument to be tested
+ succ(succ(succ(zero)))
+
+).

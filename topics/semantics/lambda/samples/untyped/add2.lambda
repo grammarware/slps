@@ -1,0 +1,8 @@
+app(app(
+ % Twice function
+ lam(f,lam(x,app(var(f),app(var(f),var(x))))),
+ % Increment function
+ lam(x,succ(var(x)))),
+ % 2
+ succ(succ(zero))).
+

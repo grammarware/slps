@@ -1,4 +1,5 @@
 :- ensure_loaded('../../shared/manysteps.pro').
+:- ensure_loaded('substitute.pro').
 
 eval(app(T1,T2),app(T3,T2)) :-
   eval(T1,T3).

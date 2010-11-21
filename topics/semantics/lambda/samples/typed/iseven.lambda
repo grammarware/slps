@@ -1,0 +1,17 @@
+% The iseven predicate with a typed lambda calculus with fixed points.
+
+app(
+
+ % iseven
+ fix(lam(e,fun(nat,bool),lam(x,nat,if(
+               iszero(var(x)),
+               true,
+               if(
+                 iszero(pred(var(x))),
+                 false,
+                 app(var(e),pred(pred(var(x))))))))),
+
+ % Argument to be tested
+ succ(succ(succ(zero)))
+
+).

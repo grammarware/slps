@@ -1,3 +1,5 @@
+:- ensure_loaded('freevars.pro').
+
 substitute(N,X,var(X),N).
 
 substitute(_,X,var(Y),var(Y))
@@ -14,14 +16,14 @@ substitute(_,X,lam(X,M),lam(X,M)).
 substitute(N,X,lam(Y,M1),lam(Y,M2))
  :-
     \+ X == Y,
-    fv(N,Xs),
+    freevars(N,Xs),
     \+ member(Y,Xs),
     substitute(N,X,M1,M2).
 
 substitute(N,X,lam(Y,M1),lam(Z,M3))
  :-
     \+ X == Y,
-    fv(N,Xs),
+    freevars(N,Xs),
     member(Y,Xs),
     freshvar(Xs,Z),
     substitute(var(Z),Y,M1,M2),
