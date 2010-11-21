@@ -1,4 +1,4 @@
-:- ['syntax.pro'].
+:- ['term.pro'].
 :- ['value.pro'].
 :- ['substitution.pro'].
 :- ['fv.pro'].
