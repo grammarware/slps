@@ -1,17 +1,7 @@
 :- ['term.pro'].
 :- ['value.pro'].
 :- ['eval.pro'].
-
-% Read and evaluate
-
-main(Input)
- :-
-    see(Input),
-    read(Term),
-    seen,
-    format('Input term: ~w~n',[Term]),
-    manysteps(Term,Value),
-    format('Value of term: ~w~n',[Value]).
+:- ['../../shared/untyped/main.pro'].
 
 :-
     current_prolog_flag(argv,Argv),
