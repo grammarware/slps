@@ -5,6 +5,7 @@ LOCAL1=${PWD}
 cd `dirname $0`
 cd ../..
 SLPS=${PWD}
+export PYTHONPATH=${SLPS}/shared/python
 cd ${LOCAL1}
 
 if [ $# -ne 3 ]; then
@@ -18,5 +19,5 @@ elif [ ! -r $2 ]; then
     exit 1
 else
     rm -f $3
-    python ${SLPS}/shared/python/xldf.py $1 $2 $3
+    python ${SLPS}/topics/transformation/xldf/xldf.py $1 $2 $3
 fi
