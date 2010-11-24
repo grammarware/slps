@@ -3,6 +3,6 @@
 :- multifile freevars/2.
 :- ['../untyped/eval.pro'].
 :- ['../../nb/untyped/eval.pro'].
-:- ensure_loaded('substitute.pro').
-:- ensure_loaded('freevars.pro').
+:- ['substitute.pro'].
+:- ['freevars.pro'].
 

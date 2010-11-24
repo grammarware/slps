@@ -1,5 +1,7 @@
 value(true).
 value(false).
-value(zero).
-value(succ(T)) :- value(T).
+value(NV) :- nvalue(NV).
+
+nvalue(zero).
+nvalue(succ(NV)) :- nvalue(NV).
 

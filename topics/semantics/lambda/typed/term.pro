@@ -1,6 +1,6 @@
 :- ['../applied/term.pro'].
 
-% The untyped version is no longer to be used.
+% The untyped version is no longer part of surface syntax.
 
 term(lam(X,A,T)) :- variable(X), type(A), term(T).
 
