@@ -8,10 +8,10 @@ welltyped(_,zero,nat).
 welltyped(G,succ(T),nat) :- welltyped(G,T,nat).
 welltyped(G,pred(T),nat) :- welltyped(G,T,nat).
 welltyped(G,iszero(T),bool) :- welltyped(G,T,nat).
-welltyped(G,if(T1,T2,T3),T) :-
+welltyped(G,if(T1,T2,T3),A) :-
  welltyped(G,T1,bool),
- welltyped(G,T2,T),
- welltyped(G,T3,T).
+ welltyped(G,T2,A),
+ welltyped(G,T3,A).
 
 
 :- ensure_loaded('../../shared/map.pro').

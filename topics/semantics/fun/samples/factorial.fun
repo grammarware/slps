@@ -1,0 +1,23 @@
+letrec(
+  add,
+  fun(nat,fun(nat,nat)),
+  lam(x,nat,lam(y,nat,
+    if(iszero(var(x)),
+      var(y),
+      succ(app(app(var(add),pred(var(x))),var(y)))))),
+  letrec(
+    mult,
+    fun(nat,fun(nat,nat)),
+    lam(x,nat,lam(y,nat,
+      if(iszero(var(x)),
+        zero,
+        app(app(var(add),var(y)),app(app(var(mult),pred(var(x))),var(y)))))),
+    letrec(
+      factorial,
+      fun(nat,nat),
+      lam(x,nat,
+        if(iszero(var(x)),
+          succ(zero),
+          app(app(var(mult),var(x)),app(var(factorial),pred(var(x)))))),
+      app(var(factorial),succ(succ(succ(succ(succ(zero))))))
+))).

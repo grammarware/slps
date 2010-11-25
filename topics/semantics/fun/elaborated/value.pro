@@ -1,0 +1,2 @@
+:- ['../../lambda/typed/value.pro'].
+

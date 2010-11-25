@@ -17,17 +17,14 @@ substitute(N,X,lam(Y,M1),lam(Y,M2))
  :-
     \+ X == Y,
     freevars(N,Xs),
-    \+ member(Y,Xs),
-    substitute(N,X,M1,M2).
-
-substitute(N,X,lam(Y,M1),lam(Z,M3))
- :-
-    \+ X == Y,
-    freevars(N,Xs),
-    member(Y,Xs),
-    freshvar(Xs,Z),
-    substitute(var(Z),Y,M1,M2),
-    substitute(N,X,M2,M3).
+    ( member(Y,Xs) ->
+         (
+           freshvar(Xs,Z),
+           substitute(var(Z),Y,M1,M12),
+           substitute(N,X,M12,M2)
+         )
+       ; substitute(N,X,M1,M2)
+    ).
 
 
 %

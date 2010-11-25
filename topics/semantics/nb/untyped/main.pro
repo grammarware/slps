@@ -1,7 +1,7 @@
 :- ['term.pro'].
 :- ['value.pro'].
 :- ['eval.pro'].
-:- ['../../shared/untyped/main.pro'].
+:- ['../../shared/main/untyped.pro'].
 
 :-
     current_prolog_flag(argv,Argv),
