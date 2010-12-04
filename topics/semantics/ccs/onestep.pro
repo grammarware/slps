@@ -1,3 +1,14 @@
+/*
+
+t/4 one-step relation for semantics of CCS.
+t(T1,T2,A,S):
+ - T1 ... input term
+ - T2 ... remaining term
+ - A  ... action
+ - S  ... definitions of constants
+
+*/
+
 % Sequential combinator
 
 t(X:E,E,X,_).
