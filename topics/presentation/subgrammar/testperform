@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo [Test Case] $1
+./subgrammar.py fl.bgf $1 fl.$1.bgf || exit -1
+../../../shared/tools/checkxml bgf fl.$1.bgf || exit -1
+../../../shared/tools/gdt fl.$1.bgf tests/$1.baseline.bgf || exit -1
