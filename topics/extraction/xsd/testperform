@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo [Test Case] $1
+../../../shared/tools/xsd2bgf $1 `basename $1 .xsd`.bgf || exit -1
+../../../shared/tools/validate bgf `basename $1 .xsd`.bgf || exit -1
+../../../shared/tools/gdt `basename $1 .xsd`.bgf tests/`basename $1 .xsd`.baseline || exit -1
