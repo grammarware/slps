@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo '[Test Case]' `basename $1`
+./export.py $1 py.bnf
+../../../shared/tools/bgf2bnf $1 xsl.bnf
+diff py.bnf xsl.bnf
+if [ $? -ne 0 ]; then
+	echo 'ERROR. Python vs XSLT output follows:'
+	cat py.bnf
+	cat xsl.bnf
+    exit -1
+fi
