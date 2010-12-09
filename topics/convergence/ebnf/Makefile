@@ -11,9 +11,7 @@ test:
 check:
 	${validator} lcf bnf.lcf
 	ls -1 xbgf/*.xbgf | xargs -n1 ${validator} xbgf
-	ls -1  bgf/*.bgf  | xargs -n1 ${validator} bgf
-	find ../../fl/lci/snapshot/ -name "*.bgf" | xargs -n1 ../../../shared/tools/bgf2bnf > /dev/null
-	find ../../java/lci/snapshot/ -name "*.bgf" | xargs -n1 ../../../shared/tools/bgf2bnf > /dev/null
+	ls -1  */*.bgf  | xargs -n1 ${validator} bgf
 
 clean:
 	rm -f *.bnf bgf/* architecture* xbgf.log
