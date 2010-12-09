@@ -182,7 +182,14 @@ class Selectable:
 		self.xml.append(self.expr.getXml())
 		return self.ex
 	def __str__(self):
-		return self.sel+'::'+str(self.expr)
+		name = self.expr.__class__.__name__
+		if name == 'Expression':
+			name = self.expr.wrapped.__class__.__name__
+		#print name
+		if name in ('Plus','Star','Optional'):
+			return self.sel+'::('+str(self.expr)+')'
+		else:
+			return self.sel+'::'+str(self.expr)
 
 # epsilon::EPSILON
 class Epsilon:
@@ -258,7 +265,7 @@ class Sequence:
 	def getXml(self):
 		#print 'Getting the XML of sequence...'
 		if len(self.data) == 0:
-			return None
+			return Epsilon().getXml()
 		elif len(self.data) == 1:
 			return self.data[0].getXml()
 		else:
@@ -289,7 +296,7 @@ class Choice:
 	def getXml(self):
 		#print 'Getting the XML of choice...'
 		if len(self.data) == 0:
-			return None
+			return Empty().getXml()
 		elif len(self.data) == 1:
 			return self.data[0].getXml()	
 		else:

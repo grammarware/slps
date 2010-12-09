@@ -26,8 +26,9 @@ if __name__ == "__main__":
 			continue
 		if line[0] == '@':
 			continue
-		elif line[0] == '=' or line[0] == '|':
+		elif line[0] == '=' or line[0] == '|' or line[0] == '>':
 			# "all", treat as alternatives
+			# "first", treat as an alternative for now
 			if nt == '':
 				print '['+str(cx)+']','Found first line, but of what nonterminal?'
 				continue
@@ -39,9 +40,6 @@ if __name__ == "__main__":
 			pass
 		elif line[0] == '-':
 			# "reject"
-			pass
-		elif line[0] == '>':
-			# "first"
 			pass
 		elif line[0:2] == '//':
 			# comment
@@ -79,16 +77,33 @@ if __name__ == "__main__":
 		for alt in grammar[nt]:
 			prod = BGF.Production()
 			prod.setNT(nt)
+			if alt[0] in ('bracket','left','right','lex'):
+				print 'Skipped a modifier',alt[0],'at',nt
+				alt = alt[1:]
 			if alt[-1] == ';':
 				alt = alt[:-1]
 			if alt[0][-1] == ':':
 				prod.setLabel(alt[0][:-1])
 				alt = alt[1:]
+			if len(alt)>1 and alt[1] == ':':
+				# if there is whitespace between the label and the :
+				prod.setLabel(alt[0])
+				alt = alt[2:]
 			cx = 0
 			seq = BGF.Sequence()
 			sym = None
 			print '['+str(cx)+']',alt
 			while cx<len(alt):
+				# comments
+				if alt[cx][:2] == '/*':
+					if alt[cx].find('*/')>0:
+						alt[cx] = alt[cx][:alt[cx].index('/*')] + alt[cx][alt[cx].index('*/')+2:]
+						if alt[cx] == '':
+							cx += 1
+							continue
+					else:
+						print '['+str(cx)+']','TODO: a comment spanning several tokens'
+				# nonterminals
 				if alt[cx][0].isupper():
 					if sym:
 						seq.add(sym)
@@ -114,7 +129,7 @@ if __name__ == "__main__":
 					sym.setName(term)
 					cx +=1
 					continue
-				if alt[cx][0] == '[':
+				if alt[cx][0] == '[' or alt[cx][:2] == '![':
 					# not quite correct
 					if sym:
 						seq.add(sym)
@@ -162,7 +177,9 @@ if __name__ == "__main__":
 			if sym:
 				seq.add(sym)
 			prod.setExpr(seq)
+			#print str(prod)
 			bgf.addProd(prod)
+	print str(bgf)
 	ET.ElementTree(bgf.getXml()).write(sys.argv[2])
 	sys.exit(0)
 		
