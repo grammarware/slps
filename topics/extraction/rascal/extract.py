@@ -8,6 +8,19 @@ import elementtree.ElementTree as ET
 
 names   = []
 
+def parseGroup(g):
+	# ['(',a,'|',b,'|',c,'|',d')']
+	if g[0] != '(' or g[-1] != ')':
+		print 'Unexprected group:',g
+		return []
+	gram = [[]]
+	for e in g[1:-1]:
+		if e == '|':
+			grqm.append([])
+		else:
+			gram[-1].append(e)
+	return
+
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
 		print 'This tool extracts a Rascal grammar.'
@@ -54,7 +67,7 @@ if __name__ == "__main__":
 				start.append(tokens[-1])
 				tokens = tokens[1:]
 				# fall through
-			if tokens[0] == 'syntax':
+			if tokens[0] in ('syntax','layout'):
 				nt = tokens[1]
 				if nt[0] == '"':
 					print '['+str(cx)+']','Cannot include lexical restriction information about',nt
@@ -67,19 +80,29 @@ if __name__ == "__main__":
 				continue
 			# give up
 			print '['+str(cx)+']','What is',line.split(),'?'
+			grammar[nt].append(tokens)
 			pass
 	# NOW TO PROCESS TOKENS
-	#print 'Literal:'
-	#for s in grammar['Literal']:
+	#print 'Command:'
+	#for s in grammar['Command']:
 	#	print '	',s
 	bgf = BGF.Grammar()
+	prevline = []
+	curly = 0
 	for nt in grammar.keys():
 		for alt in grammar[nt]:
+			if prevline:
+				prevline.append('|')
+				prevline.extend(alt)
+				alt = prevline[:]
+				prevline = []
 			prod = BGF.Production()
 			prod.setNT(nt)
-			if alt[0] in ('bracket','left','right','lex'):
+			while alt and alt[0] in ('bracket','left','right','non-assoc','lex','(',')'):
 				print 'Skipped a modifier',alt[0],'at',nt
 				alt = alt[1:]
+			if not alt:
+				continue
 			if alt[-1] == ';':
 				alt = alt[:-1]
 			if alt[0][-1] == ':':
@@ -92,8 +115,18 @@ if __name__ == "__main__":
 			cx = 0
 			seq = BGF.Sequence()
 			sym = None
-			print '['+str(cx)+']',alt
+			#print '['+str(cx)+']',alt
 			while cx<len(alt):
+				if curly>0:
+					if alt[cx] == '{':
+						curly += 1
+						#print 'MORE CURLY'
+					elif alt[cx] == '}':
+						curly -= 1
+						#print 'LESS CURLY'
+					#print 'Skipped over',alt[cx]
+					cx += 1
+					continue
 				# comments
 				if alt[cx][:2] == '/*':
 					if alt[cx].find('*/')>0:
@@ -103,8 +136,25 @@ if __name__ == "__main__":
 							continue
 					else:
 						print '['+str(cx)+']','TODO: a comment spanning several tokens'
+				# groups - TODO
+				if alt[cx] == ')':
+					cx += 1
+					continue
+				#if alt[cx] == '(':
+				#	if alt.__contains__(')'):
+				#		# the end is near
+				#		parseGroup(alt[cx:alt.index(')')+1])
+				#		# ???
+				#	else:
+				#		prevline = alt[cx:]
+				#		cx = len(alt)+10
+				#		break
 				# nonterminals
-				if alt[cx][0].isupper():
+				if alt[cx] == '{':
+					curly += 1
+					cx += 1
+					continue
+				if alt[cx][0].isupper() or alt[cx][0]=='&':
 					if sym:
 						seq.add(sym)
 					sym = BGF.Nonterminal()
@@ -125,12 +175,13 @@ if __name__ == "__main__":
 					if sym:
 						seq.add(sym)
 					sym = BGF.Terminal()
-					term = alt[cx][1:-1].replace('\\\\','\\').replace('\\>','>').replace('\\\'','\'').replace('\\"','"')
+					term = alt[cx][1:-1].replace('\\\\','\\').replace('\\>','>').replace('\\<','<').replace('\\\'','\'').replace('\\"','"')
 					sym.setName(term)
 					cx +=1
 					continue
 				if alt[cx][0] == '[' or alt[cx][:2] == '![':
 					# not quite correct
+					#print alt
 					if sym:
 						seq.add(sym)
 					if alt[cx][-1] == ']':
@@ -143,6 +194,11 @@ if __name__ == "__main__":
 						sym.setExpr(part)
 					elif alt[cx][-2] == ']' and alt[cx][-1] == '*':
 						sym = BGF.Star()
+						part = BGF.Terminal()
+						part.setName(alt[cx][1:-2])
+						sym.setExpr(part)
+					elif alt[cx][-2] == ']' and alt[cx][-1] == '?':
+						sym = BGF.Optional()
 						part = BGF.Terminal()
 						part.setName(alt[cx][1:-2])
 						sym.setExpr(part)
@@ -174,35 +230,18 @@ if __name__ == "__main__":
 						sym.setExpr(plus)
 					cx +=2
 					continue
+			if cx == len(alt)+10:
+				continue
 			if sym:
+				#print 'Adding',sym,'to',seq
 				seq.add(sym)
-			prod.setExpr(seq)
-			#print str(prod)
-			bgf.addProd(prod)
-	print str(bgf)
+				prod.setExpr(seq)
+				bgf.addProd(prod)
+			elif curly == 0 and len(seq.data)>0:
+				#print 'Adding2',seq
+				prod.setExpr(seq)
+				#print str(prod)
+				bgf.addProd(prod)
+	#print str(bgf)
 	ET.ElementTree(bgf.getXml()).write(sys.argv[2])
-	sys.exit(0)
-		
-		
-	slpsns.init(ET)
-	bgf = ET.parse(sys.argv[1])
-	for prod in bgf.findall('//'+slpsns.bgf_('production')):
-		nt = prod.findtext('nonterminal')
-		if nt in grammar.keys():
-			grammar[nt].append(prod)
-		else:
-			grammar[nt]=[prod]
-	newBgf = ET.Element(slpsns.bgf_('grammar'))
-	nts = [sys.argv[2]]
-	ET.SubElement(newBgf,'root').text = nts[0]
-	oldnts = []
-	while nts:
-		for prod in grammar[nts[0]]:
-			newBgf.append(prod)
-		for nt in prod.findall('.//nonterminal'):
-			if (nt.text not in oldnts) and (nt.text not in nts):
-				nts.append(nt.text)
-		oldnts.append(nts[0])	# car
-		nts = nts[1:]			# cdr
-	ET.ElementTree(newBgf).write(sys.argv[3])
 	sys.exit(0)
