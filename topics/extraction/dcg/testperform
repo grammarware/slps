@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo [Test Case] $1
+../../../shared/tools/dcg2bgf $1 extracted.bgf
+../../../shared/tools/validate bgf extracted.bgf
+../../../shared/tools/gdt extracted.bgf tests/`echo $1 | tr -d ./`.baseline || exit -1

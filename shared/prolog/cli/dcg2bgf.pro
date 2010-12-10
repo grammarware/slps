@@ -29,6 +29,12 @@ rhsToX([],true).
 
 rhsToX({_},true).
 
+rhsToX([0' ],t(' ')).
+
+rhsToX([0'	],t('\t')).
+
+rhsToX([10],n('NEWLINE')).
+
 rhsToX(R,X)
  :-
     R = (_,_),
@@ -45,7 +51,7 @@ rhsToX(R1,X)
 rhsToX(R,t(Y))
  :-
     R =.. [F,X],
-    member(F,[reserved,@]),
+    member(F,[reserved,keyword,@]),
     name(Y,X).
 
 rhsToX(R1,','([Y,*(','([X,Y]))]))
