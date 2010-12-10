@@ -92,6 +92,7 @@ if __name__ == "__main__":
 	for nt in grammar.keys():
 		for alt in grammar[nt]:
 			if prevline:
+				# dead code yet
 				prevline.append('|')
 				prevline.extend(alt)
 				alt = prevline[:]
@@ -112,6 +113,15 @@ if __name__ == "__main__":
 				# if there is whitespace between the label and the :
 				prod.setLabel(alt[0])
 				alt = alt[2:]
+			if alt and len(alt)>1 and alt[0][:2] == '/*':
+				if alt[0].find('*/')>0:
+					alt[0] = alt[0][:alt[0].index('/*')] + alt[0][alt[0].index('*/')+2:]
+					if alt[0] == '':
+						alt = alt[1:]
+			# had to do it the second time - bad sign
+			if alt and len(alt)>0 and alt[0][-1] == ':':
+				prod.setLabel(alt[0][:-1])
+				alt = alt[1:]
 			cx = 0
 			seq = BGF.Sequence()
 			sym = None
@@ -157,8 +167,21 @@ if __name__ == "__main__":
 				if alt[cx][0].isupper() or alt[cx][0]=='&':
 					if sym:
 						seq.add(sym)
-					sym = BGF.Nonterminal()
-					sym.setName(alt[cx])
+					if alt[cx][-1] == '+':
+						sym = BGF.Plus()
+						sym.setExpr(BGF.Nonterminal())
+						sym.data.setName(alt[cx][:-1])
+					elif alt[cx][-1] == '*':
+						sym = BGF.Star()
+						sym.setExpr(BGF.Nonterminal())
+						sym.data.setName(alt[cx][:-1])
+					elif alt[cx][-1] == '?':
+						sym = BGF.Optional()
+						sym.setExpr(BGF.Nonterminal())
+						sym.data.setName(alt[cx][:-1])
+					else:
+						sym = BGF.Nonterminal()
+						sym.setName(alt[cx])
 					cx += 1
 					continue
 				if alt[cx] == 'lex':
@@ -237,7 +260,7 @@ if __name__ == "__main__":
 				seq.add(sym)
 				prod.setExpr(seq)
 				bgf.addProd(prod)
-			elif curly == 0 and len(seq.data)>0:
+			elif curly == 0 and (len(seq.data)>0 or prod.label != ''):
 				#print 'Adding2',seq
 				prod.setExpr(seq)
 				#print str(prod)

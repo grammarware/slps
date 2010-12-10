@@ -27,11 +27,14 @@ if __name__ == "__main__":
 	ET.SubElement(newBgf,'root').text = nts[0]
 	oldnts = []
 	while nts:
-		for prod in grammar[nts[0]]:
-			newBgf.append(prod)
-		for nt in prod.findall('.//nonterminal'):
-			if (nt.text not in oldnts) and (nt.text not in nts):
-				nts.append(nt.text)
+		if nts[0] not in grammar.keys():
+			print 'Nonterminal not found:',nts[0]
+		else:
+			for prod in grammar[nts[0]]:
+				newBgf.append(prod)
+				for nt in prod.findall('.//nonterminal'):
+					if (nt.text not in oldnts) and (nt.text not in nts):
+						nts.append(nt.text)
 		oldnts.append(nts[0])	# car
 		nts = nts[1:]			# cdr
 	ET.ElementTree(newBgf).write(sys.argv[3])
