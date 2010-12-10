@@ -49,6 +49,15 @@ t(restrict(E1,L),restrict(E2,L),X,S)
     oklabel(X,L).
 
 
+% Relabeling
+
+t(relabel(E1,M),relabel(E2,M),Y,S)
+ :- 
+    t(E1,E2,X,S),
+    basename(X,B1),
+    ( member((B1,B2),M) -> relabel(X,B2,Y); Y = X ).
+
+
 % Relate corresponding names
 
 samename(name(N),coname(N)).
@@ -66,3 +75,8 @@ oklabel(X,L) :- basename(X,N), \+ member(N,L).
 basename(name(N),N).
 basename(coname(N),N).
 
+
+% Relabel
+
+relabel(name(_),N2,name(N2)).
+relabel(coname(_),N2,coname(N2)).
