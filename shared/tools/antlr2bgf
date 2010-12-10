@@ -18,10 +18,10 @@ elif [ ! -r $1 ]; then
     exit 1
 else
     # Build extractor if needed
-    cd ${LOCAL2}/../topics/extraction/antlr2bgf
+    cd ${LOCAL2}/../topics/extraction/antlr
     make
     cd ${LOCAL1}
     rm -f $2
-    python ${LOCAL2}/../topics/extraction/antlr2bgf/antlrstrip.py ${LOCAL3}/`basename $1` $1.stripped
-    java -cp ${CLASSPATH}:${LOCAL2}/../download/antlrworks-1.1.7.jar:${LOCAL2}/../topics/extraction/antlr2bgf slps.antlr2bgf.Tool $1.stripped $2
+    python ${LOCAL2}/../topics/extraction/antlr/antlrstrip.py ${LOCAL3}/`basename $1` $1.stripped
+    java -cp ${CLASSPATH}:${LOCAL2}/../download/antlrworks-1.1.7.jar:${LOCAL2}/../topics/extraction/antlr slps.antlr2bgf.Tool $1.stripped $2
 fi

@@ -9,8 +9,7 @@ build:
 test:
 	make clean-tests
 	../../../shared/tools/antlr2bgf ${source} ${target}.bgf
-	../../../shared/tools/bgf2bnf ${target}.bgf ${target}.out
-	diff ${target}.out ${target}.baseline
+	../../../shared/tools/gdt ${target}.bgf ${target}.baseline
 
 clean:
 	make clean-tests
