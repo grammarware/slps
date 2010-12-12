@@ -152,9 +152,23 @@
     </span>  </xsl:template>
   
   <xsl:template match="nonterminal">
-    <xsl:call-template name="linknt">
-      <xsl:with-param name="nt" select="."/>
-    </xsl:call-template>
+	<xsl:choose>
+		<xsl:when test=". = 'anyURI'">
+			<span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+				<xsl:text>any-uri</xsl:text>
+			</span>
+		</xsl:when>
+		<xsl:when test=". = 'ID'">
+			<span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+				<xsl:text>id</xsl:text>
+			</span>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:call-template name="linknt">
+				<xsl:with-param name="nt" select="."/>
+			</xsl:call-template>
+		</xsl:otherwise>
+	</xsl:choose>
   </xsl:template>
 
   <xsl:template match="selectable">
