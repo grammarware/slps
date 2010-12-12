@@ -1,6 +1,6 @@
 #!/bin/sh
 
 echo [Test Case] $1 $2
-../../../shared/tools/java2bgf $1 $2 `basename $1`.bgf || exit -1
-../../../shared/tools/validate bgf `basename $1`.bgf || exit -1
-../../../shared/tools/gdt `basename $1`.bgf tests/`basename $1`.baseline || exit -1
+../../../shared/tools/java2bgf $1 $2 tests/`basename $1`.bgf || exit -1
+../../../shared/tools/validate bgf tests/`basename $1`.bgf || exit -1
+../../../shared/tools/gdt tests/`basename $1`.bgf tests/`basename $1`.baseline || exit -1
