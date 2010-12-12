@@ -7,10 +7,8 @@ test:
 	make clean
 	../../../shared/tools/ecore2bgf ${source1} ${target1}.bgf
 	../../../shared/tools/ecore2bgf ${source2} ${target2}.bgf
-	../../../shared/tools/bgf2bnf ${target1}.bgf ${target1}.out
-	../../../shared/tools/bgf2bnf ${target2}.bgf ${target2}.out
-	diff ${target1}.out ${target1}.baseline
-	diff ${target2}.out ${target2}.baseline
+	../../../shared/tools/gdt ${target1}.bgf ${target1}.baseline
+	../../../shared/tools/gdt ${target2}.bgf ${target2}.baseline
 
 clean:
-	rm -f *.bgf *.out
+	rm -f *.bgf *~
