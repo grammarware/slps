@@ -18,9 +18,9 @@ else
     cd $1
     LOCAL3=${PWD}
     # Build extractor if needed
-    cd ${LOCAL2}/../topics/extraction/java2bgf/slps/java2bgf
+    cd ${LOCAL2}/../topics/extraction/java/slps/java2bgf
     javac *.java    
     cd ${LOCAL1}
     rm -f $3
-    java -cp ${CLASSPATH}:${LOCAL2}/../topics/extraction/java2bgf:${LOCAL3} slps.java2bgf.Tool $*
+    java -cp ${CLASSPATH}:${LOCAL2}/../topics/extraction/java:${LOCAL3} slps.java2bgf.Tool $*
 fi
