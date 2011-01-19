@@ -13,21 +13,27 @@ import SemanticsLib.Domain
 import SemanticsLib.Fix
 import While.AbstractSyntax
 
-type PState = Map Var Sign
-
+-- Denotation types
+type MA = PState -> Sign
 type MB = PState -> TT
 type MS = PState -> PState
 
-aexp :: Aexp -> PState -> Sign
-bexp :: Bexp -> PState -> TT
-stm  :: Stm  -> PState -> PState
+-- Property states
+type PState = Map Var Sign
 
+-- Non-standard semantic functions
+aexp :: Aexp -> MA
+bexp :: Bexp -> MB
+stm  :: Stm  -> MS
+
+-- aexp :: Aexp -> MA
 aexp (Num n) s = fromInteger n
 aexp (Var x) s = lookup x s
 aexp (Add a1 a2) s = aexp a1 s + aexp a2 s
 aexp (Mul a1 a2) s = aexp a1 s * aexp a2 s
 aexp (Sub a1 a2) s = aexp a1 s - aexp a2 s
 
+-- bexp :: Bexp -> MB
 bexp True  s = TT
 bexp False s = FF
 bexp (Eq a1 a2)  s = aexp a1 s .==. aexp a2 s
@@ -35,14 +41,15 @@ bexp (Leq a1 a2) s = aexp a1 s .<=. aexp a2 s
 bexp (Not b1)    s = notTT (bexp b1 s)
 bexp (And b1 b2) s = bexp b1 s `andTT` bexp b2 s
 
+-- stm  :: Stm  -> MS
 stm (Assign x a) = \s -> update x (aexp a s) s
 stm Skip         = id
 stm (Seq s1 s2)  = stm s2 . stm s1
 stm (If b s1 s2) = cond (bexp b) (stm s1) (stm s2)
-stm (While b s)  = fixEq2 (\f -> cond (bexp b) (f . stm s) id)
+stm (While b s)  = fix (\f -> cond (bexp b) (f . stm s) id)
 
 
--- Helper for conditionals
+-- Helpers
 
 cond :: MB -> MS -> MS -> MS
 cond = \mb ms1 ms2 s ->
@@ -51,6 +58,8 @@ cond = \mb ms1 ms2 s ->
                FF       -> ms2 s
                TopTT    -> ms1 s `lub` ms2 s
                BottomTT -> bottom
+
+fix = fixEq2
 
 
 main = 
