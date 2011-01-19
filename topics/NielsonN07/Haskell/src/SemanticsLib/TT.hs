@@ -2,6 +2,7 @@
 
 module SemanticsLib.TT (
     TT(BottomTT, TT, FF, TopTT)
+  , andTT, notTT
   , ttBooleans
   , EqTT, (.==.)
   , OrdTT, (.<=.)
