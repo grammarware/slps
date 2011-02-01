@@ -8,7 +8,7 @@ import elementtree.ElementTree as ET
 
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
-		print 'This tool extracts a Rascal grammar.'
+		print 'This tool generates a BNF representation for any given BGF grammar.'
 		print 'Usage:'
 		print '      bgf2bnf <bgf-input> <bnf-output>'
 		sys.exit(1)
