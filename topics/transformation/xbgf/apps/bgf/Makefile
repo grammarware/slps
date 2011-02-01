@@ -20,6 +20,10 @@ ${final}: append.xbgf
 	${generators}/stripsxbgf bgf0s.bgf strip.xbgf
 	${tools}/xbgf strip.xbgf bgf0s.bgf bgf1_.bgf
 	${tools}/xbgf append2.xbgf bgf1_.bgf bgf1.bgf
+	${tools}/appendxbgf append.xbgf \
+		append1.xbgf \
+		strip.xbgf \
+		append2.xbgf
 
 rebuild:
 	make clean
