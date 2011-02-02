@@ -7,4 +7,5 @@ echo [Test Case] `basename $1`
 ./rlev.py $1 >> $1.out || exit -1
 ./nlev.py $1 >> $1.out || exit -1
 ./hei.py $1 >> $1.out || exit -1
+./timp.py $1 >> $1.out || exit -1
 diff $1.out $1.baseline || exit -1
