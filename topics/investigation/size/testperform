@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo [Test Case] `basename $1`
+./prod.py $1 > $1.out || exit -1
+./bprod.py $1 >> $1.out || exit -1
+./var.py $1 >> $1.out || exit -1
+./term.py $1 >> $1.out || exit -1
+diff $1.out $1.baseline || exit -1
