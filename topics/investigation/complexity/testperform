@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo [Test Case] `basename $1`
+./mcc.py $1 > $1.out || exit -1
+./avs.py $1 >> $1.out || exit -1
+./hal.py $1 >> $1.out || exit -1
+diff $1.out $1.baseline || exit -1
