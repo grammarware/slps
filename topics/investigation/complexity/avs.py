@@ -36,5 +36,5 @@ if __name__ == "__main__":
 	bgf = BGF.Grammar()
 	bgf.parse(sys.argv[1])
 	#print 'AVS =',rhssize(bgf)
-	print '%.2f' % rhssize(bgf)
+	print '%.1f' % rhssize(bgf)
 	sys.exit(0)

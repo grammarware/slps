@@ -83,6 +83,34 @@ def opd(node):
 		print 'How to deal with',node.__class__.__name__,'?'
 		return 0
 
+def union(a,b):
+	c = a[:]
+	for x in b:
+		if x not in c:
+	 		c.append(x)
+	return c
+
+def allOperators(node):
+	if node.__class__.__name__ == 'Grammar':
+		return reduce(union,map(allOperators,node.prods),[])
+	elif node.__class__.__name__ == 'Production':
+		return allOperators(node.expr)
+	elif node.__class__.__name__ == 'Selectable':
+		return union(allOperators(node.expr),node.__class__.__name__)
+	elif node.__class__.__name__ == 'Expression':
+		return allOperators(node.wrapped)
+	elif node.__class__.__name__ in ('Plus','Star','Optional','Marked'):
+		return union(allOperators(node.data),node.__class__.__name__)
+	elif node.__class__.__name__ in ('Terminal','Nonterminal','Value'):
+		return []
+	elif node.__class__.__name__ in ('Epsilon','Any','Empty'):
+		return [node.__class__.__name__]
+	elif node.__class__.__name__ in ('Choice','Sequence'):
+		return reduce(union,map(allOperators,node.data),[])
+	else:
+		print 'How to deal with',node.__class__.__name__,'?'
+		return 0
+
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
 		print 'This tool calculates a HAL metric for any given BGF grammar.'
@@ -93,12 +121,13 @@ if __name__ == "__main__":
 	bgf.parse(sys.argv[1])
 	
 	# Selectable, Marked, Plus, Star, Optional, Epsilon, Empty, Any, Choice, Sequence
-	mu1 = 10
+	mu1 = len(allOperators(bgf))
+	#mu1 = 10
 	mu2 = len(var.var(bgf)) + len(term.term(bgf)) + len(values(bgf)) + len(labels(bgf)) + len(selectors(bgf))
 	eta1 = opr(bgf)
 	eta2 = opd(bgf)
 	hal = (mu1*eta2*(eta1+eta2)*math.log(mu1+mu2,2)) / (2*mu2)
 	#print 'µ₁ =',mu1,', µ₂ =',mu2,', η₁ =',eta1,', η₂ =',eta2
 	#print 'HAL =',hal
-	print '%.2f' % hal
+	print '%.1f' % hal
 	sys.exit(0)

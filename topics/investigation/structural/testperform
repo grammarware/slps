@@ -3,6 +3,7 @@
 echo [Test Case] `basename $1`
 ./dep.py $1 > $1.out || exit -1
 ./lev.py $1 >> $1.out || exit -1
+./clev.py $1 >> $1.out || exit -1
 ./rlev.py $1 >> $1.out || exit -1
 ./nlev.py $1 >> $1.out || exit -1
 ./hei.py $1 >> $1.out || exit -1
