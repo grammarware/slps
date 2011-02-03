@@ -6,13 +6,13 @@ cd ../..
 SLPS=${PWD}
 cd ${LOCAL}
 
-if [ $# -ne 3 ]; then
+if [ $# -lt 3 ]; then
     echo "This tool extracts a portion of a grammar that starts at a given root nonterminal and includes all referenced nonterminals as well."
-    echo "Usage: subgrammar <bgf-input> <new-root> <bgf-output>"
+    echo "Usage: subgrammar <bgf-input> <new-root> [<new-root>...] <bgf-output>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 fi
 
-${SLPS}/topics/presentation/subgrammar/subgrammar.py $1 $2 $3
+${SLPS}/topics/investigation/subgrammar/subgrammar.py $@

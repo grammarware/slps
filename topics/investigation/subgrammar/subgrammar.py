@@ -1,41 +1,38 @@
 #!/usr/local/bin/python
-import os
-import sys
-sys.path.append('../../../shared/python')
-import slpsns
+import os,sys
 import elementtree.ElementTree as ET
+sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
+import BGF
+import metrics
 
-names   = []
+processed = []
 
+def addProductionsOf(r,cg,src,tgt):
+	if r in processed:
+		return
+	for p in src.prods:
+		if p.nt == r:
+			tgt.addProd(p)
+	processed.append(r)
+	for n in cg[r]:
+		addProductionsOf(n,cg,src,tgt)
+	return
+	
 if __name__ == "__main__":
-	if len(sys.argv) != 4:
+	if len(sys.argv) < 4:
 		print 'This tool extracts a portion of a grammar that starts at a given root nonterminal and includes all referenced nonterminals as well.'
 		print 'Usage:'
-		print '      subgrammar <bgf-input> <new-root> <bgf-output>'
+		print '      subgrammar <bgf-input> <new-root> [<new-root>...] <bgf-output>'
 		sys.exit(1)
-	slpsns.init(ET)
-	bgf = ET.parse(sys.argv[1])
-	grammar = {}
-	for prod in bgf.findall('//'+slpsns.bgf_('production')):
-		nt = prod.findtext('nonterminal')
-		if nt in grammar.keys():
-			grammar[nt].append(prod)
-		else:
-			grammar[nt]=[prod]
-	newBgf = ET.Element(slpsns.bgf_('grammar'))
-	nts = [sys.argv[2]]
-	ET.SubElement(newBgf,'root').text = nts[0]
-	oldnts = []
-	while nts:
-		if nts[0] not in grammar.keys():
-			print 'Nonterminal not found:',nts[0]
-		else:
-			for prod in grammar[nts[0]]:
-				newBgf.append(prod)
-				for nt in prod.findall('.//nonterminal'):
-					if (nt.text not in oldnts) and (nt.text not in nts):
-						nts.append(nt.text)
-		oldnts.append(nts[0])	# car
-		nts = nts[1:]			# cdr
-	ET.ElementTree(newBgf).write(sys.argv[3])
+	bgf = BGF.Grammar()
+	newBgf = BGF.Grammar()
+	bgf.parse(sys.argv[1])
+	roots = sys.argv[2:-1]
+	print 'Setting root(s) to',roots
+	for r in roots:
+		newBgf.addRoot(r)
+	cg = metrics.getCallGraph(bgf)
+	for r in roots:
+		addProductionsOf(r,cg,bgf,newBgf)
+	ET.ElementTree(newBgf.getXml()).write(sys.argv[-1])
 	sys.exit(0)
