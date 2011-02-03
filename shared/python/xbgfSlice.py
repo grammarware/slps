@@ -5,7 +5,6 @@ import string
 import elementtree.ElementTree as ET
 import slpsns
 import slicing
-import metrics
 
 def main(xbgfFile):
  xbgfDir = '/'.join(xbgfFile.split('/')[:-1])

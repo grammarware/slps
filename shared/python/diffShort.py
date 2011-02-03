@@ -2,11 +2,11 @@
 import os
 import sys
 import string
-import metrics
+import mismatches
 
 if __name__ == "__main__":
  if len(sys.argv) == 4:
-  pnm,psm = metrics.mismatches(sys.argv[3],sys.argv[1],sys.argv[2])
+  pnm,psm = mismatches.mismatches(sys.argv[3],sys.argv[1],sys.argv[2])
   print 'Mismatches:',pnm,'+',psm,'=',pnm+psm
  else:
   print '''This is the shortest possible version of Grammar Diff Tool.

@@ -12,7 +12,7 @@ class Grammar:
 	def parse(self,fname):
 		self.roots = []
 		self.prods = []
-		self.xml = ET.parse(sys.argv[1])
+		self.xml = ET.parse(fname)
 		for e in self.xml.findall('root'):
 			self.roots.append(e.text)
 		for e in self.xml.findall(slpsns.bgf_('production')):

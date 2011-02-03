@@ -5,7 +5,7 @@ import string
 import elementtree.ElementTree as ET
 import slpsns
 import slicing
-import metrics
+import mismatches
 
 def main(xbgfFile,bgfFile,xbgf,gdt,synch):
  xbgfDir = '/'.join(xbgfFile.split('/')[:-1])
@@ -16,7 +16,7 @@ def main(xbgfFile,bgfFile,xbgf,gdt,synch):
  print 'Slicing...'
  sliced = slicing.sliceFile(xbgfDir,xbgfDir,xbgfFile.split('/')[-1].replace('.xbgf',''))
  print 'Runnning...'
- pnm,psm = metrics.mismatches(gdt,bgfFile,synch)
+ pnm,psm = mismatches.mismatches(gdt,bgfFile,synch)
  print 'Mismatches originally:',pnm,'+',psm,'...',len(sliced),'steps to go'
  cx = ''
  for p in sliced:
@@ -25,7 +25,7 @@ def main(xbgfFile,bgfFile,xbgf,gdt,synch):
    print 'Error running',p,'!'
    print run
    sys.exit(2)
-  nm,sm = metrics.mismatches(gdt,bgfFile+cx+'_',synch)
+  nm,sm = mismatches.mismatches(gdt,bgfFile+cx+'_',synch)
   print 'Mismatches:',nm,'+',sm
   if nm>pnm:
    print 'Observed increase in name mismatches!'

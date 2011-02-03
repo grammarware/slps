@@ -4,7 +4,7 @@ import sys
 import string
 import elementtree.ElementTree as ET
 import slpsns
-import metrics
+import mismatches
 
 synch = {}
 
@@ -70,7 +70,7 @@ def measure(gdt,x,y):
   z=synch[y][0]
  else:
   z=synch[y][1]
- nm,sm = metrics.mismatches(gdt,'bgf/'+x+'.bgf','bgf/'+z+'.bgf')
+ nm,sm = mismatches.mismatches(gdt,'bgf/'+x+'.bgf','bgf/'+z+'.bgf')
  return nm+sm,str(nm)+'\t'+str(sm)+'\t'+str(nm+sm)
 
 def cutName(lbl):
