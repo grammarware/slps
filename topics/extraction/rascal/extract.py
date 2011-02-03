@@ -46,6 +46,13 @@ if __name__ == "__main__":
 				print '['+str(cx)+']','Found first line, but of what nonterminal?'
 				continue
 			tokens = line[1:].split()
+			if len(tokens[-1])>1 and tokens[-1][-1] == ';':
+				tokens[-1] = tokens[-1][:-1]
+				tokens.append(';')
+			for i in range(0,len(tokens)):
+				if tokens[i].find('[')>-1 and tokens[i].find(']')>-1:
+					# treating a parametrised nonterminal as a base nonterminal
+					tokens[i] = tokens[i][:tokens[i].index('[')] + tokens[i][tokens[i].index(']')+1:]
 			grammar[nt].append(tokens)
 			continue
 		elif line[0] == '#':
@@ -73,6 +80,9 @@ if __name__ == "__main__":
 					print '['+str(cx)+']','Cannot include lexical restriction information about',nt
 					nt = ''
 					continue
+				if nt.find('[')>-1 and nt.find(']')>-1:
+					# treating a parametrised nonterminal as a base nonterminal
+					nt = nt[:nt.index('[')] + nt[nt.index(']')+1:]
 				print '['+str(cx)+']','Starting to treat nonterminal',nt
 				grammar[nt] = []
 				continue
@@ -101,11 +111,19 @@ if __name__ == "__main__":
 			prod.setNT(nt)
 			while alt and alt[0] in ('bracket','left','right','non-assoc','lex','(',')'):
 				print 'Skipped a modifier',alt[0],'at',nt
-				alt = alt[1:]
+				if alt[0] == 'lex':
+					alt = []
+				else:
+					alt = alt[1:]
 			if not alt:
 				continue
-			if alt[-1] == ';':
+			while len(alt)>0 and alt[-1] in (';',''):
 				alt = alt[:-1]
+			while len(alt)>0 and alt[0] == '':
+				alt = alt[1:]
+			#print '---',alt
+			if not alt:
+				continue
 			if alt[0][-1] == ':':
 				prod.setLabel(alt[0][:-1])
 				alt = alt[1:]

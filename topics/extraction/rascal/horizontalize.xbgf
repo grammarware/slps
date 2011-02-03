@@ -13,16 +13,10 @@
 		<nonterminal>BasicType</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
-		<nonterminal>BooleanLiteral</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
 		<nonterminal>Case</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
 		<nonterminal>Catch</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>Char</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
 		<nonterminal>CharClass</nonterminal>
@@ -43,25 +37,10 @@
 		<nonterminal>Command</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
-		<nonterminal>Comment</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>CommentChar</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
 		<nonterminal>Comprehension</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
-		<nonterminal>DatePart</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
 		<nonterminal>DateTimeLiteral</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>DecimalIntegerLiteral</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>DecimalLongLiteral</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
 		<nonterminal>Declaration</nonterminal>
@@ -91,9 +70,6 @@
 		<nonterminal>Kind</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
-		<nonterminal>LAYOUT</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
 		<nonterminal>LanguageAction</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
@@ -104,15 +80,6 @@
 	</xbgf:horizontal>
 	<xbgf:horizontal>
 		<nonterminal>LongLiteral</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>Name</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>NamedRegExp</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>OctalEscapeSequence</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
 		<nonterminal>Parameters</nonterminal>
@@ -148,34 +115,19 @@
 		<nonterminal>RascalReservedKeywords</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
-		<nonterminal>RealLiteral</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
 		<nonterminal>Replacement</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
 		<nonterminal>ShellCommand</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
-		<nonterminal>ShortChar</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
 		<nonterminal>Signature</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>SingleQuotedStrChar</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
 		<nonterminal>Statement</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
-		<nonterminal>StrChar</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
 		<nonterminal>Strategy</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>StringCharacter</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
 		<nonterminal>StringLiteral</nonterminal>
@@ -202,16 +154,7 @@
 		<nonterminal>Tag</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
-		<nonterminal>TagChar</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
 		<nonterminal>Test</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>TimePartNoTZ</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:horizontal>
-		<nonterminal>TimeZonePart</nonterminal>
 	</xbgf:horizontal>
 	<xbgf:horizontal>
 		<nonterminal>Type</nonterminal>

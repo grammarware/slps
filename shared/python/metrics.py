@@ -248,7 +248,7 @@ def mccabe(node):
 	elif node.__class__.__name__ in ('Terminal','Nonterminal','Epsilon','Any','Empty','Value'):
 		return 0
 	elif node.__class__.__name__ == 'Choice':
-		return len(node.data)-1 + max(map(mccabe,node.data))
+		return len(node.data)-1 + sum(map(mccabe,node.data))
 	elif node.__class__.__name__ == 'Sequence':
 		return sum(map(mccabe,node.data))
 	else:
@@ -371,12 +371,50 @@ def allOperators(node):
 		print 'How to deal with',node.__class__.__name__,'?'
 		return 0
 
-def HAL(g):
+# Halstead preparations
+def hal_mu1(g):
+	# Number of unique operators
 	# Selectable, Marked, Plus, Star, Optional, Epsilon, Empty, Any, Choice, Sequence
 	#mu1 = 10
-	mu1 = len(allOperators(g))
-	mu2 = VAR(g) + TERM(g) + VAL(g) + LAB(g)
-	eta1 = opr(g)
-	eta2 = opd(g)
-	hal = (mu1*eta2*(eta1+eta2)*math.log(mu1+mu2,2)) / (2*mu2)
-	return int(round(hal))
+ 	return len(allOperators(g))
+def hal_mu2(g):
+	# Number of unique operands
+	return VAR(g) + TERM(g) + VAL(g) + LAB(g)
+def hal_eta1(g):
+	# Total occurrences of operators
+	return opr(g)
+def hal_eta2(g):
+	# Total occurrences of operands
+	return opd(g)
+
+# HALEN - Halstead length
+def HALEN(g):
+	eta1 = hal_eta1(g)
+	eta2 = hal_eta2(g)
+	hal = eta1 + eta2
+	return hal
+
+# HAVOC - Halstead vocabulary
+def HAVOC(g):
+	mu1 = hal_mu1(g)
+	mu2 = hal_mu2(g)
+	hal = mu1 + mu2
+	return hal
+
+# HAVOL - Halstead volume
+def HAVOL(g):
+	hal = HALEN(g)*math.log(HAVOC(g),2)
+	return hal
+
+# HADIF - Halstead difficulty
+def HADIF(g):
+	mu1 = hal_mu1(g)
+	mu2 = hal_mu2(g)
+	eta2 = hal_eta2(g)
+	hal = (mu1*eta2) / (2.0*mu2)
+	return hal
+
+# HADIF - Halstead effort
+def HAEFF(g):
+	hal = HADIF(g)*HAVOL(g)
+	return hal

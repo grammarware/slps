@@ -13,5 +13,5 @@ if __name__ == "__main__":
 		sys.exit(1)
 	bgf = BGF.Grammar()
 	bgf.parse(sys.argv[1])
-	print metrics.HAL(bgf)
+	print int(round(metrics.HAEFF(bgf)))
 	sys.exit(0)
