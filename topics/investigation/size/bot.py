@@ -7,11 +7,11 @@ import metrics
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
-		print 'This tool calculates a RLEV metric for any given BGF grammar.'
+		print 'This tool calculates a BOT metric for any given BGF grammar.'
 		print 'Usage:'
 		print '      '+sys.argv[0]+' <bgf-input>'
 		sys.exit(1)
 	bgf = BGF.Grammar()
 	bgf.parse(sys.argv[1])
-	print metrics.RLEV(bgf)
+	print metrics.BOT(bgf)
 	sys.exit(0)

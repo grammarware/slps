@@ -1,9 +1,9 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
-import sys
-import levels
-sys.path.append('../../../shared/python')
+import os,sys
+sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
 import BGF
+import metrics
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
@@ -13,14 +13,5 @@ if __name__ == "__main__":
 		sys.exit(1)
 	bgf = BGF.Grammar()
 	bgf.parse(sys.argv[1])
-	cg = levels.getClosure(levels.getCallGraph(bgf))
-	n = len(cg)
-	e = sum(map(len,cg.values()))
-	# Power and Malloy made two mistakes:
-	# (1) the number of edges in a complete directed graph is n(n-1), not n(n-1)/2, as in a complete undirected graph!
-	# (2) we don't have to substract another 1 from the number of nonterminals to account for a start symbol
-	# To compute TIMP exactly as they intended to, run this:
-	# print '%.1f' % (100*2*(e-n+1)/(0.0+(n-1)*(n-2)))
-	# To run our fixed version, uncomment this:
-	print '%.1f' % (100*(e-n+1)/(0.0+n*(n-1)))
+	print '%.1f' % metrics.TIMP(bgf)
 	sys.exit(0)

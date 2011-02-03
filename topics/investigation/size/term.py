@@ -1,16 +1,9 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append('../../../shared/python')
+import os,sys
+sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
 import BGF
-
-def term(g):
-	ts = []
-	for p in g.prods:
-		for n in p.expr.wrapped.getXml().findall('.//terminal'):
-			if n.text not in ts:
-				ts.append(n.text)
-	return ts
+import metrics
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
@@ -20,6 +13,5 @@ if __name__ == "__main__":
 		sys.exit(1)
 	bgf = BGF.Grammar()
 	bgf.parse(sys.argv[1])
-	#print 'TERM =',len(term)
-	print len(term(bgf))
+	print metrics.TERM(bgf)
 	sys.exit(0)

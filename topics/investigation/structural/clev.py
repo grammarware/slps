@@ -1,11 +1,9 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
-import sys
-import levels
-sys.path.append('../../../shared/python')
+import os,sys
+sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
 import BGF
-sys.path.append('../size')
-import var
+import metrics
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
@@ -15,8 +13,5 @@ if __name__ == "__main__":
 		sys.exit(1)
 	bgf = BGF.Grammar()
 	bgf.parse(sys.argv[1])
-	gl = levels.getLevels(bgf)
-	nts = var.var(bgf)
-	#print 'CLEV =',len(gl)/(0.0+len(nts))
-	print '%.1f' % (100*len(gl)/(0.0+len(nts)))
+	print '%.1f' % metrics.CLEV(bgf)
 	sys.exit(0)

@@ -1,24 +1,9 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append('../../../shared/python')
+import os,sys
+sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
 import BGF
-import levels
-
-def hei(adg):
-	paths = []
-	for i in range(0,len(adg)):
-		paths.append(longest(i,adg))
-	return max(paths)
-
-def longest(n,adg):
-	if len(adg[n])==0:
-		return 0
-	else:
-		paths = []
-		for x in adg[n]:
-			paths.append(1+longest(x,adg))
-		return max(paths)
+import metrics
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
@@ -28,7 +13,5 @@ if __name__ == "__main__":
 		sys.exit(1)
 	bgf = BGF.Grammar()
 	bgf.parse(sys.argv[1])
-	adg = levels.getADigraph(bgf)
-	#print 'HEI =',hei(adg)
-	print hei(adg)
+	print metrics.HEI(bgf)
 	sys.exit(0)

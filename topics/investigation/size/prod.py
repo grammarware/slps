@@ -1,8 +1,9 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append('../../../shared/python')
+import os,sys
+sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
 import BGF
+import metrics
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
@@ -12,12 +13,5 @@ if __name__ == "__main__":
 		sys.exit(1)
 	bgf = BGF.Grammar()
 	bgf.parse(sys.argv[1])
-	prod = 0
-	for p in bgf.prods:
-		if p.expr.wrapped.__class__.__name__ == 'Choice':
-			prod += len(p.expr.wrapped.data)
-		else:
-			prod += 1
-	#print 'PROD =',prod
-	print prod
+	print metrics.PROD(bgf)
 	sys.exit(0)
