@@ -134,20 +134,21 @@ def getADigraph(g):
 	return adg
 
 def getLevels(g):
-	calls = getCallGraph(g)
-	calls = getClosure(calls)
+	return calculateLevels(getClosure(getCallGraph(g)))
+
+#
+def calculateLevels(calls):
 	unassigned = calls.keys()
 	levels = []
 	while len(unassigned)>0:
-		nt = unassigned[0]
+		nt         = unassigned[0]
+		unassigned = unassigned[1:]
 		levels.append([])
 		levels[-1].append(nt)
-		unassigned = unassigned[1:]
 		for n in calls[nt]:
-			if nt in calls[n]:
+			if (nt in calls[n]) and (n not in levels[-1]) and (n in unassigned):
 				levels[-1].append(n)
-				if n in unassigned:
-					unassigned.remove(n)
+				unassigned.remove(n)
 	return levels
 
 def getCallGraph(g):
@@ -166,14 +167,28 @@ def getCallGraph(g):
 	return calls
 
 def getClosure(cg):
-	calls = cg.copy()
+	# simple copy doesn't work because of the inner arrays
+	#calls = cg.copy()
+	calls = {}
+	for x in cg.keys():
+		calls[x]=cg[x][:]
 	for n in calls.keys():
 		for x in calls[n]:
-			if x not in calls.keys():
-				calls[x] = []
 			for y in calls[x]:
 				if y not in calls[n]:
 					calls[n].append(y)
+		calls[n].sort()
+	#for n in calls.keys():
+	#	print n,'▻*',calls[n]
+	#print '--------------------'
+	return calls
+
+#
+def makeOneStep(cg):
+	calls = cg.copy()
+	for n in cg.keys():
+		for x in cg[n]:
+			calls[n] = union(calls[n],cg[x])
 		calls[n].sort()
 	#for n in calls.keys():
 	#	print n,'▻*',calls[n]
@@ -221,16 +236,25 @@ def HEI(g):
 
 # TIMP - tree impurity
 def TIMP(g):
-	cg = getClosure(getCallGraph(g))
+	return impurityOfCallGraph(getClosure(getCallGraph(g)))
+
+# TIMP - tree impurity of the immediate successor graph
+def TIMPI(g):
+	return impurityOfCallGraph(getCallGraph(g))
+
+def impurityOfCallGraph(cg):
 	n = len(cg)
 	e = sum(map(len,cg.values()))
-	# Power and Malloy made two mistakes:
-	# (1) the number of edges in a complete directed graph is n(n-1), not n(n-1)/2, as in a complete undirected graph!
-	# (2) we don't have to substract another 1 from the number of nonterminals to account for a start symbol
-	# To compute TIMP exactly as they intended to, run this:
-	# return (100*2*(e-n+1)/(0.0+(n-1)*(n-2)))
-	# To run our fixed version, uncomment this:
-	return (100*(e-n+1)/(0.0+n*(n-1)))
+	if n<2:
+		return 100
+	else:
+		# Power and Malloy made two mistakes:
+		# (1) the number of edges in a complete directed graph is n(n-1), not n(n-1)/2, as in a complete undirected graph!
+		# (2) we don't have to substract another 1 from the number of nonterminals to account for a start symbol
+		# To compute TIMP exactly as they intended to, run this:
+		# return (100*2*(e-n+1)/(0.0+(n-1)*(n-2)))
+		# To run our fixed version, uncomment this:
+		return (100*(e-n+1)/(0.0+n*(n-1)))
 
 ######################################################################
 ##########               Complexity metrics                 ##########
@@ -290,6 +314,9 @@ def rhssize(node):
 
 def AVS(g):
 	return sum(map(rhssize,g.prods))/(0.0+VAR(g))
+
+def AVSp(g):
+	return sum(map(rhssize,g.prods))/(0.0+PROD(g))
 
 # HAL - Halstead effort
 def opr(node):
@@ -418,3 +445,50 @@ def HADIF(g):
 def HAEFF(g):
 	hal = HADIF(g)*HAVOL(g)
 	return hal
+
+# HALEV - Halstead level
+def HALEV(g):
+	mu1 = hal_mu1(g)
+	mu2 = hal_mu2(g)
+	eta1 = hal_eta1(g)
+	eta2 = hal_eta2(g)
+	hal = (2.0*mu2)/(mu1*eta2)
+	return hal
+
+# HATIM - Halstead time
+def HATIM(g):
+	return HAEFF(g)/18.0
+
+######################################################################
+# Experiments
+def shortestPath(a,b,cg):
+	return shortestPathAllPars(a,b,cg,getClosure(cg),[])
+
+def shortestPathAllPars(a,b,cg,ccg,visited):
+	visited.append(a)
+	if a == b:
+		#print '∆:',a,'is',b
+		return 0
+	if b in cg[a]:
+		#print '∆:',a,'is next to',b
+		return 1
+	if b not in ccg[a]:
+		#print '∆:',a,'is inaccessible from',b
+		return 1000000
+	if not cg[a]:
+		#print '∆:',a,'is inaccessible from',b
+		return 1000000
+	#print '∆:',a,'-->?'
+	goto = filter(lambda x:x not in visited,cg[a])
+	if not goto:
+		#print '∆:',a,'is inaccessible from',b
+		return 1000000
+	return 1 + min(map(lambda x:shortestPathAllPars(x,b,cg,ccg,visited),goto))
+
+def nameLevel(level,roots,g):
+	return '/'.join(union([],map(lambda x:nameLevel1Root(level,x,getCallGraph(g)),roots)))+'('+str(len(level))+')'
+	
+def nameLevel1Root(level,root,cg):
+	deltas = map(lambda x:shortestPath(root,x,cg),level)
+	#d = min(deltas):
+	return '|'.join(map(lambda i:level[i],filter(lambda i:deltas[i]==min(deltas),range(0,len(level)))))
