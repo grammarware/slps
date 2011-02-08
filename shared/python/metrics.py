@@ -60,10 +60,19 @@ def lab(g):
 def USED(g):
 	return len(used(g))
 def used(g):
+	# globally used
 	nts = []
 	for p in g.prods:
 		for n in p.expr.wrapped.getXml().findall('.//nonterminal'):
 			if n.text not in nts:
+				nts.append(n.text)
+	return nts
+def nrused(g):
+	# non-recursively used
+	nts = []
+	for p in g.prods:
+		for n in p.expr.wrapped.getXml().findall('.//nonterminal'):
+			if (n.text not in nts) and (n.text != p.nt):
 				nts.append(n.text)
 	return nts
 
@@ -82,7 +91,7 @@ def TOP(g):
 	return len(top(g))
 def top(g):
 	tops = []
-	usednts = used(g)
+	usednts = nrused(g)
 	for nt in defd(g):
 		if nt not in usednts:
 			tops.append(nt)
@@ -243,10 +252,12 @@ def TIMPI(g):
 	return impurityOfCallGraph(getCallGraph(g))
 
 def impurityOfCallGraph(cg):
+	#print cg
 	n = len(cg)
 	e = sum(map(len,cg.values()))
+	#print n,e
 	if n<2:
-		return 100
+		return 0
 	else:
 		# Power and Malloy made two mistakes:
 		# (1) the number of edges in a complete directed graph is n(n-1), not n(n-1)/2, as in a complete undirected graph!
@@ -329,16 +340,14 @@ def opr(node):
 		return 1+opr(node.expr)
 	elif node.__class__.__name__ == 'Expression':
 		return opr(node.wrapped)
-	elif node.__class__.__name__ == 'Marked':
-		return 1+opr(node.data)
-	elif node.__class__.__name__ in ('Plus','Star','Optional'):
+	elif node.__class__.__name__ in ('Plus','Star','Optional','Marked'):
 		return 1+opr(node.data)
 	elif node.__class__.__name__ in ('Terminal','Nonterminal','Value'):
 		return 0
 	elif node.__class__.__name__ in ('Epsilon','Any','Empty'):
 		return 1
 	elif node.__class__.__name__ in ('Choice','Sequence'):
-		return sum(map(opr,node.data))
+		return sum(map(opr,node.data))+len(node.data)-1
 	else:
 		print 'How to deal with',node.__class__.__name__,'?'
 		return 0
@@ -377,23 +386,30 @@ def union(a,b):
 	 		c.append(x)
 	return c
 
+def setminus(a,b):
+	c = a[:]
+	for x in b:
+		if x in c:
+	 		c.remove(x)
+	return c
+
 def allOperators(node):
 	if node.__class__.__name__ == 'Grammar':
 		return reduce(union,map(allOperators,node.prods),[])
 	elif node.__class__.__name__ == 'Production':
 		return allOperators(node.expr)
 	elif node.__class__.__name__ == 'Selectable':
-		return union(allOperators(node.expr),node.__class__.__name__)
+		return union(allOperators(node.expr),[node.__class__.__name__])
 	elif node.__class__.__name__ == 'Expression':
 		return allOperators(node.wrapped)
 	elif node.__class__.__name__ in ('Plus','Star','Optional','Marked'):
-		return union(allOperators(node.data),node.__class__.__name__)
+		return union(allOperators(node.data),[node.__class__.__name__])
 	elif node.__class__.__name__ in ('Terminal','Nonterminal','Value'):
 		return []
 	elif node.__class__.__name__ in ('Epsilon','Any','Empty'):
 		return [node.__class__.__name__]
 	elif node.__class__.__name__ in ('Choice','Sequence'):
-		return reduce(union,map(allOperators,node.data),[])
+		return reduce(union,map(allOperators,node.data),[node.__class__.__name__])
 	else:
 		print 'How to deal with',node.__class__.__name__,'?'
 		return 0

@@ -4,11 +4,32 @@ cdir = ../../topics/convergence
 
 all:
 	make clean
+	make xpath
 	make fl
+	make dsl
 	make c
 	make cpp
 	make csharp
 	make java
+
+xpath:
+	cd ${gdir}/xpath && make test
+	cp ${gdir}/xpath/xpath.bgf                         xpath.1.ext.bgf
+	cp ${gdir}/xpath/xpath.fixed.bgf                   xpath.1.rec.bgf
+
+dsl:
+	cp ${gdir}/bnf/bnf-bgf.bgf                         bnf.bgf.bgf
+	cd ${gdir}/dsl && make build
+	cp ${gdir}/dsl/bgf/bgf.bgf                         bgf.xsd.ext.bgf
+	cp ${gdir}/dsl/btf/btf.bgf                         btf.xsd.ext.bgf
+	cp ${gdir}/dsl/lcf/lcf.bgf                         lcf.xsd.ext.bgf
+	cp ${gdir}/dsl/ldf/ldf.raw.bgf                     ldf.xsd.ext.bgf
+	cp ${gdir}/dsl/ldf/ldf.final.bgf                   ldf.xsd.rec.bgf
+	cp ${gdir}/dsl/xbgf/xbgf.bgf                       xbgf.xsd.ext.bgf
+	cp ${gdir}/dsl/xldf/xldf.bgf                       xldf.xsd.ext.bgf
+	cd ../../topics/extraction/rascal && make
+	cp ../../topics/extraction/rascal/rascal.bgf       rascal.ext.bgf
+	cp ../../topics/extraction/rascal/rascal.true.bgf  rascal.rec.bgf
 
 fl:
 	cd ${cdir}/fl && make test
@@ -20,6 +41,7 @@ fl:
 	cp ${cdir}/fl/snapshot/om.bgf             fl.java.ext.bgf
 	cp ${cdir}/fl/snapshot/sdf.bgf            fl.sdf.ext.bgf
 	cp ${cdir}/fl/snapshot/txl.bgf            fl.txl.ext.bgf
+	cp ${cdir}/fl/snapshot/xsd.bgf            fl.xsd.ext.bgf
 	${tdir}/subgrammar fl.antlr.ext.bgf       program       fl.antlr.rec.bgf
 	${tdir}/subgrammar fl.dcg.ext.bgf         program       fl.dcg.rec.bgf
 	${tdir}/subgrammar fl.ecore.ext.bgf       Program       fl.ecore.rec.bgf
@@ -28,6 +50,7 @@ fl:
 	${tdir}/subgrammar fl.java.ext.bgf        Function      fl.java.rec.bgf
 	${tdir}/subgrammar fl.sdf.ext.bgf         Program       fl.sdf.rec.bgf
 	${tdir}/subgrammar fl.txl.ext.bgf         program       fl.txl.rec.bgf
+	${tdir}/subgrammar fl.xsd.ext.bgf         Program       fl.xsd.rec.bgf
 
 csharp:
 	cd ${gdir}/csharp && make build

@@ -34,6 +34,7 @@ def assignNewCurrent(c):
 	if d not in keys:
 		keys.append(d)
 	current = d
+	#print 'NEW CURRENT:',current
 
 def readBannedLinesList(f):
 	lst = open(f,'r')
@@ -75,7 +76,8 @@ knownReplacements = \
 
 oneof = False
 
-def processline(line,current,oneof):
+def processline(line,oneof):
+	global current
 	rline = line.strip()
 	if rline == '':
 		return current,oneof
@@ -111,6 +113,7 @@ def processline(line,current,oneof):
 		#	grammar[current].append(t)
 	else:
 		grammar[current].append(' '.join(processLineTokens(rline)))
+	#print 'KEYS=',grammar.keys()
 	return current,oneof
 
 def performReplacements(line):
@@ -156,13 +159,15 @@ def dumpUnbannedLines(f):
 			lines.append((cx,line))
 	print len(lines),'out of',cx,'will be used.'
 	pdf.close()
+	#DEBUG
+	#for l in lines:
+	#	print l[0],':',l[1],
+	#sys.exit(1)
 	return lines
 
 def joinLineContinuations(lines,lead):
-	print 'Searching for line continuations...'
-	
-	
-	
+	#print 'Searching for line continuations...'
+	# ??? TODO ???
 	plines = []
 	print 'Searching for line continuations...'
 	for line in lines:
@@ -183,12 +188,16 @@ def readGrammar(lines):
 	#oneof = False
 	for line in lines:
 		#debug()
-		current,oneof = processline(line,current,oneof)
+		current,oneof = processline(line,oneof)
 
 def writeGrammar(f):
 	lll = open(f,'w')
 	# we could've taken grammar.keys() here, but we want to see grammar productions order preserved
+	#print grammar.keys()
 	for t in keys:
+		if t not in grammar.keys():
+			print 'ERROR:',t,'expected to be in the grammar, but is not there!'
+			continue
 		lll.write(t+':\n')
 		lll.write('\t'+grammar[t][0]+'\n')
 		for x in grammar[t][1:]:
@@ -198,6 +207,7 @@ def writeGrammar(f):
 
 def massageGrammarRule(context,nt):
 	global nt2t
+	#DEBUG
 	for i in range(0,len(context[nt])):
 		tokens = context[nt][i].split()
 		# special case: a postfix metasymbol (e.g., *) occurs in the beggining of the line
