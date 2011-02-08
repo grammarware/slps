@@ -21,7 +21,7 @@ elif [ $# -eq 2 ]; then
 elif [ "$3" == "-v" ]; then
     python ${SLPS}/topics/extraction/bnf2bgf/html2bgf.py $1 $2 $3
 else
-    python ${SLPS}/shared/python/getpre.py $1 $2 $2.fixed
+    python ${SLPS}/topics/extraction/bnf2bgf/getpre.py $1 $2 $2.fixed
     python ${SLPS}/topics/extraction/bnf2bgf/html2bgf.py $2.fixed $3 $4
     rm -f $2.fixed
 fi

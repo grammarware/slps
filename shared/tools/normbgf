@@ -8,6 +8,5 @@ elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-	`dirname $0`/xbgf `dirname $0`/../../topics/presentation/normalize/empty.xbgf $1 $2 > /dev/null
-	mv xbgf.log $2
+	`dirname $0`/xbgf `dirname $0`/../../topics/transformation/normalization/empty.xbgf $1 $2 > /dev/null
 fi
