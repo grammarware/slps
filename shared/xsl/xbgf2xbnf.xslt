@@ -103,10 +103,18 @@
 </xsl:text>
   </xsl:template>
 
-  <xsl:template match="xbgf:deyaccify|xbgf:eliminate|xbgf:horizontal|xbgf:inline">
+  <xsl:template match="xbgf:deyaccify|xbgf:inline">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>
     <xsl:value-of select="text()"/>
+    <xsl:text>);
+</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="xbgf:eliminate|xbgf:vertical|xbgf:horizontal">
+    <xsl:value-of select="local-name()" />
+    <xsl:text>(</xsl:text>
+    <xsl:value-of select="nonterminal"/>
     <xsl:text>);
 </xsl:text>
   </xsl:template>
@@ -119,7 +127,7 @@
 </xsl:text>
   </xsl:template>
 
-  <xsl:template match="xbgf:distribute|xbgf:vertical">
+  <xsl:template match="xbgf:distribute|xbgf:vertical|xbgf:horizontal">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>
     <xsl:call-template name="context">
