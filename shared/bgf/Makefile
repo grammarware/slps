@@ -30,6 +30,10 @@ dsl:
 	cd ../../topics/extraction/rascal && make
 	cp ../../topics/extraction/rascal/rascal.bgf       rascal.ext.bgf
 	cp ../../topics/extraction/rascal/rascal.true.bgf  rascal.rec.bgf
+	cp ../../topics/grammars/oberon/oberon.ext.bgf     oberon-0.ext.bgf
+	cp ../../topics/grammars/oberon/oberon.rec.bgf     oberon-0.rec.bgf
+	cp ../../topics/grammars/extreme/baby.bgf          baby.bgf
+	cp ../../topics/grammars/extreme/monster.bgf       monster.bgf
 
 fl:
 	cd ${cdir}/fl && make test

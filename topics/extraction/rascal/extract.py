@@ -90,7 +90,8 @@ if __name__ == "__main__":
 				continue
 			# give up
 			print '['+str(cx)+']','What is',line.split(),'?'
-			grammar[nt].append(tokens)
+			if nt:
+				grammar[nt].append(tokens)
 			pass
 	# NOW TO PROCESS TOKENS
 	#print 'Command:'
@@ -145,6 +146,7 @@ if __name__ == "__main__":
 			sym = None
 			#print '['+str(cx)+']',alt
 			while cx<len(alt):
+				#print '['+str(cx)+']',alt
 				if curly>0:
 					if alt[cx] == '{':
 						curly += 1
