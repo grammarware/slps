@@ -14,10 +14,25 @@ sort2chardata(sort(&Head1 &Middle1 &Middles1 &Last1)) = chardata(&Char1 &Middle1
 
 equations
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% StrCon -> CharData
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%[strcon-of-length-1]
 %% Not working! But needed for &, <, >, etc.
 %%strcon2chardata(strcon(\" strchar(\&) \")) = entityref(& name(letter(a) namechar(letter(m)) namechar(letter(p))) ;)
 
+[strcon-of-length-1-lt]
+strcon2chardata(strcon(\" strchar(\<) \")) = &lt;
+
+[strcon-of-length-1-gt]
+strcon2chardata(strcon(\" strchar(\>) \")) = &gt;
+
+[strcon-of-length-1-amp]
+strcon2chardata(strcon(\" strchar(\&) \")) = &amp;
+
+%%[strcon-of-length-1-minus]
+%%strcon2chardata(strcon(\" strchar(\-) \")) = "-"
 
 [default-strcon-of-length-1]
 strchar(&Chr1) := &StrChar1
@@ -29,6 +44,34 @@ strchar(&Chr1) := &StrChar1,
 chardata(&Char1 &Chars1) := strcon2chardata(strcon(\" &StrChar+2 \"))
 ===========================================================
 strcon2chardata(strcon(\" &StrChar1 &StrChar+2 \")) = chardata(&Chr1 &Char1 &Chars1)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% SingleQuotedStrCon -> CharData
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[sqstrcon-of-length-1-lt]
+sqstrcon2chardata(singlequotedstrcon(\' singlequotedstrchar(\<) \')) = &lt;
+
+[sqstrcon-of-length-1-gt]
+sqstrcon2chardata(singlequotedstrcon(\' singlequotedstrchar(\>) \')) = &gt;
+
+[sqstrcon-of-length-1-amp]
+sqstrcon2chardata(singlequotedstrcon(\' singlequotedstrchar(\&) \')) = &amp;
+
+[default-sqstrcon-of-length-1]
+singlequotedstrchar(&Ch1) := &SQStrChar1
+========================================
+sqstrcon2chardata(singlequotedstrcon(\' &SQStrChar1 \')) = chardata(&Ch1)
+
+[sqstrcon-of-length-greater-than-1]
+singlequotedstrchar(&Ch1) := &SQStrChar1,
+chardata(&Char1 &Chars1) := sqstrcon2chardata(singlequotedstrcon(\' &SQStrChar+2 \'))
+===========================================================
+sqstrcon2chardata(singlequotedstrcon(\' &SQStrChar1 &SQStrChar+2 \')) = chardata(&Ch1 &Char1 &Chars1)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% IdCon -> CharData
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [idcon-of-length-1]
 idcon2chardata(idcon(&IdHead1)) = chardata(&IdHead1)

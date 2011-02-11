@@ -93,10 +93,18 @@ trafoSymbol(&N1) =
     <nonterminal>&C1</nonterminal>
   </bgf:expression>
 
-[terminal]
+[terminal-1]
 &C1 := strcon2chardata(&Z1)
 ==================
 trafoSymbol(&Z1) =
+  <bgf:expression>
+    <terminal>&C1</terminal>
+  </bgf:expression>
+
+[terminal-2]
+&C1 := sqstrcon2chardata(&Y1)
+==================
+trafoSymbol(&Y1) =
   <bgf:expression>
     <terminal>&C1</terminal>
   </bgf:expression>
@@ -175,6 +183,16 @@ trafoSymbol((&S1 &S2 &S+1)) =
 	</sequence>
   </bgf:expression>
 
+[selector-1]
+&E1 := trafoSymbol(&N1)
+================
+trafoSymbol(&I1:&N1) =
+  <bgf:expression>
+	<selectable>
+		<selector>idcon2chardata(&I1)</selector>
+		&E1
+	</selectable>
+  </bgf:expression>
 
 [cons-to-label-only-cons]
 guessLabel({cons(&I1)}) = <label>idcon2chardata(&I1)</label>

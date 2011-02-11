@@ -49,4 +49,5 @@ module Main
 	"&S+" [0-9]+ -> Symbol+
 	"&Ss" [0-9]+ -> Symbols
 	"&Z"  [0-9]+ -> StrCon
+	"&Y"  [0-9]+ -> SingleQuotedStrCon
 	"&I"  [0-9]+ -> IdCon

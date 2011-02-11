@@ -3,7 +3,7 @@
 # Get our hands on basedir
 LOCAL1=${PWD}
 cd `dirname $0`
-cd ../../topics/extraction/sdf2bgf
+cd ../../topics/extraction/sdf
 XTR=${PWD}
 cd ${LOCAL1}
 
@@ -32,6 +32,23 @@ else
         else
             echo ")" >> _.def
             cat _.def | sglr -p ${XTR}/Main.tbl | asfe -e ${XTR}/Main.eqs | unparsePT > $i
+            # a fix for ->
+            perl -pi -w -e 's/strcon2chardata\(\"\-\>\"\)/\-\&gt;/g;' $i
+            # a fix for <=
+            perl -pi -w -e 's/strcon2chardata\(\"\<\=\"\)/\&lt;\=/g;' $i
+            perl -pi -w -e "s/sqstrcon2chardata\(\'\<\=\'\)/\&lt;\=/g;" $i
+            # a fix for <<
+            perl -pi -w -e 's/strcon2chardata\(\"\<\<\"\)/\&lt;\&lt;/g;' $i
+            # a fix for <<=
+            perl -pi -w -e 's/strcon2chardata\(\"\<\<\=\"\)/\&lt;\&lt;\=/g;' $i
+            # a fix for >>
+            perl -pi -w -e 's/strcon2chardata\(\"\>\>\"\)/\&gt;\&gt;/g;' $i
+            # a fix for &=
+            perl -pi -w -e 's/strcon2chardata\(\"\&\=\"\)/\&amp;\=/g;' $i
+            # a fix for >=
+            perl -pi -w -e 's/\<terminal\>\>\=\<\/terminal\>/\<terminal\>\&gt;\=\<\/terminal\>/g;' $i
+            # a fix for >>=
+            perl -pi -w -e 's/\<terminal\>\>\>\=\<\/terminal\>/\<terminal\>\&gt;\&gt;\=\<\/terminal\>/g;' $i
         fi
     done
     rm -f _.def
