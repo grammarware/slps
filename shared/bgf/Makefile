@@ -1,39 +1,59 @@
 tdir = ../../shared/tools
 gdir = ../../topics/grammars
 cdir = ../../topics/convergence
+xdir = ../../topics/extraction
 
 all:
 	make clean
 	make xpath
 	make fl
-	make dsl
-	make c
-	make cpp
+	make bnf slps dsl
+	make c cpp
 	make csharp
 	make java
 
 xpath:
 	cd ${gdir}/xpath && make test
-	cp ${gdir}/xpath/xpath.bgf                         xpath.1.ext.bgf
-	cp ${gdir}/xpath/xpath.fixed.bgf                   xpath.1.rec.bgf
+	cp ${gdir}/xpath/xpath.bgf                xpath.1.ext.bgf
+	cp ${gdir}/xpath/xpath.fixed.bgf          xpath.1.rec.bgf
+
+bnf:
+	cd ${gdir}/bnf && make build
+	cp ${gdir}/bnf/bnf-bgf.bgf                bnf.bgf.bgf
+	cp ${gdir}/bnf/bnf.sdf.bgf                bnf.sdf.ext.bgf
+	cp ${gdir}/bnf/bnf.sdf.fix.bgf            bnf.sdf.rec.bgf
+	cp ${gdir}/bnf/ebnf.sdf.bgf               ebnf.sdf.ext.bgf
+	cp ${gdir}/bnf/ebnf.sdf.fix.bgf           ebnf.sdf.rec.bgf
+	cp ${gdir}/bnf/yacc.sdf.bgf               yacc.sdf.ext.bgf
+	cp ${gdir}/bnf/yacc.sdf.fix.bgf           yacc.sdf.rec.bgf
+
+slps:
+	cd ${gdir}/dsl && make build
+	cp ${gdir}/dsl/bgf/bgf.bgf                bgf.xsd.ext.bgf
+	cp ${gdir}/dsl/btf/btf.bgf                btf.xsd.ext.bgf
+	cp ${gdir}/dsl/lcf/lcf.bgf                lcf.xsd.ext.bgf
+	cp ${gdir}/dsl/ldf/ldf.raw.bgf            ldf.xsd.ext.bgf
+	cp ${gdir}/dsl/ldf/ldf.final.bgf          ldf.xsd.rec.bgf
+	cp ${gdir}/dsl/xbgf/xbgf.bgf              xbgf.xsd.ext.bgf
+	cp ${gdir}/dsl/xldf/xldf.bgf              xldf.xsd.ext.bgf
 
 dsl:
-	cp ${gdir}/bnf/bnf-bgf.bgf                         bnf.bgf.bgf
-	cd ${gdir}/dsl && make build
-	cp ${gdir}/dsl/bgf/bgf.bgf                         bgf.xsd.ext.bgf
-	cp ${gdir}/dsl/btf/btf.bgf                         btf.xsd.ext.bgf
-	cp ${gdir}/dsl/lcf/lcf.bgf                         lcf.xsd.ext.bgf
-	cp ${gdir}/dsl/ldf/ldf.raw.bgf                     ldf.xsd.ext.bgf
-	cp ${gdir}/dsl/ldf/ldf.final.bgf                   ldf.xsd.rec.bgf
-	cp ${gdir}/dsl/xbgf/xbgf.bgf                       xbgf.xsd.ext.bgf
-	cp ${gdir}/dsl/xldf/xldf.bgf                       xldf.xsd.ext.bgf
-	cd ../../topics/extraction/rascal && make
-	cp ../../topics/extraction/rascal/rascal.bgf       rascal.ext.bgf
-	cp ../../topics/extraction/rascal/rascal.true.bgf  rascal.rec.bgf
-	cp ../../topics/grammars/oberon/oberon.ext.bgf     oberon-0.ext.bgf
-	cp ../../topics/grammars/oberon/oberon.rec.bgf     oberon-0.rec.bgf
-	cp ../../topics/grammars/extreme/baby.bgf          baby.bgf
-	cp ../../topics/grammars/extreme/monster.bgf       monster.bgf
+	cd ${xdir}/rascal && make
+	cp ${xdir}/rascal/rascal.bgf              rascal.ext.bgf
+	cp ${xdir}/rascal/rascal.true.bgf         rascal.rec.bgf
+	cp ${gdir}/oberon/oberon.ext.bgf          oberon-0.ext.bgf
+	cp ${gdir}/oberon/oberon.rec.bgf          oberon-0.rec.bgf
+	cp ${gdir}/extreme/baby.bgf               baby.bgf
+	cp ${gdir}/extreme/monster.bgf            monster.bgf
+	cd ${gdir}/logo && make build
+	cp ${gdir}/logo/logo.sdf.ext.bgf          .
+	cp ${gdir}/logo/logo.sdf.rec.bgf          .
+	cd ${gdir}/modula && make build
+	cp ${gdir}/modula/modula.3.sdf.ext.bgf    .
+	cp ${gdir}/modula/modula.3.sdf.rec.bgf    .
+	cd ${gdir}/pico && make build
+	cp ${gdir}/pico/pico.sdf.ext.bgf          .
+	cp ${gdir}/pico/pico.sdf.rec.bgf          .
 
 fl:
 	cd ${cdir}/fl && make test
@@ -46,15 +66,15 @@ fl:
 	cp ${cdir}/fl/snapshot/sdf.bgf            fl.sdf.ext.bgf
 	cp ${cdir}/fl/snapshot/txl.bgf            fl.txl.ext.bgf
 	cp ${cdir}/fl/snapshot/xsd.bgf            fl.xsd.ext.bgf
-	${tdir}/subgrammar fl.antlr.ext.bgf       program       fl.antlr.rec.bgf
-	${tdir}/subgrammar fl.dcg.ext.bgf         program       fl.dcg.rec.bgf
-	${tdir}/subgrammar fl.ecore.ext.bgf       Program       fl.ecore.rec.bgf
-	${tdir}/subgrammar fl.xsd.ecore.ext.bgf   ProgramType   fl.xsd.ecore.rec.bgf
-	${tdir}/subgrammar fl.xsd.java.ext.bgf    Function      fl.xsd.java.rec.bgf
-	${tdir}/subgrammar fl.java.ext.bgf        Function      fl.java.rec.bgf
-	${tdir}/subgrammar fl.sdf.ext.bgf         Program       fl.sdf.rec.bgf
-	${tdir}/subgrammar fl.txl.ext.bgf         program       fl.txl.rec.bgf
-	${tdir}/subgrammar fl.xsd.ext.bgf         Program       fl.xsd.rec.bgf
+	${tdir}/subgrammar fl.antlr.ext.bgf       program               fl.antlr.rec.bgf
+	${tdir}/subgrammar fl.dcg.ext.bgf         program               fl.dcg.rec.bgf
+	${tdir}/subgrammar fl.ecore.ext.bgf       Program               fl.ecore.rec.bgf
+	${tdir}/subgrammar fl.xsd.ecore.ext.bgf   ProgramType           fl.xsd.ecore.rec.bgf
+	${tdir}/subgrammar fl.xsd.java.ext.bgf    Function              fl.xsd.java.rec.bgf
+	${tdir}/subgrammar fl.java.ext.bgf        Function              fl.java.rec.bgf
+	${tdir}/subgrammar fl.sdf.ext.bgf         Program               fl.sdf.rec.bgf
+	${tdir}/subgrammar fl.txl.ext.bgf         program               fl.txl.rec.bgf
+	${tdir}/subgrammar fl.xsd.ext.bgf         Program               fl.xsd.rec.bgf
 
 csharp:
 	cd ${gdir}/csharp && make build

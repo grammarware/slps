@@ -34,6 +34,10 @@ else
             cat _.def | sglr -p ${XTR}/Main.tbl | asfe -e ${XTR}/Main.eqs | unparsePT > $i
             # a fix for ->
             perl -pi -w -e 's/strcon2chardata\(\"\-\>\"\)/\-\&gt;/g;' $i
+            # a fix for =>
+            perl -pi -w -e 's/strcon2chardata\(\"\=\>"\)/\=\&gt;/g;' $i
+            # a fix for <:
+            perl -pi -w -e 's/strcon2chardata\(\"\<:\"\)/\&lt;:/g;' $i
             # a fix for <=
             perl -pi -w -e 's/strcon2chardata\(\"\<\=\"\)/\&lt;\=/g;' $i
             perl -pi -w -e "s/sqstrcon2chardata\(\'\<\=\'\)/\&lt;\=/g;" $i
@@ -45,6 +49,8 @@ else
             perl -pi -w -e 's/strcon2chardata\(\"\>\>\"\)/\&gt;\&gt;/g;' $i
             # a fix for &=
             perl -pi -w -e 's/strcon2chardata\(\"\&\=\"\)/\&amp;\=/g;' $i
+            # a fix for &&
+            perl -pi -w -e 's/strcon2chardata\(\"\&\&\"\)/\&amp;\&amp;/g;' $i
             # a fix for >=
             perl -pi -w -e 's/\<terminal\>\>\=\<\/terminal\>/\<terminal\>\&gt;\=\<\/terminal\>/g;' $i
             # a fix for >>=
