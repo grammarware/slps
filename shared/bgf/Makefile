@@ -11,6 +11,10 @@ all:
 	make c cpp
 	make csharp
 	make java
+	chmod 644 *.bgf
+
+norm:
+	ls -1 *.rec.bgf | xargs -n1 ./runagin
 
 xpath:
 	cd ${gdir}/xpath && make test
@@ -19,7 +23,8 @@ xpath:
 
 bnf:
 	cd ${gdir}/bnf && make build
-	cp ${gdir}/bnf/bnf-bgf.bgf                bnf.bgf.bgf
+	cp ${gdir}/bnf/bnf-bgf.bgf                bnf.bgf.ext.bgf
+	cp ${gdir}/bnf/bnf-bgf.bgf                bnf.bgf.rec.bgf
 	cp ${gdir}/bnf/bnf.sdf.bgf                bnf.sdf.ext.bgf
 	cp ${gdir}/bnf/bnf.sdf.fix.bgf            bnf.sdf.rec.bgf
 	cp ${gdir}/bnf/ebnf.sdf.bgf               ebnf.sdf.ext.bgf
@@ -33,9 +38,14 @@ slps:
 	cp ${gdir}/dsl/btf/btf.bgf                btf.xsd.ext.bgf
 	cp ${gdir}/dsl/lcf/lcf.bgf                lcf.xsd.ext.bgf
 	cp ${gdir}/dsl/ldf/ldf.raw.bgf            ldf.xsd.ext.bgf
-	cp ${gdir}/dsl/ldf/ldf.final.bgf          ldf.xsd.rec.bgf
 	cp ${gdir}/dsl/xbgf/xbgf.bgf              xbgf.xsd.ext.bgf
 	cp ${gdir}/dsl/xldf/xldf.bgf              xldf.xsd.ext.bgf
+	cp ${gdir}/dsl/bgf/bgf.fix.bgf            bgf.xsd.rec.bgf
+	cp ${gdir}/dsl/btf/btf.fix.bgf            btf.xsd.rec.bgf
+	cp ${gdir}/dsl/lcf/lcf.fix.bgf            lcf.xsd.rec.bgf
+	cp ${gdir}/dsl/ldf/ldf.final.bgf          ldf.xsd.rec.bgf
+	cp ${gdir}/dsl/xbgf/xbgf.fix.bgf          xbgf.xsd.rec.bgf
+	cp ${gdir}/dsl/xldf/xldf.fix.bgf          xldf.xsd.rec.bgf
 
 dsl:
 	cd ${xdir}/rascal && make
@@ -54,6 +64,9 @@ dsl:
 	cd ${gdir}/pico && make build
 	cp ${gdir}/pico/pico.sdf.ext.bgf          .
 	cp ${gdir}/pico/pico.sdf.rec.bgf          .
+	cd ${gdir}/fortran && make build
+	cp ${gdir}/fortran/fortran.sdf.ext.bgf    fortran.90.sdf.ext.bgf
+	cp ${gdir}/fortran/fortran.sdf.rec.bgf    fortran.90.sdf.rec.bgf
 
 fl:
 	cd ${cdir}/fl && make test

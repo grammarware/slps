@@ -508,3 +508,153 @@ def nameLevel1Root(level,root,cg):
 	deltas = map(lambda x:shortestPath(root,x,cg),level)
 	#d = min(deltas):
 	return '|'.join(map(lambda i:level[i],filter(lambda i:deltas[i]==min(deltas),range(0,len(level)))))
+
+#######
+# new
+def shortestSamples(g,nts):
+	sss = {}
+	for n in nts:
+		sss[n] = []
+	for p in g.prods:
+		sss[p.nt].append(shortest2array(p.expr))
+	for n in nts:
+		if len(sss[n])>1:
+			sss[n] = tuple(sss[n])
+	#print '--------------------------------------'
+	#for k in sss.keys():
+	#	print k,'-->',sss[k]
+	#print '--------------------------------------'
+	change = True
+	while change:
+		change = False
+		#print 'A round of rewriting.'
+		for n in nts:
+			newsssn = flatten(sss[n],sss)
+			if sss[n] != newsssn:
+				change = True
+				sss[n] = newsssn
+	#print '--------------------------------------'
+	return sss
+	for k in sss.keys():
+		print k,'-->',sss[k]
+	print '--------------------------------------'
+	for n in nts:
+		sss[n] = turn2pairs([sss[n]])
+	change = True
+	while change:
+		change = False
+		print 'A round of normalising.'
+		for n in nts:
+			newsssn = normaliseSamples(sss[n])
+			if sss[n] != newsssn:
+				change = True
+				sss[n] = newsssn
+	print '--------------------------------------'
+	return sss
+
+def normaliseSamples(a):
+	return a
+
+def turn2pairs(a):
+	pair = [0,[]]
+	for x in a:
+		if type(x)==type(0):
+			pair[0] += x
+		elif type(x)==type(''):
+			if x not in pair[1]:
+				pair[1].append(x)
+		else:
+			t = turn2pairs(x)
+			pair[0] += t[0]
+			pair[1] = union(pair[1],t[1])
+	return pair
+
+def numbers(x):
+	for i in x:
+		if type(i)!=type(0):
+			return False
+	return True
+
+def flatten(a,sss):
+	if type(a) == type(0):
+		return a
+	elif type(a) == type(''):
+		if type(sss[a]) == type(0):
+			return sss[a]
+		else:
+			return a
+	elif type(a) == type([]):
+		if len(a) == 0:
+			return 1
+		elif len(a) == 1:
+			return flatten(a[0],sss)
+		elif numbers(a):
+			return sum(a)
+		else:
+			return map(lambda x:flatten(x,sss),a)
+	elif type(a) == type(()):
+		if len(a) == 0:
+			return 0
+		elif len(a) == 1:
+			return flatten(a[0],sss)
+		elif numbers(a):
+			return min(a)
+		elif 0 in a:
+			return 0
+		elif 1 in a:
+			return 1
+		else:
+			return tuple(map(lambda x:flatten(x,sss),list(a)))
+	else:	
+		print 'WTF is',type(a).__name__
+		return a
+
+def shortest2array(node):
+	if node.__class__.__name__ == 'Expression':
+		return shortest2array(node.wrapped)
+	elif node.__class__.__name__ == 'Selectable':
+		return shortest2array(node.expr)
+	elif node.__class__.__name__ in ('Star','Optional','Epsilon','Empty'):
+		return [0]
+	elif node.__class__.__name__ in ('Plus','Marked'):
+		return shortest2array(node.data)
+	elif node.__class__.__name__ in ('Value','Any'):
+		return [1]
+	elif node.__class__.__name__ == 'Terminal':
+		return [len(node.data)]
+	elif node.__class__.__name__ == 'Nonterminal':
+		return [node.data]
+	elif node.__class__.__name__ == 'Choice':
+		# one of these is incorrect!
+		return tuple(map(shortest2array,node.data))
+	elif node.__class__.__name__ == 'Sequence':
+		# one of these is incorrect!
+		return map(shortest2value,node.data)
+	else:
+		print 'How to deal with',node.__class__.__name__,'?'
+		return 0
+
+def shortest2value(node):
+	if node.__class__.__name__ == 'Expression':
+		return shortest2value(node.wrapped)
+	elif node.__class__.__name__ == 'Selectable':
+		return shortest2value(node.expr)
+	elif node.__class__.__name__ in ('Star','Optional','Epsilon','Empty'):
+		return 0
+	elif node.__class__.__name__ in ('Plus','Marked'):
+		return shortest2value(node.data)
+	elif node.__class__.__name__ in ('Value','Any'):
+		return 1
+	elif node.__class__.__name__ == 'Terminal':
+		return len(node.data)
+	elif node.__class__.__name__ == 'Nonterminal':
+		return node.data
+	elif node.__class__.__name__ == 'Choice':
+		# one of these is incorrect!
+		return tuple(map(shortest2array,node.data))
+	elif node.__class__.__name__ == 'Sequence':
+		# one of these is incorrect!
+		return map(shortest2value,node.data)
+	else:
+		print 'How to deal with',node.__class__.__name__,'?'
+		return 0
