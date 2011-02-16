@@ -15,26 +15,19 @@
       <expand>slps</expand>/shared/tools
     </expansion>
   </shortcut>
-
-  <!--tool>
-    <name>validation</name>
-    <grammar>
-      <expand>tools</expand>/validate bgf
-    </grammar>
-  </tool-->
-  <tool>
-    <name>comparison</name>
-    <grammar>
-      <expand>tools</expand>/gdt
-    </grammar>
-  </tool>
-  <tool>
-    <name>transformation</name>
-    <grammar>
-      <expand>tools</expand>/xbgf
-    </grammar>
-  </tool>
-
+	<tools>
+		<transformer>
+			<grammar><expand>tools</expand>/xbgf</grammar>
+		</transformer>
+		<comparator>
+			<grammar><expand>tools</expand>/gdt</grammar>
+		</comparator>
+		<!--
+		<validator>
+			<grammar><expand>tools</expand>/validate bgf</grammar>
+		</validator>
+		-->
+	</tools>
   <source>
     <name>impl1</name>
     <grammar>

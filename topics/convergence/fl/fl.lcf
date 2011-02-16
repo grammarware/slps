@@ -1,240 +1,165 @@
 <?xml version="1.0"?>
 <lcf:configuration xmlns:lcf="http://planet-sl.org/lcf">
-
-  <shortcut>
-    <name>slps</name>
-    <expansion>../../..</expansion>
-  </shortcut>
-  <shortcut>
-    <name>fl</name>
-    <expansion>
-	  <expand>slps</expand>/topics/fl
-	</expansion>
-  </shortcut>
-  <shortcut>
-    <name>tools</name>
-    <expansion>
-      <expand>slps</expand>/shared/tools
-    </expansion>
-  </shortcut>
-  <shortcut>
-    <name>wrappers</name>
-    <expansion>
-      <expand>slps</expand>/shared/wrappers
-    </expansion>
-  </shortcut>
-  <shortcut>
-    <name>generators</name>
-    <expansion>
-      <expand>slps</expand>/shared/generators
-    </expansion>
-  </shortcut>
-
-  <tool>
-    <name>validation</name>
-    <grammar>
-      <expand>tools</expand>/validate bgf
-    </grammar>
-    <tree>
-      <expand>tools</expand>/validate btf
-    </tree>
-  </tool>
-  <tool>
-    <name>comparison</name>
-    <grammar>
-      <expand>tools</expand>/gdt
-    </grammar>
-    <tree>
-      <expand>tools</expand>/tdt
-    </tree>
-  </tool>
-  <tool>
-    <name>transformation</name>
-    <grammar>
-      <expand>tools</expand>/xbgf
-    </grammar>
-    <tree>
-      <expand>tools</expand>/xbtf
-    </tree>
-  </tool>
-
-  <generator>
-    <name>case</name>
-    <command>
-      <expand>generators</expand>/casexbgf 3
-    </command>
-  </generator>
-  <generator>
-    <name>stript</name>
-    <command>
-      <expand>generators</expand>/striptxbgf
-    </command>
-  </generator>
-  <generator>
-    <name>strips</name>
-    <command>
-      <expand>generators</expand>/stripsxbgf
-    </command>
-  </generator>
-  <generator>
-    <name>reroot2top</name>
-    <command>
-      <expand>generators</expand>/reroot2top
-    </command>
-  </generator>
-
-  <testset>
-    <name>xmlsamples</name>
-    <command>
-      <expand>tools</expand>/buildtestsetxml
-    </command>
-  </testset>
-  <testset>
-    <name>codesamples</name>
-    <command>
-      <expand>tools</expand>/ldf2set <expand>fl</expand>/ldf/fl.ldf
-    </command>
-  </testset>
-
-  <source>
-    <name>antlr</name>
-    <grammar>
-      <extraction>
-        <expand>tools</expand>/antlr2bgf <expand>fl</expand>/java1/FL.g
+	<shortcut>
+		<name>slps</name>
+		<expansion>../../..</expansion>
+	</shortcut>
+	<shortcut>
+		<name>fl</name>
+		<expansion><expand>slps</expand>/topics/fl</expansion>
+	</shortcut>
+	<shortcut>
+		<name>tools</name>
+		<expansion><expand>slps</expand>/shared/tools</expansion>
+	</shortcut>
+	<shortcut>
+		<name>wrappers</name>
+		<expansion><expand>slps</expand>/shared/wrappers</expansion>
+	</shortcut>
+	<shortcut>
+		<name>generators</name>
+		<expansion><expand>slps</expand>/shared/generators</expansion>
+	</shortcut>
+	<tools>
+		<transformer>
+			<grammar><expand>tools</expand>/xbgf</grammar>
+			<tree><expand>tools</expand>/xbtf</tree>
+		</transformer>
+		<comparator>
+			<grammar><expand>tools</expand>/gdt</grammar>
+			<tree><expand>tools</expand>/tdt</tree>
+		</comparator>
+		<validator>
+			<grammar><expand>tools</expand>/validate bgf</grammar>
+			<tree><expand>tools</expand>/validate btf</tree>
+		</validator>
+		<generator>
+			<name>case</name>
+			<command><expand>generators</expand>/casexbgf 3</command>
+		</generator>
+		<generator>
+			<name>stript</name>
+			<command><expand>generators</expand>/striptxbgf</command>
+		</generator>
+		<generator>
+			<name>strips</name>
+			<command><expand>generators</expand>/stripsxbgf</command>
+		</generator>
+		<generator>
+			<name>reroot2top</name>
+			<command><expand>generators</expand>/reroot2top</command>
+		</generator>
+	</tools>
+	<source>
+		<name>antlr</name>
+		<grammar>
+			<extraction><expand>tools</expand>/antlr2bgf <expand>fl</expand>/java1/FL.g
       </extraction>
-      <parsing>
-        <expand>wrappers</expand>/runantlrparser
+			<parsing><expand>wrappers</expand>/runantlrparser
       </parsing>
-      <evaluation>
-        <expand>wrappers</expand>/runantlrevaluator
+			<evaluation><expand>wrappers</expand>/runantlrevaluator
       </evaluation>
-    </grammar>
-    <testing>
-      <set>codesamples</set>
-    </testing>
-  </source>
-
-  <source>
-    <name>dcg</name>
-    <grammar>
-      <extraction>
-        <expand>tools</expand>/dcg2bgf <expand>fl</expand>/prolog1/Parser.pro
+		</grammar>
+		<testing>
+			<set>codesamples</set>
+		</testing>
+	</source>
+	<source>
+		<name>dcg</name>
+		<grammar>
+			<extraction><expand>tools</expand>/dcg2bgf <expand>fl</expand>/prolog1/Parser.pro
       </extraction>
-      <parsing>
-        <expand>wrappers</expand>/runprologparser
+			<parsing><expand>wrappers</expand>/runprologparser
       </parsing>
-      <evaluation>
-        <expand>wrappers</expand>/runprologevaluator
+			<evaluation><expand>wrappers</expand>/runprologevaluator
       </evaluation>
-    </grammar>
-    <testing>
-      <set>codesamples</set>
-    </testing>
-  </source>
-
-  <source>
-    <name>sdf</name>
-    <grammar>
-      <extraction>
-        <expand>tools</expand>/sdf2bgf <expand>fl</expand>/asfsdf/*.sdf
+		</grammar>
+		<testing>
+			<set>codesamples</set>
+		</testing>
+	</source>
+	<source>
+		<name>sdf</name>
+		<grammar>
+			<extraction><expand>tools</expand>/sdf2bgf <expand>fl</expand>/asfsdf/*.sdf
       </extraction>
-      <parsing>
-        <expand>wrappers</expand>/runasfsdfparser
+			<parsing><expand>wrappers</expand>/runasfsdfparser
       </parsing>
-      <evaluation>
-        <expand>wrappers</expand>/runasfsdfevaluator
+			<evaluation><expand>wrappers</expand>/runasfsdfevaluator
       </evaluation>
-    </grammar>
-    <tree>
-      <extraction>
-        <expand>tools</expand>/asfix2btf bgf/sdf.bgf
+		</grammar>
+		<tree>
+			<extraction><expand>tools</expand>/asfix2btf bgf/sdf.bgf
       </extraction>
-      <evaluation>
-        <expand>wrappers</expand>/runbtfevaluator
+			<evaluation><expand>wrappers</expand>/runbtfevaluator
       </evaluation>
-    </tree>
-    <testing>
-      <set>codesamples</set>
-    </testing>
-  </source>
-
-  <source>
-    <name>txl</name>
-    <grammar>
-      <extraction>
-        <expand>tools</expand>/txl2bgf <expand>fl</expand>/txl/FL.Txl
+		</tree>
+		<testing>
+			<set>codesamples</set>
+		</testing>
+	</source>
+	<source>
+		<name>txl</name>
+		<grammar>
+			<extraction><expand>tools</expand>/txl2bgf <expand>fl</expand>/txl/FL.Txl
       </extraction>
-    </grammar>
-  </source>
-  
-  <source>
-    <name>ecore</name>
-    <grammar>
-      <extraction>
-        <expand>tools</expand>/ecore2bgf <expand>fl</expand>/emf1/fl.ecore
+		</grammar>
+	</source>
+	<source>
+		<name>ecore</name>
+		<grammar>
+			<extraction><expand>tools</expand>/ecore2bgf <expand>fl</expand>/emf1/fl.ecore
       </extraction>
-    </grammar>
-  </source>
-
-  <source>
-    <name>ecore2</name>
-    <derived>
-      <from>xsd</from>
-      <using>xsd2ecore</using>
-    </derived>
-    <grammar>
-      <extraction>
-        <expand>tools</expand>/ecore2bgf <expand>fl</expand>/emf2/model/fl.ecore
+		</grammar>
+	</source>
+	<source>
+		<name>ecore2</name>
+		<derived>
+			<from>xsd</from>
+			<using>xsd2ecore</using>
+		</derived>
+		<grammar>
+			<extraction><expand>tools</expand>/ecore2bgf <expand>fl</expand>/emf2/model/fl.ecore
       </extraction>
-    </grammar>
-  </source>
-
-  <source>
-    <name>xsd</name>
-    <grammar>
-      <extraction>
-        <expand>tools</expand>/xsd2bgf <expand>fl</expand>/xsd/fl.xsd
+		</grammar>
+	</source>
+	<source>
+		<name>xsd</name>
+		<grammar>
+			<extraction><expand>tools</expand>/xsd2bgf <expand>fl</expand>/xsd/fl.xsd
       </extraction>
-      <parsing>
-        <expand>wrappers</expand>/runxsdparser
+			<parsing><expand>wrappers</expand>/runxsdparser
       </parsing>
-      <evaluation>
-        <expand>wrappers</expand>/runxqueryevaluator
+			<evaluation><expand>wrappers</expand>/runxqueryevaluator
       </evaluation>
-    </grammar>
-    <tree>
-      <extraction>
-        <expand>tools</expand>/xml2btf <expand>fl</expand>/xsd/fl.xsd
+		</grammar>
+		<tree>
+			<extraction><expand>tools</expand>/xml2btf <expand>fl</expand>/xsd/fl.xsd
       </extraction>
-    </tree>
-    <testing>
-      <set>xmlsamples</set>
-    </testing>
-  </source>
-
-  <source>
-    <name>om</name>
-    <grammar>
-      <extraction>
-        <expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
+		</tree>
+		<testing>
+			<set>xmlsamples</set>
+		</testing>
+	</source>
+	<source>
+		<name>om</name>
+		<grammar>
+			<extraction><expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
       </extraction>
-    </grammar>
-  </source>
-
-  <source>
-    <name>jaxb</name>
-    <derived>
-      <from>xsd</from>
-      <using>xjc</using>
-    </derived>
-    <grammar>
-      <extraction>
-        <expand>tools</expand>/java2bgf <expand>fl</expand>/java3 fl
+		</grammar>
+	</source>
+	<source>
+		<name>jaxb</name>
+		<derived>
+			<from>xsd</from>
+			<using>xjc</using>
+		</derived>
+		<grammar>
+			<extraction><expand>tools</expand>/java2bgf <expand>fl</expand>/java3 fl
       </extraction>
-    </grammar>
-  </source>
-
-  <!--
+		</grammar>
+	</source>
+<!--
   <source>
     <name>ldf</name>
     <grammar>
@@ -244,180 +169,182 @@
     </grammar>
   </source
 -->
-
-  <target>
-    <name>topdown</name>
-    <branch>
-      <input>dcg</input>
-    </branch>
-    <branch>
-      <input>antlr</input>
-      <nominal-matching>
-        <perform>rename-antlr</perform>
-      </nominal-matching>
-      <structural-matching>
-        <perform>preferDcg</perform>
-        <perform>designateOps</perform>
-      </structural-matching>
-    </branch>
-  </target>
-
-  <target>
-    <name>unlayered</name>
-    <branch>
-      <input>topdown</input>
-      <structural-matching>
-        <perform>removeLayers</perform>
-      </structural-matching>
-    </branch>
-    <branch>
-      <input>sdf</input>
-      <nominal-matching>
-        <automated>
-          <method>case</method>
-          <result>rename-sdf</result>
-        </automated>
-      </nominal-matching>
-    </branch>
-  </target>
-
-  <target>
-    <name>concrete</name>
-    <branch>
-      <input>unlayered</input>
-      <structural-matching>
-        <automated>
-          <method>reroot2top</method>
-          <result>reroot-lower</result>
-        </automated>
-      </structural-matching>
-    </branch>
-    <branch>
-      <input>txl</input>
-      <nominal-matching>
-        <perform>rename-txl</perform>
-      </nominal-matching>
-      <structural-matching>
-        <perform>preferSdf</perform>
-        <perform>designateOps</perform>
-      </structural-matching>
-      <relaxation>
-        <perform>multipleNewlines</perform>
-      </relaxation>
-    </branch>
-  </target>
-
-  <target>
-    <name>model</name>
-    <branch>
-      <input>ecore</input>
-      <nominal-matching>
-        <perform>rename-ecore</perform>
-        <automated>
-          <method>reroot2top</method>
-          <result>reroot-upper</result>
-        </automated>
-      </nominal-matching>
-      <structural-matching>
-        <perform>extractOps</perform>
-      </structural-matching>
-      <relaxation>
-        <perform>resolveAggregation</perform>
-      </relaxation>
-    </branch>
-    <branch>
-      <input>ecore2</input>
-      <nominal-matching>
-        <perform>rename-emf</perform>
-        <automated>
-          <method>reroot2top</method>
-          <result>reroot-upper</result>
-        </automated>
-      </nominal-matching>
-    </branch>
-    <branch>
-      <input>xsd</input>
-      <nominal-matching>
-        <perform>trim-xsd</perform>
-      </nominal-matching>
-    </branch>
-  </target>
-
-  <target>
-    <name>java</name>
-    <branch>
-      <input>jaxb</input>
-      <nominal-matching>
-        <perform>trim-jaxb</perform>
-        <automated>
-          <method>case</method>
-          <result>rename-jaxb</result>
-        </automated>
-      </nominal-matching>
-    </branch>
-    <branch>
-      <input>om</input>
-      <nominal-matching>
-        <perform>trim-om</perform>
-        <automated>
-          <method>case</method>
-          <result>rename-om</result>
-        </automated>
-        <perform>preferJaxb</perform>
-      </nominal-matching>
-    </branch>
-  </target>
-
-  <target>
-    <name>abstract</name>
-    <branch>
-      <input>java</input>
-      <structural-matching>
-        <perform>unerase</perform>
-        <automated>
-          <method>reroot2top</method>
-          <result>reroot-lower</result>
-        </automated>
-      </structural-matching>
-    </branch>
-    <branch>
-      <input>model</input>
-      <nominal-matching>
-        <automated>
-          <method>case</method>
-          <result>rename-model</result>
-        </automated>
-      </nominal-matching>
-      <structural-matching>
-        <perform>massage-model</perform>
-      </structural-matching>
-    </branch>
-  </target>
-
-  <target>
-    <name>limit</name>
-    <branch>
-      <input>concrete</input>
-      <structural-matching>
-        <perform>defineLex</perform>
-        <automated>
-          <method>stript</method>
-          <result>stripTerminals</result>
-        </automated>
-        <perform>stripNewline</perform>
-        <perform>permuteArgs</perform>
-      </structural-matching>
-    </branch>
-    <branch>
-      <input>abstract</input>
-      <structural-matching>
-        <perform>makeSignature</perform>
-        <automated>
-          <method>strips</method>
-          <result>stripSelectors</result>
-        </automated>
-      </structural-matching>
-    </branch>
-  </target>
-
+	<target>
+		<name>topdown</name>
+		<branch>
+			<input>dcg</input>
+		</branch>
+		<branch>
+			<input>antlr</input>
+			<nominal-matching>
+				<perform>rename-antlr</perform>
+			</nominal-matching>
+			<structural-matching>
+				<perform>preferDcg</perform>
+				<perform>designateOps</perform>
+			</structural-matching>
+		</branch>
+	</target>
+	<target>
+		<name>unlayered</name>
+		<branch>
+			<input>topdown</input>
+			<structural-matching>
+				<perform>removeLayers</perform>
+			</structural-matching>
+		</branch>
+		<branch>
+			<input>sdf</input>
+			<nominal-matching>
+				<automated>
+					<method>case</method>
+					<result>rename-sdf</result>
+				</automated>
+			</nominal-matching>
+		</branch>
+	</target>
+	<target>
+		<name>concrete</name>
+		<branch>
+			<input>unlayered</input>
+			<structural-matching>
+				<automated>
+					<method>reroot2top</method>
+					<result>reroot-lower</result>
+				</automated>
+			</structural-matching>
+		</branch>
+		<branch>
+			<input>txl</input>
+			<nominal-matching>
+				<perform>rename-txl</perform>
+			</nominal-matching>
+			<structural-matching>
+				<perform>preferSdf</perform>
+				<perform>designateOps</perform>
+			</structural-matching>
+			<relaxation>
+				<perform>multipleNewlines</perform>
+			</relaxation>
+		</branch>
+	</target>
+	<target>
+		<name>model</name>
+		<branch>
+			<input>ecore</input>
+			<nominal-matching>
+				<perform>rename-ecore</perform>
+				<automated>
+					<method>reroot2top</method>
+					<result>reroot-upper</result>
+				</automated>
+			</nominal-matching>
+			<structural-matching>
+				<perform>extractOps</perform>
+			</structural-matching>
+			<relaxation>
+				<perform>resolveAggregation</perform>
+			</relaxation>
+		</branch>
+		<branch>
+			<input>ecore2</input>
+			<nominal-matching>
+				<perform>rename-emf</perform>
+				<automated>
+					<method>reroot2top</method>
+					<result>reroot-upper</result>
+				</automated>
+			</nominal-matching>
+		</branch>
+		<branch>
+			<input>xsd</input>
+			<nominal-matching>
+				<perform>trim-xsd</perform>
+			</nominal-matching>
+		</branch>
+	</target>
+	<target>
+		<name>java</name>
+		<branch>
+			<input>jaxb</input>
+			<nominal-matching>
+				<perform>trim-jaxb</perform>
+				<automated>
+					<method>case</method>
+					<result>rename-jaxb</result>
+				</automated>
+			</nominal-matching>
+		</branch>
+		<branch>
+			<input>om</input>
+			<nominal-matching>
+				<perform>trim-om</perform>
+				<automated>
+					<method>case</method>
+					<result>rename-om</result>
+				</automated>
+				<perform>preferJaxb</perform>
+			</nominal-matching>
+		</branch>
+	</target>
+	<target>
+		<name>abstract</name>
+		<branch>
+			<input>java</input>
+			<structural-matching>
+				<perform>unerase</perform>
+				<automated>
+					<method>reroot2top</method>
+					<result>reroot-lower</result>
+				</automated>
+			</structural-matching>
+		</branch>
+		<branch>
+			<input>model</input>
+			<nominal-matching>
+				<automated>
+					<method>case</method>
+					<result>rename-model</result>
+				</automated>
+			</nominal-matching>
+			<structural-matching>
+				<perform>massage-model</perform>
+			</structural-matching>
+		</branch>
+	</target>
+	<target>
+		<name>limit</name>
+		<branch>
+			<input>concrete</input>
+			<structural-matching>
+				<perform>defineLex</perform>
+				<automated>
+					<method>stript</method>
+					<result>stripTerminals</result>
+				</automated>
+				<perform>stripNewline</perform>
+				<perform>permuteArgs</perform>
+			</structural-matching>
+		</branch>
+		<branch>
+			<input>abstract</input>
+			<structural-matching>
+				<perform>makeSignature</perform>
+				<automated>
+					<method>strips</method>
+					<result>stripSelectors</result>
+				</automated>
+			</structural-matching>
+		</branch>
+	</target>
+	<testset>
+		<name>xmlsamples</name>
+		<command><expand>tools</expand>/buildtestsetxml
+    </command>
+	</testset>
+	<testset>
+		<name>codesamples</name>
+		<command><expand>tools</expand>/ldf2set <expand>fl</expand>/ldf/fl.ldf
+    </command>
+	</testset>
 </lcf:configuration>

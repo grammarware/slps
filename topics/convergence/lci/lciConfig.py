@@ -145,14 +145,15 @@ def readConfiguration (cfg):
       else:
        print '[WARN] Unknown tag skipped:',p.tag
    targets[name].append(branch)
- # tools
- for xmlnode in config.findall('//tool'):
-  tools[xmlnode.findtext('name')] = expandxml(xmlnode.findall('grammar')[0],{})
-  if xmlnode.findall('tree'):
-   treeTools[xmlnode.findtext('name')] = expandxml(xmlnode.findall('tree')[0],{})
- # methods
- for xmlnode in config.findall('//generator'):
-  automethods[xmlnode.findtext('name')] = expandxml(xmlnode.findall('command')[0],{})
+ # tools & methods
+ for xmlnode in config.findall('//tools/*'):
+  #print 'Processing tool',xmlnode.tag
+  if xmlnode.tag == 'generator':
+   automethods[xmlnode.findtext('name')] = expandxml(xmlnode.findall('command')[0],{})
+  else:
+   tools[xmlnode.tag] = expandxml(xmlnode.findall('grammar')[0],{})
+   if xmlnode.findall('tree'):
+    treeTools[xmlnode.tag] = expandxml(xmlnode.findall('tree')[0],{})
  print 'Read',
  if shortcuts:
   print len(shortcuts),'shortcuts,',
@@ -190,6 +191,8 @@ def expandone(tag,text,rep):
 
 def expandxml(mixed,rep):
  s = mixed.text
+ if not s:
+  s = ''
  for tag in mixed.getchildren():
   s += expandone(tag.tag,tag.text,rep)
   s += tag.tail

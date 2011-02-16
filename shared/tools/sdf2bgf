@@ -36,6 +36,7 @@ else
             perl -pi -w -e 's/strcon2chardata\(\"\-\>\"\)/\-\&gt;/g;' $i
             # a fix for =>
             perl -pi -w -e 's/strcon2chardata\(\"\=\>"\)/\=\&gt;/g;' $i
+            perl -pi -w -e "s/sqstrcon2chardata\(\'\=\>'\)/\=\&gt;/g;" $i
             # a fix for <:
             perl -pi -w -e 's/strcon2chardata\(\"\<:\"\)/\&lt;:/g;' $i
             # a fix for <=

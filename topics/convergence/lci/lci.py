@@ -88,7 +88,7 @@ def compareGrammars(bgf,arr):
  #print '[----] Ready:',bgf,'vs',goal
  #print '[++++] Distance is:',
  #run = 'expr `'+tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "Fail:" | wc -l` + `'+tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w`'
- run = tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w'
+ run = tools['comparator'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep "only:" | grep -o "\[..*\]" | wc -w'
  writeLog(run)
  if os.system(run+' > TMP-res'):
   #print '[WARN] Cannot count name mismatches between',bgf(),'and',goal
@@ -98,7 +98,7 @@ def compareGrammars(bgf,arr):
   num = open('TMP-res','r')
   nameDiffs = num.readline().strip()
   num.close()
- run = tools['comparison'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep Fail'
+ run = tools['comparator'] + ' bgf/'+bgf.bgfFileName()+' bgf/'+goal+'.bgf | grep Fail'
  writeLog(run)
  if os.system(run+' > TMP-res'):
   #print '[WARN] Cannot count structural mismatches between',bgf(),'and',goal
@@ -290,7 +290,7 @@ def extractAll():
     problem = True
    #sysexit(3)
   else:
-   run = tools['comparison'] + ' bgf/'+bgf+'.bgf snapshot/'+bgf+'.bgf'
+   run = tools['comparator'] + ' bgf/'+bgf+'.bgf snapshot/'+bgf+'.bgf'
    writeLog(run)
    if os.system(run+shutup):
     # different from the saved version
@@ -304,7 +304,7 @@ def validateAll():
  for bgf in extractor.keys():
   if Chain(bgf) in failed:
    continue
-  run = tools['validation']+' bgf/'+bgf+'.bgf'
+  run = tools['validator']+' bgf/'+bgf+'.bgf'
   writeLog(run)
   if os.system(run+shutup):
    problem = True
@@ -332,7 +332,7 @@ def runTransforms(cut,current,whichtypes):
      print '[PASS]',
     print 'Generated',ttype[a],a+'.xbgf','from',current.bgfFileName()
     if ontheroll:
-     run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+current.bgfFileName()+' bgf/'+current.futureBgfFileName(a)
+     run = tools['transformer']+' xbgf/'+a+'.xbgf bgf/'+current.bgfFileName()+' bgf/'+current.futureBgfFileName(a)
      writeLog(run)
      if os.system(run+shutup):
       problem = True
@@ -345,7 +345,7 @@ def runTransforms(cut,current,whichtypes):
      print 'Applied generated',a+'.xbgf','to',current.bgfFileName()
    else:
     #??? 
-    run = tools['transformation']+' xbgf/'+a+'.xbgf bgf/'+current.bgfFileName()+' bgf/'+current.futureBgfFileName(a)
+    run = tools['transformer']+' xbgf/'+a+'.xbgf bgf/'+current.bgfFileName()+' bgf/'+current.futureBgfFileName(a)
     writeLog(run)
     if os.system(run+shutup):
      problem = True
@@ -387,8 +387,8 @@ def transformationChain(cut,target):
  else:
   print '[PASS]',
  print 'Branch finished as',current.bgfFileName()
- if cut not in failed and tools.has_key('validation'):
-  a = tools['validation']+' bgf/'+current.bgfFileName()
+ if cut not in failed and tools.has_key('validator'):
+  a = tools['validator']+' bgf/'+current.bgfFileName()
   writeLog(a)
   if os.system(a+shutup):
    problem = True
@@ -438,7 +438,7 @@ def buildTargets():
 def diffAll(t,car,cdr):
  #print car,cdr
  if len(cdr)==1:
-  run = tools['comparison']+' bgf/'+car.bgfFileName()+' bgf/'+cdr[0].bgfFileName()
+  run = tools['comparator']+' bgf/'+car.bgfFileName()+' bgf/'+cdr[0].bgfFileName()
   writeLog(run)
   if os.system(run+shutup):
    problem = True
@@ -459,7 +459,7 @@ def chainXBTF(testcase,steps,t):
   else:
    # name it as input.transformationName.btf
    re = '.'.join(fr.split('.')[:-1])+'.'+step+'.btf'
-  run = treeTools['transformation']+' xbgf/'+step+'.xbgf '+fr+' '+re
+  run = treeTools['transformer']+' xbgf/'+step+'.xbgf '+fr+' '+re
   writeLog(run)
   #print 'Performing coupled',step,'on',fr,'-',
   if os.system(run+shutup):
@@ -468,8 +468,8 @@ def chainXBTF(testcase,steps,t):
    break
   fr = re
  print '[PASS] Performed coupled',steps.spaceNotation(),'on',testcase,
- if treeTools.has_key('validation'):
-  run = treeTools['validation']+' '+re
+ if treeTools.has_key('validator'):
+  run = treeTools['validator']+' '+re
   if os.system(run+shutup):
    problem = True
    print '- NOT valid'
@@ -482,14 +482,14 @@ def diffBTFs(t):
  if len(testsets)<2:
   # with one test set there's nothing to diff
   return
- if 'comparison' not in treeTools.keys():
+ if 'comparator' not in treeTools.keys():
   # no tree diff tool specified
   return
  basetestset = testsets.keys()[0]
  for basetestcase in glob.glob(basetestset+'/*.'+t+'.btf'):
   for testset in testsets.keys()[1:]:
    for testcase in glob.glob(testset+'/'+basetestcase.split('/')[1]):
-    run = treeTools['comparison']+' '+basetestcase+' '+testcase
+    run = treeTools['comparator']+' '+basetestcase+' '+testcase
     if os.system(run+shutup):
      problem = True
      print '[FAIL]',
@@ -601,7 +601,7 @@ if __name__ == "__main__":
   checkConsistency()
   makeGraph()
   extractAll()
-  if tools.has_key('validation'):
+  if tools.has_key('validator'):
    validateAll()
   buildTargets()
   print '----- Grammar convergence phase finished. -----'

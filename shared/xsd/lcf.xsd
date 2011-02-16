@@ -23,31 +23,41 @@
         All DSL elements such as sources, targets and tools, are
         presented in a completely volatile order.
       </xsd:documentation>
-    </xsd:annotation>
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:group ref="lcf:definition" maxOccurs="unbounded"/>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <xsd:group name="definition">
-    <xsd:annotation>
       <xsd:documentation>
         Each configurational entity is either defining a shortcut,
         specifying a tool or a generator, or defining a source,
         a target or a test set.
       </xsd:documentation>
     </xsd:annotation>
-    <xsd:choice >
-      <xsd:element name="shortcut" type="lcf:shortcut" />
-      <xsd:element name="generator" type="lcf:generator" />
-      <xsd:element name="tool" type="lcf:tool" />
-      <xsd:element name="source" type="lcf:source" />
-      <xsd:element name="target" type="lcf:target" />
-      <xsd:element name="testset" type="lcf:testset" />
-    </xsd:choice>
-  </xsd:group>
+    <xsd:complexType>
+  	    <xsd:sequence>
+	      <xsd:element name="shortcut" type="lcf:shortcut" minOccurs="0" maxOccurs="unbounded" />
+	      <xsd:element name="tools" type="lcf:tools"/>
+	      <xsd:element name="source" type="lcf:source" maxOccurs="unbounded" />
+	      <xsd:element name="target" type="lcf:target" maxOccurs="unbounded" />
+	      <xsd:element name="testset" type="lcf:testset" minOccurs="0" maxOccurs="unbounded" />
+	    </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+    <xsd:complexType name="tools">
+	    <xsd:annotation>
+	      <xsd:documentation>
+	        All DSL elements such as sources, targets and tools, are
+	        presented in a completely volatile order.
+	      </xsd:documentation>
+	      <xsd:documentation>
+	        Each configurational entity is either defining a shortcut,
+	        specifying a tool or a generator, or defining a source,
+	        a target or a test set.
+	      </xsd:documentation>
+	    </xsd:annotation>  	    <xsd:sequence>
+	      <xsd:element name="transformer" type="lcf:tool" />
+	      <xsd:element name="comparator" type="lcf:tool" />
+	      <xsd:element name="validator" type="lcf:tool" minOccurs="0" />
+	      <xsd:element name="generator" type="lcf:generator" minOccurs="0" maxOccurs="unbounded" />
+	    </xsd:sequence>
+    </xsd:complexType>
 
   <xsd:complexType name="shortcut">
     <xsd:annotation>
@@ -277,19 +287,10 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="name" type="lcf:toolType"/>
       <xsd:element name="grammar" type="lcf:xstring"/>
       <xsd:element name="tree" type="lcf:xstring" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
-
-  <xsd:simpleType name="toolType">
-    <xsd:restriction base="xsd:token">
-      <xsd:enumeration value="validation"/>
-      <xsd:enumeration value="comparison"/>
-      <xsd:enumeration value="transformation"/>
-    </xsd:restriction>
-  </xsd:simpleType>
 
   <xsd:complexType name="xstring" mixed="true">
     <xsd:annotation>
