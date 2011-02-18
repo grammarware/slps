@@ -27,6 +27,8 @@ bnf:
 	cp ${gdir}/bnf/bnf-bgf.bgf                bnf.bgf.rec.bgf
 	cp ${gdir}/bnf/bnf.sdf.bgf                bnf.sdf.ext.bgf
 	cp ${gdir}/bnf/bnf.sdf.fix.bgf            bnf.sdf.rec.bgf
+	cp ${gdir}/bnf/ebnf.iso.informal.bgf      ebnf.iso.ext.bgf
+	cp ${gdir}/bnf/ebnf.iso.informal.fix.bgf  ebnf.iso.rec.bgf
 	cp ${gdir}/bnf/ebnf.sdf.bgf               ebnf.sdf.ext.bgf
 	cp ${gdir}/bnf/ebnf.sdf.fix.bgf           ebnf.sdf.rec.bgf
 	cp ${gdir}/bnf/yacc.sdf.bgf               yacc.sdf.ext.bgf
