@@ -14,7 +14,7 @@ all:
 	chmod 644 *.bgf
 
 norm:
-	ls -1 *.rec.bgf | xargs -n1 ./runagin
+	ls -1 *.rec.bgf | xargs -n1 ./runnorm
 
 xpath:
 	cd ${gdir}/xpath && make test
