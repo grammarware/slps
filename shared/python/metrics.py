@@ -658,3 +658,41 @@ def shortest2value(node):
 	else:
 		print 'How to deal with',node.__class__.__name__,'?'
 		return 0
+
+def buildpattern(node):
+	if node.__class__.__name__ == 'Expression':
+		return buildpattern(node.wrapped)
+	elif node.__class__.__name__ == 'Selectable':
+		return buildpattern(node.expr)
+	elif node.__class__.__name__ == 'Star':
+		if node.data.wrapped.__class__.__name__ == 'Sequence':
+			return '<'+buildpattern(node.data.wrapped.data)+'>'
+		else:
+			return '<'+buildpattern(node.data)+'>'
+	elif node.__class__.__name__ == 'Plus':
+		if node.data.wrapped.__class__.__name__ == 'Sequence':
+			return '['+buildpattern(node.data.wrapped.data)+']'
+		else:
+			return '['+buildpattern(node.data)+']'
+	elif node.__class__.__name__ == 'Optional':
+		if node.data.wrapped.__class__.__name__ == 'Sequence':
+			return '{'+buildpattern(node.data.wrapped.data)+'}'
+		else:
+			return '{'+buildpattern(node.data)+'}'
+	elif node.__class__.__name__ == 'Sequence':
+		return '('+buildpattern(node.data)+')'
+	elif node.__class__.__name__ in ('Epsilon','Empty'):
+		return ''
+	elif node.__class__.__name__ in ('Value','Nonterminal','Any'):
+		return 'N'
+	elif node.__class__.__name__ == 'Terminal':
+		return 'T'
+	elif node.__class__.__name__ == 'Choice':
+		return '|'.join(map(buildpattern,node.data))
+	elif node.__class__.__name__ == 'list':
+		return ''.join(map(buildpattern,node))
+	else:
+		# we don't deal with marked
+		print 'How to deal with',node.__class__.__name__,'?'
+		print node
+		return ''
