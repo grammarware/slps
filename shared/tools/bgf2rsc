@@ -1,0 +1,27 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -eq 1 ]; then
+    OUTPUT=/dev/stdout
+elif [ $# -ne 2 ]; then
+    echo "This tool transforms BGF grammars to Rascal."
+    echo "Usage: bgf2rsc <input-bgf-grammar> [<output-hypertex>]"
+    echo "When output file is not specified, stdout is used."
+    exit 1
+else
+    OUTPUT=$2
+fi
+if [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+${SLPS}/shared/generators/horall $1 $1.hor.xbgf
+${SLPS}/shared/tools/xbgf $1.hor.xbgf $1 ${OUTPUT}.tmp
+xsltproc ${SLPS}/topics/export/rascal/bgf2rsc.xslt ${OUTPUT}.tmp | grep -v 'DOCTYPE' > ${OUTPUT}
+rm ${OUTPUT}.tmp $1.hor.xbgf

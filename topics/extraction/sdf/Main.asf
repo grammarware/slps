@@ -183,10 +183,10 @@ trafoSymbol((&S1 &S2 &S+1)) =
 	</sequence>
   </bgf:expression>
 
-[selector-1]
-&E1 := trafoSymbol(&N1)
+[selectable-symbol]
+&E1 := trafoSymbol(&S1)
 ================
-trafoSymbol(&I1:&N1) =
+trafoSymbol(&I1:&S1) =
   <bgf:expression>
 	<selectable>
 		<selector>idcon2chardata(&I1)</selector>
