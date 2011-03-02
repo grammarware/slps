@@ -56,6 +56,8 @@ else
             perl -pi -w -e 's/\<terminal\>\>\=\<\/terminal\>/\<terminal\>\&gt;\=\<\/terminal\>/g;' $i
             # a fix for >>=
             perl -pi -w -e 's/\<terminal\>\>\>\=\<\/terminal\>/\<terminal\>\&gt;\&gt;\=\<\/terminal\>/g;' $i
+            # a fix for >>>
+            perl -pi -w -e 's/\<terminal\>strcon2chardata\(\"\>\>\>\"\)\<\/terminal\>/\<terminal\>\&gt;\&gt;\&gt;\<\/terminal\>/g;' $i
         fi
     done
     rm -f _.def
