@@ -14,7 +14,7 @@ elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    xsltproc ${SLPS}/shared/xsl/ldf2xhtml.xslt $1 | python ${SLPS}/shared/python/closemeta.py > $2
+    xsltproc ${SLPS}/topics/export/hypertext/ldf2xhtml.xslt $1 | python ${SLPS}/topics/export/hypertext/closemeta.py > $2
     perl -pi -w -e 's/xmlns:ns0\=\"http:\/\/planet-sl.org\/ldf\" xmlns=\"\"//g;' $2
     perl -pi -w -e 's/---/&#8212;/g;' $2
     perl -pi -w -e 's/--/&#8211;/g;' $2
