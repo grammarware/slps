@@ -21,4 +21,4 @@ if [ ! -r $1 ]; then
     exit 1
 fi
 
-xsltproc ${SLPS}/shared/xsl/xbgf2xhtml.xslt $1 | grep -v 'DOCTYPE' > ${OUTPUT}
+xsltproc ${SLPS}/topics/export/hypertext/xbgf2xhtml.xslt $1 | grep -v 'DOCTYPE' > ${OUTPUT}
