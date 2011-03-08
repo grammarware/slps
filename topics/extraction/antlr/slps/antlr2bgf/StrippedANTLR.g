@@ -132,46 +132,77 @@ alternative returns [Node xml]
 	;
 	
 element returns [Node xml]
-	: {boolean flag = false;} (ID '=')? name=ID (sign=suffix {flag = true;})?
+	: {boolean sel = false;boolean suf = false;} (selector=ID '=' {sel = true;})? name=ID (sign=suffix {suf = true;})?
 		{
-			if(flag)
+			Element atom = doc.createElement("nonterminal");
+			atom.appendChild(doc.createTextNode($name.text));
+			$xml = atom;
+			if(suf)
 			{
 				Element ebnf = doc.createElement($sign.name);
 			   	Element expr = doc.createElement("bgf:expression");
-			   	Element atom = doc.createElement("nonterminal");
-				atom.appendChild(doc.createTextNode($name.text));
-				expr.appendChild(atom);
+				expr.appendChild($xml);
 				ebnf.appendChild(expr);
 				$xml = ebnf;
 			}
-			else
+			if(sel)
 			{
-				Element atom = doc.createElement("nonterminal");
-				atom.appendChild(doc.createTextNode($name.text));
-				$xml = atom;
+				Element ebnf = doc.createElement("selectable");
+				Element snam = doc.createElement("selector");
+				snam.appendChild(doc.createTextNode($selector.text));
+				ebnf.appendChild(snam);
+			   	Element expr = doc.createElement("bgf:expression");
+				expr.appendChild($xml);
+				ebnf.appendChild(expr);
+				$xml = ebnf;
 			}
 		}
-	| quoted=STRING_LITERAL
+	| {boolean sel = false;boolean suf = false;} (selector=ID '=' {sel = true;})? quoted=STRING_LITERAL (sign=suffix {suf = true;})?
+	{
+		String q = $quoted.text;
+		Element atom = doc.createElement("terminal");
+		if (q.endsWith("'")&&q.startsWith("'"))
+			q = q.substring(1,q.length()-1);
+		atom.appendChild(doc.createTextNode(q));
+		$xml = atom;
+		if(suf)
 		{
-			String q = $quoted.text;
-			Element atom = doc.createElement("terminal");
-			if (q.endsWith("'")&&q.startsWith("'"))
-				q = q.substring(1,q.length()-1);
-			atom.appendChild(doc.createTextNode(q));
-			$xml = atom;
+			Element ebnf = doc.createElement($sign.name);
+		   	Element expr = doc.createElement("bgf:expression");
+			expr.appendChild($xml);
+			ebnf.appendChild(expr);
+			$xml = ebnf;
 		}
+		if(sel)
+		{
+			Element ebnf = doc.createElement("selectable");
+			Element snam = doc.createElement("selector");
+			snam.appendChild(doc.createTextNode($selector.text));
+			ebnf.appendChild(snam);
+		   	Element expr = doc.createElement("bgf:expression");
+			expr.appendChild($xml);
+			ebnf.appendChild(expr);
+			$xml = ebnf;
+		}
+	}
 	| {boolean flag = false;}'(' child=rhs ')' (sign=suffix {flag = true;})?
 		{
 			if(flag)
 			{
 				Element ebnf = doc.createElement($sign.name);
-//			    	if(child.xml.getNodeName().compareTo("bgf:expression")==0)
+			    	if(child.xml.getNodeName().compareTo("bgf:expression")!=0)
+						{
+							Element expr = doc.createElement("bgf:expression");
+							ebnf.appendChild(expr);
+							expr.appendChild($child.xml);
+						}
+					else
+						ebnf.appendChild($child.xml);
 //			    	{
 //				    	NodeList sequence = $child.xml.getChildNodes();
 //					ebnf.appendChild(sequence.item(0));
 //			    	}
 //			    	else
-					ebnf.appendChild($child.xml);
 				$xml = ebnf;
 				}
 			else
