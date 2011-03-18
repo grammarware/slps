@@ -185,9 +185,9 @@ element returns [Node xml]
 			$xml = ebnf;
 		}
 	}
-	| {boolean flag = false;}'(' child=rhs ')' (sign=suffix {flag = true;})?
+	| {boolean sel = false;boolean suf = false;} (selector=ID '=' {sel = true;})? '(' child=rhs ')' (sign=suffix {suf = true;})?
 		{
-			if(flag)
+			if(suf)
 			{
 				Element ebnf = doc.createElement($sign.name);
 			    	if(child.xml.getNodeName().compareTo("bgf:expression")!=0)
@@ -208,6 +208,17 @@ element returns [Node xml]
 			else
 			{
 				$xml = $child.xml;
+			}
+			if(sel)
+			{
+				Element ebnf = doc.createElement("selectable");
+				Element snam = doc.createElement("selector");
+				snam.appendChild(doc.createTextNode($selector.text));
+				ebnf.appendChild(snam);
+			   	Element expr = doc.createElement("bgf:expression");
+				expr.appendChild($xml);
+				ebnf.appendChild(expr);
+				$xml = ebnf;
 			}
 		}
 	;
