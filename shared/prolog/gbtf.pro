@@ -18,6 +18,10 @@ generateT(_,true,true).
 
 generateT(_,t(V),t(V)).
 
+generateT(Ps,s(S,X),s(S,T))
+ :-
+    generateT(Ps,X,T).
+
 generateT(Ps,','(Xs),','(Ts))
  :-
     maplist(generateT(Ps),Xs,Ts).

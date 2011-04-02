@@ -172,6 +172,7 @@ ppT(r(_,T)) :- ppT(T), nl.
 ppT(n(_,T)) :- ppT(T).
 ppT(true).
 ppT(t(V)) :- format('~w ',[V]).
+ppT(s(_,T)) :- ppT(T).
 ppT(','(Ts)) :- maplist(ppT,Ts).
 ppT(';'(_,T)) :- ppT(T).
 ppT('?'(Ts)) :-  maplist(ppT,Ts).
