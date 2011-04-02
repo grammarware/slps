@@ -17,3 +17,18 @@ generateT(Ps,n(N),n(P,T))
 generateT(_,true,true).
 
 generateT(_,t(V),t(V)).
+
+generateT(Ps,','(Xs),','(Ts))
+ :-
+    maplist(generateT(Ps),Xs,Ts).
+
+generateT(Ps,';'(Xs),';'(X,T))
+ :-
+    member(X,Xs),
+    generateT(Ps,X,T).
+
+generateT(_,'?'(_),'?'([])).
+
+generateT(Ps,'?'(X),'?'([T]))
+ :-
+    generateT(Ps,X,T).

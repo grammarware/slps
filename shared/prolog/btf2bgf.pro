@@ -161,3 +161,15 @@ checkbtf(_,X,T)
  :-
     format('BTF check failed:~ngrammar level: ~q~ntree level: ~q.~n',[X,T]),
     fail.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Print tree as plain string %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% For now just do a space every now and then.
+
+ppT(_)
+ :-
+     write('FATAL: showt giving up.'),
+     nl,
+     halt(1).
