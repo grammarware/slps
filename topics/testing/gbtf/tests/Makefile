@@ -1,12 +1,10 @@
 build:
 
 test:
-	make $(patsubst %.bgf,%.test,$(wildcard *.bgf))
-
-%.test:
-	gbtf $*.bgf
+	cd basics && make test
+	cd samples && make test
 
 clean:
 	rm -f *~
-	rm -f *.btf
-	rm -f TMP-res
+	cd basics && make clean
+	cd samples && make clean

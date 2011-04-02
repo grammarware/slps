@@ -179,8 +179,8 @@ ppT('?'(Ts)) :-  maplist(ppT,Ts).
 ppT('*'(Ts)) :-  maplist(ppT,Ts).
 ppT('+'(Ts)) :-  maplist(ppT,Ts).
 
-ppT(_)
+ppT(T)
  :-
-     write('FATAL: showt giving up.'),
-     nl,
+     T =.. F/A,
+     cease('BTF pretty printer failed for top-level functor ~w/~w',[F,A]),
      halt(1).

@@ -104,6 +104,49 @@ doubles(X,[H|T1],[H|T2]) :- member(H,X), doubles(X,T1,T2).
 doubles(X,[H|T1],T2) :- \+ member(H,X), doubles([H|X],T1,T2).
 
 
+% Test for set equality
+
+eqset(S1,S2) :- subset(S1,S2), subset(S2,S1).
+
+
+% Record a value for a key but delete old value if present
+
+record(Key,New)
+ :-
+    ( recorded(Key,_,Ref) -> erase(Ref); true ),
+    recordz(Key,New),
+    !.
+
+
+% Try to apply a predicate but succeed anyway
+
+maplisttry(_,[]).
+maplisttry(P,[H|T]) :- apply(P,[H]), !, maplisttry(P,T).
+maplisttry(P,[_|T]) :- maplisttry(P,T).
+
+maplisttry(_,[],[]).
+maplisttry(P,[H1|T1],[H2|T2]) :- apply(P,[H1,H2]), !, maplisttry(P,T1,T2).
+maplisttry(P,[_|T1],T2) :- maplisttry(P,T1,T2).
+
+
+% Compute mininum of 1 or more numbers
+
+min1([Min],Min).
+min1([H1,H2|T],Min2)
+ :-
+    min1([H2|T],Min1),
+    Min2 is min(H1,Min1).
+
+
+% Compute maximum of 1 or more numbers
+
+max1([Max],Max).
+max1([H1,H2|T],Max2)
+ :-
+    max1([H2|T],Max1),
+    Max2 is max(H1,Max1).
+
+
 % Filter a list by a predicate
 
 filter(_,[],[]).

@@ -126,7 +126,7 @@ findP(Ps1,As,N,P,Ps3a,Ps4a)
     !.
 
 
-% Find definitions of nonterminals
+% Find definitions of nonterminal
 
 findN(Ps1,N,Ps2)
  :- 

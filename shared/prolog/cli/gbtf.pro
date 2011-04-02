@@ -24,12 +24,8 @@ main
       fail
     ;
       nb_getval(btfno,N),
-      ( N > 0 -> halt;
-          ( write('gbtf failed.'),
-            nl,
-            halt(1)
-          ) 
-      )
+      require(N>0,'BTF generator failed',[]),
+      halt
     ).
 
 :- run.

@@ -3,8 +3,8 @@
     <nonterminal>foo</nonterminal>
     <bgf:expression>
       <choice>
-        <bgf:expression><terminal>bar1</terminal></bgf:expression>
         <bgf:expression><nonterminal>foo</nonterminal></bgf:expression>
+        <bgf:expression><terminal>bar1</terminal></bgf:expression>
       </choice>
     </bgf:expression>
   </bgf:production>
