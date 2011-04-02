@@ -32,3 +32,18 @@ generateT(_,'?'(_),'?'([])).
 generateT(Ps,'?'(X),'?'([T]))
  :-
     generateT(Ps,X,T).
+
+generateT(_,'*'(_),'*'([])).
+
+generateT(Ps,'*'(X),'*'([T]))
+ :-
+    generateT(Ps,X,T).
+
+generateT(Ps,'+'(X),'+'([T]))
+ :-
+    generateT(Ps,X,T).
+
+generateT(Ps,'+'(X),'+'([T1,T2]))
+ :-
+    generateT(Ps,X,T1),
+    generateT(Ps,X,T2).

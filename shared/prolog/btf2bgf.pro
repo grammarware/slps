@@ -174,8 +174,9 @@ ppT(true).
 ppT(t(V)) :- format('~w ',[V]).
 ppT(','(Ts)) :- maplist(ppT,Ts).
 ppT(';'(_,T)) :- ppT(T).
-ppT('?'([])). 
-ppT('?'([T])) :- ppT(T).
+ppT('?'(Ts)) :-  maplist(ppT,Ts).
+ppT('*'(Ts)) :-  maplist(ppT,Ts).
+ppT('+'(Ts)) :-  maplist(ppT,Ts).
 
 ppT(_)
  :-
