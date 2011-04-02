@@ -1,0 +1,18 @@
+#! /bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ..
+LOCAL2=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 1 ]; then
+    echo "Usage: gbtf <BGF-input>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    swipl -q -t "halt(1)" -f ${LOCAL2}/prolog/cli/gbtf.pro -- $1
+fi

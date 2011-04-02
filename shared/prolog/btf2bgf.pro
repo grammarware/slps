@@ -90,6 +90,7 @@ checkbtf(Ps,n(p(_,_,X),T))
 
 checkbtf(Ps,T)
  :-
+    % TODO: free variable is a headache
     checkbtf(Ps,_,T).
 
 checkbtf(Ps,n(N),n(p(_,N,X),T))
@@ -99,6 +100,7 @@ checkbtf(Ps,n(N),n(p(_,N,X),T))
 
 checkbtf(Ps,n(N),v(string(_)))
  :-
+    \+ var(N),
     \+ member(p(_,N,_),Ps),
     !.
 
