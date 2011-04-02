@@ -168,6 +168,15 @@ checkbtf(_,X,T)
 
 % For now just do a space every now and then.
 
+ppT(r(_,T)) :- ppT(T), nl.
+ppT(n(_,T)) :- ppT(T).
+ppT(true).
+ppT(t(V)) :- format('~w ',[V]).
+ppT(','(Ts)) :- maplist(ppT,Ts).
+ppT(';'(_,T)) :- ppT(T).
+ppT('?'([])). 
+ppT('?'([T])) :- ppT(T).
+
 ppT(_)
  :-
      write('FATAL: showt giving up.'),
