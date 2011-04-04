@@ -4,5 +4,5 @@ basics: BGF constructs are exercised.
 
 coverage: coverage criteria are exercised.
 
-samples: actual grammars from the wild are exercised.
+tescol: actual grammars from a case study.
 
