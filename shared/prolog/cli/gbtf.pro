@@ -1,6 +1,6 @@
 :- ensure_loaded('../slps.pro').
 :- ensure_loaded('../gbtf.pro').
-:- nb_setval(btfno,0).
+:- nb_setval(btfno,1).
 :- dynamic t/1.
 
 saveT(BgfFile,N,Q,T)

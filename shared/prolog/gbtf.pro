@@ -400,11 +400,24 @@ varyN(Ps,P1,n(P2,T))
     varyX(Ps,X,T),
     unmarkG(P1,P2).
 
+%
+% Treat horizontal definitions as vertical ones.
+% Inline chain productions on the fly.
+%
+
 varyX(Ps,{n(N)},n(P,T))
  :-
     findN(Ps,N,PsN),
-    member(P,PsN), 
-    completeP(Ps,P,T).
+    ( (PsN = [P], P = p(_,_,';'(Xs))) ->
+        varyX(Ps,{';'(Xs)},T) 
+      ; ( (PsN = [P], P = p(_,_,n(M))) ->
+            varyX(Ps,{n(M)},T)
+          ; (
+              member(P,PsN), 
+              completeP(Ps,P,T)
+            )
+        )
+    ).
 
 varyX(Ps,{';'(Xs)},';'(X,T))
  :-
