@@ -13,7 +13,10 @@ show:
 	showt $*.btf
 
 check:
-	ls -1 *.btf | xargs -n1 validate btf
+	ls -1 *.btf | xargs -n1 ../../../../../shared/tools/validate btf
+
+view:
+	ls -1 *.bgf | xargs -n1 ./setview
 
 clean:
 	rm -f *~
