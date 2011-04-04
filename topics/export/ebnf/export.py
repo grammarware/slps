@@ -1,7 +1,7 @@
 #!/usr/local/bin/python
 import os
 import sys
-sys.path.append('../../../shared/python')
+sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
 import slpsns
 import BGF
 import elementtree.ElementTree as ET
