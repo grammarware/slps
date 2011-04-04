@@ -8,4 +8,4 @@ SLPS=${PWD}
 cd ${LOCAL1}
 
 python ${SLPS}/shared/python/bgf_check.py $1
-
+rm -f TMP-res

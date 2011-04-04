@@ -1,7 +1,7 @@
 #!/usr/local/bin/python
 import os,sys
 import elementtree.ElementTree as ET
-sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
+sys.path.append(os.getcwd().split('projects')[0]+'projects/slps/shared/python')
 import BGF
 import metrics
 
