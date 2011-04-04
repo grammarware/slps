@@ -6,6 +6,12 @@ test:
 %.test:
 	gbtf $*.bgf
 
+show:
+	make $(patsubst %.btf,%.show,$(wildcard *.btf))
+
+%.show:
+	showt $*.btf
+
 clean:
 	rm -f *~
 	rm -f *.btf
