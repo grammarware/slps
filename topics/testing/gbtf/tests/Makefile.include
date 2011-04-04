@@ -18,6 +18,9 @@ check:
 view:
 	ls -1 *.bgf | xargs -n1 ./setview
 
+ignore:
+	svn propedit svn:ignore .
+
 clean:
 	rm -f *~
 	rm -f *.btf
