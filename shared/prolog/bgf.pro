@@ -15,6 +15,20 @@ rootNs(g(Rs1,_),Rs2)
     !.
 
 
+% Best-effort predication of start symbol
+
+rootG(g(Rs,Ps),R)
+ :-
+    Rs = [R|_] ->
+      true;
+      Ps = [p(_,R,_)|_].
+
+rootG(Ps,R)
+ :-
+    is_list(Ps),
+    Ps = [p(_,R,_)|_].
+
+
 % Return all nontmerinals defined by a grammar
 
 definedNs(g(_,Ps),Ns)
@@ -141,6 +155,7 @@ findN1(Ps,N,P)
 
 splitN(g(_,Ps1),N,Ps,Ps2,Ps3)
  :-
+    !,
     splitN(Ps1,N,Ps,Ps2,Ps3).
 
 splitN(Ps1,N,Ps,Ps2,Ps3)
@@ -154,7 +169,8 @@ splitN(Ps1,N,Ps,Ps2,Ps3)
     PsRest = [p(_,N,_)|_],
     !,
     filter(unifiable(p(_,N,_)),PsRest,Ps),
-    filter(nonunifiable(p(_,N,_)),PsRest,Ps3).
+    filter(nonunifiable(p(_,N,_)),PsRest,Ps3),
+    !.
 
 splitN1(Z,N,P,Ps2,Ps3)
  :-

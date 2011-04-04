@@ -1,16 +1,21 @@
 :- module(gbtf,
     [ mindepthG/1
+    , mindistG/1
+    , completeG/2
+    , completeN/3
+    , hostG/4
+    , hostN/5
     , contextG/2
-    , shortestG/2
     ] ).
 
 :- dynamic gbtf:mindepthFact/2.
+:- dynamic gbtf:mindistFact/3.
 
 
 % ------------------------------------------------------------
 
 %
-% Determine mindepth for all nonterminals
+% Determine mindepth for all nonterminals.
 % Loop over productions until fixed point is found
 % This is essentially an iterated fixed point computation.
 %
@@ -100,7 +105,9 @@ mindepthX(';'(Xs),D)
 % The leftmost is chosen if there are multiple options with mindepth.
 %
 
-chooseByMindepth([O],O).
+chooseByMindepth([O],O)
+ :-
+    mindepthX(O,_).
 
 chooseByMindepth([O1,O2|Os],O)
  :-
@@ -117,7 +124,213 @@ chooseByMindepth(O1,D1,[O2|Os],O)
         chooseByMindepth(O1,D1,Os,O)
     ).
 
-   
+
+% ------------------------------------------------------------
+
+%
+% Determine mindist between nonterminals.
+% This is very similar to mindept problem.
+%
+
+mindistG(g(_,Ps)) 
+ :-
+    mindistG(Ps).
+
+mindistG(Ps)
+ :-
+    is_list(Ps),
+    mindist1(Ps),
+    mindistStar(Ps).
+
+
+%
+% Initialize mindist relation with direct dependencies
+% 
+
+mindist1(Ps)
+ :-
+      definedNs(Ps,DNs),
+      member(DN,DNs),
+      findN(Ps,DN,PsDN),
+      usedNs(PsDN,UNs),
+      member(UN,UNs),
+      \+ UN == DN,
+      assertz(gbtf:mindistFact(DN,UN,1)),
+      fail;
+      true.
+
+
+%
+% Compute mindists between so-far unrelated nonterminals.
+% Use a helper nonterminal in between and existing relationships with it.
+% Fixed point is reached if no new relationships are obtainable in this manner.
+%
+
+mindistStar(Ps)
+ :-
+    mindist2(Ps,NNDs),
+    ( NNDs == [] ->
+        true;
+        (
+          member((N1,N2,D),NNDs),
+          assertz(gbtf:mindistFact(N1,N2,D)),
+          fail
+        ;
+          mindistStar(Ps)
+        )
+    ). 
+
+mindist2(Ps,NNDs)
+ :-
+    definedNs(Ps,DNs),
+    findall((N1,N2,D),
+      (
+        member(N1,DNs),
+        member(N2,DNs),
+        \+ N1 == N2,
+        \+ gbtf:mindistFact(N1,N2,_),
+        findall(D12,
+        (
+          gbtf:mindistFact(N1,N3,D1),
+          gbtf:mindistFact(N3,N2,D2),
+          D12 is D1 + D2
+        ),
+        Ds),
+        min1(Ds,D)
+      ),
+      NNDs).     
+
+
+%
+% Determine mindist from a BGF expression to a nonterminal
+%
+
+mindistX(p(_,_,X),N,D)
+ :-
+    !,
+    mindistX(X,N,D).
+
+mindistX(X,N,D)
+ :-
+    usedNs(X,UNs),
+    findall(D1,
+      (
+        member(UN,UNs),
+        ( UN == N -> D1 = 0; gbtf:mindistFact(UN,N,D1) )
+      ),
+      Ds),
+    min1(Ds,D).
+
+
+%
+% Given a list of options, determine the one with mindist.
+% The leftmost is chosen if there are multiple options with mindist.
+%
+
+chooseByMindist([O1|Os],N,O)
+ :-
+    mindistX(O1,N,D1) ->
+      chooseByMindist(O1,D1,Os,N,O) ;
+      chooseByMindist(Os,N,O).
+
+chooseByMindist(O,_,[],_,O).
+
+chooseByMindist(O1,D1,[O2|Os],N,O)
+ :-
+    mindistX(O2,N,D2) ->
+      ( D2 < D1 ->
+          chooseByMindist(O2,D2,Os,N,O) ;
+          chooseByMindist(O1,D1,Os,N,O)
+      ) ;
+      chooseByMindist(O1,D1,Os,N,O).
+
+
+% ------------------------------------------------------------
+
+%
+% Generate shortest completion
+%
+
+completeG(G,r(G,T))
+ :-
+    G = g(Rs,Ps),
+    ( Rs = [R|_] ->
+        true;
+        ( Ps = [p(_,R,_)|_] ) ),
+    completeN(Ps,R,T).
+
+completeN(g(_,Ps),N,T)
+ :-
+    completeN(Ps,N,T).
+
+completeN(Ps,N,n(P,T))
+ :-
+    is_list(Ps),
+    findN(Ps,N,PsN),
+    chooseByMindepth(PsN,P),
+    P = p(_,N,X),
+    completeX(Ps,X,T).
+
+completeX(_,true,true).
+completeX(_,t(V),t(V)).
+completeX(Ps,n(N),T) :- completeN(Ps,N,T).
+completeX(Ps,s(S,X),s(S,T)) :- completeX(Ps,X,T).
+completeX(Ps,','(Xs),','(Ts)) :- maplist(gbtf:completeX(Ps),Xs,Ts).
+completeX(Ps,';'(Xs),';'(X,T)) :- chooseByMindepth(Xs,X), completeX(Ps,X,T).
+completeX(_,'?'(_),'?'([])).
+completeX(_,'*'(_),'*'([])).
+completeX(Ps,'+'(X),'+'([T])) :- completeX(Ps,X,T).
+
+
+% ------------------------------------------------------------
+
+%
+% Generate shortest host (tree with hole).
+% Parameter H is the nonterminal for the hole.
+% Paramater V is the logic variable for the hole.
+% (Use copyterm to fill into the hole.)
+%
+
+hostG(G,H,r(G,T),V)
+ :-
+    G = g(Rs,Ps),
+    ( Rs = [R|_] ->
+        true;
+        ( Ps = [p(_,R,_)|_] ) ),
+    hostN(Ps,R,H,T,V).
+
+hostN(g(_,Ps),N,H,T,V)
+ :-
+    hostN(Ps,N,H,T,V).
+
+hostN(Ps,N,H,n(P,T),V)
+ :-
+    is_list(Ps),
+    findN(Ps,N,PsN),
+    chooseByMindist(PsN,H,P),
+    P = p(_,N,X),
+    hostX(Ps,X,H,T,V).
+
+hostX(Ps,n(N),H,T,V) :- N == H -> T = V; hostN(Ps,N,H,T,V).
+hostX(Ps,s(S,X),H,s(S,T),V) :- hostX(Ps,X,H,T,V).
+hostX(Ps,'?'(X),H,'?'([T]),V) :- hostX(Ps,X,H,T,V).
+hostX(Ps,'*'(X),H,'*'([T]),V) :- hostX(Ps,X,H,T,V).
+hostX(Ps,'+'(X),H,'+'([T]),V) :- hostX(Ps,X,H,T,V).
+
+hostX(Ps,','(Xs),H,','(Ts),V)
+ :-
+    chooseByMindist(Xs,H,X),
+    once(append(Xs1,[X|Xs2],Xs)),
+    hostX(Ps,X,H,T,V),
+    maplist(gbtf:completeX(Ps),Xs1,Ts1),
+    maplist(gbtf:completeX(Ps),Xs2,Ts2),
+    append(Ts1,[T|Ts2],Ts).
+
+hostX(Ps,';'(Xs),H,';'(X,T),V)
+ :-
+    chooseByMindist(Xs,H,X),
+    hostX(Ps,X,H,T,V).
+
 % ------------------------------------------------------------
 
 %
@@ -171,35 +384,5 @@ contextX(';'(Xs1),';'(Xs2))
     contextX(X1,X2),
     append(Xs1a,[X2|Xs1b],Xs2).
 
-
-% ------------------------------------------------------------
-
-%
-% Generate shortest completion
-%
-
-shortestG(G,r(G,T))
- :-
-    G = g(Rs,Ps),
-    ( Rs = [R|_] ->
-        true;
-        ( Ps = [p(_,R,_)|_] ) ),
-    shortestX(Ps,n(R),T).
-
-shortestX(_,true,true).
-shortestX(_,t(V),t(V)).
-shortestX(Ps,s(S,X),s(S,T)) :- shortestX(Ps,X,T).
-shortestX(Ps,','(Xs),','(Ts)) :- maplist(gbtf:shortestX(Ps),Xs,Ts).
-shortestX(Ps,';'(Xs),';'(X,T)) :- chooseByMindepth(Xs,X), shortestX(Ps,X,T).
-shortestX(_,'?'(_),'?'([])).
-shortestX(_,'*'(_),'*'([])).
-shortestX(Ps,'+'(X),'+'([T])) :- shortestX(Ps,X,T).
-
-shortestX(Ps,n(N),n(P,T))
- :-
-    findN(Ps,N,PsN),
-    chooseByMindepth(PsN,P),
-    P = p(_,N,X),
-    shortestX(Ps,X,T).
 
 % ------------------------------------------------------------
