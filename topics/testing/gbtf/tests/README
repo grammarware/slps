@@ -1,0 +1,8 @@
+Different kinds of test cases are grouped.
+
+basics: BGF constructs are exercised.
+
+coverage: coverage criteria are exercised.
+
+samples: actual grammars from the wild are exercised.
+
