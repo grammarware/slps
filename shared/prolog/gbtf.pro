@@ -5,7 +5,6 @@
     , hostG/5
     , contextN/3
     , varyG/3
-    , varyN/3
     ] ).
 
 :- dynamic gbtf:mindepthFact/2.
@@ -383,17 +382,7 @@ varyG(g(_,Ps),P,T)
  :-
     varyG(Ps,P,T).
 
-varyG(Ps,P,T)
- :-
-    is_list(Ps),
-    varyN(Ps,P,T).
-
-varyN(G,P,T)
- :-
-    G = g(_,Ps),
-    varyN(Ps,P,T).
-
-varyN(Ps,P1,n(P2,T))
+varyG(Ps,P1,n(P2,T))
  :-
     is_list(Ps),
     P1 = p(_,_,X),

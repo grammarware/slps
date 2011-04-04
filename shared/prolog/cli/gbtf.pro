@@ -87,7 +87,7 @@ main
         gbtf:mindistFact(DN,H,_),
         hostG(G,DN,H,T1,V),
         contextN(G,H,P),
-        varyN(G,P,V)
+        varyG(G,P,V)
       ),
       saveT(BgfFile,DN,cdbc,r(G,T1)),
       fail
