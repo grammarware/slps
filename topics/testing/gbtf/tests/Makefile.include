@@ -45,4 +45,4 @@ execute:
 
 clean:
 	rm -f *~
-	rm -f *.btf
+	find . -name '*.btf' -print0 | xargs -0 rm
