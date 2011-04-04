@@ -1,11 +1,8 @@
 :- module(gbtf,
     [ mindepthG/1
     , mindistG/1
-    , completeG/2
-    , completeN/3
-    , hostG/4
-    , hostN/5
-    , contextG/2
+    , completeG/3
+    , hostG/5
     , contextN/3
     , varyG/3
     , varyN/3
@@ -254,19 +251,11 @@ chooseByMindist(O1,D1,[O2|Os],N,O)
 % Generate shortest completion
 %
 
-completeG(G,r(G,T))
+completeG(g(_,Ps),N,T)
  :-
-    G = g(Rs,Ps),
-    ( Rs = [R|_] ->
-        true;
-        ( Ps = [p(_,R,_)|_] ) ),
-    completeN(Ps,R,T).
+    completeG(Ps,N,T).
 
-completeN(g(_,Ps),N,T)
- :-
-    completeN(Ps,N,T).
-
-completeN(Ps,N,n(P,T))
+completeG(Ps,N,n(P,T))
  :-
     is_list(Ps),
     findN(Ps,N,PsN),
@@ -280,7 +269,7 @@ completeP(Ps,P,T)
 
 completeX(_,true,true).
 completeX(_,t(V),t(V)).
-completeX(Ps,n(N),T) :- completeN(Ps,N,T).
+completeX(Ps,n(N),T) :- completeG(Ps,N,T).
 completeX(Ps,s(S,X),s(S,T)) :- completeX(Ps,X,T).
 completeX(Ps,','(Xs),','(Ts)) :- maplist(gbtf:completeX(Ps),Xs,Ts).
 completeX(Ps,';'(Xs),';'(X,T)) :- chooseByMindepth(Xs,X), completeX(Ps,X,T).
@@ -298,19 +287,11 @@ completeX(Ps,'+'(X),'+'([T])) :- completeX(Ps,X,T).
 % (Use copyterm to fill into the hole.)
 %
 
-hostG(G,H,r(G,T),V)
+hostG(g(_,Ps),N,H,T,V)
  :-
-    G = g(Rs,Ps),
-    ( Rs = [R|_] ->
-        true;
-        ( Ps = [p(_,R,_)|_] ) ),
-    hostN(Ps,R,H,T,V).
+    hostG(Ps,N,H,T,V).
 
-hostN(g(_,Ps),N,H,T,V)
- :-
-    hostN(Ps,N,H,T,V).
-
-hostN(Ps,N,H,n(P,T),V)
+hostG(Ps,N,H,n(P,T),V)
  :-
     is_list(Ps),
     findN(Ps,N,PsN),
@@ -318,7 +299,7 @@ hostN(Ps,N,H,n(P,T),V)
     P = p(_,N,X),
     hostX(Ps,X,H,T,V).
 
-hostX(Ps,n(N),H,T,V) :- N == H -> T = V; hostN(Ps,N,H,T,V).
+hostX(Ps,n(N),H,T,V) :- N == H -> T = V; hostG(Ps,N,H,T,V).
 hostX(Ps,s(S,X),H,s(S,T),V) :- hostX(Ps,X,H,T,V).
 hostX(Ps,'?'(X),H,'?'([T]),V) :- hostX(Ps,X,H,T,V).
 hostX(Ps,'*'(X),H,'*'([T]),V) :- hostX(Ps,X,H,T,V).
@@ -345,16 +326,6 @@ hostX(Ps,';'(Xs),H,';'(X,T),V)
 % Return just the marked production (as opposed to the entire grammar).
 % Backtracking over this predicate gives all such marked contexts.
 %
-
-contextG(g(_,Ps),P)
- :-
-    contextG(Ps,P).
-
-contextG(Ps,P2)
- :-
-    is_list(Ps),
-    member(P1,Ps),
-    contextP(P1,P2).
 
 contextN(G,N,P2)
  :-
@@ -408,9 +379,8 @@ contextX(';'(Xs1),';'(Xs2))
 % That is, all other choice points are completed in the shortest manner.
 %
 
-varyG(G,P,r(G,T))
+varyG(g(_,Ps),P,T)
  :-
-    G = g(_,Ps),
     varyG(Ps,P,T).
 
 varyG(Ps,P,T)
