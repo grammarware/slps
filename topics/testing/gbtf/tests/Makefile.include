@@ -1,27 +1,48 @@
 build:
 
 test:
+	# generate all test cases for all grammars
 	make $(patsubst %.bgf,%.test,$(wildcard *.bgf))
 
 %.test:
+	# generate all test cases for one grammar
 	gbtf $*.bgf
 
 show:
+	# pretty-print all generated test cases on the screen
 	make $(patsubst %.btf,%.show,$(wildcard *.btf))
 
 %.show:
+	# pretty-print one test case on the screen
 	showt $*.btf
 
 check:
-	ls -1 *.btf | xargs -n1 ../../../../../shared/tools/validate btf
+	# validate all generated test cases
+	xmllint --noout --schema ../../../../../shared/xsd/btf.xsd *.btf
 
 view:
-	ls -1 *.bgf | xargs -n1 ./setview
+	# view statistics for all test sets
+	ls -1 *.bgf | xargs -n1 ../setview
 
 ignore:
 	svn propedit svn:ignore .
 
+convert:
+	# convert all generated test cases from tree form (BTF) to source code
+	make $(patsubst %.btf,%.convert,$(wildcard *.btf))
+
+%.convert:
+	# convert one test case from tree form (BTF) to source code
+	../../../../../shared/tools/btf2src $*.btf $*.src
+
+execute:
+	# run all test sets for which there is a wrapper
+	make $(patsubst %.run,%.execute,$(wildcard *.run))
+
+%.execute:
+	# run all test cases in one test set with an existing wrapper
+	ls -1 $*.bgf.*.src | xargs -n1 ./$*.run 
+
 clean:
 	rm -f *~
 	rm -f *.btf
-

@@ -1,4 +1,4 @@
 #!/bin/sh
 
 /bin/echo -n Test cases for `basename $1 .bgf`:
-ls -1 $1.*.btf  2> /dev/null | wc -l
+ls -1 $1-*.btf  2> /dev/null | wc -l
