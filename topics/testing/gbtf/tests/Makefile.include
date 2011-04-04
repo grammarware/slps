@@ -18,7 +18,9 @@ show:
 
 check:
 	# validate all generated test cases
-	xmllint --noout --schema ../../../../../shared/xsd/btf.xsd *.btf
+	# xmllint --noout --schema ../../../../../shared/xsd/btf.xsd *.btf
+	find . -name '*.btf' -print0 | xargs -0 \
+		xmllint --noout --schema ../../../../../shared/xsd/btf.xsd
 
 view:
 	# view statistics for all test sets
@@ -45,4 +47,5 @@ execute:
 
 clean:
 	rm -f *~
-	find . -name '*.btf' -print0 | xargs -0 rm
+	find . -name '*.btf' -print0 | xargs -0 \
+		rm
