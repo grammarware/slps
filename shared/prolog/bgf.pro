@@ -208,6 +208,13 @@ splitL(Ps1,L,P1,Ps2a,Ps2b)
     !.
 
 
+% Remove marker from grammar fragment
+
+unmarkG(X,Y) :- transform(unmark_helper,X,Y).
+unmark_helper({X},X) :- !.
+unmark_helper(X,X).
+
+
 % Normalization
 
 normalizeG(Z1,Z4)

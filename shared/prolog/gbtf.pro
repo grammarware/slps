@@ -6,6 +6,9 @@
     , hostG/4
     , hostN/5
     , contextG/2
+    , contextN/3
+    , varyG/3
+    , varyN/3
     ] ).
 
 :- dynamic gbtf:mindepthFact/2.
@@ -268,7 +271,11 @@ completeN(Ps,N,n(P,T))
     is_list(Ps),
     findN(Ps,N,PsN),
     chooseByMindepth(PsN,P),
-    P = p(_,N,X),
+    completeP(Ps,P,T).
+
+completeP(Ps,P,T)
+ :-
+    P = p(_,_,X),
     completeX(Ps,X,T).
 
 completeX(_,true,true).
@@ -335,21 +342,29 @@ hostX(Ps,';'(Xs),H,';'(X,T),V)
 
 %
 % Find all contexts for CDBC; mark them.
+% Return just the marked production (as opposed to the entire grammar).
 % Backtracking over this predicate gives all such marked contexts.
 %
 
-contextG(g(Rs,Ps1),g(Rs,Ps2))
+contextG(g(_,Ps),P)
  :-
-    contextG(Ps1,Ps2).
+    contextG(Ps,P).
 
-contextG(Ps1,Ps2)
+contextG(Ps,P2)
  :-
-    is_list(Ps1),
-    append(Ps1a,[P1|Ps1b],Ps1),
-    P1 = p(L,N,X1),
-    contextX(X1,X2),
-    P2 = p(L,N,X2),
-    append(Ps1a,[P2|Ps1b],Ps2).
+    is_list(Ps),
+    member(P1,Ps),
+    contextP(P1,P2).
+
+contextN(G,N,P2)
+ :-
+    findN(G,N,Ps),
+    member(P1,Ps),
+    contextP(P1,P2).
+
+contextP(p(L,N,X1),p(L,N,X2))
+ :-
+    contextX(X1,X2).
 
 
 %
@@ -357,10 +372,10 @@ contextG(Ps1,Ps2)
 %
 
 contextX(n(N),{n(N)}).
+contextX(';'(Xs),{';'(Xs)}).
 contextX('?'(X),{'?'(X)}).
 contextX('*'(X),{'*'(X)}).
 contextX('+'(X),{'+'(X)}).
-contextX(';'(Xs),{';'(Xs)}).
 
 
 %
@@ -384,5 +399,72 @@ contextX(';'(Xs1),';'(Xs2))
     contextX(X1,X2),
     append(Xs1a,[X2|Xs1b],Xs2).
 
+
+% ------------------------------------------------------------
+
+%
+% Exercise all choices possible for the BGF expression.
+% Exercise one choice point at the time.
+% That is, all other choice points are completed in the shortest manner.
+%
+
+varyG(G,P,r(G,T))
+ :-
+    G = g(_,Ps),
+    varyG(Ps,P,T).
+
+varyG(Ps,P,T)
+ :-
+    is_list(Ps),
+    varyN(Ps,P,T).
+
+varyN(G,P,T)
+ :-
+    G = g(_,Ps),
+    varyN(Ps,P,T).
+
+varyN(Ps,P1,n(P2,T))
+ :-
+    is_list(Ps),
+    P1 = p(_,_,X),
+    varyX(Ps,X,T),
+    unmarkG(P1,P2).
+
+varyX(Ps,{n(N)},n(P,T))
+ :-
+    findN(Ps,N,PsN),
+    member(P,PsN), 
+    completeP(Ps,P,T).
+
+varyX(Ps,{';'(Xs)},';'(X,T))
+ :-
+    member(X,Xs),
+    completeX(Ps,X,T).
+
+varyX(_,{'?'(_)},'?'([])).
+varyX(Ps,{'?'(X)},'?'([T])) :- completeX(Ps,X,T).
+varyX(_,{'*'(_)},'*'([])).
+varyX(Ps,{'*'(X)},'*'([T])) :- completeX(Ps,X,T).
+varyX(Ps,{'+'(X)},'+'([T])) :- completeX(Ps,X,T).
+varyX(Ps,{'+'(X)},'+'([T1,T2])) :- completeX(Ps,X,T1), completeX(Ps,X,T2).
+
+varyX(Ps,s(S,X),s(S,T)) :- varyX(Ps,X,T).
+varyX(Ps,'?'(X),'?'([T])) :- varyX(Ps,X,T).
+varyX(Ps,'*'(X),'*'([T])) :- varyX(Ps,X,T).
+varyX(Ps,'+'(X),'+'([T])) :- varyX(Ps,X,T).
+
+varyX(Ps,','(Xs),','(Ts))
+ :-
+    append(Xs1,[X|Xs2],Xs),
+    maplist(gbtf:completeX(Ps),Xs1,Ts1),
+    varyX(Ps,X,T),
+    maplist(gbtf:completeX(Ps),Xs2,Ts2),
+    append(Ts1,[T|Ts2],Ts). 
+
+varyX(Ps,';'(Xs),';'(X2,T))
+ :-
+    member(X1,Xs),
+    varyX(Ps,X1,T), 
+    unmarkG(X1,X2).
 
 % ------------------------------------------------------------

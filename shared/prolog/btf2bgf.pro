@@ -60,15 +60,14 @@ checkbtf(T1)
     ( checkbtf(G1,T2) -> 
       true; 
       (
-        write('Sanity checking failed.'), nl,
-        write(G1),nl,
+        format('BTF global-level check failed.~n * BGF: ~q~n * BTF: ~q~n',[G1,T2]),
         fail
       )
     ),
     ( subsetG(G2,G1) ->
       true;
       (
-        write('Subset check failed; invoking diff.'), nl,
+        format('BTF subset check failed; invoking diff.~n',[]),
         ppG(G1),
         ppG(G2),
         diffG((
@@ -79,88 +78,97 @@ checkbtf(T1)
     ),
     !.
 
+
+%
+% checkbtf/2
+%
+
 checkbtf(g(_,Ps),r(_,T))
  :-
-    !,
+    checkbtf(Ps,T).
+
+checkbtf(g(_,Ps),T)
+ :-
+    \+ T = r(_,_),
     checkbtf(Ps,T).
 
 checkbtf(Ps,n(p(_,_,X),T))
  :-
-    checkbtf(Ps,X,T).
+    is_list(Ps),
+    checkxt(Ps,X,T).
 
-checkbtf(Ps,T)
+
+%
+% checkxt/3
+%
+
+checkxt(Ps,n(N),n(p(_,N,X),T))
  :-
-    % TODO: free variable is a headache
-    checkbtf(Ps,_,T).
+    checkxt(Ps,X,T),
+    !.
 
-checkbtf(Ps,n(N),n(p(_,N,X),T))
- :-
-    !,
-    checkbtf(Ps,X,T).
-
-checkbtf(Ps,n(N),v(string(_)))
+checkxt(Ps,n(N),v(string(_)))
  :-
     \+ var(N),
     \+ member(p(_,N,_),Ps),
     !.
 
-checkbtf(_,t(V),t(V))
+checkxt(_,t(V),t(V)) :- !.
+
+checkxt(Ps,s(S,X),s(S,T))
  :-
+    \+ var(X),
+    checkxt(Ps,X,T),
     !.
 
-checkbtf(Ps,s(S,X),s(S,T))
- :-
-    !,
-    checkbtf(Ps,X,T). 
+checkxt(_,v(string),v(string(_))) :- !.
 
-checkbtf(_,v(string),v(string(_)))
- :-
-    !.
+checkxt(_,v(int),v(int(_))) :- !.
 
-checkbtf(_,v(int),v(int(_)))
- :-
-    !.
+checkxt(_,true,true) :- !.
 
-checkbtf(_,true,true)
+checkxt(Ps,','(Xs),','(Ts))
  :-
-    !.
-
-checkbtf(Ps,','(Xs),','(Ts))
- :-
+    \+ var(Xs),
     length(Xs,Len),
     length(Ts,Len),
-    !,
-    maplist(checkbtf(Ps),Xs,Ts).
+    maplist(checkxt(Ps),Xs,Ts),
+    !.
 
-checkbtf(Ps,';'(Xs),';'(X,T))
+checkxt(Ps,';'(Xs),';'(X,T))
  :-
+    \+ var(Xs),
     member(X,Xs),
-    !,
-    checkbtf(Ps,X,T).
+    checkxt(Ps,X,T),
+    !.
 
-checkbtf(Ps,'*'(X),'*'(Ts))
+checkxt(Ps,'*'(X),'*'(Ts))
  :-
-    !,
-    maplist(checkbtf(Ps,X),Ts).
+    \+ var(X),
+    maplist(checkxt(Ps,X),Ts),
+    !.
 
-checkbtf(Ps,'+'(X),'+'(Ts))
+checkxt(Ps,'+'(X),'+'(Ts))
  :-
+    \+ var(X),
     length(Ts,Len),
     Len > 0,    
-    !,
-    maplist(checkbtf(Ps,X),Ts).
+    maplist(checkxt(Ps,X),Ts),
+    !.
 
-checkbtf(Ps,'?'(X),'?'(Ts))
+checkxt(Ps,'?'(X),'?'(Ts))
  :-
+    \+ var(X),
     length(Ts,Len),
-    Len =< 1,    
-    !,
-    maplist(checkbtf(Ps,X),Ts).
+    Len =< 1,
+    maplist(checkxt(Ps,X),Ts),
+    !.
 
-checkbtf(_,X,T)
+checkxt(_,X,T)
  :-
-    format('BTF check failed:~ngrammar level: ~q~ntree level: ~q.~n',[X,T]),
+    format('BTF expression-level check failed.~n * BGF expression: ~q~n * BTF expression: ~q~n',[X,T]),
     fail.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Print tree as plain string %

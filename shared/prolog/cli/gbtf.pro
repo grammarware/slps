@@ -1,17 +1,23 @@
 :- ensure_loaded('../slps.pro').
 :- ensure_loaded('../gbtf.pro').
 :- nb_setval(btfno,0).
+:- dynamic t/1.
 
 saveT(BgfFile,T)
  :-
-    checkbtf(T),
-    tToXml(T,XmlT),
-    nb_getval(btfno,N1),
-    N2 is N1 + 1,
-    nb_setval(btfno,N2),
-    concat_atom([BgfFile,'.',N1,'.btf'],BtfFile),
-    saveXml(BtfFile,XmlT),
-    !.
+    require(checkbtf(T),'BTF check failed',[]),
+    ( t(T) ->
+        format('Skipping duplicate.~n',[]) ;
+        (
+          assertz(t(T)),
+          tToXml(T,XmlT),
+          nb_getval(btfno,N1),
+          N2 is N1 + 1,
+          nb_setval(btfno,N2),
+          concat_atom([BgfFile,'.',N1,'.btf'],BtfFile),
+          saveXml(BtfFile,XmlT)
+        )
+    ).
 
 
 statistics(G)
@@ -39,6 +45,7 @@ main
 
     mindepthG(G),
     mindistG(G),
+    rootG(G,R),
 
 % Output some statistics
 
@@ -54,7 +61,6 @@ main
 
     format('Generating data for nonterminal coverage.~n',[]),
     (
-      rootG(G,R),
       gbtf:mindistFact(R,H,_),
       hostG(G,H,T1,V),
       completeN(G,H,V),
@@ -64,11 +70,30 @@ main
       true
     ),
 
+% Generate data for context-depdendent coverage
+
+    format('Generating data for context-depdendent coverage.~n',[]),
+    (
+      (
+        contextN(G,R,P),
+        varyG(G,P,T1)
+      ;
+        gbtf:mindistFact(R,H,_),
+        hostG(G,H,T1,V),
+        contextN(G,H,P),
+        varyN(G,P,V)
+      ),
+      saveT(BgfFile,T1),
+      fail
+    ; 
+      true
+    ),
+
 % Done!
 
     halt.
 
-%    nb_getval(btfno,N),
-%    require(N>0,'BTF generator failed',[]),
+
+% Run!
 
 :- run.
