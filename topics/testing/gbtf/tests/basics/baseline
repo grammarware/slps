@@ -1,0 +1,17 @@
+choice.bgf-foo-cdbc-2.btf
+choice.bgf-foo-sc-1.btf
+epsilon.bgf-foo-sc-1.btf
+nonterminal.bgf-bar-sc-2.btf
+nonterminal.bgf-foo-sc-1.btf
+optional.bgf-foo-cdbc-2.btf
+optional.bgf-foo-sc-1.btf
+plus.bgf-foo-cdbc-2.btf
+plus.bgf-foo-sc-1.btf
+recursion.bgf-foo-cdbc-2.btf
+recursion.bgf-foo-cdbc-3.btf
+recursion.bgf-foo-sc-1.btf
+selectable.bgf-foo-sc-1.btf
+sequence.bgf-foo-sc-1.btf
+star.bgf-foo-cdbc-2.btf
+star.bgf-foo-sc-1.btf
+terminal.bgf-foo-sc-1.btf
