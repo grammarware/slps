@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo '[' $3 ']----------'
+echo '[' $3 ']----------' > /dev/stderr
+java -cp ../../../../../../testmatch/tescol/$1:../../../../../download/antlr-3.2.jar TESCOBP $2 $3
+

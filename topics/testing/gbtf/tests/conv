@@ -1,0 +1,3 @@
+#!/bin/sh
+
+../../../../../shared/tools/btf2src $1 `basename $1 .btf`.src
