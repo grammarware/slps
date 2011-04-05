@@ -39,7 +39,7 @@ class MeasurementBench (EmptyBench):
 		if not self.cache.tops:
 			self.cache.tops = metrics.setminus(self._getDefds(),self._getNRUs())
 		return self.cache.tops
-	def _getDeadTops(self):
+	def getDeadTops(self):
 		if not self.cache.deadtops:
 			self.cache.deadtops = metrics.setminus(self._getTops(),self.grammar.roots)
 		return self.cache.deadtops
@@ -51,7 +51,7 @@ class MeasurementBench (EmptyBench):
 		if not self.cache.nrus:
 			self.cache.nrus = metrics.nrused(self.grammar)
 		return self.cache.nrus
-	def _getBottoms(self):
+	def getBottoms(self):
 		if not self.cache.bottoms:
 			self.cache.bottoms = metrics.setminus(self._getNRUs(),self._getDefds())
 		return self.cache.bottoms
@@ -67,6 +67,10 @@ class MeasurementBench (EmptyBench):
 		if not self.vals.var:
 			self.vals.var = len(self._getVarList()) + metrics.VAL(self.grammar)
 		return self.vals.var
+	def VARonly(self):
+		return len(self._getVarList())
+	def DEFD(self):
+		return len(self._getDefds())
 	def LAB(self):
 		if not self.vals.lab:
 			self.vals.lab = metrics.LAB(self.grammar)
@@ -77,17 +81,17 @@ class MeasurementBench (EmptyBench):
 		return self.vals.prod
 	def UNDEF(self):
 		if not self.vals.undef:
-			self.vals.undef = len(self._getBottoms())
+			self.vals.undef = len(self.getBottoms())
 		return self.vals.undef
 	def DEAD(self):
 		if not self.vals.dead:
-			self.vals.dead = len(self._getDeadTops())
+			self.vals.dead = len(self.getDeadTops())
 		return self.vals.dead
 	def DEADP(self):
 		if not self.vals.deadp:
 			self.vals.deadp = 0
 			for p in self.grammar.prods:
-				if p.nt in self._getDeadTops():
+				if p.nt in self.getDeadTops():
 					self.vals.deadp += 1
 		return self.vals.deadp
 	def ROOT(self):
