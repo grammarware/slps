@@ -12,7 +12,8 @@ if __name__ == "__main__":
 	grammar = BGF.Grammar()
 	grammar.parse(sys.argv[1])
 	mb = bench.MeasurementBench(grammar)
-	print 'Productions:         ',mb.PROD()
+	print 'Productions:         ',len(grammar.prods)
+	print 'Top alternatives:    ',mb.PROD()
 	print 'Nonterminals defined:',mb.DEFD()
 	pa = lambda a:reduce(lambda x,y:x+', '+str(y),a[1:],'('+str(a[0]))+')'
 	if mb.UNDEF():

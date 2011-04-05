@@ -7,5 +7,15 @@ cd ../..
 SLPS=${PWD}
 cd ${LOCAL1}
 
-python ${SLPS}/topics/investigation/analysis/present_bgf.py $1
-rm -f TMP-res
+if [ $# -ne 1 ]; then
+    echo "Usage: checkbgf <BGF-input>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    python ${SLPS}/topics/investigation/analysis/present_bgf.py $1
+fi
+
+
+
