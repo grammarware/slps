@@ -7,12 +7,12 @@ cd ..
 LOCAL2=${PWD}
 cd ${LOCAL1}
 
-if [ $# -ne 1 ]; then
-    echo "Usage: gbtf <BGF-input>"
+if [ $# -lt 1 ]; then
+    echo "Usage: gbtf <BGF-input> option1 option2 ..."
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    swipl -q -t "halt(1)" -f ${LOCAL2}/prolog/cli/gbtf.pro -- $1
+    swipl -q -t "halt(1)" -f ${LOCAL2}/prolog/cli/gbtf.pro -- $1 $2 $3 $4 $5 $6 $7 $8 $9
 fi

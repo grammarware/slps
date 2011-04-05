@@ -170,6 +170,32 @@ checkxt(_,X,T)
     fail.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Strip BTF to "untyped" sequence of terminals %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+stripT(r(_,T),r(g([],[]),','(L))) :- stripT(T,L,[]).
+stripT(T,','(L)) :- \+ T = r(_,_), stripT(T,L,[]).
+
+stripT(n(_,T),L1,L2) :- stripT(T,L1,L2).
+stripT(true,L,L).
+stripT(t(V),[t(V)|L],L).
+stripT(s(_,T),L1,L2) :- stripT(T,L1,L2).
+stripT(','(Ts),L1,L2) :- stripTs(Ts,L1,L2).
+stripT(';'(_,T),L1,L2) :- stripT(T,L1,L2).
+stripT('?'(Ts),L1,L2) :-  stripTs(Ts,L1,L2).
+stripT('*'(Ts),L1,L2) :-  stripTs(Ts,L1,L2).
+stripT('+'(Ts),L1,L2) :-  stripTs(Ts,L1,L2).
+
+stripT(T)
+ :-
+     T =.. F/A,
+     cease('BTF stripper failed for top-level functor ~w/~w',[F,A]),
+     halt(1).
+
+stripTs([],L,L).
+stripTs([H|T],L1,L2) :- stripTs(T,L3,L2), stripT(H,L1,L3).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Print tree as plain string %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

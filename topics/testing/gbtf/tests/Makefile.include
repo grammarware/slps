@@ -10,7 +10,7 @@ test:
 
 %.test:
 	# generate all test cases for one grammar
-	gbtf $*.bgf
+	gbtf $*.bgf sc nc cdbc
 
 show:
 	# pretty-print all generated test cases on the screen

@@ -3,14 +3,19 @@
 :- nb_setval(btfno,1).
 :- dynamic t/1.
 
-saveT(BgfFile,N,Q,T)
+saveT(BgfFile,N,Q,G1,T1)
  :-
-    require(checkbtf(T),'BTF check failed',[]),
-    ( t(T) ->
+    nb_getval(options,Options),
+    require(checkbtf(r(G1,T1)),'BTF check failed',[]),
+    ( member(strip,Options) ->
+        ( stripT(T1,T2), G2 = g([],[]) );
+        ( T2 = T1, G2 = G1 )
+    ),
+    ( t(T2) ->
         format('Skipping duplicate.~n',[]) ;
         (
-          assertz(t(T)),
-          tToXml(T,XmlT),
+          assertz(t(T2)),
+          tToXml(r(G2,T2),XmlT),
           nb_getval(btfno,I1),
           I2 is I1 + 1,
           nb_setval(btfno,I2),
@@ -35,7 +40,8 @@ statistics(G)
 main 
  :- 
     current_prolog_flag(argv,Argv),
-    append(_,['--',BgfFile],Argv),
+    append(_,['--',BgfFile|Options],Argv),
+    nb_setval(options,Options),
     loadXml(BgfFile, XmlG),
     xmlToG(XmlG,G),
 
@@ -51,49 +57,49 @@ main
 
 % Generate shortest completion
 
-    format('Generating shortest completion.~n',[]),
-    (
-      member(DN,DNs),
-      completeG(G,DN,T0),
-      saveT(BgfFile,DN,sc,r(G,T0)),
-      fail
-    ;
-      true
-    ),
+    ( member(sc,Options) ->
+        ( format('Generating shortest completion.~n',[]),
+          (
+            member(DN,DNs),
+            completeG(G,DN,T0),
+            saveT(BgfFile,DN,sc,G,T0),
+            fail ; true
+          )
+        ) ; true ),
 
 % Generate data for nonterminal coverage
 
-    format('Generating data for nonterminal coverage.~n',[]),
-    (
-      member(DN,DNs),
-      gbtf:mindistFact(DN,H,_),
-      hostG(G,DN,H,T1,V),
-      completeG(G,H,V),
-      saveT(BgfFile,DN,nc,r(G,T1)),
-      fail 
-    ; 
-      true
-    ),
+    ( member(nc,Options) ->
+        ( format('Generating data for nonterminal coverage.~n',[]),
+          (
+            member(DN,DNs),
+            gbtf:mindistFact(DN,H,_),
+            hostG(G,DN,H,T1,V),
+            completeG(G,H,V),
+            saveT(BgfFile,DN,nc,G,T1),
+            fail ; true
+          )
+        ) ; true ),
 
 % Generate data for context-depdendent coverage
 
-    format('Generating data for context-depdendent coverage.~n',[]),
-    (
-      member(DN,DNs),
-      (
-        contextN(G,DN,P),
-        varyG(G,P,T1)
-      ;
-        gbtf:mindistFact(DN,H,_),
-        hostG(G,DN,H,T1,V),
-        contextN(G,H,P),
-        varyG(G,P,V)
-      ),
-      saveT(BgfFile,DN,cdbc,r(G,T1)),
-      fail
-    ; 
-      true
-    ),
+    ( member(cdbc,Options) ->
+        ( format('Generating data for context-depdendent coverage.~n',[]),
+          (
+            member(DN,DNs),
+            (
+              contextN(G,DN,P),
+              varyG(G,P,T1)
+            ;
+              gbtf:mindistFact(DN,H,_),
+              hostG(G,DN,H,T1,V),
+              contextN(G,H,P),
+              varyG(G,P,V)
+            ),
+            saveT(BgfFile,DN,cdbc,G,T1),
+            fail ; true
+          )
+        ) ; true ),
 
 % Done!
 
