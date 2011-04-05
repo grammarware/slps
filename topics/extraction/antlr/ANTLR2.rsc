@@ -1,6 +1,6 @@
 module ANTLR2
 
-import SourceEditor;
+import util::IDE;
 
 //syntax ANTLRGrammar = Parser Lexer;
 syntax ANTLRGrammar = ANTLRParser;
@@ -79,7 +79,7 @@ syntax ANTLRSquareBlockElement = ![\[\]] | ANTLRSquareBlock;
 syntax ANTLRParenthesisBlock = "(" ANTLRParenthesisBlockElement* ")";
 syntax ANTLRParenthesisBlockElement = ![()] | ANTLRParenthesisBlock;
 syntax ANTLRQuotedBlock  = [\"] ANTLRQuotedBlockSymbol* [\"];
-syntax ANTLRQuotedBlockSymbol = lex ![\"\\] | lex [\\][\'rtnu\\\"];
+syntax ANTLRQuotedBlockSymbol = lex ![\"\\] | lex [\\][\'rtnuf\\\"];
  
 public ANTLRGrammar agrammar(str i, loc s){return parse(#ANTLRGrammar, i, s);}
 

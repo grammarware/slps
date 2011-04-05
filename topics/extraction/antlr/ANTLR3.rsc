@@ -1,7 +1,7 @@
 module ANTLR3
 
 import IO;
-import SourceEditor;
+import util::IDE;
 
 //syntax Grammar = Comment? "grammar" Name ";" HeaderSection* Rule+ LayoutList?;
 syntax ANTLR3Grammar = "grammar" ANTLR3Name ";" ANTLR3Header ANTLR3Rule+;
@@ -33,6 +33,7 @@ syntax ANTLR3Rule = "fragment"? ANTLR3Name ANTLR3Arguments? ANTLR3RuleHeader* ":
 
 syntax ANTLR3RuleHeader
  = ANTLR3Options
+ | @category="Comment" "scope" ANTLR3CurlyBlock
  | @category="Comment" "@after" ANTLR3CurlyBlock
  | @category="Comment" "@init" ANTLR3CurlyBlock
  ;
@@ -125,18 +126,18 @@ public ANTLR3Grammar simplify(ANTLR3Grammar g)
   //	=> (ANTLR3Rule)`<ANTLR3Name n>: <{ANTLR3Alternative "|"}+ as>;`
   // syntax ANTLR3Alternative = ANTLR3AltStart? ANTLR3Symbol* ANTLRAltTail?;
   case (ANTLR3Alternative)`<ANTLR3AltStart _> <ANTLR3Symbol+ ss> <ANTLRAltTail? _>`
-  	=> (ANTLR3Alternative)`<ANTLR3Symbol+ ss>`
+  	=> (ANTLR3Alternative)` <ANTLR3Symbol+ ss>`
   case (ANTLR3Alternative)`<ANTLR3Symbol+ ss> <ANTLRAltTail _>`
-  	=> (ANTLR3Alternative)`<ANTLR3Symbol+ ss>`
+  	=> (ANTLR3Alternative)` <ANTLR3Symbol+ ss>`
   //	syntax ANTLR3Symbol = "~"? "(" {ANTLR3Alternative "|"}+ ")"
   //case (ANTLR3Symbol)`~ (<{ANTLR3Alternative "|"}+ as>)`
   //  => (ANTLR3Symbol)`(<{ANTLR3Alternative "|"}+ as>)`
   //	syntax ANTLR3Symbol = ANTLR3Symbol ANTLR3Modifier
   case (ANTLR3Symbol)`<ANTLR3Symbol s> <ANTLR3UselessModifier _>`
-	=> s
+	=> (ANTLR3Symbol)` <ANTLR3Symbol s> `
   //	syntax ANTLR3Symbol = ANTLR3Prefix ANTLR3Symbol
   case (ANTLR3Symbol)`<ANTLR3UselessPrefix _> <ANTLR3Symbol s>`
-	=> s
+	=> (ANTLR3Symbol)` <ANTLR3Symbol s> `
   // the following does not work yet Ñ see http://bugs.meta-environment.org/show_bug.cgi?id=1072
   case (ANTLR3Header)`<ANTLR3HeaderSection* before> <ANTLR3UselessHeaderSection _> <ANTLR3HeaderSection* after>`
     => (ANTLR3Header)`<ANTLR3HeaderSection* before><ANTLR3HeaderSection* after>`
