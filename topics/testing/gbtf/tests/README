@@ -6,3 +6,18 @@ coverage: coverage criteria are exercised.
 
 tescol: actual grammars from a case study.
 
+See the individual Makefiles for default configuration of test-data generation.
+
+Here is a description of the options:
+
+- root: only generate test data for the (declared or inferred) start symbol
+- strip: produce very small BTFs
+- sc: shortest completition (one item per nonterminal)
+- nc (nonterminal coverage): exercise all reachable nonterminals
+- rc (rule coverage): exercise all reachable rules (productions)
+- bc (branch coverage): exercise all forks for "?", "*" and "+"
+- cdbc (context-dependent bc): exercise all rules in all contexts
+- uppy: do not "exhaust" top-level choices for ANTLR-style lexemes
+
+No coverage critera are automatically selected.
+
