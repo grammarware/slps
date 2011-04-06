@@ -27,14 +27,88 @@ saveT(BgfFile,N,Q,G1,T1)
 
 statistics(G)
  :-
+    G = g(_,Ps),
 
-    findall(P,(definedNs(G,DNs),member(DN,DNs),contextN(G,DN,P)),Ps),
-    length(Ps,Contexts),
-    format('* Contexts: ~w~n',[Contexts]),
+    ( allNs(Ps,Ns), 
+      length(Ns,Len),
+      format('* All nonterminals: ~w~n',[Len]),
+      fail; true ),
 
-    findall((N1,N2),gbtf:mindistFact(N1,N2,_),N12s),
-    length(N12s,Holes),
-    format('* Holes: ~w~n',[Holes]).
+    ( definedNs(Ps,Ns), 
+      length(Ns,Len),
+      format('* Defined nonterminals: ~w~n',[Len]),
+      fail; true ),
+
+    ( topNs(Ps,Ns),
+      length(Ns,Len),
+      format('* Top nonterminals: ~w~n',[Len]),
+      fail; true ),
+
+    ( startsymbol(G,R),
+      format('* Start symbol: ~w~n',[R]),
+      fail; true ),
+
+    ( length(Ps,Len), 
+      format('* Productions: ~w~n',[Len]),
+      fail; true ),
+
+    ( findall(P2,(member(P1,Ps),contextG(P1,P2)),PsWithContext),
+      length(PsWithContext,Len),
+      format('* Contexts: ~w~n',[Len]),
+      fail; true ),
+
+    ( findall((N1,N2),gbtf:mindistFact(N1,N2,_),N12s),
+      length(N12s,Len),
+      format('* Holes: ~w~n',[Len]),
+      fail; true ).
+
+
+% Best effort to determine start symbol
+ 
+startsymbol(G,R)
+ :-
+    (
+      G = g([R],_)
+    ;
+      topNs(G,[R])
+    ; 
+      definedNs(G,DNs),
+      member(R,DNs),
+      ssWeight(R,W1),
+      \+ ( member(N,DNs), \+ N == R, ssWeight(N,W2), W2 >= W1 )
+    ),
+    !.
+
+ssWeight(N,W)
+ :-
+    findall(Q,gbtf:mindistFact(N,Q,_),Qs),
+    length(Qs,W).
+
+
+% Backtrack over root nonterminals
+
+rootG(G,R)
+ :-
+    nb_getval(options,Options),
+    member(root,Options) -> 
+      require(startsymbol(G,R),'start symbol not defined/inferrable',[]) ;
+      ( definedNs(G,DNs), member(R,DNs) ).
+
+
+%
+% Optimization: skip upper "casies"?
+%
+
+skipuppy(p(_,N,_)) 
+ :-
+    skipuppy(N).
+
+skipuppy(N)
+ :-
+    atom(N),
+    nb_getval(options,Options),
+    member(uppy,Options),
+    upcase_atom(N,N).    
 
 
 main 
@@ -49,7 +123,6 @@ main
 
     mindepthG(G),
     mindistG(G),
-    definedNs(G,DNs),
 
 % Output some statistics
 
@@ -60,9 +133,9 @@ main
     ( member(sc,Options) ->
         ( format('Generating shortest completion.~n',[]),
           (
-            member(DN,DNs),
-            completeG(G,DN,T0),
-            saveT(BgfFile,DN,sc,G,T0),
+            rootG(G,R),
+            completeT(G,n(R),T),
+            saveT(BgfFile,R,sc,G,T),
             fail ; true
           )
         ) ; true ),
@@ -72,31 +145,84 @@ main
     ( member(nc,Options) ->
         ( format('Generating data for nonterminal coverage.~n',[]),
           (
-            member(DN,DNs),
-            gbtf:mindistFact(DN,H,_),
-            hostG(G,DN,H,T1,V),
-            completeG(G,H,V),
-            saveT(BgfFile,DN,nc,G,T1),
+            rootG(G,R),
+            gbtf:mindistFact(R,H,_),
+            holeT(G,n(R),H,T,V),
+            completeT(G,n(H),V),
+            saveT(BgfFile,R,nc,G,T),
             fail ; true
           )
         ) ; true ),
 
-% Generate data for context-depdendent coverage
+% Generate data for rule coverage
+
+    ( member(rc,Options) ->
+        ( format('Generating data for rule coverage.~n',[]),
+          (
+            rootG(G,R),
+            (
+              findN(G,R,Ps),
+              member(P,Ps),
+              completeT(G,P,T)
+            ;
+              gbtf:mindistFact(R,H,_),
+              \+ skipuppy(H),
+              findN(G,H,Ps),
+              holeT(G,n(R),H,T,V),
+              member(P,Ps),
+              completeT(G,P,V)
+            ),
+            saveT(BgfFile,R,rc,G,T),
+            fail ; true
+          )
+        ) ; true ),
+
+% Generate data for branch coverage
+
+    ( member(bc,Options) ->
+        ( format('Generating data for branch coverage.~n',[]),
+          (
+            rootG(G,R),
+            (
+              findN(G,R,Ps),
+              member(P,Ps),
+              forkG(P,F),
+              varyT(G,F,T)
+            ;
+              gbtf:mindistFact(R,H,_),
+              \+ skipuppy(H),
+              holeT(G,n(R),H,T,V),
+              findN(G,H,Ps),
+              member(P,Ps),
+              forkG(P,F),
+              varyT(G,F,V)
+            ),
+            saveT(BgfFile,R,bc,G,T),
+            fail ; true
+          )
+        ) ; true ),
+
+% Generate data for context-depdendent branch coverage
 
     ( member(cdbc,Options) ->
-        ( format('Generating data for context-depdendent coverage.~n',[]),
+        ( format('Generating data for context-dependent branch coverage.~n',[]),
           (
-            member(DN,DNs),
+            rootG(G,R),
             (
-              contextN(G,DN,P),
-              varyG(G,P,T1)
+              findN(G,R,Ps),
+              member(P,Ps),
+              contextG(P,F),
+              varyT(G,F,T)
             ;
-              gbtf:mindistFact(DN,H,_),
-              hostG(G,DN,H,T1,V),
-              contextN(G,H,P),
-              varyG(G,P,V)
+              gbtf:mindistFact(R,H,_),
+              \+ skipuppy(H),
+              holeT(G,n(R),H,T,V),
+              findN(G,H,Ps),
+              member(P,Ps),
+              contextG(P,F),
+              varyT(G,F,V)
             ),
-            saveT(BgfFile,DN,cdbc,G,T1),
+            saveT(BgfFile,R,cdbc,G,T),
             fail ; true
           )
         ) ; true ),

@@ -15,20 +15,6 @@ rootNs(g(Rs1,_),Rs2)
     !.
 
 
-% Best-effort predication of start symbol
-
-rootG(g(Rs,Ps),R)
- :-
-    Rs = [R|_] ->
-      true;
-      Ps = [p(_,R,_)|_].
-
-rootG(Ps,R)
- :-
-    is_list(Ps),
-    Ps = [p(_,R,_)|_].
-
-
 % Return all nontmerinals defined by a grammar
 
 definedNs(g(_,Ps),Ns)
@@ -58,6 +44,15 @@ usedNs(G,Ns2)
     !.
 
 usedN(n(N),[N]).
+
+
+% Return all top nonterminals, i.e., nonterminals defined but not used
+
+topNs(G,TNs)
+ :-
+    definedNs(G,DNs),
+    usedNs(G,UNs),
+    subtract(DNs,UNs,TNs).
 
 
 % Return all nonterminals defined or used by a grammar
