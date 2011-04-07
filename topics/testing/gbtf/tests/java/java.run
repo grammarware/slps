@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo '[' $2 ']----------'
+java -cp ../../../../../download/antlr-3.2.jar:$1 -ea TestIO $2 || echo 'NONZERO EXIT STATUS'

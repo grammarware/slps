@@ -1,4 +1,4 @@
-gbtf-options = sc root strip uppy
+gbtf-options = root uppy sc rc nc bc cdbc
 include ../Makefile.include
 
 cj:
@@ -22,3 +22,10 @@ cj:
 %.count.par:
 	@/bin/echo -n '        ' $*:
 	@find . -name 'parr.bgf-*-$*-*.btf' | wc -l
+
+execute:
+	time ls -1 habelitz.bgf-*.src | xargs -n1 ./java.run habelitz.jar > results/h2h.res 2>&1
+	time ls -1 habelitz.bgf-*.src | xargs -n1 ./java.run parr.jar     > results/h2p.res 2>&1
+	time ls -1 parr.bgf-*.src     | xargs -n1 ./java.run habelitz.jar > results/p2h.res 2>&1
+	time ls -1 parr.bgf-*.src     | xargs -n1 ./java.run parr.jar     > results/p2p.res 2>&1
+	./report-results.py
