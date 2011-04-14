@@ -1461,7 +1461,7 @@ unite(N1,N2,G1,G2)
 equate(N1,N2,g(Rs1,Ps1),g(Rs2,Ps2))
  :-
     splitN(Ps1,N1,N1Ps1,N1Ps1a,N1Ps1b),
-    definition(Ps1,N2,N2Ps),
+    def(Ps1,N2,N2Ps),
     xbgf1:renameN(N1,N2,g(Rs1,N1Ps1),g(_,N1Ps2)),
     require(
 		(xbgf1:checkforidentity(N1Ps2,N2Ps)),

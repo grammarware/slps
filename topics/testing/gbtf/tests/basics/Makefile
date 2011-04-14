@@ -1,3 +1,3 @@
-gbtf-options = sc nc rc bc cdbc
+gbtf-options = tc nc pc bc uc
 include ../Makefile.include
 

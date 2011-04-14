@@ -1,4 +1,4 @@
-gbtf-options = root uppy sc rc nc bc cdbc
+gbtf-options = root uppy tc pc nc bc uc
 include ../Makefile.include
 
 cj:

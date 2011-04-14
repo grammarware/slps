@@ -3,8 +3,7 @@
     , mindistG/1
     , complete/3
     , hole/5
-    , fork/2
-    , context/2
+    , mark/3
     , vary/3
     ] ).
 
@@ -68,7 +67,7 @@ testMindepth(Ps)
 
 mindepthN(Ps1,N)
  :-
-    definition(Ps1,N,Ps2),
+    def(Ps1,N,Ps2),
     maplisttry(gbtf:mindepthX,Ps2,Ds),
     min1(Ds,D),
     retractall(gbtf:mindepthFact(N,_)),
@@ -151,7 +150,7 @@ mindist1(Ps)
  :-
       definedNs(Ps,DNs),
       member(DN,DNs),
-      definition(Ps,DN,PsDN),
+      def(Ps,DN,PsDN),
       usedNs(PsDN,UNs),
       member(UN,UNs),
       \+ UN == DN,
@@ -257,7 +256,7 @@ complete(G,P,n(P,T))
     complete(G,X,T).
 
 complete(G,n(N),T) :- 
-    definition(G,N,Ps),
+    def(G,N,Ps),
     chooseByMindepth(Ps,P),
     complete(G,P,T).
 
@@ -288,7 +287,7 @@ hole(_,n(N),H,V,V) :- N == H.
 hole(G,n(N),H,n(P,T),V)
  :-
     \+ N == H,
-    definition(G,N,Ps),
+    def(G,N,Ps),
     chooseByMindist(Ps,H,P),
     P = p(_,N,X),
     hole(G,X,H,T,V).
@@ -316,71 +315,35 @@ hole(G,';'(Xs),H,';'(X,T),V)
 % ------------------------------------------------------------
 
 %
-% Mark all forks for BC (other than entire productions themselves).
-% Nonterminal references are not forks, but they are contexts; see below.
+% Mark all spots for BC and UC.
 %
 
-fork(p(L,N,X1),p(L,N,X2))
+mark(C,p(L,N,X1),p(L,N,X2))
  :-
-    fork(X1,X2).
+    mark(C,X1,X2).
 
-fork(';'(Xs),{';'(Xs)}).
-fork('?'(X),{'?'(X)}).
-fork('*'(X),{'*'(X)}).
-fork('+'(X),{'+'(X)}).
+mark(uc,n(N),{n(N)}).
+mark(bc,';'(Xs),{';'(Xs)}).
+mark(bc,'?'(X),{'?'(X)}).
+mark(bc,'*'(X),{'*'(X)}).
+mark(bc,'+'(X),{'+'(X)}).
 
-fork(s(S,X1),s(S,X2)) :- fork(X1,X2).
-fork('?'(X1),'?'(X2)) :- fork(X1,X2).
-fork('*'(X1),'*'(X2)) :- fork(X1,X2).
-fork('+'(X1),'+'(X2)) :- fork(X1,X2).
+mark(C,s(S,X1),s(S,X2)) :- mark(C,X1,X2).
+mark(C,'?'(X1),'?'(X2)) :- mark(C,X1,X2).
+mark(C,'*'(X1),'*'(X2)) :- mark(C,X1,X2).
+mark(C,'+'(X1),'+'(X2)) :- mark(C,X1,X2).
 
-fork(','(Xs1),','(Xs2))
+mark(C,','(Xs1),','(Xs2))
  :-
     append(Xs1a,[X1|Xs1b],Xs1),
     append(Xs1a,[X2|Xs1b],Xs2),
-    fork(X1,X2).
+    mark(C,X1,X2).
 
-fork(';'(Xs1),';'(Xs2))
+mark(C,';'(Xs1),';'(Xs2))
  :-
     append(Xs1a,[X1|Xs1b],Xs1),
     append(Xs1a,[X2|Xs1b],Xs2),
-    fork(X1,X2).
-
-
-% ------------------------------------------------------------
-
-%
-% Find all contexts for CDBC; mark them.
-% Return just the marked production (as opposed to the entire grammar).
-% Backtracking over this predicate gives all such marked contexts.
-%
-
-context(p(L,N,X1),p(L,N,X2))
- :-
-    context(X1,X2).
-
-context(n(N),{n(N)}).
-context(';'(Xs),{';'(Xs)}).
-context('?'(X),{'?'(X)}).
-context('*'(X),{'*'(X)}).
-context('+'(X),{'+'(X)}).
-
-context(s(S,X1),s(S,X2)) :- context(X1,X2).
-context('?'(X1),'?'(X2)) :- context(X1,X2).
-context('*'(X1),'*'(X2)) :- context(X1,X2).
-context('+'(X1),'+'(X2)) :- context(X1,X2).
-
-context(','(Xs1),','(Xs2))
- :-
-    append(Xs1a,[X1|Xs1b],Xs1),
-    context(X1,X2),
-    append(Xs1a,[X2|Xs1b],Xs2).
-
-context(';'(Xs1),';'(Xs2))
- :-
-    append(Xs1a,[X1|Xs1b],Xs1),
-    context(X1,X2),
-    append(Xs1a,[X2|Xs1b],Xs2).
+    mark(C,X1,X2).
 
 
 % ------------------------------------------------------------
@@ -404,7 +367,7 @@ vary(G,P1,n(P2,T))
 
 vary(G,{n(N)},n(P,T))
  :-
-    definition(G,N,Ps),
+    def(G,N,Ps),
     ( (Ps = [P], P = p(_,_,';'(Xs))) ->
         vary(G,{';'(Xs)},T) 
       ; ( (Ps = [P], P = p(_,_,n(M))) ->

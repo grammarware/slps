@@ -137,12 +137,28 @@ findP(Ps1,As,N,P,Ps3a,Ps4a)
 
 % Find definitions of nonterminal
 
-definition(Ps1,N,Ps2)
+def(g(_,Ps1),N,Ps2)
  :- 
+    def(Ps1,N,Ps2).
+
+def(Ps1,N,Ps2)
+ :- 
+    is_list(Ps1),
+    var(N),
+    definedNs(Ps1,DNs),
+    member(N,DNs),
+    def(Ps1,N,Ps2).
+
+def(Ps1,N,Ps2)
+ :- 
+    is_list(Ps1),
+    \+ var(N),
     splitN(Ps1,N,Ps2,_,_).
 
-definition1(Ps,N,P)
+def1(Ps,N,P)
  :- 
+    \+ var(Ps),
+    \+ var(N),
     splitN1(Ps,N,P,_,_).
 
 

@@ -52,7 +52,7 @@ statistics(G)
       format('* Productions: ~w~n',[Len]),
       fail; true ),
 
-    ( findall(P2,(member(P1,Ps),context(P1,P2)),PsWithContext),
+    ( findall(P2,(member(P1,Ps),mark(uc,P1,P2)),PsWithContext),
       length(PsWithContext,Len),
       format('* Contexts: ~w~n',[Len]),
       fail; true ),
@@ -111,6 +111,53 @@ skipuppy(N)
     upcase_atom(N,N).    
 
 
+tc(G,R,T)
+ :-
+    root(G,R),
+    complete(G,n(R),T).
+
+nc(G,R,T)
+ :-
+    root(G,R), 
+    gbtf:mindistFact(R,H,_),
+    hole(G,n(R),H,T,V),
+    complete(G,n(H),V).
+
+pc(G,R,T)
+ :-
+    (var(R) -> root(G,R); true),
+    def(G,R,Ps),
+    member(P,Ps),
+    complete(G,P,T).
+
+pc(G,R,T)
+ :-
+    root(G,R), 
+    gbtf:mindistFact(R,H,_),
+    \+ skipuppy(H),
+    hole(G,n(R),H,T,V),
+    pc(G,H,V).
+
+bc(G,R,T) :- cdbc(bc,G,R,T).
+
+uc(G,R,T) :- cdbc(uc,G,R,T).
+
+cdbc(C,G,R,T)
+ :-
+    (var(R) -> root(G,R); true),
+    def(G,R,Ps),
+    member(P,Ps),
+    mark(C,P,F),
+    vary(G,F,T).
+
+cdbc(C,G,R,T)
+ :-
+    root(G,R),
+    gbtf:mindistFact(R,H,_),
+    \+ skipuppy(H),
+    hole(G,n(R),H,T,V),
+    cdbc(C,G,H,V).
+
 main 
  :- 
     current_prolog_flag(argv,Argv),
@@ -130,12 +177,11 @@ main
 
 % Generate shortest completion
 
-    ( member(sc,Options) ->
-        ( format('Generating shortest completion.~n',[]),
+    ( member(tc,Options) ->
+        ( format('Generating data for trivial coverage.~n',[]),
           (
-            root(G,R),
-            complete(G,n(R),T),
-            saveT(BgfFile,R,sc,G,T),
+            tc(G,R,T),
+            saveT(BgfFile,R,tc,G,T),
             fail ; true
           )
         ) ; true ),
@@ -145,34 +191,19 @@ main
     ( member(nc,Options) ->
         ( format('Generating data for nonterminal coverage.~n',[]),
           (
-            root(G,R),
-            gbtf:mindistFact(R,H,_),
-            hole(G,n(R),H,T,V),
-            complete(G,n(H),V),
+            nc(G,R,T),
             saveT(BgfFile,R,nc,G,T),
             fail ; true
           )
         ) ; true ),
 
-% Generate data for rule coverage
+% Generate data for production coverage
 
-    ( member(rc,Options) ->
+    ( member(pc,Options) ->
         ( format('Generating data for rule coverage.~n',[]),
           (
-            root(G,R),
-            (
-              definition(G,R,Ps),
-              member(P,Ps),
-              complete(G,P,T)
-            ;
-              gbtf:mindistFact(R,H,_),
-              \+ skipuppy(H),
-              definition(G,H,Ps),
-              hole(G,n(R),H,T,V),
-              member(P,Ps),
-              complete(G,P,V)
-            ),
-            saveT(BgfFile,R,rc,G,T),
+            pc(G,R,T),
+            saveT(BgfFile,R,pc,G,T),
             fail ; true
           )
         ) ; true ),
@@ -182,47 +213,19 @@ main
     ( member(bc,Options) ->
         ( format('Generating data for branch coverage.~n',[]),
           (
-            root(G,R),
-            (
-              definition(G,R,Ps),
-              member(P,Ps),
-              fork(P,F),
-              vary(G,F,T)
-            ;
-              gbtf:mindistFact(R,H,_),
-              \+ skipuppy(H),
-              hole(G,n(R),H,T,V),
-              definition(G,H,Ps),
-              member(P,Ps),
-              fork(P,F),
-              vary(G,F,V)
-            ),
+            bc(G,R,T),
             saveT(BgfFile,R,bc,G,T),
             fail ; true
           )
         ) ; true ),
 
-% Generate data for context-depdendent branch coverage
+% Generate data for unfolding coverage
 
-    ( member(cdbc,Options) ->
-        ( format('Generating data for context-dependent branch coverage.~n',[]),
+    ( member(uc,Options) ->
+        ( format('Generating data for unfolding coverage.~n',[]),
           (
-            root(G,R),
-            (
-              definition(G,R,Ps),
-              member(P,Ps),
-              context(P,F),
-              vary(G,F,T)
-            ;
-              gbtf:mindistFact(R,H,_),
-              \+ skipuppy(H),
-              hole(G,n(R),H,T,V),
-              definition(G,H,Ps),
-              member(P,Ps),
-              context(P,F),
-              vary(G,F,V)
-            ),
-            saveT(BgfFile,R,cdbc,G,T),
+            uc(G,R,T),
+            saveT(BgfFile,R,uc,G,T),
             fail ; true
           )
         ) ; true ),
