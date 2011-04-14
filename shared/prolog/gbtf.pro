@@ -1,11 +1,11 @@
 :- module(gbtf,
     [ mindepthG/1
     , mindistG/1
-    , completeT/3
-    , holeT/5
-    , forkG/2
-    , contextG/2
-    , varyT/3
+    , complete/3
+    , hole/5
+    , fork/2
+    , context/2
+    , vary/3
     ] ).
 
 :- dynamic gbtf:mindepthFact/2.
@@ -68,7 +68,7 @@ testMindepth(Ps)
 
 mindepthN(Ps1,N)
  :-
-    findN(Ps1,N,Ps2),
+    definition(Ps1,N,Ps2),
     maplisttry(gbtf:mindepthX,Ps2,Ds),
     min1(Ds,D),
     retractall(gbtf:mindepthFact(N,_)),
@@ -151,7 +151,7 @@ mindist1(Ps)
  :-
       definedNs(Ps,DNs),
       member(DN,DNs),
-      findN(Ps,DN,PsDN),
+      definition(Ps,DN,PsDN),
       usedNs(PsDN,UNs),
       member(UN,UNs),
       \+ UN == DN,
@@ -251,24 +251,24 @@ chooseByMindist(O1,D1,[O2|Os],N,O)
 % Generate shortest completion
 %
 
-completeT(G,P,n(P,T))
+complete(G,P,n(P,T))
  :-
     P = p(_,_,X),
-    completeT(G,X,T).
+    complete(G,X,T).
 
-completeT(G,n(N),T) :- 
-    findN(G,N,Ps),
+complete(G,n(N),T) :- 
+    definition(G,N,Ps),
     chooseByMindepth(Ps,P),
-    completeT(G,P,T).
+    complete(G,P,T).
 
-completeT(_,true,true).
-completeT(_,t(V),t(V)).
-completeT(G,s(S,X),s(S,T)) :- completeT(G,X,T).
-completeT(G,','(Xs),','(Ts)) :- maplist(gbtf:completeT(G),Xs,Ts).
-completeT(G,';'(Xs),';'(X,T)) :- chooseByMindepth(Xs,X), completeT(G,X,T).
-completeT(_,'?'(_),'?'([])).
-completeT(_,'*'(_),'*'([])).
-completeT(G,'+'(X),'+'([T])) :- completeT(G,X,T).
+complete(_,true,true).
+complete(_,t(V),t(V)).
+complete(G,s(S,X),s(S,T)) :- complete(G,X,T).
+complete(G,','(Xs),','(Ts)) :- maplist(gbtf:complete(G),Xs,Ts).
+complete(G,';'(Xs),';'(X,T)) :- chooseByMindepth(Xs,X), complete(G,X,T).
+complete(_,'?'(_),'?'([])).
+complete(_,'*'(_),'*'([])).
+complete(G,'+'(X),'+'([T])) :- complete(G,X,T).
 
 
 % ------------------------------------------------------------
@@ -283,34 +283,34 @@ completeT(G,'+'(X),'+'([T])) :- completeT(G,X,T).
 %  - Logic variable for the hole.
 %
 
-holeT(_,n(N),H,V,V) :- N == H.
+hole(_,n(N),H,V,V) :- N == H.
 
-holeT(G,n(N),H,n(P,T),V)
+hole(G,n(N),H,n(P,T),V)
  :-
     \+ N == H,
-    findN(G,N,Ps),
+    definition(G,N,Ps),
     chooseByMindist(Ps,H,P),
     P = p(_,N,X),
-    holeT(G,X,H,T,V).
+    hole(G,X,H,T,V).
 
-holeT(G,s(S,X),H,s(S,T),V) :- holeT(G,X,H,T,V).
-holeT(G,'?'(X),H,'?'([T]),V) :- holeT(G,X,H,T,V).
-holeT(G,'*'(X),H,'*'([T]),V) :- holeT(G,X,H,T,V).
-holeT(G,'+'(X),H,'+'([T]),V) :- holeT(G,X,H,T,V).
+hole(G,s(S,X),H,s(S,T),V) :- hole(G,X,H,T,V).
+hole(G,'?'(X),H,'?'([T]),V) :- hole(G,X,H,T,V).
+hole(G,'*'(X),H,'*'([T]),V) :- hole(G,X,H,T,V).
+hole(G,'+'(X),H,'+'([T]),V) :- hole(G,X,H,T,V).
 
-holeT(G,','(Xs),H,','(Ts),V)
+hole(G,','(Xs),H,','(Ts),V)
  :-
     chooseByMindist(Xs,H,X),
     once(append(Xs1,[X|Xs2],Xs)),
-    holeT(G,X,H,T,V),
-    maplist(gbtf:completeT(G),Xs1,Ts1),
-    maplist(gbtf:completeT(G),Xs2,Ts2),
+    hole(G,X,H,T,V),
+    maplist(gbtf:complete(G),Xs1,Ts1),
+    maplist(gbtf:complete(G),Xs2,Ts2),
     append(Ts1,[T|Ts2],Ts).
 
-holeT(G,';'(Xs),H,';'(X,T),V)
+hole(G,';'(Xs),H,';'(X,T),V)
  :-
     chooseByMindist(Xs,H,X),
-    holeT(G,X,H,T,V).
+    hole(G,X,H,T,V).
 
 
 % ------------------------------------------------------------
@@ -320,31 +320,31 @@ holeT(G,';'(Xs),H,';'(X,T),V)
 % Nonterminal references are not forks, but they are contexts; see below.
 %
 
-forkG(p(L,N,X1),p(L,N,X2))
+fork(p(L,N,X1),p(L,N,X2))
  :-
-    forkG(X1,X2).
+    fork(X1,X2).
 
-forkG(';'(Xs),{';'(Xs)}).
-forkG('?'(X),{'?'(X)}).
-forkG('*'(X),{'*'(X)}).
-forkG('+'(X),{'+'(X)}).
+fork(';'(Xs),{';'(Xs)}).
+fork('?'(X),{'?'(X)}).
+fork('*'(X),{'*'(X)}).
+fork('+'(X),{'+'(X)}).
 
-forkG(s(S,X1),s(S,X2)) :- forkG(X1,X2).
-forkG('?'(X1),'?'(X2)) :- forkG(X1,X2).
-forkG('*'(X1),'*'(X2)) :- forkG(X1,X2).
-forkG('+'(X1),'+'(X2)) :- forkG(X1,X2).
+fork(s(S,X1),s(S,X2)) :- fork(X1,X2).
+fork('?'(X1),'?'(X2)) :- fork(X1,X2).
+fork('*'(X1),'*'(X2)) :- fork(X1,X2).
+fork('+'(X1),'+'(X2)) :- fork(X1,X2).
 
-forkG(','(Xs1),','(Xs2))
- :-
-    append(Xs1a,[X1|Xs1b],Xs1),
-    forkG(X1,X2),
-    append(Xs1a,[X2|Xs1b],Xs2).
-
-forkG(';'(Xs1),';'(Xs2))
+fork(','(Xs1),','(Xs2))
  :-
     append(Xs1a,[X1|Xs1b],Xs1),
-    forkG(X1,X2),
-    append(Xs1a,[X2|Xs1b],Xs2).
+    append(Xs1a,[X2|Xs1b],Xs2),
+    fork(X1,X2).
+
+fork(';'(Xs1),';'(Xs2))
+ :-
+    append(Xs1a,[X1|Xs1b],Xs1),
+    append(Xs1a,[X2|Xs1b],Xs2),
+    fork(X1,X2).
 
 
 % ------------------------------------------------------------
@@ -355,31 +355,31 @@ forkG(';'(Xs1),';'(Xs2))
 % Backtracking over this predicate gives all such marked contexts.
 %
 
-contextG(p(L,N,X1),p(L,N,X2))
+context(p(L,N,X1),p(L,N,X2))
  :-
-    contextG(X1,X2).
+    context(X1,X2).
 
-contextG(n(N),{n(N)}).
-contextG(';'(Xs),{';'(Xs)}).
-contextG('?'(X),{'?'(X)}).
-contextG('*'(X),{'*'(X)}).
-contextG('+'(X),{'+'(X)}).
+context(n(N),{n(N)}).
+context(';'(Xs),{';'(Xs)}).
+context('?'(X),{'?'(X)}).
+context('*'(X),{'*'(X)}).
+context('+'(X),{'+'(X)}).
 
-contextG(s(S,X1),s(S,X2)) :- contextG(X1,X2).
-contextG('?'(X1),'?'(X2)) :- contextG(X1,X2).
-contextG('*'(X1),'*'(X2)) :- contextG(X1,X2).
-contextG('+'(X1),'+'(X2)) :- contextG(X1,X2).
+context(s(S,X1),s(S,X2)) :- context(X1,X2).
+context('?'(X1),'?'(X2)) :- context(X1,X2).
+context('*'(X1),'*'(X2)) :- context(X1,X2).
+context('+'(X1),'+'(X2)) :- context(X1,X2).
 
-contextG(','(Xs1),','(Xs2))
+context(','(Xs1),','(Xs2))
  :-
     append(Xs1a,[X1|Xs1b],Xs1),
-    contextG(X1,X2),
+    context(X1,X2),
     append(Xs1a,[X2|Xs1b],Xs2).
 
-contextG(';'(Xs1),';'(Xs2))
+context(';'(Xs1),';'(Xs2))
  :-
     append(Xs1a,[X1|Xs1b],Xs1),
-    contextG(X1,X2),
+    context(X1,X2),
     append(Xs1a,[X2|Xs1b],Xs2).
 
 
@@ -391,10 +391,10 @@ contextG(';'(Xs1),';'(Xs2))
 % All unmarked particles are completed in the shortest manner.
 %
 
-varyT(G,P1,n(P2,T))
+vary(G,P1,n(P2,T))
  :-
     P1 = p(_,_,X),
-    varyT(G,X,T),
+    vary(G,X,T),
     unmarkG(P1,P2).
 
 %
@@ -402,50 +402,50 @@ varyT(G,P1,n(P2,T))
 % Inline chain productions on the fly.
 %
 
-varyT(G,{n(N)},n(P,T))
+vary(G,{n(N)},n(P,T))
  :-
-    findN(G,N,Ps),
+    definition(G,N,Ps),
     ( (Ps = [P], P = p(_,_,';'(Xs))) ->
-        varyT(G,{';'(Xs)},T) 
+        vary(G,{';'(Xs)},T) 
       ; ( (Ps = [P], P = p(_,_,n(M))) ->
-            varyT(G,{n(M)},T)
+            vary(G,{n(M)},T)
           ; (
               member(P,Ps),
               P = p(_,_,X),
-              completeT(G,X,T)
+              complete(G,X,T)
             )
         )
     ).
 
-varyT(G,{';'(Xs)},';'(X,T))
+vary(G,{';'(Xs)},';'(X,T))
  :-
     member(X,Xs),
-    completeT(G,X,T).
+    complete(G,X,T).
 
-varyT(_,{'?'(_)},'?'([])).
-varyT(G,{'?'(X)},'?'([T])) :- completeT(G,X,T).
-varyT(_,{'*'(_)},'*'([])).
-varyT(G,{'*'(X)},'*'([T])) :- completeT(G,X,T).
-varyT(G,{'+'(X)},'+'([T])) :- completeT(G,X,T).
-varyT(G,{'+'(X)},'+'([T1,T2])) :- completeT(G,X,T1), completeT(G,X,T2).
+vary(_,{'?'(_)},'?'([])).
+vary(G,{'?'(X)},'?'([T])) :- complete(G,X,T).
+vary(_,{'*'(_)},'*'([])).
+vary(G,{'*'(X)},'*'([T])) :- complete(G,X,T).
+vary(G,{'+'(X)},'+'([T])) :- complete(G,X,T).
+vary(G,{'+'(X)},'+'([T1,T2])) :- complete(G,X,T1), complete(G,X,T2).
 
-varyT(G,s(S,X),s(S,T)) :- varyT(G,X,T).
-varyT(G,'?'(X),'?'([T])) :- varyT(G,X,T).
-varyT(G,'*'(X),'*'([T])) :- varyT(G,X,T).
-varyT(G,'+'(X),'+'([T])) :- varyT(G,X,T).
+vary(G,s(S,X),s(S,T)) :- vary(G,X,T).
+vary(G,'?'(X),'?'([T])) :- vary(G,X,T).
+vary(G,'*'(X),'*'([T])) :- vary(G,X,T).
+vary(G,'+'(X),'+'([T])) :- vary(G,X,T).
 
-varyT(G,','(Xs),','(Ts))
+vary(G,','(Xs),','(Ts))
  :-
     append(Xs1,[X|Xs2],Xs),
-    maplist(gbtf:completeT(G),Xs1,Ts1),
-    varyT(G,X,T),
-    maplist(gbtf:completeT(G),Xs2,Ts2),
+    maplist(gbtf:complete(G),Xs1,Ts1),
+    vary(G,X,T),
+    maplist(gbtf:complete(G),Xs2,Ts2),
     append(Ts1,[T|Ts2],Ts). 
 
-varyT(G,';'(Xs),';'(X2,T))
+vary(G,';'(Xs),';'(X2,T))
  :-
     member(X1,Xs),
-    varyT(G,X1,T), 
+    vary(G,X1,T), 
     unmarkG(X1,X2).
 
 

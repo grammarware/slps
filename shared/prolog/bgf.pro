@@ -137,11 +137,11 @@ findP(Ps1,As,N,P,Ps3a,Ps4a)
 
 % Find definitions of nonterminal
 
-findN(Ps1,N,Ps2)
+definition(Ps1,N,Ps2)
  :- 
     splitN(Ps1,N,Ps2,_,_).
 
-findN1(Ps,N,P)
+definition1(Ps,N,P)
  :- 
     splitN1(Ps,N,P,_,_).
 

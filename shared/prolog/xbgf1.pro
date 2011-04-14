@@ -1347,7 +1347,7 @@ unchain(P1,g(Rs,Ps1),g(Rs,Ps4))
       'Production ~q must be chain production.',
       [P1]),
     append(Ps1a,Ps1b,Ps2),
-    findN1(Ps2,N2,p(_,_,X)),
+    definition1(Ps2,N2,p(_,_,X)),
     require(
        (\+ member(N2,Rs) ),
        'Nonterminal ~q must not be root.',
@@ -1461,7 +1461,7 @@ unite(N1,N2,G1,G2)
 equate(N1,N2,g(Rs1,Ps1),g(Rs2,Ps2))
  :-
     splitN(Ps1,N1,N1Ps1,N1Ps1a,N1Ps1b),
-    findN(Ps1,N2,N2Ps),
+    definition(Ps1,N2,N2Ps),
     xbgf1:renameN(N1,N2,g(Rs1,N1Ps1),g(_,N1Ps2)),
     require(
 		(xbgf1:checkforidentity(N1Ps2,N2Ps)),
