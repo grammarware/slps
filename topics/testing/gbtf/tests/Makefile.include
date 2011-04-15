@@ -4,9 +4,6 @@ test:
 	# generate all test cases for all grammars
 	make clean
 	make $(patsubst %.bgf,%.test,$(wildcard *.bgf))
-	ls *.btf > log
-	diff baseline log
-	rm log
 
 %.test:
 	# generate all test cases for one grammar
@@ -56,5 +53,6 @@ count:
 clean:
 	rm -f log
 	rm -f *~
-	find . -name '*.btf' -print0 | xargs -0 \
-		rm
+	find . -name '*.btf' -print0 | xargs -0 rm
+	find . -name '*.src' -print0 | xargs -0 rm
+

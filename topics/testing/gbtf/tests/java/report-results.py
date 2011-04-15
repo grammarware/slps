@@ -50,8 +50,8 @@ if __name__ == "__main__":
 		for m in repkk:
 			passed += report[k][m][0]
 			total  += report[k][m][1]
-			print '%-20s'%(k+' '+m.upper()),':','%6.2f'%(100.0*report[k][m][0]/report[k][m][1]),'% [',report[k][m][0],'/',report[k][m][1],']'
+			print '%-20s'%(k+' '+m.upper()),':','%6.2f'%(100.0*report[k][m][0]/report[k][m][1]),'% [','%6i'%report[k][m][0],'/','%6i'%report[k][m][1],']'
 			if report[k][m][1]-report[k][m][0]<5 and report[k][m][1]!=report[k][m][0]:
 				print ' => fails on',report[k][m][2]
-		print '%-20s'%(k+' total'),':','%6.2f'%(100.0*passed/total),'% [',passed,'/',total,']'
+		print '%-20s'%(k+' total'),':','%6.2f'%(100.0*passed/total),'% [','%6i'%passed,'/','%6i'%total,']'
 	sys.exit()

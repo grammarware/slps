@@ -1,3 +1,3 @@
-gbtf-options = tc root strip uppy
+gbtf-options = root uppy tc pc nc bc uc
 include ../Makefile.include
 
