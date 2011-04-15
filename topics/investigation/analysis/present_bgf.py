@@ -28,3 +28,4 @@ if __name__ == "__main__":
 		print '%20s:' % 'dead top',   mb.DEAD(), pa(mb.getDeadTops())
 	else:
 		print '%20s:' % 'dead top',   mb.DEAD()
+	print 'Terminals used:      ',mb.TERM()
