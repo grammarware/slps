@@ -1,10 +1,9 @@
-h1, h2 {text-align:center;}
+h1, h2, div.c {text-align:center;}
 h2 a {font-size:small;}
 dt {font-weight: bold;}
 img {border:0;}
-.last {width: 100%; text-align: right;}
+.last {width: 100%; text-align: right; font-style: italic;}
 .last img {border:0; width: 88px; height: 31px;}
-.last img#linkedin {border:0; width: 160px; height: 33px;}
 br {clear: both;}
 .container {text-align:center; width:300px;}
 ul.linklist li span,.links {text-align:center; font-family: "Courier New", Courier, mono; font-weight: bold;}

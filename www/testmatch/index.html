@@ -6,112 +6,161 @@
 		<link href="../slps.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body style="background-color:#9C9;">
+		<div class="c"><img src="figures/match-algorithm.png" alt="nonterminal matching algorithm impact"/></div>
+		<h1>Software Language Processing Suite</h1>
 		<h1>
-			Software Language Processing Suite
+			Comparison of context-free grammars based on parsing generated test data
 		</h1>
 		<h2>
-			Comparison of Context-free Grammars<br/>
-			Based on Test-data Generation and Parsing<br/>
 			[page under construction]
 		</h2>
+		<div class="c"><img src="figures/testsize.png" alt="test set sizes"/></div>
+		<h3>Test set generation</h3>
 		<ul>
 			<li>
-				ANTLR⇒BGF extraction:
-				<ul>
-					<li>
-						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR2.rsc?view=markup">ANTLR2 grammar</a> (Rascal)
-					</li>
-					<li>
-						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR3.rsc?view=markup">ANTLR3 grammar</a> (Rascal)
-					</li>
-					<li>
-						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrstrip.py?view=markup">ANTLR stripping transformation</a> (±legacy Python)
-					</li>
-					<li>
-						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrpp.py?view=markup">ANTLR pretty-printer</a> (Python)
-					</li>
-					<li>
-						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g?view=markup">Stripped ANTLR specification and its mapping to BGF</a> (ANTLR3)
-					</li>
-				</ul>
+				<a href="http://slps.svn.sourceforge.net/viewvc/slps/shared/prolog/gbtf.pro?view=markup">mindepthG, distG, complete, hole, mark, vary</a> (Prolog)
 			</li>
 			<li>
-				ANTLR Java 5 sources:
-				<dl>
-					<dt>Habelitz</dt>
-					<dd>
-						<ul>
-							<li>
-								<a href="http://www.antlr.org/grammar/1207932239307/Java1_5Grammars/Java.g">Original grammar by Dieter Habelitz</a>, ANTLR3, 2008
-							</li>
-							<li>
-								<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/habelitz/">Extraction directory</a>
-							</li>
-							<li>
-								<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/testing/gbtf/tests/java/habelitz.bgf?view=markup">Extracted grammar</a> (BGF)
-							</li>
-							<li>
-								<a href="habelitz.html">Extracted grammar</a> (browsable)
-							</li>
-						</ul>
-					</dd>
-					<dt>Parr</dt>
-					<dd>
-						<ul>
-							<li>
-								<a href="http://www.antlr.org/grammar/1152141644268/Java.g">Original grammar by Terence Parr</a>, ANTLR3, 2006
-							</li>
-							<li>
-								<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/parr/">Extraction directory</a>
-							</li>
-							<li>
-								<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/testing/gbtf/tests/java/parr.bgf?view=markup">Extracted grammar</a> (BGF)
-							</li>
-							<li>
-								<a href="parr.html">Extracted grammar</a> (browsable)
-							</li>
-						</ul>
-					</dd>
-					<dt>Stahl</dt>
-					<dd>
-						<ul>
-							<li>
-								<a href="http://www.antlr.org/grammar/1093454600181/java15-grammar.zip">Original grammar by Michael Stahl</a>, ANTLR2, 2004
-							</li>
-							<li>
-								<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/stahl/">Extraction directory</a>
-							</li>
-							<li>
-								<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/testing/gbtf/tests/java/stahl.bgf?view=markup">Extracted grammar</a> (BGF)
-							</li>
-							<li>
-								<a href="stahl.html">Extracted grammar</a> (browsable)
-							</li>
-						</ul>
-					</dd>
-					<dt>Studman</dt>
-					<dd>
-						<ul>
-							<li>
-								<a href="http://www.antlr.org/grammar/1090713067533/java15.g">Original grammar by Michael Studman</a>, ANTLR2, 2004
-							</li>
-							<li>
-								<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/studman/">Extraction directory</a>
-							</li>
-							<li>
-								<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/testing/gbtf/tests/java/studman.bgf?view=markup">Extracted grammar</a> (BGF)
-							</li>
-							<li>
-								<a href="studman.html">Extracted grammar</a> (browsable)
-							</li>
-						</ul>
-					</dd>
-				</dl>
+				<a href="http://slps.svn.sourceforge.net/viewvc/slps/shared/prolog/cli/gbtf.pro?view=markup">skipuppy, tc, pc, nc, bc, cdbc, main gbtf</a> (Prolog)
 			</li>
+		</ul>
+		<h3>ANTLR⇒BGF extraction</h3>
+		<ul>
+			<li>
+				<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR2.rsc?view=markup">ANTLR2 grammar</a> (Rascal)
+			</li>
+			<li>
+				<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR3.rsc?view=markup">ANTLR3 grammar</a> (Rascal)
+			</li>
+			<li>
+				<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrstrip.py?view=markup">ANTLR stripping transformation</a> (±legacy Python)
+			</li>
+			<li>
+				<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrpp.py?view=markup">ANTLR pretty-printer</a> (Python)
+			</li>
+			<li>
+				<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g?view=markup">Stripped ANTLR specification and its mapping to BGF</a> (ANTLR3)
+			</li>
+		</ul>
+		<div class="c"><img src="figures/java.png" alt="Java inequality"/></div>
+		<h3>ANTLR Java 5 sources</h3>
+		<dl>
+			<dt>Habelitz</dt>
+			<dd>
+				<ul>
+					<li>
+						<a href="http://www.antlr.org/grammar/1207932239307/Java1_5Grammars/Java.g">Original grammar by Dieter Habelitz</a> (ANTLR3), 2008
+					</li>
+					<li>
+						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/habelitz/">Extraction directory</a>
+					</li>
+					<li>
+						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/testing/gbtf/tests/java/habelitz.bgf?view=markup">Extracted grammar</a> (BGF)
+					</li>
+					<li>
+						<a href="java/habelitz.html">Extracted grammar</a> (browsable)
+					</li>
+				</ul>
+			</dd>
+			<dt>Parr</dt>
+			<dd>
+				<ul>
+					<li>
+						<a href="http://www.antlr.org/grammar/1152141644268/Java.g">Original grammar by Terence Parr</a> (ANTLR3), 2006
+					</li>
+					<li>
+						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/parr/">Extraction directory</a>
+					</li>
+					<li>
+						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/testing/gbtf/tests/java/parr.bgf?view=markup">Extracted grammar</a> (BGF)
+					</li>
+					<li>
+						<a href="java/parr.html">Extracted grammar</a> (browsable)
+					</li>
+				</ul>
+			</dd>
+			<dt>Stahl</dt>
+			<dd>
+				<ul>
+					<li>
+						<a href="http://www.antlr.org/grammar/1093454600181/java15-grammar.zip">Original grammar by Michael Stahl</a> (ANTLR2), 2004
+					</li>
+					<li>
+						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/stahl/">Extraction directory</a>
+					</li>
+					<li>
+						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/testing/gbtf/tests/java/stahl.bgf?view=markup">Extracted grammar</a> (BGF)
+					</li>
+					<li>
+						<a href="java/stahl.html">Extracted grammar</a> (browsable)
+					</li>
+				</ul>
+			</dd>
+			<dt>Studman</dt>
+			<dd>
+				<ul>
+					<li>
+						<a href="http://www.antlr.org/grammar/1090713067533/java15.g">Original grammar by Michael Studman</a> (ANTLR2), 2004
+					</li>
+					<li>
+						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/studman/">Extraction directory</a>
+					</li>
+					<li>
+						<a href="http://slps.svn.sourceforge.net/viewvc/slps/topics/testing/gbtf/tests/java/studman.bgf?view=markup">Extracted grammar</a> (BGF)
+					</li>
+					<li>
+						<a href="java/studman.html">Extracted grammar</a> (browsable)
+					</li>
+				</ul>
+			</dd>
+		</dl>
+		<div class="c"><img src="figures/tescol.png" alt="TESCOL nonterminal matching"/></div>
+		<h3>TESCOL sources</h3>
+		<ul>
+			<li><a href="tescol/00000.html">00000 grammar</a> (browsable)</li>
+			<li><a href="tescol/00001.html">00001 grammar</a> (browsable)</li>
+			<li><a href="tescol/00010.html">00010 grammar</a> (browsable)</li>
+			<li><a href="tescol/00011.html">00011 grammar</a> (browsable)</li>
+			<li><a href="tescol/00100.html">00100 grammar</a> (browsable)</li>
+			<li><a href="tescol/00101.html">00101 grammar</a> (browsable)</li>
+			<li><a href="tescol/00110.html">00110 grammar</a> (browsable)</li>
+			<li><a href="tescol/00111.html">00111 grammar</a> (browsable)</li>
+			<li><a href="tescol/01000.html">01000 grammar</a> (browsable)</li>
+			<li><a href="tescol/01001.html">01001 grammar</a> (browsable)</li>
+			<li><a href="tescol/01010.html">01010 grammar</a> (browsable)</li>
+			<li><a href="tescol/01011.html">01011 grammar</a> (browsable)</li>
+			<li><a href="tescol/01100.html">01100 grammar</a> (browsable)</li>
+			<li><a href="tescol/01101.html">01101 grammar</a> (browsable)</li>
+			<li><a href="tescol/01110.html">01110 grammar</a> (browsable)</li>
+			<li><a href="tescol/01111.html">01111 grammar</a> (browsable)</li>
+			<li><a href="tescol/10000.html">10000 grammar</a> (browsable)</li>
+			<li><a href="tescol/10001.html">10001 grammar</a> (browsable)</li>
+			<li><a href="tescol/10010.html">10010 grammar</a> (browsable)</li>
+			<li><a href="tescol/10011.html">10011 grammar</a> (browsable)</li>
+			<li><a href="tescol/10100.html">10100 grammar</a> (browsable)</li>
+			<li><a href="tescol/10101.html">10101 grammar</a> (browsable)</li>
+			<li><a href="tescol/10110.html">10110 grammar</a> (browsable)</li>
+			<li><a href="tescol/10111.html">10111 grammar</a> (browsable)</li>
+			<li><a href="tescol/11000.html">11000 grammar</a> (browsable)</li>
+			<li><a href="tescol/11001.html">11001 grammar</a> (browsable)</li>
+			<li><a href="tescol/11010.html">11010 grammar</a> (browsable)</li>
+			<li><a href="tescol/11011.html">11011 grammar</a> (browsable)</li>
+			<li><a href="tescol/11100.html">11100 grammar</a> (browsable)</li>
+			<li><a href="tescol/11101.html">11101 grammar</a> (browsable)</li>
+			<li><a href="tescol/11110.html">11110 grammar</a> (browsable)</li>
+			<li><a href="tescol/11111.html">11111 grammar</a> (browsable)</li>
+			<li><a href="http://files.328d.net/TESCOL.g">TESCOL.g</a> (reference grammar)</li>
+		</ul>
+		<div class="c"><img src="figures/match-good-bad.png" alt="nonterminal matching: good and bad examples"/></div>
+		<h3>Paper</h3>
+		<ul>
 			<li>
 				<a href="#">...</a>
 			</li>
 		</ul>
 		<hr />
+		<div class="last">
+			The page is maintained by <a href="http://grammarware.net/">Dr. Vadim Zaytsev</a> a.k.a. @<a href="http://twitter.com/grammarware">grammarware</a>. Last updated: April 2011.
+		</div>
 	</body>
 </html>
