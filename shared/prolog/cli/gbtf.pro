@@ -57,7 +57,7 @@ statistics(G)
       format('* Contexts: ~w~n',[Len]),
       fail; true ),
 
-    ( findall((N1,N2),gbtf:mindistFact(N1,N2,_),N12s),
+    ( findall((N1,N2),gbtf:distFact(N1,N2,_),N12s),
       length(N12s,Len),
       format('* Holes: ~w~n',[Len]),
       fail; true ).
@@ -81,7 +81,7 @@ startsymbol(G,R)
 
 ssWeight(N,W)
  :-
-    findall(Q,gbtf:mindistFact(N,Q,_),Qs),
+    findall(Q,gbtf:distFact(N,Q,_),Qs),
     length(Qs,W).
 
 
@@ -119,7 +119,7 @@ tc(G,R,T)
 nc(G,R,T)
  :-
     root(G,R), 
-    gbtf:mindistFact(R,H,_),
+    gbtf:distFact(R,H,_),
     hole(G,n(R),H,T,V),
     complete(G,n(H),V).
 
@@ -133,7 +133,7 @@ pc(G,R,T)
 pc(G,R,T)
  :-
     root(G,R), 
-    gbtf:mindistFact(R,H,_),
+    gbtf:distFact(R,H,_),
     \+ skipuppy(H),
     hole(G,n(R),H,T,V),
     pc(G,H,V).
@@ -153,7 +153,7 @@ cdbc(C,G,R,T)
 cdbc(C,G,R,T)
  :-
     root(G,R),
-    gbtf:mindistFact(R,H,_),
+    gbtf:distFact(R,H,_),
     \+ skipuppy(H),
     hole(G,n(R),H,T,V),
     cdbc(C,G,H,V).
@@ -169,7 +169,7 @@ main
 % Compute grammar properties
 
     mindepthG(G),
-    mindistG(G),
+    distG(G),
 
 % Output some statistics
 

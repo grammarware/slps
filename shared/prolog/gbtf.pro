@@ -1,6 +1,6 @@
 :- module(gbtf,
     [ mindepthG/1
-    , mindistG/1
+    , distG/1
     , complete/3
     , hole/5
     , mark/3
@@ -8,7 +8,7 @@
     ] ).
 
 :- dynamic gbtf:mindepthFact/2.
-:- dynamic gbtf:mindistFact/3.
+:- dynamic gbtf:distFact/3.
 
 
 % ------------------------------------------------------------
@@ -127,26 +127,26 @@ chooseByMindepth(O1,D1,[O2|Os],O)
 % ------------------------------------------------------------
 
 %
-% Determine mindist between nonterminals.
+% Determine dist between nonterminals.
 % This is very similar to mindept problem.
 %
 
-mindistG(g(_,Ps)) 
+distG(g(_,Ps)) 
  :-
-    mindistG(Ps).
+    distG(Ps).
 
-mindistG(Ps)
+distG(Ps)
  :-
     is_list(Ps),
-    mindist1(Ps),
-    mindistStar(Ps).
+    dist1(Ps),
+    distStar(Ps).
 
 
 %
-% Initialize mindist relation with direct dependencies
+% Initialize dist relation with direct dependencies
 % 
 
-mindist1(Ps)
+dist1(Ps)
  :-
       definedNs(Ps,DNs),
       member(DN,DNs),
@@ -154,32 +154,32 @@ mindist1(Ps)
       usedNs(PsDN,UNs),
       member(UN,UNs),
       \+ UN == DN,
-      assertz(gbtf:mindistFact(DN,UN,1)),
+      assertz(gbtf:distFact(DN,UN,1)),
       fail;
       true.
 
 
 %
-% Compute mindists between so-far unrelated nonterminals.
+% Compute dists between so-far unrelated nonterminals.
 % Use a helper nonterminal in between and existing relationships with it.
 % Fixed point is reached if no new relationships are obtainable in this manner.
 %
 
-mindistStar(Ps)
+distStar(Ps)
  :-
-    mindist2(Ps,NNDs),
+    dist2(Ps,NNDs),
     ( NNDs == [] ->
         true;
         (
           member((N1,N2,D),NNDs),
-          assertz(gbtf:mindistFact(N1,N2,D)),
+          assertz(gbtf:distFact(N1,N2,D)),
           fail
         ;
-          mindistStar(Ps)
+          distStar(Ps)
         )
     ). 
 
-mindist2(Ps,NNDs)
+dist2(Ps,NNDs)
  :-
     definedNs(Ps,DNs),
     findall((N1,N2,D),
@@ -187,11 +187,11 @@ mindist2(Ps,NNDs)
         member(N1,DNs),
         member(N2,DNs),
         \+ N1 == N2,
-        \+ gbtf:mindistFact(N1,N2,_),
+        \+ gbtf:distFact(N1,N2,_),
         findall(D12,
         (
-          gbtf:mindistFact(N1,N3,D1),
-          gbtf:mindistFact(N3,N2,D2),
+          gbtf:distFact(N1,N3,D1),
+          gbtf:distFact(N3,N2,D2),
           D12 is D1 + D2
         ),
         Ds),
@@ -201,34 +201,34 @@ mindist2(Ps,NNDs)
 
 
 %
-% Determine mindist from a BGF expression to a nonterminal
+% Determine dist from a BGF expression to a nonterminal
 %
 
-mindistX(p(_,_,X),N,D)
+distX(p(_,_,X),N,D)
  :-
     !,
-    mindistX(X,N,D).
+    distX(X,N,D).
 
-mindistX(X,N,D)
+distX(X,N,D)
  :-
     usedNs(X,UNs),
     findall(D1,
       (
         member(UN,UNs),
-        ( UN == N -> D1 = 0; gbtf:mindistFact(UN,N,D1) )
+        ( UN == N -> D1 = 0; gbtf:distFact(UN,N,D1) )
       ),
       Ds),
     min1(Ds,D).
 
 
 %
-% Given a list of options, determine the one with mindist.
-% The leftmost is chosen if there are multiple options with mindist.
+% Given a list of options, determine the one with dist.
+% The leftmost is chosen if there are multiple options with dist.
 %
 
 chooseByMindist([O1|Os],N,O)
  :-
-    mindistX(O1,N,D1) ->
+    distX(O1,N,D1) ->
       chooseByMindist(O1,D1,Os,N,O) ;
       chooseByMindist(Os,N,O).
 
@@ -236,7 +236,7 @@ chooseByMindist(O,_,[],_,O).
 
 chooseByMindist(O1,D1,[O2|Os],N,O)
  :-
-    mindistX(O2,N,D2) ->
+    distX(O2,N,D2) ->
       ( D2 < D1 ->
           chooseByMindist(O2,D2,Os,N,O) ;
           chooseByMindist(O1,D1,Os,N,O)
