@@ -20,4 +20,4 @@ else
     OUTPUT=$2
 fi
 
-xsltproc ${SLPS}/shared/xsl/bgf2dms.xslt $1> ${OUTPUT}
+xsltproc ${SLPS}/topics/export/ebnf/bgf2dms.xslt $1> ${OUTPUT}

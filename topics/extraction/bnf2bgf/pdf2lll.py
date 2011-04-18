@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import sys
-from pydbgr.api import debug
+#from pydbgr.api import debug
 
 nt2t = 0
 
