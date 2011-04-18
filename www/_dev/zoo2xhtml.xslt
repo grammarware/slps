@@ -19,9 +19,16 @@
 				</h1>
 				<h2><xsl:value-of select="count(//grammar)"/> grammars and counting</h2>
 				<h1>
-				<a href="#{language[1]/handle}"><xsl:value-of select="language[1]/name"/></a>
-				<xsl:for-each select="language[position()&gt;1]"><xsl:text> — </xsl:text><a href="#{handle}"><xsl:value-of select="name"/></a></xsl:for-each>
-			</h1>
+					<a href="#{language[1]/handle}">
+						<xsl:value-of select="language[1]/name"/>
+					</a>
+					<xsl:for-each select="language[position()&gt;1]">
+						<xsl:text> — </xsl:text>
+						<a href="#{handle}">
+							<xsl:value-of select="name"/>
+						</a>
+					</xsl:for-each>
+				</h1>
 				<xsl:for-each select="language">
 					<hr/>
 					<h2>
@@ -44,29 +51,10 @@
 							<xsl:value-of select="name"/>
 						</h3>
 						<ul>
-							<xsl:for-each select="source">
-								<li>
-									<xsl:text>Source: </xsl:text>
-									<xsl:copy-of select="title/node()"/>
-									<xsl:if test="date">
-										<xsl:text> (</xsl:text>
-										<xsl:value-of select="date"/>
-										<xsl:text>)</xsl:text>
-									</xsl:if>
-									<xsl:if test="specific">
-										<xsl:text>, </xsl:text>
-										<xsl:value-of select="specific"/>
-									</xsl:if>
-									<span class="links">
-										<xsl:for-each select="link">
-										[<a href="{uri}"><xsl:value-of select="name"/></a>]
-									</xsl:for-each>
-									</span>
-								</li>
-							</xsl:for-each>
-							<xsl:for-each select="toolset">
+							<xsl:for-each select="*">
 								<xsl:choose>
-									<xsl:when test="@ref">
+									<xsl:when test="local-name(.)='name'"/>
+									<xsl:when test="local-name(.)='toolset' and @ref">
 										<xsl:variable name="name" select="@ref"/>
 										<xsl:apply-templates select="/zoo/toolset[@name=$name]"/>
 									</xsl:when>
@@ -75,38 +63,11 @@
 									</xsl:otherwise>
 								</xsl:choose>
 							</xsl:for-each>
-							<xsl:for-each select="grammar">
-								<li>
-									<xsl:value-of select="name"/>
-									<xsl:text> grammar: </xsl:text>
-									<span class="links">
-										[<a href="{../../handle}/{handle}.html">Browsable</a>]
-										[<a href="{../../handle}/{handle}.bgf">BGF</a>]
-										[<a href="{../../handle}/{handle}.bnf">EBNF</a>]
-										<xsl:if test="not(../../handle='java') and not(../../handle='xpath')">
-											[<a href="{../../handle}/{handle}.lll">LLL</a>]
-										</xsl:if>
-										[<a href="{../../handle}/{handle}.dms">DMS BNF</a>]
-										[<a href="{../../handle}/{handle}.sdf">SDF</a>]
-										[<a href="{../../handle}/{handle}.rsc">Rascal</a>]
-									</span>
-								</li>
-							</xsl:for-each>
-							<xsl:for-each select="item">
-								<li>
-									<xsl:copy-of select="name/node()"/>
-									<span class="links">
-										<xsl:for-each select="link">
-											[<a href="{uri}"><xsl:value-of select="name"/></a>]
-										</xsl:for-each>
-									</span>
-								</li>
-							</xsl:for-each>
 						</ul>
 					</xsl:for-each>
 				</xsl:for-each>
 				<hr/>
-				<h2>Notations and Formats</h2>
+				<h3>Appendix: Notations and Formats</h3>
 				<ul>
 					<li>
 						<xsl:text>Browsable:</xsl:text>
@@ -152,7 +113,7 @@
 						</span>
 					</li>
 				</ul>
-				<hr />
+				<hr/>
 				<div class="last">
 					<span class="links">[<a href="/">↑SLPS</a>]</span>
 					<em>
@@ -184,5 +145,52 @@
 				</xsl:for-each>
 			</span>
 		</li>
-	</xsl:template>		
+	</xsl:template>
+	<xsl:template match="source">
+		<li>
+			<xsl:text>Source: </xsl:text>
+			<xsl:copy-of select="title/node()"/>
+			<xsl:if test="date">
+				<xsl:text> (</xsl:text>
+				<xsl:value-of select="date"/>
+				<xsl:text>)</xsl:text>
+			</xsl:if>
+			<xsl:if test="specific">
+				<xsl:text>, </xsl:text>
+				<xsl:value-of select="specific"/>
+			</xsl:if>
+			<span class="links">
+				<xsl:for-each select="link">
+				[<a href="{uri}"><xsl:value-of select="name"/></a>]
+			</xsl:for-each>
+			</span>
+		</li>
+	</xsl:template>
+	<xsl:template match="grammar">
+		<li>
+			<xsl:value-of select="name"/>
+			<xsl:text> grammar: </xsl:text>
+			<span class="links">
+				[<a href="{../../handle}/{handle}.html">Browsable</a>]
+				[<a href="{../../handle}/{handle}.bgf">BGF</a>]
+				[<a href="{../../handle}/{handle}.bnf">EBNF</a>]
+				<xsl:if test="not(../../handle='java') and not(../../handle='xpath') and not(handle='iso-23270-2003') and not(handle='iso-23270-2003-recovered')">
+					[<a href="{../../handle}/{handle}.lll">LLL</a>]
+				</xsl:if>
+				[<a href="{../../handle}/{handle}.dms">DMS BNF</a>]
+				[<a href="{../../handle}/{handle}.sdf">SDF</a>]
+				[<a href="{../../handle}/{handle}.rsc">Rascal</a>]
+			</span>
+		</li>
+	</xsl:template>
+	<xsl:template match="item">
+		<li>
+			<xsl:copy-of select="name/node()"/>
+			<span class="links">
+				<xsl:for-each select="link">
+					[<a href="{uri}"><xsl:value-of select="name"/></a>]
+				</xsl:for-each>
+			</span>
+		</li>
+	</xsl:template>
 </xsl:stylesheet>

@@ -30,6 +30,13 @@
 			<name>BGF⇒Rascal</name>
 		</link>
 	</toolset>
+	<toolset name="scraping">
+		<name>Extraction</name>
+		<link>
+			<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/html2bgf.py?view=markup</uri>
+			<name>HTML⇒BGF</name>
+		</link>
+	</toolset>
 	<!-- ================================================================ -->
 	<language>
 		<handle>c</handle>
@@ -212,21 +219,6 @@
 				<name>Recovered grammar</name>
 				<handle>iso-23270-2003-recovered</handle>
 			</grammar>
-			<item>
-				<name>V. Zaytsev. <em>Correct C# Grammar too Sharp for ISO.</em> GTTSE 2005. Extended abstract.</name>
-				<link>
-					<uri>http://wiki.di.uminho.pt/twiki/bin/view/Events/GTTSE/</uri>
-					<name>GTTSE</name>
-				</link>
-				<link>
-					<uri>http://grammarware.net/text/2005/toosharp.pdf</uri>
-					<name>Abstract</name>
-				</link>
-				<link>
-					<uri>http://grammarware.net/slides/2005/gttse.pdf</uri>
-					<name>Slides</name>
-				</link>
-			</item>
 			<toolset>
 				<name>Recovery</name>
 				<link>
@@ -265,6 +257,22 @@
 					<name>modularise</name>
 				</link>
 			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item>
+				<name>V. Zaytsev. <em>Correct C# Grammar too Sharp for ISO.</em> GTTSE 2005. Extended abstract.</name>
+				<link>
+					<uri>http://wiki.di.uminho.pt/twiki/bin/view/Events/GTTSE/</uri>
+					<name>GTTSE</name>
+				</link>
+				<link>
+					<uri>http://grammarware.net/text/2005/toosharp.pdf</uri>
+					<name>Abstract</name>
+				</link>
+				<link>
+					<uri>http://grammarware.net/slides/2005/gttse.pdf</uri>
+					<name>Slides</name>
+				</link>
+			</item>
 		</version>
 		<version>
 			<name>ISO C# 2006</name>
@@ -284,17 +292,8 @@
 				<name>Extracted</name>
 				<handle>iso-23270-2006</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>Microsoft C# 1.0</name>
@@ -310,17 +309,8 @@
 				<name>Extracted</name>
 				<handle>msft-ls-1.0</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>Microsoft C# 1.2</name>
@@ -336,17 +326,8 @@
 				<name>Extracted</name>
 				<handle>msft-ls-1.2</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>Microsoft C# 3.0</name>
@@ -362,17 +343,8 @@
 				<name>Extracted</name>
 				<handle>msft-ls-3.0</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>Microsoft C# 4.0</name>
@@ -388,17 +360,8 @@
 				<name>Extracted</name>
 				<handle>msft-ls-4.0</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>
 	<language>
@@ -426,6 +389,8 @@
 				<name>Implementable</name>
 				<handle>jls1-impl</handle>
 			</grammar>
+			<toolset ref="scraping"/>
+			<toolset ref="bnfdmssdfrsc"/>
 			<item>
 				<name>R. Lämmel, V. Zaytsev. <em>Recovering Grammar Relationships for the Java Language Specification.</em> SCAM 2009.</name>
 				<link>
@@ -464,13 +429,6 @@
 					<name>Slides</name>
 				</link>
 			</item>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/html2bgf.py?view=markup</uri>
-					<name>HTML⇒BGF</name>
-				</link>
-			</toolset>
 		</version>
 		<version>
 			<name>J2SE 1.2 “Playground”</name>
@@ -494,6 +452,8 @@
 				<name>Implementable</name>
 				<handle>jls2-impl</handle>
 			</grammar>
+			<toolset ref="scraping"/>
+			<toolset ref="bnfdmssdfrsc"/>
 			<item>
 				<name>R. Lämmel, V. Zaytsev. <em>Recovering Grammar Relationships for the Java Language Specification.</em> SCAM 2009.</name>
 				<link>
@@ -532,13 +492,6 @@
 					<name>Slides</name>
 				</link>
 			</item>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/html2bgf.py?view=markup</uri>
-					<name>HTML⇒BGF</name>
-				</link>
-			</toolset>
 		</version>
 		<version>
 			<name>J2SE 5.0 “Tiger”</name>
@@ -554,38 +507,6 @@
 					<name>PDF</name>
 				</link>
 			</source>
-			<source>
-				<title>Dieter Habelitz, <em>Java.g</em></title>
-				<date>2008</date>
-				<link>
-					<uri>http://www.antlr.org/grammar/1207932239307/Java1_5Grammars/Java.g</uri>
-					<name>ANTLR3</name>
-				</link>
-			</source>
-			<source>
-				<title>Terence Parr, <em>Java.g</em></title>
-				<date>2006</date>
-				<link>
-					<uri>http://www.antlr.org/grammar/1152141644268/Java.g</uri>
-					<name>ANTLR3</name>
-				</link>
-			</source>
-			<source>
-				<title>Michael Stahl, <em>java15.g</em></title>
-				<date>2004</date>
-				<link>
-					<uri>http://www.antlr.org/grammar/1093454600181/java15-grammar.zip</uri>
-					<name>ANTLR2</name>
-				</link>
-			</source>
-			<source>
-				<title>Michael Studman, <em>java15.g</em></title>
-				<date>2004</date>
-				<link>
-					<uri>http://www.antlr.org/grammar/1090713067533/java15.g</uri>
-					<name>ANTLR2</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Readable</name>
 				<handle>jls3-read</handle>
@@ -594,22 +515,132 @@
 				<name>Implementable</name>
 				<handle>jls3-impl</handle>
 			</grammar>
+			<toolset ref="scraping"/>
+			<toolset ref="bnfdmssdfrsc"/>
+			<source>
+				<title>Dieter Habelitz, <code>Java.g</code></title>
+				<date>2008</date>
+				<link>
+					<uri>http://www.antlr.org/grammar/1207932239307/Java1_5Grammars/Java.g</uri>
+					<name>ANTLR3</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Habelitz</name>
 				<handle>habelitz</handle>
 			</grammar>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR3.rsc?view=markup</uri>
+					<name>ANTLR3.rsc</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrpp.py?view=markup</uri>
+					<name>antlrpp.py</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g?view=markup</uri>
+					<name>StrippedANTLR.g</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/habelitz/post-extraction.xbgf?view=markup</uri>
+					<name>post-extraction</name>
+				</link>
+			</toolset>
+			<source>
+				<title>Terence Parr, <code>Java.g</code></title>
+				<date>2006</date>
+				<link>
+					<uri>http://www.antlr.org/grammar/1152141644268/Java.g</uri>
+					<name>ANTLR3</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Parr</name>
 				<handle>parr</handle>
 			</grammar>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR3.rsc?view=markup</uri>
+					<name>ANTLR3.rsc</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrpp.py?view=markup</uri>
+					<name>antlrpp.py</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g?view=markup</uri>
+					<name>StrippedANTLR.g</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/parr/post-extraction.xbgf?view=markup</uri>
+					<name>post-extraction</name>
+				</link>
+			</toolset>
+			<source>
+				<title>Michael Stahl, <code>java15.g</code></title>
+				<date>2004</date>
+				<link>
+					<uri>http://www.antlr.org/grammar/1093454600181/java15-grammar.zip</uri>
+					<name>ANTLR2.ZIP</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Stahl</name>
 				<handle>stahl</handle>
 			</grammar>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR2.rsc?view=markup</uri>
+					<name>ANTLR2.rsc</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrpp.py?view=markup</uri>
+					<name>antlrpp.py</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g?view=markup</uri>
+					<name>StrippedANTLR.g</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/stahl/post-extraction.xbgf?view=markup</uri>
+					<name>post-extraction</name>
+				</link>
+			</toolset>
+			<source>
+				<title>Michael Studman, <code>java15.g</code></title>
+				<date>2004</date>
+				<link>
+					<uri>http://www.antlr.org/grammar/1090713067533/java15.g</uri>
+					<name>ANTLR2</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Studman</name>
 				<handle>studman</handle>
 			</grammar>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR2.rsc?view=markup</uri>
+					<name>ANTLR2.rsc</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrpp.py?view=markup</uri>
+					<name>antlrpp.py</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g?view=markup</uri>
+					<name>StrippedANTLR.g</name>
+				</link>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/studman/post-extraction.xbgf?view=markup</uri>
+					<name>post-extraction</name>
+				</link>
+			</toolset>
 			<item>
 				<name>R. Lämmel, V. Zaytsev. <em>Recovering Grammar Relationships for the Java Language Specification.</em> SCAM 2009.</name>
 				<link>
@@ -659,13 +690,17 @@
 					<name>Paper</name>
 				</link>
 			</item>
-			<toolset>
-				<name>Extraction</name>
+			<item>
+				<name>R. Lämmel, V. Zaytsev. <em>Comparison of Context-free Grammars Based on Parsing Generated Test Data.</em></name>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/html2bgf.py?view=markup</uri>
-					<name>HTML⇒BGF</name>
+					<uri>http://grammarware.net/text/2011/testmatch.pdf</uri>
+					<name>Draft</name>
 				</link>
-			</toolset>
+				<link>
+					<uri>http://slps.sf.net/testmatch</uri>
+					<name>Online</name>
+				</link>
+			</item>
 		</version>
 	</language>
 	<language>
