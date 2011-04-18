@@ -18,6 +18,7 @@ all:
 	../shared/tools/bgf2bnf zoo/csharp/$*.bgf zoo/csharp/$*.bnf
 	../shared/tools/bgf2dms zoo/csharp/$*.bgf zoo/csharp/$*.dms
 	../shared/tools/bgf2sdf zoo/csharp/$*.bgf zoo/csharp/$*.sdf
+	../shared/tools/bgf2rsc zoo/csharp/$*.bgf zoo/csharp/$*.rsc
 
 iso-23270-2003-extracted:
 	cp ../topics/grammars/csharp/iso-23270-2003/extracted-grammar.bgf zoo/csharp/iso-23270-2003.bgf
@@ -25,6 +26,7 @@ iso-23270-2003-extracted:
 	../shared/tools/bgf2bnf zoo/csharp/iso-23270-2003.bgf zoo/csharp/iso-23270-2003.bnf
 	../shared/tools/bgf2dms zoo/csharp/iso-23270-2003.bgf zoo/csharp/iso-23270-2003.dms
 	../shared/tools/bgf2sdf zoo/csharp/iso-23270-2003.bgf zoo/csharp/iso-23270-2003.sdf
+	../shared/tools/bgf2rsc zoo/csharp/iso-23270-2003.bgf zoo/csharp/iso-23270-2003.rsc
 
 iso-23270-2003-recovered:
 	cp ../topics/grammars/csharp/iso-23270-2003/recovered-grammar.bgf zoo/csharp/iso-23270-2003-recovered.bgf
@@ -32,3 +34,4 @@ iso-23270-2003-recovered:
 	../shared/tools/bgf2bnf zoo/csharp/iso-23270-2003-recovered.bgf zoo/csharp/iso-23270-2003-recovered.bnf
 	../shared/tools/bgf2dms zoo/csharp/iso-23270-2003-recovered.bgf zoo/csharp/iso-23270-2003-recovered.dms
 	../shared/tools/bgf2sdf zoo/csharp/iso-23270-2003-recovered.bgf zoo/csharp/iso-23270-2003-recovered.sdf
+	../shared/tools/bgf2rsc zoo/csharp/iso-23270-2003-recovered.bgf zoo/csharp/iso-23270-2003-recovered.rsc

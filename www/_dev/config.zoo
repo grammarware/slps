@@ -1,70 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zoo>
+	<toolset name="lll">
+		<name>Extraction</name>
+		<link>
+			<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
+			<name>PDF⇒LLL</name>
+		</link>
+		<link>
+			<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
+			<name>LLL⇒BGF</name>
+		</link>
+	</toolset>
+	<toolset name="bnfdmssdfrsc">
+		<name>Export</name>
+		<link>
+			<uri>http://slps.svn.sourceforge.net/viewvc/slps/shared/xsl/bgf2bnf.xslt?view=markup</uri>
+			<name>BGF⇒BNF</name>
+		</link>
+		<link>
+			<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/export/ebnf/bgf2dms.xslt?view=markup</uri>
+			<name>BGF⇒DMS</name>
+		</link>
+		<link>
+			<uri>http://slps.svn.sourceforge.net/viewvc/slps/shared/xsl/bgf2sdf.xslt?view=markup</uri>
+			<name>BGF⇒SDF</name>
+		</link>
+		<link>
+			<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/export/rascal/bgf2rsc.xslt?view=markup</uri>
+			<name>BGF⇒Rascal</name>
+		</link>
+	</toolset>
+	<!-- ================================================================ -->
 	<language>
 		<handle>c</handle>
 		<name>C</name>
 		<version>
 			<name>ISO C 1999</name>
-			<source>ISO/IEC 9899:1999(E) <em>Programming languages — C</em></source>
-			<date>December 1999</date>
-			<specific>Annex A, pages 402–416</specific>
+			<source>
+				<title>ISO/IEC 9899:1999(E) <em>Programming languages — C</em></title>
+				<date>December 1999</date>
+				<specific>Annex A, pages 402–416</specific>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>iso-9899-1999</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ISO C 2005</name>
-			<source>ISO/IEC 9899:TC2 <em>WG14/N1124</em> Committee Draft</source>
-			<date>May 2005</date>
-			<specific>Annex A, pages 403–417</specific>
+			<source>
+				<title>ISO/IEC 9899:TC2 <em>WG14/N1124</em> Committee Draft</title>
+				<date>May 2005</date>
+				<specific>Annex A, pages 403–417</specific>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>iso-9899-tc2</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ISO C 2007</name>
-			<source>ISO/IEC 9899:TC3 <em>WG14/N1256</em> Committee Draft</source>
-			<date>September 2007</date>
-			<specific>Annex A, pages 403–418</specific>
+			<source>
+				<title>ISO/IEC 9899:TC3 <em>WG14/N1256</em> Committee Draft</title>
+				<date>September 2007</date>
+				<specific>Annex A, pages 403–418</specific>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>iso-9899-tc3</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>
 	<language>
@@ -72,45 +82,31 @@
 		<name>C++</name>
 		<version>
 			<name>ISO C++ 1998</name>
-			<source>ISO/IEC 14882:1998(E) <em>Programming languages — C++</em> First edition</source>
-			<date>September 1998</date>
-			<specific>Annex A, pages 667–684</specific>
+			<source>
+				<title>ISO/IEC 14882:1998(E) <em>Programming languages — C++</em> First edition</title>
+				<date>September 1998</date>
+				<specific>Annex A, pages 667–684</specific>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>iso-14882-1998</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ISO C++ 2008</name>
-			<source>ISO/IEC SC22/WG21 N2723=08-0233 Working Draft, <em>Standard for Programming Language C++</em></source>
-			<date>August 2008</date>
-			<specific>Annex A, pages 1089–1101</specific>
+			<source>
+				<title>ISO/IEC SC22/WG21 N2723=08-0233 Working Draft, <em>Standard for Programming Language C++</em></title>
+				<date>August 2008</date>
+				<specific>Annex A, pages 1089–1101</specific>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>iso-n2723</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>
 	<language>
@@ -118,122 +114,96 @@
 		<name>C#</name>
 		<version>
 			<name>ECMA C# 2001</name>
-			<source>ECMA International Standard <em>ECMA-334, 1<sup>st</sup> edition</em></source>
-			<date>December 2001</date>
-			<specific>Appendix A, pages 339–364</specific>
-			<link>
-				<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
-				<name>Archive</name>
-			</link>
-			<link>
-				<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%201st%20edition,%20December%202001.pdf</uri>
-				<name>PDF</name>
-			</link>
+			<source>
+				<title>ECMA International Standard <em>ECMA-334, 1<sup>st</sup> edition</em></title>
+				<date>December 2001</date>
+				<specific>Appendix A, pages 339–364</specific>
+				<link>
+					<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
+					<name>Archive</name>
+				</link>
+				<link>
+					<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%201st%20edition,%20December%202001.pdf</uri>
+					<name>PDF</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>ecma-334-1</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ECMA C# 2002</name>
-			<source>ECMA International Standard <em>ECMA-334, 2<sup>nd</sup> edition</em></source>
-			<date>December 2002</date>
-			<specific>Appendix A, pages 335–360</specific>
-			<link>
-				<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
-				<name>Archive</name>
-			</link>
-			<link>
-				<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%202nd%20edition,%20December%202002.pdf</uri>
-				<name>PDF</name>
-			</link>
+			<source>
+				<title>ECMA International Standard <em>ECMA-334, 2<sup>nd</sup> edition</em></title>
+				<date>December 2002</date>
+				<specific>Appendix A, pages 335–360</specific>
+				<link>
+					<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
+					<name>Archive</name>
+				</link>
+				<link>
+					<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%202nd%20edition,%20December%202002.pdf</uri>
+					<name>PDF</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>ecma-334-2</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ECMA C# 2005</name>
-			<source>ECMA International Standard <em>ECMA-334, 3<sup>rd</sup> edition</em></source>
-			<date>June 2005</date>
-			<link>
-				<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
-				<name>Archive</name>
-			</link>
-			<link>
-				<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%203rd%20edition,%20June%202005.pdf</uri>
-				<name>PDF</name>
-			</link>
+			<source>
+				<title>ECMA International Standard <em>ECMA-334, 3<sup>rd</sup> edition</em></title>
+				<date>June 2005</date>
+				<link>
+					<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
+					<name>Archive</name>
+				</link>
+				<link>
+					<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%203rd%20edition,%20June%202005.pdf</uri>
+					<name>PDF</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>ecma-334-3</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ECMA C# 2006</name>
-			<source>ECMA International Standard <em>ECMA-334, 4<sup>th</sup> edition</em></source>
-			<date>June 2006</date>
-			<link>
-				<uri>http://www.ecma-international.org/publications/standards/Ecma-334.htm</uri>
-				<name>Standard</name>
-			</link>
-			<link>
-				<uri>http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-334.pdf</uri>
-				<name>PDF</name>
-			</link>
+			<source>
+				<title>ECMA International Standard <em>ECMA-334, 4<sup>th</sup> edition</em></title>
+				<date>June 2006</date>
+				<link>
+					<uri>http://www.ecma-international.org/publications/standards/Ecma-334.htm</uri>
+					<name>Standard</name>
+				</link>
+				<link>
+					<uri>http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-334.pdf</uri>
+					<name>PDF</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>ecma-334-4</handle>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
-					<name>PDF⇒LLL</name>
-				</link>
-				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
+			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ISO C# 2003</name>
-			<source>ISO/IEC 23270:2003(E) <em>Information technology — Programming languages — C#</em> First edition</source>
-			<date>2003</date>
+			<source>
+				<title>ISO/IEC 23270:2003(E) <em>Information technology — Programming languages — C#</em> First edition</title>
+				<date>2003</date>
+			</source>
 			<grammar>
 				<name>Extracted grammar</name>
 				<handle>iso-23270-2003</handle>
@@ -249,11 +219,11 @@
 					<name>GTTSE</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/text/2005/toosharp.pdf</uri>
+					<uri>http://grammarware.net/text/2005/toosharp.pdf</uri>
 					<name>Abstract</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/slides/2005/gttse.pdf</uri>
+					<uri>http://grammarware.net/slides/2005/gttse.pdf</uri>
 					<name>Slides</name>
 				</link>
 			</item>
@@ -298,16 +268,18 @@
 		</version>
 		<version>
 			<name>ISO C# 2006</name>
-			<source>ISO/IEC 23270:2006(E) <em>Information technology — Programming languages — C#</em> Second edition</source>
-			<date>September 2006</date>
-			<link>
-				<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/index.html</uri>
-				<name>Standard</name>
-			</link>
-			<link>
-				<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/c042926_ISO_IEC_23270_2006(E).zip</uri>
-				<name>PDF.ZIP</name>
-			</link>
+			<source>
+				<title>ISO/IEC 23270:2006(E) <em>Information technology — Programming languages — C#</em> Second edition</title>
+				<date>September 2006</date>
+				<link>
+					<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/index.html</uri>
+					<name>Standard</name>
+				</link>
+				<link>
+					<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/c042926_ISO_IEC_23270_2006(E).zip</uri>
+					<name>PDF.ZIP</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>iso-23270-2006</handle>
@@ -326,12 +298,14 @@
 		</version>
 		<version>
 			<name>Microsoft C# 1.0</name>
-			<source>C# Language Specification. Version 1.0</source>
-			<date>2002</date>
-			<link>
-				<uri>http://download.microsoft.com/download/a/9/e/a9e229b9-fee5-4c3e-8476-917dee385062/CSharp%20Language%20Specification%20v1.0.doc</uri>
-				<name>DOC</name>
-			</link>
+			<source>
+				<title>C# Language Specification. Version 1.0</title>
+				<date>2002</date>
+				<link>
+					<uri>http://download.microsoft.com/download/a/9/e/a9e229b9-fee5-4c3e-8476-917dee385062/CSharp%20Language%20Specification%20v1.0.doc</uri>
+					<name>DOC</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>msft-ls-1.0</handle>
@@ -350,12 +324,14 @@
 		</version>
 		<version>
 			<name>Microsoft C# 1.2</name>
-			<source>C# Language Specification. Version 1.2</source>
-			<date>2003</date>
-			<link>
-				<uri>http://download.microsoft.com/download/5/e/5/5e58be0a-b02b-41ac-a4a3-7a22286214ff/csharp%20language%20specification%20v1.2.doc</uri>
-				<name>DOC</name>
-			</link>
+			<source>
+				<title>C# Language Specification. Version 1.2</title>
+				<date>2003</date>
+				<link>
+					<uri>http://download.microsoft.com/download/5/e/5/5e58be0a-b02b-41ac-a4a3-7a22286214ff/csharp%20language%20specification%20v1.2.doc</uri>
+					<name>DOC</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>msft-ls-1.2</handle>
@@ -374,12 +350,14 @@
 		</version>
 		<version>
 			<name>Microsoft C# 3.0</name>
-			<source>C# Language Specification. Version 3.0</source>
-			<date>2007</date>
-			<link>
-				<uri>http://download.microsoft.com/download/3/8/8/388e7205-bc10-4226-b2a8-75351c669b09/CSharp%20Language%20Specification.doc</uri>
-				<name>DOC</name>
-			</link>
+			<source>
+				<title>C# Language Specification. Version 3.0</title>
+				<date>2007</date>
+				<link>
+					<uri>http://download.microsoft.com/download/3/8/8/388e7205-bc10-4226-b2a8-75351c669b09/CSharp%20Language%20Specification.doc</uri>
+					<name>DOC</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>msft-ls-3.0</handle>
@@ -398,12 +376,14 @@
 		</version>
 		<version>
 			<name>Microsoft C# 4.0</name>
-			<source>C# Language Specification. Version 4.0</source>
-			<date>2010</date>
-			<link>
-				<uri>http://download.microsoft.com/download/0/B/D/0BDA894F-2CCD-4C2C-B5A7-4EB1171962E5/CSharp%20Language%20Specification.doc</uri>
-				<name>DOC</name>
-			</link>
+			<source>
+				<title>C# Language Specification. Version 4.0</title>
+				<date>2010</date>
+				<link>
+					<uri>http://download.microsoft.com/download/0/B/D/0BDA894F-2CCD-4C2C-B5A7-4EB1171962E5/CSharp%20Language%20Specification.doc</uri>
+					<name>DOC</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>msft-ls-4.0</handle>
@@ -426,16 +406,18 @@
 		<name>Java</name>
 		<version>
 			<name>JDK 1.0</name>
-			<source>James Gosling, Bill Joy, Guy Steele, <em>Java Language Specification</em></source>
-			<date>1996</date>
-			<link>
-				<uri>http://java.sun.com/docs/books/jls/first_edition/html/index.html</uri>
-				<name>HTML</name>
-			</link>
-			<link>
-				<uri>http://java.sun.com/docs/books/jls/download/langspec-1.0.pdf</uri>
-				<name>PDF</name>
-			</link>
+			<source>
+				<title>James Gosling, Bill Joy, Guy Steele, <em>Java Language Specification</em></title>
+				<date>1996</date>
+				<link>
+					<uri>http://java.sun.com/docs/books/jls/first_edition/html/index.html</uri>
+					<name>HTML</name>
+				</link>
+				<link>
+					<uri>http://java.sun.com/docs/books/jls/download/langspec-1.0.pdf</uri>
+					<name>PDF</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Readable</name>
 				<handle>jls1-read</handle>
@@ -463,7 +445,7 @@
 					<name>Journal Paper</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/slides/2009/scam.pdf</uri>
+					<uri>http://grammarware.net/slides/2009/scam.pdf</uri>
 					<name>Slides</name>
 				</link>
 			</item>
@@ -474,11 +456,11 @@
 					<name>WSR</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/text/2010/wsr.pdf</uri>
+					<uri>http://grammarware.net/text/2010/wsr.pdf</uri>
 					<name>Abstract</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/slides/2010/wsr.pdf.gz</uri>
+					<uri>http://grammarware.net/slides/2010/wsr.pdf.gz</uri>
 					<name>Slides</name>
 				</link>
 			</item>
@@ -492,16 +474,18 @@
 		</version>
 		<version>
 			<name>J2SE 1.2 “Playground”</name>
-			<source>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em>Java Language Specification</em> Second Edition</source>
-			<date>1998</date>
-			<link>
-				<uri>http://java.sun.com/docs/books/jls/second_edition/html/j.title.doc.html</uri>
-				<name>HTML</name>
-			</link>
-			<link>
-				<uri>http://java.sun.com/docs/books/jls/download/langspec-2.0.pdf</uri>
-				<name>PDF</name>
-			</link>
+			<source>
+				<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em>Java Language Specification</em> Second Edition</title>
+				<date>1998</date>
+				<link>
+					<uri>http://java.sun.com/docs/books/jls/second_edition/html/j.title.doc.html</uri>
+					<name>HTML</name>
+				</link>
+				<link>
+					<uri>http://java.sun.com/docs/books/jls/download/langspec-2.0.pdf</uri>
+					<name>PDF</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Readable</name>
 				<handle>jls2-read</handle>
@@ -529,7 +513,7 @@
 					<name>Journal Paper</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/slides/2009/scam.pdf</uri>
+					<uri>http://grammarware.net/slides/2009/scam.pdf</uri>
 					<name>Slides</name>
 				</link>
 			</item>
@@ -540,11 +524,11 @@
 					<name>WSR</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/text/2010/wsr.pdf</uri>
+					<uri>http://grammarware.net/text/2010/wsr.pdf</uri>
 					<name>Abstract</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/slides/2010/wsr.pdf.gz</uri>
+					<uri>http://grammarware.net/slides/2010/wsr.pdf.gz</uri>
 					<name>Slides</name>
 				</link>
 			</item>
@@ -558,16 +542,50 @@
 		</version>
 		<version>
 			<name>J2SE 5.0 “Tiger”</name>
-			<source>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em>Java Language Specification</em> Third Edition</source>
-			<date>2004</date>
-			<link>
-				<uri>http://java.sun.com/docs/books/jls/third_edition/html/j3TOC.html</uri>
-				<name>HTML</name>
-			</link>
-			<link>
-				<uri>http://java.sun.com/docs/books/jls/download/langspec-3.0.pdf</uri>
-				<name>PDF</name>
-			</link>
+			<source>
+				<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em>Java Language Specification</em> Third Edition</title>
+				<date>2004</date>
+				<link>
+					<uri>http://java.sun.com/docs/books/jls/third_edition/html/j3TOC.html</uri>
+					<name>HTML</name>
+				</link>
+				<link>
+					<uri>http://java.sun.com/docs/books/jls/download/langspec-3.0.pdf</uri>
+					<name>PDF</name>
+				</link>
+			</source>
+			<source>
+				<title>Dieter Habelitz, <em>Java.g</em></title>
+				<date>2008</date>
+				<link>
+					<uri>http://www.antlr.org/grammar/1207932239307/Java1_5Grammars/Java.g</uri>
+					<name>ANTLR3</name>
+				</link>
+			</source>
+			<source>
+				<title>Terence Parr, <em>Java.g</em></title>
+				<date>2006</date>
+				<link>
+					<uri>http://www.antlr.org/grammar/1152141644268/Java.g</uri>
+					<name>ANTLR3</name>
+				</link>
+			</source>
+			<source>
+				<title>Michael Stahl, <em>java15.g</em></title>
+				<date>2004</date>
+				<link>
+					<uri>http://www.antlr.org/grammar/1093454600181/java15-grammar.zip</uri>
+					<name>ANTLR2</name>
+				</link>
+			</source>
+			<source>
+				<title>Michael Studman, <em>java15.g</em></title>
+				<date>2004</date>
+				<link>
+					<uri>http://www.antlr.org/grammar/1090713067533/java15.g</uri>
+					<name>ANTLR2</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Readable</name>
 				<handle>jls3-read</handle>
@@ -575,6 +593,22 @@
 			<grammar>
 				<name>Implementable</name>
 				<handle>jls3-impl</handle>
+			</grammar>
+			<grammar>
+				<name>Habelitz</name>
+				<handle>habelitz</handle>
+			</grammar>
+			<grammar>
+				<name>Parr</name>
+				<handle>parr</handle>
+			</grammar>
+			<grammar>
+				<name>Stahl</name>
+				<handle>stahl</handle>
+			</grammar>
+			<grammar>
+				<name>Studman</name>
+				<handle>studman</handle>
 			</grammar>
 			<item>
 				<name>R. Lämmel, V. Zaytsev. <em>Recovering Grammar Relationships for the Java Language Specification.</em> SCAM 2009.</name>
@@ -587,15 +621,11 @@
 					<name>Abstract</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~laemmel/jls/scam09.pdf</uri>
+					<uri>http://grammarware.net/text/2009/jls-scam.pdf</uri>
 					<name>Paper</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~laemmel/jls/paper.pdf</uri>
-					<name>Journal Paper</name>
-				</link>
-				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/slides/2009/scam.pdf</uri>
+					<uri>http://grammarware.net/slides/2009/scam.pdf</uri>
 					<name>Slides</name>
 				</link>
 			</item>
@@ -606,16 +636,31 @@
 					<name>WSR</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/text/2010/wsr.pdf</uri>
+					<uri>http://grammarware.net/text/2010/wsr.pdf</uri>
 					<name>Abstract</name>
 				</link>
 				<link>
-					<uri>http://userpages.uni-koblenz.de/~zaytsev/slides/2010/wsr.pdf.gz</uri>
+					<uri>http://grammarware.net/slides/2010/wsr.pdf.gz</uri>
 					<name>Slides</name>
 				</link>
 			</item>
+			<item>
+				<name>R. Lämmel, V. Zaytsev. <em>Recovering Grammar Relationships for the Java Language Specification.</em> ACM CRR; SQJ 19:2.</name>
+				<link>
+					<uri>http://dx.doi.org/10.1007/s11219-010-9116-5</uri>
+					<name>SQJ</name>
+				</link>
+				<link>
+					<uri>http://arxiv.org/abs/1008.4188</uri>
+					<name>arXiv</name>
+				</link>
+				<link>
+					<uri>http://grammarware.net/text/2011/jls-sqj.pdf</uri>
+					<name>Paper</name>
+				</link>
+			</item>
 			<toolset>
-				<name>Extraction tools</name>
+				<name>Extraction</name>
 				<link>
 					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/html2bgf.py?view=markup</uri>
 					<name>HTML⇒BGF</name>
@@ -628,16 +673,18 @@
 		<name>XPath</name>
 		<version>
 			<name>XPath 1.0</name>
-			<source><em>XML Path Language (XPath)</em>, Version 1.0, W3C Recommendation</source>
-			<date>16 November 1999</date>
-			<link>
-				<uri>http://www.w3.org/TR/1999/REC-xpath-19991116.xml</uri>
-				<name>XML</name>
-			</link>
-			<link>
-				<uri>http://www.w3.org/TR/1999/REC-xpath-19991116/</uri>
-				<name>HTML</name>
-			</link>
+			<source>
+				<title><em>XML Path Language (XPath)</em>, Version 1.0, W3C Recommendation</title>
+				<date>16 November 1999</date>
+				<link>
+					<uri>http://www.w3.org/TR/1999/REC-xpath-19991116.xml</uri>
+					<name>XML</name>
+				</link>
+				<link>
+					<uri>http://www.w3.org/TR/1999/REC-xpath-19991116/</uri>
+					<name>HTML</name>
+				</link>
+			</source>
 			<grammar>
 				<name>Extracted</name>
 				<handle>v1</handle>
@@ -661,6 +708,21 @@
 					<name>XBGF</name>
 				</link>
 			</toolset>
+			<item>
+				<name>V. Zaytsev, R. Lämmel. <em>A Unified Format for Language Documents.</em> SLE 2010.</name>
+				<link>
+					<uri>http://planet-sl.org/sle2010/</uri>
+					<name>SLE</name>
+				</link>
+				<link>
+					<uri>http://grammarware.net/text/2011/ldf.pdf</uri>
+					<name>Paper</name>
+				</link>
+				<link>
+					<uri>http://grammarware.net/slides/2010/sle.pdf</uri>
+					<name>Slides</name>
+				</link>
+			</item>
 		</version>
 	</language>
 </zoo>

@@ -9,3 +9,4 @@ all:
 	../shared/tools/bgf2bnf zoo/cpp/$*.bgf zoo/cpp/$*.bnf
 	../shared/tools/bgf2dms zoo/cpp/$*.bgf zoo/cpp/$*.dms
 	../shared/tools/bgf2sdf zoo/cpp/$*.bgf zoo/cpp/$*.sdf
+	../shared/tools/bgf2rsc zoo/cpp/$*.bgf zoo/cpp/$*.rsc

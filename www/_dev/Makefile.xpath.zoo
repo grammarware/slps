@@ -7,3 +7,4 @@ all:
 	../shared/tools/bgf2bnf zoo/xpath/$*.bgf zoo/xpath/$*.bnf
 	../shared/tools/bgf2dms zoo/xpath/$*.bgf zoo/xpath/$*.dms
 	../shared/tools/bgf2sdf zoo/xpath/$*.bgf zoo/xpath/$*.sdf
+	../shared/tools/bgf2rsc zoo/xpath/$*.bgf zoo/xpath/$*.rsc

@@ -10,3 +10,4 @@ all:
 	../shared/tools/bgf2bnf zoo/c/$*.bgf zoo/c/$*.bnf
 	../shared/tools/bgf2dms zoo/c/$*.bgf zoo/c/$*.dms
 	../shared/tools/bgf2sdf zoo/c/$*.bgf zoo/c/$*.sdf
+	../shared/tools/bgf2rsc zoo/c/$*.bgf zoo/c/$*.rsc

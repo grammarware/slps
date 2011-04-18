@@ -1,7 +1,11 @@
 all:
-	make 1.jls -f _dev/Makefile.java.zoo
-	make 2.jls -f _dev/Makefile.java.zoo
-	make 3.jls -f _dev/Makefile.java.zoo
+	make 1.jls          -f _dev/Makefile.java.zoo
+	make 2.jls          -f _dev/Makefile.java.zoo
+	make 3.jls          -f _dev/Makefile.java.zoo
+	make habelitz.antlr -f _dev/Makefile.java.zoo
+	make parr.antlr     -f _dev/Makefile.java.zoo
+	make stahl.antlr    -f _dev/Makefile.java.zoo
+	make studman.antlr  -f _dev/Makefile.java.zoo
 
 %.jls:
 	cp ../topics/grammars/java/jls$*/extracted-implementable-grammar.bgf zoo/java/jls$*-impl.bgf
@@ -14,3 +18,9 @@ all:
 	../shared/tools/bgf2bnf zoo/java/$*.bgf zoo/java/$*.bnf
 	../shared/tools/bgf2dms zoo/java/$*.bgf zoo/java/$*.dms
 	../shared/tools/bgf2sdf zoo/java/$*.bgf zoo/java/$*.sdf
+	../shared/tools/bgf2rsc zoo/java/$*.bgf zoo/java/$*.rsc
+
+%.antlr:
+	cp ../topics/grammars/java/antlr-java-5/$*/$*.bgf zoo/java/$*.bgf
+	make $*.formats -f _dev/Makefile.java.zoo
+
