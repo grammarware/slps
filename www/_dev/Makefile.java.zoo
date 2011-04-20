@@ -6,6 +6,7 @@ all:
 	make parr.antlr     -f _dev/Makefile.java.zoo
 	make stahl.antlr    -f _dev/Makefile.java.zoo
 	make studman.antlr  -f _dev/Makefile.java.zoo
+	chmod 644 zoo/java/*.bgf
 
 %.jls:
 	cp ../topics/grammars/java/jls$*/extracted-implementable-grammar.bgf zoo/java/jls$*-impl.bgf

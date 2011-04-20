@@ -1,5 +1,6 @@
 all:
 	make v1 -f _dev/Makefile.xpath.zoo
+	chmod 644 zoo/xpath/*.bgf
 
 %:
 	cp ../topics/grammars/xpath/extracted-grammar-$*.bgf zoo/xpath/$*.bgf

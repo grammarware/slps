@@ -18,6 +18,7 @@ zooprj:
 	make -f _dev/Makefile.cpp.zoo
 	make -f _dev/Makefile.csharp.zoo
 	make -f _dev/Makefile.java.zoo
+	make -f _dev/Makefile.fl.zoo
 	make -f _dev/Makefile.xpath.zoo
 	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/zoo2xhtml.xslt _dev/config.zoo > zoo/index.html
 	xsltproc _dev/links2html.xslt _dev/java-grammars.xml | python ../topics/export/hypertext/closemeta.py > zoo/java/links.html

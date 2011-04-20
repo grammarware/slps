@@ -1,24 +1,35 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:bgf="http://planet-sl.org/bgf" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Software Language Processing Suite</title>
 		<link href="slps.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript">
+
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-3743366-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+
+		</script>
 	</head>
 	<body style="background-color:#9CF;">
 		<h1>
 			Software Language Processing Suite
-			<br/>
-			<a href="http://sourceforge.net">
-				<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=228107&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" />
-			</a>
+			<br />
+			<a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=228107&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 		</h1>
 		<h2>Mission</h2>
 		<h3>
 			The project facilitates exposition and comparison of approaches and
 			techniques on language processing in a way that is relevant for CS
-			students, teachers, scientists, and practitioners.
+			students, teachers, scientists, engineers and practitioners.
 		</h3>
 		<hr />
 		<h2>Pages</h2>
@@ -71,11 +82,13 @@
 					</dd>
 					<dt>convergence</dt>
 					<dd>
-						Grammar convergence scenarios: Factorial Language, Java Language Specification, etc.
+						Grammar convergence tool (Language Convergence Infrastructure)
+						and grammar convergence scenarios: Factorial Language, Java Language Specification, etc.
 					</dd>
 					<dt>extraction</dt>
 					<dd>
-						Grammar extractors.
+						Grammar extractors: getting grammar knowledge in a form of BGF from
+						ANTLR, DCG, Ecore, HTML, BNF dialects, source code, SDF, TXL, Rascal, XML Schema, …
 					</dd>
 					<dt>recovery</dt>
 					<dd>
@@ -84,24 +97,43 @@
 					<dt>grammars</dt>
 					<dd>
 						Extracted grammars that form the <a href="zoo/">SLPS Zoo</a>.
-						Java grammars are also located here.
+						Of many grammars located here, the most interesting ones are those of
+						C, C++, C# and Java.
 					</dd>
 					<dt>storage</dt>
 					<dd>
 						Formats for storing language documentation and grammar syntax definitions:
 						Language Document Format, BNF-like Grammar Format and similar topics. Work on metasyntax in progress.
 					</dd>
-					<dt>presentation</dt>
+					<dt>investigation</dt>
 					<dd>
-						Mappers from BGF to elsewhere: pretty-printers, grammar analyses, metrics, normalisations, etc.
+						Grammar analysis, metrics, visualisations, normalisations.
+					</dd>
+					<dt>export</dt>
+					<dd>
+						The reverse of extraction: mappers from BGF to elsewhere:
+						pretty-printers, hypertext enablers, generators of Rascal and TXL, etc.
 					</dd>
 					<dt>transformation</dt>
 					<dd>
 						Grammar transformation and language document transformation, complete with test sets.
 					</dd>
+					<dt>testing</dt>
+					<dd>
+						Combinatorial test data generation framework and input data for and around the 
+						<a href="testmatch/">TestMatch</a> project.
+					</dd>
 					<dt>exercises</dt>
 					<dd>
 						Lab exercises for the course Programming Paradigms and Formal Semantics.
+					</dd>
+					<dt>parsing</dt>
+					<dd>
+						Parsing-related materials for the same course (in Haskell).
+					</dd>
+					<dt>semantics</dt>
+					<dd>
+						Semantics-related materials for the same course (in Prolog).
 					</dd>
 					<dt>documents</dt>
 					<dd>
@@ -111,10 +143,6 @@
 					<dd>
 						Some encodings of semantics derived from Nielson and Nielson, 2007 (and prior versions).
 						In particular, the denotational semantics of While language.
-					</dd>
-					<dt>while</dt>
-					<dd>
-						While language. Outdated.
 					</dd>
 					<dt>apimigration</dt>
 					<dd>
@@ -180,17 +208,8 @@
 			</dd>
 		</dl>
 		<hr />
-<!-- Start of StatCounter Code -->
-<script type="text/javascript">
-sc_project=3709270; 
-sc_invisible=1; 
-sc_partition=44; 
-sc_security="9a69ae83"; 
-</script>
-
-<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a href="http://www.statcounter.com/" target="_blank"><img class="statcounter" src="http://c45.statcounter.com/3709270/0/9a69ae83/1/" alt="site stats" ></a></div></noscript>
-<!-- End of StatCounter Code -->
-
-</body>
-
+		<div class="last">
+			The page is maintained by <a href="http://grammarware.net/">Dr. Vadim Zaytsev</a> a.k.a. @<a href="http://twitter.com/grammarware">grammarware</a>. Last updated: April 2011.
+		</div>
+	</body>
 </html>

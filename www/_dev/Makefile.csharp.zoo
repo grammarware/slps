@@ -10,6 +10,7 @@ all:
 	make msft-ls-1.2 -f _dev/Makefile.csharp.zoo
 	make msft-ls-3.0 -f _dev/Makefile.csharp.zoo
 	make msft-ls-4.0 -f _dev/Makefile.csharp.zoo
+	chmod 644 zoo/csharp/*.bgf
 
 %:
 	cp ../topics/grammars/csharp/$*/extracted-grammar.bgf zoo/csharp/$*.bgf

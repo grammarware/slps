@@ -1,6 +1,7 @@
 all:
 	make iso-14882-1998 -f _dev/Makefile.cpp.zoo
 	make iso-n2723 -f _dev/Makefile.cpp.zoo
+	chmod 644 zoo/cpp/*.bgf
 
 %:
 	cp ../topics/grammars/cpp/$*/extracted-grammar.bgf zoo/cpp/$*.bgf

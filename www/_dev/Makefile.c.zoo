@@ -2,6 +2,7 @@ all:
 	make iso-9899-1999 -f _dev/Makefile.c.zoo
 	make iso-9899-tc2 -f _dev/Makefile.c.zoo
 	make iso-9899-tc3 -f _dev/Makefile.c.zoo
+	chmod 644 zoo/c/*.bgf
 
 %:
 	cp ../topics/grammars/c/$*/extracted-grammar.bgf zoo/c/$*.bgf

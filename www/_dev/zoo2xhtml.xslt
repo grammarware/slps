@@ -10,6 +10,20 @@
 				Software Language Processing Suite — Grammar Zoo
 			</title>
 				<link href="../slps.css" rel="stylesheet" type="text/css"/>
+				<script type="text/javascript">
+					<xsl:text>
+
+				  var _gaq = _gaq || [];
+				  _gaq.push(['_setAccount', 'UA-3743366-5']);
+				  _gaq.push(['_trackPageview']);
+
+				  (function() {
+				    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				  })();
+					</xsl:text>
+				</script>
 			</head>
 			<body style="background-color:#9C9;">
 				<h1>
@@ -25,7 +39,14 @@
 					<xsl:for-each select="language[position()&gt;1]">
 						<xsl:text> — </xsl:text>
 						<a href="#{handle}">
-							<xsl:value-of select="name"/>
+							<xsl:choose>
+								<xsl:when test="short">
+									<xsl:value-of select="short"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="name"/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</a>
 					</xsl:for-each>
 				</h1>
@@ -49,6 +70,13 @@
 						<h3>
 							<a name="{name}"/>
 							<xsl:value-of select="name"/>
+							<xsl:if test="count(grammar) &gt; 1">
+								<em>
+									<xsl:text> (</xsl:text>
+									<xsl:value-of select="count(grammar)"/>
+									<xsl:text> grammars)</xsl:text>
+								</em>
+							</xsl:if>
 						</h3>
 						<ul>
 							<xsl:for-each select="*">
@@ -57,6 +85,14 @@
 									<xsl:when test="local-name(.)='toolset' and @ref">
 										<xsl:variable name="name" select="@ref"/>
 										<xsl:apply-templates select="/zoo/toolset[@name=$name]"/>
+									</xsl:when>
+									<xsl:when test="local-name(.)='item' and @ref">
+										<xsl:variable name="name" select="@ref"/>
+										<xsl:apply-templates select="/zoo/item[@name=$name]"/>
+									</xsl:when>
+									<xsl:when test="local-name(.)='itemset' and @ref">
+										<xsl:variable name="name" select="@ref"/>
+										<xsl:apply-templates select="/zoo/itemset[@name=$name]/item"/>
 									</xsl:when>
 									<xsl:otherwise>
 										<xsl:apply-templates select="."/>
@@ -115,6 +151,10 @@
 				</ul>
 				<hr/>
 				<div class="last">
+					<strong>
+						All grammars are distributed on terms of the <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a> license
+						or on terms of any other license bound to the source of our research in a way that enforces its propagation to derivatives.<br/>
+					</strong>
 					<span class="links">[<a href="/">↑SLPS</a>]</span>
 					<em>
 						<xsl:text>The page is maintained by Dr. </xsl:text>
@@ -125,6 +165,7 @@
 						<xsl:value-of select="$date"/>
 					</em>
 					<br/>
+					<img src="http://i.creativecommons.org/l/by/3.0/88x31.png" alt="CC-BY"/>
 					<a href="http://validator.w3.org/check/referer">
 						<img src="valid-xhtml10.png" alt="XHTML 1.0"/>
 					</a>
@@ -174,7 +215,7 @@
 				[<a href="{../../handle}/{handle}.html">Browsable</a>]
 				[<a href="{../../handle}/{handle}.bgf">BGF</a>]
 				[<a href="{../../handle}/{handle}.bnf">EBNF</a>]
-				<xsl:if test="not(../../handle='java') and not(../../handle='xpath') and not(handle='iso-23270-2003') and not(handle='iso-23270-2003-recovered')">
+				<xsl:if test="(../../handle='c') or (../../handle='cpp') or ((../../handle='csharp') and not(handle='iso-23270-2003') and not(handle='iso-23270-2003-recovered'))">
 					[<a href="{../../handle}/{handle}.lll">LLL</a>]
 				</xsl:if>
 				[<a href="{../../handle}/{handle}.dms">DMS BNF</a>]

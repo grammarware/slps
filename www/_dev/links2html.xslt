@@ -9,9 +9,25 @@
 				</title>
 				<style type="text/css">h1{text-align:center}</style>
 				<link href="slps.css" rel="stylesheet" type="text/css"/>
+				<script type="text/javascript">
+					<xsl:text>
+
+				  var _gaq = _gaq || [];
+				  _gaq.push(['_setAccount', 'UA-3743366-5']);
+				  _gaq.push(['_trackPageview']);
+
+				  (function() {
+				    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				  })();
+					</xsl:text>
+				</script>
 			</head>
 			<body style="background-color:#9C9;">
-				<h1><xsl:value-of select="@name"/></h1>
+				<h1>
+					<xsl:value-of select="@name"/>
+				</h1>
 				<xsl:for-each select="list">
 					<h2>
 						<xsl:value-of select="title"/>
