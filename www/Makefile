@@ -18,8 +18,9 @@ zooprj:
 	make -f _dev/Makefile.cpp.zoo
 	make -f _dev/Makefile.csharp.zoo
 	make -f _dev/Makefile.java.zoo
-	make -f _dev/Makefile.fl.zoo
 	make -f _dev/Makefile.xpath.zoo
+	make -f _dev/Makefile.fl.tank
+	make -f _dev/Makefile.ebnf.tank
 	make zoolists
 
 zoolists:

@@ -175,6 +175,7 @@
 						<xsl:text>Rascal Meta Programming Language:</xsl:text>
 						<span class="links">
 							[<a href="http://www.rascal-mpl.org/">Rascal MPL</a>]
+							[<a href="http://www.cwi.nl/research-groups/Software-Analysis-and-Transformation">SWAT</a>]
 						</span>
 					</li>
 				</ul>
@@ -210,15 +211,27 @@
 			<xsl:copy-of select="name/node()"/>
 			<xsl:text> tools: </xsl:text>
 			<span class="links">
-				<xsl:for-each select="link">
-					[<a href="{uri}"><xsl:value-of select="name"/></a>]
-				</xsl:for-each>
+				<xsl:apply-templates select="link"/>
 			</span>
 		</li>
 	</xsl:template>
+	<xsl:template match="link">
+		<xsl:text> [</xsl:text>
+		<xsl:if test="uri">
+			<a xmlns="http://www.w3.org/1999/xhtml" href="{uri}">
+				<xsl:value-of select="name"/>
+			</a>
+		</xsl:if>
+		<xsl:if test="mu">
+			<a xmlns="http://www.w3.org/1999/xhtml" href="http://slps.svn.sourceforge.net/viewvc/slps/{mu}?view=markup">
+				<xsl:value-of select="name"/>
+			</a>
+		</xsl:if>
+		<xsl:text>] </xsl:text>
+	</xsl:template>
 	<xsl:template match="source">
 		<li>
-			<xsl:text>Source: </xsl:text>
+			<strong>Source: </strong>
 			<xsl:copy-of select="title/node()"/>
 			<xsl:if test="date">
 				<xsl:text> (</xsl:text>
@@ -230,9 +243,7 @@
 				<xsl:value-of select="specific"/>
 			</xsl:if>
 			<span class="links">
-				<xsl:for-each select="link">
-				[<a href="{uri}"><xsl:value-of select="name"/></a>]
-			</xsl:for-each>
+				<xsl:apply-templates select="link"/>
 			</span>
 		</li>
 	</xsl:template>
@@ -257,9 +268,7 @@
 		<li>
 			<xsl:copy-of select="name/node()"/>
 			<span class="links">
-				<xsl:for-each select="link">
-					[<a href="{uri}"><xsl:value-of select="name"/></a>]
-				</xsl:for-each>
+				<xsl:apply-templates select="link"/>
 			</span>
 		</li>
 	</xsl:template>

@@ -1,0 +1,38 @@
+all:
+	make bgf            -f _dev/Makefile.ebnf.tank
+	make bnf-bgf        -f _dev/Makefile.ebnf.tank
+	make bnf-sdf        -f _dev/Makefile.ebnf.tank
+	make ebnf-iso       -f _dev/Makefile.ebnf.tank
+	make ebnf-sdf       -f _dev/Makefile.ebnf.tank
+	make rascal         -f _dev/Makefile.ebnf.tank
+	make yacc           -f _dev/Makefile.ebnf.tank
+	chmod 644 tank/ebnf/*.bgf
+	ls -1 tank/ebnf/*.bgf | xargs -n1 -I _ basename _ .bgf | xargs -n1 -I ZZZ make ZZZ.formats -f _dev/Makefile.ebnf.tank
+
+%.formats:
+	../shared/tools/bgf2html tank/ebnf/$*.bgf tank/ebnf/$*.html
+	../shared/tools/bgf2bnf  tank/ebnf/$*.bgf tank/ebnf/$*.bnf
+	../shared/tools/bgf2dms  tank/ebnf/$*.bgf tank/ebnf/$*.dms
+	../shared/tools/bgf2sdf  tank/ebnf/$*.bgf tank/ebnf/$*.sdf
+	../shared/tools/bgf2rsc  tank/ebnf/$*.bgf tank/ebnf/$*.rsc
+
+bgf:
+	../shared/tools/xsd2bgf ../shared/xsd/bgf.xsd tank/ebnf/bgf.bgf
+
+bnf-bgf:
+	cp ../topics/grammars/bnf/bnf-bgf.bgf tank/ebnf/bnf-bgf.bgf
+
+bnf-sdf:
+	cp ../topics/grammars/bnf/bnf.sdf.fix.bgf tank/ebnf/bnf-sdf.bgf
+
+ebnf-iso:
+	cp ../topics/grammars/bnf/ebnf.iso.informal.fix.bgf tank/ebnf/ebnf-iso.bgf
+
+ebnf-sdf:
+	cp ../topics/grammars/bnf/ebnf.sdf.fix.bgf tank/ebnf/ebnf-sdf.bgf
+
+rascal:
+	cp ../topics/grammars/rascal/rascal.true.bgf tank/ebnf/rascal.bgf
+
+yacc:
+	cp ../topics/grammars/bnf/yacc.sdf.fix.bgf tank/ebnf/yacc.bgf

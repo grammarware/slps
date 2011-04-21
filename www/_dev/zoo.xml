@@ -4,37 +4,41 @@
 	<toolset name="lll">
 		<name>Extraction</name>
 		<link>
-			<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/pdf2lll.py?view=markup</uri>
+			<mu>topics/extraction/bnf2bgf/pdf2lll.py</mu>
 			<name>PDF⇒LLL</name>
 		</link>
 		<link>
-			<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
+			<mu>topics/extraction/bnf2bgf/lll2bgf.py</mu>
 			<name>LLL⇒BGF</name>
 		</link>
 	</toolset>
 	<toolset name="bnfdmssdfrsc">
 		<name>Export</name>
 		<link>
-			<uri>http://slps.svn.sourceforge.net/viewvc/slps/shared/xsl/bgf2bnf.xslt?view=markup</uri>
+			<mu>topics/export/hypertext/bgf2xhtml.xslt</mu>
+			<name>BGF⇒HTML</name>
+		</link>
+		<link>
+			<mu>shared/xsl/bgf2bnf.xslt</mu>
 			<name>BGF⇒BNF</name>
 		</link>
 		<link>
-			<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/export/ebnf/bgf2dms.xslt?view=markup</uri>
+			<mu>topics/export/ebnf/bgf2dms.xslt</mu>
 			<name>BGF⇒DMS</name>
 		</link>
 		<link>
-			<uri>http://slps.svn.sourceforge.net/viewvc/slps/shared/xsl/bgf2sdf.xslt?view=markup</uri>
+			<mu>shared/xsl/bgf2sdf.xslt</mu>
 			<name>BGF⇒SDF</name>
 		</link>
 		<link>
-			<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/export/rascal/bgf2rsc.xslt?view=markup</uri>
+			<mu>topics/export/rascal/bgf2rsc.xslt</mu>
 			<name>BGF⇒Rascal</name>
 		</link>
 	</toolset>
 	<toolset name="scraping">
 		<name>Extraction</name>
 		<link>
-			<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/html2bgf.py?view=markup</uri>
+			<mu>topics/extraction/bnf2bgf/html2bgf.py</mu>
 			<name>HTML⇒BGF</name>
 		</link>
 	</toolset>
@@ -316,34 +320,34 @@
 					<name>GDK</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/bnf2bgf/lll2bgf.py?view=markup</uri>
+					<mu>topics/extraction/bnf2bgf/lll2bgf.py</mu>
 					<name>LLL⇒BGF</name>
 				</link>
 			</toolset>
 			<toolset>
 				<name>Transformation</name>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/recovery/csharp/trafo/deyaccify.trafo?view=markup</uri>
+					<mu>topics/recovery/csharp/trafo/deyaccify.trafo</mu>
 					<name>deyaccify</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/recovery/csharp/trafo/adapt.trafo?view=markup</uri>
+					<mu>topics/recovery/csharp/trafo/adapt.trafo</mu>
 					<name>adapt</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/recovery/csharp/trafo/disambiguate.trafo?view=markup</uri>
+					<mu>topics/recovery/csharp/trafo/disambiguate.trafo</mu>
 					<name>disambiguate</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/recovery/csharp/trafo/fixerrors.trafo?view=markup</uri>
+					<mu>topics/recovery/csharp/trafo/fixerrors.trafo</mu>
 					<name>fixerrors</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/recovery/csharp/trafo/expressions.trafo?view=markup</uri>
+					<mu>topics/recovery/csharp/trafo/expressions.trafo</mu>
 					<name>expressions</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/recovery/csharp/trafo/modularise.trafo?view=markup</uri>
+					<mu>topics/recovery/csharp/trafo/modularise.trafo</mu>
 					<name>modularise</name>
 				</link>
 			</toolset>
@@ -353,6 +357,10 @@
 				<link>
 					<uri>http://wiki.di.uminho.pt/twiki/bin/view/Events/GTTSE/</uri>
 					<name>GTTSE</name>
+				</link>
+				<link>
+					<uri>http://www.cs.vu.nl/lppr/</uri>
+					<name>LPPR</name>
 				</link>
 				<link>
 					<uri>http://grammarware.net/text/2005/toosharp.pdf</uri>
@@ -532,7 +540,6 @@
 				<handle>jls3-impl</handle>
 			</grammar>
 			<toolset ref="scraping"/>
-			<toolset ref="bnfdmssdfrsc"/>
 			<source>
 				<title>Dieter Habelitz, <code>Java.g</code></title>
 				<date>2008</date>
@@ -548,19 +555,19 @@
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR3.rsc?view=markup</uri>
+					<mu>topics/extraction/antlr/ANTLR3.rsc</mu>
 					<name>ANTLR3.rsc</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrpp.py?view=markup</uri>
+					<mu>topics/extraction/antlr/antlrpp.py</mu>
 					<name>antlrpp.py</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g?view=markup</uri>
+					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
 					<name>StrippedANTLR.g</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/habelitz/post-extraction.xbgf?view=markup</uri>
+					<mu>topics/grammars/java/antlr-java-5/habelitz/post-extraction.xbgf</mu>
 					<name>post-extraction</name>
 				</link>
 			</toolset>
@@ -579,19 +586,19 @@
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR3.rsc?view=markup</uri>
+					<mu>topics/extraction/antlr/ANTLR3.rsc</mu>
 					<name>ANTLR3.rsc</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrpp.py?view=markup</uri>
+					<mu>topics/extraction/antlr/antlrpp.py</mu>
 					<name>antlrpp.py</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g?view=markup</uri>
+					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
 					<name>StrippedANTLR.g</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/parr/post-extraction.xbgf?view=markup</uri>
+					<mu>topics/grammars/java/antlr-java-5/parr/post-extraction.xbgf</mu>
 					<name>post-extraction</name>
 				</link>
 			</toolset>
@@ -610,19 +617,19 @@
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR2.rsc?view=markup</uri>
+					<mu>topics/extraction/antlr/ANTLR2.rsc</mu>
 					<name>ANTLR2.rsc</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrpp.py?view=markup</uri>
+					<mu>topics/extraction/antlr/antlrpp.py</mu>
 					<name>antlrpp.py</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g?view=markup</uri>
+					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
 					<name>StrippedANTLR.g</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/stahl/post-extraction.xbgf?view=markup</uri>
+					<mu>topics/grammars/java/antlr-java-5/stahl/post-extraction.xbgf</mu>
 					<name>post-extraction</name>
 				</link>
 			</toolset>
@@ -641,22 +648,23 @@
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/ANTLR2.rsc?view=markup</uri>
+					<mu>topics/extraction/antlr/ANTLR2.rsc</mu>
 					<name>ANTLR2.rsc</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/antlrpp.py?view=markup</uri>
+					<mu>topics/extraction/antlr/antlrpp.py</mu>
 					<name>antlrpp.py</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g?view=markup</uri>
+					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
 					<name>StrippedANTLR.g</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/java/antlr-java-5/studman/post-extraction.xbgf?view=markup</uri>
+					<mu>topics/grammars/java/antlr-java-5/studman/post-extraction.xbgf</mu>
 					<name>post-extraction</name>
 				</link>
 			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
 			<itemset ref="javapubs"/>
 			<item>
 				<name>R. Lämmel, V. Zaytsev. <em>Comparison of Context-free Grammars Based on Parsing Generated Test Data.</em></name>
@@ -695,22 +703,23 @@
 			<toolset>
 				<name>Extraction</name>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/w3c/spec2bgf.xslt?view=markup</uri>
+					<mu>topics/extraction/w3c/spec2bgf.xslt</mu>
 					<name>XSLT1</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/w3c/postfix2confix.xslt?view=markup</uri>
+					<mu>topics/extraction/w3c/postfix2confix.xslt</mu>
 					<name>XSLT2</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/extraction/w3c/cleanup.xslt?view=markup</uri>
+					<mu>topics/extraction/w3c/cleanup.xslt</mu>
 					<name>XSLT3</name>
 				</link>
 				<link>
-					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/grammars/xpath/xpath1.normalize.xbgf?view=markup</uri>
+					<mu>topics/grammars/xpath/xpath1.normalize.xbgf</mu>
 					<name>XBGF</name>
 				</link>
 			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
 			<item>
 				<name>V. Zaytsev, R. Lämmel. <em>A Unified Format for Language Documents.</em> SLE 2010.</name>
 				<link>
