@@ -1,0 +1,14 @@
+all:
+	make for90 -f _dev/Makefile.for.zoo
+	chmod 644 zoo/fortran/*.bgf
+	ls -1 zoo/fortran/*.bgf | xargs -n1 -I _ basename _ .bgf | xargs -n1 -I ZZZ make ZZZ.formats -f _dev/Makefile.for.zoo
+
+%.formats:
+	../shared/tools/bgf2html zoo/fortran/$*.bgf zoo/fortran/$*.html
+	../shared/tools/bgf2bnf  zoo/fortran/$*.bgf zoo/fortran/$*.bnf
+	../shared/tools/bgf2dms  zoo/fortran/$*.bgf zoo/fortran/$*.dms
+	../shared/tools/bgf2sdf  zoo/fortran/$*.bgf zoo/fortran/$*.sdf
+	../shared/tools/bgf2rsc  zoo/fortran/$*.bgf zoo/fortran/$*.rsc
+
+for90:
+	cp ../topics/grammars/fortran/fortran.sdf.rec.bgf zoo/fortran/fortran90.bgf

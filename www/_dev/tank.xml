@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zoo>
+	<name>Tank</name>
+	<toolset name="bnfdmssdfrsc">
+		<name>Export</name>
+		<link>
+			<mu>topics/export/hypertext/bgf2xhtml.xslt</mu>
+			<name>BGF⇒HTML</name>
+		</link>
+		<link>
+			<mu>shared/xsl/bgf2bnf.xslt</mu>
+			<name>BGF⇒BNF</name>
+		</link>
+		<link>
+			<mu>topics/export/ebnf/bgf2dms.xslt</mu>
+			<name>BGF⇒DMS</name>
+		</link>
+		<link>
+			<mu>shared/xsl/bgf2sdf.xslt</mu>
+			<name>BGF⇒SDF</name>
+		</link>
+		<link>
+			<mu>topics/export/rascal/bgf2rsc.xslt</mu>
+			<name>BGF⇒Rascal</name>
+		</link>
+	</toolset>
+	<toolset name="sdf2bgf">
+		<name>Extraction</name>
+		<link>
+			<mu>topics/extraction/sdf/Main.sdf</mu>
+			<name>Main.sdf</name>
+		</link>
+		<link>
+			<mu>topics/extraction/sdf/Main.asf</mu>
+			<name>Main.asf</name>
+		</link>
+		<link>
+			<mu>topics/extraction/sdf/Tokens.sdf</mu>
+			<name>Tokens.sdf</name>
+		</link>
+		<link>
+			<mu>topics/extraction/sdf/Tokens.asf</mu>
+			<name>Tokens.asf</name>
+		</link>
+	</toolset>
+	<toolset name="rsc2bgf">
+		<name>Extraction</name>
+		<link>
+			<mu>topics/extraction/rascal/extract.py</mu>
+			<name>extract.py</name>
+		</link>
+	</toolset>
+	<toolset name="xsd2bgf">
+		<name>Extraction</name>
+		<link>
+			<mu>shared/prolog/cli/xsd2bgf.pro</mu>
+			<name>xsd2bgf.pro</name>
+		</link>
+	</toolset>
+	<item name="ifm2009">
+		<name>R. Lämmel, V. Zaytsev. <em>An Introduction to Grammar Convergence.</em> iFM 2009.</name>
+		<link>
+			<uri>http://www.formal-methods.de/ifm09/</uri>
+			<name>iFM</name>
+		</link>
+		<link>
+			<uri>http://dx.doi.org/10.1007/978-3-642-00255-7_17</uri>
+			<name>LNCS</name>
+		</link>
+		<link>
+			<uri>http://portal.acm.org/citation.cfm?id=1506936.1506955</uri>
+			<name>ACM</name>
+		</link>
+		<link>
+			<uri>http://grammarware.net/text/2009/convergence.pdf</uri>
+			<name>Paper</name>
+		</link>
+		<link>
+			<uri>http://grammarware.net/slides/2009/ifm.pdf</uri>
+			<name>Slides</name>
+		</link>
+	</item>
+	<item name="phd">
+		<name>V. Zaytsev. <em>Recovery, Convergence and Documentation of Languages.</em> Vrije Universiteit Amsterdam, 2010.</name>
+		<link>
+			<uri>http://grammarware.net/text/2010/zaytsev-thesis.pdf</uri>
+			<name>Thesis</name>
+		</link>
+		<link>
+			<uri>http://grammarware.net/slides/2010/phd-swat.pdf</uri>
+			<name>Slides</name>
+		</link>
+	</item>
+	<!-- ================================================================ -->
+	<language>
+		<handle>fl</handle>
+		<name>Factorial Language</name>
+		<short>FL</short>
+		<version>
+			<name>FL in ANTLR</name>
+			<source>
+				<title>
+					Ralf Lämmel, <code>FL.g</code>
+				</title>
+				<date>17 May – 16 July 2008</date>
+				<link>
+					<mu>topics/fl/java1/FL.g</mu>
+					<name>SVN</name>
+				</link>
+				<link>
+					<uri>http://www.antlr.org/</uri>
+					<name>ANTLR</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>antlr</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/extraction/antlr/antlrstrip.py</mu>
+					<name>antlrstrip.py</name>
+				</link>
+				<link>
+					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
+					<name>StrippedANTLR.g</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item ref="ifm2009"/>
+			<item ref="phd"/>
+		</version>
+		<version>
+			<name>FL in DCG</name>
+			<source>
+				<title>
+					Ralf Lämmel, <code>Parser.pro</code>
+				</title>
+				<date>28 July – 3 September 2008</date>
+				<link>
+					<mu>topics/fl/prolog1/Parser.pro</mu>
+					<name>SVN</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>dcg</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>shared/prolog/cli/dcg2bgf.pro</mu>
+					<name>dcg2bgf.pro</name>
+				</link>
+			</toolset>
+			<item>
+				<name>R. Lämmel, G. Riedewald. <em>Prological Language Processing.</em> LDTA 2001.</name>
+				<link>
+					<uri>http://ldta.info/2001/</uri>
+					<name>LDTA</name>
+				</link>
+				<link>
+					<uri>http://homepages.cwi.nl/~ralf/plp/paper.pdf</uri>
+					<name>Paper</name>
+				</link>
+				<link>
+					<uri>http://homepages.cwi.nl/~ralf/plp/slides.pdf</uri>
+					<name>Slides</name>
+				</link>
+			</item>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item ref="ifm2009"/>
+			<item ref="phd"/>
+		</version>
+		<version>
+			<name>FL in Ecore</name>
+			<source>
+				<title>
+					Guido Wachsmuth, Vadim Zaytsev, <code>fl.ecore</code>
+				</title>
+				<date>26 June 2008 – 28 May 2009</date>
+				<link>
+					<mu>topics/fl/emf1/fl.ecore</mu>
+					<name>SVN</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>ecore</handle>
+			</grammar>
+			<source>
+				<title>
+					Vadim Zaytsev, <code>fl.ecore</code> generated from <code>fl.xsd</code>
+				</title>
+				<date>28 May 2009</date>
+				<link>
+					<mu>topics/fl/emf2/model/fl.ecore</mu>
+					<name>SVN</name>
+				</link>
+				<link>
+					<uri>http://www.eclipse.org</uri>
+					<name>Eclipse</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>ecore2</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/extraction/ecore/ecore2bgf.xslt</mu>
+					<name>ecore2bgf.xslt</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item ref="phd"/>
+		</version>
+		<version>
+			<name>FL in Java</name>
+			<source>
+				<title>
+					Ralf Lämmel, <code>Program.java</code>, <code>Function.java</code> et al.
+				</title>
+				<date>17 May – 28 July 2008</date>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/fl/java1/types/</uri>
+					<name>SVN</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>om</handle>
+			</grammar>
+			<source>
+				<title>
+					Ralf Lämmel, <code>Program.java</code>, <code>Function.java</code> et al. generated from <code>fl.xsd</code>.
+				</title>
+				<date>21 May – 28 July 2008</date>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/fl/java3/fl/</uri>
+					<name>SVN</name>
+				</link>
+				<link>
+					<uri>http://jaxb.java.net/</uri>
+					<name>JAXB</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>jaxb</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/extraction/java/slps/java2bgf/Tool.java</mu>
+					<name>slps.java2bgf.Tool</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item ref="ifm2009"/>
+			<item ref="phd"/>
+		</version>
+		<version>
+			<name>FL in SDF</name>
+			<source>
+				<title>
+					Ralf Lämmel, Vadim Zaytsev, <code>FL.sdf</code>, <code>Syntax.sdf</code>, et al.
+				</title>
+				<date>1–25 Aug 2008</date>
+				<link>
+					<uri>http://slps.svn.sourceforge.net/viewvc/slps/topics/fl/asfsdf/</uri>
+					<name>SVN</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>sdf</handle>
+			</grammar>
+			<toolset ref="sdf2bgf"/>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item ref="ifm2009"/>
+			<item ref="phd"/>
+		</version>
+		<version>
+			<name>FL in TXL</name>
+			<source>
+				<title>
+					Vadim Zaytsev, <code>FL.Txl</code>.
+				</title>
+				<date>6–7 Jul 2009</date>
+				<link>
+					<mu>topics/fl/txl/FL.Txl</mu>
+					<name>SVN</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>txl</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/extraction/txl/TXLGrammar/Txl/txl.grm</mu>
+					<name>txl.grm</name>
+				</link>
+				<link>
+					<mu>topics/extraction/txl/txl2bgf.xslt</mu>
+					<name>txl2bgf.xslt</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item ref="phd"/>
+		</version>
+		<version>
+			<name>FL in XML Schema</name>
+			<source>
+				<title>
+					Ralf Lämmel, <code>fl.xsd</code>.
+				</title>
+				<date>20 May – 29 July 2008</date>
+				<link>
+					<mu>topics/fl/xsd/fl.xsd</mu>
+					<name>SVN</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>xsd</handle>
+			</grammar>
+			<toolset ref="xsd2bgf"/>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item ref="ifm2009"/>
+			<item ref="phd"/>
+		</version>
+	</language>
+	<language>
+		<handle>ebnf</handle>
+		<name>Metasyntax</name>
+		<short>(E)BNF</short>
+		<version>
+			<name>BGF</name>
+			<source>
+				<title>
+					Ralf Lämmel, Vadim Zaytsev, <code>bgf.xsd</code>
+				</title>
+				<date>28 July 2008 – 5 February 2009</date>
+				<link>
+					<mu>shared/xsd/bgf.xsd</mu>
+					<name>SVN</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>bgf</handle>
+			</grammar>
+			<toolset ref="xsd2bgf"/>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item ref="ifm2009"/>
+			<item ref="phd"/>
+		</version>
+		<version>
+			<name>BNF in BGF</name>
+			<source>
+				<title>
+					Vadim Zaytsev, <code>bnf-bgf.bgf</code>
+				</title>
+				<date>11 July 2010 – 11 February 2011</date>
+				<link>
+					<mu>topics/grammars/bnf/bnf-bgf.bgf</mu>
+					<name>SVN</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>bnf-bgf</handle>
+			</grammar>
+			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+		<version>
+			<name>BNF in SDF</name>
+			<source>
+				<title>
+					Tijs van der Storm, <code>BNF.sdf</code>
+				</title>
+				<date>28 March 2003</date>
+				<link>
+					<uri>http://www.meta-environment.org/</uri>
+					<name>MetaEnv</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>bnf-sdf</handle>
+			</grammar>
+			<toolset ref="sdf2bgf"/>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<mu>topics/grammars/bnf/bnf.sdf.correct.xbgf</mu>
+					<name>bnf.sdf.correct.xbgf</name>
+				</link>
+				<link>
+					<mu>topics/investigation/subgrammar/subgrammar.py</mu>
+					<name>subgrammar.py</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+		<version>
+			<name>EBNF of ISO</name>
+			<source>
+				<title>
+					ISO/IEC 14977:1996(E).
+					<em>Information Technology—Syntactic Metalanguage—Extended BNF</em>
+				</title>
+				<date>1996</date>
+				<link>
+					<uri>http://www.cl.cam.ac.uk/~mgk25/iso-14977.pdf</uri>
+					<name>PDF</name>
+				</link>
+				<link>
+					<mu>topics/grammars/bnf/ebnf.iso.informal.bgf</mu>
+					<name>SVN</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>ebnf-iso</handle>
+			</grammar>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<mu>topics/grammars/bnf/ebnf.iso.generalize.xbgf</mu>
+					<name>ebnf.iso.generalize.xbgf</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+		<version>
+			<name>EBNF in SDF</name>
+			<source>
+				<title>
+					Paul Klint, W3C version of <code>EBNF.sdf</code>
+				</title>
+				<date>27 March 2007</date>
+				<link>
+					<uri>http://www.meta-environment.org/</uri>
+					<name>MetaEnv</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>ebnf-sdf</handle>
+			</grammar>
+			<toolset ref="sdf2bgf"/>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<mu>topics/grammars/bnf/correct.ebnf.xbgf</mu>
+					<name>correct.ebnf.xbgf</name>
+				</link>
+				<link>
+					<mu>topics/investigation/subgrammar/subgrammar.py</mu>
+					<name>subgrammar.py</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+		<version>
+			<name>Rascal</name>
+			<source>
+				<title>
+					Jurgen Vinju, Arnold Lankamp, Tijs van der Storm, <code>RascalRascal.rsc</code>
+				</title>
+				<date>10 August 2010 – 5 April 2011</date>
+				<link>
+					<uri>http://www.rascal-mpl.org/</uri>
+					<name>Rascal</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>rascal</handle>
+			</grammar>
+			<toolset ref="rsc2bgf"/>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<mu>topics/investigation/subgrammar/subgrammar.py</mu>
+					<name>subgrammar.py</name>
+				</link>
+				<link>
+					<mu>topics/grammars/rascal/horizontalize.xbgf</mu>
+					<name>horizontalize.xbgf</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+		<version>
+			<name>YACC</name>
+			<source>
+				<title>
+					Paul Klint, <code>YACC.sdf</code>
+				</title>
+				<date>28 March 2007</date>
+				<link>
+					<uri>http://www.meta-environment.org/</uri>
+					<name>MetaEnv</name>
+				</link>
+				<link>
+					<uri>http://dinosaur.compilertools.net/#yacc</uri>
+					<name>YACC</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>yacc</handle>
+			</grammar>
+			<toolset ref="sdf2bgf"/>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<mu>topics/grammars/bnf/refactor.yacc.xbgf</mu>
+					<name>refactor.yacc.xbgf</name>
+				</link>
+				<link>
+					<mu>topics/investigation/subgrammar/subgrammar.py</mu>
+					<name>subgrammar.py</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+	</language>
+	<language>
+		<handle>tescol</handle>
+		<name>TESt COmpiler Language</name>
+		<short>TESCOL</short>
+		<version>
+			<name>TESCOL</name>
+			<source>
+				<title>
+					Bernd Fischer, <em>COMP2010: Compiler Engineering</em> course work
+				</title>
+				<date>11 March – 22 April 2010</date>
+				<link>
+					<uri>http://328d.net/</uri>
+					<name>328d</name>
+					</link>
+			</source>
+			<grammar><name>Reference</name><handle>reference</handle></grammar>
+			<grammar><name>00000</name><handle>00000</handle></grammar>
+			<grammar><name>00001</name><handle>00001</handle></grammar>
+			<grammar><name>00010</name><handle>00010</handle></grammar>
+			<grammar><name>00011</name><handle>00011</handle></grammar>
+			<grammar><name>00100</name><handle>00100</handle></grammar>
+			<grammar><name>00101</name><handle>00101</handle></grammar>
+			<grammar><name>00110</name><handle>00110</handle></grammar>
+			<grammar><name>00111</name><handle>00111</handle></grammar>
+			<grammar><name>01000</name><handle>01000</handle></grammar>
+			<grammar><name>01001</name><handle>01001</handle></grammar>
+			<grammar><name>01010</name><handle>01010</handle></grammar>
+			<grammar><name>01011</name><handle>01011</handle></grammar>
+			<grammar><name>01100</name><handle>01100</handle></grammar>
+			<grammar><name>01101</name><handle>01101</handle></grammar>
+			<grammar><name>01110</name><handle>01110</handle></grammar>
+			<grammar><name>01111</name><handle>01111</handle></grammar>
+			<grammar><name>10000</name><handle>10000</handle></grammar>
+			<grammar><name>10001</name><handle>10001</handle></grammar>
+			<grammar><name>10010</name><handle>10010</handle></grammar>
+			<grammar><name>10011</name><handle>10011</handle></grammar>
+			<grammar><name>10100</name><handle>10100</handle></grammar>
+			<grammar><name>10101</name><handle>10101</handle></grammar>
+			<grammar><name>10110</name><handle>10110</handle></grammar>
+			<grammar><name>10111</name><handle>10111</handle></grammar>
+			<grammar><name>11000</name><handle>11000</handle></grammar>
+			<grammar><name>11001</name><handle>11001</handle></grammar>
+			<grammar><name>11010</name><handle>11010</handle></grammar>
+			<grammar><name>11011</name><handle>11011</handle></grammar>
+			<grammar><name>11100</name><handle>11100</handle></grammar>
+			<grammar><name>11101</name><handle>11101</handle></grammar>
+			<grammar><name>11110</name><handle>11110</handle></grammar>
+			<grammar><name>11111</name><handle>11111</handle></grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/extraction/antlr/ANTLR3.rsc</mu>
+					<name>ANTLR3.rsc</name>
+				</link>
+				<link>
+					<mu>topics/extraction/antlr/antlrpp.py</mu>
+					<name>antlrpp.py</name>
+				</link>
+				<link>
+					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
+					<name>StrippedANTLR.g</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item>
+				<name>R. Lämmel, V. Zaytsev. <em>Comparison of Context-free Grammars Based on Parsing Generated Test Data.</em></name>
+				<link>
+					<uri>http://grammarware.net/text/2011/testmatch.pdf</uri>
+					<name>Draft</name>
+				</link>
+				<link>
+					<uri>../testmatch</uri>
+					<name>Online</name>
+				</link>
+			</item>
+		</version>
+	</language>
+</zoo>
