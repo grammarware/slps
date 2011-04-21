@@ -20,7 +20,11 @@ zooprj:
 	make -f _dev/Makefile.java.zoo
 	make -f _dev/Makefile.fl.zoo
 	make -f _dev/Makefile.xpath.zoo
-	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/zoo2xhtml.xslt _dev/config.zoo > zoo/index.html
+	make zoolists
+
+zoolists:
+	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/listgrammars.xslt _dev/zoo.xml  >  zoo/index.html
+	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/listgrammars.xslt _dev/tank.xml > tank/index.html
 	xsltproc _dev/links2html.xslt _dev/java-grammars.xml | python ../topics/export/hypertext/closemeta.py > zoo/java/links.html
 
 tmprj:
@@ -29,4 +33,4 @@ tmprj:
 	@#xsltproc ../shared/xsl/links2html.xslt _dev/testmatch.xml | python ../shared/python/closemeta.py > testmatch/index.html
 
 test:
-	xmllint --noout --schema ../shared/xsd/links.xsd _dev/*.xml
+	xmllint --noout --schema ../shared/xsd/links.xsd _dev/java-grammars.xml

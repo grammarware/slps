@@ -1,13 +1,12 @@
 h1, h2, div.c {text-align:center;}
-h2 a {font-size:small;}
+h2 a, div.c em {font-size:small;}
 dt {font-weight: bold;}
 img {border:0;}
 .last {width: 100%; text-align: right; font-style: italic;}
 .last img {border:0; width: 88px; height: 31px;}
 br {clear: both;}
-.container {text-align:center; width:300px;}
-ul.linklist li span,.links {text-align:center; font-family: "Courier New", Courier, mono; font-weight: bold;}
-ul.linklist li span a, .links a {text-decoration: none;}
+.links {text-align:center; font-family: "Courier New", Courier, mono; font-weight: bold;}
+.links a {text-decoration: none;}
 a:hover {text-decoration: underline;}
 body{color:#033;}
 a:link{color:#039;}

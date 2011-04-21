@@ -7,8 +7,9 @@
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 				<title>
-				Software Language Processing Suite — Grammar Zoo
-			</title>
+					<xsl:text>Software Language Processing Suite — Grammar </xsl:text>
+					<xsl:value-of select="name"/>
+				</title>
 				<link href="../slps.css" rel="stylesheet" type="text/css"/>
 				<script type="text/javascript">
 					<xsl:text>
@@ -26,15 +27,43 @@
 				</script>
 			</head>
 			<body style="background-color:#9C9;">
-				<h1>
-				Software Language Processing Suite
-				<br/>
-				Grammar Zoo
-				</h1>
+				<h1>Software Language Processing Suite</h1>
+				<xsl:if test="name='Zoo'">
+					<h1>
+						<xsl:text>Grammar Zoo | </xsl:text>
+						<a href="../tank/">Grammar Tank</a>
+					</h1>
+					<div class="c">
+						<em>
+							The objective of the Grammar Zoo is to accumulate grammars of contemporary 
+							programming languages, extracted and recovered from language documentation, parser
+							specifications and other artifacts and make them available in a range of formats.
+						</em>
+					</div>
+				</xsl:if>
+				<xsl:if test="name='Tank'">
+					<h1>
+						<a href="../zoo/">Grammar Zoo</a>
+						<xsl:text> | Grammar Tank</xsl:text>
+					</h1>
+					<div class="c">
+						<em>
+							The objective of the Grammar Tank is to compose a grammar base of multiple different
+							grammars for the same intended language to be used in language engineering research.
+						</em>
+					</div>
+				</xsl:if>
 				<h2><xsl:value-of select="count(//grammar)"/> grammars and counting</h2>
 				<h1>
 					<a href="#{language[1]/handle}">
-						<xsl:value-of select="language[1]/name"/>
+						<xsl:choose>
+							<xsl:when test="language[1]/short">
+								<xsl:value-of select="language[1]/short"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="language[1]/name"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</a>
 					<xsl:for-each select="language[position()&gt;1]">
 						<xsl:text> — </xsl:text>
@@ -145,7 +174,7 @@
 					<li>
 						<xsl:text>Rascal Meta Programming Language:</xsl:text>
 						<span class="links">
-							[<a href="http://www.rascal-mpl.org/">Rascal DSL</a>]
+							[<a href="http://www.rascal-mpl.org/">Rascal MPL</a>]
 						</span>
 					</li>
 				</ul>
@@ -167,10 +196,10 @@
 					<br/>
 					<img src="http://i.creativecommons.org/l/by/3.0/88x31.png" alt="CC-BY"/>
 					<a href="http://validator.w3.org/check/referer">
-						<img src="valid-xhtml10.png" alt="XHTML 1.0"/>
+						<img src="../img/valid-xhtml10.png" alt="XHTML 1.0"/>
 					</a>
 					<a href="http://jigsaw.w3.org/css-validator/check/referer">
-						<img src="vcss.png" alt="CSS 2.1"/>
+						<img src="../img/vcss.png" alt="CSS 2.1"/>
 					</a>
 				</div>
 			</body>
