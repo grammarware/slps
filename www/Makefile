@@ -4,7 +4,7 @@ upload:
 	scp index.html rlaemmel,slps@web.sourceforge.net:htdocs
 
 sync:
-	rsync -avz --exclude=".svn" --exclude="Makefile" --exclude="_dev" * sspider,slps@web.sourceforge.net:htdocs
+	rsync -avz --delete --exclude=".svn" --exclude="Makefile" --exclude="_dev" * sspider,slps@web.sourceforge.net:htdocs
 
 clean:
 	rm -f *~ zoo/*/*

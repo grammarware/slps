@@ -55,7 +55,7 @@
 				</xsl:if>
 				<h2><xsl:value-of select="count(//grammar)"/> grammars and counting</h2>
 				<h1>
-					<a href="#{language[1]/handle}">
+					<a href="#{translate(language[1]/handle,' +#“”','_ps__')}">
 						<xsl:choose>
 							<xsl:when test="language[1]/short">
 								<xsl:value-of select="language[1]/short"/>
@@ -67,7 +67,7 @@
 					</a>
 					<xsl:for-each select="language[position()&gt;1]">
 						<xsl:text> — </xsl:text>
-						<a href="#{handle}">
+						<a href="#{translate(handle,' +#“”','_ps__')}">
 							<xsl:choose>
 								<xsl:when test="short">
 									<xsl:value-of select="short"/>
@@ -82,7 +82,7 @@
 				<xsl:for-each select="language">
 					<hr/>
 					<h2>
-						<a name="{handle}"/>
+						<a name="{translate(handle,' +#“”','_ps__')}"/>
 						<xsl:value-of select="name"/>
 						<br/>
 						<a href="#{version[1]/name}">
@@ -97,7 +97,7 @@
 					</h2>
 					<xsl:for-each select="version">
 						<h3>
-							<a name="{name}"/>
+							<a name="{translate(name,' +#“”','_ps__')}"/>
 							<xsl:value-of select="name"/>
 							<xsl:if test="count(grammar) &gt; 1">
 								<em>
@@ -197,7 +197,7 @@
 					<br/>
 					<img src="http://i.creativecommons.org/l/by/3.0/88x31.png" alt="CC-BY"/>
 					<a href="http://validator.w3.org/check/referer">
-						<img src="../img/valid-xhtml10.png" alt="XHTML 1.0"/>
+						<img src="../img/vxhtml.png" alt="XHTML 1.0"/>
 					</a>
 					<a href="http://jigsaw.w3.org/css-validator/check/referer">
 						<img src="../img/vcss.png" alt="CSS 2.1"/>
@@ -230,7 +230,7 @@
 		<xsl:text>] </xsl:text>
 	</xsl:template>
 	<xsl:template match="source">
-		<li>
+		<li xmlns="http://www.w3.org/1999/xhtml">
 			<strong>Source: </strong>
 			<xsl:copy-of select="title/node()"/>
 			<xsl:if test="date">
@@ -248,7 +248,7 @@
 		</li>
 	</xsl:template>
 	<xsl:template match="grammar">
-		<li>
+		<li xmlns="http://www.w3.org/1999/xhtml">
 			<xsl:value-of select="name"/>
 			<xsl:text> grammar: </xsl:text>
 			<span class="links">
@@ -265,7 +265,7 @@
 		</li>
 	</xsl:template>
 	<xsl:template match="item">
-		<li>
+		<li xmlns="http://www.w3.org/1999/xhtml">
 			<xsl:copy-of select="name/node()"/>
 			<span class="links">
 				<xsl:apply-templates select="link"/>

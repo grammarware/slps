@@ -58,7 +58,7 @@
 		</link>
 	</toolset>
 	<item name="ifm2009">
-		<name>R. Lämmel, V. Zaytsev. <em>An Introduction to Grammar Convergence.</em> iFM 2009.</name>
+		<name>R. Lämmel, V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">An Introduction to Grammar Convergence.</em> iFM 2009.</name>
 		<link>
 			<uri>http://www.formal-methods.de/ifm09/</uri>
 			<name>iFM</name>
@@ -81,7 +81,7 @@
 		</link>
 	</item>
 	<item name="phd">
-		<name>V. Zaytsev. <em>Recovery, Convergence and Documentation of Languages.</em> Vrije Universiteit Amsterdam, 2010.</name>
+		<name>V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Recovery, Convergence and Documentation of Languages.</em> Vrije Universiteit Amsterdam, 2010.</name>
 		<link>
 			<uri>http://grammarware.net/text/2010/zaytsev-thesis.pdf</uri>
 			<name>Thesis</name>
@@ -100,7 +100,7 @@
 			<name>FL in ANTLR</name>
 			<source>
 				<title>
-					Ralf Lämmel, <code>FL.g</code>
+					Ralf Lämmel, <code xmlns="http://www.w3.org/1999/xhtml">FL.g</code>
 				</title>
 				<date>17 May – 16 July 2008</date>
 				<link>
@@ -135,7 +135,7 @@
 			<name>FL in DCG</name>
 			<source>
 				<title>
-					Ralf Lämmel, <code>Parser.pro</code>
+					Ralf Lämmel, <code xmlns="http://www.w3.org/1999/xhtml">Parser.pro</code>
 				</title>
 				<date>28 July – 3 September 2008</date>
 				<link>
@@ -155,7 +155,7 @@
 				</link>
 			</toolset>
 			<item>
-				<name>R. Lämmel, G. Riedewald. <em>Prological Language Processing.</em> LDTA 2001.</name>
+				<name>R. Lämmel, G. Riedewald. <em xmlns="http://www.w3.org/1999/xhtml">Prological Language Processing.</em> LDTA 2001.</name>
 				<link>
 					<uri>http://ldta.info/2001/</uri>
 					<name>LDTA</name>
@@ -177,7 +177,7 @@
 			<name>FL in Ecore</name>
 			<source>
 				<title>
-					Guido Wachsmuth, Vadim Zaytsev, <code>fl.ecore</code>
+					Guido Wachsmuth, Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">fl.ecore</code>
 				</title>
 				<date>26 June 2008 – 28 May 2009</date>
 				<link>
@@ -191,7 +191,7 @@
 			</grammar>
 			<source>
 				<title>
-					Vadim Zaytsev, <code>fl.ecore</code> generated from <code>fl.xsd</code>
+					Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">fl.ecore</code> generated from <code xmlns="http://www.w3.org/1999/xhtml">fl.xsd</code>
 				</title>
 				<date>28 May 2009</date>
 				<link>
@@ -221,7 +221,7 @@
 			<name>FL in Java</name>
 			<source>
 				<title>
-					Ralf Lämmel, <code>Program.java</code>, <code>Function.java</code> et al.
+					Ralf Lämmel, <code xmlns="http://www.w3.org/1999/xhtml">Program.java</code>, <code xmlns="http://www.w3.org/1999/xhtml">Function.java</code> et al.
 				</title>
 				<date>17 May – 28 July 2008</date>
 				<link>
@@ -235,7 +235,7 @@
 			</grammar>
 			<source>
 				<title>
-					Ralf Lämmel, <code>Program.java</code>, <code>Function.java</code> et al. generated from <code>fl.xsd</code>.
+					Ralf Lämmel, <code xmlns="http://www.w3.org/1999/xhtml">Program.java</code>, <code xmlns="http://www.w3.org/1999/xhtml">Function.java</code> et al. generated from <code xmlns="http://www.w3.org/1999/xhtml">fl.xsd</code>.
 				</title>
 				<date>21 May – 28 July 2008</date>
 				<link>
@@ -266,7 +266,7 @@
 			<name>FL in SDF</name>
 			<source>
 				<title>
-					Ralf Lämmel, Vadim Zaytsev, <code>FL.sdf</code>, <code>Syntax.sdf</code>, et al.
+					Ralf Lämmel, Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">FL.sdf</code>, <code xmlns="http://www.w3.org/1999/xhtml">Syntax.sdf</code>, et al.
 				</title>
 				<date>1–25 Aug 2008</date>
 				<link>
@@ -287,7 +287,7 @@
 			<name>FL in TXL</name>
 			<source>
 				<title>
-					Vadim Zaytsev, <code>FL.Txl</code>.
+					Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">FL.Txl</code>.
 				</title>
 				<date>6–7 Jul 2009</date>
 				<link>
@@ -317,7 +317,7 @@
 			<name>FL in XML Schema</name>
 			<source>
 				<title>
-					Ralf Lämmel, <code>fl.xsd</code>.
+					Ralf Lämmel, <code xmlns="http://www.w3.org/1999/xhtml">fl.xsd</code>.
 				</title>
 				<date>20 May – 29 July 2008</date>
 				<link>
@@ -343,7 +343,7 @@
 			<name>BGF</name>
 			<source>
 				<title>
-					Ralf Lämmel, Vadim Zaytsev, <code>bgf.xsd</code>
+					Ralf Lämmel, Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">bgf.xsd</code>
 				</title>
 				<date>28 July 2008 – 5 February 2009</date>
 				<link>
@@ -364,7 +364,7 @@
 			<name>BNF in BGF</name>
 			<source>
 				<title>
-					Vadim Zaytsev, <code>bnf-bgf.bgf</code>
+					Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">bnf-bgf.bgf</code>
 				</title>
 				<date>11 July 2010 – 11 February 2011</date>
 				<link>
@@ -382,7 +382,7 @@
 			<name>BNF in SDF</name>
 			<source>
 				<title>
-					Tijs van der Storm, <code>BNF.sdf</code>
+					Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">BNF.sdf</code>
 				</title>
 				<date>28 March 2003</date>
 				<link>
@@ -413,7 +413,7 @@
 			<source>
 				<title>
 					ISO/IEC 14977:1996(E).
-					<em>Information Technology—Syntactic Metalanguage—Extended BNF</em>
+					<em xmlns="http://www.w3.org/1999/xhtml">Information Technology—Syntactic Metalanguage—Extended BNF</em>
 				</title>
 				<date>1996</date>
 				<link>
@@ -442,7 +442,7 @@
 			<name>EBNF in SDF</name>
 			<source>
 				<title>
-					Paul Klint, W3C version of <code>EBNF.sdf</code>
+					Paul Klint, W3C version of <code xmlns="http://www.w3.org/1999/xhtml">EBNF.sdf</code>
 				</title>
 				<date>27 March 2007</date>
 				<link>
@@ -472,7 +472,7 @@
 			<name>Rascal</name>
 			<source>
 				<title>
-					Jurgen Vinju, Arnold Lankamp, Tijs van der Storm, <code>RascalRascal.rsc</code>
+					Jurgen Vinju, Arnold Lankamp, Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">RascalRascal.rsc</code>
 				</title>
 				<date>10 August 2010 – 5 April 2011</date>
 				<link>
@@ -502,7 +502,7 @@
 			<name>YACC</name>
 			<source>
 				<title>
-					Paul Klint, <code>YACC.sdf</code>
+					Paul Klint, <code xmlns="http://www.w3.org/1999/xhtml">YACC.sdf</code>
 				</title>
 				<date>28 March 2007</date>
 				<link>
@@ -541,7 +541,7 @@
 			<name>TESCOL</name>
 			<source>
 				<title>
-					Bernd Fischer, <em>COMP2010: Compiler Engineering</em> course work
+					Bernd Fischer, <em xmlns="http://www.w3.org/1999/xhtml">COMP2010: Compiler Engineering</em> course work
 				</title>
 				<date>11 March – 22 April 2010</date>
 				<link>
@@ -599,7 +599,7 @@
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
 			<item>
-				<name>R. Lämmel, V. Zaytsev. <em>Comparison of Context-free Grammars Based on Parsing Generated Test Data.</em></name>
+				<name>R. Lämmel, V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Comparison of Context-free Grammars Based on Parsing Generated Test Data.</em></name>
 				<link>
 					<uri>http://grammarware.net/text/2011/testmatch.pdf</uri>
 					<name>Draft</name>
