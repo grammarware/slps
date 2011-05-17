@@ -152,6 +152,57 @@
 	</itemset>
 	<!-- ================================================================ -->
 	<language>
+		<handle>ada</handle>
+		<name>Ada</name>
+		<version>
+			<name>Ada 95</name>
+			<source>
+				<title>ISO/IEC 8652:1995 <em xmlns="http://www.adahome.com/rm95/rm9x-toc.html">Information Technology — Programming Languages — Ada</em></title>
+				<date>1995</date>
+				<specific>Annex P, pages 479–493</specific>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>iso-8652-1995</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/extraction/bnf2bgf/lll2bgf.py</mu>
+					<name>LLL⇒BGF</name>
+				</link>
+				<link>
+					<mu>topics/grammars/ada/iso-8652-1995/post-extract.xbgf</mu>
+					<name>XBGF</name>
+				</link>
+			</toolset>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<mu>topics/grammars/ada/iso-8652-1995/keywords.lst</mu>
+					<name>Keywords</name>
+				</link>
+				<link>
+					<mu>shared/python/keywords2xbgf.py</mu>
+					<name>Keywords⇒XBGF</name>
+				</link>
+				<link>
+					<mu>topics/grammars/ada/iso-8652-1995/correct.xbgf</mu>
+					<name>XBGF</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+			<item>
+				<name>Ralf Lämmel &amp; Chris Verhoef. <em>Engineering of Grammarware. Browsable Ada 95 Grammar 1.0</em>. CWI, VU, December 2000.</name>
+				<link>
+					<uri>http://www.cs.vu.nl/grammarware/ada/</uri>
+					<name>Grammar</name>
+				</link>
+			</item>
+		</version>
+	</language>
+	<!-- ================================================================ -->
+	<language>
 		<handle>c</handle>
 		<name>C</name>
 		<version>

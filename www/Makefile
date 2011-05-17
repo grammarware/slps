@@ -14,6 +14,7 @@ build:
 	make tmprj
 
 zooprj:
+	make -f _dev/Makefile.ada.zoo
 	make -f _dev/Makefile.c.zoo
 	make -f _dev/Makefile.cpp.zoo
 	make -f _dev/Makefile.csharp.zoo

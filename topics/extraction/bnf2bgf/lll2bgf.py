@@ -124,12 +124,13 @@ def serialiseExpression(ts,debug):
 
 def serialiseFormula(name,tokens):
 	# Useful yet annoying
-	#print 'Processing',name,'...'
+	print 'Processing nonterminal',name,'...'
 	# Replace BREAKPOINT with the name of a nonterminal you like to debug
-	if name=='BREAKPOINT':
+	debug = False
+	if name=='select_statement':
 		print tokens
 		return '<bgf:production><nonterminal>'+name+'</nonterminal>'+serialiseExpression(tokens,True)+'</bgf:production>'
-	return '<bgf:production><nonterminal>'+name+'</nonterminal>'+serialiseExpression(tokens,False)+'</bgf:production>'
+	return '<bgf:production><nonterminal>'+name+'</nonterminal>'+serialiseExpression(tokens,debug)+'</bgf:production>'
 
 def lll2lines(f1,f2):
 	lll = open(f1,'r')
