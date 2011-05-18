@@ -157,13 +157,25 @@
 		<version>
 			<name>Ada 95</name>
 			<source>
-				<title>ISO/IEC 8652:1995 <em xmlns="http://www.adahome.com/rm95/rm9x-toc.html">Information Technology — Programming Languages — Ada</em></title>
+				<title>ISO/IEC 8652:1995 <em xmlns="http://www.w3.org/1999/xhtml">Information Technology — Programming Languages — Ada</em></title>
 				<date>1995</date>
 				<specific>Annex P, pages 479–493</specific>
 			</source>
+			<source>
+				<title>Magnus Kempe, <em xmlns="http://www.w3.org/1999/xhtml">Ada 95 Reference Manual</em>, Hypertext version</title>
+				<date>1994–1997</date>
+				<link>
+					<uri>http://www.adahome.com/rm95/rm9x-toc.html</uri>
+					<name>TOC</name>
+				</link>
+				<link>
+					<uri>http://www.adahome.com/rm95/rm9x-P.html</uri>
+					<name>Annex</name>
+				</link>
+			</source>
 			<grammar>
-				<name>Extracted</name>
-				<handle>iso-8652-1995</handle>
+				<name>Recovered</name>
+				<handle>kempe</handle>
 			</grammar>
 			<toolset>
 				<name>Extraction</name>
@@ -172,14 +184,14 @@
 					<name>LLL⇒BGF</name>
 				</link>
 				<link>
-					<mu>topics/grammars/ada/iso-8652-1995/post-extract.xbgf</mu>
+					<mu>topics/grammars/ada/kempe/post-extract.xbgf</mu>
 					<name>XBGF</name>
 				</link>
 			</toolset>
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/ada/iso-8652-1995/keywords.lst</mu>
+					<mu>topics/grammars/ada/kempe/keywords.lst</mu>
 					<name>Keywords</name>
 				</link>
 				<link>
@@ -191,14 +203,30 @@
 					<name>XBGF</name>
 				</link>
 			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
-			<item>
-				<name>Ralf Lämmel &amp; Chris Verhoef. <em>Engineering of Grammarware. Browsable Ada 95 Grammar 1.0</em>. CWI, VU, December 2000.</name>
+			<source>
+				<title>Ralf Lämmel, Chris Verhoef. <em xmlns="http://www.w3.org/1999/xhtml">Engineering of Grammarware. Browsable Ada 95 Grammar</em> 1.0.</title>
+				<date>December 2000</date>
 				<link>
 					<uri>http://www.cs.vu.nl/grammarware/ada/</uri>
 					<name>Grammar</name>
 				</link>
-			</item>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>laemmel-verhoef</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/grammars/ada/laemmel-verhoef/config.edd</mu>
+					<name>EDD</name>
+				</link>
+				<link>
+					<mu>topics/grammars/ada/laemmel-verhoef/extract.py</mu>
+					<name>extract.py</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>
 	<!-- ================================================================ -->

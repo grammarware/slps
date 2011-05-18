@@ -1,9 +1,10 @@
 all:
-	make iso-8652-1995 -f _dev/Makefile.ada.zoo
+	make kempe -f _dev/Makefile.ada.zoo
+	make laemmel-verhoef -f _dev/Makefile.ada.zoo
 
 %:
-	cp ../topics/grammars/ada/$*/iso-ada-fix.bgf zoo/ada/$*.bgf
-	cp ../topics/grammars/ada/$*/iso-grammar.txt zoo/ada/$*.lll
+	cp ../topics/grammars/ada/$*/ada.bgf zoo/ada/$*.bgf
+	#cp ../topics/grammars/ada/$*/iso-grammar.txt zoo/ada/$*.lll
 	../shared/tools/bgf2html zoo/ada/$*.bgf zoo/ada/$*.html
 	../shared/tools/bgf2bnf  zoo/ada/$*.bgf zoo/ada/$*.bnf
 	../shared/tools/bgf2dms  zoo/ada/$*.bgf zoo/ada/$*.dms

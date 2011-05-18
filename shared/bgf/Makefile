@@ -8,13 +8,20 @@ all:
 	make xpath
 	make fl
 	make bnf slps dsl
+	make ada
 	make c cpp
 	make csharp
-	make java
+	make java jls
 	chmod 644 *.bgf
 
 norm:
 	ls -1 *.rec.bgf | xargs -n1 ./runnorm
+
+ada:
+	cd ${gdir}/ada && make build
+	cp ${gdir}/ada/kempe/iso-ada-1.bgf        ada.95.kempe.ext.bgf
+	cp ${gdir}/ada/kempe/ada.bgf              ada.95.kempe.rec.bgf
+	cp ${gdir}/ada/laemmel-verhoef/ada.bgf    ada.95.rlxv.rec.bgf
 
 xpath:
 	cd ${gdir}/xpath && make test
@@ -118,7 +125,7 @@ c:
 	cp ${gdir}/c/iso-9899-tc3/extracted-grammar.bgf      c.iso-9899-tc3.ext.bgf
 	cp ${gdir}/c/iso-9899-tc3/recovered-grammar.bgf      c.iso-9899-tc3.rec.bgf
 
-java:
+jls:
 	cd ${gdir}/java && make build
 	cp ${gdir}/java/jls1/extracted-readable-grammar.bgf      java.jdk-1.read.ext.bgf
 	cp ${gdir}/java/jls2/extracted-readable-grammar.bgf      java.j2se-1.2.read.ext.bgf
@@ -132,6 +139,16 @@ java:
 	cp ${gdir}/java/jls1/recovered-implementable-grammar.bgf java.jdk-1.impl.rec.bgf
 	cp ${gdir}/java/jls2/recovered-implementable-grammar.bgf java.j2se-1.2.impl.rec.bgf
 	cp ${gdir}/java/jls3/recovered-implementable-grammar.bgf java.j2se-5.0.impl.rec.bgf
+
+java:
+	cp ${gdir}/java/antlr-java-5/habelitz/habelitz.ext.bgf   java.j2se-5.0.habelitz.ext.bgf
+	cp ${gdir}/java/antlr-java-5/habelitz/habelitz.bgf       java.j2se-5.0.habelitz.rec.bgf
+	cp ${gdir}/java/antlr-java-5/parr/parr.ext.bgf           java.j2se-5.0.parr.ext.bgf
+	cp ${gdir}/java/antlr-java-5/parr/parr.bgf               java.j2se-5.0.parr.rec.bgf
+	cp ${gdir}/java/antlr-java-5/stahl/stahl.ext.bgf         java.j2se-5.0.stahl.ext.bgf
+	cp ${gdir}/java/antlr-java-5/stahl/stahl.bgf             java.j2se-5.0.stahl.rec.bgf
+	cp ${gdir}/java/antlr-java-5/studman/studman.ext.bgf     java.j2se-5.0.studman.ext.bgf
+	cp ${gdir}/java/antlr-java-5/studman/studman.bgf         java.j2se-5.0.studman.rec.bgf
 
 clean:
 	rm -f *~ *.bgf
