@@ -72,6 +72,8 @@ class NLGEngine:
 			return random.choice(('a hash ','a sharp sign ','a number sign '))
 		elif name == ';':
 			return 'a semicolon '
+		elif name == '~':
+			return random.choice(('a tilde ','a wave dash ','a swung dash '))
 		elif name == ':=':
 			return 'an assignment sign '
 		elif name == '<=':
