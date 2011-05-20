@@ -180,8 +180,12 @@
 			<toolset>
 				<name>Extraction</name>
 				<link>
-					<mu>topics/extraction/bnf2bgf/lll2bgf.py</mu>
-					<name>LLL⇒BGF</name>
+					<mu>topics/grammars/ada/kempe/config.edd</mu>
+					<name>EDD</name>
+				</link>
+				<link>
+					<mu>topics/grammars/ada/hunter.py</mu>
+					<name>Hunter</name>
 				</link>
 				<link>
 					<mu>topics/grammars/ada/kempe/post-extract.xbgf</mu>
@@ -191,15 +195,7 @@
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/ada/kempe/keywords.lst</mu>
-					<name>Keywords</name>
-				</link>
-				<link>
-					<mu>shared/python/keywords2xbgf.py</mu>
-					<name>Keywords⇒XBGF</name>
-				</link>
-				<link>
-					<mu>topics/grammars/ada/iso-8652-1995/correct.xbgf</mu>
+					<mu>topics/grammars/ada/kempe/correct.xbgf</mu>
 					<name>XBGF</name>
 				</link>
 			</toolset>
@@ -222,8 +218,19 @@
 					<name>EDD</name>
 				</link>
 				<link>
-					<mu>topics/grammars/ada/laemmel-verhoef/extract.py</mu>
-					<name>extract.py</name>
+					<mu>topics/grammars/ada/hunter.py</mu>
+					<name>Hunter</name>
+				</link>
+				<link>
+					<mu>topics/grammars/ada/laemmel-verhoef/post-extract.xbgf</mu>
+					<name>XBGF</name>
+				</link>
+			</toolset>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<mu>topics/grammars/ada/laemmel-verhoef/correct.xbgf</mu>
+					<name>XBGF</name>
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
