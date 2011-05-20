@@ -1,6 +1,7 @@
 all:
 	make kempe -f _dev/Makefile.ada.zoo
 	make laemmel-verhoef -f _dev/Makefile.ada.zoo
+	make lncs-4348 -f _dev/Makefile.ada.zoo
 
 %:
 	cp ../topics/grammars/ada/$*/ada.bgf zoo/ada/$*.bgf

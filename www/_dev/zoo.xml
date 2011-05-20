@@ -235,6 +235,48 @@
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
 		</version>
+		<version>
+			<name>Ada 2005</name>
+			<source>
+				<title>
+					ISO/IEC 8652/1995(E) <em xmlns="http://www.w3.org/1999/xhtml">Ada 2005 Reference Manual. Language and Standard Libraries</em>.
+					Also published as LNCS 4348 with Taft, S.T.; Duff, R.A.; Brukardt, R.L.; Ploedereder, E.; Leroy, P. as editors.
+				</title>
+				<date>2006</date>
+				<specific>Annex P, pages 675–692</specific>
+				<link>
+					<uri>http://dx.doi.org/10.1007/978-3-540-69336-9</uri>
+					<name>DOI</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Recovered</name>
+				<handle>lncs-4348</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/grammars/ada/lncs-4348/config.edd</mu>
+					<name>EDD</name>
+				</link>
+				<link>
+					<mu>topics/grammars/ada/hunter.py</mu>
+					<name>Hunter</name>
+				</link>
+				<link>
+					<mu>topics/grammars/ada/lncs-4348/post-extract.xbgf</mu>
+					<name>XBGF</name>
+				</link>
+			</toolset>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<mu>topics/grammars/ada/lncs-4348/correct.xbgf</mu>
+					<name>XBGF</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+		</version>
 	</language>
 	<!-- ================================================================ -->
 	<language>
