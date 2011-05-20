@@ -26,6 +26,7 @@ zooprj:
 	make -f _dev/Makefile.ebnf.tank
 	make -f _dev/Makefile.tescol.tank
 	make zoolists
+	rm -f tmp.xml
 
 zoolists:
 	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/listgrammars.xslt _dev/zoo.xml  >  zoo/index.html

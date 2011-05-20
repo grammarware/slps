@@ -4,11 +4,11 @@ all:
 	ls -1 zoo/modula/*.bgf | xargs -n1 -I _ basename _ .bgf | xargs -n1 -I ZZZ make ZZZ.formats -f _dev/Makefile.mod.zoo
 
 %.formats:
-	../shared/tools/bgf2html zoo/modula/$*.bgf zoo/modula/$*.html
 	../shared/tools/bgf2bnf  zoo/modula/$*.bgf zoo/modula/$*.bnf
 	../shared/tools/bgf2dms  zoo/modula/$*.bgf zoo/modula/$*.dms
 	../shared/tools/bgf2sdf  zoo/modula/$*.bgf zoo/modula/$*.sdf
 	../shared/tools/bgf2rsc  zoo/modula/$*.bgf zoo/modula/$*.rsc
+	_dev/fancy modula $* $*
 
 mod3:
 	cp ../topics/grammars/modula/modula.3.sdf.rec.bgf zoo/modula/modula3.bgf

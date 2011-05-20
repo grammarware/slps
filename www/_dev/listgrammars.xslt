@@ -183,17 +183,16 @@
 				<div class="last">
 					<strong>
 						All grammars are distributed on terms of the <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a> license
-						or on terms of any other license bound to the source of our research in a way that enforces its propagation to derivatives.<br/>
+						as well as on terms of any other license bound to the source of our research in a way that enforces
+						its propagation to derivatives.<br/>
 					</strong>
+					<xsl:text>The page is maintained by Dr. </xsl:text>
+					<a href="http://grammarware.net/">Vadim Zaytsev</a>
+					<xsl:text> a.k.a. @</xsl:text>
+					<a href="http://twitter.com/grammarware">grammarware</a>
+					<xsl:text>. Last updated: </xsl:text>
+					<xsl:value-of select="$date"/>
 					<span class="links">[<a href="/">↑SLPS</a>]</span>
-					<em>
-						<xsl:text>The page is maintained by Dr. </xsl:text>
-						<a href="http://grammarware.net/">Vadim Zaytsev</a>
-						<xsl:text> a.k.a. @</xsl:text>
-						<a href="http://twitter.com/grammarware">grammarware</a>
-						<xsl:text>. Last updated: </xsl:text>
-						<xsl:value-of select="$date"/>
-					</em>
 					<br/>
 					<a href="http://creativecommons.org/licenses/by/3.0/">
 						<img src="http://i.creativecommons.org/l/by/3.0/88x31.png" alt="CC-BY"/>

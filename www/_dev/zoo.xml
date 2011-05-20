@@ -161,7 +161,7 @@
 				<date>1995</date>
 				<specific>Annex P, pages 479–493</specific>
 			</source>
-			<source>
+			<source id="adakempe">
 				<title>Magnus Kempe, <em xmlns="http://www.w3.org/1999/xhtml">Ada 95 Reference Manual</em>, Hypertext version</title>
 				<date>1994–1997</date>
 				<link>
@@ -203,7 +203,7 @@
 					<name>XBGF</name>
 				</link>
 			</toolset>
-			<source>
+			<source id="adalaemmel-verhoef">
 				<title>Ralf Lämmel, Chris Verhoef. <em xmlns="http://www.w3.org/1999/xhtml">Engineering of Grammarware. Browsable Ada 95 Grammar</em> 1.0.</title>
 				<date>December 2000</date>
 				<link>
@@ -245,7 +245,7 @@
 		</version>
 		<version>
 			<name>Ada 2005</name>
-			<source>
+			<source id="adalncs-4348">
 				<title>
 					ISO/IEC 8652/1995(E) <em xmlns="http://www.w3.org/1999/xhtml">Ada 2005 Reference Manual. Language and Standard Libraries</em>.
 					Also published as LNCS 4348 with Taft, S.T.; Duff, R.A.; Brukardt, R.L.; Ploedereder, E.; Leroy, P. as editors.
@@ -296,7 +296,7 @@
 		<name>C</name>
 		<version>
 			<name>ISO C 1999</name>
-			<source>
+			<source id="ciso-9899-1999">
 				<title>ISO/IEC 9899:1999(E) <em xmlns="http://www.w3.org/1999/xhtml">Programming languages — C</em></title>
 				<date>December 1999</date>
 				<specific>Annex A, pages 402–416</specific>
@@ -314,7 +314,7 @@
 		</version>
 		<version>
 			<name>ISO C 2005</name>
-			<source>
+			<source id="ciso-9899-tc2">
 				<title>ISO/IEC 9899:TC2 <em xmlns="http://www.w3.org/1999/xhtml">WG14/N1124</em> Committee Draft</title>
 				<date>May 2005</date>
 				<specific>Annex A, pages 403–417</specific>
@@ -332,7 +332,7 @@
 		</version>
 		<version>
 			<name>ISO C 2007</name>
-			<source>
+			<source id="ciso-9899-tc3">
 				<title>ISO/IEC 9899:TC3 <em xmlns="http://www.w3.org/1999/xhtml">WG14/N1256</em> Committee Draft</title>
 				<date>September 2007</date>
 				<specific>Annex A, pages 403–418</specific>
@@ -354,7 +354,7 @@
 		<name>C++</name>
 		<version>
 			<name>ISO C++ 1998</name>
-			<source>
+			<source id="cppiso-14882-1998">
 				<title>ISO/IEC 14882:1998(E) <em xmlns="http://www.w3.org/1999/xhtml">Programming languages — C++</em>. First edition</title>
 				<date>September 1998</date>
 				<specific>Annex A, pages 667–684</specific>
@@ -372,7 +372,7 @@
 		</version>
 		<version>
 			<name>ISO C++ 2008</name>
-			<source>
+			<source id="cppiso-n2723">
 				<title>ISO/IEC SC22/WG21 N2723=08-0233 Working Draft, <em xmlns="http://www.w3.org/1999/xhtml">Standard for Programming Language C++</em></title>
 				<date>August 2008</date>
 				<specific>Annex A, pages 1089–1101</specific>
@@ -394,7 +394,7 @@
 		<name>C#</name>
 		<version>
 			<name>ECMA C# 2001</name>
-			<source>
+			<source id="csharpecma-334-1">
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 1<sup>st</sup> edition</em></title>
 				<date>December 2001</date>
 				<specific>Appendix A, pages 339–364</specific>
@@ -420,7 +420,7 @@
 		</version>
 		<version>
 			<name>ECMA C# 2002</name>
-			<source>
+			<source id="csharpecma-334-2">
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 2<sup>nd</sup> edition</em></title>
 				<date>December 2002</date>
 				<specific>Appendix A, pages 335–360</specific>
@@ -446,7 +446,7 @@
 		</version>
 		<version>
 			<name>ECMA C# 2005</name>
-			<source>
+			<source id="csharpecma-334-3">
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 3<sup>rd</sup> edition</em></title>
 				<date>June 2005</date>
 				<link>
@@ -471,7 +471,7 @@
 		</version>
 		<version>
 			<name>ECMA C# 2006</name>
-			<source>
+			<source id="csharpecma-334-4">
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 4<sup>th</sup> edition</em></title>
 				<date>June 2006</date>
 				<link>
@@ -496,7 +496,7 @@
 		</version>
 		<version>
 			<name>ISO C# 2003</name>
-			<source>
+			<source id="csharpiso-23270-2003">
 				<title>ISO/IEC 23270:2003(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Programming languages — C#</em>. First edition</title>
 				<date>2003</date>
 				<link>
@@ -573,7 +573,7 @@
 		</version>
 		<version>
 			<name>ISO C# 2006</name>
-			<source>
+			<source id="csharpiso-23270-2006">
 				<title>ISO/IEC 23270:2006(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Programming languages — C#</em>. Second edition</title>
 				<date>September 2006</date>
 				<link>
@@ -598,7 +598,7 @@
 		</version>
 		<version>
 			<name>Microsoft C# 1.0</name>
-			<source>
+			<source id="csharpmsft-ls-1.0">
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 1.0</title>
 				<date>2002</date>
 				<link>
@@ -619,7 +619,7 @@
 		</version>
 		<version>
 			<name>Microsoft C# 1.2</name>
-			<source>
+			<source id="csharpmsft-ls-1.2">
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 1.2</title>
 				<date>2003</date>
 				<link>
@@ -640,7 +640,7 @@
 		</version>
 		<version>
 			<name>Microsoft C# 3.0</name>
-			<source>
+			<source id="csharpmsft-ls-3.0">
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 3.0</title>
 				<date>2007</date>
 				<link>
@@ -661,7 +661,7 @@
 		</version>
 		<version>
 			<name>Microsoft C# 4.0</name>
-			<source>
+			<source id="csharpmsft-ls-4.0">
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 4.0</title>
 				<date>2010</date>
 				<link>
@@ -686,7 +686,7 @@
 		<name>Fortran</name>
 		<version>
 			<name>Fortran-90</name>
-			<source>
+			<source id="fortran">
 				<title>Jan Derricks, <code xmlns="http://www.w3.org/1999/xhtml">Fortran90.sdf</code></title>
 				<date>12 July 2007</date>
 				<link>
@@ -733,7 +733,7 @@
 		<name>Java</name>
 		<version>
 			<name>JDK 1.0</name>
-			<source>
+			<source id="jls1">
 				<title>James Gosling, Bill Joy, Guy Steele, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em></title>
 				<date>1996</date>
 				<link>
@@ -763,7 +763,7 @@
 		</version>
 		<version>
 			<name>J2SE 1.2 “Playground”</name>
-			<source>
+			<source id="jls2">
 				<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em> Second Edition</title>
 				<date>1998</date>
 				<link>
@@ -793,7 +793,7 @@
 		</version>
 		<version>
 			<name>J2SE 5.0 “Tiger”</name>
-			<source>
+			<source id="jls3">
 				<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em> Third Edition</title>
 				<date>2004</date>
 				<link>
@@ -818,7 +818,7 @@
 				<handle>jls3-impl</handle>
 			</grammar>
 			<toolset ref="scraping"/>
-			<source>
+			<source id="javahabelitz">
 				<title>Dieter Habelitz, <code xmlns="http://www.w3.org/1999/xhtml">Java.g</code></title>
 				<date>2008</date>
 				<link>
@@ -853,7 +853,7 @@
 					<name>post-extraction</name>
 				</link>
 			</toolset>
-			<source>
+			<source id="javaparr">
 				<title>Terence Parr, <code xmlns="http://www.w3.org/1999/xhtml">Java.g</code></title>
 				<date>2006</date>
 				<link>
@@ -888,7 +888,7 @@
 					<name>post-extraction</name>
 				</link>
 			</toolset>
-			<source>
+			<source id="javastahl">
 				<title>Michael Stahl, <code xmlns="http://www.w3.org/1999/xhtml">java15.g</code></title>
 				<date>2004</date>
 				<link>
@@ -923,7 +923,7 @@
 					<name>post-extraction</name>
 				</link>
 			</toolset>
-			<source>
+			<source id="javastudman">
 				<title>Michael Studman, <code xmlns="http://www.w3.org/1999/xhtml">java15.g</code></title>
 				<date>2004</date>
 				<link>
@@ -978,7 +978,7 @@
 		<name>Modula</name>
 		<version>
 			<name>Modula-3</name>
-			<source>
+			<source id="mod3">
 				<title>Jurgen Vinju, Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">Modula-3.sdf</code></title>
 				<date>13 February 2006 – 19 September 2008</date>
 				<link>
@@ -1014,7 +1014,7 @@
 		<name>XPath</name>
 		<version>
 			<name>XPath 1.0</name>
-			<source>
+			<source id="xpathv1">
 				<title><em xmlns="http://www.w3.org/1999/xhtml">XML Path Language (XPath)</em>, Version 1.0, W3C Recommendation</title>
 				<date>16 November 1999</date>
 				<link>
