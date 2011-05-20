@@ -143,7 +143,7 @@
 					<li>
 						<xsl:text>BNF-like Grammar Format:</xsl:text>
 						<span class="links">
-							[<a href="http://slps.svn.sourceforge.net/viewvc/slps/shared/xsd/bgf.xsd">Schema</a>]
+							[<a href="http://slps.svn.sourceforge.net/viewvc/slps/shared/xsd/bgf.xsd?view=markup">Schema</a>]
 							[<a href="http://www.w3.org/TR/xml/">W3C XML Rec</a>]
 							[<a href="http://www.w3.org/TR/xmlschema11-1/">W3C XSD WD 1</a>]
 							[<a href="http://www.w3.org/TR/xmlschema11-2/">W3C XSD WD 2</a>]
@@ -195,7 +195,9 @@
 						<xsl:value-of select="$date"/>
 					</em>
 					<br/>
-					<img src="http://i.creativecommons.org/l/by/3.0/88x31.png" alt="CC-BY"/>
+					<a href="http://creativecommons.org/licenses/by/3.0/">
+						<img src="http://i.creativecommons.org/l/by/3.0/88x31.png" alt="CC-BY"/>
+					</a>
 					<a href="http://validator.w3.org/check/referer">
 						<img src="../img/vxhtml.png" alt="XHTML 1.0"/>
 					</a>
@@ -217,16 +219,28 @@
 	</xsl:template>
 	<xsl:template match="link">
 		<xsl:text> [</xsl:text>
-		<xsl:if test="uri">
-			<a xmlns="http://www.w3.org/1999/xhtml" href="{uri}">
-				<xsl:value-of select="name"/>
-			</a>
-		</xsl:if>
-		<xsl:if test="mu">
-			<a xmlns="http://www.w3.org/1999/xhtml" href="http://slps.svn.sourceforge.net/viewvc/slps/{mu}?view=markup">
-				<xsl:value-of select="name"/>
-			</a>
-		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="uri">
+				<a xmlns="http://www.w3.org/1999/xhtml" href="{uri}">
+					<xsl:value-of select="name"/>
+				</a>
+			</xsl:when>
+			<xsl:when test="mu">
+				<a xmlns="http://www.w3.org/1999/xhtml" href="http://slps.svn.sourceforge.net/viewvc/slps/{mu}?view=markup">
+					<xsl:value-of select="name"/>
+				</a>
+			</xsl:when>
+			<xsl:when test="slps">
+				<a xmlns="http://www.w3.org/1999/xhtml" href="http://slps.svn.sourceforge.net/viewvc/slps/{slps}">
+					<xsl:value-of select="name"/>
+				</a>
+			</xsl:when>
+			<xsl:when test="doi">
+				<a xmlns="http://www.w3.org/1999/xhtml" href="http://dx.doi.org/{doi}">
+					<xsl:value-of select="name"/>
+				</a>
+			</xsl:when>
+		</xsl:choose>
 		<xsl:text>] </xsl:text>
 	</xsl:template>
 	<xsl:template match="source">

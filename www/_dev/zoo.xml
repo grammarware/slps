@@ -68,7 +68,7 @@
 			<name>iFM</name>
 		</link>
 		<link>
-			<uri>http://dx.doi.org/10.1007/978-3-642-00255-7_17</uri>
+			<doi>10.1007/978-3-642-00255-7_17</doi>
 			<name>LNCS</name>
 		</link>
 		<link>
@@ -137,7 +137,7 @@
 		<item>
 			<name>R. Lämmel, V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Recovering Grammar Relationships for the Java Language Specification.</em> ACM CRR; SQJ 19:2.</name>
 			<link>
-				<uri>http://dx.doi.org/10.1007/s11219-010-9116-5</uri>
+				<doi>10.1007/s11219-010-9116-5</doi>
 				<name>SQJ</name>
 			</link>
 			<link>
@@ -164,6 +164,10 @@
 			<source>
 				<title>Magnus Kempe, <em xmlns="http://www.w3.org/1999/xhtml">Ada 95 Reference Manual</em>, Hypertext version</title>
 				<date>1994–1997</date>
+				<link>
+					<slps>topics/grammars/ada/kempe/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://www.adahome.com/rm95/rm9x-toc.html</uri>
 					<name>TOC</name>
@@ -202,6 +206,10 @@
 			<source>
 				<title>Ralf Lämmel, Chris Verhoef. <em xmlns="http://www.w3.org/1999/xhtml">Engineering of Grammarware. Browsable Ada 95 Grammar</em> 1.0.</title>
 				<date>December 2000</date>
+				<link>
+					<slps>topics/grammars/ada/laemmel-verhoef/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://www.cs.vu.nl/grammarware/ada/</uri>
 					<name>Grammar</name>
@@ -245,7 +253,11 @@
 				<date>2006</date>
 				<specific>Annex P, pages 675–692</specific>
 				<link>
-					<uri>http://dx.doi.org/10.1007/978-3-540-69336-9</uri>
+					<slps>topics/grammars/ada/lncs-4348/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
+					<doi>10.1007/978-3-540-69336-9</doi>
 					<name>DOI</name>
 				</link>
 			</source>
@@ -288,6 +300,10 @@
 				<title>ISO/IEC 9899:1999(E) <em xmlns="http://www.w3.org/1999/xhtml">Programming languages — C</em></title>
 				<date>December 1999</date>
 				<specific>Annex A, pages 402–416</specific>
+				<link>
+					<slps>topics/grammars/c/iso-9899-1999/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 			</source>
 			<grammar>
 				<name>Extracted</name>
@@ -302,6 +318,10 @@
 				<title>ISO/IEC 9899:TC2 <em xmlns="http://www.w3.org/1999/xhtml">WG14/N1124</em> Committee Draft</title>
 				<date>May 2005</date>
 				<specific>Annex A, pages 403–417</specific>
+				<link>
+					<slps>topics/grammars/c/iso-9899-tc2/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 			</source>
 			<grammar>
 				<name>Extracted</name>
@@ -316,6 +336,10 @@
 				<title>ISO/IEC 9899:TC3 <em xmlns="http://www.w3.org/1999/xhtml">WG14/N1256</em> Committee Draft</title>
 				<date>September 2007</date>
 				<specific>Annex A, pages 403–418</specific>
+				<link>
+					<slps>topics/grammars/c/iso-9899-tc3/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 			</source>
 			<grammar>
 				<name>Extracted</name>
@@ -334,6 +358,10 @@
 				<title>ISO/IEC 14882:1998(E) <em xmlns="http://www.w3.org/1999/xhtml">Programming languages — C++</em>. First edition</title>
 				<date>September 1998</date>
 				<specific>Annex A, pages 667–684</specific>
+				<link>
+					<slps>topics/grammars/cpp/iso-14882-1998/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 			</source>
 			<grammar>
 				<name>Extracted</name>
@@ -348,6 +376,10 @@
 				<title>ISO/IEC SC22/WG21 N2723=08-0233 Working Draft, <em xmlns="http://www.w3.org/1999/xhtml">Standard for Programming Language C++</em></title>
 				<date>August 2008</date>
 				<specific>Annex A, pages 1089–1101</specific>
+				<link>
+					<slps>topics/grammars/cpp/iso-n2723/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 			</source>
 			<grammar>
 				<name>Extracted</name>
@@ -366,6 +398,10 @@
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 1<sup>st</sup> edition</em></title>
 				<date>December 2001</date>
 				<specific>Appendix A, pages 339–364</specific>
+				<link>
+					<slps>topics/grammars/csharp/ecma-334-1/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
 					<name>Archive</name>
@@ -389,6 +425,10 @@
 				<date>December 2002</date>
 				<specific>Appendix A, pages 335–360</specific>
 				<link>
+					<slps>topics/grammars/csharp/ecma-334-2/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
 					<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
 					<name>Archive</name>
 				</link>
@@ -409,6 +449,10 @@
 			<source>
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 3<sup>rd</sup> edition</em></title>
 				<date>June 2005</date>
+				<link>
+					<slps>topics/grammars/csharp/ecma-334-3/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
 					<name>Archive</name>
@@ -431,6 +475,10 @@
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 4<sup>th</sup> edition</em></title>
 				<date>June 2006</date>
 				<link>
+					<slps>topics/grammars/csharp/ecma-334-4/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
 					<uri>http://www.ecma-international.org/publications/standards/Ecma-334.htm</uri>
 					<name>Standard</name>
 				</link>
@@ -451,6 +499,10 @@
 			<source>
 				<title>ISO/IEC 23270:2003(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Programming languages — C#</em>. First edition</title>
 				<date>2003</date>
+				<link>
+					<slps>topics/grammars/csharp/iso-23270-2003/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 			</source>
 			<grammar>
 				<name>Extracted</name>
@@ -525,6 +577,10 @@
 				<title>ISO/IEC 23270:2006(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Programming languages — C#</em>. Second edition</title>
 				<date>September 2006</date>
 				<link>
+					<slps>topics/grammars/csharp/iso-23270-2006/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
 					<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/index.html</uri>
 					<name>Standard</name>
 				</link>
@@ -546,6 +602,10 @@
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 1.0</title>
 				<date>2002</date>
 				<link>
+					<slps>topics/grammars/csharp/msft-ls-1.0/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
 					<uri>http://download.microsoft.com/download/a/9/e/a9e229b9-fee5-4c3e-8476-917dee385062/CSharp%20Language%20Specification%20v1.0.doc</uri>
 					<name>DOC</name>
 				</link>
@@ -562,6 +622,10 @@
 			<source>
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 1.2</title>
 				<date>2003</date>
+				<link>
+					<slps>topics/grammars/csharp/msft-ls-1.2/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://download.microsoft.com/download/5/e/5/5e58be0a-b02b-41ac-a4a3-7a22286214ff/csharp%20language%20specification%20v1.2.doc</uri>
 					<name>DOC</name>
@@ -580,6 +644,10 @@
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 3.0</title>
 				<date>2007</date>
 				<link>
+					<slps>topics/grammars/csharp/msft-ls-3.0/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
 					<uri>http://download.microsoft.com/download/3/8/8/388e7205-bc10-4226-b2a8-75351c669b09/CSharp%20Language%20Specification.doc</uri>
 					<name>DOC</name>
 				</link>
@@ -596,6 +664,10 @@
 			<source>
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 4.0</title>
 				<date>2010</date>
+				<link>
+					<slps>topics/grammars/csharp/msft-ls-4.0/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://download.microsoft.com/download/0/B/D/0BDA894F-2CCD-4C2C-B5A7-4EB1171962E5/CSharp%20Language%20Specification.doc</uri>
 					<name>DOC</name>
@@ -617,6 +689,10 @@
 			<source>
 				<title>Jan Derricks, <code xmlns="http://www.w3.org/1999/xhtml">Fortran90.sdf</code></title>
 				<date>12 July 2007</date>
+				<link>
+					<slps>topics/grammars/fortran/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://www.meta-environment.org/</uri>
 					<name>MetaEnv</name>
@@ -661,6 +737,10 @@
 				<title>James Gosling, Bill Joy, Guy Steele, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em></title>
 				<date>1996</date>
 				<link>
+					<slps>topics/grammars/java/jls1/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
 					<uri>http://java.sun.com/docs/books/jls/first_edition/html/index.html</uri>
 					<name>HTML</name>
 				</link>
@@ -686,6 +766,10 @@
 			<source>
 				<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em> Second Edition</title>
 				<date>1998</date>
+				<link>
+					<slps>topics/grammars/java/jls2/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://java.sun.com/docs/books/jls/second_edition/html/j.title.doc.html</uri>
 					<name>HTML</name>
@@ -713,6 +797,10 @@
 				<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em> Third Edition</title>
 				<date>2004</date>
 				<link>
+					<slps>topics/grammars/java/jls3/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
 					<uri>http://java.sun.com/docs/books/jls/third_edition/html/j3TOC.html</uri>
 					<name>HTML</name>
 				</link>
@@ -733,6 +821,10 @@
 			<source>
 				<title>Dieter Habelitz, <code xmlns="http://www.w3.org/1999/xhtml">Java.g</code></title>
 				<date>2008</date>
+				<link>
+					<slps>topics/grammars/java/antlr-java-5/habelitz/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://www.antlr.org/grammar/1207932239307/Java1_5Grammars/Java.g</uri>
 					<name>ANTLR3</name>
@@ -765,6 +857,10 @@
 				<title>Terence Parr, <code xmlns="http://www.w3.org/1999/xhtml">Java.g</code></title>
 				<date>2006</date>
 				<link>
+					<slps>topics/grammars/java/antlr-java-5/parr/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
 					<uri>http://www.antlr.org/grammar/1152141644268/Java.g</uri>
 					<name>ANTLR3</name>
 				</link>
@@ -796,6 +892,10 @@
 				<title>Michael Stahl, <code xmlns="http://www.w3.org/1999/xhtml">java15.g</code></title>
 				<date>2004</date>
 				<link>
+					<slps>topics/grammars/java/antlr-java-5/stahl/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
 					<uri>http://www.antlr.org/grammar/1093454600181/java15-grammar.zip</uri>
 					<name>ANTLR2.ZIP</name>
 				</link>
@@ -826,6 +926,10 @@
 			<source>
 				<title>Michael Studman, <code xmlns="http://www.w3.org/1999/xhtml">java15.g</code></title>
 				<date>2004</date>
+				<link>
+					<slps>topics/grammars/java/antlr-java-5/studman/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://www.antlr.org/grammar/1090713067533/java15.g</uri>
 					<name>ANTLR2</name>
@@ -878,6 +982,10 @@
 				<title>Jurgen Vinju, Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">Modula-3.sdf</code></title>
 				<date>13 February 2006 – 19 September 2008</date>
 				<link>
+					<slps>topics/grammars/modula/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
 					<uri>http://www.meta-environment.org/</uri>
 					<name>MetaEnv</name>
 				</link>
@@ -909,6 +1017,10 @@
 			<source>
 				<title><em xmlns="http://www.w3.org/1999/xhtml">XML Path Language (XPath)</em>, Version 1.0, W3C Recommendation</title>
 				<date>16 November 1999</date>
+				<link>
+					<slps>topics/grammars/xpath/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
 				<link>
 					<uri>http://www.w3.org/TR/1999/REC-xpath-19991116.xml</uri>
 					<name>XML</name>
