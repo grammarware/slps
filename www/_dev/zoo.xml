@@ -241,13 +241,57 @@
 					<name>XBGF</name>
 				</link>
 			</toolset>
+			<source id="adalncs-2219">
+				<title>
+					International Standard ISO/IEC 8652/1995(E) with Technical Corrigendum 1.
+					<em xmlns="http://www.w3.org/1999/xhtml">Consolidated Ada Reference Manual. Language and Standard Libraries</em>.
+					Also published as LNCS 2219 with Taft, T.S.; Duff, R.A.; Brukardt, R.L.; Ploedereder, E. as editors.
+				</title>
+				<date>2001</date>
+				<specific>Annex P, pages 497–512</specific>
+				<link>
+					<slps>topics/grammars/ada/lncs-2219/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
+					<doi>10.1007/3-540-45340-7</doi>
+					<name>DOI</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Recovered</name>
+				<handle>lncs-2219</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/grammars/ada/lncs-2219/config.edd</mu>
+					<name>EDD</name>
+				</link>
+				<link>
+					<mu>topics/grammars/ada/hunter.py</mu>
+					<name>Hunter</name>
+				</link>
+				<link>
+					<mu>topics/grammars/ada/lncs-2219/post-extract.xbgf</mu>
+					<name>XBGF</name>
+				</link>
+			</toolset>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<mu>topics/grammars/ada/lncs-2219/correct.xbgf</mu>
+					<name>XBGF</name>
+				</link>
+			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>Ada 2005</name>
 			<source id="adalncs-4348">
 				<title>
-					ISO/IEC 8652/1995(E) <em xmlns="http://www.w3.org/1999/xhtml">Ada 2005 Reference Manual. Language and Standard Libraries</em>.
+					International Standard ISO/IEC 8652/1995(E) with Technical Corrigendum 1 and Amendment 1.
+					<em xmlns="http://www.w3.org/1999/xhtml">Ada 2005 Reference Manual. Language and Standard Libraries</em>.
 					Also published as LNCS 4348 with Taft, S.T.; Duff, R.A.; Brukardt, R.L.; Ploedereder, E.; Leroy, P. as editors.
 				</title>
 				<date>2006</date>

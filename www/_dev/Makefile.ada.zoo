@@ -1,6 +1,7 @@
 all:
 	make kempe -f _dev/Makefile.ada.zoo
 	make laemmel-verhoef -f _dev/Makefile.ada.zoo
+	make lncs-2219 -f _dev/Makefile.ada.zoo
 	make lncs-4348 -f _dev/Makefile.ada.zoo
 	rm tmp.xml
 

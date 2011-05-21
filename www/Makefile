@@ -4,6 +4,7 @@ upload:
 	scp index.html rlaemmel,slps@web.sourceforge.net:htdocs
 
 sync:
+	rm -f tmp.xml
 	rsync -avz --delete --exclude=".svn" --exclude="Makefile" --exclude="_dev" * sspider,slps@web.sourceforge.net:htdocs
 
 clean:
@@ -26,7 +27,6 @@ zooprj:
 	make -f _dev/Makefile.ebnf.tank
 	make -f _dev/Makefile.tescol.tank
 	make zoolists
-	rm -f tmp.xml
 
 zoolists:
 	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/listgrammars.xslt _dev/zoo.xml  >  zoo/index.html
