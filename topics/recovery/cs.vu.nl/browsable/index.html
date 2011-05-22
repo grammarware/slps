@@ -1,0 +1,139 @@
+<HEAD>
+<TITLE>Browsable grammars</TITLE>
+<META NAME="keywords"
+ CONTENT="grammar, free, COBOL, IBM, BNF, EBNF, YACC, parser, syntax, syntax diagram">
+</HEAD>
+<BODY BGCOLOR=white>
+<H1>Browsable grammars</H1>
+
+<B>Copyright (C) 1999
+<A HREF=http://www.cwi.nl/~ralf>Ralf L&auml;mmel</A>
+(<A HREF=http://www.cwi.nl>CWI, Amsterdam</A>)
+&amp;
+<A HREF=http://www.wins.uva.nl/~x>Chris Verhoef</A></I>
+(<A HREF=http://www.wins.uva.nl>WINS, Universiteit van Amsterdam</A>)
+</B>
+
+<P>
+
+We offer the following grammars:
+
+<UL>
+<LI> <A HREF=vs-cobol-ii>VS COBOL II</A> (fully tested)
+<LI> <A HREF=cobol>COBOL</A> with OO/recursion/intrinsic functions etc. (not yet corrected/completed; preliminary release)
+<LI> <A HREF=os-pli-v2r3>OS PL/I V2R3</A> (not yet corrected/completed; preliminary release)
+<LI> <A HREF=ada>Ada 95</A> (not yet completed; reengineered from standard)
+<LI> <A HREF=CSharp>C# 1.0</A> (preliminary release)
+</UL>
+
+Further grammars will be released soon.
+
+<P>
+
+<HR>
+
+<H2>How to use browsable grammars ...</H2>
+
+From our grammars we generate a <I>browsable</I> version.
+Such a "grammar" browser is very useful, for example, to understand
+the syntax of the language described by the underlying grammar. The
+actual grammar rules are connected using hyperlinks so that it possible
+to go from the use site of a sort to its definition. In addition to the
+grammar rules, also a graphical representation in the form of so-called
+syntax diagrams is provided. The syntax diagrams are also connected
+using hyperlinks. There are special cross-reference tables for the
+sorts and the keywords used in the grammar. By the way, we extensively
+use grammar browsers for completing and correcting grammars in our
+(re-) engineering cycle.
+<P>
+
+A browsable grammar consists of the following sections:
+
+<DL>
+
+<DT><B>Summary</B>
+<DD> The number of rules, sorts, top sorts, bottom sorts, lexical sorts
+and keywords are listed. This information is useful to get an impression
+on the size and the completeness of the grammar. The terms sorts,
+top sorts, bottom sorts are explained in some detail below.
+
+<DT><B>Context-free syntax</B>
+<DD> The actual context-free grammar rules are provided in this section.
+We use a variant of EBNF (Extended Backus Naur Form).
+Rules are of the form <I>s = e</I>, where <I>s</I> is the
+sort to be defined and <I>e</I> is the expression
+built from some EBNF constructs as follows. Alternatives are
+separated by "|". Concatenation coincides with juxtaposition.
+Repetition is indicated by the braces, where "*" and "+" are
+used as postfix operators in order to express whether 0 or more 
+resp. 1 or more repetitions are required. Keywords are enclosed
+in double quotes. There is one non-standard construct for permutation
+phrases. ( a b | b a ) can be abbreviated as ( a || b ).
+
+<DT><B>Lexical syntax</B>
+<DD> Lexical definitions are written using some standard notation for
+regular expressions in the spirit of LEX. Character sets are enclosed in
+"[" and "]". All characters but letters and digits have to be escaped by "\".
+Enumerations can be abbreviated using "-" as an infix operator. The
+complementary character set of some set is obtained by using "~" as a
+prefix operator. There are the standard postfix operators for regular
+expressions: "?" for optional parts, "*" for zero or more repetitions and
+"+" for 1 or more repetitions of certain parts. Alternatives are separated
+by "|" which binds weaker than concatenation. A lexical definition consists
+of rules of the form <I>s = e</I>, where <I>s</I> is the lexical sort defined
+by the regular expression <I>e</I>. Auxiliary lexical sorts might be introduced
+in the scope of a rule by enclosing the rules defining the auxiliary sorts by
+"auxiliaries begin" and "end".  The notation "..." denotes the undefined regular
+expression. We use "..." as the right-hand side of a rule in order to indicate
+that we do not want to provide a lexical definition for the corresponding sort
+for some reason.
+
+<DT><B>All sorts</B>
+<DD> This table enumerates all sorts in alphabetical order.
+Sorts are usually called nonterminals. Since we also deal with
+incomplete grammars, we prefer the distinguishable term <I>sort</I>.
+For each sort all the RHS (right-hand side) occurrences or use sites
+are listed in the table, i.e., the sorts using the sort in their
+definition. All sorts in the table are connected with their
+definition (if there is any) via hyperlinks. If you browse the
+grammar rules, you can get to the table by clicking on the LHS
+(left-hand side) sort in a given rule.
+
+<DT><B>Top sorts</B>
+<DD> This section just lists all top sorts. A top sort is a sort which
+is defined but not used, i.e., a sort with a LHS occurrence in the grammar
+rules, but with no RHS occurrence. A complete grammar should ideally contain
+one top sort which is usually called start symbol or axiom.
+
+<DT><B>Bottom sorts</B>
+<DD> This section enumerates all bottom sorts. A bottom sort is
+a sort with one or more RHS occurrence, but with no LHS occurrence.
+In a complete grammar there should be no bottom sorts. Before providing
+a lexical definition, all potential lexical sorts will be counted as
+bottom sorts.
+
+<DT><B>Keywords</B>
+<DD> All the keywords occurring in the grammar are listed in alphabetical
+order. For each keyword all the use sites are listed as well. 
+
+<DT><B>Diagrams</B>
+<DD> We use a graphical notation very similar to IBM's syntax diagrams used
+in several language documents. For more information on IBM's syntax diagrams
+refer to some IBM language document, e.g., the corresponding section
+<A HREF=http://www.s390.ibm.com:80/bookmgr-cgi/bookmgr.cmd/BOOKS/IGYR1101/PREFACE%2e4>How to Read the Syntax Diagrams</A> from IBM's VS COBOL II Reference Summary.
+The most important deviation in our notation is that we have a special
+form of stacking using "||" to express permutation phrases.
+Stacking blocks using the ordinary "|" is a way of expressing alternatives,
+whereas stacking blocks using "||" is a way to express that the sequential order of
+the blocks is immaterial. A minor deviation is that we do not qualify the occurrences
+of sort names in diagrams by naturals. 
+</DL>
+
+<HR>
+<SMALL>
+Page by <A HREF=http://www.cwi.nl/~ralf>Ralf L&auml;mmel</A>
+(<A HREF=http://www.cwi.nl>CWI, Amsterdam</A>,
+Email: <A HREF=mailto:ralf@cwi.nl>ralf@cwi.nl</A>)
+</SMALL>
+</BODY>
+
