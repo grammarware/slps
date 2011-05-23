@@ -77,7 +77,12 @@
 					<li>
 						<xsl:text>Number of defined nonterminal symbols: </xsl:text>
 						<strong>
-							<xsl:value-of select="count(bgf:production/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())])"/>
+							<xsl:choose>
+								<xsl:when test="bgf:production/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())]">
+									<xsl:value-of select="count(bgf:production/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())])"/>
+								</xsl:when>
+								<xsl:otherwise>—</xsl:otherwise>
+							</xsl:choose>
 						</strong>
 					</li>
 					<li>
