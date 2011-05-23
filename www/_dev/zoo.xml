@@ -285,6 +285,41 @@
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
+			<source id="adakellogg">
+				<title>Oliver Kellogg, <code xmlns="http://www.w3.org/1999/xhtml">ada.g</code></title>
+				<date>2003</date>
+				<link>
+					<slps>topics/grammars/ada/kellogg/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
+					<uri>http://www.antlr.org/grammar/ada/ada.g</uri>
+					<name>ANTLR</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Kellogg</name>
+				<handle>kellogg</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/extraction/antlr/ANTLR2.rsc</mu>
+					<name>ANTLR2.rsc</name>
+				</link>
+				<link>
+					<mu>topics/extraction/antlr/antlrpp.py</mu>
+					<name>antlrpp.py</name>
+				</link>
+				<link>
+					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
+					<name>StrippedANTLR.g</name>
+				</link>
+				<link>
+					<mu>topics/grammars/ada/kellogg/post-extraction.xbgf</mu>
+					<name>post-extraction</name>
+				</link>
+			</toolset>
 		</version>
 		<version>
 			<name>Ada 2005</name>
