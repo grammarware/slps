@@ -5,10 +5,11 @@ img {border:0;}
 .last {width: 100%; text-align: right; font-style: italic;}
 .last img {border:0; width: 88px; height: 31px;}
 br {clear: both;}
-.links {text-align:center; font-family: "Courier New", Courier, mono; font-weight: bold;}
+.links {text-align:center; font-family: monospace; font-weight: bold;}
 .links a {text-decoration: none;}
 a:hover {text-decoration: underline;}
 body{color:#033;}
 a:link{color:#039;}
 a:visited{color:#006;}
 ul li {list-style:disc;}
+a:link.red, a:visited.red {color:#933;}

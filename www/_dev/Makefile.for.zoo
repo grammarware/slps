@@ -1,13 +1,15 @@
 all:
-	make for90 -f _dev/Makefile.for.zoo
-	chmod 644 zoo/fortran/*.bgf
-	ls -1 zoo/fortran/*.bgf | xargs -n1 -I _ basename _ .bgf | xargs -n1 -I ZZZ make ZZZ.formats -f _dev/Makefile.for.zoo
+	make derricks -f _dev/Makefile.for.zoo
+	chmod 644 zoo/fortran/*.*
+	rm tmp.xml
 
-%.formats:
-	../shared/tools/bgf2dms  zoo/fortran/$*.bgf zoo/fortran/$*.dms
-	../shared/tools/bgf2sdf  zoo/fortran/$*.bgf zoo/fortran/$*.sdf
-	../shared/tools/bgf2rsc  zoo/fortran/$*.bgf zoo/fortran/$*.rsc
-	_dev/fancy zoo fortran $* fortran
-
-for90:
-	cp ../topics/grammars/fortran/fortran.sdf.rec.bgf zoo/fortran/fortran90.bgf
+%:
+	cp ../topics/grammars/fortran/$*/fortran.bgf zoo/fortran/$*.bgf
+	../shared/tools/bgf2bnf   zoo/fortran/$*.bgf zoo/fortran/$*.bnf
+	../shared/tools/bgf2dms   zoo/fortran/$*.bgf zoo/fortran/$*.dms
+	../shared/tools/bgf2sdf   zoo/fortran/$*.bgf zoo/fortran/$*.sdf
+	../shared/tools/bgf2rsc   zoo/fortran/$*.bgf zoo/fortran/$*.rsc
+	_dev/fancy zoo fortran $* fortran-$*
+	if [ -r ../topics/grammars/fortran/$*/post-extract.xbgf ]; then ../shared/tools/xbgf2html ../topics/grammars/fortran/$*/post-extract.xbgf zoo/fortran/$*-post-extract.html $*.html; fi
+	if [ -r ../topics/grammars/fortran/$*/correct.xbgf ]; then ../shared/tools/xbgf2html ../topics/grammars/fortran/$*/correct.xbgf zoo/fortran/$*-correct.html $*.html; fi
+	if [ -r ../topics/grammars/fortran/$*/refactor.xbgf ]; then ../shared/tools/xbgf2html ../topics/grammars/fortran/$*/refactor.xbgf zoo/fortran/$*-refactor.html $*.html; fi

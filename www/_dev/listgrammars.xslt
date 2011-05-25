@@ -229,6 +229,12 @@
 					<xsl:value-of select="name"/>
 				</a>
 			</xsl:when>
+			<xsl:when test="xbgf">
+				<a xmlns="http://www.w3.org/1999/xhtml" href="{xbgf}.html">
+					<xsl:value-of select="name"/>
+					<xsl:text>.xbgf</xsl:text>
+				</a>
+			</xsl:when>
 			<xsl:when test="slps">
 				<a xmlns="http://www.w3.org/1999/xhtml" href="http://slps.svn.sourceforge.net/viewvc/slps/{slps}">
 					<xsl:value-of select="name"/>
@@ -265,7 +271,7 @@
 			<xsl:value-of select="name"/>
 			<xsl:text> grammar: </xsl:text>
 			<span class="links">
-				[<a href="{../../handle}/{handle}.html">Browsable</a>]
+				[<a href="{../../handle}/{handle}.html" class="red">Browsable</a>]
 				[<a href="{../../handle}/{handle}.bgf">BGF</a>]
 				[<a href="{../../handle}/{handle}.bnf">EBNF</a>]
 				<xsl:if test="(../../handle='c') or (../../handle='cpp') or ((../../handle='csharp') and not(handle='iso-23270-2003') and not(handle='iso-23270-2003-recovered'))">

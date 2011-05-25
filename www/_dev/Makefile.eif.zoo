@@ -1,13 +1,14 @@
 all:
-	make eif -f _dev/Makefile.eif.zoo
-	chmod 644 zoo/eiffel/*.bgf
-	ls -1 zoo/eiffel/*.bgf | xargs -n1 -I _ basename _ .bgf | xargs -n1 -I ZZZ make ZZZ.formats -f _dev/Makefile.eif.zoo
+	make iso-25436-2006 -f _dev/Makefile.eif.zoo
+	chmod 644 zoo/eiffel/*.*
+	rm tmp.xml
 
-%.formats:
+%:
+	cp ../topics/grammars/eiffel/$*/eiffel.bgf zoo/eiffel/$*.bgf
+	../shared/tools/bgf2bnf  zoo/eiffel/$*.bgf zoo/eiffel/$*.bnf
 	../shared/tools/bgf2dms  zoo/eiffel/$*.bgf zoo/eiffel/$*.dms
 	../shared/tools/bgf2sdf  zoo/eiffel/$*.bgf zoo/eiffel/$*.sdf
 	../shared/tools/bgf2rsc  zoo/eiffel/$*.bgf zoo/eiffel/$*.rsc
-	_dev/fancy zoo eiffel $* eiffel
-
-eif:
-	cp ../topics/grammars/eiffel/eiffel.bgf zoo/eiffel/eiffel.bgf
+	_dev/fancy zoo eiffel $* eiffel$*
+	if [ -r ../topics/grammars/eiffel/$*/post-extract.xbgf ]; then ../shared/tools/xbgf2html ../topics/grammars/eiffel/$*/post-extract.xbgf zoo/eiffel/$*-post-extract.html $*.html; fi
+	if [ -r ../topics/grammars/eiffel/$*/correct.xbgf ]; then ../shared/tools/xbgf2html ../topics/grammars/eiffel/$*/correct.xbgf zoo/eiffel/$*-correct.html $*.html; fi

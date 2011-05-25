@@ -192,15 +192,15 @@
 					<name>Hunter</name>
 				</link>
 				<link>
-					<mu>topics/grammars/ada/kempe/post-extract.xbgf</mu>
-					<name>XBGF</name>
+					<xbgf>ada/kempe-post-extract</xbgf>
+					<name>post-extract</name>
 				</link>
 			</toolset>
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/ada/kempe/correct.xbgf</mu>
-					<name>XBGF</name>
+					<xbgf>ada/kempe-correct</xbgf>
+					<name>correct</name>
 				</link>
 			</toolset>
 			<source id="adalaemmel-verhoef">
@@ -229,16 +229,12 @@
 					<mu>topics/grammars/hunter.py</mu>
 					<name>Hunter</name>
 				</link>
-				<link>
-					<mu>topics/grammars/ada/laemmel-verhoef/post-extract.xbgf</mu>
-					<name>XBGF</name>
-				</link>
 			</toolset>
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/ada/laemmel-verhoef/correct.xbgf</mu>
-					<name>XBGF</name>
+					<xbgf>ada/laemmel-verhoef-correct</xbgf>
+					<name>correct</name>
 				</link>
 			</toolset>
 			<source id="adalncs-2219">
@@ -273,15 +269,15 @@
 					<name>Hunter</name>
 				</link>
 				<link>
-					<mu>topics/grammars/ada/lncs-2219/post-extract.xbgf</mu>
-					<name>XBGF</name>
+					<xbgf>ada/lncs-2219-post-extract</xbgf>
+					<name>post-extract</name>
 				</link>
 			</toolset>
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/ada/lncs-2219/correct.xbgf</mu>
-					<name>XBGF</name>
+					<xbgf>ada/lncs-2219-correct</xbgf>
+					<name>correct</name>
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
@@ -316,8 +312,8 @@
 					<name>StrippedANTLR.g</name>
 				</link>
 				<link>
-					<mu>topics/grammars/ada/kellogg/post-extraction.xbgf</mu>
-					<name>post-extraction</name>
+					<xbgf>ada/kellogg-post-extract</xbgf>
+					<name>post-extract</name>
 				</link>
 			</toolset>
 		</version>
@@ -355,15 +351,15 @@
 					<name>Hunter</name>
 				</link>
 				<link>
-					<mu>topics/grammars/ada/lncs-4348/post-extract.xbgf</mu>
-					<name>XBGF</name>
+					<xbgf>ada/lncs-4348-post-extract</xbgf>
+					<name>post-extract</name>
 				</link>
 			</toolset>
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/ada/lncs-4348/correct.xbgf</mu>
-					<name>XBGF</name>
+					<xbgf>ada/lncs-4348-correct</xbgf>
+					<name>correct</name>
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
@@ -765,7 +761,7 @@
 		<name>Eiffel</name>
 		<version>
 			<name>Eiffel</name>
-			<source id="eiffel">
+			<source id="eiffel-iso-25436-2006">
 				<title>ISO/IEC 25436:2006(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Eiffel: Analysis, Design and Programming Language</em></title>
 				<date>2006</date>
 				<specific>Syntax sections collected from pages 30–158</specific>
@@ -780,12 +776,12 @@
 			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>eiffel</handle>
+				<handle>iso-25436-2006</handle>
 			</grammar>
 			<toolset>
 				<name>Extraction</name>
 				<link>
-					<mu>topics/grammars/eiffel/config.edd</mu>
+					<mu>topics/grammars/eiffel/iso-25436-2006/config.edd</mu>
 					<name>EDD</name>
 				</link>
 				<link>
@@ -793,15 +789,15 @@
 					<name>Hunter</name>
 				</link>
 				<link>
-					<mu>topics/grammars/eiffel/post-extract.xbgf</mu>
-					<name>XBGF</name>
+					<xbgf>eiffel/iso-25436-2006-post-extract</xbgf>
+					<name>post-extract</name>
 				</link>
 			</toolset>
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/eiffel/correct.xbgf</mu>
-					<name>XBGF</name>
+					<xbgf>eiffel/iso-25436-2006-correct</xbgf>
+					<name>correct</name>
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
@@ -812,7 +808,7 @@
 		<name>Fortran</name>
 		<version>
 			<name>Fortran-90</name>
-			<source id="fortran">
+			<source id="fortran-derricks">
 				<title>Jan Derricks, <code xmlns="http://www.w3.org/1999/xhtml">Fortran90.sdf</code></title>
 				<date>12 July 2007</date>
 				<link>
@@ -826,7 +822,7 @@
 			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>fortran</handle>
+				<handle>derricks</handle>
 			</grammar>
 			<toolset ref="sdf2bgf"/>
 			<toolset>
@@ -836,8 +832,8 @@
 					<name>subgrammar.py</name>
 				</link>
 				<link>
-					<mu>topics/grammars/fortran/refactor.xbgf</mu>
-					<name>refactor.xbgf</name>
+					<xbgf>fortran/derricks-refactor</xbgf>
+					<name>refactor</name>
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
