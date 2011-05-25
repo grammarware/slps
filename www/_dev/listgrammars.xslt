@@ -274,9 +274,11 @@
 				[<a href="{../../handle}/{handle}.html" class="red">Browsable</a>]
 				[<a href="{../../handle}/{handle}.bgf">BGF</a>]
 				[<a href="{../../handle}/{handle}.bnf">EBNF</a>]
+				<!--
 				<xsl:if test="(../../handle='c') or (../../handle='cpp') or ((../../handle='csharp') and not(handle='iso-23270-2003') and not(handle='iso-23270-2003-recovered'))">
 					[<a href="{../../handle}/{handle}.lll">LLL</a>]
 				</xsl:if>
+				-->
 				[<a href="{../../handle}/{handle}.dms">DMS BNF</a>]
 				[<a href="{../../handle}/{handle}.sdf">SDF</a>]
 				[<a href="{../../handle}/{handle}.rsc">Rascal</a>]

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ $2 == 'jls1-impl' ]; then
+	cp ../topics/grammars/$1/jls1/extracted-implementable-grammar.bgf zoo/$1/$2.bgf
+elif [ $2 == 'jls2-impl' ]; then
+	cp ../topics/grammars/$1/jls2/extracted-implementable-grammar.bgf zoo/$1/$2.bgf
+elif [ $2 == 'jls3-impl' ]; then
+	cp ../topics/grammars/$1/jls3/extracted-implementable-grammar.bgf zoo/$1/$2.bgf
+elif [ $2 == 'jls1-read' ]; then
+	cp ../topics/grammars/$1/jls1/extracted-readable-grammar.bgf zoo/$1/$2.bgf
+elif [ $2 == 'jls2-read' ]; then
+	cp ../topics/grammars/$1/jls2/extracted-readable-grammar.bgf zoo/$1/$2.bgf
+elif [ $2 == 'jls3-read' ]; then
+	cp ../topics/grammars/$1/jls3/extracted-readable-grammar.bgf zoo/$1/$2.bgf
+elif [ $1 == 'java' ]; then
+	cp ../topics/grammars/$1/antlr-java-5/$2/$2.bgf zoo/$1/$2.bgf
+elif [ $2 == 'iso-23270-2003' ]; then
+	cp ../topics/grammars/$1/iso-23270-2003/$1.ext.bgf zoo/$1/$2.bgf
+elif [ $2 == 'iso-23270-2003-recovered' ]; then
+	cp ../topics/grammars/$1/iso-23270-2003/$1.bgf zoo/$1/$2.bgf
+else
+    cp ../topics/grammars/$1/$2/$1.bgf zoo/$1/$2.bgf
+fi

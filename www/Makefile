@@ -12,27 +12,20 @@ clean:
 
 build:
 	make zooprj
+	make tankprj
 	make tmprj
+	xsltproc _dev/links2html.xslt _dev/java-grammars.xml | python ../topics/export/hypertext/closemeta.py > zoo/java/links.html
 
 zooprj:
-	make -f _dev/Makefile.ada.zoo
-	make -f _dev/Makefile.c.zoo
-	make -f _dev/Makefile.cpp.zoo
-	make -f _dev/Makefile.csharp.zoo
-	make -f _dev/Makefile.eif.zoo
-	make -f _dev/Makefile.for.zoo
-	make -f _dev/Makefile.java.zoo
-	make -f _dev/Makefile.mod.zoo
-	make -f _dev/Makefile.xpath.zoo
+	xsltproc _dev/list2makefile.xslt _dev/zoo.xml > _dev/Makefile.x
+	make -f _dev/Makefile.x
+	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/listgrammars.xslt _dev/zoo.xml  >  zoo/index.html
+
+tankprj:
 	make -f _dev/Makefile.fl.tank
 	make -f _dev/Makefile.ebnf.tank
 	make -f _dev/Makefile.tescol.tank
-	make zoolists
-
-zoolists:
-	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/listgrammars.xslt _dev/zoo.xml  >  zoo/index.html
 	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/listgrammars.xslt _dev/tank.xml > tank/index.html
-	xsltproc _dev/links2html.xslt _dev/java-grammars.xml | python ../topics/export/hypertext/closemeta.py > zoo/java/links.html
 
 tmprj:
 	ls -1 ../topics/testing/gbtf/tests/java/*.bgf   | xargs -n1 _dev/conv java

@@ -161,7 +161,7 @@
 				<date>1995</date>
 				<specific>Annex P, pages 479–493</specific>
 			</source>
-			<source id="adakempe">
+			<source id="ada-kempe">
 				<title>Magnus Kempe, <em xmlns="http://www.w3.org/1999/xhtml">Ada 95 Reference Manual</em>, Hypertext version</title>
 				<date>1994–1997</date>
 				<link>
@@ -203,7 +203,7 @@
 					<name>correct</name>
 				</link>
 			</toolset>
-			<source id="adalaemmel-verhoef">
+			<source id="ada-laemmel-verhoef">
 				<title>Ralf Lämmel, Chris Verhoef. <em xmlns="http://www.w3.org/1999/xhtml">Engineering of Grammarware. Browsable Ada 95 Grammar</em> 1.0.</title>
 				<date>December 2000</date>
 				<link>
@@ -237,7 +237,7 @@
 					<name>correct</name>
 				</link>
 			</toolset>
-			<source id="adalncs-2219">
+			<source id="ada-lncs-2219">
 				<title>
 					International Standard ISO/IEC 8652/1995(E) with Technical Corrigendum 1.
 					<em xmlns="http://www.w3.org/1999/xhtml">Consolidated Ada Reference Manual. Language and Standard Libraries</em>.
@@ -281,7 +281,7 @@
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
-			<source id="adakellogg">
+			<source id="ada-kellogg">
 				<title>Oliver Kellogg, <code xmlns="http://www.w3.org/1999/xhtml">ada.g</code></title>
 				<date>2003</date>
 				<link>
@@ -319,7 +319,7 @@
 		</version>
 		<version>
 			<name>Ada 2005</name>
-			<source id="adalncs-4348">
+			<source id="ada-lncs-4348">
 				<title>
 					International Standard ISO/IEC 8652/1995(E) with Technical Corrigendum 1 and Amendment 1.
 					<em xmlns="http://www.w3.org/1999/xhtml">Ada 2005 Reference Manual. Language and Standard Libraries</em>.
@@ -371,7 +371,7 @@
 		<name>C</name>
 		<version>
 			<name>ISO C 1999</name>
-			<source id="ciso-9899-1999">
+			<source id="c-iso-9899-1999">
 				<title>ISO/IEC 9899:1999(E) <em xmlns="http://www.w3.org/1999/xhtml">Programming languages — C</em></title>
 				<date>December 1999</date>
 				<specific>Annex A, pages 402–416</specific>
@@ -389,7 +389,7 @@
 		</version>
 		<version>
 			<name>ISO C 2005</name>
-			<source id="ciso-9899-tc2">
+			<source id="c-iso-9899-tc2">
 				<title>ISO/IEC 9899:TC2 <em xmlns="http://www.w3.org/1999/xhtml">WG14/N1124</em> Committee Draft</title>
 				<date>May 2005</date>
 				<specific>Annex A, pages 403–417</specific>
@@ -399,15 +399,22 @@
 				</link>
 			</source>
 			<grammar>
-				<name>Extracted</name>
+				<name>Recovered</name>
 				<handle>iso-9899-tc2</handle>
 			</grammar>
 			<toolset ref="lll"/>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<xbgf>cpp/iso-9899-tc2-correct</xbgf>
+					<name>correct</name>
+				</link>
+			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ISO C 2007</name>
-			<source id="ciso-9899-tc3">
+			<source id="c-iso-9899-tc3">
 				<title>ISO/IEC 9899:TC3 <em xmlns="http://www.w3.org/1999/xhtml">WG14/N1256</em> Committee Draft</title>
 				<date>September 2007</date>
 				<specific>Annex A, pages 403–418</specific>
@@ -417,10 +424,17 @@
 				</link>
 			</source>
 			<grammar>
-				<name>Extracted</name>
+				<name>Recovered</name>
 				<handle>iso-9899-tc3</handle>
 			</grammar>
 			<toolset ref="lll"/>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<xbgf>cpp/iso-9899-tc3-correct</xbgf>
+					<name>correct</name>
+				</link>
+			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>
@@ -429,7 +443,7 @@
 		<name>C++</name>
 		<version>
 			<name>ISO C++ 1998</name>
-			<source id="cppiso-14882-1998">
+			<source id="cpp-iso-14882-1998">
 				<title>ISO/IEC 14882:1998(E) <em xmlns="http://www.w3.org/1999/xhtml">Programming languages — C++</em>. First edition</title>
 				<date>September 1998</date>
 				<specific>Annex A, pages 667–684</specific>
@@ -439,15 +453,22 @@
 				</link>
 			</source>
 			<grammar>
-				<name>Extracted</name>
+				<name>Recovered</name>
 				<handle>iso-14882-1998</handle>
 			</grammar>
 			<toolset ref="lll"/>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<xbgf>cpp/iso-14882-1998-correct</xbgf>
+					<name>correct</name>
+				</link>
+			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ISO C++ 2008</name>
-			<source id="cppiso-n2723">
+			<source id="cpp-iso-n2723">
 				<title>ISO/IEC SC22/WG21 N2723=08-0233 Working Draft, <em xmlns="http://www.w3.org/1999/xhtml">Standard for Programming Language C++</em></title>
 				<date>August 2008</date>
 				<specific>Annex A, pages 1089–1101</specific>
@@ -457,10 +478,17 @@
 				</link>
 			</source>
 			<grammar>
-				<name>Extracted</name>
+				<name>Recovered</name>
 				<handle>iso-n2723</handle>
 			</grammar>
 			<toolset ref="lll"/>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<xbgf>cpp/iso-n2723-correct</xbgf>
+					<name>correct</name>
+				</link>
+			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>
@@ -469,7 +497,7 @@
 		<name>C#</name>
 		<version>
 			<name>ECMA C# 2001</name>
-			<source id="csharpecma-334-1">
+			<source id="csharp-ecma-334-1">
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 1<sup>st</sup> edition</em></title>
 				<date>December 2001</date>
 				<specific>Appendix A, pages 339–364</specific>
@@ -495,7 +523,7 @@
 		</version>
 		<version>
 			<name>ECMA C# 2002</name>
-			<source id="csharpecma-334-2">
+			<source id="csharp-ecma-334-2">
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 2<sup>nd</sup> edition</em></title>
 				<date>December 2002</date>
 				<specific>Appendix A, pages 335–360</specific>
@@ -521,7 +549,7 @@
 		</version>
 		<version>
 			<name>ECMA C# 2005</name>
-			<source id="csharpecma-334-3">
+			<source id="csharp-ecma-334-3">
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 3<sup>rd</sup> edition</em></title>
 				<date>June 2005</date>
 				<link>
@@ -546,7 +574,7 @@
 		</version>
 		<version>
 			<name>ECMA C# 2006</name>
-			<source id="csharpecma-334-4">
+			<source id="csharp-ecma-334-4">
 				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 4<sup>th</sup> edition</em></title>
 				<date>June 2006</date>
 				<link>
@@ -571,7 +599,7 @@
 		</version>
 		<version>
 			<name>ISO C# 2003</name>
-			<source id="csharpiso-23270-2003">
+			<source id="csharp-iso-23270-2003">
 				<title>ISO/IEC 23270:2003(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Programming languages — C#</em>. First edition</title>
 				<date>2003</date>
 				<link>
@@ -648,7 +676,7 @@
 		</version>
 		<version>
 			<name>ISO C# 2006</name>
-			<source id="csharpiso-23270-2006">
+			<source id="csharp-iso-23270-2006">
 				<title>ISO/IEC 23270:2006(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Programming languages — C#</em>. Second edition</title>
 				<date>September 2006</date>
 				<link>
@@ -673,7 +701,7 @@
 		</version>
 		<version>
 			<name>Microsoft C# 1.0</name>
-			<source id="csharpmsft-ls-1.0">
+			<source id="csharp-msft-ls-1.0">
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 1.0</title>
 				<date>2002</date>
 				<link>
@@ -694,7 +722,7 @@
 		</version>
 		<version>
 			<name>Microsoft C# 1.2</name>
-			<source id="csharpmsft-ls-1.2">
+			<source id="csharp-msft-ls-1.2">
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 1.2</title>
 				<date>2003</date>
 				<link>
@@ -715,7 +743,7 @@
 		</version>
 		<version>
 			<name>Microsoft C# 3.0</name>
-			<source id="csharpmsft-ls-3.0">
+			<source id="csharp-msft-ls-3.0">
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 3.0</title>
 				<date>2007</date>
 				<link>
@@ -736,7 +764,7 @@
 		</version>
 		<version>
 			<name>Microsoft C# 4.0</name>
-			<source id="csharpmsft-ls-4.0">
+			<source id="csharp-msft-ls-4.0">
 				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 4.0</title>
 				<date>2010</date>
 				<link>
@@ -940,7 +968,7 @@
 				<handle>jls3-impl</handle>
 			</grammar>
 			<toolset ref="scraping"/>
-			<source id="javahabelitz">
+			<source id="java-habelitz">
 				<title>Dieter Habelitz, <code xmlns="http://www.w3.org/1999/xhtml">Java.g</code></title>
 				<date>2008</date>
 				<link>
@@ -971,11 +999,11 @@
 					<name>StrippedANTLR.g</name>
 				</link>
 				<link>
-					<mu>topics/grammars/java/antlr-java-5/habelitz/post-extraction.xbgf</mu>
+					<xbgf>java/habelitz-post-extraction</xbgf>
 					<name>post-extraction</name>
 				</link>
 			</toolset>
-			<source id="javaparr">
+			<source id="java-parr">
 				<title>Terence Parr, <code xmlns="http://www.w3.org/1999/xhtml">Java.g</code></title>
 				<date>2006</date>
 				<link>
@@ -1006,11 +1034,11 @@
 					<name>StrippedANTLR.g</name>
 				</link>
 				<link>
-					<mu>topics/grammars/java/antlr-java-5/parr/post-extraction.xbgf</mu>
+					<xbgf>java/parr-post-extraction</xbgf>
 					<name>post-extraction</name>
 				</link>
 			</toolset>
-			<source id="javastahl">
+			<source id="java-stahl">
 				<title>Michael Stahl, <code xmlns="http://www.w3.org/1999/xhtml">java15.g</code></title>
 				<date>2004</date>
 				<link>
@@ -1041,11 +1069,11 @@
 					<name>StrippedANTLR.g</name>
 				</link>
 				<link>
-					<mu>topics/grammars/java/antlr-java-5/stahl/post-extraction.xbgf</mu>
+					<xbgf>java/stahl-post-extraction</xbgf>
 					<name>post-extraction</name>
 				</link>
 			</toolset>
-			<source id="javastudman">
+			<source id="java-studman">
 				<title>Michael Studman, <code xmlns="http://www.w3.org/1999/xhtml">java15.g</code></title>
 				<date>2004</date>
 				<link>
@@ -1076,7 +1104,7 @@
 					<name>StrippedANTLR.g</name>
 				</link>
 				<link>
-					<mu>topics/grammars/java/antlr-java-5/studman/post-extraction.xbgf</mu>
+					<xbgf>java/studman-post-extraction</xbgf>
 					<name>post-extraction</name>
 				</link>
 			</toolset>
@@ -1100,7 +1128,7 @@
 		<name>Modula</name>
 		<version>
 			<name>Modula-3</name>
-			<source id="mod3">
+			<source id="modula-sdf">
 				<title>Jurgen Vinju, Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">Modula-3.sdf</code></title>
 				<date>13 February 2006 – 19 September 2008</date>
 				<link>
@@ -1114,7 +1142,7 @@
 			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>modula3</handle>
+				<handle>sdf</handle>
 			</grammar>
 			<toolset ref="sdf2bgf"/>
 			<toolset>
@@ -1124,8 +1152,8 @@
 					<name>subgrammar.py</name>
 				</link>
 				<link>
-					<mu>topics/grammars/modula/refactor.xbgf</mu>
-					<name>refactor.xbgf</name>
+					<xbgf>modula/sdf-refactor</xbgf>
+					<name>refactor</name>
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
@@ -1136,11 +1164,11 @@
 		<name>XPath</name>
 		<version>
 			<name>XPath 1.0</name>
-			<source id="xpathv1">
+			<source id="xpath-v1">
 				<title><em xmlns="http://www.w3.org/1999/xhtml">XML Path Language (XPath)</em>, Version 1.0, W3C Recommendation</title>
 				<date>16 November 1999</date>
 				<link>
-					<slps>topics/grammars/xpath/README.txt</slps>
+					<slps>topics/grammars/xpath/v1/README.txt</slps>
 					<name>ReadMe</name>
 				</link>
 				<link>
@@ -1171,8 +1199,8 @@
 					<name>XSLT3</name>
 				</link>
 				<link>
-					<mu>topics/grammars/xpath/xpath1.normalize.xbgf</mu>
-					<name>XBGF</name>
+					<xbgf>xpath/v1-normalize</xbgf>
+					<name>normalize</name>
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
