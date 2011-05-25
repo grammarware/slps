@@ -98,7 +98,7 @@
 		<short>FL</short>
 		<version>
 			<name>FL in ANTLR</name>
-			<source>
+			<source id="fl-antlr">
 				<title>
 					Ralf Lämmel, <code xmlns="http://www.w3.org/1999/xhtml">FL.g</code>
 				</title>
@@ -133,7 +133,7 @@
 		</version>
 		<version>
 			<name>FL in DCG</name>
-			<source>
+			<source id="fl-dcg">
 				<title>
 					Ralf Lämmel, <code xmlns="http://www.w3.org/1999/xhtml">Parser.pro</code>
 				</title>
@@ -175,7 +175,7 @@
 		</version>
 		<version>
 			<name>FL in Ecore</name>
-			<source>
+			<source id="fl-ecore">
 				<title>
 					Guido Wachsmuth, Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">fl.ecore</code>
 				</title>
@@ -189,7 +189,7 @@
 				<name>Extracted</name>
 				<handle>ecore</handle>
 			</grammar>
-			<source>
+			<source id="fl-ecore2">
 				<title>
 					Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">fl.ecore</code> generated from <code xmlns="http://www.w3.org/1999/xhtml">fl.xsd</code>
 				</title>
@@ -219,7 +219,7 @@
 		</version>
 		<version>
 			<name>FL in Java</name>
-			<source>
+			<source id="fl-om">
 				<title>
 					Ralf Lämmel, <code xmlns="http://www.w3.org/1999/xhtml">Program.java</code>, <code xmlns="http://www.w3.org/1999/xhtml">Function.java</code> et al.
 				</title>
@@ -233,7 +233,7 @@
 				<name>Extracted</name>
 				<handle>om</handle>
 			</grammar>
-			<source>
+			<source id="fl-jaxb">
 				<title>
 					Ralf Lämmel, <code xmlns="http://www.w3.org/1999/xhtml">Program.java</code>, <code xmlns="http://www.w3.org/1999/xhtml">Function.java</code> et al. generated from <code xmlns="http://www.w3.org/1999/xhtml">fl.xsd</code>.
 				</title>
@@ -264,7 +264,7 @@
 		</version>
 		<version>
 			<name>FL in SDF</name>
-			<source>
+			<source id="fl-sdf">
 				<title>
 					Ralf Lämmel, Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">FL.sdf</code>, <code xmlns="http://www.w3.org/1999/xhtml">Syntax.sdf</code>, et al.
 				</title>
@@ -285,7 +285,7 @@
 		</version>
 		<version>
 			<name>FL in TXL</name>
-			<source>
+			<source id="fl-txl">
 				<title>
 					Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">FL.Txl</code>.
 				</title>
@@ -315,7 +315,7 @@
 		</version>
 		<version>
 			<name>FL in XML Schema</name>
-			<source>
+			<source id="fl-xsd">
 				<title>
 					Ralf Lämmel, <code xmlns="http://www.w3.org/1999/xhtml">fl.xsd</code>.
 				</title>
@@ -341,7 +341,7 @@
 		<short>(E)BNF</short>
 		<version>
 			<name>BGF</name>
-			<source>
+			<source id="bgf">
 				<title>
 					Ralf Lämmel, Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">bgf.xsd</code>
 				</title>
@@ -362,7 +362,7 @@
 		</version>
 		<version>
 			<name>BNF in BGF</name>
-			<source>
+			<source id="bnf-bgf">
 				<title>
 					Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">bnf-bgf.bgf</code>
 				</title>
@@ -380,7 +380,7 @@
 		</version>
 		<version>
 			<name>BNF in SDF</name>
-			<source>
+			<source id="bnf-sdf">
 				<title>
 					Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">BNF.sdf</code>
 				</title>
@@ -410,7 +410,7 @@
 		</version>
 		<version>
 			<name>EBNF of ISO</name>
-			<source>
+			<source id="ebnf-iso">
 				<title>
 					ISO/IEC 14977:1996(E).
 					<em xmlns="http://www.w3.org/1999/xhtml">Information Technology—Syntactic Metalanguage—Extended BNF</em>
@@ -440,7 +440,7 @@
 		</version>
 		<version>
 			<name>EBNF in SDF</name>
-			<source>
+			<source id="ebnf-sdf">
 				<title>
 					Paul Klint, W3C version of <code xmlns="http://www.w3.org/1999/xhtml">EBNF.sdf</code>
 				</title>
@@ -470,7 +470,7 @@
 		</version>
 		<version>
 			<name>Rascal</name>
-			<source>
+			<source id="rascal">
 				<title>
 					Jurgen Vinju, Arnold Lankamp, Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">RascalRascal.rsc</code>
 				</title>
@@ -500,7 +500,7 @@
 		</version>
 		<version>
 			<name>YACC</name>
-			<source>
+			<source id="yacc">
 				<title>
 					Paul Klint, <code xmlns="http://www.w3.org/1999/xhtml">YACC.sdf</code>
 				</title>
@@ -539,7 +539,7 @@
 		<short>TESCOL</short>
 		<version>
 			<name>TESCOL</name>
-			<source>
+			<source id="tescol">
 				<title>
 					Bernd Fischer, <em xmlns="http://www.w3.org/1999/xhtml">COMP2010: Compiler Engineering</em> course work
 				</title>

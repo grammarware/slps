@@ -188,7 +188,7 @@
 					<name>EDD</name>
 				</link>
 				<link>
-					<mu>topics/grammars/ada/hunter.py</mu>
+					<mu>topics/grammars/hunter.py</mu>
 					<name>Hunter</name>
 				</link>
 				<link>
@@ -226,7 +226,7 @@
 					<name>EDD</name>
 				</link>
 				<link>
-					<mu>topics/grammars/ada/hunter.py</mu>
+					<mu>topics/grammars/hunter.py</mu>
 					<name>Hunter</name>
 				</link>
 				<link>
@@ -269,7 +269,7 @@
 					<name>EDD</name>
 				</link>
 				<link>
-					<mu>topics/grammars/ada/hunter.py</mu>
+					<mu>topics/grammars/hunter.py</mu>
 					<name>Hunter</name>
 				</link>
 				<link>
@@ -298,7 +298,7 @@
 				</link>
 			</source>
 			<grammar>
-				<name>Kellogg</name>
+				<name>Extracted</name>
 				<handle>kellogg</handle>
 			</grammar>
 			<toolset>
@@ -351,7 +351,7 @@
 					<name>EDD</name>
 				</link>
 				<link>
-					<mu>topics/grammars/ada/hunter.py</mu>
+					<mu>topics/grammars/hunter.py</mu>
 					<name>Hunter</name>
 				</link>
 				<link>
@@ -757,6 +757,53 @@
 				<handle>msft-ls-4.0</handle>
 			</grammar>
 			<toolset ref="lll"/>
+			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+	</language>
+	<language>
+		<handle>eiffel</handle>
+		<name>Eiffel</name>
+		<version>
+			<name>Eiffel</name>
+			<source id="eiffel">
+				<title>ISO/IEC 25436:2006(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Eiffel: Analysis, Design and Programming Language</em></title>
+				<date>2006</date>
+				<specific>Syntax sections collected from pages 30–158</specific>
+				<link>
+					<slps>topics/grammars/eiffel/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
+					<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/index.html</uri>
+					<name>ISO</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Extracted</name>
+				<handle>eiffel</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/grammars/eiffel/config.edd</mu>
+					<name>EDD</name>
+				</link>
+				<link>
+					<mu>topics/grammars/hunter.py</mu>
+					<name>Hunter</name>
+				</link>
+				<link>
+					<mu>topics/grammars/eiffel/post-extract.xbgf</mu>
+					<name>XBGF</name>
+				</link>
+			</toolset>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<mu>topics/grammars/eiffel/correct.xbgf</mu>
+					<name>XBGF</name>
+				</link>
+			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>

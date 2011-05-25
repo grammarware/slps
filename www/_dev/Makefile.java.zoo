@@ -11,10 +11,10 @@ all:
 %.jls:
 	cp ../topics/grammars/java/jls$*/extracted-implementable-grammar.bgf zoo/java/jls$*-impl.bgf
 	make jls$*-impl.formats -f _dev/Makefile.java.zoo
-	_dev/fancy java jls$*-impl jls$*
+	_dev/fancy zoo java jls$*-impl jls$*
 	cp ../topics/grammars/java/jls$*/extracted-readable-grammar.bgf zoo/java/jls$*-read.bgf
 	make jls$*-read.formats -f _dev/Makefile.java.zoo
-	_dev/fancy java jls$*-read jls$*
+	_dev/fancy zoo java jls$*-read jls$*
 
 %.formats:
 	../shared/tools/bgf2bnf zoo/java/$*.bgf zoo/java/$*.bnf
@@ -25,4 +25,4 @@ all:
 %.antlr:
 	cp ../topics/grammars/java/antlr-java-5/$*/$*.bgf zoo/java/$*.bgf
 	make $*.formats -f _dev/Makefile.java.zoo
-	_dev/fancy java $* java$*
+	_dev/fancy zoo java $* java$*

@@ -12,5 +12,5 @@ all:
 	../shared/tools/bgf2dms  zoo/ada/$*.bgf zoo/ada/$*.dms
 	../shared/tools/bgf2sdf  zoo/ada/$*.bgf zoo/ada/$*.sdf
 	../shared/tools/bgf2rsc  zoo/ada/$*.bgf zoo/ada/$*.rsc
-	_dev/fancy ada $* ada$*
+	_dev/fancy zoo ada $* ada$*
 	chmod 644 zoo/ada/*.bgf

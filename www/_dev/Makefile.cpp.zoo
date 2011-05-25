@@ -10,4 +10,4 @@ all:
 	../shared/tools/bgf2dms zoo/cpp/$*.bgf zoo/cpp/$*.dms
 	../shared/tools/bgf2sdf zoo/cpp/$*.bgf zoo/cpp/$*.sdf
 	../shared/tools/bgf2rsc zoo/cpp/$*.bgf zoo/cpp/$*.rsc
-	_dev/fancy cpp $* cpp$*
+	_dev/fancy zoo cpp $* cpp$*

@@ -1,0 +1,13 @@
+all:
+	make eif -f _dev/Makefile.eif.zoo
+	chmod 644 zoo/eiffel/*.bgf
+	ls -1 zoo/eiffel/*.bgf | xargs -n1 -I _ basename _ .bgf | xargs -n1 -I ZZZ make ZZZ.formats -f _dev/Makefile.eif.zoo
+
+%.formats:
+	../shared/tools/bgf2dms  zoo/eiffel/$*.bgf zoo/eiffel/$*.dms
+	../shared/tools/bgf2sdf  zoo/eiffel/$*.bgf zoo/eiffel/$*.sdf
+	../shared/tools/bgf2rsc  zoo/eiffel/$*.bgf zoo/eiffel/$*.rsc
+	_dev/fancy zoo eiffel $* eiffel
+
+eif:
+	cp ../topics/grammars/eiffel/eiffel.bgf zoo/eiffel/eiffel.bgf

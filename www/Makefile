@@ -19,6 +19,7 @@ zooprj:
 	make -f _dev/Makefile.c.zoo
 	make -f _dev/Makefile.cpp.zoo
 	make -f _dev/Makefile.csharp.zoo
+	make -f _dev/Makefile.eif.zoo
 	make -f _dev/Makefile.for.zoo
 	make -f _dev/Makefile.java.zoo
 	make -f _dev/Makefile.mod.zoo

@@ -8,7 +8,7 @@ all:
 	../shared/tools/bgf2dms  zoo/modula/$*.bgf zoo/modula/$*.dms
 	../shared/tools/bgf2sdf  zoo/modula/$*.bgf zoo/modula/$*.sdf
 	../shared/tools/bgf2rsc  zoo/modula/$*.bgf zoo/modula/$*.rsc
-	_dev/fancy modula $* $*
+	_dev/fancy zoo modula $* $*
 
 mod3:
 	cp ../topics/grammars/modula/modula.3.sdf.rec.bgf zoo/modula/modula3.bgf

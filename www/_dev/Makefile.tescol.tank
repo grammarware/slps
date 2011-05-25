@@ -4,8 +4,8 @@ all:
 	ls -1 tank/tescol/*.bgf | xargs -n1 -I _ basename _ .bgf | xargs -n1 -I ZZZ make ZZZ.formats -f _dev/Makefile.tescol.tank
 
 %.formats:
-	../shared/tools/bgf2html tank/tescol/$*.bgf tank/tescol/$*.html
 	../shared/tools/bgf2bnf  tank/tescol/$*.bgf tank/tescol/$*.bnf
 	../shared/tools/bgf2dms  tank/tescol/$*.bgf tank/tescol/$*.dms
 	../shared/tools/bgf2sdf  tank/tescol/$*.bgf tank/tescol/$*.sdf
 	../shared/tools/bgf2rsc  tank/tescol/$*.bgf tank/tescol/$*.rsc
+	_dev/fancy tank tescol $* tescol

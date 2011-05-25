@@ -10,11 +10,11 @@ all:
 	ls -1 tank/ebnf/*.bgf | xargs -n1 -I _ basename _ .bgf | xargs -n1 -I ZZZ make ZZZ.formats -f _dev/Makefile.ebnf.tank
 
 %.formats:
-	../shared/tools/bgf2html tank/ebnf/$*.bgf tank/ebnf/$*.html
 	../shared/tools/bgf2bnf  tank/ebnf/$*.bgf tank/ebnf/$*.bnf
 	../shared/tools/bgf2dms  tank/ebnf/$*.bgf tank/ebnf/$*.dms
 	../shared/tools/bgf2sdf  tank/ebnf/$*.bgf tank/ebnf/$*.sdf
 	../shared/tools/bgf2rsc  tank/ebnf/$*.bgf tank/ebnf/$*.rsc
+	_dev/fancy tank ebnf $* $*
 
 bgf:
 	../shared/tools/xsd2bgf ../shared/xsd/bgf.xsd tank/ebnf/bgf.bgf
