@@ -77,30 +77,30 @@
 					<li>
 						<xsl:text>Number of defined nonterminal symbols: </xsl:text>
 						<strong>
-							<xsl:choose>
-								<xsl:when test="bgf:production/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())]">
-									<xsl:value-of select="count(bgf:production/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())])"/>
-								</xsl:when>
-								<xsl:otherwise>—</xsl:otherwise>
-							</xsl:choose>
+							<xsl:value-of select="count(bgf:production/nonterminal[not(text()=../preceding-sibling::*/nonterminal/text())])"/>
 						</strong>
 					</li>
 					<li>
 						<xsl:text>Root nonterminal symbols: </xsl:text>
 						<xsl:choose>
 							<xsl:when test="root">
-								<xsl:for-each select="root">
-									<a href="#{.}" class="nt">
-										<xsl:value-of select="."/>
+								<code>
+									<a href="#{root[1]}" class="nt">
+										<xsl:value-of select="root[1]"/>
 									</a>
-									<xsl:text> </xsl:text>
-								</xsl:for-each>
+									<xsl:for-each select="root[position()&gt;1]">
+										<xsl:text>, </xsl:text>
+										<a href="#{.}" class="nt">
+											<xsl:value-of select="."/>
+										</a>
+									</xsl:for-each>
+								</code>
 							</xsl:when>
 							<xsl:otherwise>—</xsl:otherwise>
 						</xsl:choose>
 					</li>
 					<li>
-						<xsl:text>Top nonterminal symbols: </xsl:text>
+						<xsl:text>Other top nonterminal symbols: </xsl:text>
 						<xsl:choose>
 							<xsl:when test="$xmlreport/top">
 								<strong>
@@ -148,7 +148,12 @@
 					<li>
 						<xsl:text>Number of used terminal symbols: </xsl:text>
 						<strong>
-							<xsl:value-of select="count($xmlreport/terminal)+count($xmlreport/keyword)"/>
+							<xsl:choose>
+								<xsl:when test="count($xmlreport/terminal)+count($xmlreport/keyword) &gt; 0">
+									<xsl:value-of select="count($xmlreport/terminal)+count($xmlreport/keyword)"/>
+								</xsl:when>
+								<xsl:otherwise>—</xsl:otherwise>
+							</xsl:choose>
 						</strong>
 					</li>
 					<xsl:if test="$xmlreport/terminal">

@@ -23,7 +23,7 @@ if __name__ == "__main__":
 	mb = bench.MeasurementBench(grammar)
 	print '<?xml version="1.0"?><xml>'
 	wrap = lambda x,y:map(lambda z:'<'+x+'>'+z+'</'+x+'>',y)
-	print ''.join(wrap('bottom',mb.getBottoms()))+''.join(wrap('top',mb.getDeadTops()))
+	print (''.join(wrap('bottom',mb.getBottoms()))+''.join(wrap('top',mb.getDeadTops()))).replace('&','&amp;')
 	terms = metrics.term(grammar)
 	htmlify = lambda s:map(lambda x:x.replace('&','&amp;').replace('>','&gt;').replace('<','&lt;'),s)
 	print ''.join(wrap('keyword',htmlify(filter(isalpha,terms))))+''.join(wrap('terminal',htmlify(filter(isnotalpha,terms))))
