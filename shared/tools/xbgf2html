@@ -1,24 +1,25 @@
 #!/bin/sh
 
-LOCAL=${PWD}
-cd `dirname $0`
-cd ../..
-SLPS=${PWD}
-cd ${LOCAL}
-
-if [ $# -eq 1 ]; then
-    OUTPUT=/dev/stdout
-elif [ $# -ne 2 ]; then
-    echo "This tool transforms Transformational BGF documents to hypertext EBNF."
-    echo "Usage: xbgf2html <input-xbgf-document> [<output-hypertex>]"
-    echo "When output file is not specified, stdout is used."
-    exit 1
-else
-    OUTPUT=$2
-fi
 if [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 fi
 
-xsltproc ${SLPS}/topics/export/hypertext/xbgf2xhtml.xslt $1 | grep -v 'DOCTYPE' > ${OUTPUT}
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd `dirname ${LOCAL}/$1`
+FULLPATH=${PWD}
+cd ${LOCAL}
+
+if [ $# -eq 2 ]; then
+    xsltproc --stringparam date `date +"%d/%m/%Y"` --stringparam fname `basename $1 .xbgf` --stringparam fullpath ${FULLPATH}/`basename $1` ${SLPS}/topics/export/hypertext/xbgf2xhtml.xslt $1 | grep -v 'DOCTYPE' > $2
+elif [ $# -eq 3 ]; then
+    xsltproc --stringparam date `date +"%d/%m/%Y"` --stringparam fname `basename $1 .xbgf` --stringparam fullpath ${FULLPATH}/`basename $1` --stringparam gname $3 ${SLPS}/topics/export/hypertext/xbgf2xhtml.xslt $1 | grep -v 'DOCTYPE' > $2
+else
+    echo "This tool transforms Transformational BGF documents to hypertext EBNF."
+    echo "Usage: xbgf2html <input-xbgf-document> <output-hypertext> [<hypertext-grammar>]"
+    echo "When grammar is not specified, the local file is used."
+    exit 1
+fi
