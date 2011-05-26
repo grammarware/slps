@@ -340,7 +340,7 @@
 		<name>Metasyntax</name>
 		<short>(E)BNF</short>
 		<version>
-			<name>BGF</name>
+			<name>BGF in XSD</name>
 			<source id="metasyntax-bgf">
 				<title>
 					Ralf Lämmel, Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">bgf.xsd</code>
@@ -410,30 +410,139 @@
 		</version>
 		<version>
 			<name>EBNF of ISO</name>
-			<source id="metasyntax-ebnf-iso">
+			<source id="metasyntax-ebnf-iso-1">
 				<title>
 					ISO/IEC 14977:1996(E).
 					<em xmlns="http://www.w3.org/1999/xhtml">Information Technology—Syntactic Metalanguage—Extended BNF</em>
 				</title>
 				<date>1996</date>
+				<specific>§8.1 “The syntax of Extended BNF”, pages 8–10</specific>
 				<link>
 					<uri>http://www.cl.cam.ac.uk/~mgk25/iso-14977.pdf</uri>
 					<name>PDF</name>
 				</link>
 				<link>
-					<mu>topics/grammars/bnf/ebnf.iso.informal.bgf</mu>
-					<name>SVN</name>
+					<mu>topics/grammars/metasyntax/ebnf-iso-1/README.txt</mu>
+					<name>ReadMe</name>
 				</link>
 			</source>
 			<grammar>
-				<name>Extracted</name>
-				<handle>ebnf-iso</handle>
+				<name>Recovered</name>
+				<handle>ebnf-iso-1</handle>
 			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/grammars/metasyntax/ebnf-iso-1/config.edd</mu>
+					<name>EDD</name>
+				</link>
+				<link>
+					<mu>topics/grammars/hunter.py</mu>
+					<name>Hunter</name>
+				</link>
+				<link>
+					<xbgf>metasyntax/ebnf-iso-1-post-extract</xbgf>
+					<name>post-extract</name>
+				</link>
+			</toolset>
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<xbgf>metasyntax/ebnf-iso-generalize</xbgf>
-					<name>generalize</name>
+					<xbgf>metasyntax/ebnf-iso-1-refactor</xbgf>
+					<name>refactor</name>
+				</link>
+			</toolset>
+			<!--
+					<toolset>
+						<name>Recovery</name>
+						<link>
+							<xbgf>metasyntax/ebnf-iso-1-generalize</xbgf>
+							<name>generalize</name>
+						</link>
+					</toolset>
+				-->
+			<source id="metasyntax-ebnf-iso-2">
+				<title>
+						ISO/IEC 14977:1996(E).
+						<em xmlns="http://www.w3.org/1999/xhtml">Information Technology—Syntactic Metalanguage—Extended BNF</em>
+					</title>
+				<date>1996</date>
+				<specific>§8.2 “Extended BNF used to define itself informally”, page 10</specific>
+				<link>
+					<uri>http://www.cl.cam.ac.uk/~mgk25/iso-14977.pdf</uri>
+					<name>PDF</name>
+				</link>
+				<link>
+					<mu>topics/grammars/metasyntax/ebnf-iso-2/README.txt</mu>
+					<name>ReadMe</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Recovered</name>
+				<handle>ebnf-iso-2</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/grammars/metasyntax/ebnf-iso-2/config.edd</mu>
+					<name>EDD</name>
+				</link>
+				<link>
+					<mu>topics/grammars/hunter.py</mu>
+					<name>Hunter</name>
+				</link>
+				<link>
+					<xbgf>metasyntax/ebnf-iso-2-post-extract</xbgf>
+					<name>post-extract</name>
+				</link>
+			</toolset>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<xbgf>metasyntax/ebnf-iso-2-refactor</xbgf>
+					<name>refactor</name>
+				</link>
+			</toolset>
+			<source id="metasyntax-ebnf-iso-3">
+				<title>
+					ISO/IEC 14977:1996(E).
+					<em xmlns="http://www.w3.org/1999/xhtml">Information Technology—Syntactic Metalanguage—Extended BNF</em>
+				</title>
+				<date>1996</date>
+				<specific>§8.3 “Extended BNF defined informally”, page 10</specific>
+				<link>
+					<uri>http://www.cl.cam.ac.uk/~mgk25/iso-14977.pdf</uri>
+					<name>PDF</name>
+				</link>
+				<link>
+					<mu>topics/grammars/metasyntax/ebnf-iso-3/README.txt</mu>
+					<name>ReadMe</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Recovered</name>
+				<handle>ebnf-iso-3</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/grammars/metasyntax/ebnf-iso-3/config.edd</mu>
+					<name>EDD</name>
+				</link>
+				<link>
+					<mu>topics/grammars/hunter.py</mu>
+					<name>Hunter</name>
+				</link>
+				<link>
+					<xbgf>metasyntax/ebnf-iso-3-post-extract</xbgf>
+					<name>post-extract</name>
+				</link>
+			</toolset>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<xbgf>metasyntax/ebnf-iso-3-refactor</xbgf>
+					<name>refactor</name>
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
@@ -547,41 +656,140 @@
 				<link>
 					<uri>http://328d.net/</uri>
 					<name>328d</name>
-					</link>
+				</link>
 			</source>
-			<grammar><name>Reference</name><handle>reference</handle></grammar>
-			<grammar><name>00000</name><handle>00000</handle></grammar>
-			<grammar><name>00001</name><handle>00001</handle></grammar>
-			<grammar><name>00010</name><handle>00010</handle></grammar>
-			<grammar><name>00011</name><handle>00011</handle></grammar>
-			<grammar><name>00100</name><handle>00100</handle></grammar>
-			<grammar><name>00101</name><handle>00101</handle></grammar>
-			<grammar><name>00110</name><handle>00110</handle></grammar>
-			<grammar><name>00111</name><handle>00111</handle></grammar>
-			<grammar><name>01000</name><handle>01000</handle></grammar>
-			<grammar><name>01001</name><handle>01001</handle></grammar>
-			<grammar><name>01010</name><handle>01010</handle></grammar>
-			<grammar><name>01011</name><handle>01011</handle></grammar>
-			<grammar><name>01100</name><handle>01100</handle></grammar>
-			<grammar><name>01101</name><handle>01101</handle></grammar>
-			<grammar><name>01110</name><handle>01110</handle></grammar>
-			<grammar><name>01111</name><handle>01111</handle></grammar>
-			<grammar><name>10000</name><handle>10000</handle></grammar>
-			<grammar><name>10001</name><handle>10001</handle></grammar>
-			<grammar><name>10010</name><handle>10010</handle></grammar>
-			<grammar><name>10011</name><handle>10011</handle></grammar>
-			<grammar><name>10100</name><handle>10100</handle></grammar>
-			<grammar><name>10101</name><handle>10101</handle></grammar>
-			<grammar><name>10110</name><handle>10110</handle></grammar>
-			<grammar><name>10111</name><handle>10111</handle></grammar>
-			<grammar><name>11000</name><handle>11000</handle></grammar>
-			<grammar><name>11001</name><handle>11001</handle></grammar>
-			<grammar><name>11010</name><handle>11010</handle></grammar>
-			<grammar><name>11011</name><handle>11011</handle></grammar>
-			<grammar><name>11100</name><handle>11100</handle></grammar>
-			<grammar><name>11101</name><handle>11101</handle></grammar>
-			<grammar><name>11110</name><handle>11110</handle></grammar>
-			<grammar><name>11111</name><handle>11111</handle></grammar>
+			<grammar>
+				<name>Reference</name>
+				<handle>reference</handle>
+			</grammar>
+			<grammar>
+				<name>00000</name>
+				<handle>00000</handle>
+			</grammar>
+			<grammar>
+				<name>00001</name>
+				<handle>00001</handle>
+			</grammar>
+			<grammar>
+				<name>00010</name>
+				<handle>00010</handle>
+			</grammar>
+			<grammar>
+				<name>00011</name>
+				<handle>00011</handle>
+			</grammar>
+			<grammar>
+				<name>00100</name>
+				<handle>00100</handle>
+			</grammar>
+			<grammar>
+				<name>00101</name>
+				<handle>00101</handle>
+			</grammar>
+			<grammar>
+				<name>00110</name>
+				<handle>00110</handle>
+			</grammar>
+			<grammar>
+				<name>00111</name>
+				<handle>00111</handle>
+			</grammar>
+			<grammar>
+				<name>01000</name>
+				<handle>01000</handle>
+			</grammar>
+			<grammar>
+				<name>01001</name>
+				<handle>01001</handle>
+			</grammar>
+			<grammar>
+				<name>01010</name>
+				<handle>01010</handle>
+			</grammar>
+			<grammar>
+				<name>01011</name>
+				<handle>01011</handle>
+			</grammar>
+			<grammar>
+				<name>01100</name>
+				<handle>01100</handle>
+			</grammar>
+			<grammar>
+				<name>01101</name>
+				<handle>01101</handle>
+			</grammar>
+			<grammar>
+				<name>01110</name>
+				<handle>01110</handle>
+			</grammar>
+			<grammar>
+				<name>01111</name>
+				<handle>01111</handle>
+			</grammar>
+			<grammar>
+				<name>10000</name>
+				<handle>10000</handle>
+			</grammar>
+			<grammar>
+				<name>10001</name>
+				<handle>10001</handle>
+			</grammar>
+			<grammar>
+				<name>10010</name>
+				<handle>10010</handle>
+			</grammar>
+			<grammar>
+				<name>10011</name>
+				<handle>10011</handle>
+			</grammar>
+			<grammar>
+				<name>10100</name>
+				<handle>10100</handle>
+			</grammar>
+			<grammar>
+				<name>10101</name>
+				<handle>10101</handle>
+			</grammar>
+			<grammar>
+				<name>10110</name>
+				<handle>10110</handle>
+			</grammar>
+			<grammar>
+				<name>10111</name>
+				<handle>10111</handle>
+			</grammar>
+			<grammar>
+				<name>11000</name>
+				<handle>11000</handle>
+			</grammar>
+			<grammar>
+				<name>11001</name>
+				<handle>11001</handle>
+			</grammar>
+			<grammar>
+				<name>11010</name>
+				<handle>11010</handle>
+			</grammar>
+			<grammar>
+				<name>11011</name>
+				<handle>11011</handle>
+			</grammar>
+			<grammar>
+				<name>11100</name>
+				<handle>11100</handle>
+			</grammar>
+			<grammar>
+				<name>11101</name>
+				<handle>11101</handle>
+			</grammar>
+			<grammar>
+				<name>11110</name>
+				<handle>11110</handle>
+			</grammar>
+			<grammar>
+				<name>11111</name>
+				<handle>11111</handle>
+			</grammar>
 			<toolset>
 				<name>Extraction</name>
 				<link>
