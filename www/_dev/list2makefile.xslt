@@ -7,12 +7,16 @@
 		<xsl:for-each select="language">
 			<xsl:for-each select="version/grammar">
 				<xsl:text>	_dev/add </xsl:text>
+				<xsl:value-of select="/zoo/name"/>
+				<xsl:text> </xsl:text>
 				<xsl:value-of select="../../handle"/>
 				<xsl:text> </xsl:text>
 				<xsl:value-of select="handle"/>
 				<xsl:text>
 </xsl:text>
 				<xsl:text>	_dev/format </xsl:text>
+				<xsl:value-of select="/zoo/name"/>
+				<xsl:text> </xsl:text>
 				<xsl:value-of select="../../handle"/>
 				<xsl:text> </xsl:text>
 				<xsl:value-of select="handle"/>

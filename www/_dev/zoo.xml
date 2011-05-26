@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zoo>
-	<name>Zoo</name>
+	<name>zoo</name>
 	<toolset name="sdf2bgf">
 		<name>Extraction</name>
 		<link>

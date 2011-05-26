@@ -28,7 +28,7 @@
 			</head>
 			<body style="background-color:#9C9;">
 				<h1>Software Language Processing Suite</h1>
-				<xsl:if test="name='Zoo'">
+				<xsl:if test="name='zoo'">
 					<h1>
 						<xsl:text>Grammar Zoo | </xsl:text>
 						<a href="../tank/">Grammar Tank</a>
@@ -41,7 +41,7 @@
 						</em>
 					</div>
 				</xsl:if>
-				<xsl:if test="name='Tank'">
+				<xsl:if test="name='tank'">
 					<h1>
 						<a href="../zoo/">Grammar Zoo</a>
 						<xsl:text> | Grammar Tank</xsl:text>

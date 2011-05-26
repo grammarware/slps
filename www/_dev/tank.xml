@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zoo>
-	<name>Tank</name>
+	<name>tank</name>
 	<toolset name="bnfdmssdfrsc">
 		<name>Export</name>
 		<link>
@@ -336,12 +336,12 @@
 		</version>
 	</language>
 	<language>
-		<handle>ebnf</handle>
+		<handle>metasyntax</handle>
 		<name>Metasyntax</name>
 		<short>(E)BNF</short>
 		<version>
 			<name>BGF</name>
-			<source id="bgf">
+			<source id="metasyntax-bgf">
 				<title>
 					Ralf Lämmel, Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">bgf.xsd</code>
 				</title>
@@ -362,13 +362,13 @@
 		</version>
 		<version>
 			<name>BNF in BGF</name>
-			<source id="bnf-bgf">
+			<source id="metasyntax-bnf-bgf">
 				<title>
 					Vadim Zaytsev, <code xmlns="http://www.w3.org/1999/xhtml">bnf-bgf.bgf</code>
 				</title>
 				<date>11 July 2010 – 11 February 2011</date>
 				<link>
-					<mu>topics/grammars/bnf/bnf-bgf.bgf</mu>
+					<mu>topics/grammars/metasyntax/bnf-bgf.bgf</mu>
 					<name>SVN</name>
 				</link>
 			</source>
@@ -380,7 +380,7 @@
 		</version>
 		<version>
 			<name>BNF in SDF</name>
-			<source id="bnf-sdf">
+			<source id="metasyntax-bnf-sdf">
 				<title>
 					Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">BNF.sdf</code>
 				</title>
@@ -398,8 +398,8 @@
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/bnf/bnf.sdf.correct.xbgf</mu>
-					<name>bnf.sdf.correct.xbgf</name>
+					<xbgf>metasyntax/bnf-sdf-correct</xbgf>
+					<name>correct</name>
 				</link>
 				<link>
 					<mu>topics/investigation/subgrammar/subgrammar.py</mu>
@@ -410,7 +410,7 @@
 		</version>
 		<version>
 			<name>EBNF of ISO</name>
-			<source id="ebnf-iso">
+			<source id="metasyntax-ebnf-iso">
 				<title>
 					ISO/IEC 14977:1996(E).
 					<em xmlns="http://www.w3.org/1999/xhtml">Information Technology—Syntactic Metalanguage—Extended BNF</em>
@@ -432,15 +432,15 @@
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/bnf/ebnf.iso.generalize.xbgf</mu>
-					<name>ebnf.iso.generalize.xbgf</name>
+					<xbgf>metasyntax/ebnf-iso-generalize</xbgf>
+					<name>generalize</name>
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>EBNF in SDF</name>
-			<source id="ebnf-sdf">
+			<source id="metasyntax-ebnf-sdf">
 				<title>
 					Paul Klint, W3C version of <code xmlns="http://www.w3.org/1999/xhtml">EBNF.sdf</code>
 				</title>
@@ -458,8 +458,8 @@
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/bnf/correct.ebnf.xbgf</mu>
-					<name>correct.ebnf.xbgf</name>
+					<xbgf>metasyntax/ebnf-sdf-correct</xbgf>
+					<name>correct</name>
 				</link>
 				<link>
 					<mu>topics/investigation/subgrammar/subgrammar.py</mu>
@@ -470,7 +470,7 @@
 		</version>
 		<version>
 			<name>Rascal</name>
-			<source id="rascal">
+			<source id="metasyntax-rascal">
 				<title>
 					Jurgen Vinju, Arnold Lankamp, Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">RascalRascal.rsc</code>
 				</title>
@@ -492,15 +492,15 @@
 					<name>subgrammar.py</name>
 				</link>
 				<link>
-					<mu>topics/grammars/rascal/horizontalize.xbgf</mu>
-					<name>horizontalize.xbgf</name>
+					<xbgf>metasyntax/rascal-horizontalize</xbgf>
+					<name>horizontalize</name>
 				</link>
 			</toolset>
 			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>YACC</name>
-			<source id="yacc">
+			<source id="metasyntax-yacc">
 				<title>
 					Paul Klint, <code xmlns="http://www.w3.org/1999/xhtml">YACC.sdf</code>
 				</title>
@@ -522,8 +522,8 @@
 			<toolset>
 				<name>Recovery</name>
 				<link>
-					<mu>topics/grammars/bnf/refactor.yacc.xbgf</mu>
-					<name>refactor.yacc.xbgf</name>
+					<xbgf>metasyntax/yacc-refactor</xbgf>
+					<name>refactor</name>
 				</link>
 				<link>
 					<mu>topics/investigation/subgrammar/subgrammar.py</mu>

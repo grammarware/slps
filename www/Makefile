@@ -17,15 +17,19 @@ build:
 	xsltproc _dev/links2html.xslt _dev/java-grammars.xml | python ../topics/export/hypertext/closemeta.py > zoo/java/links.html
 
 zooprj:
+	rm -f zoo/*/*
 	xsltproc _dev/list2makefile.xslt _dev/zoo.xml > _dev/Makefile.x
 	make -f _dev/Makefile.x
-	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/listgrammars.xslt _dev/zoo.xml  >  zoo/index.html
+	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/list2xhtml.xslt _dev/zoo.xml  >  zoo/index.html
 
 tankprj:
-	make -f _dev/Makefile.fl.tank
-	make -f _dev/Makefile.ebnf.tank
-	make -f _dev/Makefile.tescol.tank
-	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/listgrammars.xslt _dev/tank.xml > tank/index.html
+	rm -f tank/*/*
+	cp ../topics/convergence/fl/snapshot/*.bgf tank/fl/
+	cp ../topics/testing/gbtf/tests/tescol/*.bgf tank/tescol/
+	chmod 644 tank/*/*.bgf
+	xsltproc _dev/list2makefile.xslt _dev/tank.xml | grep -v 'add tank fl' | grep -v 'add tank tescol' > _dev/Makefile.y
+	make -f _dev/Makefile.y
+	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/list2xhtml.xslt _dev/tank.xml > tank/index.html
 
 tmprj:
 	ls -1 ../topics/testing/gbtf/tests/java/*.bgf   | xargs -n1 _dev/conv java
