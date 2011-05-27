@@ -85,12 +85,12 @@
 						<a name="{translate(handle,' +#“”','_ps__')}"/>
 						<xsl:value-of select="name"/>
 						<br/>
-						<a href="#{version[1]/name}">
+						<a href="#{translate(version[1]/name,' +#“”','_ps__')}">
 							<xsl:value-of select="version[1]/name"/>
 						</a>
 						<xsl:for-each select="version[position()&gt;1]">
 							<xsl:text> — </xsl:text>
-							<a href="#{name}">
+							<a href="#{translate(name,' +#“”','_ps__')}">
 								<xsl:value-of select="name"/>
 							</a>
 						</xsl:for-each>

@@ -788,13 +788,56 @@
 		<handle>eiffel</handle>
 		<name>Eiffel</name>
 		<version>
-			<name>Eiffel</name>
+			<name>Gobo Eiffel</name>
+			<source id="eiffel-bezault">
+				<title>Eric Bezault,
+				 <em xmlns="http://www.w3.org/1999/xhtml">Eiffel: The Syntax</em></title>
+				<date>1999</date>
+				<link>
+					<slps>topics/grammars/eiffel/bezault/README.txt</slps>
+					<name>ReadMe</name>
+				</link>
+				<link>
+					<uri>http://www.gobosoft.com/eiffel/syntax/</uri>
+					<name>Online</name>
+				</link>
+			</source>
+			<grammar>
+				<name>Recovered</name>
+				<handle>bezault</handle>
+			</grammar>
+			<toolset>
+				<name>Extraction</name>
+				<link>
+					<mu>topics/grammars/eiffel/bezault/config.edd</mu>
+					<name>EDD</name>
+				</link>
+				<link>
+					<mu>topics/grammars/hunter.py</mu>
+					<name>Hunter</name>
+				</link>
+				<link>
+					<xbgf>eiffel/bezault-post-extract</xbgf>
+					<name>post-extract</name>
+				</link>
+			</toolset>
+			<toolset>
+				<name>Recovery</name>
+				<link>
+					<xbgf>eiffel/bezault-complete</xbgf>
+					<name>complete</name>
+				</link>
+			</toolset>
+			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+		<version>
+			<name>ISO Eiffel</name>
 			<source id="eiffel-iso-25436-2006">
 				<title>ISO/IEC 25436:2006(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Eiffel: Analysis, Design and Programming Language</em></title>
 				<date>2006</date>
 				<specific>Syntax sections collected from pages 30–158</specific>
 				<link>
-					<slps>topics/grammars/eiffel/README.txt</slps>
+					<slps>topics/grammars/eiffel/iso-25436-2006/README.txt</slps>
 					<name>ReadMe</name>
 				</link>
 				<link>
