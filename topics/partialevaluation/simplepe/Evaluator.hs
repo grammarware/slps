@@ -29,3 +29,4 @@ main
  = do
       print $ eval (lib, Apply "fac" [Const 5])
       print $ eval (lib, Apply "exp" [Const 2, Const 3])
+      print $ eval (lib, Apply "test" [Const 1, Const 3, Const 100000])

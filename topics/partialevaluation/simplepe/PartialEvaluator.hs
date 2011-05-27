@@ -39,3 +39,5 @@ main
       print $ peval (lib, Apply "fac" [Const 5])
       print $ peval (lib, Apply "exp" [Const 2, Const 3])
       print $ peval (lib, Apply "exp" [Var "x", Const 3])
+      print $ peval (lib, Apply "test" [Const 1, Const 3, Const 100000])
+--      print $ peval (lib, Apply "test" [Const 1, Const 3, Var "v"])

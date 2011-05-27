@@ -13,12 +13,13 @@ data Expr
  | Apply String [Expr]
  deriving (Show)
 
-data Op = Plus | Times
+data Op = Plus | Times | Mod
  deriving (Show)
 
 op2f :: Op -> (Int -> Int -> Int)
 op2f Plus = (+) 
 op2f Times = (*)
+op2f Mod = mod
 
 
 -- Sample functions collected in one "library"
@@ -42,4 +43,13 @@ lib
                    (Var "x")
                    (Apply "exp" [Var "x",(Binary Plus
                                                  (Var "n")
-                                                 (Const (-1)))])))) ]
+                                                 (Const (-1)))])))),
+
+     -- test(x, n, v) = if v == 0 then v else test(x + 1 mod n, n, v - 1)
+     ("test",
+       ( ["x","n","v"]
+       , IfZero (Var "v")
+           (Var "v")
+           (Apply "test" [Binary Mod (Binary Plus (Var "x") (Const 1)) (Var "n"),
+                          Var "n",
+                          Binary Plus (Var "v") (Const (-1))])))]
