@@ -1,0 +1,21 @@
+(C) 2011, Ralf Laemmel
+
+Thanks to William Cook for some tips.
+
+See here for some background:
+
+http://professor-fish.blogspot.com/2011/05/illustrative-online-partial-evaluator.html
+
+Interpreter.hs is a straightforward interpreter.
+
+TrivialPartialEvaluator is a very simple online partial evaluator.
+
+PartialEvaluator makes a proper effort:
+
+- It specializes functions based on static variables.
+- It memoizes specializations (even under recursion) to avoid non-termination and code cloning.
+- It also avoids variable capture.
+
+However, this evaluator would require post-processing.
+
+In particular, synthesized functions with only a single application should be inlined.
