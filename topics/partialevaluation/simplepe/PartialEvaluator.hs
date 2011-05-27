@@ -43,35 +43,28 @@ peval (fe,m) ve = runState (peval' m ve) []
         -- Build a variable environment for the static variables
         let ve' = map (\(_,n,i) -> (n,i)) ss
 
-        -- Check whether there are any dynamic variables
-        if null ds
+        -- The name that encodes the static values
+        let n' = n ++ "_" ++ show (map (\(p,_,i) -> (p,i)) ss)
 
-          -- Interpret single-stage expression
-          then peval' e ve'
+        -- The result
+        let e' = Apply n' (map (\(_,_,e) -> e) ds)
+        
+        -- See whether the specialization exists already           
+        fe <- get
+        case lookup n' fe of
+          Just _ -> return e'
+          Nothing -> (do 
 
-          -- Specialize function at hand
-          else (do
-                   -- The name that encodes the static values
-                   let n' = n ++ "_" ++ show (map (\(p,_,i) -> (p,i)) ss)
+                         -- Memo before possible recursion
+                         put (fe++[(n',undefined)])
 
-                   -- The result
-                   let e' = Apply n' (map (\(_,_,e) -> e) ds)
-                   
-                   fe <- get
-                   case lookup n' fe of
-                     Just _ -> return e'
-                     Nothing -> (do 
+                         -- Partial evaluation of instance of function definition
+                         e'' <- peval' e ve'
 
-                                    -- Memo before possible recursion
-                                    put ((n',undefined):fe)
-
-                                    -- Partial evaluation of instance of function definition
-                                    e'' <- peval' e ve'
-
-                                    -- Record proper definition of specialized function
-                                    fe' <- get
-                                    put (update (const (map (\(_,n,_) -> n) ds,e'')) n' fe')
-                                    return e'))
+                         -- Record proper definition of specialized function
+                         fe' <- get
+                         put (update (const (map (\(_,n,_) -> n) ds,e'')) n' fe')
+                         return e')
    where
     partition p [] [] = ([],[])
     partition p (n:ns) (Const i:es) = ((p,n,i):ss,ds) where (ss,ds) = partition (p+1) ns es
