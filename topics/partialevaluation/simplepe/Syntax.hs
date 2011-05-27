@@ -45,6 +45,7 @@ lib
                                                  (Var "n")
                                                  (Const (-1)))])))),
 
+     -- A particular test case calling for memoization during PE:
      -- test(x, n, v) = if v == 0 then v else test(x + 1 mod n, n, v - 1)
      ("test",
        ( ["x","n","v"]
