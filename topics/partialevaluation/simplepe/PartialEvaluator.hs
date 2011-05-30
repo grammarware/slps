@@ -72,10 +72,10 @@ peval (fe,m) = runState (peval' m []) []
                 -- Memo before possible recursion
                 put (fe++[(n',undefined)])
 
-                -- Partial evaluation of instance of function definition
+                -- Partial evaluation of function body
                 e'' <- peval' e ss
 
-                -- Record proper definition of specialized function
+                -- Record definition of specialized function
                 fe' <- get
                 put (update (const (map fst ds,e'')) n' fe')
 
