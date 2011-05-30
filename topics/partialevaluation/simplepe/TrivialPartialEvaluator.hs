@@ -1,4 +1,6 @@
 import Syntax
+import Substitution
+import Evaluator (eval)
 import Data.Maybe
 
 type VEnv = [(String,Expr)]
@@ -34,10 +36,20 @@ peval (fe,m) = peval' m []
     es' = map (\e -> peval' e ve) es
     ve' = zip ns es'
 
+-- Test the result of partial evaluation for a concrete value
+
+test :: FEnv -> Expr -> String -> Int -> IO ()
+test fe e s i
+ = do
+      let e' = peval (fe, e)
+      print e'
+      let e'' = substitute [(s,Const i)] e'
+      print $ eval (fe, e'')
+
 main
  = do
       print $ peval (lib, Apply "fac" [Const 5])
       print $ peval (lib, Apply "exp" [Const 2, Const 3])
-      print $ peval (lib, Apply "exp" [Var "x", Const 3])
-      print $ peval (lib, Apply "test" [Const 1, Const 3, Const 100000])
---      print $ peval (lib, Apply "test" [Const 1, Const 3, Var "v"])
+      print $ peval (lib, Apply "mod" [Const 8, Const 3, Const 0])
+      test lib (Apply "exp" [Var "x", Const 3]) "x" 2
+--      print $ peval (lib, Apply "mod" [Var "x", Const 3, Const 0]) -- Diverges!
