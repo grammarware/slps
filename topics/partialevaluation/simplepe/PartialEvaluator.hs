@@ -37,7 +37,7 @@ peval (fe,m) = runState (peval' m []) []
         -- Look up function
         let (ns,e) = fromJust (lookup n fe)
 
-        -- Evaluate arguments
+        -- Partially evaluate arguments
         es' <- mapM (flip peval' ve) es
 
         -- Partition arguments into static and dynamic ones
