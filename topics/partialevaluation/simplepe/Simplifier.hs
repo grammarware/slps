@@ -46,6 +46,6 @@ simplify' e fs1 (f@(s,(ss,e')):fs2)
   inlineEL :: [Expr] -> [Expr]
   inlineEL = map inlineE
   inlineF :: FDef -> FDef
-  inlineF (s,(ss',e)) = (s,(ss,inlineE e))
+  inlineF (s,(ss',e)) = (s,(ss',inlineE e))
   inlineFL :: [FDef] -> [FDef]
   inlineFL = map inlineF

@@ -52,4 +52,5 @@ main
       print $ peval (lib, Apply "exp" [Const 2, Const 3])
       print $ peval (lib, Apply "mod" [Const 8, Const 3, Const 0])
       test lib (Apply "exp" [Var "x", Const 3]) "x" 2
---      print $ peval (lib, Apply "mod" [Var "x", Const 3, Const 0]) -- Diverges!
+--      test lib (Apply "exp" [Const 2, Var "n"]) "n" 3 -- Diverges!
+--      print $ peval (lib, Apply "mod" [Var "x", Const 3]) -- Diverges!

@@ -1,5 +1,6 @@
 import Syntax
 import Substitution
+import Simplifier
 import Evaluator (eval)
 import Data.Maybe
 import Control.Monad.State
@@ -40,10 +41,7 @@ peval (fe,m) = runState (peval' m []) []
         es' <- mapM (flip peval' ve) es
 
         -- Partition arguments into static and dynamic ones
-        let (ss,ds) = partition 0 ns es'
-
-        -- Build a variable environment for the static variables
-        let ve' = map (\(_,n,i) -> (n,i)) ss
+        let (ss,ds) = partition ns es'
 
         case (null ss, null ds) of
 
@@ -51,7 +49,7 @@ peval (fe,m) = runState (peval' m []) []
           (True, True) -> peval' e []
 
           -- A fully static application
-          (False, True) -> peval' e ve'
+          (False, True) -> peval' e ss
 
           -- A fully dynamic application
           (True, False) -> return (Apply n es')
@@ -60,10 +58,10 @@ peval (fe,m) = runState (peval' m []) []
           (False, False) -> (do
 
             -- The name that encodes the static values
-            let n' = n ++ "_" ++ show (map (\(p,_,i) -> (p,i)) ss)
+            let n' = n ++ "_" ++ myshowl ss
 
             -- Construct application of specialized function
-            let e' = Apply n' (map (\(_,_,e) -> e) ds)
+            let e' = Apply n' (map snd ds)
         
             -- See whether the specialization exists already           
             fe <- get
@@ -75,19 +73,23 @@ peval (fe,m) = runState (peval' m []) []
                 put (fe++[(n',undefined)])
 
                 -- Partial evaluation of instance of function definition
-                e'' <- peval' e ve'
+                e'' <- peval' e ss
 
                 -- Record proper definition of specialized function
                 fe' <- get
-                put (update (const (map (\(_,n,_) -> n) ds,e'')) n' fe')
+                put (update (const (map fst ds,e'')) n' fe')
 
                 -- Return application of specialized function
                 return e'))
    where
-    partition p [] [] = ([],[])
-    partition p (n:ns) (Const i:es) = ((p,n,i):ss,ds) where (ss,ds) = partition (p+1) ns es
-    partition p (n:ns) (e:es) = (ss,(p,n,e):ds) where (ss,ds) = partition (p+1) ns es
-
+    partition [] [] = ([],[])
+    partition (n:ns) (Const i:es) = ((n,i):ss,ds) where (ss,ds) = partition ns es
+    partition (n:ns) (e:es) = (ss,(n,e):ds) where (ss,ds) = partition ns es
+    myshowl [] = "[]"
+    myshowl (x:xs) = "[" ++ myshow1 x ++ myshowr xs ++ "]"
+    myshow1 (s,i) = "(" ++ s ++ "," ++ show i ++ ")"
+    myshowr [] = ""
+    myshowr (x:xs) = "," ++ myshow1 x ++ myshowr xs
 
 -- Update a list that is supposed to be a map/dictionary
 
@@ -115,5 +117,6 @@ main
       print $ peval (lib, Apply "fac" [Const 5])
       print $ peval (lib, Apply "exp" [Const 2, Const 3])
       test lib (Apply "exp" [Var "x", Const 3]) "x" 2
-      print $ peval (lib,  Apply "mod" [Const 8, Const 3, Const 0])
-      test lib (Apply "mod" [Var "x", Const 3, Const 0]) "x" 8
+      test lib (Apply "exp" [Const 2, Var "n"]) "n" 3
+      print $ peval (lib,  Apply "mod" [Const 8, Const 3])
+      test lib (Apply "mod" [Var "x", Const 3]) "x" 8

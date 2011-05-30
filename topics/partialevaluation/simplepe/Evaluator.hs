@@ -31,4 +31,4 @@ main
  = do
       print $ eval (lib, Apply "fac" [Const 5])
       print $ eval (lib, Apply "exp" [Const 2, Const 3])
-      print $ eval (lib, Apply "mod" [Const 8, Const 3, Const 0])
+      print $ eval (lib, Apply "mod" [Const 8, Const 3])
