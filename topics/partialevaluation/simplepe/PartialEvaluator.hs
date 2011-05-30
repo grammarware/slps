@@ -34,53 +34,53 @@ peval (fe,m) = runState (peval' m []) []
     r3 = peval' e3 ve
   peval' (Apply n es) ve
    = do
-        -- Look up function
-        let (ns,e) = fromJust (lookup n fe)
+     -- Look up function
+     let (ns,e) = fromJust (lookup n fe)
 
-        -- Partially evaluate arguments
-        es' <- mapM (flip peval' ve) es
+     -- Partially evaluate arguments
+     es' <- mapM (flip peval' ve) es
 
-        -- Partition arguments into static and dynamic ones
-        let (ss,ds) = partition ns es'
+     -- Partition arguments into static and dynamic ones
+     let (ss,ds) = partition ns es'
 
-        case (null ss, null ds) of
+     case (null ss, null ds) of
 
-          -- A constant application
-          (True, True) -> peval' e []
+       -- A constant application
+       (True, True) -> peval' e []
 
-          -- A fully static application
-          (False, True) -> peval' e ss
+       -- A fully static application
+       (False, True) -> peval' e ss
 
-          -- A fully dynamic application
-          (True, False) -> return (Apply n es')
+       -- A fully dynamic application
+       (True, False) -> return (Apply n es')
 
-          -- A mixed static application
-          (False, False) -> (do
+       -- A mixed static application
+       (False, False) -> (do
 
-            -- The name that encodes the static values
-            let n' = n ++ "_" ++ myshowl ss
+         -- The name that encodes the static values
+         let n' = n ++ "_" ++ myshowl ss
 
-            -- Construct application of specialized function
-            let e' = Apply n' (map snd ds)
+         -- Construct application of specialized function
+         let e' = Apply n' (map snd ds)
         
-            -- See whether the specialization exists already           
-            fe <- get
-            case lookup n' fe of
-              Just _ -> return e'
-              Nothing -> (do 
+         -- See whether the specialization exists already           
+         fe <- get
+         case lookup n' fe of
+           Just _ -> return e'
+           Nothing -> (do 
 
-                -- Memo before possible recursion
-                put (fe++[(n',undefined)])
+             -- Memo before possible recursion
+             put (fe++[(n',undefined)])
 
-                -- Partial evaluation of function body
-                e'' <- peval' e ss
+             -- Partial evaluation of function body
+             e'' <- peval' e ss
 
-                -- Record definition of specialized function
-                fe' <- get
-                put (update (const (map fst ds,e'')) n' fe')
+             -- Record definition of specialized function
+             fe' <- get
+             put (update (const (map fst ds,e'')) n' fe')
 
-                -- Return application of specialized function
-                return e'))
+             -- Return application of specialized function
+             return e'))
    where
     partition [] [] = ([],[])
     partition (n:ns) (Const i:es) = ((n,i):ss,ds) where (ss,ds) = partition ns es
