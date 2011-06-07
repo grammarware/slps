@@ -358,4 +358,36 @@
 		</a>
 		<xsl:text>]</xsl:text>
 	</xsl:template>
+	<!-- We need override the standard BGF2HTML one in order to hyperlink the nonterminal that is being defined. -->
+	<xsl:template match="bgf:production">
+		<xsl:if test="./label">
+			<xsl:call-template name="displaylabel">
+				<xsl:with-param name="l" select="label"/>
+			</xsl:call-template>
+		</xsl:if>
+		<xsl:apply-templates select="nonterminal"/>
+		<xsl:text>:</xsl:text>
+		<xsl:choose>
+			<xsl:when test="./bgf:expression/choice">
+				<xsl:for-each select="./bgf:expression/choice/bgf:expression">
+					<xsl:text>
+	        </xsl:text>
+					<xsl:call-template name="no-parenthesis">
+						<xsl:with-param name="expr" select="."/>
+					</xsl:call-template>
+				</xsl:for-each>
+				<xsl:text>
+	</xsl:text>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:text>
+	        </xsl:text>
+				<xsl:call-template name="no-parenthesis">
+					<xsl:with-param name="expr" select="./bgf:expression"/>
+				</xsl:call-template>
+				<xsl:text>
+	</xsl:text>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 </xsl:stylesheet>

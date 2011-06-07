@@ -27,7 +27,7 @@ tankprj:
 	cp ../topics/convergence/fl/snapshot/*.bgf tank/fl/
 	cp ../topics/testing/gbtf/tests/tescol/*.bgf tank/tescol/
 	chmod 644 tank/*/*.bgf
-	xsltproc _dev/list2makefile.xslt _dev/tank.xml | grep -v 'add tank fl' | grep -v 'add tank tescol' > _dev/Makefile.y
+	xsltproc _dev/list2makefile.xslt _dev/tank.xml | grep -v 'tank/fl' | grep -v 'tank/tescol' > _dev/Makefile.y
 	make -f _dev/Makefile.y
 	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/list2xhtml.xslt _dev/tank.xml > tank/index.html
 

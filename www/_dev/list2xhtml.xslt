@@ -53,9 +53,9 @@
 						</em>
 					</div>
 				</xsl:if>
-				<h2><xsl:value-of select="count(//grammar)"/> grammars and counting</h2>
+				<h2><xsl:value-of select="count(//grammar)+count(//grammarname)"/> grammars and counting</h2>
 				<h1>
-					<a href="#{translate(language[1]/handle,' +#“”','_ps__')}">
+					<a href="#{translate(language[1]/name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ +#“”','abcdefghijklmnopqrstuvwxyz_ps__')}">
 						<xsl:choose>
 							<xsl:when test="language[1]/short">
 								<xsl:value-of select="language[1]/short"/>
@@ -67,7 +67,7 @@
 					</a>
 					<xsl:for-each select="language[position()&gt;1]">
 						<xsl:text> — </xsl:text>
-						<a href="#{translate(handle,' +#“”','_ps__')}">
+						<a href="#{translate(name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ +#“”','abcdefghijklmnopqrstuvwxyz_ps__')}">
 							<xsl:choose>
 								<xsl:when test="short">
 									<xsl:value-of select="short"/>
@@ -82,7 +82,7 @@
 				<xsl:for-each select="language">
 					<hr/>
 					<h2>
-						<a name="{translate(handle,' +#“”','_ps__')}"/>
+						<a name="{translate(name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ +#“”','abcdefghijklmnopqrstuvwxyz_ps__')}"/>
 						<xsl:value-of select="name"/>
 						<br/>
 						<a href="#{translate(version[1]/name,' +#“”','_ps__')}">
@@ -99,43 +99,23 @@
 						<h3>
 							<a name="{translate(name,' +#“”','_ps__')}"/>
 							<xsl:value-of select="name"/>
-							<xsl:if test="count(grammar) &gt; 1">
+							<xsl:if test="grammarset or count(grammar) &gt; 1">
 								<em>
 									<xsl:text> (</xsl:text>
-									<xsl:value-of select="count(grammar)"/>
+									<xsl:value-of select="count(grammar)+count(grammarset/grammarname)"/>
 									<xsl:text> grammars)</xsl:text>
 								</em>
 							</xsl:if>
 						</h3>
-						<ul>
-							<xsl:for-each select="*">
-								<xsl:choose>
-									<xsl:when test="local-name(.)='name'"/>
-									<xsl:when test="local-name(.)='toolset' and @ref">
-										<xsl:variable name="name" select="@ref"/>
-										<xsl:apply-templates select="/zoo/toolset[@name=$name]"/>
-									</xsl:when>
-									<xsl:when test="local-name(.)='item' and @ref">
-										<xsl:variable name="name" select="@ref"/>
-										<xsl:apply-templates select="/zoo/item[@name=$name]"/>
-									</xsl:when>
-									<xsl:when test="local-name(.)='itemset' and @ref">
-										<xsl:variable name="name" select="@ref"/>
-										<xsl:apply-templates select="/zoo/itemset[@name=$name]/item"/>
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:apply-templates select="."/>
-									</xsl:otherwise>
-								</xsl:choose>
-							</xsl:for-each>
-						</ul>
+						<xsl:apply-templates select="grammar|grammarset"/>
 					</xsl:for-each>
 				</xsl:for-each>
 				<hr/>
 				<h3>Appendix: Notations and Formats</h3>
 				<ul>
+					<xsl:apply-templates select="/zoo/toolset[@name='export']"/>
 					<li>
-						<xsl:text>Browsable:</xsl:text>
+						<xsl:text>Browsable (hypertext) format:</xsl:text>
 						<span class="links">
 							[<a href="http://www.w3.org/TR/xhtml1/">W3C XHTML Rec</a>]
 						</span>
@@ -250,7 +230,7 @@
 	</xsl:template>
 	<xsl:template match="source">
 		<li xmlns="http://www.w3.org/1999/xhtml">
-			<strong>Source: </strong>
+			<xsl:text>Source: </xsl:text>
 			<xsl:copy-of select="title/node()"/>
 			<xsl:if test="date">
 				<xsl:text> (</xsl:text>
@@ -267,23 +247,115 @@
 		</li>
 	</xsl:template>
 	<xsl:template match="grammar">
-		<li xmlns="http://www.w3.org/1999/xhtml">
-			<xsl:value-of select="name"/>
-			<xsl:text> grammar: </xsl:text>
-			<span class="links">
-				[<a href="{../../handle}/{handle}.html" class="red">Browsable</a>]
-				[<a href="{../../handle}/{handle}.bgf">BGF</a>]
-				[<a href="{../../handle}/{handle}.bnf">EBNF</a>]
+		<xsl:variable name="filename">
+			<xsl:choose>
+				<xsl:when test="../../short">
+					<xsl:value-of select="handle"/>
+				</xsl:when>
+				<xsl:when test="substring-after(handle,concat(translate(../../name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ +#“”','abcdefghijklmnopqrstuvwxyz_ps__'),'/'))=''">
+					<xsl:value-of select="concat(translate(../../name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ +#“”','abcdefghijklmnopqrstuvwxyz_ps__'),concat('/',translate(handle,'/','-')))"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(translate(../../name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ +#“”','abcdefghijklmnopqrstuvwxyz_ps__'),concat('/',substring-after(handle,'/')))"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<ul xmlns="http://www.w3.org/1999/xhtml">
+			<xsl:apply-templates select="source"/>
+			<xsl:if test="handle">
+				<li>
+					<xsl:value-of select="name"/>
+					<xsl:text> grammar: </xsl:text>
+					<span class="links">
+				[<a href="{$filename}.html" class="red">Browsable</a>]
+				[<a href="{$filename}.bgf">BGF</a>]
+				[<a href="{$filename}.bnf">EBNF</a>]
 				<!--
 				<xsl:if test="(../../handle='c') or (../../handle='cpp') or ((../../handle='csharp') and not(handle='iso-23270-2003') and not(handle='iso-23270-2003-recovered'))">
-					[<a href="{../../handle}/{handle}.lll">LLL</a>]
+					[<a href="{$filename}.lll">LLL</a>]
 				</xsl:if>
 				-->
-				[<a href="{../../handle}/{handle}.dms">DMS BNF</a>]
-				[<a href="{../../handle}/{handle}.sdf">SDF</a>]
-				[<a href="{../../handle}/{handle}.rsc">Rascal</a>]
+				[<a href="{$filename}.dms">DMS BNF</a>]
+				[<a href="{$filename}.sdf">SDF</a>]
+				[<a href="{$filename}.rsc">Rascal</a>]
 			</span>
-		</li>
+				</li>
+			</xsl:if>
+			<xsl:for-each select="*">
+				<xsl:choose>
+					<xsl:when test="local-name(.)='name'"/>
+					<xsl:when test="local-name(.)='handle'"/>
+					<xsl:when test="local-name(.)='source'"/>
+					<xsl:when test="local-name(.)='toolset' and @ref">
+						<xsl:variable name="name" select="@ref"/>
+						<xsl:apply-templates select="/zoo/toolset[@name=$name]"/>
+					</xsl:when>
+					<xsl:when test="local-name(.)='item' and @ref">
+						<xsl:variable name="name" select="@ref"/>
+						<xsl:apply-templates select="/zoo/item[@name=$name]"/>
+					</xsl:when>
+					<xsl:when test="local-name(.)='itemset' and @ref">
+						<xsl:variable name="name" select="@ref"/>
+						<xsl:apply-templates select="/zoo/itemset[@name=$name]/item"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:apply-templates select="."/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ul>
+	</xsl:template>
+	<xsl:template match="grammarset">
+		<!-- clone of match="grammar"!!! -->
+		<ul xmlns="http://www.w3.org/1999/xhtml">
+			<xsl:apply-templates select="source"/>
+			<xsl:for-each select="grammarname">
+				<xsl:variable name="filename">
+					<xsl:choose>
+						<xsl:when test="../../short">
+							<xsl:value-of select="concat(translate(../../short,'ABCDEFGHIJKLMNOPQRSTUVWXYZ +#“”','abcdefghijklmnopqrstuvwxyz_ps__'),concat('/',translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ +#“”','abcdefghijklmnopqrstuvwxyz_ps__')))"/>
+						</xsl:when>
+						<xsl:when test="../../name">
+							<xsl:value-of select="concat(translate(../../name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ +#“”','abcdefghijklmnopqrstuvwxyz_ps__'),concat('/',translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ +#“”','abcdefghijklmnopqrstuvwxyz_ps__')))"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:text>error</xsl:text>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<li>
+					<xsl:value-of select="."/>
+					<xsl:text> grammar: </xsl:text>
+					<span class="links">
+					[<a href="{$filename}.html" class="red">Browsable</a>]
+					[<a href="{$filename}.bgf">BGF</a>]
+					[<a href="{$filename}.bnf">EBNF</a>]
+					[<a href="{$filename}.dms">DMS BNF</a>]
+					[<a href="{$filename}.sdf">SDF</a>]
+					[<a href="{$filename}.rsc">Rascal</a>]
+				</span>
+				</li>
+			</xsl:for-each>
+			<xsl:for-each select="tool|toolset|item|itemset">
+				<xsl:choose>
+					<xsl:when test="local-name(.)='toolset' and @ref">
+						<xsl:variable name="name" select="@ref"/>
+						<xsl:apply-templates select="/zoo/toolset[@name=$name]"/>
+					</xsl:when>
+					<xsl:when test="local-name(.)='item' and @ref">
+						<xsl:variable name="name" select="@ref"/>
+						<xsl:apply-templates select="/zoo/item[@name=$name]"/>
+					</xsl:when>
+					<xsl:when test="local-name(.)='itemset' and @ref">
+						<xsl:variable name="name" select="@ref"/>
+						<xsl:apply-templates select="/zoo/itemset[@name=$name]/item"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:apply-templates select="."/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ul>
 	</xsl:template>
 	<xsl:template match="item">
 		<li xmlns="http://www.w3.org/1999/xhtml">

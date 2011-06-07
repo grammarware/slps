@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zoo>
 	<name>zoo</name>
+	<toolset name="export">
+		<name>Export</name>
+		<link>
+			<mu>topics/export/hypertext/bgf2xhtml.xslt</mu>
+			<name>BGF⇒HTML</name>
+		</link>
+		<link>
+			<mu>shared/xsl/bgf2bnf.xslt</mu>
+			<name>BGF⇒BNF</name>
+		</link>
+		<link>
+			<mu>topics/export/ebnf/bgf2dms.xslt</mu>
+			<name>BGF⇒DMS</name>
+		</link>
+		<link>
+			<mu>shared/xsl/bgf2sdf.xslt</mu>
+			<name>BGF⇒SDF</name>
+		</link>
+		<link>
+			<mu>topics/export/rascal/bgf2rsc.xslt</mu>
+			<name>BGF⇒Rascal</name>
+		</link>
+	</toolset>
 	<toolset name="sdf2bgf">
 		<name>Extraction</name>
 		<link>
@@ -29,29 +52,6 @@
 		<link>
 			<mu>topics/extraction/bnf2bgf/lll2bgf.py</mu>
 			<name>LLL⇒BGF</name>
-		</link>
-	</toolset>
-	<toolset name="bnfdmssdfrsc">
-		<name>Export</name>
-		<link>
-			<mu>topics/export/hypertext/bgf2xhtml.xslt</mu>
-			<name>BGF⇒HTML</name>
-		</link>
-		<link>
-			<mu>shared/xsl/bgf2bnf.xslt</mu>
-			<name>BGF⇒BNF</name>
-		</link>
-		<link>
-			<mu>topics/export/ebnf/bgf2dms.xslt</mu>
-			<name>BGF⇒DMS</name>
-		</link>
-		<link>
-			<mu>shared/xsl/bgf2sdf.xslt</mu>
-			<name>BGF⇒SDF</name>
-		</link>
-		<link>
-			<mu>topics/export/rascal/bgf2rsc.xslt</mu>
-			<name>BGF⇒Rascal</name>
 		</link>
 	</toolset>
 	<toolset name="scraping">
@@ -152,1116 +152,1218 @@
 	</itemset>
 	<!-- ================================================================ -->
 	<language>
-		<handle>ada</handle>
 		<name>Ada</name>
 		<version>
 			<name>Ada 95</name>
-			<source>
-				<title>ISO/IEC 8652:1995 <em xmlns="http://www.w3.org/1999/xhtml">Information Technology — Programming Languages — Ada</em></title>
-				<date>1995</date>
-				<specific>Annex P, pages 479–493</specific>
-			</source>
-			<source id="ada-kempe">
-				<title>Magnus Kempe, <em xmlns="http://www.w3.org/1999/xhtml">Ada 95 Reference Manual</em>, Hypertext version</title>
-				<date>1994–1997</date>
-				<link>
-					<slps>topics/grammars/ada/kempe/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.adahome.com/rm95/rm9x-toc.html</uri>
-					<name>TOC</name>
-				</link>
-				<link>
-					<uri>http://www.adahome.com/rm95/rm9x-P.html</uri>
-					<name>Annex</name>
-				</link>
-			</source>
+			<!-- >
+			<grammar>
+				<source>
+					<title>ISO/IEC 8652:1995 <em xmlns="http://www.w3.org/1999/xhtml">Information Technology — Programming Languages — Ada</em></title>
+					<date>1995</date>
+					<specific>Annex P, pages 479–493</specific>
+				</source>
+			</grammar>
+		-->
 			<grammar>
 				<name>Recovered</name>
-				<handle>kempe</handle>
+				<handle>ada/kempe</handle>
+				<source>
+					<title>Magnus Kempe, <em xmlns="http://www.w3.org/1999/xhtml">Ada 95 Reference Manual</em>, Hypertext version</title>
+					<date>1994–1997</date>
+					<link>
+						<slps>topics/grammars/ada/kempe/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.adahome.com/rm95/rm9x-toc.html</uri>
+						<name>TOC</name>
+					</link>
+					<link>
+						<uri>http://www.adahome.com/rm95/rm9x-P.html</uri>
+						<name>Annex</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/ada/kempe/config.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<xbgf>ada/kempe-post-extract</xbgf>
+						<name>post-extract</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>ada/kempe-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<mu>topics/grammars/ada/kempe/config.edd</mu>
-					<name>EDD</name>
-				</link>
-				<link>
-					<mu>topics/grammars/hunter.py</mu>
-					<name>Hunter</name>
-				</link>
-				<link>
-					<xbgf>ada/kempe-post-extract</xbgf>
-					<name>post-extract</name>
-				</link>
-			</toolset>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<xbgf>ada/kempe-correct</xbgf>
-					<name>correct</name>
-				</link>
-			</toolset>
-			<source id="ada-laemmel-verhoef">
-				<title>Ralf Lämmel, Chris Verhoef. <em xmlns="http://www.w3.org/1999/xhtml">Engineering of Grammarware. Browsable Ada 95 Grammar</em> 1.0.</title>
-				<date>December 2000</date>
-				<link>
-					<slps>topics/grammars/ada/laemmel-verhoef/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.cs.vu.nl/grammarware/ada/</uri>
-					<name>Grammar</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>laemmel-verhoef</handle>
+				<handle>ada/laemmel-verhoef</handle>
+				<source>
+					<title>Ralf Lämmel, Chris Verhoef. <em xmlns="http://www.w3.org/1999/xhtml">Engineering of Grammarware. Browsable Ada 95 Grammar</em> 1.0.</title>
+					<date>December 2000</date>
+					<link>
+						<slps>topics/grammars/ada/laemmel-verhoef/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.cs.vu.nl/grammarware/ada/</uri>
+						<name>Grammar</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/ada/laemmel-verhoef/config.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>ada/laemmel-verhoef-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<mu>topics/grammars/ada/laemmel-verhoef/config.edd</mu>
-					<name>EDD</name>
-				</link>
-				<link>
-					<mu>topics/grammars/hunter.py</mu>
-					<name>Hunter</name>
-				</link>
-			</toolset>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<xbgf>ada/laemmel-verhoef-correct</xbgf>
-					<name>correct</name>
-				</link>
-			</toolset>
-			<source id="ada-lncs-2219">
-				<title>
+			<grammar>
+				<name>Recovered</name>
+				<handle>ada/lncs-2219</handle>
+				<source>
+					<title>
 					International Standard ISO/IEC 8652/1995(E) with Technical Corrigendum 1.
 					<em xmlns="http://www.w3.org/1999/xhtml">Consolidated Ada Reference Manual. Language and Standard Libraries</em>.
 					Also published as LNCS 2219 with Taft, T.S.; Duff, R.A.; Brukardt, R.L.; Ploedereder, E. as editors.
 				</title>
-				<date>2001</date>
-				<specific>Annex P, pages 497–512</specific>
-				<link>
-					<slps>topics/grammars/ada/lncs-2219/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<doi>10.1007/3-540-45340-7</doi>
-					<name>DOI</name>
-				</link>
-			</source>
-			<grammar>
-				<name>Recovered</name>
-				<handle>lncs-2219</handle>
+					<date>2001</date>
+					<specific>Annex P, pages 497–512</specific>
+					<link>
+						<slps>topics/grammars/ada/lncs-2219/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<doi>10.1007/3-540-45340-7</doi>
+						<name>DOI</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/ada/lncs-2219/config.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<xbgf>ada/lncs-2219-post-extract</xbgf>
+						<name>post-extract</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>ada/lncs-2219-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<mu>topics/grammars/ada/lncs-2219/config.edd</mu>
-					<name>EDD</name>
-				</link>
-				<link>
-					<mu>topics/grammars/hunter.py</mu>
-					<name>Hunter</name>
-				</link>
-				<link>
-					<xbgf>ada/lncs-2219-post-extract</xbgf>
-					<name>post-extract</name>
-				</link>
-			</toolset>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<xbgf>ada/lncs-2219-correct</xbgf>
-					<name>correct</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
-			<source id="ada-kellogg">
-				<title>Oliver Kellogg, <code xmlns="http://www.w3.org/1999/xhtml">ada.g</code></title>
-				<date>2003</date>
-				<link>
-					<slps>topics/grammars/ada/kellogg/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.antlr.org/grammar/ada/ada.g</uri>
-					<name>ANTLR</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>kellogg</handle>
+				<handle>ada/kellogg</handle>
+				<source>
+					<title>Oliver Kellogg, <code xmlns="http://www.w3.org/1999/xhtml">ada.g</code></title>
+					<date>2003</date>
+					<link>
+						<slps>topics/grammars/ada/kellogg/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.antlr.org/grammar/ada/ada.g</uri>
+						<name>ANTLR</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/extraction/antlr/ANTLR2.rsc</mu>
+						<name>ANTLR2.rsc</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/antlrpp.py</mu>
+						<name>antlrpp.py</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
+						<name>StrippedANTLR.g</name>
+					</link>
+					<link>
+						<xbgf>ada/kellogg-post-extract</xbgf>
+						<name>post-extract</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<mu>topics/extraction/antlr/ANTLR2.rsc</mu>
-					<name>ANTLR2.rsc</name>
-				</link>
-				<link>
-					<mu>topics/extraction/antlr/antlrpp.py</mu>
-					<name>antlrpp.py</name>
-				</link>
-				<link>
-					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
-					<name>StrippedANTLR.g</name>
-				</link>
-				<link>
-					<xbgf>ada/kellogg-post-extract</xbgf>
-					<name>post-extract</name>
-				</link>
-			</toolset>
 		</version>
 		<version>
 			<name>Ada 2005</name>
-			<source id="ada-lncs-4348">
-				<title>
+			<grammar>
+				<name>Recovered</name>
+				<handle>ada/lncs-4348</handle>
+				<source>
+					<title>
 					International Standard ISO/IEC 8652/1995(E) with Technical Corrigendum 1 and Amendment 1.
 					<em xmlns="http://www.w3.org/1999/xhtml">Ada 2005 Reference Manual. Language and Standard Libraries</em>.
 					Also published as LNCS 4348 with Taft, S.T.; Duff, R.A.; Brukardt, R.L.; Ploedereder, E.; Leroy, P. as editors.
 				</title>
-				<date>2006</date>
-				<specific>Annex P, pages 675–692</specific>
-				<link>
-					<slps>topics/grammars/ada/lncs-4348/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<doi>10.1007/978-3-540-69336-9</doi>
-					<name>DOI</name>
-				</link>
-			</source>
-			<grammar>
-				<name>Recovered</name>
-				<handle>lncs-4348</handle>
+					<date>2006</date>
+					<specific>Annex P, pages 675–692</specific>
+					<link>
+						<slps>topics/grammars/ada/lncs-4348/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<doi>10.1007/978-3-540-69336-9</doi>
+						<name>DOI</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/ada/lncs-4348/config.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<xbgf>ada/lncs-4348-post-extract</xbgf>
+						<name>post-extract</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>ada/lncs-4348-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<mu>topics/grammars/ada/lncs-4348/config.edd</mu>
-					<name>EDD</name>
-				</link>
-				<link>
-					<mu>topics/grammars/hunter.py</mu>
-					<name>Hunter</name>
-				</link>
-				<link>
-					<xbgf>ada/lncs-4348-post-extract</xbgf>
-					<name>post-extract</name>
-				</link>
-			</toolset>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<xbgf>ada/lncs-4348-correct</xbgf>
-					<name>correct</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>
 	<!-- ================================================================ -->
 	<language>
-		<handle>c</handle>
 		<name>C</name>
 		<version>
 			<name>ISO C 1999</name>
-			<source id="c-iso-9899-1999">
-				<title>ISO/IEC 9899:1999(E) <em xmlns="http://www.w3.org/1999/xhtml">Programming languages — C</em></title>
-				<date>December 1999</date>
-				<specific>Annex A, pages 402–416</specific>
-				<link>
-					<slps>topics/grammars/c/iso-9899-1999/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>iso-9899-1999</handle>
+				<handle>c/iso-9899-1999</handle>
+				<source>
+					<title>ISO/IEC 9899:1999(E) <em xmlns="http://www.w3.org/1999/xhtml">Programming languages — C</em></title>
+					<date>December 1999</date>
+					<specific>Annex A, pages 402–416</specific>
+					<link>
+						<slps>topics/grammars/c/iso-9899-1999/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ISO C 2005</name>
-			<source id="c-iso-9899-tc2">
-				<title>ISO/IEC 9899:TC2 <em xmlns="http://www.w3.org/1999/xhtml">WG14/N1124</em> Committee Draft</title>
-				<date>May 2005</date>
-				<specific>Annex A, pages 403–417</specific>
-				<link>
-					<slps>topics/grammars/c/iso-9899-tc2/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Recovered</name>
-				<handle>iso-9899-tc2</handle>
+				<handle>c/iso-9899-tc2</handle>
+				<source>
+					<title>ISO/IEC 9899:TC2 <em xmlns="http://www.w3.org/1999/xhtml">WG14/N1124</em> Committee Draft</title>
+					<date>May 2005</date>
+					<specific>Annex A, pages 403–417</specific>
+					<link>
+						<slps>topics/grammars/c/iso-9899-tc2/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>c/iso-9899-tc2-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<xbgf>cpp/iso-9899-tc2-correct</xbgf>
-					<name>correct</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ISO C 2007</name>
-			<source id="c-iso-9899-tc3">
-				<title>ISO/IEC 9899:TC3 <em xmlns="http://www.w3.org/1999/xhtml">WG14/N1256</em> Committee Draft</title>
-				<date>September 2007</date>
-				<specific>Annex A, pages 403–418</specific>
-				<link>
-					<slps>topics/grammars/c/iso-9899-tc3/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Recovered</name>
-				<handle>iso-9899-tc3</handle>
+				<handle>c/iso-9899-tc3</handle>
+				<source>
+					<title>ISO/IEC 9899:TC3 <em xmlns="http://www.w3.org/1999/xhtml">WG14/N1256</em> Committee Draft</title>
+					<date>September 2007</date>
+					<specific>Annex A, pages 403–418</specific>
+					<link>
+						<slps>topics/grammars/c/iso-9899-tc3/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>c/iso-9899-tc3-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<xbgf>cpp/iso-9899-tc3-correct</xbgf>
-					<name>correct</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>
 	<language>
-		<handle>cpp</handle>
 		<name>C++</name>
 		<version>
 			<name>ISO C++ 1998</name>
-			<source id="cpp-iso-14882-1998">
-				<title>ISO/IEC 14882:1998(E) <em xmlns="http://www.w3.org/1999/xhtml">Programming languages — C++</em>. First edition</title>
-				<date>September 1998</date>
-				<specific>Annex A, pages 667–684</specific>
-				<link>
-					<slps>topics/grammars/cpp/iso-14882-1998/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Recovered</name>
-				<handle>iso-14882-1998</handle>
+				<handle>cpp/iso-14882-1998</handle>
+				<source>
+					<title>ISO/IEC 14882:1998(E) <em xmlns="http://www.w3.org/1999/xhtml">Programming languages — C++</em>. First edition</title>
+					<date>September 1998</date>
+					<specific>Annex A, pages 667–684</specific>
+					<link>
+						<slps>topics/grammars/cpp/iso-14882-1998/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>cpp/iso-14882-1998-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<xbgf>cpp/iso-14882-1998-correct</xbgf>
-					<name>correct</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
 			<name>ISO C++ 2008</name>
-			<source id="cpp-iso-n2723">
-				<title>ISO/IEC SC22/WG21 N2723=08-0233 Working Draft, <em xmlns="http://www.w3.org/1999/xhtml">Standard for Programming Language C++</em></title>
-				<date>August 2008</date>
-				<specific>Annex A, pages 1089–1101</specific>
-				<link>
-					<slps>topics/grammars/cpp/iso-n2723/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Recovered</name>
-				<handle>iso-n2723</handle>
+				<handle>cpp/iso-n2723</handle>
+				<source>
+					<title>ISO/IEC SC22/WG21 N2723=08-0233 Working Draft, <em xmlns="http://www.w3.org/1999/xhtml">Standard for Programming Language C++</em></title>
+					<date>August 2008</date>
+					<specific>Annex A, pages 1089–1101</specific>
+					<link>
+						<slps>topics/grammars/cpp/iso-n2723/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>cpp/iso-n2723-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<xbgf>cpp/iso-n2723-correct</xbgf>
-					<name>correct</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>
 	<language>
-		<handle>csharp</handle>
 		<name>C#</name>
 		<version>
-			<name>ECMA C# 2001</name>
-			<source id="csharp-ecma-334-1">
-				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 1<sup>st</sup> edition</em></title>
-				<date>December 2001</date>
-				<specific>Appendix A, pages 339–364</specific>
-				<link>
-					<slps>topics/grammars/csharp/ecma-334-1/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
-					<name>Archive</name>
-				</link>
-				<link>
-					<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%201st%20edition,%20December%202001.pdf</uri>
-					<name>PDF</name>
-				</link>
-			</source>
+			<name>C# 1.x</name>
 			<grammar>
 				<name>Extracted</name>
-				<handle>ecma-334-1</handle>
+				<handle>csharp/ecma-334-1</handle>
+				<source>
+					<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 1<sup>st</sup> edition</em></title>
+					<date>December 2001</date>
+					<specific>Appendix A, pages 339–364</specific>
+					<link>
+						<slps>topics/grammars/csharp/ecma-334-1/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
+						<name>Archive</name>
+					</link>
+					<link>
+						<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%201st%20edition,%20December%202001.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset ref="bnfdmssdfrsc"/>
-		</version>
-		<version>
-			<name>ECMA C# 2002</name>
-			<source id="csharp-ecma-334-2">
-				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 2<sup>nd</sup> edition</em></title>
-				<date>December 2002</date>
-				<specific>Appendix A, pages 335–360</specific>
-				<link>
-					<slps>topics/grammars/csharp/ecma-334-2/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
-					<name>Archive</name>
-				</link>
-				<link>
-					<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%202nd%20edition,%20December%202002.pdf</uri>
-					<name>PDF</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>ecma-334-2</handle>
-			</grammar>
-			<toolset ref="lll"/>
-			<toolset ref="bnfdmssdfrsc"/>
-		</version>
-		<version>
-			<name>ECMA C# 2005</name>
-			<source id="csharp-ecma-334-3">
-				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 3<sup>rd</sup> edition</em></title>
-				<date>June 2005</date>
-				<link>
-					<slps>topics/grammars/csharp/ecma-334-3/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
-					<name>Archive</name>
-				</link>
-				<link>
-					<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%203rd%20edition,%20June%202005.pdf</uri>
-					<name>PDF</name>
-				</link>
-			</source>
-			<grammar>
-				<name>Extracted</name>
-				<handle>ecma-334-3</handle>
-			</grammar>
-			<toolset ref="lll"/>
-			<toolset ref="bnfdmssdfrsc"/>
-		</version>
-		<version>
-			<name>ECMA C# 2006</name>
-			<source id="csharp-ecma-334-4">
-				<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 4<sup>th</sup> edition</em></title>
-				<date>June 2006</date>
-				<link>
-					<slps>topics/grammars/csharp/ecma-334-4/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.ecma-international.org/publications/standards/Ecma-334.htm</uri>
-					<name>Standard</name>
-				</link>
-				<link>
-					<uri>http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-334.pdf</uri>
-					<name>PDF</name>
-				</link>
-			</source>
-			<grammar>
-				<name>Extracted</name>
-				<handle>ecma-334-4</handle>
-			</grammar>
-			<toolset ref="lll"/>
-			<toolset ref="bnfdmssdfrsc"/>
-		</version>
-		<version>
-			<name>ISO C# 2003</name>
-			<source id="csharp-iso-23270-2003">
-				<title>ISO/IEC 23270:2003(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Programming languages — C#</em>. First edition</title>
-				<date>2003</date>
-				<link>
-					<slps>topics/grammars/csharp/iso-23270-2003/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-			</source>
-			<grammar>
-				<name>Extracted</name>
-				<handle>iso-23270-2003</handle>
+				<handle>csharp/ecma-334-2</handle>
+				<source>
+					<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 2<sup>nd</sup> edition</em></title>
+					<date>December 2002</date>
+					<specific>Appendix A, pages 335–360</specific>
+					<link>
+						<slps>topics/grammars/csharp/ecma-334-2/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
+						<name>Archive</name>
+					</link>
+					<link>
+						<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%202nd%20edition,%20December%202002.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
 			</grammar>
 			<grammar>
 				<name>Recovered</name>
-				<handle>iso-23270-2003-recovered</handle>
+				<handle>csharp/zaytsev</handle>
+				<source>
+					<title>Vadim Zaytsev, <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334 C# Grammar Recovered</em>.</title>
+					<date>2005</date>
+					<link>
+						<slps>topics/grammars/csharp/zaytsev/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.cs.vu.nl/grammarware/browsable/CSharp/</uri>
+						<name>Online</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<uri>http://gdk.sourceforge.net/</uri>
+						<name>GDK</name>
+					</link>
+					<link>
+						<mu>topics/extraction/bnf2bgf/lll2bgf.py</mu>
+						<name>LLL⇒BGF</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Transformation</name>
+					<link>
+						<mu>topics/recovery/csharp/trafo/deyaccify.trafo</mu>
+						<name>deyaccify</name>
+					</link>
+					<link>
+						<mu>topics/recovery/csharp/trafo/adapt.trafo</mu>
+						<name>adapt</name>
+					</link>
+					<link>
+						<mu>topics/recovery/csharp/trafo/disambiguate.trafo</mu>
+						<name>disambiguate</name>
+					</link>
+					<link>
+						<mu>topics/recovery/csharp/trafo/fixerrors.trafo</mu>
+						<name>fixerrors</name>
+					</link>
+					<link>
+						<mu>topics/recovery/csharp/trafo/expressions.trafo</mu>
+						<name>expressions</name>
+					</link>
+					<link>
+						<mu>topics/recovery/csharp/trafo/modularise.trafo</mu>
+						<name>modularise</name>
+					</link>
+				</toolset>
+				<item>
+					<name>V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Correct C# Grammar too Sharp for ISO.</em> GTTSE 2005. Extended abstract.</name>
+					<link>
+						<uri>http://wiki.di.uminho.pt/twiki/bin/view/Events/GTTSE/</uri>
+						<name>GTTSE</name>
+					</link>
+					<link>
+						<uri>http://www.cs.vu.nl/lppr/</uri>
+						<name>LPPR</name>
+					</link>
+					<link>
+						<uri>http://grammarware.net/text/2005/toosharp.pdf</uri>
+						<name>Abstract</name>
+					</link>
+					<link>
+						<uri>http://grammarware.net/slides/2005/gttse.pdf</uri>
+						<name>Slides</name>
+					</link>
+				</item>
 			</grammar>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<uri>http://gdk.sourceforge.net/</uri>
-					<name>GDK</name>
-				</link>
-				<link>
-					<mu>topics/extraction/bnf2bgf/lll2bgf.py</mu>
-					<name>LLL⇒BGF</name>
-				</link>
-			</toolset>
-			<toolset>
-				<name>Transformation</name>
-				<link>
-					<mu>topics/recovery/csharp/trafo/deyaccify.trafo</mu>
-					<name>deyaccify</name>
-				</link>
-				<link>
-					<mu>topics/recovery/csharp/trafo/adapt.trafo</mu>
-					<name>adapt</name>
-				</link>
-				<link>
-					<mu>topics/recovery/csharp/trafo/disambiguate.trafo</mu>
-					<name>disambiguate</name>
-				</link>
-				<link>
-					<mu>topics/recovery/csharp/trafo/fixerrors.trafo</mu>
-					<name>fixerrors</name>
-				</link>
-				<link>
-					<mu>topics/recovery/csharp/trafo/expressions.trafo</mu>
-					<name>expressions</name>
-				</link>
-				<link>
-					<mu>topics/recovery/csharp/trafo/modularise.trafo</mu>
-					<name>modularise</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
-			<item>
-				<name>V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Correct C# Grammar too Sharp for ISO.</em> GTTSE 2005. Extended abstract.</name>
-				<link>
-					<uri>http://wiki.di.uminho.pt/twiki/bin/view/Events/GTTSE/</uri>
-					<name>GTTSE</name>
-				</link>
-				<link>
-					<uri>http://www.cs.vu.nl/lppr/</uri>
-					<name>LPPR</name>
-				</link>
-				<link>
-					<uri>http://grammarware.net/text/2005/toosharp.pdf</uri>
-					<name>Abstract</name>
-				</link>
-				<link>
-					<uri>http://grammarware.net/slides/2005/gttse.pdf</uri>
-					<name>Slides</name>
-				</link>
-			</item>
-		</version>
-		<version>
-			<name>ISO C# 2006</name>
-			<source id="csharp-iso-23270-2006">
-				<title>ISO/IEC 23270:2006(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Programming languages — C#</em>. Second edition</title>
-				<date>September 2006</date>
-				<link>
-					<slps>topics/grammars/csharp/iso-23270-2006/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/index.html</uri>
-					<name>Standard</name>
-				</link>
-				<link>
-					<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/c042926_ISO_IEC_23270_2006(E).zip</uri>
-					<name>PDF.ZIP</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>iso-23270-2006</handle>
+				<handle>csharp/iso-23270-2003</handle>
+				<source>
+					<title>ISO/IEC 23270:2003(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Programming languages — C#</em>. First edition</title>
+					<date>2003</date>
+					<link>
+						<slps>topics/grammars/csharp/iso-23270-2003/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset ref="bnfdmssdfrsc"/>
-		</version>
-		<version>
-			<name>Microsoft C# 1.0</name>
-			<source id="csharp-msft-ls-1.0">
-				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 1.0</title>
-				<date>2002</date>
-				<link>
-					<slps>topics/grammars/csharp/msft-ls-1.0/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://download.microsoft.com/download/a/9/e/a9e229b9-fee5-4c3e-8476-917dee385062/CSharp%20Language%20Specification%20v1.0.doc</uri>
-					<name>DOC</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>msft-ls-1.0</handle>
+				<handle>csharp/msft-ls-1.0</handle>
+				<source>
+					<title>Microsoft, <em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 1.0</title>
+					<date>2002</date>
+					<link>
+						<slps>topics/grammars/csharp/msft-ls-1.0/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://download.microsoft.com/download/a/9/e/a9e229b9-fee5-4c3e-8476-917dee385062/CSharp%20Language%20Specification%20v1.0.doc</uri>
+						<name>DOC</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset ref="bnfdmssdfrsc"/>
-		</version>
-		<version>
-			<name>Microsoft C# 1.2</name>
-			<source id="csharp-msft-ls-1.2">
-				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 1.2</title>
-				<date>2003</date>
-				<link>
-					<slps>topics/grammars/csharp/msft-ls-1.2/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://download.microsoft.com/download/5/e/5/5e58be0a-b02b-41ac-a4a3-7a22286214ff/csharp%20language%20specification%20v1.2.doc</uri>
-					<name>DOC</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>msft-ls-1.2</handle>
+				<handle>csharp/msft-ls-1.2</handle>
+				<source>
+					<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 1.2</title>
+					<date>2003</date>
+					<link>
+						<slps>topics/grammars/csharp/msft-ls-1.2/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://download.microsoft.com/download/5/e/5/5e58be0a-b02b-41ac-a4a3-7a22286214ff/csharp%20language%20specification%20v1.2.doc</uri>
+						<name>DOC</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 		<version>
-			<name>Microsoft C# 3.0</name>
-			<source id="csharp-msft-ls-3.0">
-				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 3.0</title>
-				<date>2007</date>
-				<link>
-					<slps>topics/grammars/csharp/msft-ls-3.0/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://download.microsoft.com/download/3/8/8/388e7205-bc10-4226-b2a8-75351c669b09/CSharp%20Language%20Specification.doc</uri>
-					<name>DOC</name>
-				</link>
-			</source>
+			<name>C# 2.0</name>
 			<grammar>
 				<name>Extracted</name>
-				<handle>msft-ls-3.0</handle>
+				<handle>csharp/ecma-334-3</handle>
+				<source>
+					<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 3<sup>rd</sup> edition</em></title>
+					<date>June 2005</date>
+					<link>
+						<slps>topics/grammars/csharp/ecma-334-3/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.ecma-international.org/publications/standards/Ecma-334-arch.htm</uri>
+						<name>Archive</name>
+					</link>
+					<link>
+						<uri>http://www.ecma-international.org/publications/files/ECMA-ST-WITHDRAWN/ECMA-334,%203rd%20edition,%20June%202005.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset ref="bnfdmssdfrsc"/>
+			<grammar>
+				<name>Extracted</name>
+				<handle>csharp/ecma-334-4</handle>
+				<source>
+					<title>ECMA International Standard <em xmlns="http://www.w3.org/1999/xhtml">ECMA-334, 4<sup>th</sup> edition</em></title>
+					<date>June 2006</date>
+					<link>
+						<slps>topics/grammars/csharp/ecma-334-4/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.ecma-international.org/publications/standards/Ecma-334.htm</uri>
+						<name>Standard</name>
+					</link>
+					<link>
+						<uri>http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-334.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>cs/csharp-ecma-334-4-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
+			</grammar>
+			<grammar>
+				<name>Extracted</name>
+				<handle>csharp/iso-23270-2006</handle>
+				<source>
+					<title>ISO/IEC 23270:2006(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Programming languages — C#</em>. Second edition</title>
+					<date>September 2006</date>
+					<link>
+						<slps>topics/grammars/csharp/iso-23270-2006/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/index.html</uri>
+						<name>Standard</name>
+					</link>
+					<link>
+						<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/c042926_ISO_IEC_23270_2006(E).zip</uri>
+						<name>PDF.ZIP</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
+			</grammar>
 		</version>
 		<version>
-			<name>Microsoft C# 4.0</name>
-			<source id="csharp-msft-ls-4.0">
-				<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 4.0</title>
-				<date>2010</date>
-				<link>
-					<slps>topics/grammars/csharp/msft-ls-4.0/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://download.microsoft.com/download/0/B/D/0BDA894F-2CCD-4C2C-B5A7-4EB1171962E5/CSharp%20Language%20Specification.doc</uri>
-					<name>DOC</name>
-				</link>
-			</source>
+			<name>C# 3.0</name>
 			<grammar>
 				<name>Extracted</name>
-				<handle>msft-ls-4.0</handle>
+				<handle>csharp/msft-ls-3.0</handle>
+				<source>
+					<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 3.0</title>
+					<date>2007</date>
+					<link>
+						<slps>topics/grammars/csharp/msft-ls-3.0/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://download.microsoft.com/download/3/8/8/388e7205-bc10-4226-b2a8-75351c669b09/CSharp%20Language%20Specification.doc</uri>
+						<name>DOC</name>
+					</link>
+				</source>
+				<toolset ref="lll"/>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>cs/csharp-msft-ls-3.0-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset ref="lll"/>
-			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+		<version>
+			<name>C# 4.0</name>
+			<grammar>
+				<name>Extracted</name>
+				<handle>csharp/msft-ls-4.0</handle>
+				<source>
+					<title><em xmlns="http://www.w3.org/1999/xhtml">C# Language Specification.</em> Version 4.0</title>
+					<date>2010</date>
+					<link>
+						<slps>topics/grammars/csharp/msft-ls-4.0/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://download.microsoft.com/download/0/B/D/0BDA894F-2CCD-4C2C-B5A7-4EB1171962E5/CSharp%20Language%20Specification.doc</uri>
+						<name>DOC</name>
+					</link>
+				</source>
+				<toolset ref="lll"/><toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>cs/csharp-msft-ls-4.0-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
+			</grammar>
 		</version>
 	</language>
 	<language>
-		<handle>eiffel</handle>
 		<name>Eiffel</name>
 		<version>
-			<name>Gobo Eiffel</name>
-			<source id="eiffel-bezault">
-				<title>Eric Bezault,
-				 <em xmlns="http://www.w3.org/1999/xhtml">Eiffel: The Syntax</em></title>
-				<date>1999</date>
-				<link>
-					<slps>topics/grammars/eiffel/bezault/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.gobosoft.com/eiffel/syntax/</uri>
-					<name>Online</name>
-				</link>
-			</source>
+			<name>Eiffel</name>
 			<grammar>
 				<name>Recovered</name>
-				<handle>bezault</handle>
+				<handle>eiffel/bezault</handle>
+				<source>
+					<title>Eric Bezault,
+				 <em xmlns="http://www.w3.org/1999/xhtml">Eiffel: The Syntax</em></title>
+					<date>1999</date>
+					<link>
+						<slps>topics/grammars/eiffel/bezault/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.gobosoft.com/eiffel/syntax/</uri>
+						<name>Online</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/eiffel/bezault/config.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<xbgf>eiffel/bezault-post-extract</xbgf>
+						<name>post-extract</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>eiffel/bezault-complete</xbgf>
+						<name>complete</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<mu>topics/grammars/eiffel/bezault/config.edd</mu>
-					<name>EDD</name>
-				</link>
-				<link>
-					<mu>topics/grammars/hunter.py</mu>
-					<name>Hunter</name>
-				</link>
-				<link>
-					<xbgf>eiffel/bezault-post-extract</xbgf>
-					<name>post-extract</name>
-				</link>
-			</toolset>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<xbgf>eiffel/bezault-complete</xbgf>
-					<name>complete</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
-		</version>
-		<version>
-			<name>ISO Eiffel</name>
-			<source id="eiffel-iso-25436-2006">
-				<title>ISO/IEC 25436:2006(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Eiffel: Analysis, Design and Programming Language</em></title>
-				<date>2006</date>
-				<specific>Syntax sections collected from pages 30–158</specific>
-				<link>
-					<slps>topics/grammars/eiffel/iso-25436-2006/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/index.html</uri>
-					<name>ISO</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>iso-25436-2006</handle>
+				<handle>eiffel/iso-25436-2006</handle>
+				<source>
+					<title>ISO/IEC 25436:2006(E) <em xmlns="http://www.w3.org/1999/xhtml">Information technology — Eiffel: Analysis, Design and Programming Language</em></title>
+					<date>2006</date>
+					<specific>Syntax sections collected from pages 30–158</specific>
+					<link>
+						<slps>topics/grammars/eiffel/iso-25436-2006/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://standards.iso.org/ittf/PubliclyAvailableStandards/index.html</uri>
+						<name>ISO</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/eiffel/iso-25436-2006/config.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<xbgf>eiffel/iso-25436-2006-post-extract</xbgf>
+						<name>post-extract</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>eiffel/iso-25436-2006-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<mu>topics/grammars/eiffel/iso-25436-2006/config.edd</mu>
-					<name>EDD</name>
-				</link>
-				<link>
-					<mu>topics/grammars/hunter.py</mu>
-					<name>Hunter</name>
-				</link>
-				<link>
-					<xbgf>eiffel/iso-25436-2006-post-extract</xbgf>
-					<name>post-extract</name>
-				</link>
-			</toolset>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<xbgf>eiffel/iso-25436-2006-correct</xbgf>
-					<name>correct</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
 		</version>
 	</language>
 	<language>
-		<handle>fortran</handle>
 		<name>Fortran</name>
 		<version>
 			<name>Fortran-90</name>
-			<source id="fortran-derricks">
-				<title>Jan Derricks, <code xmlns="http://www.w3.org/1999/xhtml">Fortran90.sdf</code></title>
-				<date>12 July 2007</date>
-				<link>
-					<slps>topics/grammars/fortran/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.meta-environment.org/</uri>
-					<name>MetaEnv</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>derricks</handle>
+				<handle>fortran/derricks</handle>
+				<source>
+					<title>Jan Derricks, <code xmlns="http://www.w3.org/1999/xhtml">Fortran90.sdf</code></title>
+					<date>12 July 2007</date>
+					<link>
+						<slps>topics/grammars/fortran/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.meta-environment.org/</uri>
+						<name>MetaEnv</name>
+					</link>
+				</source>
+				<toolset ref="sdf2bgf"/>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<mu>topics/investigation/subgrammar/subgrammar.py</mu>
+						<name>subgrammar.py</name>
+					</link>
+					<link>
+						<xbgf>fortran/derricks-refactor</xbgf>
+						<name>refactor</name>
+					</link>
+				</toolset>
+				<item>
+					<name>J. Derricks. <em xmlns="http://www.w3.org/1999/xhtml">Fortran grammatica-extractie.</em> MSc thesis, 2007.</name>
+					<link>
+						<uri>http://repository.cwi.nl/search/abstract.php?publnr=12415</uri>
+						<name>Abstract</name>
+					</link>
+					<link>
+						<uri>http://homepages.cwi.nl/~paulk/thesesMasterSoftwareEngineering/2007/JanDerriks.pdf</uri>
+						<name>Thesis</name>
+					</link>
+				</item>
 			</grammar>
-			<toolset ref="sdf2bgf"/>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<mu>topics/investigation/subgrammar/subgrammar.py</mu>
-					<name>subgrammar.py</name>
-				</link>
-				<link>
-					<xbgf>fortran/derricks-refactor</xbgf>
-					<name>refactor</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
-			<item>
-				<name>J. Derricks. <em xmlns="http://www.w3.org/1999/xhtml">Fortran grammatica-extractie.</em> MSc thesis, 2007.</name>
-				<link>
-					<uri>http://repository.cwi.nl/search/abstract.php?publnr=12415</uri>
-					<name>Abstract</name>
-				</link>
-				<link>
-					<uri>http://homepages.cwi.nl/~paulk/thesesMasterSoftwareEngineering/2007/JanDerriks.pdf</uri>
-					<name>Thesis</name>
-				</link>
-			</item>
 		</version>
 	</language>
 	<language>
-		<handle>java</handle>
 		<name>Java</name>
 		<version>
-			<name>JDK 1.0</name>
-			<source id="jls1">
-				<title>James Gosling, Bill Joy, Guy Steele, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em></title>
-				<date>1996</date>
-				<link>
-					<slps>topics/grammars/java/jls1/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://java.sun.com/docs/books/jls/first_edition/html/index.html</uri>
-					<name>HTML</name>
-				</link>
-				<link>
-					<uri>http://java.sun.com/docs/books/jls/download/langspec-1.0.pdf</uri>
-					<name>PDF</name>
-				</link>
-			</source>
+			<name>JDK 1.0 aka Java 1</name>
 			<grammar>
 				<name>Readable</name>
-				<handle>jls1-read</handle>
+				<handle>java-1/jls-read</handle>
+				<source>
+					<title>James Gosling, Bill Joy, Guy Steele, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em></title>
+					<date>1996</date>
+					<link>
+						<slps>topics/grammars/java-1/jls-read/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/first_edition/html/index.html</uri>
+						<name>HTML</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/download/langspec-1.0.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</source>
+				<toolset ref="scraping"/>
+				<itemset ref="javapubs"/>
 			</grammar>
 			<grammar>
 				<name>Implementable</name>
-				<handle>jls1-impl</handle>
+				<handle>java-1/jls-impl</handle>
+				<source>
+					<title>James Gosling, Bill Joy, Guy Steele, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em></title>
+					<date>1996</date>
+					<specific>§19: LALR(1) Grammar, pages 439–453</specific>
+					<link>
+						<slps>topics/grammars/java-1/jls-impl/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/first_edition/html/19.doc.html</uri>
+						<name>HTML</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/download/langspec-1.0.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</source>
+				<toolset ref="scraping"/>
+				<itemset ref="javapubs"/>
 			</grammar>
-			<toolset ref="scraping"/>
-			<toolset ref="bnfdmssdfrsc"/>
-			<itemset ref="javapubs"/>
 		</version>
 		<version>
-			<name>J2SE 1.2 “Playground”</name>
-			<source id="jls2">
-				<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em> Second Edition</title>
-				<date>1998</date>
-				<link>
-					<slps>topics/grammars/java/jls2/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://java.sun.com/docs/books/jls/second_edition/html/j.title.doc.html</uri>
-					<name>HTML</name>
-				</link>
-				<link>
-					<uri>http://java.sun.com/docs/books/jls/download/langspec-2.0.pdf</uri>
-					<name>PDF</name>
-				</link>
-			</source>
+			<name>J2SE 1.2 “Playground” aka Java 2</name>
 			<grammar>
 				<name>Readable</name>
-				<handle>jls2-read</handle>
+				<handle>java-2/jls-read</handle>
+				<source>
+					<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em> Second Edition</title>
+					<date>1998</date>
+					<link>
+						<slps>topics/grammars/java-2/jls-read/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/second_edition/html/j.title.doc.html</uri>
+						<name>HTML</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/download/langspec-2.0.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</source>
+				<toolset ref="scraping"/>
+				<itemset ref="javapubs"/>
 			</grammar>
 			<grammar>
 				<name>Implementable</name>
-				<handle>jls2-impl</handle>
+				<handle>java-2/jls-impl</handle>
+				<source>
+					<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em> Second Edition</title>
+					<date>1998</date>
+					<specific>§18: Syntax, pages 449–456</specific>
+					<link>
+						<slps>topics/grammars/java-2/jls-impl/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/second_edition/html/syntax.doc.html</uri>
+						<name>HTML</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/download/langspec-2.0.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</source>
+				<toolset ref="scraping"/>
+				<itemset ref="javapubs"/>
 			</grammar>
-			<toolset ref="scraping"/>
-			<toolset ref="bnfdmssdfrsc"/>
-			<itemset ref="javapubs"/>
 		</version>
 		<version>
-			<name>J2SE 5.0 “Tiger”</name>
-			<source id="jls3">
-				<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em> Third Edition</title>
-				<date>2004</date>
-				<link>
-					<slps>topics/grammars/java/jls3/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://java.sun.com/docs/books/jls/third_edition/html/j3TOC.html</uri>
-					<name>HTML</name>
-				</link>
-				<link>
-					<uri>http://java.sun.com/docs/books/jls/download/langspec-3.0.pdf</uri>
-					<name>PDF</name>
-				</link>
-			</source>
+			<name>J2SE 5.0 “Tiger” aka Java 5</name>
 			<grammar>
 				<name>Readable</name>
-				<handle>jls3-read</handle>
+				<handle>java-5/jls-read</handle>
+				<source>
+					<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em> Third Edition</title>
+					<date>2004</date>
+					<link>
+						<slps>topics/grammars/java-5/jls-read/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/third_edition/html/j3TOC.html</uri>
+						<name>HTML</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/download/langspec-3.0.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</source>
+				<toolset ref="scraping"/>
+				<itemset ref="javapubs"/>
 			</grammar>
 			<grammar>
 				<name>Implementable</name>
-				<handle>jls3-impl</handle>
+				<handle>java-5/jls-impl</handle>
+				<source>
+					<title>James Gosling, Bill Joy, Guy Steele, Gilad Bracha, <em xmlns="http://www.w3.org/1999/xhtml">Java Language Specification</em> Third Edition</title>
+					<date>2004</date>
+					<specific>§18: Syntax, pages 585–596</specific>
+					<link>
+						<slps>topics/grammars/java-5/jls-impl/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/third_edition/html/syntax.html</uri>
+						<name>HTML</name>
+					</link>
+					<link>
+						<uri>http://java.sun.com/docs/books/jls/download/langspec-3.0.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</source>
+				<toolset ref="scraping"/>
+				<itemset ref="javapubs"/>
 			</grammar>
-			<toolset ref="scraping"/>
-			<source id="java-habelitz">
-				<title>Dieter Habelitz, <code xmlns="http://www.w3.org/1999/xhtml">Java.g</code></title>
-				<date>2008</date>
-				<link>
-					<slps>topics/grammars/java/antlr-java-5/habelitz/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.antlr.org/grammar/1207932239307/Java1_5Grammars/Java.g</uri>
-					<name>ANTLR3</name>
-				</link>
-			</source>
-			<grammar>
-				<name>Habelitz</name>
-				<handle>habelitz</handle>
-			</grammar>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<mu>topics/extraction/antlr/ANTLR3.rsc</mu>
-					<name>ANTLR3.rsc</name>
-				</link>
-				<link>
-					<mu>topics/extraction/antlr/antlrpp.py</mu>
-					<name>antlrpp.py</name>
-				</link>
-				<link>
-					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
-					<name>StrippedANTLR.g</name>
-				</link>
-				<link>
-					<xbgf>java/habelitz-post-extraction</xbgf>
-					<name>post-extraction</name>
-				</link>
-			</toolset>
-			<source id="java-parr">
-				<title>Terence Parr, <code xmlns="http://www.w3.org/1999/xhtml">Java.g</code></title>
-				<date>2006</date>
-				<link>
-					<slps>topics/grammars/java/antlr-java-5/parr/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.antlr.org/grammar/1152141644268/Java.g</uri>
-					<name>ANTLR3</name>
-				</link>
-			</source>
-			<grammar>
-				<name>Parr</name>
-				<handle>parr</handle>
-			</grammar>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<mu>topics/extraction/antlr/ANTLR3.rsc</mu>
-					<name>ANTLR3.rsc</name>
-				</link>
-				<link>
-					<mu>topics/extraction/antlr/antlrpp.py</mu>
-					<name>antlrpp.py</name>
-				</link>
-				<link>
-					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
-					<name>StrippedANTLR.g</name>
-				</link>
-				<link>
-					<xbgf>java/parr-post-extraction</xbgf>
-					<name>post-extraction</name>
-				</link>
-			</toolset>
-			<source id="java-stahl">
-				<title>Michael Stahl, <code xmlns="http://www.w3.org/1999/xhtml">java15.g</code></title>
-				<date>2004</date>
-				<link>
-					<slps>topics/grammars/java/antlr-java-5/stahl/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.antlr.org/grammar/1093454600181/java15-grammar.zip</uri>
-					<name>ANTLR2.ZIP</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Stahl</name>
-				<handle>stahl</handle>
+				<handle>java-5/stahl</handle>
+				<source>
+					<title>Michael Stahl, <code xmlns="http://www.w3.org/1999/xhtml">java15.g</code></title>
+					<date>2004</date>
+					<link>
+						<slps>topics/grammars/java-5/stahl/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.antlr.org/grammar/1093454600181/java15-grammar.zip</uri>
+						<name>ANTLR2.ZIP</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<mu>topics/extraction/antlr/ANTLR2.rsc</mu>
+						<name>ANTLR2.rsc</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/antlrpp.py</mu>
+						<name>antlrpp.py</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
+						<name>StrippedANTLR.g</name>
+					</link>
+					<link>
+						<xbgf>java/java-5-stahl-post-extraction</xbgf>
+						<name>post-extraction</name>
+					</link>
+				</toolset>
+				<item>
+					<name>R. Lämmel, V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Comparison of Context-free Grammars Based on Parsing Generated Test Data.</em></name>
+					<link>
+						<uri>http://grammarware.net/text/2011/testmatch.pdf</uri>
+						<name>Draft</name>
+					</link>
+					<link>
+						<uri>../testmatch</uri>
+						<name>Online</name>
+					</link>
+				</item>
 			</grammar>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<mu>topics/extraction/antlr/ANTLR2.rsc</mu>
-					<name>ANTLR2.rsc</name>
-				</link>
-				<link>
-					<mu>topics/extraction/antlr/antlrpp.py</mu>
-					<name>antlrpp.py</name>
-				</link>
-				<link>
-					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
-					<name>StrippedANTLR.g</name>
-				</link>
-				<link>
-					<xbgf>java/stahl-post-extraction</xbgf>
-					<name>post-extraction</name>
-				</link>
-			</toolset>
-			<source id="java-studman">
-				<title>Michael Studman, <code xmlns="http://www.w3.org/1999/xhtml">java15.g</code></title>
-				<date>2004</date>
-				<link>
-					<slps>topics/grammars/java/antlr-java-5/studman/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.antlr.org/grammar/1090713067533/java15.g</uri>
-					<name>ANTLR2</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Studman</name>
-				<handle>studman</handle>
+				<handle>java-5/studman</handle>
+				<source>
+					<title>Michael Studman, <code xmlns="http://www.w3.org/1999/xhtml">java15.g</code></title>
+					<date>2004</date>
+					<link>
+						<slps>topics/grammars/java-5/studman/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.antlr.org/grammar/1090713067533/java15.g</uri>
+						<name>ANTLR2</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<mu>topics/extraction/antlr/ANTLR2.rsc</mu>
+						<name>ANTLR2.rsc</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/antlrpp.py</mu>
+						<name>antlrpp.py</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
+						<name>StrippedANTLR.g</name>
+					</link>
+					<link>
+						<xbgf>java/java-5-studman-post-extraction</xbgf>
+						<name>post-extraction</name>
+					</link>
+				</toolset>
+				<item>
+					<name>R. Lämmel, V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Comparison of Context-free Grammars Based on Parsing Generated Test Data.</em></name>
+					<link>
+						<uri>http://grammarware.net/text/2011/testmatch.pdf</uri>
+						<name>Draft</name>
+					</link>
+					<link>
+						<uri>../testmatch</uri>
+						<name>Online</name>
+					</link>
+				</item>
 			</grammar>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<mu>topics/extraction/antlr/ANTLR2.rsc</mu>
-					<name>ANTLR2.rsc</name>
-				</link>
-				<link>
-					<mu>topics/extraction/antlr/antlrpp.py</mu>
-					<name>antlrpp.py</name>
-				</link>
-				<link>
-					<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
-					<name>StrippedANTLR.g</name>
-				</link>
-				<link>
-					<xbgf>java/studman-post-extraction</xbgf>
-					<name>post-extraction</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
-			<itemset ref="javapubs"/>
-			<item>
-				<name>R. Lämmel, V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Comparison of Context-free Grammars Based on Parsing Generated Test Data.</em></name>
-				<link>
-					<uri>http://grammarware.net/text/2011/testmatch.pdf</uri>
-					<name>Draft</name>
-				</link>
-				<link>
-					<uri>../testmatch</uri>
-					<name>Online</name>
-				</link>
-			</item>
+			<grammar>
+				<name>Parr</name>
+				<handle>java-5/parr</handle>
+				<source>
+					<title>Terence Parr, <code xmlns="http://www.w3.org/1999/xhtml">Java.g</code></title>
+					<date>2006</date>
+					<link>
+						<slps>topics/grammars/java-5/parr/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.antlr.org/grammar/1152141644268/Java.g</uri>
+						<name>ANTLR3</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<mu>topics/extraction/antlr/ANTLR3.rsc</mu>
+						<name>ANTLR3.rsc</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/antlrpp.py</mu>
+						<name>antlrpp.py</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
+						<name>StrippedANTLR.g</name>
+					</link>
+					<link>
+						<xbgf>java/java-5-parr-post-extraction</xbgf>
+						<name>post-extraction</name>
+					</link>
+				</toolset>
+				<item>
+					<name>R. Lämmel, V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Comparison of Context-free Grammars Based on Parsing Generated Test Data.</em></name>
+					<link>
+						<uri>http://grammarware.net/text/2011/testmatch.pdf</uri>
+						<name>Draft</name>
+					</link>
+					<link>
+						<uri>../testmatch</uri>
+						<name>Online</name>
+					</link>
+				</item>
+			</grammar>
+			<grammar>
+				<name>Habelitz</name>
+				<handle>java-5/habelitz</handle>
+				<source>
+					<title>Dieter Habelitz, <code xmlns="http://www.w3.org/1999/xhtml">Java.g</code></title>
+					<date>2008</date>
+					<link>
+						<slps>topics/grammars/java-5/habelitz/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.antlr.org/grammar/1207932239307/Java1_5Grammars/Java.g</uri>
+						<name>ANTLR3</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<mu>topics/extraction/antlr/ANTLR3.rsc</mu>
+						<name>ANTLR3.rsc</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/antlrpp.py</mu>
+						<name>antlrpp.py</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
+						<name>StrippedANTLR.g</name>
+					</link>
+					<link>
+						<xbgf>java/java-5-habelitz-post-extraction</xbgf>
+						<name>post-extraction</name>
+					</link>
+				</toolset>
+				<item>
+					<name>R. Lämmel, V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Comparison of Context-free Grammars Based on Parsing Generated Test Data.</em></name>
+					<link>
+						<uri>http://grammarware.net/text/2011/testmatch.pdf</uri>
+						<name>Draft</name>
+					</link>
+					<link>
+						<uri>../testmatch</uri>
+						<name>Online</name>
+					</link>
+				</item>
+			</grammar>
 		</version>
 	</language>
 	<language>
-		<handle>modula</handle>
 		<name>Modula</name>
 		<version>
 			<name>Modula-3</name>
-			<source id="modula-sdf">
-				<title>Jurgen Vinju, Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">Modula-3.sdf</code></title>
-				<date>13 February 2006 – 19 September 2008</date>
-				<link>
-					<slps>topics/grammars/modula/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.meta-environment.org/</uri>
-					<name>MetaEnv</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>sdf</handle>
+				<handle>modula/src-052</handle>
+				<source>
+					<title>Luca Cardelli, James Donahue,
+				Lucille Glassman, Mick Jordan,
+				Bill Kalsow, Greg Nelson, <em xmlns="http://www.w3.org/1999/xhtml">SRC 052: Modula-3 Report (revised)</em></title>
+					<date>1 November 1989</date>
+					<specific>§9 Syntax, pages 56–60</specific>
+					<link>
+						<slps>topics/grammars/modula/src-052/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/modula/src-052/config.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<xbgf>modula/src-052-refactor</xbgf>
+						<name>refactor</name>
+					</link>
+				</toolset>
 			</grammar>
-			<toolset ref="sdf2bgf"/>
-			<toolset>
-				<name>Recovery</name>
-				<link>
-					<mu>topics/investigation/subgrammar/subgrammar.py</mu>
-					<name>subgrammar.py</name>
-				</link>
-				<link>
-					<xbgf>modula/sdf-refactor</xbgf>
-					<name>refactor</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
+			<grammar>
+				<name>Extracted</name>
+				<handle>modula/sdf</handle>
+				<source>
+					<title>Jurgen Vinju, Tijs van der Storm, <code xmlns="http://www.w3.org/1999/xhtml">Modula-3.sdf</code></title>
+					<date>13 February 2006 – 19 September 2008</date>
+					<link>
+						<slps>topics/grammars/modula/sdf/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.meta-environment.org/</uri>
+						<name>MetaEnv</name>
+					</link>
+				</source>
+				<toolset ref="sdf2bgf"/>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<mu>topics/investigation/subgrammar/subgrammar.py</mu>
+						<name>subgrammar.py</name>
+					</link>
+					<link>
+						<xbgf>modula/sdf-refactor</xbgf>
+						<name>refactor</name>
+					</link>
+				</toolset>
+			</grammar>
 		</version>
 	</language>
 	<language>
-		<handle>xpath</handle>
 		<name>XPath</name>
 		<version>
 			<name>XPath 1.0</name>
-			<source id="xpath-v1">
-				<title><em xmlns="http://www.w3.org/1999/xhtml">XML Path Language (XPath)</em>, Version 1.0, W3C Recommendation</title>
-				<date>16 November 1999</date>
-				<link>
-					<slps>topics/grammars/xpath/v1/README.txt</slps>
-					<name>ReadMe</name>
-				</link>
-				<link>
-					<uri>http://www.w3.org/TR/1999/REC-xpath-19991116.xml</uri>
-					<name>XML</name>
-				</link>
-				<link>
-					<uri>http://www.w3.org/TR/1999/REC-xpath-19991116/</uri>
-					<name>HTML</name>
-				</link>
-			</source>
 			<grammar>
 				<name>Extracted</name>
-				<handle>v1</handle>
+				<handle>w3c/xpath1</handle>
+				<source>
+					<title><em xmlns="http://www.w3.org/1999/xhtml">XML Path Language (XPath)</em>, Version 1.0, W3C Recommendation</title>
+					<date>16 November 1999</date>
+					<link>
+						<slps>topics/grammars/xpath/v1/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.w3.org/TR/1999/REC-xpath-19991116.xml</uri>
+						<name>XML</name>
+					</link>
+					<link>
+						<uri>http://www.w3.org/TR/1999/REC-xpath-19991116/</uri>
+						<name>HTML</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/extraction/w3c/spec2bgf.xslt</mu>
+						<name>spec2bgf.xslt</name>
+					</link>
+					<link>
+						<mu>topics/extraction/w3c/postfix2confix.xslt</mu>
+						<name>postfix2confix.xslt</name>
+					</link>
+					<link>
+						<mu>topics/extraction/w3c/cleanup.xslt</mu>
+						<name>cleanup.xslt</name>
+					</link>
+					<link>
+						<xbgf>xpath/w3c-xpath1-normalize</xbgf>
+						<name>normalize</name>
+					</link>
+				</toolset>
+				<item>
+					<name>V. Zaytsev, R. Lämmel. <em xmlns="http://www.w3.org/1999/xhtml">A Unified Format for Language Documents.</em> SLE 2010.</name>
+					<link>
+						<uri>http://planet-sl.org/sle2010/</uri>
+						<name>SLE</name>
+					</link>
+					<link>
+						<uri>http://grammarware.net/text/2011/ldf.pdf</uri>
+						<name>Paper</name>
+					</link>
+					<link>
+						<uri>http://grammarware.net/slides/2010/sle.pdf</uri>
+						<name>Slides</name>
+					</link>
+				</item>
 			</grammar>
-			<toolset>
-				<name>Extraction</name>
-				<link>
-					<mu>topics/extraction/w3c/spec2bgf.xslt</mu>
-					<name>XSLT1</name>
-				</link>
-				<link>
-					<mu>topics/extraction/w3c/postfix2confix.xslt</mu>
-					<name>XSLT2</name>
-				</link>
-				<link>
-					<mu>topics/extraction/w3c/cleanup.xslt</mu>
-					<name>XSLT3</name>
-				</link>
-				<link>
-					<xbgf>xpath/v1-normalize</xbgf>
-					<name>normalize</name>
-				</link>
-			</toolset>
-			<toolset ref="bnfdmssdfrsc"/>
-			<item>
-				<name>V. Zaytsev, R. Lämmel. <em xmlns="http://www.w3.org/1999/xhtml">A Unified Format for Language Documents.</em> SLE 2010.</name>
-				<link>
-					<uri>http://planet-sl.org/sle2010/</uri>
-					<name>SLE</name>
-				</link>
-				<link>
-					<uri>http://grammarware.net/text/2011/ldf.pdf</uri>
-					<name>Paper</name>
-				</link>
-				<link>
-					<uri>http://grammarware.net/slides/2010/sle.pdf</uri>
-					<name>Slides</name>
-				</link>
-			</item>
 		</version>
 	</language>
 </zoo>

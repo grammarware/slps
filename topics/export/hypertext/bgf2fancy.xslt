@@ -6,14 +6,15 @@
 	<xsl:param name="zoo"/>
 	<xsl:param name="id"/>
 	<xsl:param name="report"/>
-	<xsl:variable name="mysrc" select="document($zoo)//source[@id=$id]"/>
+	<xsl:variable name="mysrc" select="document($zoo)//grammar[handle=$id]/source"/>
+	<xsl:variable name="mysrcs" select="document($zoo)//grammarset/grammarname[.=$id]/../source"/>
 	<xsl:variable name="xmlreport" select="document($report)/xml"/>
 	<xsl:template match="/bgf:grammar">
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 			<head>
 				<title>
 					<xsl:text>Browsable </xsl:text>
-					<xsl:value-of select="$mysrc/../name"/>
+					<xsl:value-of select="concat($mysrc/../../name,$mysrcs/../../name)"/>
 					<xsl:text> Grammar</xsl:text>
 				</title>
 				<style type="text/css">
@@ -36,7 +37,7 @@
 			<body>
 				<h1>
 					<xsl:text>Browsable </xsl:text>
-					<xsl:value-of select="$mysrc/../name"/>
+					<xsl:value-of select="concat($mysrc/../../name,$mysrcs/../../name)"/>
 					<xsl:text> Grammar</xsl:text>
 				</h1>
 				<a href="http://creativecommons.org/licenses/by/3.0/">
@@ -58,6 +59,15 @@
 						<xsl:value-of select="$mysrc/date"/>
 						<xsl:text>) </xsl:text>
 						<xsl:value-of select="$mysrc/specific"/>
+					</xsl:if>
+					<xsl:if test="$mysrcs">
+						<br/>
+						<xsl:text>Source used for this grammar: </xsl:text>
+						<xsl:copy-of select="$mysrcs/title/node()"/>
+						<xsl:text> (</xsl:text>
+						<xsl:value-of select="$mysrcs/date"/>
+						<xsl:text>) </xsl:text>
+						<xsl:value-of select="$mysrcs/specific"/>
 					</xsl:if>
 				</p>
 				<h2>Summary</h2>

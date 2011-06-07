@@ -1,35 +1,11 @@
 #!/bin/sh
 
-../shared/tools/bgf2bnf   $1/$2/$3.bgf $1/$2/$3.bnf
-../shared/tools/bgf2dms   $1/$2/$3.bgf $1/$2/$3.dms
-../shared/tools/bgf2sdf   $1/$2/$3.bgf $1/$2/$3.sdf
-../shared/tools/bgf2rsc   $1/$2/$3.bgf $1/$2/$3.rsc
-if [ $3 == 'iso-23270-2003-recovered' ]; then
-	_dev/fancy $1 $2 $3 csharp-iso-23270-2003
-elif [ $3 == 'jls1-read' ]; then
-	_dev/fancy $1 $2 $3 jls1
-elif [ $3 == 'jls2-read' ]; then
-	_dev/fancy $1 $2 $3 jls2
-elif [ $3 == 'jls3-read' ]; then
-	_dev/fancy $1 $2 $3 jls3
-elif [ $3 == 'jls1-impl' ]; then
-	_dev/fancy $1 $2 $3 jls1
-elif [ $3 == 'jls2-impl' ]; then
-	_dev/fancy $1 $2 $3 jls2
-elif [ $3 == 'jls3-impl' ]; then
-	_dev/fancy $1 $2 $3 jls3
-elif [ $2 == 'java' ]; then
-	_dev/fancy $1 $2 $3 $2-$3
-	ls -1 ../topics/grammars/$2/antlr-java-5/$3/*.xbgf | xargs -n1 -I _ basename _ .xbgf | xargs -n1 -I _ ../shared/tools/xbgf2html ../topics/grammars/$2/antlr-java-5/$3/_.xbgf $1/$2/$3-_.html $3.html
-elif [ $2 == 'metasyntax' ]; then
-	_dev/fancy $1 $2 $3 $2-$3
-	ls -1 ../topics/grammars/$2/$3/*.xbgf | xargs -n1 -I _ basename _ .xbgf | xargs -n1 -I _ ../shared/tools/xbgf2html ../topics/grammars/$2/$3/_.xbgf $1/$2/$3-_.html $3.html
-elif [ $1 == 'tank' ]; then
-	_dev/fancy $1 $2 $3 $2-$3
-elif [ -r ../topics/grammars/$2/$3 ]; then
-	_dev/fancy $1 $2 $3 $2-$3
-	ls -1 ../topics/grammars/$2/$3/*.xbgf | xargs -n1 -I _ basename _ .xbgf | xargs -n1 -I _ ../shared/tools/xbgf2html ../topics/grammars/$2/$3/_.xbgf $1/$2/$3-_.html $3.html
-else
-	echo Cannot find directory $2/$3
-	exit -1
+../shared/tools/bgf2bnf   $1/$2.bgf $1/$2.bnf
+../shared/tools/bgf2dms   $1/$2.bgf $1/$2.dms
+../shared/tools/bgf2sdf   $1/$2.bgf $1/$2.sdf
+../shared/tools/bgf2rsc   $1/$2.bgf $1/$2.rsc
+../topics/investigation/analysis/overview_bgf.py $1/$2.bgf >tmp.xml || exit -1
+xsltproc --stringparam date `date +"%d/%m/%Y"` --stringparam zoo ../../../www/_dev/$1.xml --stringparam id $3 --stringparam report ../../../www/tmp.xml ../topics/export/hypertext/bgf2fancy.xslt $1/$2.bgf >$1/$2.html || exit -1
+if [ -r ../topics/grammars/$3 ]; then
+	ls -1 ../topics/grammars/$3/*.xbgf | xargs -n1 -I _ basename _ .xbgf | xargs -n1 -I _ ../shared/tools/xbgf2html ../topics/grammars/$3/_.xbgf $1/$2-_.html `basename $2`.html
 fi

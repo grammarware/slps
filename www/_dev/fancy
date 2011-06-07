@@ -1,4 +1,0 @@
-#!/bin/sh
-
-../topics/investigation/analysis/overview_bgf.py $1/$2/$3.bgf >tmp.xml || exit -1
-xsltproc --stringparam date `date +"%d/%m/%Y"` --stringparam zoo ../../../www/_dev/$1.xml --stringparam id $4 --stringparam report ../../../www/tmp.xml ../topics/export/hypertext/bgf2fancy.xslt $1/$2/$3.bgf >$1/$2/$3.html || exit -1
