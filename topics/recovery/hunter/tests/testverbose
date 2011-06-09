@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo [Verbose Test Hunter] $1
+rm -f $1.log
+../hunter.py $1.src $1.edd $1.out  || exit -1
+../../../../shared/tools/validate bgf $1.out || exit -1
+gdts $1.bgf $1.out || exit -1

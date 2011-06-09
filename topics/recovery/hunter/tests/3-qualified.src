@@ -1,0 +1,9 @@
+1.1.1:
+foo ::= bar END
+
+1.1.2:
+bar ::= wez END
+
+2.1.3:
+wez ::= foo END
+

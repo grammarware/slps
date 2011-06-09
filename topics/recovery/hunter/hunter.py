@@ -162,6 +162,41 @@ def readConfig(f):
 	if debug:
 		print('Ok',config)
 
+# bucket sort
+def calculateFrequencies(arr):
+	fs = {}
+	for x in arr:
+		if x not in fs.keys():
+			fs[x] = 1
+		else:
+			fs[x] += 1
+	return fs
+
+def bestFrequency(fs):
+	bestv = max(fs.values())
+	for x in fs.keys():
+		if fs[x] == bestv:
+			bestk = x
+			break
+	return bestk,bestv
+
+# Use terminator symbol to distinguish productions
+def useTerminatorSymbol(ts,t):
+	ps = [[]]
+	for x in ts:
+		if x == t:
+			ps.append([])
+		else:
+			ps[-1].append(x)
+	#ps = list(filter(lambda x:x!=[],ps))
+	if 'start-label-symbol' in config.keys() or 'end-label-symbol' in config.keys():
+		print('STEP 4: guessing defining-symbol in a grammar with labels not implemented yet!')
+		return None,None
+	dss = list(map(lambda x:'' if len(x)<2 else x[1],filter(lambda x:x!=[],ps)))
+	bestds,bestdsvalue = bestFrequency(calculateFrequencies(filter(lambda x:x!='',dss)))
+	prob = bestdsvalue * 100.0 / len(dss)
+	return prob,bestds
+
 # Use defining symbol to distinguish productions
 def useDefiningSymbol(ts,d):
 	poss = []
@@ -228,12 +263,7 @@ def useDefinitionSeparatorSymbol(ts,d):
 
 def findMostProbableTail(ps):
 	# bucket sort
-	ss = {}
-	for s in map(lambda x:x[-1],ps):
-		if s not in ss.keys():
-			ss[s] = 1
-		else:
-			ss[s] += 1
+	ss = calculateFrequencies(map(lambda x:x[-1],ps))
 	# at least 80% has the same end symbol?
 	# TODO: describe the heuristic
 	vs = list(ss.values())
@@ -654,12 +684,14 @@ def assembleQualifiedNumbers(ts):
 			ds.append(x)
 	return ds
 
-def splitString(s,kw):
+def splitString(s,kw,defd):
 	# split s according to any kws while preserving them
 	if len(kw)==0:
 		return [s]
+	elif s in defd:
+		return [s]
 	elif s.find(kw[0])<0:
-		return splitString(s,kw[1:])
+		return splitString(s,kw[1:],defd)
 	else:
 		ss = s.split(kw[0])
 		done = []
@@ -673,19 +705,20 @@ def splitString(s,kw):
 			done = done[1:]
 		res = []
 		for a in done:
-			res.extend(splitString(a,kw[1:]))
+			res.extend(splitString(a,kw[1:],defd))
 		reject = False
 		if min(map(len,res))<2:
 			reject = True
 		if 'nonterminal-if-contains' in config.keys():
 			for y in res:
-				if y in kw or y.find(config['nonterminal-if-contains']) < 0:
+				if y in defd or y.find(config['nonterminal-if-contains']) < 0:
 					continue
 				else:
 					reject = True
 					#print('!!!!! Have to reject',res,'of',s)
+					#print(kw)
 		if reject:
-			return splitString(s,kw[1:])
+			return splitString(s,kw[1:],defd)
 		else:
 			return res
 
@@ -713,17 +746,20 @@ def decomposeSymbols(p,defd):
 		#	q.append(x)
 		#	continue
 		# none of the above: it is a nonterminal, it's not defined and we have no way to dismiss it
-		var = splitString(x,defd)
+		var = splitString(x,defd,defd)
+		#print(var)
 		if len(var)==1:
 			q.append(x)
 			continue
 		#print(x,'-->',var)
 		pos = True
-		for y in var:
-			if y in defd or ('nonterminal-if-contains' in config.keys() and y.find(config['nonterminal-if-contains']) < 0):
-				continue
-			else:
-				pos = False
+		# TODO: inspection! strange dead code follows
+		#for y in var:
+		#	if y in defd:
+		#		# or ('nonterminal-if-contains' in config.keys() and y.find(config['nonterminal-if-contains']) > -1):
+		#		continue
+		#	else:
+		#		pos = False
 		if pos:
 			print('STEP 8:',x,'matches as',var)
 			q.extend(var)
@@ -979,20 +1015,51 @@ if __name__ == "__main__":
 	if 'nonterminals-may-contain-spaces' in config.keys() and 'concatenate-symbol' in config.keys():
 		# can only treat them together, because spaces in names without concatenation symbol are highly ambiguous
 		# and concatenation symbols are never used if nonterminal names do not have spaces
+		# TODO: not necessarily true, if you have both start-nonterminal-symbol and end-nonterminal-symbol!
 		tokens = reconsiderSpaces(tokens,config['concatenate-symbol'],config.values())
-	if 'defining-symbol' in config.keys():
-		prods = useDefiningSymbol(tokens,config['defining-symbol'])
-	else:
-		print('STEP 4 skipped, sorry: defining-symbol is not specified.')
-		# TODO
-	# STEP 4a.1: [sanity check] Infer terminator-symbol
-	if debug:
-		print('The grammar is perceived like this:')
-		for p in prods:
-			print('\t',p[1],'is defined as',p[2:])
+	need2fix = []
+	if 'defining-symbol' not in config.keys():
+		# STEP 4: we do not have defining-symbol, too bad
+		if 'terminator-symbol' in config.keys():
+			# STEP 4: at least the terminator-symbol is here, can work with that
+			print('STEP 4: using terminator-symbol to slice token stream into productions.')
+			prob,ds = useTerminatorSymbol(tokens,config['terminator-symbol'])
+			if ds:
+				if prob == 100:
+					print('STEP 4: inferred defining symbol is',repr(ds)+'.')
+				else:
+					print('STEP 4: the most probable defining symbol is',repr(ds),'with',str(int(prob))+'% certainty.')
+				config['defining-symbol'] = ds
+			else:
+				print('STEP 4 skipped, sorry: could not infer defining-symbol.')
+				print(ds,tokens)
+				sys.exit(-1)
+		else:
+			# STEP 4: we're screwed
+			print('STEP 4 in a pinch: neither defining-symbol nor terminator-symbol are specified!')
+			popular = calculateFrequencies(tokens)
+			highest = max(popular.values())
+			solution = ['','',0]
+			for sym in popular.keys():
+				if popular[sym]>2:
+					# TODO: threshold justification
+					prob,ds = useTerminatorSymbol(tokens,sym)
+					if ds:
+						print('STEP 4 could have gone for terminator-symbol',repr(sym),'('+str(int(100.0*popular[sym]/highest))+'%) and defining-symbol',repr(ds),'('+str(int(prob))+'%)...')
+						if prob*popular[sym]/highest > solution[2]:
+							solution = sym,ds,prob*popular[sym]/highest
+			if solution[2] < 50:
+				print('STEP 4 skipped, sorry: inference failed.')
+				sys.exit(-1)
+			else:
+				config['defining-symbol'] = solution[1]
+				print('STEP 4 assumes defining-symbol is',repr(solution[1])+'.')
+	# STEP 4: we do now have defining-symbol, yay!
+	print('STEP 4: using defining-symbol to slice token stream into productions.')
+	prods = useDefiningSymbol(tokens,config['defining-symbol'])
 	print('STEP 4: inferring terminator-symbol by looking at the productions.')
 	if 'terminator-symbol' in config.keys():
-		# we do have the terminator, but suppose we also had definition symbol!
+		# we do have the terminator, but suppose we also had defining symbol!
 		# TODO otherwise
 		ts = findCommonTail(prods[:-1])
 		if ts:
@@ -1024,6 +1091,11 @@ if __name__ == "__main__":
 					print('%40s'%p[1],'>>>>>>',p[-2:])
 				config['terminator-symbol'] = ''
 				need2fix = []
+	# STEP 4a.1: [sanity check] Infer terminator-symbol
+	if debug:
+		print('The grammar is perceived like this:')
+		for p in prods:
+			print('\t',p[1],'is defined as',p[2:])
 	# STEP 4a.2: adjusting the terminator-symbol on the unfit productions
 	poststep4 = 0
 	if debug:
