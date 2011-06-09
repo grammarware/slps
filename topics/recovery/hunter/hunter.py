@@ -658,6 +658,7 @@ def filterNewlines(s):
 
 def glueTerminals(p):
 	q = []
+	#print('>g>l>u>e>',p)
 	for y in p[2:]:
 		if y[0] != config['start-terminal-symbol'] or len(q) == 0 or q[-1][0] != config['start-terminal-symbol']:
 			q.append(y)
@@ -930,6 +931,28 @@ def considerIndentation(ts):
 		nts[-1] += '0'
 	return nts
 
+def convertNonalphanumerics2Terminals(p):
+	q = p[:2]
+	for x in p[2:]:
+		if x[:len(config['start-terminal-symbol'])] == config['start-terminal-symbol'] or x == '\n' or 'consider-indentation' in config.keys():
+			# TODO: make compatible with consider-indentation
+			q.append(x)
+			continue
+		# if it's a possible metasymbol, let it be
+		an = x in config.values()
+		for y in x:
+			if y.isalnum():
+				an = True
+				break
+		if an:
+			# stands a chance
+			q.append(x)
+		else:
+			# convert to terminal
+			# TODO: can also be a meta-symbol
+			q.append(config['start-terminal-symbol']+x+config['end-terminal-symbol'])
+	return q
+
 if __name__ == "__main__":
 	if len(sys.argv) != 4:
 		print('Usage:')
@@ -1135,6 +1158,9 @@ if __name__ == "__main__":
 	if 'decompose-symbols' in config.keys():
 		print('STEP 5 (part of rule 4): decomposing compound symbols.')
 		prods = [decomposeSymbols(x,defined) for x in prods]
+	# STEP 5: non-alphanumerics
+	print('STEP 5 (part of rule 5): converting non-alphanumeric nonterminal symbols to terminals.')
+	prods = list(map(convertNonalphanumerics2Terminals,prods))
 	# STEP 6: slice insides according to definition-separator-symbol
 	step6 = False
 	for s in \
@@ -1185,12 +1211,12 @@ if __name__ == "__main__":
 		print('STEP 8 (rule 5): turning undefined nonterminals into terminals.')
 		step8 = True
 		prods = [[convert2terminal(x,defined) for x in p] for p in prods]
-	#for p in prods:
-	#	print(p[1],'is defined as',p[2:])
 	if 'glue-nonalphanumeric-terminals' in config.keys():
 		print('STEP 8 (part of rule 3): glueing non-alphanumeric terminal symbols together.')
 		step8 = True
 		prods = list(map(glueTerminals,prods))
+	#for p in prods:
+	#	print(p[1],'is defined as',p[2:])
 	if not step8:
 		print('STEP 8 skipped, sorry: no special commands found in the configuration.')
 	# STEP X: validating bracketing?
