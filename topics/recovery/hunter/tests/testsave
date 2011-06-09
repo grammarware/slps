@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo '<?xml version="1.0" encoding="UTF-8"?>' > $1.bgf
+cat $1.out >> $1.bgf
+perl -pi -w -e 's/ns0/bgf/g;' $1.bgf

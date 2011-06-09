@@ -1,0 +1,6 @@
+// this is foo
+foo : bar
+bar : wez
+// this is not foo
+wez : foo
+

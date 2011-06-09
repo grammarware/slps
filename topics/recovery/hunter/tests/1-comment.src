@@ -1,0 +1,4 @@
+foo : /* this is foo */ bar
+bar : wez
+wez : foo /* this is not foo */
+

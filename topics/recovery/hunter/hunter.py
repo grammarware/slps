@@ -21,6 +21,8 @@ special = \
 		'DEFINITION-SEPARATOR-SYMBOL',
 		'START-TERMINAL-SYMBOL',
 		'END-TERMINAL-SYMBOL',
+		'START-NONTERMINAL-SYMBOL',
+		'END-NONTERMINAL-SYMBOL',
 		'START-GROUP-SYMBOL',
 		'END-GROUP-SYMBOL',
 		'START-OPTION-SYMBOL',
@@ -270,19 +272,21 @@ def findCommonTail(ps):
 	tail.reverse()
 	return tail
 
-def assembleBracketedSymbols(ts,start,end):
+def assembleBracketedSymbols(ts,start,end,preserveSpace):
 	tss = []
-	terminal = False
+	inside = False
 	i = 0
 	while (i<len(ts)):
-		if terminal:
+		if inside:
+			if preserveSpace and ts[i] != end and tss[-1][-1] != start:
+				tss[-1] += ' '
 			tss[-1] += ts[i]
 			if ts[i] == end:
-				terminal = False
+				inside = False
 		else:
 			tss.append(ts[i])
 			if ts[i] == start:
-				terminal = True
+				inside = True
 		i += 1
 	return tss
 
@@ -302,7 +306,7 @@ def findGroups(ats,start,end):
 				level -= 1
 				poss[1][lp.pop(level)] = (i,j)
 	if len(poss[0]) != len(poss[1]):
-		print('STEP 7 deadlock: number of start-group-symbol and end-group-symbol occurrences do not match.')
+		print('STEP 8 deadlock: number of start-group-symbol and end-group-symbol occurrences do not match.')
 		return ats
 	if debug and poss[0]:
 		print('poss >>>>>',poss)
@@ -354,7 +358,7 @@ def findSpecialGroups(ats,start,end):
 				level -= 1
 				poss[1][lp.pop(level)] = (i,j)
 	if len(poss[0]) != len(poss[1]):
-		print('STEP 7 deadlock: number of start-?-symbol and end-?-symbol occurrences do not match.')
+		print('STEP 8 deadlock: number of start-?-symbol and end-?-symbol occurrences do not match.')
 		return ats
 	if debug and poss[0]:
 		print('poss >>>>>',poss)
@@ -541,7 +545,13 @@ def map2expr(ss):
 			if debug:
 				print('NONTERMINAL',ss[i])
 			e = BGF3.Nonterminal()
-			e.setName(ss[i])
+			n = ss[i]
+			if 'start-nonterminal-symbol' in config.keys() or 'end-nonterminal-symbol' in config.keys():
+				if n[:len(config['start-nonterminal-symbol'])] == config['start-nonterminal-symbol']:
+					n = n[len(config['start-nonterminal-symbol']):]
+				if n[-len(config['end-nonterminal-symbol']):] == config['end-nonterminal-symbol']:
+					n = n[:-len(config['end-nonterminal-symbol'])]
+			e.setName(n)
 			es.append(e)
 			i += 1
 	ess.append(es)
@@ -715,7 +725,7 @@ def decomposeSymbols(p,defd):
 			else:
 				pos = False
 		if pos:
-			print('STEP 7:',x,'matches as',var)
+			print('STEP 8:',x,'matches as',var)
 			q.extend(var)
 			# todo: need to be adjusted if the order of phases is changed
 			#q.append(config['start-terminal-symbol']+t+config['end-terminal-symbol'])
@@ -777,14 +787,14 @@ def balanceProd(p):
 				else:
 					fail = True
 			if fail:
-				print('STEP 6: Cannot balance a production, reverting',oldpi,'to a terminal.')
+				print('STEP 7: Cannot balance a production, reverting',oldpi,'to a terminal.')
 				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
 				i += 1
 			elif p[i] == oldpi:
-				print('STEP 6: Problem at',oldpi,'in',p)
+				print('STEP 7: Problem at',oldpi,'in',p)
 				i += 1
 			else:
-				print('STEP 6: Rebalanced ambiguity of',oldpi,'with',p[i])
+				print('STEP 7: Rebalanced ambiguity of',oldpi,'with',p[i])
 				i = j
 		else:
 			i = j
@@ -795,18 +805,18 @@ def postfix2confix(p):
 		while s in p:
 			w = p.index(s)
 			if w == 0:
-				print('STEP 6: Impossible place for postfix operator, converted to a terminal.')
+				print('STEP 7: Impossible place for postfix operator, converted to a terminal.')
 				p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 				continue
 			if 'end-group-symbol' in config.keys() and p[w-1] == config['end-group-symbol']:
 				# group
 				j = startOfContext(p,w-1,config['start-group-symbol'])
 				if j<0:
-					print('STEP 6: Impossible to balance the group preceding a postfix operator, converted it to a terminal')
+					print('STEP 7: Impossible to balance the group preceding a postfix operator, converted it to a terminal')
 					p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 					continue
 				else:
-					print('STEP 6: Converted postfix metasymbol to confix notation.')
+					print('STEP 7: Converted postfix metasymbol to confix notation.')
 					p[w-1] = s.replace('POSTFIX','END')
 					p[j] = s.replace('POSTFIX','START')
 					q = p[:w]
@@ -814,7 +824,7 @@ def postfix2confix(p):
 					p = q
 			else:
 				# single element
-				print('STEP 6: Converted postfix metasymbol to confix notation.')
+				print('STEP 7: Converted postfix metasymbol to confix notation.')
 				q = p[:w-1]
 				q.append(s.replace('POSTFIX','START'))
 				q.append(p[w-1])
@@ -918,7 +928,7 @@ if __name__ == "__main__":
 		print('Token stream:',tokens)
 	if 'start-terminal-symbol' in config.keys() and 'end-terminal-symbol' in config.keys():
 		tokens = [config['start-terminal-symbol']+masked[x]+config['end-terminal-symbol'] if x in masked.keys() else x for x in tokens]
-		tokens = assembleBracketedSymbols(tokens,config['start-terminal-symbol'],config['end-terminal-symbol'])
+		tokens = assembleBracketedSymbols(tokens,config['start-terminal-symbol'],config['end-terminal-symbol'],False)
 	else:
 		print('STEP 1 was of limited use, sorry: start-terminal-symbol and end-terminal-symbol are not both specified.')
 		# technically we still need them to denote terminals in our internal representation
@@ -943,7 +953,7 @@ if __name__ == "__main__":
 	# STEP 2: assemble nonterminal symbols
 	print('STEP 2: assembling nonterminal symbols.')
 	if 'start-nonterminal-symbol' in config.keys() and 'end-nonterminal-symbol' in config.keys():
-		tokens = assembleBracketedSymbols(tokens,config['start-nonterminal-symbol'],config['end-nonterminal-symbol'])
+		tokens = assembleBracketedSymbols(tokens,config['start-nonterminal-symbol'],config['end-nonterminal-symbol'],True)
 	else:
 		print('STEP 2 skipped, sorry: start-nonterminal-symbol and end-nonterminal-symbol are not both specified.')
 	# STEP 3: assembling composite metasymbols together
@@ -1045,8 +1055,16 @@ if __name__ == "__main__":
 	# STEP 4b: splitting the token stream into productions according to terminator-symbol; inferring defining-symbol
 	# TODO
 	prods = [p[:-(len(config['terminator-symbol']))] if p[-(len(config['terminator-symbol'])):] == config['terminator-symbol'] else p for p in prods]
-	# STEP 5: slice insides according to definition-separator-symbol
-	step5 = False
+	# STEP 5: decompose symbols
+	defined = [x[1] for x in prods]
+	if debug:
+		print('Defined are',defined)
+	defined.extend(config.keys())
+	if 'decompose-symbols' in config.keys():
+		print('STEP 5 (part of rule 4): decomposing compound symbols.')
+		prods = [decomposeSymbols(x,defined) for x in prods]
+	# STEP 6: slice insides according to definition-separator-symbol
+	step6 = False
 	for s in \
 		('definition-separator-symbol'
 		,'postfix-repetition-star-symbol'
@@ -1065,13 +1083,13 @@ if __name__ == "__main__":
 		,'start-option-symbol'
 		,'end-option-symbol'):
 		if s in config.keys():
-			print('STEP 5: marking',s+'.')
-			step5 = True
+			print('STEP 6: marking',s+'.')
+			step6 = True
 			prods = [[s.upper() if x==config[s] else x for x in p] for p in prods]
 			#prods = list(map(lambda p:list(map(lambda x:s.upper() if x==config[s] else x,p)),prods))
-	if not step5:
-		print('STEP 5 skipped: sorry, no metasymbols specified.')
-	# STEP 6: validating metasymbols
+	if not step6:
+		print('STEP 6 skipped: sorry, no metasymbols specified.')
+	# STEP 7: validating metasymbols
 	if debug:
 		print('The grammar is perceived like this:')
 		for p in prods:
@@ -1082,35 +1100,27 @@ if __name__ == "__main__":
 		print('The grammar is perceived like this:')
 		for p in prods:
 			print('\t',p[1],'is defined as',p[2:])
-	# STEP 7: various commands
-	print('STEP 7: executing special extraction commands.')
-	step7 = False
-	defined = [x[1] for x in prods]
-	if debug:
-		print('Defined are',defined)
-	defined.append(config['defining-symbol'])
+	# STEP 8: various commands
+	print('STEP 8: executing special extraction commands.')
+	step8 = False
 	if len(ignore_tokens)>0:
-		print('STEP 7: ignoring extra tokens.')
-		step7 = True
+		print('STEP 8: ignoring extra tokens.')
+		step8 = True
 		for x in ignore_tokens:
 			prods = [list(filter(lambda y:y!=x,p)) for p in prods]
 		#prods = list(map(lambda x:filter(lambda y:y!='\n',x),prods))
-	if 'decompose-symbols' in config.keys():
-		print('STEP 7 (part of rule 4): decomposing compound symbols.')
-		step7 = True
-		prods = [decomposeSymbols(x,defined) for x in prods]
 	if 'undefined-nonterminals-are-terminals' in config.keys():
-		print('STEP 7 (rule 5): turning undefined nonterminals into terminals.')
-		step7 = True
+		print('STEP 8 (rule 5): turning undefined nonterminals into terminals.')
+		step8 = True
 		prods = [[convert2terminal(x,defined) for x in p] for p in prods]
 	#for p in prods:
 	#	print(p[1],'is defined as',p[2:])
 	if 'glue-nonalphanumeric-terminals' in config.keys():
-		print('STEP 7 (part of rule 3): glueing non-alphanumeric terminal symbols together.')
-		step7 = True
+		print('STEP 8 (part of rule 3): glueing non-alphanumeric terminal symbols together.')
+		step8 = True
 		prods = list(map(glueTerminals,prods))
-	if not step7:
-		print('STEP 7 skipped, sorry: no special commands found in the configuration.')
+	if not step8:
+		print('STEP 8 skipped, sorry: no special commands found in the configuration.')
 	# STEP X: validating bracketing?
 	# ...
 	# RESULT

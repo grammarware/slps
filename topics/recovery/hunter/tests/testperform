@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo [Test Hunter] $1
+rm -f $1.log
+../hunter.py $1.src $1.edd $1.out > $1.log || exit -1
+../../../../shared/tools/validate bgf $1.out 2>> $1.log || exit -1
+gdt $1.bgf $1.out > $1.gdt || exit -1

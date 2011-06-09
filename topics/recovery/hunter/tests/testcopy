@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cp $1.src $2.src
+cp $1.edd $2.edd
+cp $1.bgf $2.bgf
