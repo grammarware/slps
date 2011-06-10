@@ -59,6 +59,8 @@
 	<xsl:template match="literalOrType">
 		<!--xsl:for-each select="repeat_literalOrType/literalOrType"-->
 		<xsl:choose>
+			<!-- we have no way of expressing this in BGF (yet) -->
+			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='not'"/>
 			<xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater='+'">
 				<bgf:expression>
 					<plus>
@@ -132,6 +134,18 @@
 	<xsl:template match="literal">
 		<xsl:choose>
 			<xsl:when test="comment"/>
+			<xsl:when test="quotedLiteral/unquotedLiteral = &quot; '&quot;">
+				<bgf:expression>
+					<terminal>'</terminal>
+				</bgf:expression>
+			</xsl:when>
+			<xsl:when test="quotedLiteral/unquotedLiteral">
+				<bgf:expression>
+					<terminal>
+						<xsl:value-of select="quotedLiteral/unquotedLiteral"/>
+					</terminal>
+				</bgf:expression>
+			</xsl:when>
 			<xsl:when test="substring-after(unquotedLiteral/special,&quot;'&quot;)!=&quot;&quot;">
 				<bgf:expression>
 					<terminal>
