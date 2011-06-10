@@ -46,6 +46,9 @@ special = \
 		'GLUE-NONALPHANUMERIC-TERMINALS'
 	]
 
+def myIsUpper(x):
+	return reduce(lambda a,b:a and (b.isupper() and not b.isdigit()),x,True)
+
 def isAlpha(x):
 	return reduce(lambda a,b:a and (b=='_' or b=='-' or b.isalnum()),x,True)
 
@@ -952,7 +955,7 @@ def convertNonalphanumerics2Terminals(p):
 			# TODO: can also be a meta-symbol
 			q.append(config['start-terminal-symbol']+x+config['end-terminal-symbol'])
 	return q
-
+	
 if __name__ == "__main__":
 	if len(sys.argv) != 4:
 		print('Usage:')
@@ -998,7 +1001,7 @@ if __name__ == "__main__":
 		tokens = [config['start-terminal-symbol']+x+config['end-terminal-symbol']
 					if  len(x)>1
 					and x[0]!=config['start-terminal-symbol']
-					and x.isupper()
+					and myIsUpper(x)
 					and x not in always_nonterminals
 				else x
 					for x in tokens]

@@ -423,7 +423,7 @@
 						<name>EDD</name>
 					</link>
 					<link>
-						<mu>topics/grammars/hunter.py</mu>
+						<mu>topics/recovery/hunter/hunter.py</mu>
 						<name>Hunter</name>
 					</link>
 					<link>
@@ -465,7 +465,7 @@
 						<name>EDD</name>
 					</link>
 					<link>
-						<mu>topics/grammars/hunter.py</mu>
+						<mu>topics/recovery/hunter/hunter.py</mu>
 						<name>Hunter</name>
 					</link>
 					<link>
@@ -507,7 +507,7 @@
 						<name>EDD</name>
 					</link>
 					<link>
-						<mu>topics/grammars/hunter.py</mu>
+						<mu>topics/recovery/hunter/hunter.py</mu>
 						<name>Hunter</name>
 					</link>
 					<link>

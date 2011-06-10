@@ -190,7 +190,7 @@
 						<name>EDD</name>
 					</link>
 					<link>
-						<mu>topics/grammars/hunter.py</mu>
+						<mu>topics/recovery/hunter/hunter.py</mu>
 						<name>Hunter</name>
 					</link>
 					<link>
@@ -228,7 +228,7 @@
 						<name>EDD</name>
 					</link>
 					<link>
-						<mu>topics/grammars/hunter.py</mu>
+						<mu>topics/recovery/hunter/hunter.py</mu>
 						<name>Hunter</name>
 					</link>
 				</toolset>
@@ -267,7 +267,7 @@
 						<name>EDD</name>
 					</link>
 					<link>
-						<mu>topics/grammars/hunter.py</mu>
+						<mu>topics/recovery/hunter/hunter.py</mu>
 						<name>Hunter</name>
 					</link>
 					<link>
@@ -348,7 +348,7 @@
 						<name>EDD</name>
 					</link>
 					<link>
-						<mu>topics/grammars/hunter.py</mu>
+						<mu>topics/recovery/hunter/hunter.py</mu>
 						<name>Hunter</name>
 					</link>
 					<link>
@@ -772,7 +772,8 @@
 						<name>DOC</name>
 					</link>
 				</source>
-				<toolset ref="lll"/><toolset>
+				<toolset ref="lll"/>
+				<toolset>
 					<name>Recovery</name>
 					<link>
 						<xbgf>cs/csharp-msft-ls-4.0-correct</xbgf>
@@ -809,7 +810,7 @@
 						<name>EDD</name>
 					</link>
 					<link>
-						<mu>topics/grammars/hunter.py</mu>
+						<mu>topics/recovery/hunter/hunter.py</mu>
 						<name>Hunter</name>
 					</link>
 					<link>
@@ -848,7 +849,7 @@
 						<name>EDD</name>
 					</link>
 					<link>
-						<mu>topics/grammars/hunter.py</mu>
+						<mu>topics/recovery/hunter/hunter.py</mu>
 						<name>Hunter</name>
 					</link>
 					<link>
@@ -1267,8 +1268,15 @@
 						<name>EDD</name>
 					</link>
 					<link>
-						<mu>topics/grammars/hunter.py</mu>
+						<mu>topics/recovery/hunter/hunter.py</mu>
 						<name>Hunter</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>modula/src-052-complete</xbgf>
+						<name>complete</name>
 					</link>
 					<link>
 						<xbgf>modula/src-052-refactor</xbgf>
