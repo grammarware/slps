@@ -14,6 +14,7 @@ always_terminals = []
 always_nonterminals = []
 ignore_tokens = []
 ignore_lines = []
+nonterminals_alphabet = []
 
 special = \
 	[
@@ -35,7 +36,7 @@ special = \
 		'END-SEPLIST-STAR-SYMBOL',
 		'START-SEPLIST-PLUS-SYMBOL',
 		'END-SEPLIST-PLUS-SYMBOL',
-		'POSTFIX-OPTIONALITY-SYMBOL',
+		'POSTFIX-OPTION-SYMBOL',
 		'POSTFIX-REPETITION-STAR-SYMBOL',
 		'POSTFIX-REPETITION-PLUS-SYMBOL',
 		'UNDEFINED-NONTERMINALS-ARE-TERMINALS',
@@ -50,7 +51,7 @@ def myIsUpper(x):
 	return reduce(lambda a,b:a and (b.isupper() and not b.isdigit()),x,True)
 
 def isAlpha(x):
-	return reduce(lambda a,b:a and (b=='_' or b=='-' or b.isalnum()),x,True)
+	return reduce(lambda a,b:a and (b=='_' or b=='-' or b.isalnum() or b in nonterminals_alphabet),x,True)
 
 def isQNumber(x):
 	if x =='.':
@@ -138,6 +139,9 @@ def readConfig(f):
 	for e in cfg.findall('*'):
 		if e.tag == 'mask':
 			masked[e.findtext('token')] = e.findtext('terminal')
+		elif e.tag == 'nonterminals-may-contain':
+			for x in e.text:
+				nonterminals_alphabet.append(x)
 		elif e.text:
 			config[e.tag] = e.text.replace('\\n','\n')
 		else:
@@ -205,9 +209,14 @@ def useDefiningSymbol(ts,d):
 	poss = []
 	prods = []
 	for i in range(0,len(ts)):
-		if ts[i] == d and isAlpha(ts[i-1]):
-			poss.append(i)
+		if ts[i] == d:
+			j = i-1
+			while j>-1 and ts[j] in ignore_tokens:
+				j -= 1
+			if isAlpha(ts[j]):
+				poss.append(i)
 	poss.append(len(ts)+1)
+	#print('Positions:',poss)
 	for i in range(0,len(poss)-1):
 		if 'end-label-symbol' in config.keys():
 			if ts[poss[i]-2] == config['end-label-symbol']:
@@ -221,14 +230,28 @@ def useDefiningSymbol(ts,d):
 						# todo: recover
 				else:
 					# no starting symbol for the label
-					p = [ts[poss[i]-3],ts[poss[i]-1]]
+					j = poss[i]-1
+					while ts[j] in ignore_tokens:
+						j -= 1
+					k = j-2
+					while ts[k] in ignore_tokens:
+						k -= 1
+					p = [ts[k],ts[j]]
 			else:
 				# no label this time
-				p = ['',ts[poss[i]-1]]
+				j = poss[i]-1
+				while ts[j] in ignore_tokens:
+					j -= 1
+				p = ['',ts[j]]
 		else:
 			# no labels at all
-			p = ['',ts[poss[i]-1]]
+			j = poss[i]-1
+			while ts[j] in ignore_tokens:
+				j -= 1
+			p = ['',ts[j]]
 		end = poss[i+1]-1
+		while -1<end<len(ts) and ts[end] in ignore_tokens:
+			end -= 1
 		if 'end-label-symbol' in config.keys() and ts[end-1] == config['end-label-symbol']:
 			end -= 2
 			if 'start-label-symbol' in config.keys() and ts[end-1] == config['start-label-symbol']:
@@ -447,15 +470,16 @@ def startOfContext(a,i,s):
 	e = a[i]
 	level = 1
 	j = i-1
-	#print('Searching in a context of',a[i:],'for',e)
+	#print('Searching in a context of',a[:i+1],'for',s)
 	while level>0 and j>=0:
-		if a[j]==s:
+		if a[j] == e:
 			level += 1
-		elif a[j]==e:
+		elif a[j] == s:
 			level -= 1
 		j -= 1
+		#print('j=',j,'a[j]=',a[j],'level=',level)
 	if level != 0:
-		#print('Cannot find end of context in:',a[i:],'@',level)
+		#print('Cannot find end of context in:',a[:i+1],'@',level)
 		return -level
 	return j
 
@@ -469,7 +493,7 @@ def map2expr(ss):
 		if ss[i] == 'START-REPETITION-STAR-SYMBOL':
 			j = endOfContext(ss,i,'END-REPETITION-STAR-SYMBOL')
 			if j<0:
-				print('Unbalanced bracketing, please fix first. Level:',-j)
+				print('Unbalanced bracketing, please fix first:',ss[i:],'Level:',-j)
 				j = len(ss)
 			if debug:
 				print('>>>context>>>',ss[i:j])
@@ -480,7 +504,7 @@ def map2expr(ss):
 		elif ss[i] == 'START-REPETITION-PLUS-SYMBOL':
 			j = endOfContext(ss,i,'END-REPETITION-PLUS-SYMBOL')
 			if j<0:
-				print('Unbalanced bracketing, please fix first. Level:',-j)
+				print('Unbalanced bracketing, please fix first:',ss[i:],'Level:',-j)
 				j = len(ss)
 			if debug:
 				print('>>>context>>>',ss[i:j])
@@ -491,7 +515,7 @@ def map2expr(ss):
 		elif ss[i] == 'START-OPTION-SYMBOL':
 			j = endOfContext(ss,i,'END-OPTION-SYMBOL')
 			if j<0:
-				print('Unbalanced bracketing, please fix first. Level:',-j)
+				print('Unbalanced bracketing, please fix first:',ss[i:],'Level:',-j)
 				j = len(ss)
 			if debug:
 				print('>>>context>>>',ss[i:j])
@@ -502,10 +526,10 @@ def map2expr(ss):
 		elif ss[i] == 'START-SEPLIST-STAR-SYMBOL':
 			j = endOfContext(ss,i,'END-SEPLIST-STAR-SYMBOL')
 			if j<0:
-				print('Unbalanced bracketing, please fix first. Level:',-j)
+				print('Unbalanced bracketing, please fix first:',ss[i:],'Level:',-j)
 				j = len(ss)
 			if j-i != 4:
-				print('Incorrect separator list!')
+				print('Incorrect separator list:',ss[i:j])
 			if debug:
 				print('>>>context>>>',ss[i:j])
 			# {x y}* => (x (yx)*)?
@@ -526,10 +550,10 @@ def map2expr(ss):
 		elif ss[i] == 'START-SEPLIST-PLUS-SYMBOL':
 			j = endOfContext(ss,i,'END-SEPLIST-PLUS-SYMBOL')
 			if j<0:
-				print('Unbalanced bracketing, please fix first.')
+				print('Unbalanced bracketing, please fix first:',ss[i:])
 				j = len(ss)
 			if j-i != 4:
-				print('Incorrect separator list!')
+				print('Incorrect separator list:',ss[i:j])
 			if debug:
 				print('>>>context>>>',ss[i:j])
 			# {x y}+ => (x (yx)*)
@@ -548,7 +572,7 @@ def map2expr(ss):
 		elif ss[i] == 'START-GROUP-SYMBOL':
 			j = endOfContext(ss,i,'END-GROUP-SYMBOL')
 			if j<0:
-				print('Unbalanced bracketing, please fix first.')
+				print('Unbalanced bracketing, please fix first:',ss[i:])
 				j = len(ss)
 			if i == 0 and j == len(ss):
 				ss = ss[1:-1]
@@ -827,7 +851,7 @@ def balanceProd(p):
 				else:
 					fail = True
 			if fail:
-				print('STEP 7: Cannot balance a production, reverting',oldpi,'to a terminal.')
+				print('STEP 7: Cannot balance a production',p,'- reverting',oldpi,'to a terminal.')
 				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
 				i += 1
 			elif p[i] == oldpi:
@@ -841,27 +865,30 @@ def balanceProd(p):
 	return p
 
 def postfix2confix(p):
-	for s in ('POSTFIX-REPETITION-PLUS-SYMBOL','POSTFIX-REPETITION-STAR-SYMBOL','POSTFIX-OPTIONALITY-SYMBOL'):
+	#print('>>>postfix>>>>confix>>>',p)
+	for s in ('POSTFIX-REPETITION-PLUS-SYMBOL','POSTFIX-REPETITION-STAR-SYMBOL','POSTFIX-OPTION-SYMBOL'):
 		while s in p:
 			w = p.index(s)
 			if w == 0:
 				print('STEP 7: Impossible place for postfix operator, converted to a terminal.')
 				p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 				continue
-			if 'end-group-symbol' in config.keys() and p[w-1] == config['end-group-symbol']:
+			if p[w-1] == 'END-GROUP-SYMBOL':
 				# group
-				j = startOfContext(p,w-1,config['start-group-symbol'])
+				j = startOfContext(p,w-1,'START-GROUP-SYMBOL')
 				if j<0:
 					print('STEP 7: Impossible to balance the group preceding a postfix operator, converted it to a terminal')
 					p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 					continue
 				else:
 					print('STEP 7: Converted postfix metasymbol to confix notation.')
+					#print('<<<p<<<',p)
 					p[w-1] = s.replace('POSTFIX','END')
-					p[j] = s.replace('POSTFIX','START')
+					p[j+1] = s.replace('POSTFIX','START')
 					q = p[:w]
 					q.extend(p[w+1:])
 					p = q
+					#print('>>>p>>>',p)
 			else:
 				# single element
 				print('STEP 7: Converted postfix metasymbol to confix notation.')
@@ -1083,6 +1110,10 @@ if __name__ == "__main__":
 	# STEP 4: we do now have defining-symbol, yay!
 	print('STEP 4: using defining-symbol to slice token stream into productions.')
 	prods = useDefiningSymbol(tokens,config['defining-symbol'])
+	if debug:
+		print('The grammar is perceived like this:')
+		for p in prods:
+			print('\t',p[1],'is defined as',p[2:])
 	print('STEP 4: inferring terminator-symbol by looking at the productions.')
 	if 'terminator-symbol' in config.keys():
 		# we do have the terminator, but suppose we also had defining symbol!
@@ -1096,7 +1127,7 @@ if __name__ == "__main__":
 		if ''.join(ts) == config['terminator-symbol']:
 			print('STEP 4 confirmed terminator-symbol, congratulations!')
 		else:
-			print('STEP 4 would have thought that terminator-symbol is',ts,'and not',config['terminator-symbol'])
+			print('STEP 4 would have thought that terminator-symbol is',repr(''.join(ts)),'and not',repr(config['terminator-symbol']))
 		# now let's fix productions that were joined together
 		prods = useTerminatorToFixProds(prods,config['terminator-symbol'])
 	else:
@@ -1170,7 +1201,7 @@ if __name__ == "__main__":
 		('definition-separator-symbol'
 		,'postfix-repetition-star-symbol'
 		,'postfix-repetition-plus-symbol'
-		,'postfix-optionality-symbol'
+		,'postfix-option-symbol'
 		,'start-group-symbol'
 		,'end-group-symbol'
 		,'start-repetition-star-symbol'
