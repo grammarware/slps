@@ -10,3 +10,6 @@ test:
 	@/bin/echo -n "evaluate x = " >>fac5.fl
 	@cat ../shared/fac5.txt >> fac5.fl
 	@txl fac5.fl FL_evaluator.Txl
+
+extract:
+	../../../shared/tools/txl2bgf FL.Txl fl.bgf
