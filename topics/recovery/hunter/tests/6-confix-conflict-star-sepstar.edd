@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edd:config xmlns:edd="http://planet-sl.org/edd">
+	<defining-symbol>:</defining-symbol>
+	<terminator-symbol>\n</terminator-symbol>
+	<start-repetition-star-symbol>[</start-repetition-star-symbol>
+	<end-repetition-star-symbol>]</end-repetition-star-symbol>
+	<start-seplist-star-symbol>[</start-seplist-star-symbol>
+	<end-seplist-star-symbol>]}*</end-seplist-star-symbol>
+</edd:config>

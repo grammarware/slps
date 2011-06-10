@@ -1,0 +1,4 @@
+zzz : aaa
+yyy : [aaa]?
+xxx : [aaa bbb]?
+www : aaa [bbb ccc]? ddd
