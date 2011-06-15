@@ -935,9 +935,10 @@ def balanceProd(p):
 	# balancing backward
 	i = len(p)-1
 	while i>1:
-		if p[i].find('END')<0 or p[i] in ignore_tokens:
+		if p[i].find('END-')<0 or p[i] in ignore_tokens:
 			i -= 1
 			continue
+		#print('>>>>>> Found',p[i])
 		j = startOfContext(p,i,p[i].replace('END','START'))
 		while j>-1 and p[j] in ignore_tokens:
 			j -= 1
@@ -1435,6 +1436,8 @@ if __name__ == "__main__":
 	# STEP 6: slice insides according to definition-separator-symbol
 	step6 = False
 	for z in metasymbols:
+		if z == 'TERMINATOR-SYMBOL':
+			continue
 		s = z.lower()
 		if s in config.keys():
 			print('STEP 6: marking',repr(config[s]),'as',s+'.')
