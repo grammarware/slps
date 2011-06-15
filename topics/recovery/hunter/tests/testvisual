@@ -1,0 +1,8 @@
+#!/bin/sh
+
+./testperform $1
+echo '------------------  Input: ------------------'
+cat $1.src
+echo '------------------ Output: ------------------'
+../../../../shared/tools/bgf2bnf $1.out
+

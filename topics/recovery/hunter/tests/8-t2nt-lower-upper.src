@@ -1,0 +1,3 @@
+foo : BAR WEZ FOO “BAR” “WEZ” “FOO”
+Bar : wez foo bar “wez” “foo” “bar”
+WEZ : Foo Bar Wez “Foo” “Bar” “Wez”

@@ -841,6 +841,9 @@ def convert2terminal(x,defd):
 	if x in defd:
 		# defined nonterminal
 		return x
+	if x[0] == config['start-terminal-symbol'] and x[-1] == config['end-terminal-symbol']:
+		# already a terminal
+		return x
 	if x in metasymbols:
 		# pseudo-meta-symbol
 		return x
@@ -862,11 +865,35 @@ def convert2terminal(x,defd):
 	if 'nonterminal-if-camelcase' in config.keys() and len(x)>1 and isCamelCase(x):
 		# configuration claims that CamelCase is a nonterminal
 		return x
-	if x[0] == config['start-terminal-symbol'] and x[-1] == config['end-terminal-symbol']:
-		# already a terminal
-		return x
 	# none of the above
 	return config['start-terminal-symbol'] + x + config['end-terminal-symbol']
+
+def convert2nonterminal(x,defd):
+	# unfolded for better readability
+	if len(x) < 4:
+		# an tiny terminal or even less than that
+		return x
+	if x[0] != config['start-terminal-symbol'] or x[-1] != config['end-terminal-symbol']:
+		# not a terminal at all
+		return x
+	y = x[1:-1]
+	if y in always_terminals:
+		# configured exception
+		return x
+	if 'terminal-if-uppercase' in config.keys() and isUpperCase(y):
+		# configuration claims that UPPERCASE is a terminal
+		return x
+	if 'terminal-if-lowercase' in config.keys() and isLowerCase(y):
+		# configuration claims that UPPERCASE is a terminal
+		return x
+	if 'terminal-if-camelcase' in config.keys() and isCamelCase(y):
+		# configuration claims that CamelCase is a terminal
+		return x
+	if y in defd:
+		# The moment of truth: could it be a defined nonterminal? 
+		return y
+	# none of the above
+	return x
 
 def balanceProd(p):
 	global debug
@@ -1436,10 +1463,16 @@ if __name__ == "__main__":
 		for x in ignore_tokens:
 			prods = [list(filter(lambda y:y!=x,p)) for p in prods]
 		#prods = list(map(lambda x:filter(lambda y:y!='\n',x),prods))
+	# quite usual trick, harmless for most grammars
 	if 'terminal-if-undefined' in config.keys():
 		print('STEP 8 (rule 5): turning undefined nonterminals into terminals.')
 		step8 = True
 		prods = [[convert2terminal(x,defined) for x in p] for p in prods]
+	# should be used very carefully because it is common for grammars to have terminals and nonterminals with the "same" name
+	if 'nonterminal-if-defined' in config.keys():
+		print('STEP 8 (rule 6): turning terminals that look like defined nonterminals into nonterminals.')
+		step8 = True
+		prods = [[convert2nonterminal(x,defined) for x in p] for p in prods]
 	if 'glue-nonalphanumeric-terminals' in config.keys():
 		print('STEP 8 (part of rule 3): glueing non-alphanumeric terminal symbols together.')
 		step8 = True

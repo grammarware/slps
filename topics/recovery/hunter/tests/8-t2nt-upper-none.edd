@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edd:config xmlns:edd="http://planet-sl.org/edd">
+	<defining-symbol>:</defining-symbol>
+	<terminator-symbol>\n</terminator-symbol>
+	<start-terminal-symbol>“</start-terminal-symbol>
+	<end-terminal-symbol>”</end-terminal-symbol>
+	<nonterminal-if-defined/>
+	<nonterminal-if-uppercase/>
+</edd:config>
