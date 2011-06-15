@@ -1,0 +1,3 @@
+foo : BAR WEZ FOO
+Bar : wez foo bar
+WEZ : Foo Bar Wez

@@ -9,28 +9,36 @@
 	<bgf:production>
 		<nonterminal>yyy</nonterminal>
 		<bgf:expression>
-			<plus>
+			<optional>
 				<bgf:expression>
-					<nonterminal>aaa</nonterminal>
+					<plus>
+						<bgf:expression>
+							<nonterminal>aaa</nonterminal>
+						</bgf:expression>
+					</plus>
 				</bgf:expression>
-			</plus>
+			</optional>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
 		<nonterminal>xxx</nonterminal>
 		<bgf:expression>
-			<plus>
+			<optional>
 				<bgf:expression>
-					<sequence>
+					<plus>
 						<bgf:expression>
-							<nonterminal>aaa</nonterminal>
+							<sequence>
+								<bgf:expression>
+									<nonterminal>aaa</nonterminal>
+								</bgf:expression>
+								<bgf:expression>
+									<nonterminal>bbb</nonterminal>
+								</bgf:expression>
+							</sequence>
 						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>bbb</nonterminal>
-						</bgf:expression>
-					</sequence>
+					</plus>
 				</bgf:expression>
-			</plus>
+			</optional>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
@@ -41,18 +49,22 @@
 					<nonterminal>aaa</nonterminal>
 				</bgf:expression>
 				<bgf:expression>
-					<plus>
+					<optional>
 						<bgf:expression>
-							<sequence>
+							<plus>
 								<bgf:expression>
-									<nonterminal>bbb</nonterminal>
+									<sequence>
+										<bgf:expression>
+											<nonterminal>bbb</nonterminal>
+										</bgf:expression>
+										<bgf:expression>
+											<nonterminal>ccc</nonterminal>
+										</bgf:expression>
+									</sequence>
 								</bgf:expression>
-								<bgf:expression>
-									<nonterminal>ccc</nonterminal>
-								</bgf:expression>
-							</sequence>
+							</plus>
 						</bgf:expression>
-					</plus>
+					</optional>
 				</bgf:expression>
 				<bgf:expression>
 					<nonterminal>ddd</nonterminal>

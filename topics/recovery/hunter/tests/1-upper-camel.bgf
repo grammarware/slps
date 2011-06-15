@@ -15,7 +15,7 @@
 	<bgf:production>
 		<nonterminal>wez</nonterminal>
 		<bgf:expression>
-			<terminal>FOO</terminal>
+			<terminal>Foo</terminal>
 		</bgf:expression>
 	</bgf:production>
 </bgf:grammar>

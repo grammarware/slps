@@ -5,10 +5,10 @@
 		<bgf:expression>
 			<sequence>
 				<bgf:expression>
-					<terminal>[</terminal>
+					<nonterminal>BAR</nonterminal>
 				</bgf:expression>
 				<bgf:expression>
-					<nonterminal>a</nonterminal>
+					<nonterminal>BAR</nonterminal>
 				</bgf:expression>
 			</sequence>
 		</bgf:expression>
@@ -18,10 +18,10 @@
 		<bgf:expression>
 			<sequence>
 				<bgf:expression>
-					<nonterminal>b</nonterminal>
+					<nonterminal>wez</nonterminal>
 				</bgf:expression>
 				<bgf:expression>
-					<terminal>]</terminal>
+					<nonterminal>wez</nonterminal>
 				</bgf:expression>
 			</sequence>
 		</bgf:expression>
@@ -29,7 +29,14 @@
 	<bgf:production>
 		<nonterminal>wez</nonterminal>
 		<bgf:expression>
-			<nonterminal>foo</nonterminal>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>Foo</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>Foo</nonterminal>
+				</bgf:expression>
+			</sequence>
 		</bgf:expression>
 	</bgf:production>
 </bgf:grammar>

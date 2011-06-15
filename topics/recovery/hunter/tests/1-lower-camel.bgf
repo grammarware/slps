@@ -3,33 +3,19 @@
 	<bgf:production>
 		<nonterminal>foo</nonterminal>
 		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<terminal>[</terminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>a</nonterminal>
-				</bgf:expression>
-			</sequence>
+			<nonterminal>BAR</nonterminal>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
 		<nonterminal>bar</nonterminal>
 		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<nonterminal>b</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<terminal>]</terminal>
-				</bgf:expression>
-			</sequence>
+			<terminal>wez</terminal>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
 		<nonterminal>wez</nonterminal>
 		<bgf:expression>
-			<nonterminal>foo</nonterminal>
+			<terminal>Foo</terminal>
 		</bgf:expression>
 	</bgf:production>
 </bgf:grammar>

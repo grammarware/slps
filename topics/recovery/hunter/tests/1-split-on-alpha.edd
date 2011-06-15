@@ -2,6 +2,4 @@
 <edd:config xmlns:edd="http://planet-sl.org/edd">
 	<defining-symbol>:</defining-symbol>
 	<terminator-symbol>\n</terminator-symbol>
-	<decompose-symbols/>
-	<terminal-if-undefined/>
 </edd:config>

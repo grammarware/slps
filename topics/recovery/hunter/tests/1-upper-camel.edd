@@ -2,6 +2,6 @@
 <edd:config xmlns:edd="http://planet-sl.org/edd">
 	<defining-symbol>:</defining-symbol>
 	<terminator-symbol>\n</terminator-symbol>
-	<decompose-symbols/>
-	<terminal-if-undefined/>
+	<terminal-if-uppercase/>
+	<terminal-if-camelcase/>
 </edd:config>

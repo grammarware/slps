@@ -14,16 +14,15 @@ always_terminals = []
 always_nonterminals = []
 ignore_tokens = []
 ignore_lines = []
-nonterminals_alphabet = []
+nonterminals_alphabet = ['-','_']
+multiples = []
 
-special = \
+metasymbols = \
 	[
 		'DEFINING-SYMBOL',
+		'TERMINATOR-SYMBOL',
+		'MULTIPLE-DEFINING-SYMBOL',
 		'DEFINITION-SEPARATOR-SYMBOL',
-		'START-TERMINAL-SYMBOL',
-		'END-TERMINAL-SYMBOL',
-		'START-NONTERMINAL-SYMBOL',
-		'END-NONTERMINAL-SYMBOL',
 		'START-GROUP-SYMBOL',
 		'END-GROUP-SYMBOL',
 		'START-OPTION-SYMBOL',
@@ -39,19 +38,41 @@ special = \
 		'POSTFIX-OPTION-SYMBOL',
 		'POSTFIX-REPETITION-STAR-SYMBOL',
 		'POSTFIX-REPETITION-PLUS-SYMBOL',
-		'UNDEFINED-NONTERMINALS-ARE-TERMINALS',
+	]
+specials = \
+	[
+		'START-TERMINAL-SYMBOL',
+		'END-TERMINAL-SYMBOL',
+		'START-NONTERMINAL-SYMBOL',
+		'END-NONTERMINAL-SYMBOL',
 		'NONTERMINAL-IF-CONTAINS',
+		'NONTERMINAL-IF-DEFINED',
 		'NONTERMINAL-IF-UPPERCASE',
+		'NONTERMINAL-IF-LOWERCASE',
+		'NONTERMINAL-IF-CAMELCASE',
+		'TERMINAL-IF-UNDEFINED',
 		'TERMINAL-IF-UPPERCASE',
+		'TERMINAL-IF-LOWERCASE',
+		'TERMINAL-IF-CAMELCASE',
 		'IGNORE-EXTRA-NEWLINES',
 		'GLUE-NONALPHANUMERIC-TERMINALS'
 	]
+specials.extend(metasymbols)
 
-def myIsUpper(x):
-	return reduce(lambda a,b:a and (b.isupper() and not b.isdigit()),x,True)
+def isUpperCase(x):
+	return reduce(lambda a,b:a and (b.isalpha() or b in nonterminals_alphabet) and b.isupper(),x,True)
+
+def isLowerCase(x):
+	return reduce(lambda a,b:a and (b.isalpha() or b in nonterminals_alphabet) and b.islower(),x,True)
+
+def isCamelCase(x):
+	return isUpperCase(x[0]) and not isUpperCase(x) and isAlpha(x)
+
+def isAlphaNum(x):
+	return reduce(lambda a,b:a and (b.isalnum() or b in nonterminals_alphabet),x,True)
 
 def isAlpha(x):
-	return reduce(lambda a,b:a and (b=='_' or b=='-' or b.isalnum() or b in nonterminals_alphabet),x,True)
+	return reduce(lambda a,b:a and (b.isalpha() or b in nonterminals_alphabet),x,True)
 
 def isQNumber(x):
 	if x =='.':
@@ -81,10 +102,10 @@ def removeComments(ts,s,e):
 		#print('>>>',ts)
 	return ts
 	
-def splitTokenStream(s):
+def splitTokenStreamByAlphas(s):
 	ts = [s[0]]
 	i = 1
-	alpha = isAlpha(s[0])
+	alpha = isAlphaNum(s[0])
 	inQuotes = False
 	while (i<len(s)):
 		if 'start-terminal-symbol' in config.keys() and 'end-terminal-symbol' in config.keys():
@@ -100,14 +121,14 @@ def splitTokenStream(s):
 				i += 1
 				continue
 		if alpha:
-			if isAlpha(s[i]):
+			if isAlphaNum(s[i]):
 				ts[-1] += s[i]
 			else:
 				alpha = False
 				ts.append(s[i])
 		else:
 			ts.append(s[i])
-			alpha = isAlpha(s[i])
+			alpha = isAlphaNum(s[i])
 		i += 1
 	if 'tabulation-symbol' in config.keys():
 		ts = mapglue(ts,config['tabulation-symbol'])
@@ -146,11 +167,14 @@ def readConfig(f):
 			config[e.tag] = e.text.replace('\\n','\n')
 		else:
 			config[e.tag] = ''
-		if e.tag in ('nonterminal-if-camelcase','nonterminal-if-uppercase','decompose-symbols'):
-			config[e.tag] = ''
+		if e.tag in ('nonterminal-if-camelcase','nonterminal-if-uppercase','nonterminal-if-lowercase','nonterminal-if-contains','nonterminal-if-defined','decompose-symbols'):
+			if e.text:
+				config[e.tag] = e.text
+			else:
+				config[e.tag] = ''
 			for x in e.findall('except'):
 				always_terminals.append(x.text)
-		if e.tag in ('terminal-if-camelcase','terminal-if-uppercase','undefined-nonterminals-are-terminals'):
+		if e.tag in ('terminal-if-camelcase','terminal-if-uppercase','terminal-if-lowercase','terminal-if-undefined'):
 			config[e.tag] = ''
 			for x in e.findall('except'):
 				always_nonterminals.append(x.text)
@@ -213,7 +237,7 @@ def useDefiningSymbol(ts,d):
 			j = i-1
 			while j>-1 and ts[j] in ignore_tokens:
 				j -= 1
-			if isAlpha(ts[j]):
+			if isAlphaNum(ts[j]) or (ts[j][0]==config['start-terminal-symbol'] and ts[j][-1]==config['end-terminal-symbol'] and isAlphaNum(ts[j][1:-1])):
 				poss.append(i)
 	poss.append(len(ts)+1)
 	#print('Positions:',poss)
@@ -258,6 +282,11 @@ def useDefiningSymbol(ts,d):
 				end -= 1
 		p.extend(ts[poss[i]+1:end])
 		prods.append(p)
+	# all left hand sides need to be nonterminals!
+	for i in range(0,len(prods)):
+		if prods[i][1][0] == config['start-terminal-symbol'] and prods[i][1][-1] == config['end-terminal-symbol']:
+			print('STEP 4 warning: terminal on the left hand side of a production, fixed by turning it back into a nonterminal.')
+			prods[i][1] = prods[i][1][1:-1]
 	return prods
 
 def useDefinitionSeparatorSymbol(ts,d):
@@ -691,7 +720,7 @@ def glueTerminals(p):
 			q.append(y)
 			continue
 		x = y[1:-1]
-		if len(q)>0 and not isAlpha(q[-1][1:-1]) and not isAlpha(x):
+		if len(q)>0 and not isAlphaNum(q[-1][1:-1]) and not isAlphaNum(x):
 			# addition on terminals
 			q[-1] = q[-1][:-1] + y[1:]
 		else:
@@ -713,7 +742,9 @@ def assembleQualifiedNumbers(ts):
 	return ds
 
 def splitString(s,kw,defd):
+	global debug
 	# split s according to any kws while preserving them
+	#print('Searching for a split in',s,'with',kw)
 	if len(kw)==0:
 		return [s]
 	elif s in defd:
@@ -743,7 +774,8 @@ def splitString(s,kw,defd):
 					continue
 				else:
 					reject = True
-					#print('!!!!! Have to reject',res,'of',s)
+					if debug:
+						print('!!!!! Have to reject',res,'of',s)
 					#print(kw)
 		if reject:
 			return splitString(s,kw[1:],defd)
@@ -751,6 +783,7 @@ def splitString(s,kw,defd):
 			return res
 
 def decomposeSymbols(p,defd):
+	global debug
 	# [label, nt, ...]
 	q = p[:2]
 	# nested-name-specifiertemplateopt
@@ -775,7 +808,8 @@ def decomposeSymbols(p,defd):
 		#	continue
 		# none of the above: it is a nonterminal, it's not defined and we have no way to dismiss it
 		var = splitString(x,defd,defd)
-		#print(var)
+		if debug and len(var)>1:
+			print('Going to split',x,'to',var)
 		if len(var)==1:
 			q.append(x)
 			continue
@@ -807,29 +841,37 @@ def convert2terminal(x,defd):
 	if x in defd:
 		# defined nonterminal
 		return x
-	if x in special:
+	if x in metasymbols:
 		# pseudo-meta-symbol
 		return x
 	if x in always_nonterminals:
 		# configured exception
 		return x
+	if x in always_terminals:
+		# configured exception
+		return config['start-terminal-symbol'] + x + config['end-terminal-symbol']
 	if 'nonterminal-if-contains' in config.keys() and x.find(config['nonterminal-if-contains'])>-1:
 		# undefined nonterminal, but banned by configuration from being converted to a terminal
 		return x
-	if 'nonterminal-if-uppercase' in config.keys() and len(x)>1 and x.isupper():
-		# configuration claims that LONGUPPERCASE is a nonterminal
+	if 'nonterminal-if-uppercase' in config.keys() and len(x)>1 and isUpperCase(x):
+		# configuration claims that UPPERCASE is a nonterminal
 		return x
-	if 'nonterminal-if-camelcase' in config.keys() and len(x)>1 and x[0].isupper() and x[1:].isalpha() and x not in always_terminals:
+	if 'nonterminal-if-lowercase' in config.keys() and len(x)>1 and isLowerCase(x):
+		# configuration claims that UPPERCASE is a nonterminal
+		return x
+	if 'nonterminal-if-camelcase' in config.keys() and len(x)>1 and isCamelCase(x):
 		# configuration claims that CamelCase is a nonterminal
 		return x
 	if x[0] == config['start-terminal-symbol'] and x[-1] == config['end-terminal-symbol']:
 		# already a terminal
 		return x
 	# none of the above
-	return config['start-terminal-symbol']+x+config['end-terminal-symbol']
+	return config['start-terminal-symbol'] + x + config['end-terminal-symbol']
 
 def balanceProd(p):
+	global debug
 	i = 2
+	# balance forward
 	while i<len(p):
 		if p[i].find('START')<0:
 			i += 1
@@ -851,20 +893,62 @@ def balanceProd(p):
 				else:
 					fail = True
 			if fail:
-				print('STEP 7: Cannot balance a production',p,'- reverting',oldpi,'to a terminal.')
+				print('STEP 7: Cannot forward balance a production',p,'- reverting',oldpi,'to a terminal.')
 				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
 				i += 1
 			elif p[i] == oldpi:
-				print('STEP 7: Problem at',oldpi,'in',p)
+				print('STEP 7: Problem at',oldpi,'in',p[1],'- converted back to a terminal symbol.')
+				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
 				i += 1
 			else:
-				print('STEP 7: Rebalanced ambiguity of',oldpi,'with',p[i])
+				print('STEP 7: Rebalanced ambiguity of',oldpi,'with',p[i],'in',p[1])
+				i = j
+		else:
+			i = j
+	# balancing backward
+	i = len(p)-1
+	while i>1:
+		if p[i].find('END')<0 or p[i] in ignore_tokens:
+			i -= 1
+			continue
+		j = startOfContext(p,i,p[i].replace('END','START'))
+		while j>-1 and p[j] in ignore_tokens:
+			j -= 1
+		if j<0:
+			# endeavour 1: maybe there is another metasymbol with the same concrete representation?
+			if debug:
+				print('Endeavour 1: maybe there is another metasymbol with the same concrete representation as',repr(p[j]),'?')
+				print(p)
+			amb = []
+			for k in config.keys():
+				if config[k] == config[p[i].lower()] and k != p[i].lower():
+					amb.append(k.upper())
+			oldpi = p[i]
+			fail = False
+			for a in amb:
+				p[i] = a
+				j = startOfContext(p,i,p[i].replace('END','START'))
+				if j>0:
+					break
+				else:
+					fail = True
+			if fail:
+				print('STEP 7: Cannot backward balance a production',p,'- reverting',oldpi,'to a terminal.')
+				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
+				i -= 1
+			elif p[i] == oldpi:
+				print('STEP 7: Problem at',oldpi,'in',p[1],'- converted back to a terminal symbol.')
+				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
+				i -= 1
+			else:
+				print('STEP 7: Rebalanced ambiguity of',oldpi,'with',p[i],'in',p[1])
 				i = j
 		else:
 			i = j
 	return p
 
 def postfix2confix(p):
+	global debug
 	#print('>>>postfix>>>>confix>>>',p)
 	for s in ('POSTFIX-REPETITION-PLUS-SYMBOL','POSTFIX-REPETITION-STAR-SYMBOL','POSTFIX-OPTION-SYMBOL'):
 		while s in p:
@@ -874,14 +958,17 @@ def postfix2confix(p):
 				p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 				continue
 			if p[w-1] == 'END-GROUP-SYMBOL':
-				# group
+				# groups cease to exist if a postfix operator follows them
+				# i.e., (a b)? will be [a b], not [(a b)]
 				j = startOfContext(p,w-1,'START-GROUP-SYMBOL')
 				if j<0:
 					print('STEP 7: Impossible to balance the group preceding a postfix operator, converted it to a terminal')
 					p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 					continue
 				else:
-					print('STEP 7: Converted postfix metasymbol to confix notation.')
+					# nice message to get, but clutters the output
+					if debug:
+						print('STEP 7: Converted postfix metasymbol to confix notation.')
 					#print('<<<p<<<',p)
 					p[w-1] = s.replace('POSTFIX','END')
 					p[j+1] = s.replace('POSTFIX','START')
@@ -889,9 +976,31 @@ def postfix2confix(p):
 					q.extend(p[w+1:])
 					p = q
 					#print('>>>p>>>',p)
+			elif p[w-1][:4] == 'END-' and p[w-1][-7:] == '-SYMBOL':
+				# different groupings continue to exist if a postfix operator follows them
+				# i.e., {a b}? will be [{a b}], not [a b]
+				j = startOfContext(p,w-1,p[w-1].replace('END','START'))
+				if j<0:
+					print('STEP 7: Impossible to balance the group preceding a postfix operator, converted it to a terminal')
+					p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
+					continue
+				else:
+					# nice message to get, but clutters the output
+					if debug:
+						print('STEP 7: Converted postfix metasymbol to confix notation.')
+					print('<<<p<<<',p)
+					q = p[:j+1]
+					q.append(s.replace('POSTFIX','START'))
+					q.extend(p[j+1:w])
+					q.append(s.replace('POSTFIX','END'))
+					q.extend(p[w+1:])
+					p = q
+					print('>>>p>>>',p)
 			else:
+				# nice message to get, but clutters the output
+				if debug:
+					print('STEP 7: Converted postfix metasymbol to confix notation.')
 				# single element
-				print('STEP 7: Converted postfix metasymbol to confix notation.')
 				q = p[:w-1]
 				q.append(s.replace('POSTFIX','START'))
 				q.append(p[w-1])
@@ -982,7 +1091,61 @@ def convertNonalphanumerics2Terminals(p):
 			# TODO: can also be a meta-symbol
 			q.append(config['start-terminal-symbol']+x+config['end-terminal-symbol'])
 	return q
-	
+
+def splitTokenStreamByWhitespace(lines):
+	ts = [''.join(lines)]
+	specials = []
+	for x in metasymbols:
+		if x.lower() in config.keys() and config[x.lower()] not in ('',' '):
+			specials.append(config[x.lower()])
+	#specials = list(filter(lambda x:x not in ('',' '),config.values()))
+	specials.sort(key=len)
+	specials.reverse()
+	#print('SPECIALS:',specials)
+	i = j = 0
+	while i<len(ts):
+		#print('i=',i,'ts[i]=',repr(ts[i]))
+		for x in specials:
+			if ts[i].find(x) < 0 or ts[i] in specials:
+				continue
+			else:
+				nts = ts[:i]
+				nts.append(ts[i][:ts[i].index(x)])
+				nts.append(x)
+				nts.append(ts[i][ts[i].index(x)+len(x):])
+				nts.extend(ts[i+1:])
+				#print('old ts:',ts)
+				ts = nts
+				#print('new ts:',ts)
+		i += 1
+	nts = []
+	for x in ts:
+		if x in specials:
+			nts.append(x)
+		else:
+			nts.extend(x.split(' '))
+	#print('TS=',nts)
+	return list(filter(lambda x:x!='',nts))
+
+def nt2t(tokens,check):
+	return [config['start-terminal-symbol']+x+config['end-terminal-symbol']
+				if  len(x)>1
+				and x[0]!=config['start-terminal-symbol']
+				and check(x)
+				and x not in always_nonterminals
+			else x
+				for x in tokens]
+
+def t2nt(tokens,check):
+	return [x[1:-1]
+				if  len(x)>2
+				and x[0]==config['start-terminal-symbol']
+				and x[-1]==config['end-terminal-symbol']
+				and check(x[1:-1])
+				and x[1:-1] not in always_terminals
+			else x
+				for x in tokens]
+
 if __name__ == "__main__":
 	if len(sys.argv) != 4:
 		print('Usage:')
@@ -998,17 +1161,24 @@ if __name__ == "__main__":
 	#print(ignore_lines)
 	for sign in ignore_lines:
 		lines = list(filter(lambda x:x.find(sign)<0,lines))
-	tokens = list(''.join(lines))
+	if 'break-tokens-at-whitespace' in config.keys():
+		# only at whitespace
+		tokens = splitTokenStreamByWhitespace(lines)
+	else:
+		# at any change from alphanumeric to non-alphanumeric
+		tokens = list(''.join(lines))
+		if debug:
+			print('Token stream:',tokens)
+		print('STEP 1: removing whitespace and comments, assembling terminal symbols.')
+		for k in masked.keys():
+			if len(k)>1 and k.find('@@@')<0:
+				print('STEP 1: going to glue tokens that resemble masked terminal', repr(k))
+				tokens = mapglue(tokens,k)
+				if debug:
+					print('Token stream:',tokens)
+		tokens = splitTokenStreamByAlphas(tokens)
 	if debug:
-		print('Token stream:',tokens)
-	print('STEP 1: removing whitespace and comments, assembling terminal symbols.')
-	for k in masked.keys():
-		if len(k)>1 and k.find('@@@')<0:
-			print('STEP 1: going to glue tokens that resemble masked terminal', k.replace('\n','\\n'))
-			tokens = mapglue(tokens,k)
-			if debug:
-				print('Token stream:',tokens)
-	tokens = splitTokenStream(tokens)
+		print('Token stream after splitting it:',tokens)
 	if 'start-comment-symbol' in config.keys() and 'end-comment-symbol' in config.keys():
 		# remove comments
 		# assumption: comments are never nested!
@@ -1023,15 +1193,17 @@ if __name__ == "__main__":
 		# technically we still need them to denote terminals in our internal representation
 		config['start-terminal-symbol'] = config['end-terminal-symbol'] = '"'
 		tokens = [config['start-terminal-symbol']+masked[x]+config['end-terminal-symbol'] if x in masked.keys() else x for x in tokens]
+	# if we know special rules for telling terminals from nonterminals, now is the time to use them!
 	if 'terminal-if-uppercase' in config.keys():
 		print('STEP 1: all uppercase tokens are considered terminals.')
-		tokens = [config['start-terminal-symbol']+x+config['end-terminal-symbol']
-					if  len(x)>1
-					and x[0]!=config['start-terminal-symbol']
-					and myIsUpper(x)
-					and x not in always_nonterminals
-				else x
-					for x in tokens]
+		tokens = nt2t(tokens,isUpperCase)
+	if 'terminal-if-lowercase' in config.keys():
+		print('STEP 1: all lowercase tokens are considered terminals.')
+		tokens = nt2t(tokens,isLowerCase)
+	if 'terminal-if-camelcase' in config.keys():
+		print('STEP 1: all camelcase tokens are considered terminals.')
+		tokens = nt2t(tokens,isCamelCase)
+	# spaces instead of weird occurrences of start-terminal-symbols
 	tokens = [config['start-terminal-symbol']+x+config['end-terminal-symbol']
 				if x==config['start-terminal-symbol']+config['end-terminal-symbol']
 				or x==config['start-terminal-symbol']
@@ -1045,6 +1217,19 @@ if __name__ == "__main__":
 		tokens = assembleBracketedSymbols(tokens,config['start-nonterminal-symbol'],config['end-nonterminal-symbol'],True)
 	else:
 		print('STEP 2 skipped, sorry: start-nonterminal-symbol and end-nonterminal-symbol are not both specified.')
+	# if we know special rules for telling terminals from nonterminals, now is the time to use them!
+	if 'nonterminal-if-uppercase' in config.keys():
+		print('STEP 2: all uppercase tokens are considered nonterminals.')
+		tokens = t2nt(tokens,isUpperCase)
+	if 'nonterminal-if-lowercase' in config.keys():
+		print('STEP 2: all lowercase tokens are considered nonterminals.')
+		tokens = t2nt(tokens,isLowerCase)
+	if 'nonterminal-if-camelcase' in config.keys():
+		print('STEP 2: all camelcase tokens are considered nonterminals.')
+		tokens = t2nt(tokens,isCamelCase)
+	if 'nonterminal-if-contains' in config.keys():
+		print('STEP 2: all tokens containing',repr(config['nonterminal-if-contains']),'are considered nonterminals.')
+		tokens = t2nt(tokens,lambda x:x.find(config['nonterminal-if-contains'])>-1)
 	# STEP 3: assembling composite metasymbols together
 	if debug:
 		print('Token stream:',tokens)
@@ -1052,8 +1237,18 @@ if __name__ == "__main__":
 	tokens = assembleQualifiedNumbers(tokens)
 	for k in config.keys():
 		if len(config[k])>1 and (config[k].find('\n')<0 or 'consider-indentation' not in config.keys()):
-			print('STEP 3: going to glue tokens that resemble metasymbol', config[k].replace('\n','\\n').replace('\t','\\t'),'('+k+')')
+			print('STEP 3: going to glue tokens that resemble metasymbol', repr(config[k]),'('+k+')')
 			tokens = mapglue(tokens,config[k])
+	# treat "multiple" productions
+	if 'multiple-defining-symbol' in config.keys():
+		for i in range(0,len(tokens)):
+			if tokens[i] == config['multiple-defining-symbol']:
+				print('STEP 3 found a multiple choice production.')
+				tokens[i] = config['defining-symbol']
+				j = i-1
+				while tokens[j] in ignore_tokens:
+					j -= 1
+				multiples.append(tokens[j])
 	if debug:
 		print('Token stream:',tokens)
 	# STEP 4: slice according to defining-symbol
@@ -1188,7 +1383,22 @@ if __name__ == "__main__":
 	defined = [x[1] for x in prods]
 	if debug:
 		print('Defined are',defined)
-	defined.extend(config.keys())
+	for x in config.values():
+		if x and isAlphaNum(x):
+			defined.append(x)
+	# are there any nonterminals defined as "one of"?
+	if multiples:
+		nprods = []
+		for p in prods:
+			if p[1] in multiples:
+				q = p[:3]
+				for y in p[3:]:
+					q.append('DEFINITION-SEPARATOR-SYMBOL')
+					q.append(y)
+				nprods.append(q)
+			else:
+				nprods.append(p)
+		prods = nprods
 	if 'decompose-symbols' in config.keys():
 		print('STEP 5 (part of rule 4): decomposing compound symbols.')
 		prods = [decomposeSymbols(x,defined) for x in prods]
@@ -1197,25 +1407,10 @@ if __name__ == "__main__":
 	prods = list(map(convertNonalphanumerics2Terminals,prods))
 	# STEP 6: slice insides according to definition-separator-symbol
 	step6 = False
-	for s in \
-		('definition-separator-symbol'
-		,'postfix-repetition-star-symbol'
-		,'postfix-repetition-plus-symbol'
-		,'postfix-option-symbol'
-		,'start-group-symbol'
-		,'end-group-symbol'
-		,'start-repetition-star-symbol'
-		,'end-repetition-star-symbol'
-		,'start-repetition-plus-symbol'
-		,'end-repetition-plus-symbol'
-		,'start-seplist-star-symbol'
-		,'end-seplist-star-symbol'
-		,'start-seplist-plus-symbol'
-		,'end-seplist-plus-symbol'
-		,'start-option-symbol'
-		,'end-option-symbol'):
+	for z in metasymbols:
+		s = z.lower()
 		if s in config.keys():
-			print('STEP 6: marking',s+'.')
+			print('STEP 6: marking',repr(config[s]),'as',s+'.')
 			step6 = True
 			prods = [[s.upper() if x==config[s] else x for x in p] for p in prods]
 			#prods = list(map(lambda p:list(map(lambda x:s.upper() if x==config[s] else x,p)),prods))
@@ -1241,7 +1436,7 @@ if __name__ == "__main__":
 		for x in ignore_tokens:
 			prods = [list(filter(lambda y:y!=x,p)) for p in prods]
 		#prods = list(map(lambda x:filter(lambda y:y!='\n',x),prods))
-	if 'undefined-nonterminals-are-terminals' in config.keys():
+	if 'terminal-if-undefined' in config.keys():
 		print('STEP 8 (rule 5): turning undefined nonterminals into terminals.')
 		step8 = True
 		prods = [[convert2terminal(x,defined) for x in p] for p in prods]
