@@ -742,9 +742,10 @@ def assembleQualifiedNumbers(ts):
 	return ds
 
 def splitString(s,kw,defd):
-	global debug
 	# split s according to any kws while preserving them
-	#print('Searching for a split in',s,'with',kw)
+	global debug
+	if debug:
+		print('Searching for a split in',s,'with',kw)
 	if len(kw)==0:
 		return [s]
 	elif s in defd:
@@ -755,7 +756,8 @@ def splitString(s,kw,defd):
 		ss = s.split(kw[0])
 		done = []
 		for x in ss:
-			done.append(x)
+			if x:
+				done.append(x)
 			done.append(kw[0])
 		done.pop()
 		if done[-1]=='':
@@ -1101,23 +1103,44 @@ def considerIndentation(ts):
 def convertNonalphanumerics2Terminals(p):
 	q = p[:2]
 	for x in p[2:]:
-		if x[:len(config['start-terminal-symbol'])] == config['start-terminal-symbol'] or x == '\n' or 'consider-indentation' in config.keys():
+		if 'consider-indentation' in config.keys():
 			# TODO: make compatible with consider-indentation
 			q.append(x)
 			continue
-		# if it's a possible metasymbol, let it be
-		an = x in config.values()
-		for y in x:
-			if y.isalnum():
-				an = True
-				break
-		if an:
-			# stands a chance
+		if x[:len(config['start-terminal-symbol'])] == config['start-terminal-symbol'] or x == '\n':
+			# TODO: make compatible with consider-indentation
 			q.append(x)
-		else:
-			# convert to terminal
-			# TODO: can also be a meta-symbol
-			q.append(config['start-terminal-symbol']+x+config['end-terminal-symbol'])
+			continue
+		if x in config.values():
+			# if it's a possible metasymbol, let it be
+			q.append(x)
+			continue
+		if isAlphaNum(x) and x[0].isalpha():
+			# a good alphanumeric word
+			q.append(x)
+			continue
+		# none of the above
+		string = x[0]
+		alpha = isAlphaNum(x[0])
+		if alpha and not x[0].isalpha():
+			print('STEP 5 warning: the first letter of',x,'does not seem right, will be separated.')
+			alpha = False
+		for s in x[1:]:
+			if alpha == isAlphaNum(s):
+				string += s
+			else:
+				if string:
+					if isAlphaNum(string):
+						q.append(string)
+					else:
+						q.append(config['start-terminal-symbol'] + string + config['end-terminal-symbol'])
+				string = s
+				alpha = isAlphaNum(s)
+		if string:
+			if isAlphaNum(string):
+				q.append(string)
+			else:
+				q.append(config['start-terminal-symbol'] + string + config['end-terminal-symbol'])
 	return q
 
 def splitTokenStreamByWhitespace(lines):
@@ -1421,18 +1444,29 @@ if __name__ == "__main__":
 			if p[1] in multiples:
 				q = p[:3]
 				for y in p[3:]:
+					if y in ignore_tokens:
+						continue
 					q.append('DEFINITION-SEPARATOR-SYMBOL')
-					q.append(y)
+					if config['definition-separator-symbol'] == y:
+						q.append(config['start-terminal-symbol']+y+config['end-terminal-symbol'])
+					else:
+						q.append(y)
 				nprods.append(q)
 			else:
 				nprods.append(p)
 		prods = nprods
-	if 'decompose-symbols' in config.keys():
-		print('STEP 5 (part of rule 4): decomposing compound symbols.')
-		prods = [decomposeSymbols(x,defined) for x in prods]
+	if debug:
+		print('After treating multiples the grammar is perceived like this:')
+		for p in prods:
+			print('\t',p[1],'is defined as',p[2:])
 	# STEP 5: non-alphanumerics
 	print('STEP 5 (part of rule 5): converting non-alphanumeric nonterminal symbols to terminals.')
 	prods = list(map(convertNonalphanumerics2Terminals,prods))
+	# STEP 5: decomposition
+	defined.extend(always_nonterminals)
+	if 'decompose-symbols' in config.keys():
+		print('STEP 5 (part of rule 4): decomposing compound symbols.')
+		prods = [decomposeSymbols(x,defined) for x in prods]
 	# STEP 6: slice insides according to definition-separator-symbol
 	step6 = False
 	for z in metasymbols:
