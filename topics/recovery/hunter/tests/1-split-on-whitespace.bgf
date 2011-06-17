@@ -3,29 +3,35 @@
 	<bgf:production>
 		<nonterminal>foo</nonterminal>
 		<bgf:expression>
-			<nonterminal>a@b±c!d</nonterminal>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>a</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>@</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>b</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>±</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>c</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>!</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>d</nonterminal>
+				</bgf:expression>
+			</sequence>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
 		<nonterminal>bar</nonterminal>
 		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<terminal>!@</terminal>
-				</bgf:expression>
-				<bgf:expression>
-					<terminal>#$</terminal>
-				</bgf:expression>
-				<bgf:expression>
-					<terminal>%^</terminal>
-				</bgf:expression>
-				<bgf:expression>
-					<terminal>&amp;*</terminal>
-				</bgf:expression>
-				<bgf:expression>
-					<terminal>()</terminal>
-				</bgf:expression>
-			</sequence>
+			<terminal>!@#$%^&amp;*()</terminal>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
@@ -52,6 +58,28 @@
 				</bgf:expression>
 				<bgf:expression>
 					<nonterminal>d</nonterminal>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>qux</nonterminal>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<terminal>!@</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>#$</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>%^</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>&amp;*</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>()</terminal>
 				</bgf:expression>
 			</sequence>
 		</bgf:expression>

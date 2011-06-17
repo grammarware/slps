@@ -7,7 +7,9 @@ import BGF3
 from functools import reduce
 
 debug = False
+#debug = True
 
+defaults = {'definition-separator-symbol':'|||||'}
 config = {}
 masked = {}
 always_terminals = []
@@ -16,6 +18,7 @@ ignore_tokens = []
 ignore_lines = []
 nonterminals_alphabet = ['-','_']
 multiples = []
+aliases = {}
 
 metasymbols = \
 	[
@@ -41,6 +44,8 @@ metasymbols = \
 	]
 specials = \
 	[
+		'CONCATENATE-SYMBOL',
+		'LINE-CONTINUATION-SYMBOL'
 		'START-TERMINAL-SYMBOL',
 		'END-TERMINAL-SYMBOL',
 		'START-NONTERMINAL-SYMBOL',
@@ -55,7 +60,7 @@ specials = \
 		'TERMINAL-IF-LOWERCASE',
 		'TERMINAL-IF-CAMELCASE',
 		'IGNORE-EXTRA-NEWLINES',
-		'GLUE-NONALPHANUMERIC-TERMINALS'
+		'GLUE-NONALPHANUMERIC-TERMINALS',
 	]
 specials.extend(metasymbols)
 
@@ -163,6 +168,25 @@ def readConfig(f):
 		elif e.tag == 'nonterminals-may-contain':
 			for x in e.text:
 				nonterminals_alphabet.append(x)
+		elif e.tag == 'ignore':
+			#config[e.tag] = ''
+			for x in e.findall('*'):
+				if x.tag == 'newline':
+					ignore_tokens.append('\n')
+					ignore_tokens.append('@@@0-0')
+				elif x.tag == 'space':
+					ignore_tokens.append(' ')
+				elif x.tag == 'lines-containing':
+					ignore_lines.append(x.text)
+				elif x.tag == 'same-indentation':
+					ignore_tokens.append('@@@1-1')
+				else:
+					ignore_tokens.append(x.text)
+		elif e.tag == 'alias':
+			for x in e.findall('*'):
+				if x.tag not in aliases.keys():
+					aliases[x.tag] = []
+				aliases[x.tag].append(x.text)
 		elif e.text:
 			config[e.tag] = e.text.replace('\\n','\n')
 		else:
@@ -178,18 +202,6 @@ def readConfig(f):
 			config[e.tag] = ''
 			for x in e.findall('except'):
 				always_nonterminals.append(x.text)
-		if e.tag=='ignore':
-			config[e.tag] = ''
-			for x in e.findall('*'):
-				if x.tag == 'newline':
-					ignore_tokens.append('\n')
-					ignore_tokens.append('@@@0-0')
-				elif x.tag == 'lines-containing':
-					ignore_lines.append(x.text)
-				elif x.tag == 'same-indentation':
-					ignore_tokens.append('@@@1-1')
-				else:
-					ignore_tokens.append(x.text)
 	if debug:
 		print('Ok',config)
 
@@ -1115,11 +1127,17 @@ def convertNonalphanumerics2Terminals(p):
 			# if it's a possible metasymbol, let it be
 			q.append(x)
 			continue
-		if isAlphaNum(x) and x[0].isalpha():
+		if 'start-nonterminal-symbol' in config.keys() and 'end-nonterminal-symbol' in config.keys() and x[0] == config['start-nonterminal-symbol'] and x[-1] == config['end-nonterminal-symbol']:
+			# we know nonterminal name delimiters
+			q.append(x)
+			continue
+		if isAlphaNum(x) and x[0].isalpha() and x[-1].isalnum():
 			# a good alphanumeric word
 			q.append(x)
 			continue
 		# none of the above
+		if x[0]==' ' or x[-1]==' ':
+			x = x.strip()
 		string = x[0]
 		alpha = isAlphaNum(x[0])
 		if alpha and not x[0].isalpha():
@@ -1203,11 +1221,36 @@ if __name__ == "__main__":
 		print('	extract.py input.txt config.edd output.bgf')
 		sys.exit(-1)
 	readConfig(sys.argv[2])
+	# default values for some metasymbols
+	for x in defaults.keys():
+		if x not in config.keys():
+			config[x] = defaults[x]
 	f = open(sys.argv[1],'r')
 	# STEP 0: read the file, remove whitespace (?)
 	print('STEP 0: reading the input file.')
 	lines = f.readlines()
 	f.close()
+	if 'line-continuation-symbol' in config.keys():
+		if 'concatenate-symbol' in config.keys():
+			sep = config['concatenate-symbol']
+		else:
+			sep = ' '
+		cx = 0
+		nlines = []
+		for line in lines:
+			if line[:len(config['line-continuation-symbol'])] == config['line-continuation-symbol']:
+				if debug:
+					print('STEP 0: concatenating',repr(nlines[-1]),'and',repr(line))
+				# [:-1] because there is still the \n character at the end of the last line
+				nlines[-1] = nlines[-1][:-1] + sep + line
+				cx += 1
+			else:
+				nlines.append(line)
+		lines = nlines
+		if cx > 0:
+			print('STEP 0: found',cx,'line continuations.')
+		else:
+			print('STEP 0: line continuation specified, but not encountered.')
 	# STEP 1: assemble terminal symbols
 	#print(ignore_lines)
 	for sign in ignore_lines:
@@ -1288,7 +1331,8 @@ if __name__ == "__main__":
 	tokens = assembleQualifiedNumbers(tokens)
 	for k in config.keys():
 		if len(config[k])>1 and (config[k].find('\n')<0 or 'consider-indentation' not in config.keys()):
-			print('STEP 3: going to glue tokens that resemble metasymbol', repr(config[k]),'('+k+')')
+			if k in defaults.keys() and config[k] != defaults[k]:
+				print('STEP 3: going to glue tokens that resemble metasymbol', repr(config[k]),'('+k+')')
 			tokens = mapglue(tokens,config[k])
 	# treat "multiple" productions
 	if 'multiple-defining-symbol' in config.keys():
@@ -1311,7 +1355,7 @@ if __name__ == "__main__":
 		print('After considering indentation:',tokens)
 	if debug:
 		print('Token stream:',tokens)
-	if 'nonterminals-may-contain-spaces' in config.keys() and 'concatenate-symbol' in config.keys():
+	if ' ' in nonterminals_alphabet and 'concatenate-symbol' in config.keys():
 		# can only treat them together, because spaces in names without concatenation symbol are highly ambiguous
 		# and concatenation symbols are never used if nonterminal names do not have spaces
 		# TODO: not necessarily true, if you have both start-nonterminal-symbol and end-nonterminal-symbol!
@@ -1401,10 +1445,6 @@ if __name__ == "__main__":
 			print('\t',p[1],'is defined as',p[2:])
 	# STEP 4a.2: adjusting the terminator-symbol on the unfit productions
 	poststep4 = 0
-	if debug:
-		print('The grammar is perceived like this:')
-		for p in prods:
-			print('\t',p[1],'is defined as',p[2:])
 	for f in need2fix:
 		for i in range(0,len(config['terminator-symbol'])):
 			if prods[f][-len(config['terminator-symbol'])+i:] == config['terminator-symbol'][:len(config['terminator-symbol'])-i]:
@@ -1415,6 +1455,7 @@ if __name__ == "__main__":
 		if ''.join(prods[f][-len(config['terminator-symbol'])-1:-1]) == config['terminator-symbol'] and prods[f][-1] == '\n':
 			prods[f].pop()
 			poststep4 += 1
+	#print('ignored tokens',ignore_tokens)
 	ii = list(filter(lambda x:x[:3]=='@@@',ignore_tokens))
 	if 'consider-indentation' in config.keys() and len(ii)>0:
 		# rewrite tokens with tabulation
@@ -1459,6 +1500,10 @@ if __name__ == "__main__":
 		print('After treating multiples the grammar is perceived like this:')
 		for p in prods:
 			print('\t',p[1],'is defined as',p[2:])
+	# STEP 4 end: removing extra whitespace
+	if ' ' in ignore_tokens:
+		print('STEP 4 took care of extra spaces that were left unused at this point.')
+		prods = [[x.strip() for x in p] for p in prods]
 	# STEP 5: non-alphanumerics
 	print('STEP 5 (part of rule 5): converting non-alphanumeric nonterminal symbols to terminals.')
 	prods = list(map(convertNonalphanumerics2Terminals,prods))
@@ -1474,7 +1519,8 @@ if __name__ == "__main__":
 			continue
 		s = z.lower()
 		if s in config.keys():
-			print('STEP 6: marking',repr(config[s]),'as',s+'.')
+			if s in defaults.keys() and config[s] != defaults[s]:
+				print('STEP 6: marking',repr(config[s]),'as',s+'.')
 			step6 = True
 			prods = [[s.upper() if x==config[s] else x for x in p] for p in prods]
 			#prods = list(map(lambda p:list(map(lambda x:s.upper() if x==config[s] else x,p)),prods))
@@ -1521,10 +1567,25 @@ if __name__ == "__main__":
 	# STEP X: validating bracketing?
 	# ...
 	# RESULT
-	if 'nonterminals-may-contain-spaces' in config.keys():
-		#
-		prods = [[x.replace(' ','_') if len(x)<3 or (x[0]!=config['start-terminal-symbol'] and x[-1]!=config['end-terminal-symbol']) else x for x in p] for p in prods]
+	if ' ' in nonterminals_alphabet:
+		# expanded from list comprehension for enhanced readability
 		print('LAST STEP: replacing spaces with underscores for BGF compatibility and readability.')
+		for i in range(0,len(prods)):
+			#print('PRODS[i]=',prods[i])
+			#if len(prods[i][0]) > 0 and (prods[i][0][0] == ' ' or prods[i][0][-1] == ' '):
+			#	prods[i][0] = prods[i][0].strip()
+			#if len(prods[i][1]) > 0 and (prods[i][1][0] == ' ' or prods[i][1][-1] == ' '):
+			#	prods[i][1] = prods[i][1].strip()
+			for j in range(0,len(prods[i])):
+				if len(prods[i][j])<2:
+					continue
+				#if prods[i][j][0] == config['start-terminal-symbol']:
+				#	prods[i][j] = prods[i][j].strip()
+				if prods[i][j][0] == config['start-terminal-symbol'] and prods[i][j][-1] == config['end-terminal-symbol']:
+					continue
+				# len(x)<3 -- why relevant? TODO
+				prods[i][j] = prods[i][j].replace(' ','_')
+	#prods[i] = [x.replace(' ','_') if len(x)<3 or (x[0]!=config['start-terminal-symbol'] and x[-1]!=config['end-terminal-symbol']) else x for x in prods[i]]
 	if debug:
 		print('RESULT:')
 		for p in prods:

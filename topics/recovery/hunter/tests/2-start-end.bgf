@@ -9,7 +9,7 @@
 	<bgf:production>
 		<nonterminal>bar</nonterminal>
 		<bgf:expression>
-			<nonterminal>x_y_z</nonterminal>
+			<nonterminal>x y z</nonterminal>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>

@@ -93,4 +93,41 @@
 			</sequence>
 		</bgf:expression>
 	</bgf:production>
+	<bgf:production>
+		<nonterminal>qux</nonterminal>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<terminal>!</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>@</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>#</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>$</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>%</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>^</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>&amp;</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>*</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>(</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>)</terminal>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</bgf:production>
 </bgf:grammar>
