@@ -13,14 +13,14 @@ clean:
 build:
 	make zooprj
 	make tankprj
-	make tmprj
-	xsltproc _dev/links2html.xslt _dev/java-grammars.xml | python ../topics/export/hypertext/closemeta.py > zoo/java/links.html
+	#make tmprj
 
 zooprj:
 	rm -f zoo/*/*
 	xsltproc _dev/list2makefile.xslt _dev/zoo.xml > _dev/Makefile.x
 	make -f _dev/Makefile.x
 	xsltproc --stringparam date `date +"%d/%m/%Y"` _dev/list2xhtml.xslt _dev/zoo.xml  >  zoo/index.html
+	xsltproc _dev/links2html.xslt _dev/java-grammars.xml | python ../topics/export/hypertext/closemeta.py > zoo/java/links.html
 
 tankprj:
 	rm -f tank/*/*

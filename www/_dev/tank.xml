@@ -555,6 +555,102 @@
 			</grammar>
 		</version>
 		<version>
+			<name>LLL</name>
+			<grammar>
+				<name>Extracted</name>
+				<handle>metasyntax/lll-ldta</handle>
+				<source>
+					<title>Jan Kort, Ralf Lämmel, Chris Verhoef, <em xmlns="http://www.w3.org/1999/xhtml">The LLL grammar format</em></title>
+					<specific>GDK System Demo, page 2</specific>
+					<date>April 2002</date>
+					<link>
+						<uri>http://gdk.sourceforge.net/</uri>
+						<name>GDK</name>
+					</link>
+					<link>
+						<mu>topics/grammars/metasyntax/lll-ldta/README.txt</mu>
+						<name>ReadMe</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>shared/edd/lll.edd</mu>
+						<name>LLL.EDD</name>
+					</link>
+					<link>
+						<mu>topics/recovery/hunter/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<mu>shared/generators/reroot2top</mu>
+						<name>reroot2top</name>
+					</link>
+				</toolset>
+				<item>
+					<name>J. Kort, R. Lämmel, C. Verhoef. <em xmlns="http://www.w3.org/1999/xhtml">The Grammar Deployment Kit — System Demonstration.</em> LDTA'02, ENTCS 65:3, 2002.</name>
+					<link>
+						<uri>http://www.cs.vu.nl/grammars/gdk</uri>
+						<name>Abstract</name>
+					</link>
+					<link>
+						<uri>http://www.cs.vu.nl/grammarware/gdk/ldta2002.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</item>
+			</grammar>
+			<grammar>
+				<name>Extracted</name>
+				<handle>metasyntax/lll-kort</handle>
+				<source>
+					<title>Jan Kort, <em xmlns="http://www.w3.org/1999/xhtml">The LLL grammar format</em></title>
+					<specific>GDK Reference Manual, Chapter 3, page 3</specific>
+					<date>May 2003</date>
+					<link>
+						<uri>http://gdk.sourceforge.net/</uri>
+						<name>GDK</name>
+					</link>
+					<link>
+						<mu>topics/grammars/metasyntax/lll-kort/README.txt</mu>
+						<name>ReadMe</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>shared/edd/lll.edd</mu>
+						<name>LLL.EDD</name>
+					</link>
+					<link>
+						<mu>topics/recovery/hunter/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<mu>shared/generators/reroot2top</mu>
+						<name>reroot2top</name>
+					</link>
+				</toolset>
+				<item>
+					<name>J. Kort, R. Lämmel, C. Verhoef. <em xmlns="http://www.w3.org/1999/xhtml">The Grammar Deployment Kit — System Demonstration.</em> LDTA'02, ENTCS 65:3, 2002.</name>
+					<link>
+						<uri>http://www.cs.vu.nl/grammars/gdk</uri>
+						<name>Abstract</name>
+					</link>
+					<link>
+						<uri>http://www.cs.vu.nl/grammarware/gdk/ldta2002.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</item>
+				<item>
+					<name>J. Kort. <em xmlns="http://www.w3.org/1999/xhtml">Grammar Deployment Kit Reference Manual.</em> UvA 2003.</name>
+					<link>
+						<uri>http://gdk.sourceforge.net/gdkref.pdf</uri>
+						<name>PDF</name>
+					</link>
+				</item>
+			</grammar>
+		</version>
+		<version>
 			<name>Rascal</name>
 			<grammar>
 				<name>Extracted</name>

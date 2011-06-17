@@ -451,12 +451,19 @@
 						<name>ReadMe</name>
 					</link>
 				</source>
-				<toolset ref="lll"/>
 				<toolset>
-					<name>Recovery</name>
+					<name>Extraction</name>
 					<link>
-						<xbgf>cpp/iso-14882-1998-correct</xbgf>
-						<name>correct</name>
+						<mu>topics/grammars/cpp/iso-14882-1998/config.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/recovery/hunter/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<xbgf>cpp/iso-14882-1998-post-extract</xbgf>
+						<name>post-extract</name>
 					</link>
 				</toolset>
 			</grammar>
@@ -550,14 +557,18 @@
 					</link>
 				</source>
 				<toolset>
-					<name>Recovery</name>
+					<name>Extraction</name>
 					<link>
 						<uri>http://gdk.sourceforge.net/</uri>
 						<name>GDK</name>
 					</link>
 					<link>
-						<mu>topics/extraction/bnf2bgf/lll2bgf.py</mu>
-						<name>LLL⇒BGF</name>
+						<mu>shared/edd/lll.edd</mu>
+						<name>LLL.EDD</name>
+					</link>
+					<link>
+						<mu>topics/recovery/hunter/hunter.py</mu>
+						<name>Hunter</name>
 					</link>
 				</toolset>
 				<toolset>
@@ -618,7 +629,17 @@
 						<name>ReadMe</name>
 					</link>
 				</source>
-				<toolset ref="lll"/>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>shared/edd/lll.edd</mu>
+						<name>LLL.EDD</name>
+					</link>
+					<link>
+						<mu>topics/recovery/hunter/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+				</toolset>
 			</grammar>
 			<grammar>
 				<name>Extracted</name>
