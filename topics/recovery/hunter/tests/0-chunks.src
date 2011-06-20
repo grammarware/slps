@@ -1,0 +1,11 @@
+The following is the grammar of foo:
+<grammar>
+foo : bar.
+bar : wez.
+</grammar>
+
+The following is also a grammar, but not of foo
+
+<grammar>wez : foo.</grammar>
+
+This is some irrelevant text.

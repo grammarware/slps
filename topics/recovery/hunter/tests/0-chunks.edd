@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edd:config xmlns:edd="http://planet-sl.org/edd">
+	<start-grammar-symbol>&lt;grammar&gt;</start-grammar-symbol>
+	<end-grammar-symbol>&lt;/grammar&gt;</end-grammar-symbol>
+	<defining-symbol>:</defining-symbol>
+	<terminator-symbol>.</terminator-symbol>
+	<ignore>
+		<newline/>
+	</ignore>
+</edd:config>

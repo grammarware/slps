@@ -1215,6 +1215,24 @@ def t2nt(tokens,check):
 			else x
 				for x in tokens]
 
+def processLine(line,inside,chunks):
+	if inside:
+		if line.find(config['end-grammar-symbol'])>-1:
+			inside = False
+			line = line[:line.index(config['end-grammar-symbol'])]
+			if line.strip() != '':
+				line,inside,chunks = processLine(line,True,chunks)
+				return line,False,chunks
+		else:
+			chunks.append(line)
+	else:
+		if line.find(config['start-grammar-symbol'])>-1:
+			inside = True
+			line = line[line.index(config['start-grammar-symbol'])+len(config['start-grammar-symbol']):]
+			if line.strip() != '':
+				return processLine(line,inside,chunks)
+	return (line,inside,chunks)
+
 if __name__ == "__main__":
 	if len(sys.argv) != 4:
 		print('Usage:')
@@ -1230,6 +1248,15 @@ if __name__ == "__main__":
 	print('STEP 0: reading the input file.')
 	lines = f.readlines()
 	f.close()
+	if 'start-grammar-symbol' in config.keys() and 'end-grammar-symbol' in config.keys():
+		chunks = []
+		inside = False
+		for line in lines:
+			(line,inside,chunks) = processLine(line,inside,chunks)
+		lines = chunks
+		print('STEP 0 found',len(lines),'in grammar chunks between designated delimiters.')
+		if debug:
+			print('Perceived lines:',lines)
 	if 'line-continuation-symbol' in config.keys():
 		if 'concatenate-symbol' in config.keys():
 			sep = config['concatenate-symbol']
