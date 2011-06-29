@@ -1395,4 +1395,44 @@
 			</grammar>
 		</version>
 	</language>
+	<language>
+		<name>Wiki</name>
+		<version>
+			<name>MediaWiki in EBNF</name>
+			<grammar>
+				<name>Extracted</name>
+				<handle>wiki/mediawiki-ebnf</handle>
+				<source>
+					<title>MediaWiki, <em xmlns="http://www.w3.org/1999/xhtml">Markup spec/EBNF</em>, Revision 335623</title>
+					<date>5 July 2010</date>
+					<link>
+						<uri>http://www.mediawiki.org/w/index.php?title=Markup_spec/EBNF&amp;oldid=335623</uri>
+						<name>Page</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/wiki/mediawiki-ebnf/config.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/recovery/hunter/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-ebnf-post-extract</xbgf>
+						<name>post-extract</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>wiki/mediawiki-ebnf-correct</xbgf>
+						<name>correct</name>
+					</link>
+				</toolset>
+			</grammar>
+		</version>
+	</language>
 </zoo>
