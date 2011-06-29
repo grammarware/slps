@@ -1,0 +1,15 @@
+#! /bin/sh
+
+# Get our hands on basedir
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -lt 3 ]; then
+    echo "Usage: mergebgf <BGF-input> [<BGF-input>...] <BGF-output>"
+    exit 1
+else
+	${SLPS}/topics/transformation/merge/merge.py $*
+fi
