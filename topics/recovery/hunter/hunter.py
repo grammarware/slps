@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os, sys
 import xml.etree.ElementTree as ET
-sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
+sys.path.append(os.getcwd().split('projects')[0]+'projects/slps/shared/python')
 import BGF3
 from functools import reduce
 
@@ -17,6 +17,7 @@ always_nonterminals = []
 ignore_tokens = []
 ignore_lines = []
 nonterminals_alphabet = ['-','_']
+nonterminals_start = []
 multiples = []
 aliases = {}
 
@@ -44,6 +45,7 @@ metasymbols = \
 	]
 specials = \
 	[
+		'POSSIBLE-TERMINATOR-SYMBOL',
 		'CONCATENATE-SYMBOL',
 		'LINE-CONTINUATION-SYMBOL'
 		'START-TERMINAL-SYMBOL',
@@ -108,11 +110,14 @@ def removeComments(ts,s,e):
 	return ts
 	
 def splitTokenStreamByAlphas(s):
+	global debug
 	ts = [s[0]]
 	i = 1
 	alpha = isAlphaNum(s[0])
 	inQuotes = False
 	while (i<len(s)):
+		if debug:
+			print('Examining',s[i],'with inQuotes=',inQuotes,':',ts[-1])
 		if 'start-terminal-symbol' in config.keys() and 'end-terminal-symbol' in config.keys():
 			if not inQuotes and s[i] == config['start-terminal-symbol']:
 				ts.append(s[i])
@@ -124,6 +129,7 @@ def splitTokenStreamByAlphas(s):
 					inQuotes = False
 				ts[-1] += s[i]
 				i += 1
+				alpha = False
 				continue
 		if alpha:
 			if isAlphaNum(s[i]):
@@ -164,10 +170,18 @@ def readConfig(f):
 	cfg = ET.parse(f)
 	for e in cfg.findall('*'):
 		if e.tag == 'mask':
-			masked[e.findtext('token')] = e.findtext('terminal')
+			if e.findall('terminal'):
+				masked[e.findtext('token')] = e.findtext('terminal')
+			elif e.findall('epsilon'):
+				masked[e.findtext('token')] = 'EPSILON'
+			else:
+				print('Unknown masked token:',e.findtext('token'))
 		elif e.tag == 'nonterminals-may-contain':
 			for x in e.text:
 				nonterminals_alphabet.append(x)
+		elif e.tag == 'nonterminals-may-start-with':
+			for x in e.text:
+				nonterminals_start.append(x)
 		elif e.tag == 'ignore':
 			#config[e.tag] = ''
 			for x in e.findall('*'):
@@ -242,6 +256,7 @@ def useTerminatorSymbol(ts,t):
 
 # Use defining symbol to distinguish productions
 def useDefiningSymbol(ts,d):
+	global debug
 	poss = []
 	prods = []
 	for i in range(0,len(ts)):
@@ -249,10 +264,13 @@ def useDefiningSymbol(ts,d):
 			j = i-1
 			while j>-1 and ts[j] in ignore_tokens:
 				j -= 1
-			if isAlphaNum(ts[j]) or (ts[j][0]==config['start-terminal-symbol'] and ts[j][-1]==config['end-terminal-symbol'] and isAlphaNum(ts[j][1:-1])):
+			if isAlphaNum(ts[j]) \
+			or (ts[j][0]==config['start-terminal-symbol'] and ts[j][-1]==config['end-terminal-symbol'] and isAlphaNum(ts[j][1:-1]))\
+			or 'start-nonterminal-symbol' in config.keys() and 'end-nonterminal-symbol' in config.keys() and (ts[j][0]==config['start-nonterminal-symbol'] and ts[j][-1]==config['end-nonterminal-symbol'] and isAlphaNum(ts[j][1:-1])):
 				poss.append(i)
 	poss.append(len(ts)+1)
-	#print('Positions:',poss)
+	if debug:
+		print('Positions:',poss)
 	for i in range(0,len(poss)-1):
 		if 'end-label-symbol' in config.keys():
 			if ts[poss[i]-2] == config['end-label-symbol']:
@@ -328,7 +346,7 @@ def useDefinitionSeparatorSymbol(ts,d):
 		alts.append(ts[poss[i]+1:poss[i+1]])
 	return alts
 
-def findMostProbableTail(ps):
+def findMostProbableTail(ps,known):
 	# bucket sort
 	ss = calculateFrequencies(map(lambda x:x[-1],ps))
 	# at least 80% has the same end symbol?
@@ -337,17 +355,17 @@ def findMostProbableTail(ps):
 	m = max(vs)
 	vs.remove(m)
 	m2 = max(vs)
+	for k in ss.keys():
+		if ss[k] == m:
+			break
 	#print('m=',m,'m2=',m2,'len(ps)=',len(ps))
-	if m < max(0.25*len(ps),2*m2):
+	if k != known and m < max(0.25*len(ps),2*m2):
 		possibles = []
 		for i in ss.keys():
 			if ss[i]>1:
 				possibles.append((i,ss[i]))
 		print('Candidates were:',possibles,'with total',len(ps))
 		return None,None,None
-	for k in ss.keys():
-		if ss[k] == m:
-			break
 	n2f = []
 	fps = []
 	cx = 0
@@ -380,6 +398,18 @@ def assembleBracketedSymbols(ts,start,end,preserveSpace):
 			tss[-1] += ts[i]
 			if ts[i] == end:
 				inside = False
+			elif ts[i] == start:
+				# we do not allow nested bracketed symbols
+				print('STEP x ERROR: unbalanced bracketed metasymbols',repr(start),'and',repr(end))
+				if preserveSpace:
+					last = tss[-1].split(' ')
+					tss[-1] = last[0]
+					tss[-1] += end
+					tss.extend(last[1:])
+					#tss.append(ts[i])
+				else:
+					tss[-1] += end
+					tss.append(ts[i])
 		else:
 			tss.append(ts[i])
 			if ts[i] == start:
@@ -635,6 +665,8 @@ def map2expr(ss):
 			if ss[i][1:-1] == '':
 				print('Serialisation error: empty terminal, replaced with ""!')
 				e.setName('""')
+			elif ss[i] == config['start-terminal-symbol']+'EPSILON'+config['end-terminal-symbol']:
+				e = BGF3.Epsilon()
 			else:
 				e.setName(ss[i][1:-1])
 			es.append(e)
@@ -1056,7 +1088,10 @@ def useTerminatorToFixProds(ps,ts):
 	nps = []
 	for p in ps:
 		if ts not in p:
-			print('STEP 4 warning: a production is disregarded due to the lack of terminator symbol:',p)
+			#print('STEP 4 warning: a production is disregarded due to the lack of terminator symbol:',p)
+			print('STEP 4 warning: a production for',p[1].strip(),'without terminator-symbol, appended one.')
+			p.append(ts)
+			print(p)
 		while ts in p:
 			i = p.index(ts)
 			nps.append(p[:i])
@@ -1067,7 +1102,7 @@ def useTerminatorToFixProds(ps,ts):
 					while x in tail:
 						tail.remove(x)
 				if len(tail)>0:
-					print('STEP 4 problem: terminator symbol without proper defining symbol context.',tail)
+					print('STEP 4 problem: terminator-symbol without proper defining-symbol context.',tail)
 					return nps
 				else:
 					p = tail
@@ -1115,6 +1150,10 @@ def considerIndentation(ts):
 def convertNonalphanumerics2Terminals(p):
 	q = p[:2]
 	for x in p[2:]:
+		#print('Checking',repr(x))
+		if x == '' or x in ignore_tokens:
+			# if we end up here, it probably indicates a bug elsewhere
+			continue
 		if 'consider-indentation' in config.keys():
 			# TODO: make compatible with consider-indentation
 			q.append(x)
@@ -1138,9 +1177,13 @@ def convertNonalphanumerics2Terminals(p):
 		# none of the above
 		if x[0]==' ' or x[-1]==' ':
 			x = x.strip()
+		if x in ('_','-') or x.isdigit():
+			print('STEP 5 warning:',repr(x),'is assumed to be an invalid nonterminal name, converted to a terminal symbol.')
+			q.append(config['start-terminal-symbol'] + x + config['end-terminal-symbol'])
+			continue
 		string = x[0]
 		alpha = isAlphaNum(x[0])
-		if alpha and not x[0].isalpha():
+		if alpha and not (x[0].isalpha() or x[0] in nonterminals_start):
 			print('STEP 5 warning: the first letter of',x,'does not seem right, will be separated.')
 			alpha = False
 		for s in x[1:]:
@@ -1220,7 +1263,7 @@ def processLine(line,inside,chunks):
 		if line.find(config['end-grammar-symbol'])>-1:
 			inside = False
 			line = line[:line.index(config['end-grammar-symbol'])]
-			if line.strip() != '':
+			if line != '':
 				line,inside,chunks = processLine(line,True,chunks)
 				return line,False,chunks
 		else:
@@ -1229,7 +1272,7 @@ def processLine(line,inside,chunks):
 		if line.find(config['start-grammar-symbol'])>-1:
 			inside = True
 			line = line[line.index(config['start-grammar-symbol'])+len(config['start-grammar-symbol']):]
-			if line.strip() != '':
+			if line != '':
 				return processLine(line,inside,chunks)
 	return (line,inside,chunks)
 
@@ -1257,6 +1300,9 @@ if __name__ == "__main__":
 		print('STEP 0 found',len(lines),'in grammar chunks between designated delimiters.')
 		if debug:
 			print('Perceived lines:',lines)
+	if len(lines) == 0:
+		print('FINAL STEP: premature exit due to the lack of any grammar chunks.')
+		sys.exit(0)
 	if 'line-continuation-symbol' in config.keys():
 		if 'concatenate-symbol' in config.keys():
 			sep = config['concatenate-symbol']
@@ -1435,12 +1481,15 @@ if __name__ == "__main__":
 	if 'terminator-symbol' in config.keys():
 		# we do have the terminator, but suppose we also had defining symbol!
 		# TODO otherwise
-		ts = findCommonTail(prods[:-1])
+		if len(prods) > 1:
+			ts = findCommonTail(prods[:-1])
+		else:
+			ts = prods[0][-1]
 		if ts:
 			need2fix = [-1]
 			prob = 100
 		else:
-			(need2fix,ts,prob) = findMostProbableTail(prods)
+			(need2fix,ts,prob) = findMostProbableTail(prods,config['terminator-symbol'])
 		if ''.join(ts) == config['terminator-symbol']:
 			print('STEP 4 confirmed terminator-symbol, congratulations!')
 		else:
@@ -1454,7 +1503,7 @@ if __name__ == "__main__":
 			config['terminator-symbol'] = ts
 			need2fix = [-1]
 		else:
-			(need2fix,ts,prob) = findMostProbableTail(prods)
+			(need2fix,ts,prob) = findMostProbableTail(prods,'')
 			if ts:
 				print('STEP 4 successful: inferred the most probable terminator-symbol:',repr(ts[0]),',','%i'%prob+'% sure')
 				config['terminator-symbol'] = ts[0]
@@ -1491,6 +1540,18 @@ if __name__ == "__main__":
 			prods = [list(filter(lambda y:y!=x,p)) for p in prods]
 	if poststep4 > 0:
 		print('STEP 4 also adjusted',poststep4,'productions that did not quite fit the expectations.')
+	if 'possible-terminator-symbol' in config.keys():
+		no = yes = 0
+		for i in range(0,len(prods)):
+			j = len(prods[i])-1
+			while prods[i][j] in ignore_tokens:
+				j -= 1
+			if prods[i][j] == config['possible-terminator-symbol']:
+				yes += 1
+				prods[i] = prods[i][:j]
+			else:
+				no += 1
+		print('STEP 4 found',yes,'productions using possible terminator symbol and',no,'productions not using it.')
 	if debug:
 		print('The grammar is perceived like this:')
 		for p in prods:
@@ -1623,7 +1684,10 @@ if __name__ == "__main__":
 		p = BGF3.Production()
 		if 'disregard-labels' not in config.keys() and q[0]:
 			p.setLabel(q[0])
-		p.setNT(q[1])
+		if 'start-nonterminal-symbol' in config.keys() and 'end-nonterminal-symbol' in config.keys():
+			p.setNT(q[1][len(config['start-nonterminal-symbol']):-len(config['end-nonterminal-symbol'])])
+		else:
+			p.setNT(q[1])
 		p.setExpr(map2expr(q[2:]))
 		bgf.addProd(p)
 	ET.ElementTree(bgf.getXml()).write(sys.argv[3])

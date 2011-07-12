@@ -32,8 +32,12 @@ if __name__ == "__main__":
 	grammar = {}	# in tokens
 	nt = ''
 	cx = 0
-	for line in rsc.readlines():
-		line = line.strip()
+	lines = rsc.readlines()
+	discardBracket = 0
+	grammarkeys = []
+	endOfAlt = False
+	while cx < len(lines):
+		line = lines[cx].strip()
 		cx += 1
 		if line == '':
 			continue
@@ -46,53 +50,89 @@ if __name__ == "__main__":
 				print '['+str(cx)+']','Found first line, but of what nonterminal?'
 				continue
 			tokens = line[1:].split()
-			if len(tokens[-1])>1 and tokens[-1][-1] == ';':
+			if len(tokens) == 0:
+				continue
+			endOfAlt = True
+			if len(tokens[-1])>0 and tokens[-1][-1] == ';':
 				tokens[-1] = tokens[-1][:-1]
 				tokens.append(';')
 			for i in range(0,len(tokens)):
 				if tokens[i].find('[')>-1 and tokens[i].find(']')>-1:
 					# treating a parametrised nonterminal as a base nonterminal
 					tokens[i] = tokens[i][:tokens[i].index('[')] + tokens[i][tokens[i].index(']')+1:]
-			grammar[nt].append(tokens)
-			continue
+			#grammar[nt].append(tokens)
+			#continue
+			# fall down
 		elif line[0] == '#':
 			# "follow"
-			pass
+			continue
 		elif line[0] == '-':
 			# "reject"
-			pass
+			continue
 		elif line[0:2] == '//':
 			# comment
 			continue
 		else:
 			tokens = line.split()
-			if tokens[0] == 'module':
-				print '['+str(cx)+']','Parsing module',tokens[1]
-				# do something with the module name!
+		# main branching down, fall down point here
+		if len(tokens) == 0:
+			continue
+		if tokens[0] == 'module':
+			print '['+str(cx)+']','Parsing module',tokens[1]
+			# do something with the module name!
+			continue
+		if tokens[0] == 'start':
+			start.append(tokens[-1])
+			tokens = tokens[1:]
+			# fall through
+		if tokens[0] in ('syntax','layout'):
+			nt = tokens[1]
+			if nt[0] == '"':
+				print '['+str(cx)+']','Cannot include lexical restriction information about',nt
+				nt = ''
+				while cx < len(lines) and lines[cx].strip() != ';':
+					cx += 1
 				continue
-			if tokens[0] == 'start':
-				start.append(tokens[-1])
-				tokens = tokens[1:]
-				# fall through
-			if tokens[0] in ('syntax','layout'):
-				nt = tokens[1]
-				if nt[0] == '"':
-					print '['+str(cx)+']','Cannot include lexical restriction information about',nt
-					nt = ''
-					continue
-				if nt.find('[')>-1 and nt.find(']')>-1:
-					# treating a parametrised nonterminal as a base nonterminal
-					nt = nt[:nt.index('[')] + nt[nt.index(']')+1:]
-				print '['+str(cx)+']','Starting to treat nonterminal',nt
+			if nt.find('[')>-1 and nt.find(']')>-1:
+				# treating a parametrised nonterminal as a base nonterminal
+				nt = nt[:nt.index('[')] + nt[nt.index(']')+1:]
+			print '['+str(cx)+']','Starting to treat nonterminal',nt
+			if nt in grammarkeys:
+				print '['+str(cx)+']','Duplicate or partial definition of nonterminal',nt
+				endOfAlt = True
+			else:
 				grammar[nt] = []
+				grammarkeys.append(nt)
+			# in case there are more tokens on the same line, we proceed
+			if len(tokens) > 3:
+				tokens = tokens[3:]
+			else:
 				continue
-			if tokens[0] == ';' and len(tokens) == 1:
-				continue
-			# give up
-			print '['+str(cx)+']','What is',line.split(),'?'
-			if nt:
+		if len(tokens) == 1 and tokens[0] == ';':
+			continue
+		while len(tokens) > 0 and tokens[0] in ('left','right','non-assoc'):
+			tokens = tokens[1:]
+			print 'Skipped a modifier',tokens[0],'at',nt
+		if len(tokens) > 0:
+			if tokens[0] == '(':
+				discardBracket += 1
+				tokens = tokens [1:]
+			elif tokens[0] == ')' and discardBracket > 0:
+				discardBracket -= 1
+				tokens = tokens [1:]
+		if len(tokens) == 0:
+			continue
+		# give up
+		print '['+str(cx)+']','What is',tokens,'- a part of',nt,'?'
+		if nt:
+			if endOfAlt:
 				grammar[nt].append(tokens)
-			pass
+				endOfAlt = False
+			elif len(grammar[nt]) > 0:
+				grammar[nt][-1].extend(tokens)
+			else:
+				grammar[nt].append(tokens)
+		pass
 	# NOW TO PROCESS TOKENS
 	#print 'Command:'
 	#for s in grammar['Command']:
@@ -100,7 +140,11 @@ if __name__ == "__main__":
 	bgf = BGF.Grammar()
 	prevline = []
 	curly = 0
-	for nt in grammar.keys():
+	# going through the sorted list of nonterminals
+	print grammarkeys
+	for nt in grammarkeys:
+		print nt,'::=',grammar[nt]
+	for nt in grammarkeys:
 		for alt in grammar[nt]:
 			if prevline:
 				# dead code yet
@@ -116,6 +160,7 @@ if __name__ == "__main__":
 					alt = []
 				else:
 					alt = alt[1:]
+				print 'left:',alt
 			if not alt:
 				continue
 			while len(alt)>0 and alt[-1] in (';',''):
@@ -146,7 +191,10 @@ if __name__ == "__main__":
 			sym = None
 			#print '['+str(cx)+']',alt
 			while cx<len(alt):
-				#print '['+str(cx)+']',alt
+				print '['+str(cx)+']',alt
+				if alt[cx][0]=='@':
+					cx += 1
+					continue
 				if curly>0:
 					if alt[cx] == '{':
 						curly += 1
@@ -221,6 +269,7 @@ if __name__ == "__main__":
 					term = alt[cx][1:-1].replace('\\\\','\\').replace('\\>','>').replace('\\<','<').replace('\\\'','\'').replace('\\"','"')
 					sym.setName(term)
 					cx +=1
+					print 'Found a terminal',term
 					continue
 				if alt[cx][0] == '[' or alt[cx][:2] == '![':
 					# not quite correct
@@ -285,6 +334,7 @@ if __name__ == "__main__":
 				prod.setExpr(seq)
 				#print str(prod)
 				bgf.addProd(prod)
-	#print str(bgf)
+	#for p in bgf.prods:
+	#	print str(p)
 	ET.ElementTree(bgf.getXml()).write(sys.argv[2])
 	sys.exit(0)
