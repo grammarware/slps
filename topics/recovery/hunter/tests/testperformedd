@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo [Test EDD PP] $1
+rm -f $1.log
+../../../../shared/tools/bgf0edd2bnf $1.bgf $1.edd $1.out || exit -1
+diff $1.src $1.out || exit -1

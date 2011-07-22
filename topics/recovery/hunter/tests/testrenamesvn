@@ -1,0 +1,6 @@
+#!/bin/sh
+
+svn mv $1.src $2.src
+svn mv $1.edd $2.edd
+svn mv $1.bgf $2.bgf
+rm -f $1.out $1.log

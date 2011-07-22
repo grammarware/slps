@@ -1,0 +1,4 @@
+#!/bin/sh
+
+./testperformedd $1
+mv $1.out $1.src
