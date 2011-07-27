@@ -135,7 +135,7 @@
 			</link>
 		</item>
 		<item>
-			<name>R. Lämmel, V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Recovering Grammar Relationships for the Java Language Specification.</em> ACM CRR; SQJ 19:2.</name>
+			<name>R. Lämmel, V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">Recovering Grammar Relationships for the Java Language Specification.</em> ACM CoRR; SQJ 19:2.</name>
 			<link>
 				<doi>10.1007/s11219-010-9116-5</doi>
 				<name>SQJ</name>
@@ -1397,6 +1397,194 @@
 	</language>
 	<language>
 		<name>Wiki</name>
+		<version>
+			<name>MediaWiki in BNF</name>
+			<grammar>
+				<name>Recovered</name>
+				<handle>wiki/mediawiki-bnf</handle>
+				<source>
+					<title>MediaWiki, <em xmlns="http://www.w3.org/1999/xhtml">Markup spec/BNF/Article title</em>, Revision 295042</title>
+					<date>28 December 2009</date>
+					<link>
+						<uri>http://www.mediawiki.org/w/index.php?title=Markup_spec/BNF/Article_title&amp;oldid=295042</uri>
+						<name>Page</name>
+					</link>
+				</source>
+				<source>
+					<title>MediaWiki, <em xmlns="http://www.w3.org/1999/xhtml">Markup spec/BNF/Article</em>, Revision 281674</title>
+					<date>17 October 2009</date>
+					<link>
+						<uri>http://www.mediawiki.org/w/index.php?title=Markup_spec/BNF/Article&amp;oldid=281674</uri>
+						<name>Page</name>
+					</link>
+				</source>
+				<source>
+					<title>MediaWiki, <em xmlns="http://www.w3.org/1999/xhtml">Markup spec/BNF/Noparse-block</em>, Revision 372814</title>
+					<date>30 December 2010</date>
+					<link>
+						<uri>http://www.mediawiki.org/w/index.php?title=Markup_spec/BNF/Noparse-block&amp;oldid=372814</uri>
+						<name>Page</name>
+					</link>
+				</source>
+				<source>
+					<title>MediaWiki, <em xmlns="http://www.w3.org/1999/xhtml">Markup spec/BNF/Links</em>, Revision 376721</title>
+					<date>18 January 2011</date>
+					<link>
+						<uri>http://www.mediawiki.org/w/index.php?title=Markup_spec/BNF/Links&amp;oldid=376721</uri>
+						<name>Page</name>
+					</link>
+				</source>
+				<source>
+					<title>MediaWiki, <em xmlns="http://www.w3.org/1999/xhtml">Markup spec/BNF/Magic links</em>, Revision 269783</title>
+					<date>8 August 2009</date>
+					<link>
+						<uri>http://www.mediawiki.org/w/index.php?title=Markup_spec/BNF/Magic_links&amp;oldid=269783</uri>
+						<name>Page</name>
+					</link>
+				</source>
+				<source>
+					<title>MediaWiki, <em xmlns="http://www.w3.org/1999/xhtml">Markup spec/BNF/Special block</em>, Revision 281676</title>
+					<date>17 October 2009</date>
+					<link>
+						<uri>http://www.mediawiki.org/w/index.php?title=Markup_spec/BNF/Special_block&amp;oldid=281676</uri>
+						<name>Page</name>
+					</link>
+				</source>
+				<source>
+					<title>MediaWiki, <em xmlns="http://www.w3.org/1999/xhtml">Markup spec/BNF/Inline text</em>, Revision 295055</title>
+					<date>29 December 2009</date>
+					<link>
+						<uri>http://www.mediawiki.org/w/index.php?title=Markup_spec/BNF/Inline_text&amp;oldid=295055</uri>
+						<name>Page</name>
+					</link>
+				</source>
+				<source>
+					<title>MediaWiki, <em xmlns="http://www.w3.org/1999/xhtml">Markup spec/BNF/Fundamental elements</em>, Revision 212918</title>
+					<date>17 September 2008</date>
+					<link>
+						<uri>http://www.mediawiki.org/w/index.php?title=Markup_spec/BNF/Fundamental_elements&amp;oldid=212918</uri>
+						<name>Page</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/wiki/mediawiki-bnf/main.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/wiki/mediawiki-bnf/metawiki.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/wiki/mediawiki-bnf/noparse.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/wiki/mediawiki-bnf/special.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/grammars/wiki/mediawiki-bnf/inline.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/recovery/hunter/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-utilise-repetition</xbgf>
+						<name>utilise-repetition</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-remove-concatenation</xbgf>
+						<name>remove-concatenation</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-remove-extension-points</xbgf>
+						<name>remove-extension-points</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-remove-php-legacy</xbgf>
+						<name>remove-php-legacy</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-deyaccify</xbgf>
+						<name>deyaccify</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-remove-comments</xbgf>
+						<name>remove-comments</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-remove-lookahead</xbgf>
+						<name>remove-lookahead</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-remove-duplicates</xbgf>
+						<name>remove-duplicates</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-dehtmlify</xbgf>
+						<name>dehtmlify</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-utilise-question</xbgf>
+						<name>utilise-question</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-fix-markup</xbgf>
+						<name>fix-markup</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-define-special-symbols</xbgf>
+						<name>define-special-symbols</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-fake-exclusion</xbgf>
+						<name>fake-exclusion</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-remove-postfix-case</xbgf>
+						<name>remove-postfix-case</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-fix-names</xbgf>
+						<name>fix-names</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-unify-whitespace</xbgf>
+						<name>unify-whitespace</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-connect-grammar</xbgf>
+						<name>connect-grammar</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-refactor-repetition</xbgf>
+						<name>refactor-repetition</name>
+					</link>
+					<link>
+						<xbgf>wiki/mediawiki-bnf-define-lexicals</xbgf>
+						<name>define-lexicals</name>
+					</link>
+				</toolset>
+				<item>
+					<name>V. Zaytsev. <em xmlns="http://www.w3.org/1999/xhtml">MediaWiki Grammar Recovery.</em> ACM CoRR.</name>
+					<link>
+						<uri>http://arxiv.org/abs/1107.4661</uri>
+						<name>arXiv</name>
+					</link>
+					<link>
+						<uri>http://grammarware.net/text/2011/mediawiki.pdf</uri>
+						<name>Paper</name>
+					</link>
+				</item>
+			</grammar>
+		</version>
 		<version>
 			<name>MediaWiki in EBNF</name>
 			<grammar>

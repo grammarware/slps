@@ -103,7 +103,7 @@
 </xsl:text>
   </xsl:template>
 
-  <xsl:template match="xbgf:deyaccify|xbgf:inline">
+  <xsl:template match="xbgf:inline">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>
     <xsl:value-of select="text()"/>
@@ -162,7 +162,7 @@
 </xsl:text>
   </xsl:template>
 
-  <xsl:template match="xbgf:fold|xbgf:unfold">
+  <xsl:template match="xbgf:deyaccify|xbgf:fold|xbgf:unfold">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>
     <xsl:value-of select="./nonterminal"/>

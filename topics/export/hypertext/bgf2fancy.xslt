@@ -58,7 +58,7 @@
 						</xsl:otherwise>
 					</xsl:choose>
 					<xsl:text> for details. </xsl:text>
-					<xsl:if test="$mysrc">
+					<xsl:if test="$mysrc and count($mysrc)=1">
 						<br/>
 						<xsl:text>Source used for this grammar: </xsl:text>
 						<xsl:copy-of select="$mysrc/title/node()"/>
@@ -67,6 +67,17 @@
 						<xsl:text>) </xsl:text>
 						<xsl:value-of select="$mysrc/specific"/>
 					</xsl:if>
+					<xsl:if test="$mysrc and count($mysrc)!=1">
+						<br/>
+						<xsl:text>Sources used for this grammar: </xsl:text>
+						<xsl:for-each select="$mysrc">
+							<xsl:copy-of select="title/node()"/>
+							<xsl:text> (</xsl:text>
+							<xsl:value-of select="date"/>
+							<xsl:text>); </xsl:text>
+						</xsl:for-each>
+					</xsl:if>
+					
 					<xsl:if test="$mysrcs">
 						<br/>
 						<xsl:text>Source used for this grammar: </xsl:text>
