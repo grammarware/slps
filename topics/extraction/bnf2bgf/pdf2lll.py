@@ -189,6 +189,8 @@ def readGrammar(lines):
 	#oneof = False
 	for line in lines:
 		#debug()
+		print 'Processing line:'
+		print '>>>',repr(line)
 		current,oneof = processline(line,oneof)
 
 def writeGrammar(f):
@@ -198,6 +200,9 @@ def writeGrammar(f):
 	for t in keys:
 		if t not in grammar.keys():
 			print 'ERROR:',t,'expected to be in the grammar, but is not there!'
+			continue
+		elif not grammar[t]:
+			print 'ERROR:',t,'expected to be in the grammar, but has empty definition'
 			continue
 		lll.write(t+':\n')
 		lll.write('\t'+grammar[t][0]+'\n')

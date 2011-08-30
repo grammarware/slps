@@ -1,0 +1,817 @@
+%% Modules:     3
+%% Sorts:       153
+%% - top:       1
+%% - used:      152
+%% - defined:   145
+%% - undefined: 8
+%% - lexical:   8
+%% Literals:    121
+
+definition
+
+module Main
+  imports Lex-csharp-extra Lex-csharp Default
+
+module Default
+  imports Lex-csharp-extra Lex-csharp
+  exports
+    sorts
+      Accessor-declarations
+      Add-accessor-declaration
+      Argument
+      Argument-list
+      Array-initializer
+      Array-type
+      Assignment-operator
+      Attribute
+      Attribute-arguments
+      Attribute-list
+      Attribute-name
+      Attribute-section
+      Attribute-target
+      Attributes
+      Binary-operator-declarator
+      Block
+      Break-statement
+      Built-in-class-type
+      Built-in-type
+      Catch-clauses
+      Class-base
+      Class-body
+      Class-declaration
+      Class-member-declaration
+      Class-modifier
+      Compilation-unit
+      Constant-declaration
+      Constant-declarator
+      Constant-modifier
+      Constructor-declaration
+      Constructor-declarator
+      Constructor-initializer
+      Constructor-modifier
+      Continue-statement
+      Conversion-kind
+      Conversion-operator-declarator
+      Declaration-statement
+      Delegate-declaration
+      Delegate-modifier
+      Destructor-declaration
+      Do-statement
+      Else-part
+      Embedded-statement
+      Enum-body
+      Enum-declaration
+      Enum-member-declaration
+      Enum-modifier
+      Event-accessor-declarations
+      Event-declaration
+      Event-modifier
+      Expression
+      Expression-equality-operator
+      Expression-list
+      Expression-relational-operator
+      Expression-shift-operator
+      Expression-unary-operator
+      Field-declaration
+      Field-modifier
+      Finally-clause
+      Fixed-parameter
+      Fixed-parameters
+      For-initializer
+      For-statement
+      Foreach-statement
+      Formal-parameter-list
+      General-catch-clause
+      Get-accessor-declaration
+      Global-attribute-section
+      Global-attributes
+      Goto-statement
+      If-statement
+      Increment-decrement
+      Indexer-declaration
+      Indexer-declarator
+      Indexer-modifier
+      Integral-type
+      Interface-accessors
+      Interface-body
+      Interface-declaration
+      Interface-event-declaration
+      Interface-indexer-declaration
+      Interface-member-declaration
+      Interface-method-declaration
+      Interface-modifier
+      Interface-property-declaration
+      Iteration-statement
+      Jump-statement
+      Labeled-statement
+      Local-constant-declaration
+      Local-variable-declaration
+      Lock-statement
+      Maybe-empty-block
+      Method-declaration
+      Method-header
+      Method-modifier
+      Namespace-body
+      Namespace-declaration
+      Namespace-member-declaration
+      Non-array-type
+      Operator-declaration
+      Operator-declarator
+      Operator-modifier
+      Overloadable-binary-operator
+      Overloadable-unary-operator
+      Parameter-array
+      Parameter-modifier
+      Predefined-type
+      Primary-expression
+      Property-declaration
+      Property-modifier
+      Qualified-identifier
+      Qualified-identifier-list
+      Rank-specifier
+      Ref-or-out
+      Remove-accessor-declaration
+      Resource-acquisition
+      Return-statement
+      Selection-statement
+      Set-accessor-declaration
+      Specific-catch-clause
+      Statement
+      Statement-expression
+      Statement-expression-list
+      Static-constructor-declaration
+      Static-constructor-modifiers
+      Struct-body
+      Struct-declaration
+      Struct-member-declaration
+      Struct-member-declarations
+      Struct-modifier
+      Switch-label
+      Switch-section
+      Switch-statement
+      Throw-statement
+      Try-statement
+      Type
+      Type-declaration
+      Type-or-void
+      Unary-expression
+      Unary-operator-declarator
+      Using-directive
+      Using-statement
+      Variable-declarator
+      Variable-initializer
+      While-statement
+
+    context-free syntax
+      Get-accessor-declaration Set-accessor-declaration? -> Accessor-declarations {cons("Accessor-declarations-c1")}
+      Set-accessor-declaration Get-accessor-declaration? -> Accessor-declarations {cons("Accessor-declarations-c2")}
+
+      Attributes "add" Block -> Add-accessor-declaration {cons("Add-accessor-declaration")}
+
+      Ref-or-out? Expression -> Argument {cons("Argument")}
+
+      {Argument ","}* -> Argument-list {cons("Argument-list")}
+
+      "{" "}" -> Array-initializer {cons("Array-initializer-c1")}
+      "{" {Variable-initializer ","}+ ","? "}" -> Array-initializer {cons("Array-initializer-c2")}
+
+      Non-array-type Rank-specifier+ -> Array-type {cons("Array-type")}
+
+      "=" -> Assignment-operator {cons("Assignment-operator-c1")}
+      "+=" -> Assignment-operator {cons("Assignment-operator-c2")}
+      "-=" -> Assignment-operator {cons("Assignment-operator-c3")}
+      "*=" -> Assignment-operator {cons("Assignment-operator-c4")}
+      "/=" -> Assignment-operator {cons("Assignment-operator-c5")}
+      "%=" -> Assignment-operator {cons("Assignment-operator-c6")}
+      "&=" -> Assignment-operator {cons("Assignment-operator-c7")}
+      "|=" -> Assignment-operator {cons("Assignment-operator-c8")}
+      "^=" -> Assignment-operator {cons("Assignment-operator-c9")}
+      "<<=" -> Assignment-operator {cons("Assignment-operator-c10")}
+      ">>=" -> Assignment-operator {cons("Assignment-operator-c11")}
+
+      Attribute-name Attribute-arguments? -> Attribute {cons("Attribute")}
+
+      "(" Expression-list? ")" -> Attribute-arguments {cons("Attribute-arguments")}
+
+      {Attribute ","}+ -> Attribute-list {cons("Attribute-list")}
+
+      Qualified-identifier -> Attribute-name {cons("Attribute-name")}
+
+      "[" ((Attribute-target ":"))? Attribute-list ","? "]" -> Attribute-section {cons("Attribute-section")}
+
+      "field" -> Attribute-target {cons("Attribute-target-c1")}
+      "event" -> Attribute-target {cons("Attribute-target-c2")}
+      "method" -> Attribute-target {cons("Attribute-target-c3")}
+      "module" -> Attribute-target {cons("Attribute-target-c4")}
+      "param" -> Attribute-target {cons("Attribute-target-c5")}
+      "property" -> Attribute-target {cons("Attribute-target-c6")}
+      "return" -> Attribute-target {cons("Attribute-target-c7")}
+      "type" -> Attribute-target {cons("Attribute-target-c8")}
+
+      Attribute-section* -> Attributes {cons("Attributes")}
+
+      Type "operator" Overloadable-binary-operator "(" Type Identifier "," Type Identifier ")" -> Binary-operator-declarator {cons("Binary-operator-declarator")}
+
+      "{" Statement* "}" -> Block {cons("Block")}
+
+      "break" ";" -> Break-statement {cons("Break-statement")}
+
+      "object" -> Built-in-class-type {cons("Built-in-class-type-c1")}
+      "string" -> Built-in-class-type {cons("Built-in-class-type-c2")}
+
+      Integral-type -> Built-in-type {cons("Built-in-type-c1")}
+      Built-in-class-type -> Built-in-type {cons("Built-in-type-c2")}
+      "bool" -> Built-in-type {cons("Built-in-type-c3")}
+      "decimal" -> Built-in-type {cons("Built-in-type-c4")}
+      "float" -> Built-in-type {cons("Built-in-type-c5")}
+      "double" -> Built-in-type {cons("Built-in-type-c6")}
+
+      Specific-catch-clause+ General-catch-clause? -> Catch-clauses {cons("Catch-clauses-c1")}
+      Specific-catch-clause* General-catch-clause -> Catch-clauses {cons("Catch-clauses-c2")}
+
+      ":" Qualified-identifier-list -> Class-base {cons("Class-base-c1")}
+      ":" Built-in-class-type (("," Qualified-identifier-list))? -> Class-base {cons("Class-base-c2")}
+
+      "{" Class-member-declaration* "}" -> Class-body {cons("Class-body")}
+
+      Attributes Class-modifier* "class" Identifier Class-base? Class-body ";"? -> Class-declaration {cons("Class-declaration")}
+
+      Constant-declaration -> Class-member-declaration {cons("Class-member-declaration-c1")}
+      Field-declaration -> Class-member-declaration {cons("Class-member-declaration-c2")}
+      Method-declaration -> Class-member-declaration {cons("Class-member-declaration-c3")}
+      Property-declaration -> Class-member-declaration {cons("Class-member-declaration-c4")}
+      Event-declaration -> Class-member-declaration {cons("Class-member-declaration-c5")}
+      Indexer-declaration -> Class-member-declaration {cons("Class-member-declaration-c6")}
+      Operator-declaration -> Class-member-declaration {cons("Class-member-declaration-c7")}
+      Constructor-declaration -> Class-member-declaration {cons("Class-member-declaration-c8")}
+      Destructor-declaration -> Class-member-declaration {cons("Class-member-declaration-c9")}
+      Static-constructor-declaration -> Class-member-declaration {cons("Class-member-declaration-c10")}
+      Type-declaration -> Class-member-declaration {cons("Class-member-declaration-c11")}
+
+      "new" -> Class-modifier {cons("Class-modifier-c1")}
+      "public" -> Class-modifier {cons("Class-modifier-c2")}
+      "protected" -> Class-modifier {cons("Class-modifier-c3")}
+      "internal" -> Class-modifier {cons("Class-modifier-c4")}
+      "private" -> Class-modifier {cons("Class-modifier-c5")}
+      "abstract" -> Class-modifier {cons("Class-modifier-c6")}
+      "sealed" -> Class-modifier {cons("Class-modifier-c7")}
+
+      Using-directive* Global-attributes Namespace-member-declaration* -> Compilation-unit {cons("Compilation-unit")}
+
+      Attributes Constant-modifier* "const" Type {Constant-declarator ","}+ ";" -> Constant-declaration {cons("Constant-declaration")}
+
+      Identifier "=" Expression -> Constant-declarator {cons("Constant-declarator")}
+
+      "new" -> Constant-modifier {cons("Constant-modifier-c1")}
+      "public" -> Constant-modifier {cons("Constant-modifier-c2")}
+      "protected" -> Constant-modifier {cons("Constant-modifier-c3")}
+      "internal" -> Constant-modifier {cons("Constant-modifier-c4")}
+      "private" -> Constant-modifier {cons("Constant-modifier-c5")}
+
+      Attributes Constructor-modifier* Constructor-declarator Maybe-empty-block -> Constructor-declaration {cons("Constructor-declaration")}
+
+      Identifier "(" Formal-parameter-list? ")" Constructor-initializer? -> Constructor-declarator {cons("Constructor-declarator")}
+
+      ":" "base" "(" Argument-list ")" -> Constructor-initializer {cons("Constructor-initializer-c1")}
+      ":" "this" "(" Argument-list ")" -> Constructor-initializer {cons("Constructor-initializer-c2")}
+
+      "public" -> Constructor-modifier {cons("Constructor-modifier-c1")}
+      "protected" -> Constructor-modifier {cons("Constructor-modifier-c2")}
+      "internal" -> Constructor-modifier {cons("Constructor-modifier-c3")}
+      "private" -> Constructor-modifier {cons("Constructor-modifier-c4")}
+      "extern" -> Constructor-modifier {cons("Constructor-modifier-c5")}
+
+      "continue" ";" -> Continue-statement {cons("Continue-statement")}
+
+      "implicit" -> Conversion-kind {cons("Conversion-kind-c1")}
+      "explicit" -> Conversion-kind {cons("Conversion-kind-c2")}
+
+      Conversion-kind "operator" Type "(" Type Identifier ")" -> Conversion-operator-declarator {cons("Conversion-operator-declarator")}
+
+      Local-variable-declaration ";" -> Declaration-statement {cons("Declaration-statement-c1")}
+      Local-constant-declaration ";" -> Declaration-statement {cons("Declaration-statement-c2")}
+
+      Attributes Delegate-modifier* "delegate" Type-or-void Identifier "(" Formal-parameter-list? ")" ";" -> Delegate-declaration {cons("Delegate-declaration")}
+
+      "new" -> Delegate-modifier {cons("Delegate-modifier-c1")}
+      "public" -> Delegate-modifier {cons("Delegate-modifier-c2")}
+      "protected" -> Delegate-modifier {cons("Delegate-modifier-c3")}
+      "internal" -> Delegate-modifier {cons("Delegate-modifier-c4")}
+      "private" -> Delegate-modifier {cons("Delegate-modifier-c5")}
+
+      Attributes "extern"? "~" Identifier "(" ")" Maybe-empty-block -> Destructor-declaration {cons("Destructor-declaration")}
+
+      "do" Embedded-statement "while" "(" Expression ")" ";" -> Do-statement {cons("Do-statement")}
+
+      "else" Embedded-statement -> Else-part {cons("Else-part")}
+
+      Maybe-empty-block -> Embedded-statement {cons("Embedded-statement-c1")}
+      Statement-expression ";" -> Embedded-statement {cons("Embedded-statement-c2")}
+      Selection-statement -> Embedded-statement {cons("Embedded-statement-c3")}
+      Iteration-statement -> Embedded-statement {cons("Embedded-statement-c4")}
+      Jump-statement -> Embedded-statement {cons("Embedded-statement-c5")}
+      Try-statement -> Embedded-statement {cons("Embedded-statement-c6")}
+      "checked" Block -> Embedded-statement {cons("Embedded-statement-c7")}
+      "unchecked" Block -> Embedded-statement {cons("Embedded-statement-c8")}
+      Lock-statement -> Embedded-statement {cons("Embedded-statement-c9")}
+      Using-statement -> Embedded-statement {cons("Embedded-statement-c10")}
+
+      "{" "}" -> Enum-body {cons("Enum-body-c1")}
+      "{" {Enum-member-declaration ","}+ ","? "}" -> Enum-body {cons("Enum-body-c2")}
+
+      Attributes Enum-modifier* "enum" Identifier ((":" Integral-type))? Enum-body ";"? -> Enum-declaration {cons("Enum-declaration")}
+
+      Attributes Identifier (("=" Expression))? -> Enum-member-declaration {cons("Enum-member-declaration")}
+
+      "new" -> Enum-modifier {cons("Enum-modifier-c1")}
+      "public" -> Enum-modifier {cons("Enum-modifier-c2")}
+      "protected" -> Enum-modifier {cons("Enum-modifier-c3")}
+      "internal" -> Enum-modifier {cons("Enum-modifier-c4")}
+      "private" -> Enum-modifier {cons("Enum-modifier-c5")}
+
+      Add-accessor-declaration Remove-accessor-declaration -> Event-accessor-declarations {cons("Event-accessor-declarations-c1")}
+      Remove-accessor-declaration Add-accessor-declaration -> Event-accessor-declarations {cons("Event-accessor-declarations-c2")}
+
+      Attributes Event-modifier* "event" Type {Variable-declarator ","}+ ";" -> Event-declaration {cons("Event-declaration-c1")}
+      Attributes Event-modifier* "event" Type Qualified-identifier "{" Event-accessor-declarations "}" -> Event-declaration {cons("Event-declaration-c2")}
+
+      "new" -> Event-modifier {cons("Event-modifier-c1")}
+      "public" -> Event-modifier {cons("Event-modifier-c2")}
+      "protected" -> Event-modifier {cons("Event-modifier-c3")}
+      "internal" -> Event-modifier {cons("Event-modifier-c4")}
+      "private" -> Event-modifier {cons("Event-modifier-c5")}
+      "static" -> Event-modifier {cons("Event-modifier-c6")}
+      "virtual" -> Event-modifier {cons("Event-modifier-c7")}
+      "sealed" -> Event-modifier {cons("Event-modifier-c8")}
+      "override" -> Event-modifier {cons("Event-modifier-c9")}
+      "abstract" -> Event-modifier {cons("Event-modifier-c10")}
+      "extern" -> Event-modifier {cons("Event-modifier-c11")}
+
+      Expression "?" Expression ":" Expression -> Expression {cons("Expression-c1")}
+      Expression "||" Expression -> Expression {cons("Expression-c2")}
+      Expression "&&" Expression -> Expression {cons("Expression-c3")}
+      Expression Bar Expression -> Expression {cons("Expression-c4")}
+      Expression "^" Expression -> Expression {cons("Expression-c5")}
+      Expression Ampersand Expression -> Expression {cons("Expression-c6")}
+      Expression Expression-equality-operator Expression -> Expression {cons("Expression-c7")}
+      Expression Expression-relational-operator Expression -> Expression {cons("Expression-c8")}
+      Expression "is" Built-in-type -> Expression {cons("Expression-c9")}
+      Expression Expression-shift-operator Expression -> Expression {cons("Expression-c10")}
+      Expression Plus Expression -> Expression {cons("Expression-c11")}
+      Expression Minus Expression -> Expression {cons("Expression-c12")}
+      Expression "*" Expression -> Expression {cons("Expression-c13")}
+      Expression "/" Expression -> Expression {cons("Expression-c14")}
+      Expression "%" Expression -> Expression {cons("Expression-c15")}
+      Unary-expression -> Expression {cons("Expression-c16")}
+      Unary-expression Assignment-operator Expression -> Expression {cons("Expression-c17")}
+
+      "==" -> Expression-equality-operator {cons("Expression-equality-operator-c1")}
+      "!=" -> Expression-equality-operator {cons("Expression-equality-operator-c2")}
+
+      {Expression ","}+ -> Expression-list {cons("Expression-list")}
+
+      Less-than -> Expression-relational-operator {cons("Expression-relational-operator-c1")}
+      Greater-than -> Expression-relational-operator {cons("Expression-relational-operator-c2")}
+      "<=" -> Expression-relational-operator {cons("Expression-relational-operator-c3")}
+      ">=" -> Expression-relational-operator {cons("Expression-relational-operator-c4")}
+      "is" -> Expression-relational-operator {cons("Expression-relational-operator-c5")}
+      "as" -> Expression-relational-operator {cons("Expression-relational-operator-c6")}
+
+      "<<" -> Expression-shift-operator {cons("Expression-shift-operator-c1")}
+      ">>" -> Expression-shift-operator {cons("Expression-shift-operator-c2")}
+
+      Plus -> Expression-unary-operator {cons("Expression-unary-operator-c1")}
+      Minus -> Expression-unary-operator {cons("Expression-unary-operator-c2")}
+      Increment-decrement -> Expression-unary-operator {cons("Expression-unary-operator-c3")}
+      "!" -> Expression-unary-operator {cons("Expression-unary-operator-c4")}
+      "~" -> Expression-unary-operator {cons("Expression-unary-operator-c5")}
+      "*" -> Expression-unary-operator {cons("Expression-unary-operator-c6")}
+
+      Attributes Field-modifier* Type {Variable-declarator ","}+ ";" -> Field-declaration {cons("Field-declaration")}
+
+      "new" -> Field-modifier {cons("Field-modifier-c1")}
+      "public" -> Field-modifier {cons("Field-modifier-c2")}
+      "protected" -> Field-modifier {cons("Field-modifier-c3")}
+      "internal" -> Field-modifier {cons("Field-modifier-c4")}
+      "private" -> Field-modifier {cons("Field-modifier-c5")}
+      "static" -> Field-modifier {cons("Field-modifier-c6")}
+      "readonly" -> Field-modifier {cons("Field-modifier-c7")}
+      "volatile" -> Field-modifier {cons("Field-modifier-c8")}
+
+      "finally" Block -> Finally-clause {cons("Finally-clause")}
+
+      Attributes Parameter-modifier? Type Identifier -> Fixed-parameter {cons("Fixed-parameter")}
+
+      {Fixed-parameter ","}+ -> Fixed-parameters {cons("Fixed-parameters")}
+
+      Local-variable-declaration -> For-initializer {cons("For-initializer-c1")}
+      Statement-expression-list -> For-initializer {cons("For-initializer-c2")}
+
+      "for" "(" For-initializer? ";" Expression? ";" Statement-expression-list? ")" Embedded-statement -> For-statement {cons("For-statement")}
+
+      "foreach" "(" Type Identifier "in" Expression ")" Embedded-statement -> Foreach-statement {cons("Foreach-statement")}
+
+      Fixed-parameters -> Formal-parameter-list {cons("Formal-parameter-list-c1")}
+      Fixed-parameters "," Parameter-array -> Formal-parameter-list {cons("Formal-parameter-list-c2")}
+      Parameter-array -> Formal-parameter-list {cons("Formal-parameter-list-c3")}
+
+      "catch" Block -> General-catch-clause {cons("General-catch-clause")}
+
+      Attributes "get" Maybe-empty-block -> Get-accessor-declaration {cons("Get-accessor-declaration")}
+
+      "[" "assembly" ":" Attribute-list ","? "]" -> Global-attribute-section {cons("Global-attribute-section")}
+
+      Global-attribute-section* -> Global-attributes {cons("Global-attributes")}
+
+      "goto" Identifier ";" -> Goto-statement {cons("Goto-statement-c1")}
+      "goto" "case" Expression ";" -> Goto-statement {cons("Goto-statement-c2")}
+      "goto" "default" ";" -> Goto-statement {cons("Goto-statement-c3")}
+
+      "if" "(" Expression ")" Embedded-statement Else-part? -> If-statement {cons("If-statement")}
+
+      "++" -> Increment-decrement {cons("Increment-decrement-c1")}
+      "--" -> Increment-decrement {cons("Increment-decrement-c2")}
+
+      Attributes Indexer-modifier* Indexer-declarator "{" Accessor-declarations "}" -> Indexer-declaration {cons("Indexer-declaration")}
+
+      Type "this" "[" Formal-parameter-list "]" -> Indexer-declarator {cons("Indexer-declarator-c1")}
+      Type Qualified-identifier "." "this" "[" Formal-parameter-list "]" -> Indexer-declarator {cons("Indexer-declarator-c2")}
+
+      "new" -> Indexer-modifier {cons("Indexer-modifier-c1")}
+      "public" -> Indexer-modifier {cons("Indexer-modifier-c2")}
+      "protected" -> Indexer-modifier {cons("Indexer-modifier-c3")}
+      "internal" -> Indexer-modifier {cons("Indexer-modifier-c4")}
+      "private" -> Indexer-modifier {cons("Indexer-modifier-c5")}
+      "virtual" -> Indexer-modifier {cons("Indexer-modifier-c6")}
+      "sealed" -> Indexer-modifier {cons("Indexer-modifier-c7")}
+      "override" -> Indexer-modifier {cons("Indexer-modifier-c8")}
+      "abstract" -> Indexer-modifier {cons("Indexer-modifier-c9")}
+      "extern" -> Indexer-modifier {cons("Indexer-modifier-c10")}
+
+      "sbyte" -> Integral-type {cons("Integral-type-c1")}
+      "byte" -> Integral-type {cons("Integral-type-c2")}
+      "short" -> Integral-type {cons("Integral-type-c3")}
+      "ushort" -> Integral-type {cons("Integral-type-c4")}
+      "int" -> Integral-type {cons("Integral-type-c5")}
+      "uint" -> Integral-type {cons("Integral-type-c6")}
+      "long" -> Integral-type {cons("Integral-type-c7")}
+      "ulong" -> Integral-type {cons("Integral-type-c8")}
+      "char" -> Integral-type {cons("Integral-type-c9")}
+
+      Attributes "get" ";" ((Attributes "set" ";"))? -> Interface-accessors {cons("Interface-accessors-c1")}
+      Attributes "set" ";" ((Attributes "get" ";"))? -> Interface-accessors {cons("Interface-accessors-c2")}
+
+      "{" Interface-member-declaration* "}" -> Interface-body {cons("Interface-body")}
+
+      Attributes Interface-modifier* "interface" Identifier ((":" Qualified-identifier-list))? Interface-body ";"? -> Interface-declaration {cons("Interface-declaration")}
+
+      Attributes "new"? "event" Type Identifier ";" -> Interface-event-declaration {cons("Interface-event-declaration")}
+
+      Attributes "new"? Type "this" "[" Formal-parameter-list "]" "{" Interface-accessors "}" -> Interface-indexer-declaration {cons("Interface-indexer-declaration")}
+
+      Interface-method-declaration -> Interface-member-declaration {cons("Interface-member-declaration-c1")}
+      Interface-property-declaration -> Interface-member-declaration {cons("Interface-member-declaration-c2")}
+      Interface-event-declaration -> Interface-member-declaration {cons("Interface-member-declaration-c3")}
+      Interface-indexer-declaration -> Interface-member-declaration {cons("Interface-member-declaration-c4")}
+
+      Attributes "new"? Type-or-void Identifier "(" Formal-parameter-list? ")" ";" -> Interface-method-declaration {cons("Interface-method-declaration")}
+
+      "new" -> Interface-modifier {cons("Interface-modifier-c1")}
+      "public" -> Interface-modifier {cons("Interface-modifier-c2")}
+      "protected" -> Interface-modifier {cons("Interface-modifier-c3")}
+      "internal" -> Interface-modifier {cons("Interface-modifier-c4")}
+      "private" -> Interface-modifier {cons("Interface-modifier-c5")}
+
+      Attributes "new"? Type Identifier "{" Interface-accessors "}" -> Interface-property-declaration {cons("Interface-property-declaration")}
+
+      While-statement -> Iteration-statement {cons("Iteration-statement-c1")}
+      Do-statement -> Iteration-statement {cons("Iteration-statement-c2")}
+      For-statement -> Iteration-statement {cons("Iteration-statement-c3")}
+      Foreach-statement -> Iteration-statement {cons("Iteration-statement-c4")}
+
+      Break-statement -> Jump-statement {cons("Jump-statement-c1")}
+      Continue-statement -> Jump-statement {cons("Jump-statement-c2")}
+      Goto-statement -> Jump-statement {cons("Jump-statement-c3")}
+      Return-statement -> Jump-statement {cons("Jump-statement-c4")}
+      Throw-statement -> Jump-statement {cons("Jump-statement-c5")}
+
+      Identifier ":" Statement -> Labeled-statement {cons("Labeled-statement")}
+
+      "const" Type {Constant-declarator ","}+ -> Local-constant-declaration {cons("Local-constant-declaration")}
+
+      Type {Variable-declarator ","}+ -> Local-variable-declaration {cons("Local-variable-declaration")}
+
+      "lock" "(" Expression ")" Embedded-statement -> Lock-statement {cons("Lock-statement")}
+
+      "{" Statement* "}" -> Maybe-empty-block {cons("Maybe-empty-block-c1")}
+      ";" -> Maybe-empty-block {cons("Maybe-empty-block-c2")}
+
+      Method-header Maybe-empty-block -> Method-declaration {cons("Method-declaration")}
+
+      Attributes Method-modifier* Type-or-void Qualified-identifier "(" Formal-parameter-list? ")" -> Method-header {cons("Method-header")}
+
+      "new" -> Method-modifier {cons("Method-modifier-c1")}
+      "public" -> Method-modifier {cons("Method-modifier-c2")}
+      "protected" -> Method-modifier {cons("Method-modifier-c3")}
+      "internal" -> Method-modifier {cons("Method-modifier-c4")}
+      "private" -> Method-modifier {cons("Method-modifier-c5")}
+      "static" -> Method-modifier {cons("Method-modifier-c6")}
+      "virtual" -> Method-modifier {cons("Method-modifier-c7")}
+      "sealed" -> Method-modifier {cons("Method-modifier-c8")}
+      "override" -> Method-modifier {cons("Method-modifier-c9")}
+      "abstract" -> Method-modifier {cons("Method-modifier-c10")}
+      "extern" -> Method-modifier {cons("Method-modifier-c11")}
+
+      "{" Using-directive* Namespace-member-declaration* "}" -> Namespace-body {cons("Namespace-body")}
+
+      "namespace" Qualified-identifier Namespace-body ";"? -> Namespace-declaration {cons("Namespace-declaration")}
+
+      Namespace-declaration -> Namespace-member-declaration {cons("Namespace-member-declaration-c1")}
+      Type-declaration -> Namespace-member-declaration {cons("Namespace-member-declaration-c2")}
+
+      Qualified-identifier -> Non-array-type {cons("Non-array-type-c1")}
+      Built-in-type -> Non-array-type {cons("Non-array-type-c2")}
+
+      Attributes Operator-modifier+ Operator-declarator Maybe-empty-block -> Operator-declaration {cons("Operator-declaration")}
+
+      Unary-operator-declarator -> Operator-declarator {cons("Operator-declarator-c1")}
+      Binary-operator-declarator -> Operator-declarator {cons("Operator-declarator-c2")}
+      Conversion-operator-declarator -> Operator-declarator {cons("Operator-declarator-c3")}
+
+      "public" -> Operator-modifier {cons("Operator-modifier-c1")}
+      "static" -> Operator-modifier {cons("Operator-modifier-c2")}
+      "extern" -> Operator-modifier {cons("Operator-modifier-c3")}
+
+      Plus -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c1")}
+      Minus -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c2")}
+      "*" -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c3")}
+      "/" -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c4")}
+      "%" -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c5")}
+      Ampersand -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c6")}
+      Bar -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c7")}
+      "^" -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c8")}
+      "<<" -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c9")}
+      ">>" -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c10")}
+      "==" -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c11")}
+      "!=" -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c12")}
+      Greater-than -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c13")}
+      Less-than -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c14")}
+      ">=" -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c15")}
+      "<=" -> Overloadable-binary-operator {cons("Overloadable-binary-operator-c16")}
+
+      Plus -> Overloadable-unary-operator {cons("Overloadable-unary-operator-c1")}
+      Minus -> Overloadable-unary-operator {cons("Overloadable-unary-operator-c2")}
+      Increment-decrement -> Overloadable-unary-operator {cons("Overloadable-unary-operator-c3")}
+      "!" -> Overloadable-unary-operator {cons("Overloadable-unary-operator-c4")}
+      "~" -> Overloadable-unary-operator {cons("Overloadable-unary-operator-c5")}
+      "true" -> Overloadable-unary-operator {cons("Overloadable-unary-operator-c6")}
+      "false" -> Overloadable-unary-operator {cons("Overloadable-unary-operator-c7")}
+
+      Attributes "params" Array-type Identifier -> Parameter-array {cons("Parameter-array")}
+
+      "ref" -> Parameter-modifier {cons("Parameter-modifier-c1")}
+      "out" -> Parameter-modifier {cons("Parameter-modifier-c2")}
+
+      "bool" -> Predefined-type {cons("Predefined-type-c1")}
+      "byte" -> Predefined-type {cons("Predefined-type-c2")}
+      "char" -> Predefined-type {cons("Predefined-type-c3")}
+      "decimal" -> Predefined-type {cons("Predefined-type-c4")}
+      "double" -> Predefined-type {cons("Predefined-type-c5")}
+      "float" -> Predefined-type {cons("Predefined-type-c6")}
+      "int" -> Predefined-type {cons("Predefined-type-c7")}
+      "long" -> Predefined-type {cons("Predefined-type-c8")}
+      "object" -> Predefined-type {cons("Predefined-type-c9")}
+      "sbyte" -> Predefined-type {cons("Predefined-type-c10")}
+      "short" -> Predefined-type {cons("Predefined-type-c11")}
+      "string" -> Predefined-type {cons("Predefined-type-c12")}
+      "uint" -> Predefined-type {cons("Predefined-type-c13")}
+      "ulong" -> Predefined-type {cons("Predefined-type-c14")}
+      "ushort" -> Predefined-type {cons("Predefined-type-c15")}
+
+      "new" Non-array-type "[" Expression-list "]" Rank-specifier* Array-initializer? -> Primary-expression {cons("Primary-expression-c1")}
+      "new" Array-type Array-initializer -> Primary-expression {cons("Primary-expression-c2")}
+      Literal -> Primary-expression {cons("Primary-expression-c3")}
+      Identifier -> Primary-expression {cons("Primary-expression-c4")}
+      "(" Expression ")" -> Primary-expression {cons("Primary-expression-c5")}
+      Primary-expression "." Identifier -> Primary-expression {cons("Primary-expression-c6")}
+      Predefined-type "." Identifier -> Primary-expression {cons("Primary-expression-c7")}
+      Primary-expression "(" Argument-list ")" -> Primary-expression {cons("Primary-expression-c8")}
+      Primary-expression "[" Expression-list "]" -> Primary-expression {cons("Primary-expression-c9")}
+      "this" -> Primary-expression {cons("Primary-expression-c10")}
+      "base" "." Identifier -> Primary-expression {cons("Primary-expression-c11")}
+      "base" "[" Expression-list "]" -> Primary-expression {cons("Primary-expression-c12")}
+      Primary-expression Increment-decrement -> Primary-expression {cons("Primary-expression-c13")}
+      "new" Type "(" Argument-list ")" -> Primary-expression {cons("Primary-expression-c14")}
+      "typeof" "(" Type-or-void ")" -> Primary-expression {cons("Primary-expression-c15")}
+      "checked" "(" Expression ")" -> Primary-expression {cons("Primary-expression-c16")}
+      "unchecked" "(" Expression ")" -> Primary-expression {cons("Primary-expression-c17")}
+
+      Attributes Property-modifier* Type Qualified-identifier "{" Accessor-declarations "}" -> Property-declaration {cons("Property-declaration")}
+
+      "new" -> Property-modifier {cons("Property-modifier-c1")}
+      "public" -> Property-modifier {cons("Property-modifier-c2")}
+      "protected" -> Property-modifier {cons("Property-modifier-c3")}
+      "internal" -> Property-modifier {cons("Property-modifier-c4")}
+      "private" -> Property-modifier {cons("Property-modifier-c5")}
+      "static" -> Property-modifier {cons("Property-modifier-c6")}
+      "virtual" -> Property-modifier {cons("Property-modifier-c7")}
+      "sealed" -> Property-modifier {cons("Property-modifier-c8")}
+      "override" -> Property-modifier {cons("Property-modifier-c9")}
+      "abstract" -> Property-modifier {cons("Property-modifier-c10")}
+      "extern" -> Property-modifier {cons("Property-modifier-c11")}
+
+      {Identifier "."}+ -> Qualified-identifier {cons("Qualified-identifier")}
+
+      {Qualified-identifier ","}+ -> Qualified-identifier-list {cons("Qualified-identifier-list")}
+
+      "[" ","* "]" -> Rank-specifier {cons("Rank-specifier")}
+
+      "ref" -> Ref-or-out {cons("Ref-or-out-c1")}
+      "out" -> Ref-or-out {cons("Ref-or-out-c2")}
+
+      Attributes "remove" Block -> Remove-accessor-declaration {cons("Remove-accessor-declaration")}
+
+      Local-variable-declaration -> Resource-acquisition {cons("Resource-acquisition-c1")}
+      Expression -> Resource-acquisition {cons("Resource-acquisition-c2")}
+
+      "return" Expression? ";" -> Return-statement {cons("Return-statement")}
+
+      If-statement -> Selection-statement {cons("Selection-statement-c1")}
+      Switch-statement -> Selection-statement {cons("Selection-statement-c2")}
+
+      Attributes "set" Maybe-empty-block -> Set-accessor-declaration {cons("Set-accessor-declaration")}
+
+      "catch" "(" Built-in-class-type Identifier? ")" Block -> Specific-catch-clause {cons("Specific-catch-clause-c1")}
+      "catch" "(" Qualified-identifier Identifier? ")" Block -> Specific-catch-clause {cons("Specific-catch-clause-c2")}
+
+      Labeled-statement -> Statement {cons("Statement-c1")}
+      Declaration-statement -> Statement {cons("Statement-c2")}
+      Embedded-statement -> Statement {cons("Statement-c3")}
+
+      Primary-expression "(" Argument-list ")" -> Statement-expression {cons("Statement-expression-c1")}
+      "new" Type "(" Argument-list ")" -> Statement-expression {cons("Statement-expression-c2")}
+      Unary-expression Assignment-operator Expression -> Statement-expression {cons("Statement-expression-c3")}
+      Primary-expression Increment-decrement -> Statement-expression {cons("Statement-expression-c4")}
+      Increment-decrement Primary-expression -> Statement-expression {cons("Statement-expression-c5")}
+
+      {Statement-expression ","}+ -> Statement-expression-list {cons("Statement-expression-list")}
+
+      Attributes Static-constructor-modifiers Identifier "(" ")" Maybe-empty-block -> Static-constructor-declaration {cons("Static-constructor-declaration")}
+
+      "extern"? "static" -> Static-constructor-modifiers {cons("Static-constructor-modifiers-c1")}
+      "static" "extern" -> Static-constructor-modifiers {cons("Static-constructor-modifiers-c2")}
+
+      "{" Struct-member-declaration* "}" -> Struct-body {cons("Struct-body")}
+
+      Attributes Struct-modifier* "struct" Identifier ((":" Qualified-identifier-list))? Struct-body ";"? -> Struct-declaration {cons("Struct-declaration")}
+
+      Constant-declaration -> Struct-member-declaration {cons("Struct-member-declaration-c1")}
+      Field-declaration -> Struct-member-declaration {cons("Struct-member-declaration-c2")}
+      Method-declaration -> Struct-member-declaration {cons("Struct-member-declaration-c3")}
+      Property-declaration -> Struct-member-declaration {cons("Struct-member-declaration-c4")}
+      Event-declaration -> Struct-member-declaration {cons("Struct-member-declaration-c5")}
+      Indexer-declaration -> Struct-member-declaration {cons("Struct-member-declaration-c6")}
+      Operator-declaration -> Struct-member-declaration {cons("Struct-member-declaration-c7")}
+      Constructor-declaration -> Struct-member-declaration {cons("Struct-member-declaration-c8")}
+      Static-constructor-declaration -> Struct-member-declaration {cons("Struct-member-declaration-c9")}
+      Type-declaration -> Struct-member-declaration {cons("Struct-member-declaration-c10")}
+
+      Struct-member-declaration -> Struct-member-declarations {cons("Struct-member-declarations-c1")}
+      Struct-member-declarations Struct-member-declaration -> Struct-member-declarations {cons("Struct-member-declarations-c2")}
+
+      "new" -> Struct-modifier {cons("Struct-modifier-c1")}
+      "public" -> Struct-modifier {cons("Struct-modifier-c2")}
+      "protected" -> Struct-modifier {cons("Struct-modifier-c3")}
+      "internal" -> Struct-modifier {cons("Struct-modifier-c4")}
+      "private" -> Struct-modifier {cons("Struct-modifier-c5")}
+
+      "case" Expression ":" -> Switch-label {cons("Switch-label-c1")}
+      "default" ":" -> Switch-label {cons("Switch-label-c2")}
+
+      Switch-label+ Statement+ -> Switch-section {cons("Switch-section")}
+
+      "switch" "(" Expression ")" "{" Switch-section* "}" -> Switch-statement {cons("Switch-statement")}
+
+      "throw" Expression? ";" -> Throw-statement {cons("Throw-statement")}
+
+      "try" Block Catch-clauses Finally-clause? -> Try-statement {cons("Try-statement-c1")}
+      "try" Block Finally-clause -> Try-statement {cons("Try-statement-c2")}
+
+      Non-array-type Rank-specifier* -> Type {cons("Type")}
+
+      Class-declaration -> Type-declaration {cons("Type-declaration-c1")}
+      Struct-declaration -> Type-declaration {cons("Type-declaration-c2")}
+      Interface-declaration -> Type-declaration {cons("Type-declaration-c3")}
+      Enum-declaration -> Type-declaration {cons("Type-declaration-c4")}
+      Delegate-declaration -> Type-declaration {cons("Type-declaration-c5")}
+
+      Type -> Type-or-void {cons("Type-or-void-c1")}
+      "void" -> Type-or-void {cons("Type-or-void-c2")}
+
+      Expression-unary-operator Unary-expression -> Unary-expression {cons("Unary-expression-c1")}
+      "(" Type ")" Unary-expression -> Unary-expression {cons("Unary-expression-c2")}
+      Primary-expression -> Unary-expression {cons("Unary-expression-c3")}
+
+      Type "operator" Overloadable-unary-operator "(" Type Identifier ")" -> Unary-operator-declarator {cons("Unary-operator-declarator")}
+
+      "using" ((Identifier "="))? Qualified-identifier ";" -> Using-directive {cons("Using-directive")}
+
+      "using" "(" Resource-acquisition ")" Embedded-statement -> Using-statement {cons("Using-statement")}
+
+      Identifier -> Variable-declarator {cons("Variable-declarator-c1")}
+      Identifier "=" Variable-initializer -> Variable-declarator {cons("Variable-declarator-c2")}
+
+      Expression -> Variable-initializer {cons("Variable-initializer-c1")}
+      Array-initializer -> Variable-initializer {cons("Variable-initializer-c2")}
+
+      "while" "(" Expression ")" Embedded-statement -> While-statement {cons("While-statement")}
+
+
+module KEYWORDS
+  exports
+    context-free syntax
+    lexical restrictions
+      "abstract"
+      "add"
+      "as"
+      "assembly"
+      "base"
+      "bool"
+      "break"
+      "byte"
+      "case"
+      "catch"
+      "char"
+      "checked"
+      "class"
+      "const"
+      "continue"
+      "decimal"
+      "default"
+      "delegate"
+      "do"
+      "double"
+      "else"
+      "enum"
+      "event"
+      "explicit"
+      "extern"
+      "false"
+      "field"
+      "finally"
+      "float"
+      "for"
+      "foreach"
+      "get"
+      "goto"
+      "if"
+      "implicit"
+      "in"
+      "int"
+      "interface"
+      "internal"
+      "is"
+      "lock"
+      "long"
+      "method"
+      "module"
+      "namespace"
+      "new"
+      "object"
+      "operator"
+      "out"
+      "override"
+      "param"
+      "params"
+      "private"
+      "property"
+      "protected"
+      "public"
+      "readonly"
+      "ref"
+      "remove"
+      "return"
+      "sbyte"
+      "sealed"
+      "set"
+      "short"
+      "static"
+      "string"
+      "struct"
+      "switch"
+      "this"
+      "throw"
+      "true"
+      "try"
+      "type"
+      "typeof"
+      "uint"
+      "ulong"
+      "unchecked"
+      "ushort"
+      "using"
+      "virtual"
+      "void"
+      "volatile"
+      "while"
+      -/- [A-Za-z0-9\-\_]
