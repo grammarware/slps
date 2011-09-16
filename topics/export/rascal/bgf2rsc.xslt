@@ -1,22 +1,27 @@
 <?xml version="1.0"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bgf="http://planet-sl.org/bgf" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.0">
 	<xsl:output method="text" encoding="UTF-8" omit-xml-declaration="yes"/>
+	<xsl:param name="grammarname"/>
 	<xsl:template match="/bgf:grammar">
-		<xsl:text>module ExtractedGrammar
+		<xsl:text>@contributor{bgf2src automated exporter - SLPS}
+module </xsl:text>
+		<xsl:call-template name="capitalise">
+			<xsl:with-param name="n" select="$grammarname"/>
+		</xsl:call-template>
+		<xsl:text>
 
 </xsl:text>
 		<xsl:apply-templates select="./bgf:*"/>
 	</xsl:template>
 	<xsl:template match="bgf:production">
-		<xsl:if test="./label">
-			<xsl:text>[</xsl:text>
-			<xsl:value-of select="./label"/>
-			<xsl:text>] </xsl:text>
-		</xsl:if>
 		<xsl:text>syntax </xsl:text>
-		<xsl:value-of select="./nonterminal"/>
+		<xsl:apply-templates select="./nonterminal"/>
 		<xsl:text>
         = </xsl:text>
+		<xsl:if test="./label">
+			<xsl:value-of select="./label"/>
+			<xsl:text>: </xsl:text>
+		</xsl:if>
 		<xsl:choose>
 			<xsl:when test="./bgf:expression/choice">
 				<xsl:for-each select="./bgf:expression/choice/bgf:expression">
@@ -48,7 +53,7 @@
 		<xsl:apply-templates select="./*"/>
 	</xsl:template>
 	<xsl:template match="marked">
-<!-- do not exist in Rascal -->
+		<!-- do not exist in Rascal -->
 		<xsl:text>(</xsl:text>
 		<xsl:apply-templates select="./*"/>
 		<xsl:text>)</xsl:text>
@@ -62,10 +67,9 @@
 		<xsl:text>*</xsl:text>
 	</xsl:template>
 	<xsl:template match="optional">
-<!--  (N ("," N)*)? is treated as {N ","}* -->
+		<!--  (N ("," N)*)? is treated as {N ","}* -->
 		<xsl:choose>
-			<xsl:when test="local-name(./bgf:expression/*[1]) = 'sequence'
-                        and ./bgf:expression/sequence/bgf:expression[1]/*[1] = ./bgf:expression/sequence/bgf:expression[2]/star/bgf:expression/sequence/bgf:expression[2]/*[1]">
+			<xsl:when test="local-name(./bgf:expression/*[1]) = 'sequence'                         and ./bgf:expression/sequence/bgf:expression[1]/*[1] = ./bgf:expression/sequence/bgf:expression[2]/star/bgf:expression/sequence/bgf:expression[2]/*[1]">
 				<xsl:text>{</xsl:text>
 				<xsl:apply-templates select="./bgf:expression/sequence/bgf:expression[1]"/>
 				<xsl:text> </xsl:text>
@@ -81,7 +85,9 @@
 	</xsl:template>
 	<xsl:template match="terminal">
 		<xsl:text>"</xsl:text>
-		<xsl:value-of select="."/>
+		<xsl:call-template name="escape">
+			<xsl:with-param name="t" select="."/>
+		</xsl:call-template>
 		<xsl:text>"</xsl:text>
 	</xsl:template>
 	<xsl:template match="value">
@@ -95,27 +101,27 @@
 		</xsl:choose>
 	</xsl:template>
 	<xsl:template match="epsilon">
-		<xsl:text>EPSILON</xsl:text>
+		<xsl:text>()</xsl:text>
 	</xsl:template>
 	<xsl:template match="empty">
-		<xsl:text>EMPTY</xsl:text>
+		<xsl:text>()</xsl:text>
 	</xsl:template>
 	<xsl:template match="any">
 		<xsl:text>ANY</xsl:text>
 	</xsl:template>
 	<xsl:template match="nonterminal">
-		<xsl:value-of select="."/>
+		<xsl:call-template name="capitalise">
+			<xsl:with-param name="n" select="."/>
+		</xsl:call-template>
 	</xsl:template>
 	<xsl:template match="selectable">
 		<xsl:choose>
-			<xsl:when test="local-name(bgf:expression/*) = 'star'
-				         or local-name(bgf:expression/*) = 'optional'
-				         or local-name(bgf:expression/*) = 'plus'">
-				<xsl:text>&lt;</xsl:text>
+			<xsl:when test="local-name(bgf:expression/*) = 'star'              or local-name(bgf:expression/*) = 'optional'              or local-name(bgf:expression/*) = 'plus'">
+				<!-- <xsl:text>&lt;</xsl:text> -->
 				<xsl:apply-templates select="bgf:expression"/>
 				<xsl:text> </xsl:text>
 				<xsl:value-of select="selector"/>
-				<xsl:text>&gt;</xsl:text>
+				<!-- <xsl:text>&gt;</xsl:text>-->
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:apply-templates select="bgf:expression"/>
@@ -133,7 +139,7 @@
 		</xsl:for-each>
 		<xsl:text>)</xsl:text>
 	</xsl:template>
-<!-- inner choices - BNF bar -->
+	<!-- inner choices - BNF bar -->
 	<xsl:template match="choice">
 		<xsl:text>(</xsl:text>
 		<xsl:apply-templates select="./bgf:expression[1]/*"/>
@@ -157,5 +163,23 @@
 				<xsl:apply-templates select="$expr"/>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+	<xsl:template name="capitalise">
+		<xsl:param name="n"/>
+		<xsl:value-of select="translate(substring($n,1,1),'abcdefghijklmnopqrstuvwxyz-.','ABCDEFGHIJKLMNOPQRSTUVWXYZ__')"/>
+		<xsl:value-of select="translate(substring($n,2),'-.','__')"/>
+	</xsl:template>
+	<xsl:template name="escape">
+		<xsl:param name="t"/>
+		<xsl:if test="$t != ''">
+			<xsl:variable name="c" select="substring($t, 1, 1)"/>
+			<xsl:if test="$c = '&lt;' or $c = '&gt;' or $c = '&quot;' or $c = '\' ">
+				<xsl:text>\</xsl:text>
+			</xsl:if>
+			<xsl:value-of select="$c"/>
+			<xsl:call-template name="escape">
+				<xsl:with-param name="t" select="substring($t, 2)"/>
+			</xsl:call-template>
+		</xsl:if>
 	</xsl:template>
 </xsl:stylesheet>

@@ -22,6 +22,6 @@ if [ ! -r $1 ]; then
 fi
 
 ${SLPS}/shared/generators/horall $1 $1.hor.xbgf
-${SLPS}/shared/tools/xbgf $1.hor.xbgf $1 ${OUTPUT}.tmp
-xsltproc ${SLPS}/topics/export/rascal/bgf2rsc.xslt ${OUTPUT}.tmp | grep -v 'DOCTYPE' > ${OUTPUT}
-rm ${OUTPUT}.tmp $1.hor.xbgf
+${SLPS}/shared/tools/xbgf $1.hor.xbgf $1 $1.tmp
+xsltproc --stringparam grammarname `basename $1 .bgf` ${SLPS}/topics/export/rascal/bgf2rsc.xslt $1.tmp | grep -v 'DOCTYPE' > ${OUTPUT}
+rm $1.tmp $1.hor.xbgf
