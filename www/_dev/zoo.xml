@@ -801,6 +801,41 @@
 		</version>
 	</language>
 	<language>
+		<name>Dart</name>
+		<version>
+			<name>Google Dart</name>
+			<grammar>
+				<name>Extracted</name>
+				<handle>dart/google</handle>
+				<source>
+					<title>Google, Inc., Dart subversion repository</title>
+					<date>October 2011</date>
+					<specific>bleeding edge branch, revision 14</specific>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/extraction/antlr/ANTLR3.rsc</mu>
+						<name>ANTLR3.rsc</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/antlrpp.py</mu>
+						<name>antlrpp.py</name>
+					</link>
+					<link>
+						<mu>topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g</mu>
+						<name>StrippedANTLR.g</name>
+					</link>
+					<link>
+						<xbgf>dart/google-post-extraction.html</xbgf>
+						<name>post-extraction</name>
+					</link>
+				</toolset>
+			</grammar>
+			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+	</language>
+	<language>
 		<name>Eiffel</name>
 		<version>
 			<name>Eiffel</name>
