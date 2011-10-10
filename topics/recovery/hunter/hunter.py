@@ -57,10 +57,12 @@ specials = \
 		'NONTERMINAL-IF-UPPERCASE',
 		'NONTERMINAL-IF-LOWERCASE',
 		'NONTERMINAL-IF-CAMELCASE',
+		'NONTERMINAL-IF-MIXEDCASE',
 		'TERMINAL-IF-UNDEFINED',
 		'TERMINAL-IF-UPPERCASE',
 		'TERMINAL-IF-LOWERCASE',
 		'TERMINAL-IF-CAMELCASE',
+		'TERMINAL-IF-MIXEDCASE',
 		'IGNORE-EXTRA-NEWLINES',
 		'GLUE-NONALPHANUMERIC-TERMINALS',
 	]
@@ -74,6 +76,9 @@ def isLowerCase(x):
 
 def isCamelCase(x):
 	return isUpperCase(x[0]) and not isUpperCase(x) and isAlpha(x)
+
+def isMixedCase(x):
+	return isLowerCase(x[0]) and not isLowerCase(x) and isAlpha(x)
 
 def isAlphaNum(x):
 	return reduce(lambda a,b:a and (b.isalnum() or b in nonterminals_alphabet),x,True)
@@ -205,14 +210,14 @@ def readConfig(f):
 			config[e.tag] = e.text.replace('\\n','\n')
 		else:
 			config[e.tag] = ''
-		if e.tag in ('nonterminal-if-camelcase','nonterminal-if-uppercase','nonterminal-if-lowercase','nonterminal-if-contains','nonterminal-if-defined','decompose-symbols'):
+		if e.tag in ('nonterminal-if-camelcase','nonterminal-if-mixedcase','nonterminal-if-uppercase','nonterminal-if-lowercase','nonterminal-if-contains','nonterminal-if-defined','decompose-symbols'):
 			if e.text:
 				config[e.tag] = e.text
 			else:
 				config[e.tag] = ''
 			for x in e.findall('except'):
 				always_terminals.append(x.text)
-		if e.tag in ('terminal-if-camelcase','terminal-if-uppercase','terminal-if-lowercase','terminal-if-undefined'):
+		if e.tag in ('terminal-if-camelcase','terminal-if-mixedcase','terminal-if-uppercase','terminal-if-lowercase','terminal-if-undefined'):
 			config[e.tag] = ''
 			for x in e.findall('except'):
 				always_nonterminals.append(x.text)
@@ -671,6 +676,10 @@ def map2expr(ss):
 				e.setName(ss[i][1:-1])
 			es.append(e)
 			i += 1
+		elif ss[i] in metasymbols:
+			print('STEP 9:',ss[i],'found untouched at serialisation stage, turned into a terminal symbol "'+config[ss[i].lower()]+'"')
+			ss[i] = config['start-terminal-symbol'] + config[ss[i].lower()] + config['end-terminal-symbol']
+			continue
 		else:
 			if debug:
 				print('NONTERMINAL',ss[i])
@@ -704,7 +713,7 @@ def map2expr(ss):
 		for es in ess:
 			if len(es) == 0:
 				print('Serialisation warning: empty internal output sequence, treating like epsilon!')
-				return BGF3.Expression(BGF3.Epsilon())
+				e.add(BGF3.Expression(BGF3.Epsilon()))
 			elif len(es) == 1:
 				e.add(BGF3.Expression(es[0]))
 			else:
@@ -911,6 +920,9 @@ def convert2terminal(x,defd):
 	if 'nonterminal-if-camelcase' in config.keys() and len(x)>1 and isCamelCase(x):
 		# configuration claims that CamelCase is a nonterminal
 		return x
+	if 'nonterminal-if-mixedcase' in config.keys() and len(x)>1 and isMixedCase(x):
+		# configuration claims that mixedCase is a nonterminal
+		return x
 	# none of the above
 	return config['start-terminal-symbol'] + x + config['end-terminal-symbol']
 
@@ -935,6 +947,9 @@ def convert2nonterminal(x,defd):
 	if 'terminal-if-camelcase' in config.keys() and isCamelCase(y):
 		# configuration claims that CamelCase is a terminal
 		return x
+	if 'terminal-if-mixedcase' in config.keys() and isMixedCase(y):
+		# configuration claims that mixedCase is a terminal
+		return x
 	if y in defd:
 		# The moment of truth: could it be a defined nonterminal? 
 		return y
@@ -946,7 +961,7 @@ def balanceProd(p):
 	i = 2
 	# balance forward
 	while i<len(p):
-		if p[i].find('START')<0:
+		if p[i].find('START') != 1:
 			i += 1
 			continue
 		j = endOfContext(p,i,p[i].replace('START','END'))
@@ -1028,7 +1043,7 @@ def postfix2confix(p):
 		while s in p:
 			w = p.index(s)
 			if w == 0:
-				print('STEP 7: Impossible place for postfix operator, converted to a terminal.')
+				print('STEP 7: Impossible place for postfix operator at',p[1],'- converted to a terminal.')
 				p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 				continue
 			if p[w-1] == 'END-GROUP-SYMBOL':
@@ -1036,7 +1051,7 @@ def postfix2confix(p):
 				# i.e., (a b)? will be [a b], not [(a b)]
 				j = startOfContext(p,w-1,'START-GROUP-SYMBOL')
 				if j<0:
-					print('STEP 7: Impossible to balance the group preceding a postfix operator, converted it to a terminal')
+					print('STEP 7: Impossible to balance the group preceding a postfix operator at',p[1],'- converted it to a terminal')
 					p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 					continue
 				else:
@@ -1362,14 +1377,17 @@ if __name__ == "__main__":
 		tokens = [config['start-terminal-symbol']+masked[x]+config['end-terminal-symbol'] if x in masked.keys() else x for x in tokens]
 	# if we know special rules for telling terminals from nonterminals, now is the time to use them!
 	if 'terminal-if-uppercase' in config.keys():
-		print('STEP 1: all uppercase tokens are considered terminals.')
+		print('STEP 1: all UPPERCASE tokens are considered terminals.')
 		tokens = nt2t(tokens,isUpperCase)
 	if 'terminal-if-lowercase' in config.keys():
 		print('STEP 1: all lowercase tokens are considered terminals.')
 		tokens = nt2t(tokens,isLowerCase)
 	if 'terminal-if-camelcase' in config.keys():
-		print('STEP 1: all camelcase tokens are considered terminals.')
+		print('STEP 1: all CamelCase tokens are considered terminals.')
 		tokens = nt2t(tokens,isCamelCase)
+	if 'terminal-if-mixedcase' in config.keys():
+		print('STEP 1: all mixedCase tokens are considered terminals.')
+		tokens = nt2t(tokens,isMixedCase)
 	# spaces instead of weird occurrences of start-terminal-symbols
 	tokens = [config['start-terminal-symbol']+x+config['end-terminal-symbol']
 				if x==config['start-terminal-symbol']+config['end-terminal-symbol']
@@ -1386,14 +1404,17 @@ if __name__ == "__main__":
 		print('STEP 2 skipped, sorry: start-nonterminal-symbol and end-nonterminal-symbol are not both specified.')
 	# if we know special rules for telling terminals from nonterminals, now is the time to use them!
 	if 'nonterminal-if-uppercase' in config.keys():
-		print('STEP 2: all uppercase tokens are considered nonterminals.')
+		print('STEP 2: all UPPERCASE tokens are considered nonterminals.')
 		tokens = t2nt(tokens,isUpperCase)
 	if 'nonterminal-if-lowercase' in config.keys():
 		print('STEP 2: all lowercase tokens are considered nonterminals.')
 		tokens = t2nt(tokens,isLowerCase)
 	if 'nonterminal-if-camelcase' in config.keys():
-		print('STEP 2: all camelcase tokens are considered nonterminals.')
+		print('STEP 2: all CamelCase tokens are considered nonterminals.')
 		tokens = t2nt(tokens,isCamelCase)
+	if 'nonterminal-if-mixedcase' in config.keys():
+		print('STEP 2: all mixedCase tokens are considered nonterminals.')
+		tokens = t2nt(tokens,isMixedCase)
 	if 'nonterminal-if-contains' in config.keys():
 		print('STEP 2: all tokens containing',repr(config['nonterminal-if-contains']),'are considered nonterminals.')
 		tokens = t2nt(tokens,lambda x:x.find(config['nonterminal-if-contains'])>-1)
