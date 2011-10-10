@@ -16,8 +16,9 @@ syntax ANTLR3TokenDefinition
  | ANTLR3UselessTokenDefinition;
 syntax ANTLR3UselessTokenDefinition = ANTLR3Name ";" ;
 syntax ANTLR3RealTokenDefinition    = ANTLR3Name "=" ANTLR3QuotedBlock ";" ;
-syntax ANTLR3FakeTokenDefinition    = ANTLR3Name ":" ANTLR3QuotedBlock ";" ;
+syntax ANTLR3FakeTokenDefinition    = ANTLR3Name ":" ANTLR3QuotedBlock ";" ANTLR3Finally?;
 
+syntax ANTLR3Finally = @category="Comment" "finally" ANTLR3CurlyBlock;
 syntax ANTLR3SectionName
  = "options"
  | "@header"
@@ -72,7 +73,9 @@ syntax ANTLR3UselessPrefix
 syntax ANTLR3Modifier = "*" | "?" | "+" | @category="Comment" ANTLR3UselessModifier;
 syntax ANTLR3UselessModifier = "!" | "^" | ANTLR3CurlyBlock | ANTLR3Arguments;
 syntax ANTLR3Terminal = @category="Variable" ANTLR3QuotedBlock;
-syntax ANTLR3Name = @category="Constant" lex [A-Za-z0-9_@]+ # [A-Za-z0-9_@] | @category="Constant" lex "." # ".";
+lexical ANTLR3Name
+ = @category="Constant" [A-Za-z0-9_@]+ !>> [A-Za-z0-9_@]
+ | @category="Constant" "." !>> ".";
 
 syntax ANTLR3AltStart
  = @category="Comment" ANTLR3ParenthesisBlock "=\>"
@@ -84,14 +87,14 @@ syntax ANTLR3OptionsSemicolon = @category="Comment" ANTLR3Options ":";
 syntax ANTLR3Options = @category="Comment" "options" ANTLR3CurlyBlock;
 syntax ANTLR3OptionalCurlyBlock = @category="Comment" ANTLR3CurlyBlock "?"?;
 
-syntax ANTLR3Layout
- = lex [\ \t\n\r]
- | @category="Comment" lex "//" ![\n]* [\n]
- | @category="Comment" lex "/*" ANTLR3CommentChar* "*/" ;
+lexical ANTLR3Layout
+ = [\ \t\n\r]
+ | @category="Comment" "//" ![\n]* [\n]
+ | @category="Comment" "/*" ANTLR3CommentChar* "*/" ;
   
-syntax ANTLR3CommentChar = lex ![*] | lex ANTLR3Asterisk ;
-syntax ANTLR3Asterisk = lex [*] # [/] ;
-layout ANTLR3LayoutList = lex ANTLR3Layout* # [\ \t\n\r] # "/*" # "//";
+lexical ANTLR3CommentChar = ![*] | ANTLR3Asterisk ;
+lexical ANTLR3Asterisk = [*] !>> [/] ;
+layout ANTLR3LayoutList = ANTLR3Layout* !>> [\ \t\n\r] !>> "/*" !>> "//";
 
 syntax ANTLR3CurlyBlock  = "{" ANTLR3CurlyBlockElement* "}";
 syntax ANTLR3CurlyBlockElement  = ![{}] | ANTLR3CurlyBlock;
@@ -100,7 +103,7 @@ syntax ANTLR3SquareBlockElement = ![\[\]] | ANTLR3SquareBlock;
 syntax ANTLR3ParenthesisBlock = "(" ANTLR3ParenthesisBlockElement* ")";
 syntax ANTLR3ParenthesisBlockElement = ![()] | ANTLR3ParenthesisBlock;
 syntax ANTLR3QuotedBlock  = [\'] ANTLR3QuotedBlockSymbol* [\'];
-syntax ANTLR3QuotedBlockSymbol = lex ![\'\\] | lex [\\][\'rtnfu?\\\"] | lex "\\.";
+lexical ANTLR3QuotedBlockSymbol = ![\'\\] | [\\][\'rtnfu?\\\"] | "\\.";
  
 public ANTLR3Grammar agrammar(str i, loc s){return parse(#ANTLR3Grammar, i, s);}
 
@@ -134,10 +137,10 @@ public ANTLR3Grammar simplify(ANTLR3Grammar g)
   //  => (ANTLR3Symbol)`(<{ANTLR3Alternative "|"}+ as>)`
   //	syntax ANTLR3Symbol = ANTLR3Symbol ANTLR3Modifier
   case (ANTLR3Symbol)`<ANTLR3Symbol s> <ANTLR3UselessModifier _>`
-	=> (ANTLR3Symbol)` <ANTLR3Symbol s> `
+	=> s
   //	syntax ANTLR3Symbol = ANTLR3Prefix ANTLR3Symbol
   case (ANTLR3Symbol)`<ANTLR3UselessPrefix _> <ANTLR3Symbol s>`
-	=> (ANTLR3Symbol)` <ANTLR3Symbol s> `
+	=> s
   // the following does not work yet Ñ see http://bugs.meta-environment.org/show_bug.cgi?id=1072
   case (ANTLR3Header)`<ANTLR3HeaderSection* before> <ANTLR3UselessHeaderSection _> <ANTLR3HeaderSection* after>`
     => (ANTLR3Header)`<ANTLR3HeaderSection* before><ANTLR3HeaderSection* after>`
@@ -149,9 +152,9 @@ public str simplify2str(ANTLR3Grammar g, loc z)
    return "<simplify(g)>";
 }
 
-// import SourceEditor;
-// import ANTLR;
+// import util::IDE;
+// import ANTLR3;
 // registerLanguage("ANTLR","ag",agrammar);
 // registerContributions("ANTLR",{popup(menu("ANTLR",[edit("simplify!", simplify2str)]))});
-// a=parse(#ANTLRGrammar,|project://antlr/src/Java.ag|);
+// a=parse(#ANTLR3Grammar,|project://antlr/src/Java.ag|);
 // writeTextValueFile(|project://antlr/src/Test.ag|,parse(#ANTLRGrammar,|project://antlr/src/Java.ag|));
