@@ -8,7 +8,7 @@
 :- test(evala(add(num(21),num(21)),_,42)).
 :- test(evala(add(num(21),id(x)),[('x',21)],42)).
 :- test(
-    execute(
+    exec(
      while( not(eq(id(x),num(0))),
             seq(
               assign(y,mul(id(x),id(y))),
