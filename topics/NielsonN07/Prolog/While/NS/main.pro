@@ -1,13 +1,9 @@
 :- ['eval.pro'].
 :- ['exec.pro'].
 :- ['map.pro'].
+:- ['test.pro'].
 
 % Tests
-
-test(G)
- :-
-    ( G -> P = 'OK'; P = 'FAIL' ),
-    format('~w: ~w~n',[P,G]).
 
 :- test(evala(add(num(21),num(21)),_,42)).
 :- test(evala(add(num(21),id(x)),[('x',21)],42)).
