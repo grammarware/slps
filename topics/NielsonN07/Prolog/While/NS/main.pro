@@ -1,5 +1,5 @@
 :- ['eval.pro'].
-:- ['ns.pro'].
+:- ['exec.pro'].
 :- ['map.pro'].
 
 % Tests
