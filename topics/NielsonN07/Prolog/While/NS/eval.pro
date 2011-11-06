@@ -93,5 +93,6 @@ not(tt,ff).
 not(ff,tt).
 
 and(tt,tt,tt).
-and(ff,_,ff).
-and(_,ff,ff).
+and(ff,tt,ff).
+and(tt,ff,ff).
+and(ff,ff,ff).

@@ -1,5 +1,5 @@
 :- ['eval.pro'].
-:- ['sos.pro'].
+:- ['exec.pro'].
 :- ['map.pro'].
 :- ['test.pro'].
 
