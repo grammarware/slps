@@ -181,7 +181,9 @@ class Selectable:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		self.xml = ET.SubElement(self.ex,'selectable')
 		ET.SubElement(self.xml,'selector').text = self.sel
-		self.xml.append(self.expr.getXml())
+		if self.expr:
+			self.xml.append(self.expr.getXml())
+			# troubleshooting?
 		return self.ex
 	def __str__(self):
 		name = self.expr.__class__.__name__

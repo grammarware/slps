@@ -35,6 +35,8 @@ if __name__ == "__main__":
 	lines = rsc.readlines()
 	discardBracket = 0
 	grammarkeys = []
+	lexicals = []
+	layouts = []
 	endOfAlt = False
 	while cx < len(lines):
 		line = lines[cx].strip()
@@ -81,11 +83,15 @@ if __name__ == "__main__":
 			print '['+str(cx)+']','Parsing module',tokens[1]
 			# do something with the module name!
 			continue
+		if tokens[0] == 'import':
+			print '['+str(cx)+']','Ignoring import',tokens[1:]
+			# do something with imports?
+			continue
 		if tokens[0] == 'start':
 			start.append(tokens[-1])
 			tokens = tokens[1:]
 			# fall through
-		if tokens[0] in ('syntax','layout'):
+		if tokens[0] in ('syntax','layout','lexical'):
 			nt = tokens[1]
 			if nt[0] == '"':
 				print '['+str(cx)+']','Cannot include lexical restriction information about',nt
@@ -103,12 +109,17 @@ if __name__ == "__main__":
 			else:
 				grammar[nt] = []
 				grammarkeys.append(nt)
+				if tokens[0] == 'lexical':
+					lexicals.append(nt)
+				elif tokens[0]=='layout':
+					layouts.append(nt)
 			# in case there are more tokens on the same line, we proceed
 			if len(tokens) > 3:
 				tokens = tokens[3:]
 			else:
 				continue
 		if len(tokens) == 1 and tokens[0] == ';':
+			print "Done with nonterminal",nt
 			continue
 		while len(tokens) > 0 and tokens[0] in ('left','right','non-assoc'):
 			tokens = tokens[1:]
@@ -123,7 +134,10 @@ if __name__ == "__main__":
 		if len(tokens) == 0:
 			continue
 		# give up
-		print '['+str(cx)+']','What is',tokens,'- a part of',nt,'?'
+		if nt:
+			print '['+str(cx)+']','Treating',tokens,'as a part of',nt
+		else:
+			print '['+str(cx)+']','Disregarding',tokens,'completely.'
 		if nt:
 			if endOfAlt:
 				grammar[nt].append(tokens)
@@ -133,6 +147,10 @@ if __name__ == "__main__":
 			else:
 				grammar[nt].append(tokens)
 		pass
+		if tokens[-1][-1]==';':
+			if nt:
+				print '['+str(cx)+']','Done with nonterminal',nt
+			nt = ''
 	# NOW TO PROCESS TOKENS
 	#print 'Command:'
 	#for s in grammar['Command']:
@@ -145,7 +163,16 @@ if __name__ == "__main__":
 	for nt in grammarkeys:
 		print nt,'::=',grammar[nt]
 	for nt in grammarkeys:
+		if nt in lexicals:
+			print 'Lexical nonterminal',nt,'is disregarded'
+			continue
+		if nt in layouts:
+			print 'Layout-related nonterminal',nt,'is disregarded'
+			continue
 		for alt in grammar[nt]:
+			while alt[0][0]=='@':
+				print 'Disregarding annotation',alt[0]
+				alt = alt[1:]
 			if prevline:
 				# dead code yet
 				prevline.append('|')
@@ -191,10 +218,9 @@ if __name__ == "__main__":
 			sym = None
 			#print '['+str(cx)+']',alt
 			while cx<len(alt):
-				print '['+str(cx)+']',alt
-				if alt[cx][0]=='@':
-					cx += 1
-					continue
+				if alt[cx][-1] == ';':
+					alt[cx] = alt[cx][:-1]
+				print '['+str(cx)+']','@',alt
 				if curly>0:
 					if alt[cx] == '{':
 						curly += 1
@@ -247,6 +273,9 @@ if __name__ == "__main__":
 						sym = BGF.Optional()
 						sym.setExpr(BGF.Nonterminal())
 						sym.data.setName(alt[cx][:-1])
+					elif alt[cx] in layouts:
+						print 'Occurrence of layout nonterminal',alt[cx],'is disregarded.'
+						sym = BGF.Epsilon()
 					else:
 						sym = BGF.Nonterminal()
 						sym.setName(alt[cx])
