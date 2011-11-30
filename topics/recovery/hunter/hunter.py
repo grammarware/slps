@@ -274,6 +274,7 @@ def useDefiningSymbol(ts,d):
 			or 'start-nonterminal-symbol' in config.keys() and 'end-nonterminal-symbol' in config.keys() and (ts[j][0]==config['start-nonterminal-symbol'] and ts[j][-1]==config['end-nonterminal-symbol'] and isAlphaNum(ts[j][1:-1])):
 				poss.append(i)
 	poss.append(len(ts)+1)
+	#print('POSSSSS:',poss)
 	if debug:
 		print('Positions:',poss)
 	for i in range(0,len(poss)-1):
@@ -609,19 +610,24 @@ def map2expr(ss):
 			if debug:
 				print('>>>context>>>',ss[i:j])
 			# {x y}* => (x (yx)*)?
-			e = BGF3.Sequence()
-			x = map2expr([ss[i+1]])
-			y = map2expr([ss[i+2]])
-			e.add(x)
-			e2 = BGF3.Sequence()
-			e2.add(y)
-			e2.add(x)
-			s = BGF3.Star()
-			s.setExpr(BGF3.Expression(e2))
-			e.add(BGF3.Expression(s))
-			e2 = BGF3.Optional()
-			e2.setExpr(e)
-			es.append(e2)
+			e = BGF3.SepListStar()
+			e.setItem([ss[i+1]])
+			e.setSep([ss[i+2]])
+			es.append(e)
+			### if no bare seplist desired in BGF, uncomment the following instead
+			# e = BGF3.Sequence()
+			# x = map2expr([ss[i+1]])
+			# y = map2expr([ss[i+2]])
+			# e.add(x)
+			# e2 = BGF3.Sequence()
+			# e2.add(y)
+			# e2.add(x)
+			# s = BGF3.Star()
+			# s.setExpr(BGF3.Expression(e2))
+			# e.add(BGF3.Expression(s))
+			# e2 = BGF3.Optional()
+			# e2.setExpr(e)
+			# es.append(e2)
 			i = j
 		elif ss[i] == 'START-SEPLIST-PLUS-SYMBOL':
 			j = endOfContext(ss,i,'END-SEPLIST-PLUS-SYMBOL')
@@ -633,17 +639,22 @@ def map2expr(ss):
 			if debug:
 				print('>>>context>>>',ss[i:j])
 			# {x y}+ => (x (yx)*)
-			e = BGF3.Sequence()
-			x = map2expr([ss[i+1]])
-			y = map2expr([ss[i+2]])
-			e.add(x)
-			e2 = BGF3.Sequence()
-			e2.add(y)
-			e2.add(x)
-			s = BGF3.Star()
-			s.setExpr(BGF3.Expression(e2))
-			e.add(BGF3.Expression(s))
+			e = BGF3.SepListPlus()
+			e.setItem([ss[i+1]])
+			e.setSep([ss[i+2]])
 			es.append(e)
+			### if no bare seplist desired in BGF, uncomment the following instead
+			# e = BGF3.Sequence()
+			# x = map2expr([ss[i+1]])
+			# y = map2expr([ss[i+2]])
+			# e.add(x)
+			# e2 = BGF3.Sequence()
+			# e2.add(y)
+			# e2.add(x)
+			# s = BGF3.Star()
+			# s.setExpr(BGF3.Expression(e2))
+			# e.add(BGF3.Expression(s))
+			# es.append(e)
 			i = j
 		elif ss[i] == 'START-GROUP-SYMBOL':
 			j = endOfContext(ss,i,'END-GROUP-SYMBOL')
@@ -678,6 +689,7 @@ def map2expr(ss):
 			i += 1
 		elif ss[i] in metasymbols:
 			print('STEP 9:',ss[i],'found untouched at serialisation stage, turned into a terminal symbol "'+config[ss[i].lower()]+'"')
+			print(ss)
 			ss[i] = config['start-terminal-symbol'] + config[ss[i].lower()] + config['end-terminal-symbol']
 			continue
 		else:

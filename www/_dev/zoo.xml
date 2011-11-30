@@ -811,6 +811,14 @@
 					<title>Google, Inc., Dart subversion repository</title>
 					<date>October 2011</date>
 					<specific>bleeding edge branch, revision 14</specific>
+					<link>
+						<slps>topics/grammars/dart/google/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>https://dart.googlecode.com/svn/branches/bleeding_edge/dart/language/grammar/Dart.g</uri>
+						<name>Online</name>
+					</link>
 				</source>
 				<toolset>
 					<name>Extraction</name>
@@ -832,7 +840,109 @@
 					</link>
 				</toolset>
 			</grammar>
-			<toolset ref="bnfdmssdfrsc"/>
+		</version>
+		<version>
+			<name>Dart Specification 0.01</name>
+			<grammar>
+				<name>Recovered</name>
+				<handle>dart/spec-0.01</handle>
+				<source>
+					<title>The Dart Team, Dart Programming Language Specification, Draft Version 0.01</title>
+					<date>October 2011</date>
+					<link>
+						<slps>topics/grammars/dart/spec-0.01/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.dartlang.org/docs/spec/index.html</uri>
+						<name>Online</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/dart/spec-0.01/ebnf.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/recovery/hunter/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<mu>topics/grammars/dart/spec-0.01/Makefile</mu>
+						<name>replacements</name>
+					</link>
+					<link>
+						<xbgf>dart/spec-0.01-post-extract</xbgf>
+						<name>post-extract</name>
+					</link>
+				</toolset>
+				<toolset>
+					<name>Recovery</name>
+					<link>
+						<xbgf>dart/spec-0.01-fix-spaces</xbgf>
+						<name>fix-spaces</name>
+					</link>
+					<link>
+						<xbgf>dart/spec-0.01-drop-empty-alternatives</xbgf>
+						<name>drop-empty-alternatives</name>
+					</link>
+					<link>
+						<xbgf>dart/spec-0.01-unite-misspellings</xbgf>
+						<name>unite-misspellings</name>
+					</link>
+					<link>
+						<xbgf>dart/spec-0.01-emulate-negation</xbgf>
+						<name>emulate-negation</name>
+					</link>
+					<link>
+						<xbgf>dart/spec-0.01-emulate-omission</xbgf>
+						<name>emulate-omission</name>
+					</link>
+					<link>
+						<xbgf>dart/spec-0.01-correct</xbgf>
+						<name>correct</name>
+					</link>
+					<link>
+						<xbgf>dart/spec-0.01-complete</xbgf>
+						<name>complete</name>
+					</link>
+				</toolset>
+			</grammar>
+		</version>
+		<version>
+			<name>Dart Specification 0.05</name>
+			<grammar>
+				<name>Recovered</name>
+				<handle>dart/spec-0.05</handle>
+				<source>
+					<title>The Dart Team, Dart Programming Language Specification, Draft Version 0.05</title>
+					<date>November 2011</date>
+					<link>
+						<slps>topics/grammars/dart/spec-0.05/README.txt</slps>
+						<name>ReadMe</name>
+					</link>
+					<link>
+						<uri>http://www.dartlang.org/docs/spec/index.html</uri>
+						<name>Online</name>
+					</link>
+				</source>
+				<toolset>
+					<name>Extraction</name>
+					<link>
+						<mu>topics/grammars/dart/spec-0.05/ebnf2.edd</mu>
+						<name>EDD</name>
+					</link>
+					<link>
+						<mu>topics/recovery/hunter/hunter.py</mu>
+						<name>Hunter</name>
+					</link>
+					<link>
+						<mu>topics/grammars/dart/spec-0.05/Makefile</mu>
+						<name>replacements</name>
+					</link>
+				</toolset>
+			</grammar>
 		</version>
 	</language>
 	<language>
