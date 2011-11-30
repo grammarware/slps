@@ -938,6 +938,10 @@
 						<name>Hunter</name>
 					</link>
 					<link>
+						<mu>topics/recovery/hunter/getgrammar.py</mu>
+						<name>getgrammar.py</name>
+					</link>
+					<link>
 						<mu>topics/grammars/dart/spec-0.05/Makefile</mu>
 						<name>replacements</name>
 					</link>
