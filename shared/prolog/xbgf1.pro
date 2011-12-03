@@ -1347,7 +1347,8 @@ unchain(P1,g(Rs,Ps1),g(Rs,Ps4))
       'Production ~q must be chain production.',
       [P1]),
     append(Ps1a,Ps1b,Ps2),
-    definition1(Ps2,N2,p(_,_,X)),
+    def(Ps2,N2,N2Ps),
+    member(p(_,_,X),N2Ps),
     require(
        (\+ member(N2,Rs) ),
        'Nonterminal ~q must not be root.',
