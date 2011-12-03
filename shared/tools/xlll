@@ -1,0 +1,31 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+cd `dirname $1`
+EDD=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 4 ]; then
+    echo "This tool wraps LLL-to-BGF-trafo-BGF-to-LLL cycle so that it seems that XBGF can transform LLL directly."
+    echo "Usage: xlll <LLL-definition> <XBGF-input> <LLL-input> <LLL-output>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+    exit 1
+elif [ ! -r $3 ]; then
+    echo "Oops: $3 not found or not readable."
+    exit 1
+else
+    rm -f $3.bgf $4 $4.bgf
+	${SLPS}/topics/recovery/hunter/hunter.py $3 ${SLPS}/shared/edd/lll2.edd $3.bgf
+	swipl -q -t "halt(1)" -f ${SLPS}/shared/prolog/cli/xbgf.pro -- $2 $3.bgf $4.bgf
+	xsltproc --stringparam edd ${EDD}/`basename $1` ${SLPS}/shared/xsl/bgf-reformat.xslt $4.bgf > $4
+	perl -pi -w -e 's/\\n/\n/g;' $4
+fi

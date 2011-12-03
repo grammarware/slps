@@ -1,0 +1,29 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+cd `dirname $2`
+EDD=${PWD}
+cd ${LOCAL}
+
+if [ $# -eq 2 ]; then
+    OUTPUT=/dev/stdout
+elif [ $# -ne 3 ]; then
+    echo "This tool pretty-prints BGF according the the EBNF Dialect Definition."
+    echo "Usage: reformat <input-bgf-document> <desired-ebnf-dialect> [<output-text>]"
+    echo "When output file is not specified, stdout is used."
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+    OUTPUT=$3
+fi
+
+xsltproc --stringparam edd ${EDD}/`basename $2` ${SLPS}/shared/xsl/bgf-reformat.xslt $1 > output.tmp
+perl -pi -w -e 's/\\n/\n/g;' output.tmp
+cp output.tmp ${OUTPUT}
+rm -f output.tmp
