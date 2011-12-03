@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 2 ]; then
+    echo "This is the name independend version of Grammar Diff Tool. If you want a normal one, please use gdt (also considerably faster)"
+    echo "Usage: nigdt <BGF-input1> <BGF-input2>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+    exit 1
+else
+    ${SLPS}/topics/comparison/nid.py $1 $2
+fi

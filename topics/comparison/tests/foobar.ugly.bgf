@@ -1,0 +1,2 @@
+<?xml version="1.0"?><x1:grammar xmlns:x1="http://planet-sl.org/bgf"><x1:production><nonterminal>foo</nonterminal><x1:expression>
+<nonterminal>bar</nonterminal></x1:expression></x1:production></x1:grammar>
