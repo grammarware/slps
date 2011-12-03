@@ -2,7 +2,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bgf="http://planet-sl.org/bgf" xmlns:cbgf="http://planet-sl.org/cbgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.0">
 	<xsl:output method="xml" encoding="UTF-8"/>
 	<xsl:template match="/cbgf:relationship">
-		<xsl:apply-templates select="*"/>
+		<xbgf:sequence>
+			<xsl:apply-templates select="*"/>
+		</xbgf:sequence>
 	</xsl:template>
 	<xsl:template match="cbgf:add-remove">
 		<xbgf:add>
@@ -171,6 +173,11 @@
 		<xbgf:rename>
 			<xsl:copy-of select="*"/>
 		</xbgf:rename>
+	</xsl:template>
+	<xsl:template match="cbgf:reroot-reroot">
+		<xbgf:reroot>
+			<xsl:copy-of select="to/*"/>
+		</xbgf:reroot>
 	</xsl:template>
 	<xsl:template match="cbgf:replace-replace">
 		<xbgf:replace>

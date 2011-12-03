@@ -24,6 +24,8 @@
 				not covered from xbgf:
 					* strip (deprecated)
 					* dump (debug)
+				
+				might be shaky!
 					* reroot (implementation is not easily turned bx)
 			-->
 			<xsd:group ref="cbgf:folding-unfolding-transformation"/>
@@ -33,6 +35,7 @@
 			<xsd:group ref="cbgf:abstract-revising-transformation"/>
 			<xsd:group ref="cbgf:decorative-transformation"/>
 			<xsd:element ref="cbgf:rename-rename"/>
+			<xsd:element ref="cbgf:reroot-reroot"/>
 		</xsd:choice>
 	</xsd:group>
 	<xsd:group name="folding-unfolding-transformation">
@@ -545,6 +548,13 @@
 			<xsd:choice>
 				<xsd:element ref="bgf:production"/>
 			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="reroot-reroot">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="root" type="bgf:nonterminal" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:group name="scope">

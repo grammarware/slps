@@ -2,7 +2,12 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bgf="http://planet-sl.org/bgf" xmlns:cbgf="http://planet-sl.org/cbgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.0">
 	<xsl:output method="xml" encoding="UTF-8"/>
 	<xsl:template match="/cbgf:relationship">
-		<xsl:apply-templates select="*"/>
+		<xbgf:sequence>
+			<xsl:for-each select="*">
+				<xsl:sort select="position()" data-type="number" order="descending"/>
+				<xsl:apply-templates select="."/>
+			</xsl:for-each>
+		</xbgf:sequence>
 	</xsl:template>
 	<xsl:template match="cbgf:remove-add">
 		<xbgf:add>
@@ -168,9 +173,22 @@
 		</xbgf:permute>
 	</xsl:template>
 	<xsl:template match="cbgf:rename-rename">
+		<!-- TODO: does not work with scope (as many other things as well). Don't try this at home or at work! -->
 		<xbgf:rename>
-			<xsl:copy-of select="*"/>
+			<xsl:element name="{local-name(*)}">
+				<from>
+					<xsl:value-of select="*/to"/>
+				</from>
+				<to>
+					<xsl:value-of select="*/from"/>
+				</to>
+			</xsl:element>
 		</xbgf:rename>
+	</xsl:template>
+	<xsl:template match="cbgf:reroot-reroot">
+		<xbgf:reroot>
+			<xsl:copy-of select="from/*"/>
+		</xbgf:reroot>
 	</xsl:template>
 	<xsl:template match="cbgf:replace-replace">
 		<xbgf:replace>

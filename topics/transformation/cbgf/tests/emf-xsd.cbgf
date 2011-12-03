@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<cbgf:relationship xmlns:bgf="http://planet-sl.org/bgf" xmlns:cbgf="http://planet-sl.org/cbgf">
+	<!-- rename-emf -->
+	<cbgf:rename-rename>
+		<nonterminal>
+			<from>ProgramType</from>
+			<to>Program</to>
+		</nonterminal>
+	</cbgf:rename-rename>
+	<!-- reverse of trim-xsd -->
+	<cbgf:introduce-eliminate>
+		<bgf:production>
+			<nonterminal>Fragment</nonterminal>
+			<bgf:expression>
+				<nonterminal>Expr</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</cbgf:introduce-eliminate>
+	<!-- reroot-to-top -->
+	<cbgf:reroot-reroot>
+		<from>
+		</from>
+		<to>
+			<root>Program</root>
+			<root>Fragment</root>
+		</to>
+	</cbgf:reroot-reroot>
+</cbgf:relationship>

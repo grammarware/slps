@@ -1,0 +1,30 @@
+#! /bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ..
+SHARED=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 3 ]; then
+	echo "This tool checks if two BGF grammars converge with the given CBGF scenario"
+    echo "Usage: cbgf <CBGF-input> <BGF-input-1> <BGF-input-2>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+    exit 1
+elif [ ! -r $3 ]; then
+    echo "Oops: $3 not found or not readable."
+    exit 1
+else
+	xsltproc ${SHARED}/xsl/cbgf2xbgf-forward.xslt $1 > $1.forward.xbgf
+	xsltproc ${SHARED}/xsl/cbgf2xbgf-reverse.xslt $1 > $1.reverse.xbgf
+	${SHARED}/tools/xbgf $1.forward.xbgf $2 $2.res
+	${SHARED}/tools/xbgf $1.reverse.xbgf $3 $3.res
+	${SHARED}/tools/gdt $2 $3.res
+	${SHARED}/tools/gdt $3 $2.res
+fi
