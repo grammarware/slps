@@ -5,23 +5,23 @@ xdir = ../../topics/extraction
 
 all:
 	make clean
-	make xpath
-	make fl
-	make bnf slps dsl
-	make ada
-	make c cpp
-	make csharp
-	make java jls
+	make ada.save c.save cpp.save csharp.save dart.save eiffel.save fortran.save modula.save oberon-0.save w3c.save wiki.save
+	make java-1.save java-2.save java-4.save java-5.save
+	make metasyntax.save
 	chmod 644 *.bgf
 
 norm:
 	ls -1 *.rec.bgf | xargs -n1 ./runnorm
 
+%.save:
+	rm -f ${gdir}/$*/*.bgf
+	cd ${gdir}/$* && make save
+	for f in ${gdir}/$*/*.bgf ; do cp "$$f" $*-`basename "$$f"` ; done
+
 ada:
-	cd ${gdir}/ada && make build
-	cp ${gdir}/ada/kempe/iso-ada-1.bgf        ada.95.kempe.ext.bgf
-	cp ${gdir}/ada/kempe/ada.bgf              ada.95.kempe.rec.bgf
-	cp ${gdir}/ada/laemmel-verhoef/ada.bgf    ada.95.rlxv.rec.bgf
+	rm -f ${gdir}/ada/*.bgf
+	cd ${gdir}/ada && make save
+	for f in ${gdir}/ada/*.bgf ; do cp "$$f" ada-`basename "$$f"` ; done
 
 xpath:
 	cd ${gdir}/xpath && make test
