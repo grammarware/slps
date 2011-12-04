@@ -23,24 +23,54 @@
 	<cbgf:vertical-horizontal>
 		<nonterminal>expr</nonterminal>
 	</cbgf:vertical-horizontal>
+	<cbgf:designate-unlabel>
+		<bgf:production>
+			<label>apply</label>
+			<nonterminal>expr</nonterminal>
+			<bgf:expression>
+				<nonterminal>apply</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</cbgf:designate-unlabel>
 	<cbgf:unchain-chain>
 		<bgf:production>
+			<label>apply</label>
 			<nonterminal>expr</nonterminal>
 			<bgf:expression>
 				<nonterminal>apply</nonterminal>
 			</bgf:expression>
 		</bgf:production>
 	</cbgf:unchain-chain>
+	<cbgf:designate-unlabel>
+		<bgf:production>
+			<label>binary</label>
+			<nonterminal>expr</nonterminal>
+			<bgf:expression>
+				<nonterminal>binary</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</cbgf:designate-unlabel>
 	<cbgf:unchain-chain>
 		<bgf:production>
+			<label>binary</label>
 			<nonterminal>expr</nonterminal>
 			<bgf:expression>
 				<nonterminal>binary</nonterminal>
 			</bgf:expression>
 		</bgf:production>
 	</cbgf:unchain-chain>
+	<cbgf:designate-unlabel>
+		<bgf:production>
+			<label>ifThenElse</label>
+			<nonterminal>expr</nonterminal>
+			<bgf:expression>
+				<nonterminal>ifThenElse</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</cbgf:designate-unlabel>
 	<cbgf:unchain-chain>
 		<bgf:production>
+			<label>ifThenElse</label>
 			<nonterminal>expr</nonterminal>
 			<bgf:expression>
 				<nonterminal>ifThenElse</nonterminal>
@@ -99,4 +129,55 @@
 			</bgf:expression>
 		</bgf:production>
 	</cbgf:designate-unlabel>
+	<!--
+
+	<cbgf:designate-unlabel>
+		<bgf:production>
+			<label>apply</label>
+			<nonterminal>expr</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>name</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<plus>
+							<bgf:expression>
+								<nonterminal>atom</nonterminal>
+							</bgf:expression>
+						</plus>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</cbgf:designate-unlabel>
+	<cbgf:designate-unlabel>
+		<bgf:production>
+			<label>ifThenElse</label>
+			<nonterminal>expr</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>if</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>expr</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>then</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>expr</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>else</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>expr</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</cbgf:designate-unlabel>
+	-->
 </cbgf:relationship>
