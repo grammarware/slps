@@ -119,7 +119,8 @@
 	</xsl:template>
 	<xsl:template match="cbgf:factor-factor">
 		<xbgf:factor>
-			<xsl:copy-of select="*"/>
+			<xsl:copy-of select="bgf:expression[2]"/>
+			<xsl:copy-of select="bgf:expression[1]"/>
 		</xbgf:factor>
 	</xsl:template>
 	<xsl:template match="cbgf:fold-unfold">
@@ -154,22 +155,26 @@
 	</xsl:template>
 	<xsl:template match="cbgf:massage-massage">
 		<xbgf:massage>
-			<xsl:copy-of select="*"/>
+			<xsl:copy-of select="bgf:expression[2]"/>
+			<xsl:copy-of select="bgf:expression[1]"/>
 		</xbgf:massage>
 	</xsl:template>
 	<xsl:template match="cbgf:widen-narrow">
 		<xbgf:narrow>
-			<xsl:copy-of select="*"/>
+			<xsl:copy-of select="bgf:expression[2]"/>
+			<xsl:copy-of select="bgf:expression[1]"/>
 		</xbgf:narrow>
 	</xsl:template>
 	<xsl:template match="cbgf:narrow-widen">
 		<xbgf:widen>
-			<xsl:copy-of select="*"/>
+			<xsl:copy-of select="bgf:expression[2]"/>
+			<xsl:copy-of select="bgf:expression[1]"/>
 		</xbgf:widen>
 	</xsl:template>
 	<xsl:template match="cbgf:permute-permute">
 		<xbgf:permute>
-			<xsl:copy-of select="*"/>
+			<xsl:copy-of select="bgf:expression[2]"/>
+			<xsl:copy-of select="bgf:expression[1]"/>
 		</xbgf:permute>
 	</xsl:template>
 	<xsl:template match="cbgf:rename-rename">
@@ -192,7 +197,8 @@
 	</xsl:template>
 	<xsl:template match="cbgf:replace-replace">
 		<xbgf:replace>
-			<xsl:copy-of select="*"/>
+			<xsl:copy-of select="bgf:expression[2]"/>
+			<xsl:copy-of select="bgf:expression[1]"/>
 		</xbgf:replace>
 	</xsl:template>
 	<xsl:template match="cbgf:detour-abridge">

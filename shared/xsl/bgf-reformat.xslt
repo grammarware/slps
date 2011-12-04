@@ -22,7 +22,13 @@
 					<xsl:with-param name="expr" select="bgf:expression/choice/bgf:expression[1]"/>
 				</xsl:call-template>
 				<xsl:for-each select="./bgf:expression/choice/bgf:expression[position()&gt;1]">
+					<xsl:if test="not(contains($cfg/definition-separator-symbol,' '))">
+						<xsl:text> </xsl:text>
+					</xsl:if>
 					<xsl:value-of select="$cfg/definition-separator-symbol"/>
+					<xsl:if test="not(contains($cfg/definition-separator-symbol,' '))">
+						<xsl:text> </xsl:text>
+					</xsl:if>
 					<xsl:call-template name="no-parenthesis">
 						<xsl:with-param name="expr" select="."/>
 					</xsl:call-template>
@@ -38,6 +44,10 @@
 			<xsl:text> </xsl:text>
 		</xsl:if>
 		<xsl:value-of select="$cfg/terminator-symbol"/>
+		<xsl:if test="not(contains($cfg/terminator-symbol,'\n'))">
+			<xsl:text>
+</xsl:text>
+		</xsl:if>
 	</xsl:template>
 	<xsl:template match="bgf:expression">
 		<xsl:apply-templates select="./*"/>

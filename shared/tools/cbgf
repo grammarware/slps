@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # Get our hands on basedir
 LOCAL1=${PWD}
@@ -21,8 +21,7 @@ elif [ ! -r $3 ]; then
     echo "Oops: $3 not found or not readable."
     exit 1
 else
-	xsltproc ${SHARED}/xsl/cbgf2xbgf-forward.xslt $1 > $1.forward.xbgf
-	xsltproc ${SHARED}/xsl/cbgf2xbgf-reverse.xslt $1 > $1.reverse.xbgf
+	${SHARED}/tools/cbgf2xbgf $1 $1.forward.xbgf $1.reverse.xbgf
 	${SHARED}/tools/xbgf $1.forward.xbgf $2 $2.res
 	${SHARED}/tools/xbgf $1.reverse.xbgf $3 $3.res
 	${SHARED}/tools/gdt $2 $3.res
