@@ -139,8 +139,10 @@
 		<xsl:value-of select="$cfg/end-nonterminal-symbol"/>
 	</xsl:template>
 	<xsl:template match="selectable">
+		<!-- TODO
 		<xsl:value-of select="selector"/>
 		<xsl:text>::</xsl:text>
+		-->
 		<xsl:choose>
 			<xsl:when test="local-name(bgf:expression/*) = 'star'                    or local-name(bgf:expression/*) = 'optional'                    or local-name(bgf:expression/*) = 'plus'">
 				<xsl:text>(</xsl:text>

@@ -384,3 +384,54 @@ class Plus:
 		return self.ex
 	def __str__(self):
 		return str(self.data)+'+'
+
+
+# sepliststar
+class SepListStar:
+	def __init__(self):
+		self.item = None
+		self.sep = None
+	def parse(self,slelem):
+		exprs = slelem.findall(slpsns.bgf_('expression'))
+		self.item = Expression(None)
+		self.item.parse(exprs[0])
+		self.sep = Expression(None)
+		self.sep.parse(exprs[1])
+	def setItem(self,name):
+		self.item = name
+	def setSep(self,expr):
+		self.sep = expr
+	def getXml(self):
+		#print 'Getting the XML of selectable',self.sel,'...'
+		self.ex = ET.Element(slpsns.bgf_('expression'))
+		self.xml = ET.SubElement(self.ex,'sepliststar')
+		self.xml.append(self.item.getXml())
+		self.xml.append(self.sep.getXml())
+		return self.ex
+	def __str__(self):
+		return '{'+str(self.item)+' '+str(self.sep)+'}*'
+
+# seplistplus
+class SepListPlus:
+	def __init__(self):
+		self.item = None
+		self.sep = None
+	def parse(self,slelem):
+		exprs = slelem.findall(slpsns.bgf_('expression'))
+		self.item = Expression(None)
+		self.item.parse(exprs[0])
+		self.sep = Expression(None)
+		self.sep.parse(exprs[1])
+	def setItem(self,name):
+		self.item = name
+	def setSep(self,expr):
+		self.sep = expr
+	def getXml(self):
+		#print 'Getting the XML of selectable',self.sel,'...'
+		self.ex = ET.Element(slpsns.bgf_('expression'))
+		self.xml = ET.SubElement(self.ex,'seplistplus')
+		self.xml.append(self.item.getXml())
+		self.xml.append(self.sep.getXml())
+		return self.ex
+	def __str__(self):
+		return '{'+str(self.item)+' '+str(self.sep)+'}+'

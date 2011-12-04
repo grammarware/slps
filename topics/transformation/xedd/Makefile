@@ -1,13 +1,31 @@
 all:
 
+lll:
+	for f in ../../../shared/bgf/*.bgf ; do ../../../shared/tools/reformat "$$f" lll1.edd llls/`basename "$$f" .bgf`.lll ; done
+
 try:
+	# This scenario propagates changes from the definition "in itself" to the grammar, to the unbeautified grammar
+	# should also propagate farther: to the parser, to the notation and finally to the (calculated) notation delta
 	../../recovery/hunter/hunter.py lll1t.doc.lll1t lll1t.edd lll1n.doc.bgf
+	# in this simple case, spec2doc.xbgf is still okay
 	../../../shared/tools/cbgf2xbgf lll1.spec2doc.cbgf /dev/null lll1.reverse.xbgf
 	../../../shared/tools/xbgf lll1.reverse.xbgf lll1n.doc.bgf lll1n.spec.bgf
-	#../../../shared/tools/cbgf lll1t.coupled.cbgf 
-	gdt lll1.spec.bgf lll1t.spec.bgf
+	# could not detect starting symbols from LLL notation, using an automated mutation
+	../../../shared/generators/reroot2top lll1n.spec.bgf lll1n.reroot.xbgf
+	../../../shared/tools/xbgf lll1n.reroot.xbgf lll1n.spec.bgf lll1n.spec2.bgf
+	# should be equal
+	../../../shared/tools/gdt lll1t.spec.bgf lll1n.spec2.bgf
+	../../../shared/tools/bgf2rsc lll1n.spec.bgf lll1n.rsc
 
-specprop:
+migrate1:
+	rm -f mllls/*
+	ls -1 llls | xargs -n1 -I {} make {}.migrate1
+
+%.migrate1:
+	../../recovery/hunter/hunter.py llls/$* lll1.edd tmp.bgf
+	../../../shared/tools/reformat tmp.bgf lll1t.edd mllls/`basename $* .lll`.lll
+
+specprop1:
 	# This scenario propagates changes from the notation to its parser, to its grammar, to its beautified grammar and to its definition "in itself"
 	./xedd.py lll1.try.xedd lll1.edd lll1t.edd lll1t.coupled.cbgf
 	# need to learn to run Rascal from command line
@@ -20,8 +38,9 @@ specprop:
 	../../../shared/tools/reformat lll1t.doc.bgf lll1t.edd lll1t.doc.lll1t
 
 edd:
-	cp ../../../shared/edd/lll1.edd lll1.edd
-	cp ../../../shared/edd/lll2.edd lll2.edd
+	#cp ../../../shared/edd/lll1.edd lll1.edd
+	#cp ../../../shared/edd/lll2.edd lll2.edd
+	echo Copied
 
 rsc: edd
 	# need to learn to run Rascal from command line
@@ -29,19 +48,21 @@ rsc: edd
 	cp backup/lll?.rsc .
 
 bgfspec: rsc
-	../../../shared/tools/rsc2bgf lll1.rsc lll1.raw.bgf
+	../../../shared/tools/rsc2bgf lll1.rsc lll1.raw.bgf SL
 	../../../shared/tools/normbgf lll1.raw.bgf lll1.spec.bgf
-	../../../shared/tools/rsc2bgf lll2.rsc lll2.raw.bgf
+	../../../shared/tools/rsc2bgf lll2.rsc lll2.raw.bgf SL
 	../../../shared/tools/normbgf lll2.raw.bgf lll2.spec.bgf
 
 bgfdoc:
 	cp ../../grammars/metasyntax/lll-ldta/grammar.bgf lll1.doc.bgf
 	../../../shared/tools/reformat lll1.doc.bgf lll1.edd lll1.doc.lll1
-	cp ../../grammars/metasyntax/lll-kort/grammar.bgf lll2.doc.bgf
+	# need to rerun hunter since otherwise it's without seplists (legacy?)
+	../../recovery/hunter/hunter.py ../../grammars/metasyntax/lll-kort/src.manually.fixed.txt ../../../shared/edd/lll2.edd lll2.doc.bgf
 	../../../shared/tools/reformat lll2.doc.bgf lll2.edd lll2.doc.lll2
 
 bgfspecndoc: bgfspec bgfdoc
 	../../../shared/tools/cbgf lll1.spec2doc.cbgf lll1.spec.bgf lll1.doc.bgf
+	../../../shared/tools/cbgf lll2.spec2doc.cbgf lll2.spec.bgf lll2.doc.bgf
 
 get:
 	cp ../../grammars/metasyntax/lll-kort/src.manually.fixed.txt lll-gdkref.lll

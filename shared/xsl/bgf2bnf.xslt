@@ -65,6 +65,22 @@
     <xsl:text>*</xsl:text>
   </xsl:template>
 
+  <xsl:template match="sepliststar">
+    <xsl:text>{</xsl:text>
+    <xsl:apply-templates select="*[1]"/>
+    <xsl:text> </xsl:text>
+    <xsl:apply-templates select="*[2]"/>
+    <xsl:text>}*</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="seplistplus">
+    <xsl:text>{</xsl:text>
+    <xsl:apply-templates select="*[1]"/>
+    <xsl:text> </xsl:text>
+    <xsl:apply-templates select="*[2]"/>
+    <xsl:text>}+</xsl:text>
+  </xsl:template>
+
   <xsl:template match="optional">
     <xsl:apply-templates select="./*"/>
     <xsl:text>?</xsl:text>

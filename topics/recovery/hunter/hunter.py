@@ -611,8 +611,8 @@ def map2expr(ss):
 				print('>>>context>>>',ss[i:j])
 			# {x y}* => (x (yx)*)?
 			e = BGF3.SepListStar()
-			e.setItem([ss[i+1]])
-			e.setSep([ss[i+2]])
+			e.setItem(map2expr([ss[i+1]]))
+			e.setSep(map2expr([ss[i+2]]))
 			es.append(e)
 			### if no bare seplist desired in BGF, uncomment the following instead
 			# e = BGF3.Sequence()
@@ -640,8 +640,8 @@ def map2expr(ss):
 				print('>>>context>>>',ss[i:j])
 			# {x y}+ => (x (yx)*)
 			e = BGF3.SepListPlus()
-			e.setItem([ss[i+1]])
-			e.setSep([ss[i+2]])
+			e.setItem(map2expr([ss[i+1]]))
+			e.setSep(map2expr([ss[i+2]]))
 			es.append(e)
 			### if no bare seplist desired in BGF, uncomment the following instead
 			# e = BGF3.Sequence()
@@ -971,9 +971,11 @@ def convert2nonterminal(x,defd):
 def balanceProd(p):
 	global debug
 	i = 2
+	if debug:
+		print('Balancing forward...')
 	# balance forward
 	while i<len(p):
-		if p[i].find('START') != 1:
+		if p[i].find('START') != 0:
 			i += 1
 			continue
 		j = endOfContext(p,i,p[i].replace('START','END'))
@@ -1005,6 +1007,8 @@ def balanceProd(p):
 				i = j
 		else:
 			i = j
+	if debug:
+		print('Balancing backward...')
 	# balancing backward
 	i = len(p)-1
 	while i>1:
@@ -1026,6 +1030,8 @@ def balanceProd(p):
 					amb.append(k.upper())
 			oldpi = p[i]
 			fail = False
+			if not amb:
+				fail = True
 			for a in amb:
 				p[i] = a
 				j = startOfContext(p,i,p[i].replace('END','START'))
@@ -1033,11 +1039,20 @@ def balanceProd(p):
 					break
 				else:
 					fail = True
+			# if fail:
+			# 	# endeavour 2: maybe there is another metasymbol with the same concrete representation as a matching start symbol?
+			# 	amb = []
+			# 	st = p[i].lower().replace('end','start')
+			# 	for k in config.keys():
+			# 		if config[k] == config[st]:
+			# 			amb.append(k.upper())
+			# 	print('>>>',amb)
 			if fail:
 				print('STEP 7: Cannot backward balance a production',p,'- reverting',oldpi,'to a terminal.')
 				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
 				i -= 1
 			elif p[i] == oldpi:
+				print(p)
 				print('STEP 7: Problem at',oldpi,'in',p[1],'- converted back to a terminal symbol.')
 				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
 				i -= 1

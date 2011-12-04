@@ -7,6 +7,7 @@ import BGF
 import elementtree.ElementTree as ET
 
 names   = []
+we_want_sl = False
 
 def parseGroup(g):
 	# ['(',a,'|',b,'|',c,'|',d')']
@@ -22,12 +23,14 @@ def parseGroup(g):
 	return
 
 if __name__ == "__main__":
-	if len(sys.argv) != 3:
+	if len(sys.argv) not in [3,4]:
 		print 'This tool extracts a Rascal grammar.'
 		print 'Usage:'
-		print '      rsc2bgf <rsc-input> <bgf-output>'
+		print '      rsc2bgf <rsc-input> <bgf-output> SL?'
 		sys.exit(1)
 	rsc = open(sys.argv[1],'r')
+	if len(sys.argv) == 4 and sys.argv[3] == 'SL':
+		we_want_sl = True
 	start = []
 	grammar = {}	# in tokens
 	nt = ''
@@ -331,26 +334,37 @@ if __name__ == "__main__":
 					cx +=1
 					continue
 				if alt[cx][0] == '{':
-					# a hack (OTF refactoring)
 					if sym:
 						seq.add(sym)
-					base = BGF.Nonterminal()
-					base.setName(alt[cx][1:])
-					sep = BGF.Terminal()
-					sep.setName(alt[cx+1][1:-3])
-					plus = BGF.Sequence()
-					plus.add(base)
-					part = BGF.Sequence()
-					part.add(sep)
-					part.add(base)
-					star = BGF.Star()
-					star.setExpr(part)
-					plus.add(star)
-					if alt[cx+1][-1] == '+':
-						sym = plus
+					# change the bool below if you want no separator lists in your output BGF
+					if we_want_sl:
+						if alt[cx+1][-1] == '+':
+							sym = BGF.SepListPlus()
+						else:
+							sym = BGF.SepListStar()
+						sym.item = BGF.Nonterminal()
+						sym.item.setName(alt[cx][1:])
+						sym.sep = BGF.Terminal()
+						sym.sep.setName(alt[cx+1][1:-3])
 					else:
-						sym = BGF.Optional()
-						sym.setExpr(plus)
+						# a hack (OTF refactoring)
+						base = BGF.Nonterminal()
+						base.setName(alt[cx][1:])
+						sep = BGF.Terminal()
+						sep.setName(alt[cx+1][1:-3])
+						plus = BGF.Sequence()
+						plus.add(base)
+						part = BGF.Sequence()
+						part.add(sep)
+						part.add(base)
+						star = BGF.Star()
+						star.setExpr(part)
+						plus.add(star)
+						if alt[cx+1][-1] == '+':
+							sym = plus
+						else:
+							sym = BGF.Optional()
+							sym.setExpr(plus)
 					cx +=2
 					continue
 			if cx == len(alt)+10:

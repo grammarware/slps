@@ -7,15 +7,16 @@ cd ../..
 SLPS=${PWD}
 cd ${LOCAL1}
 
-if [ $# -ne 2 ]; then
+if [ $# -lt 2 ]; then
     echo "This tool produces a BGF grammar from a Rascal grammar"
     echo "Usage:"
-    echo "        rsc2bgf <input-rsc> <output-bgf>"
+    echo "        rsc2bgf <input-rsc> <output-bgf> SL?"
+    echo "SL as the last parameter means to use separator lists"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    python ${SLPS}/topics/extraction/rascal/extract.py $1 $2
+    python ${SLPS}/topics/extraction/rascal/extract.py $*
 fi
 
