@@ -88,7 +88,8 @@ if __name__ == "__main__":
 			# do something with imports?
 			continue
 		if tokens[0] == 'start':
-			start.append(tokens[-1])
+			print 'Assumed',tokens[2],'to be a root.'
+			start.append(tokens[2])
 			tokens = tokens[1:]
 			# fall through
 		if tokens[0] in ('syntax','layout','lexical'):
@@ -156,6 +157,7 @@ if __name__ == "__main__":
 	#for s in grammar['Command']:
 	#	print '	',s
 	bgf = BGF.Grammar()
+	bgf.roots = start
 	prevline = []
 	curly = 0
 	# going through the sorted list of nonterminals

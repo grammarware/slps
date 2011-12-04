@@ -116,6 +116,16 @@ def isEqualE(e1,e2):
 			#print("--isEqualE--> NO (type mismatch)")
 			return False
 		return isEqualE(e1.wrapped.data,e2.wrapped.data)
+	if str(e1.wrapped.__class__) == "<class 'BGF3.Star'>":
+		if str(e2.wrapped.__class__) != "<class 'BGF3.Star'>":
+			#print("--isEqualE--> NO (type mismatch)")
+			return False
+		return isEqualE(e1.wrapped.data,e2.wrapped.data)
+	if str(e1.wrapped.__class__) == "<class 'BGF3.Plus'>":
+		if str(e2.wrapped.__class__) != "<class 'BGF3.Plus'>":
+			#print("--isEqualE--> NO (type mismatch)")
+			return False
+		return isEqualE(e1.wrapped.data,e2.wrapped.data)
 	if str(e1.wrapped.__class__) == "<class 'BGF3.Nonterminal'>":
 		if str(e2.wrapped.__class__) != "<class 'BGF3.Nonterminal'>":
 			#print("--isEqualE--> NO (type mismatch)")
