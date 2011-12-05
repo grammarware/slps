@@ -1,0 +1,35 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+    exit 1
+elif [ ! -r $3 ]; then
+    echo "Oops: $3 not found or not readable."
+    exit 1
+elif [ $# -eq 4 ]; then
+	${SLPS}/topics/recovery/hunter/hunter.py $1 $2 $1.bgf
+	${SLPS}/shared/tools/bgfpp $1.bgf $3 $4
+	rm $1.bgf
+elif [ ! -r $5 ]; then
+    echo "Oops: $5 not found or not readable."
+    exit 1
+elif [ $# -eq 5 ]; then
+	${SLPS}/topics/recovery/hunter/hunter.py $1 $2 $1.bgf
+	${SLPS}/shared/tools/xbgf $5 $1.bgf $1.xformed.bgf
+	${SLPS}/shared/tools/bgfpp $1.xformed.bgf $3 $4
+	rm $1.xformed.bgf $1.bgf
+else
+    echo "This tool reads a grammar in one syntactic notation and pretty-prints it in another."
+    echo "Usage: bgfreformat <input-text> <source-ebnf-dialect> <target-ebnf-dialect> <output-text> [<beautifying-transformation>]"
+    echo "When the last parameter is specified, those grammar transformations are executed in between."
+    exit 1
+fi

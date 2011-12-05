@@ -1,7 +1,7 @@
 all:
 
 lll:
-	for f in ../../../shared/bgf/*.bgf ; do ../../../shared/tools/reformat "$$f" lll1.edd llls/`basename "$$f" .bgf`.lll ; done
+	for f in ../../../shared/bgf/*.bgf ; do ../../../shared/tools/bgfpp "$$f" lll1.edd llls/`basename "$$f" .bgf`.lll ; done
 
 try:
 	# This scenario propagates changes from the definition "in itself" to the grammar, to the unbeautified grammar
@@ -22,8 +22,7 @@ migrate1:
 	ls -1 llls | xargs -n1 -I {} make {}.migrate1
 
 %.migrate1:
-	../../recovery/hunter/hunter.py llls/$* lll1.edd tmp.bgf
-	../../../shared/tools/reformat tmp.bgf lll1t.edd mllls/`basename $* .lll`.lll
+	../../../shared/tools/bgfreformat llls/$* lll1.edd lll1t.edd mllls/`basename $* .lll`.lll
 
 specprop1:
 	# This scenario propagates changes from the notation to its parser, to its grammar, to its beautified grammar and to its definition "in itself"
@@ -35,7 +34,7 @@ specprop1:
 	../../../shared/tools/cbgf lll1t.coupled.cbgf lll1.spec.bgf lll1t.spec.bgf
 	../../../shared/tools/cbgf2xbgf lll1.spec2doc.cbgf lll1.forward.xbgf /dev/null
 	../../../shared/tools/xbgf lll1.forward.xbgf lll1t.spec.bgf lll1t.doc.bgf
-	../../../shared/tools/reformat lll1t.doc.bgf lll1t.edd lll1t.doc.lll1t
+	../../../shared/tools/bgfpp lll1t.doc.bgf lll1t.edd lll1t.doc.lll1t
 
 edd:
 	#cp ../../../shared/edd/lll1.edd lll1.edd
@@ -55,10 +54,10 @@ bgfspec: rsc
 
 bgfdoc:
 	cp ../../grammars/metasyntax/lll-ldta/grammar.bgf lll1.doc.bgf
-	../../../shared/tools/reformat lll1.doc.bgf lll1.edd lll1.doc.lll1
+	../../../shared/tools/bgfpp lll1.doc.bgf lll1.edd lll1.doc.lll1
 	# need to rerun hunter since otherwise it's without seplists (legacy?)
 	../../recovery/hunter/hunter.py ../../grammars/metasyntax/lll-kort/src.manually.fixed.txt ../../../shared/edd/lll2.edd lll2.doc.bgf
-	../../../shared/tools/reformat lll2.doc.bgf lll2.edd lll2.doc.lll2
+	../../../shared/tools/bgfpp lll2.doc.bgf lll2.edd lll2.doc.lll2
 
 bgfspecndoc: bgfspec bgfdoc
 	../../../shared/tools/cbgf lll1.spec2doc.cbgf lll1.spec.bgf lll1.doc.bgf
@@ -69,8 +68,8 @@ get:
 	cp ../../grammars/metasyntax/lll-ldta/src.ldta.2002.txt lll-ldta.lll
 	cd ../../grammars/metasyntax/lll1-edd && make extract
 	cd ../../grammars/metasyntax/lll2-edd && make extract
-	../../../shared/tools/reformat ../../grammars/metasyntax/lll1-edd/grammar.bgf lll1.edd lll1.lll
-	../../../shared/tools/reformat ../../grammars/metasyntax/lll2-edd/grammar.bgf lll2.edd lll2.lll
+	../../../shared/tools/bgfpp ../../grammars/metasyntax/lll1-edd/grammar.bgf lll1.edd lll1.lll
+	../../../shared/tools/bgfpp ../../grammars/metasyntax/lll2-edd/grammar.bgf lll2.edd lll2.lll
 
 clean:
 	rm -f lll?.edd GeneratedLLL.rsc lll?.rsc lll?.raw.bgf lll?.spec.bgf lll?.doc.bgf *.xbgf *.lll?? *.res

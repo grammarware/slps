@@ -9,12 +9,10 @@ cd ${LOCAL}
 if [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
-elif [ $# -eq 2 ]
-then
+elif [ $# -eq 2 ]; then
     rm -f $2
     xsltproc ${SLPS}/topics/extraction/ldf/ldf2bgf.xslt $1 > $2
-elif [ $# -eq 1 ]
-then
+elif [ $# -eq 1 ]; then
     xsltproc ${SLPS}/topics/extraction/ldf/ldf2bgf.xslt $1 > ${LOCAL}/`basename $1 .ldf`.bgf
 else
     echo "This tool transforms Language Document Format to BNF-like Grammar Format"
