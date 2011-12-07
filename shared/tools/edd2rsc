@@ -1,0 +1,20 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 2 ]; then
+    echo "This tool pretty-prints BGF, generating an SDF."
+    echo "Usage: edd2rsc <input-edd> <output-name>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+xsltproc ${SLPS}/shared/xsl/edd-export.xslt $1 > ${SLPS}/topics/recovery/edd2rsc/edd.txt
+cd ${SLPS}/topics/recovery/edd2rsc && java -jar ${SLPS}/download/rascal.jar Transformer.rsc edd.txt $2
+mv ${SLPS}/topics/recovery/edd2rsc/$2.rsc ${LOCAL}
