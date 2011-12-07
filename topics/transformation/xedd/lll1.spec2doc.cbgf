@@ -1,39 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cbgf:relationship xmlns:bgf="http://planet-sl.org/bgf" xmlns:cbgf="http://planet-sl.org/cbgf">
-	<!-- dealing with separator lists -->
-	<cbgf:massage-massage>
-		<bgf:expression>
-			<seplistplus>
-				<bgf:expression>
-					<nonterminal>LLL1Definition</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<terminal>|</terminal>
-				</bgf:expression>
-			</seplistplus>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<nonterminal>LLL1Definition</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<star>
-						<bgf:expression>
-							<sequence>
-								<bgf:expression>
-									<terminal>|</terminal>
-								</bgf:expression>
-								<bgf:expression>
-									<nonterminal>LLL1Definition</nonterminal>
-								</bgf:expression>
-							</sequence>
-						</bgf:expression>
-					</star>
-				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</cbgf:massage-massage>
 	<!-- renamings -->
 	<cbgf:rename-rename>
 		<nonterminal>
@@ -71,6 +37,40 @@
 			<to>literal</to>
 		</nonterminal>
 	</cbgf:rename-rename>
+	<!-- dealing with separator lists -->
+	<cbgf:massage-massage>
+		<bgf:expression>
+			<seplistplus>
+				<bgf:expression>
+					<nonterminal>alt</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>|</terminal>
+				</bgf:expression>
+			</seplistplus>
+		</bgf:expression>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>alt</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<star>
+						<bgf:expression>
+							<sequence>
+								<bgf:expression>
+									<terminal>|</terminal>
+								</bgf:expression>
+								<bgf:expression>
+									<nonterminal>alt</nonterminal>
+								</bgf:expression>
+							</sequence>
+						</bgf:expression>
+					</star>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</cbgf:massage-massage>
 	<!-- refactorings -->
 	<cbgf:narrow-widen>
 		<bgf:expression>

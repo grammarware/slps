@@ -15,6 +15,8 @@ elif [ ! -r $1 ]; then
     exit 1
 fi
 
+rm -f ${SLPS}/topics/recovery/edd2rsc/edd.txt
 xsltproc ${SLPS}/shared/xsl/edd-export.xslt $1 > ${SLPS}/topics/recovery/edd2rsc/edd.txt
+cat ${SLPS}/topics/recovery/edd2rsc/edd.txt
 cd ${SLPS}/topics/recovery/edd2rsc && java -jar ${SLPS}/download/rascal.jar Transformer.rsc edd.txt $2
 mv ${SLPS}/topics/recovery/edd2rsc/$2.rsc ${LOCAL}

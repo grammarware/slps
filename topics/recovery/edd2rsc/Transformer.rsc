@@ -119,7 +119,10 @@ str EDD2Rascal(map[str,str] edd, str name)
  	' = @category=\"Identifier\" nonterminal: <name>Nonterminal
  	' | @category=\"Constant\" terminal: <name>Terminal";
  	if("start-group-symbol" in edd && edd["start-group-symbol"]!="" && edd["end-group-symbol"]!="")
- 		prep += "\n | group: <quoted(edd,"start-group-symbol")> <name>Definition <quoted(edd,"end-group-symbol")>";
+		if ("definition-separator-symbol" in edd)
+			prep += "\n | group: <quoted(edd,"start-group-symbol")> {<name>Definition <quoted(edd,"definition-separator-symbol")>}+ <quoted(edd,"end-group-symbol")>";
+		else
+ 			prep += "\n | group: <quoted(edd,"start-group-symbol")> <name>Definition <quoted(edd,"end-group-symbol")>";
  	if("postfix-option-symbol" in edd && edd["postfix-option-symbol"]!="")
  		prep += "\n | optional: <name>Symbol <quoted(edd,"postfix-option-symbol")>";
  	if("postfix-repetition-star-symbol" in edd && edd["postfix-repetition-star-symbol"]!="")

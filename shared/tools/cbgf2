@@ -1,0 +1,24 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+cd `dirname $2`
+WHERE=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 3 ]; then
+    echo "This tool propagates renamings from one CBGF to another CBGF."
+    echo "Usage: cbgf2 <renaming-cbgf> <input-cbgf> <adjusted-cbgf>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+    exit 1
+fi
+
+xsltproc --stringparam rename ${WHERE}/`basename $1` ${SLPS}/shared/xsl/cbgf2cbgf2cbgf.xslt $2 > $3
