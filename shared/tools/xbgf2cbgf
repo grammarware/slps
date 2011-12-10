@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Get our hands on basedir
+LOCAL1=${PWD}
+cd `dirname $0`
+cd ..
+SHARED=${PWD}
+cd ${LOCAL1}
+
+if [ $# -ne 2 ]; then
+	echo "This tool migrates an XBGF transformation sequence to CBGF"
+    echo "Usage: xbgf2cbgf <XBGF-input> <CBGF-output>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+else
+	xsltproc ${SHARED}/xsl/xbgf2cbgf.xslt $1 > $2
+fi

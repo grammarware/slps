@@ -459,9 +459,10 @@
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="permute-permute">
-		<!-- naturally bx -->
+		<!-- one there, one back -->
 		<xsd:complexType>
 			<xsd:choice>
+				<xsd:element ref="bgf:production"/>
 				<xsd:element ref="bgf:production"/>
 			</xsd:choice>
 		</xsd:complexType>

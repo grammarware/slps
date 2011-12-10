@@ -173,8 +173,7 @@
 	</xsl:template>
 	<xsl:template match="cbgf:permute-permute">
 		<xbgf:permute>
-			<xsl:copy-of select="bgf:expression[2]"/>
-			<xsl:copy-of select="bgf:expression[1]"/>
+			<xsl:copy-of select="bgf:production[1]"/>
 		</xbgf:permute>
 	</xsl:template>
 	<xsl:template match="cbgf:rename-rename">
