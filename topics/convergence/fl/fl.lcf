@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <lcf:configuration xmlns:lcf="http://planet-sl.org/lcf">
 	<shortcut>
 		<name>slps</name>
@@ -159,7 +159,7 @@
       </extraction>
 		</grammar>
 	</source>
-<!--
+	<!--
   <source>
     <name>ldf</name>
     <grammar>
@@ -177,11 +177,12 @@
 		<branch>
 			<input>antlr</input>
 			<nominal-matching>
+				<perform>anonymize-antlr</perform>
 				<perform>rename-antlr</perform>
 			</nominal-matching>
 			<structural-matching>
-				<perform>preferDcg</perform>
-				<perform>designateOps</perform>
+				<perform>unchain-antlr</perform>
+				<perform>designate-antlr</perform>
 			</structural-matching>
 		</branch>
 	</target>
@@ -220,8 +221,7 @@
 				<perform>rename-txl</perform>
 			</nominal-matching>
 			<structural-matching>
-				<perform>preferSdf</perform>
-				<perform>designateOps</perform>
+				<perform>designate-txl</perform>
 			</structural-matching>
 			<relaxation>
 				<perform>multipleNewlines</perform>

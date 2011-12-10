@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
+	<xbgf:vertical>
+		<nonterminal>expr</nonterminal>
+	</xbgf:vertical>
+	<xbgf:unchain>
+		<bgf:production>
+			<label>apply</label>
+			<nonterminal>expr</nonterminal>
+			<bgf:expression>
+				<nonterminal>apply</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:unchain>
+	<xbgf:unchain>
+		<bgf:production>
+			<label>binary</label>
+			<nonterminal>expr</nonterminal>
+			<bgf:expression>
+				<nonterminal>binary</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:unchain>
+	<xbgf:unchain>
+		<bgf:production>
+			<label>ifThenElse</label>
+			<nonterminal>expr</nonterminal>
+			<bgf:expression>
+				<nonterminal>ifThenElse</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:unchain>
+</xbgf:sequence>
