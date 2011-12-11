@@ -35,9 +35,18 @@
 		</cbgf:inline-extract>
 	</xsl:template>
 	<xsl:template match="cbgf:permute-permute">
+		<xsl:variable name="n" select="todo/bgf:production/nonterminal"/>
+		<xsl:variable name="l" select="todo/bgf:production/label"/>
 		<cbgf:permute-permute>
-			<!-- TODO -->
-			<xsl:copy-of select="*"/>
+			<xsl:choose>
+				<xsl:when test="$l">
+					<xsl:copy-of select="$cntxt/bgf:production[nonterminal=$n and label=$l]"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:copy-of select="$cntxt/bgf:production[nonterminal=$n]"/>
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:copy-of select="todo/*"/>
 		</cbgf:permute-permute>
 	</xsl:template>
 	<xsl:template match="cbgf:undefine-define">
@@ -93,29 +102,64 @@
 	<xsl:template match="cbgf:unite-split">
 		<xsl:variable name="n1" select="todo/add"/>
 		<xsl:variable name="n2" select="todo/to"/>
-		<cbgf:unite-split>
-			<add>
-				<xsl:copy-of select="$cntxt/bgf:production[nonterminal=$n1]"/>
-			</add>
-			<to>
-				<xsl:copy-of select="$cntxt/bgf:production[nonterminal=$n2]"/>
-			</to>
-			<in>
-				<xsl:for-each select="$cntxt/bgf:production[*//nonterminal=$n1]">
-					<xsl:choose>
-						<xsl:when test="label">
-							<label>
-								<xsl:value-of select="label"/>
-							</label>
-						</xsl:when>
-						<xsl:otherwise>
-							<nonterminal>
-								<xsl:value-of select="nonterminal"/>
-							</nonterminal>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:for-each>
-			</in>
-		</cbgf:unite-split>
+		<xsl:choose>
+			<xsl:when test="$cntxt/bgf:production[nonterminal=$n1]">
+				<cbgf:unite-split>
+					<add>
+						<xsl:copy-of select="$cntxt/bgf:production[nonterminal=$n1]"/>
+					</add>
+					<to>
+						<xsl:copy-of select="$cntxt/bgf:production[nonterminal=$n2]"/>
+					</to>
+					<in>
+						<xsl:for-each select="$cntxt/bgf:production[*//nonterminal=$n1]">
+							<xsl:choose>
+								<xsl:when test="label">
+									<label>
+										<xsl:value-of select="label"/>
+									</label>
+								</xsl:when>
+								<xsl:otherwise>
+									<nonterminal>
+										<xsl:value-of select="nonterminal"/>
+									</nonterminal>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:for-each>
+					</in>
+				</cbgf:unite-split>
+			</xsl:when>
+			<xsl:otherwise>
+				<!-- merging two undefined nonterminals -->
+				<cbgf:replace-replace>
+					<bgf:expression>
+						<nonterminal>
+							<xsl:value-of select="$n1"/>
+						</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>
+							<xsl:value-of select="$n2"/>
+						</nonterminal>
+					</bgf:expression>
+					<in>
+						<xsl:for-each select="$cntxt/bgf:production[*//nonterminal=$n1]">
+							<xsl:choose>
+								<xsl:when test="label">
+									<label>
+										<xsl:value-of select="label"/>
+									</label>
+								</xsl:when>
+								<xsl:otherwise>
+									<nonterminal>
+										<xsl:value-of select="nonterminal"/>
+									</nonterminal>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:for-each>
+					</in>
+				</cbgf:replace-replace>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 </xsl:stylesheet>

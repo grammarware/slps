@@ -23,14 +23,14 @@ fi
 xsltproc ${SHARED}/xsl/xbgf2cbgf.xslt $1 > $2
 grep todo $2 > /dev/null
 if [ $? -ne 0 ]; then
-	echo "Migration successful."
+	echo "[XBGF2CBGF]" $1: Migration successful.
 	exit 0
 elif [ $# -eq 2 ]; then
-	echo "BGF not given, advanced migration impossible".
+	echo "[XBGF2CBGF] BGF not given, advanced migration impossible".
 	exit 1
 fi
 
-echo "Straightforward migration unsuccessful, trying advanced one..."
+echo $1: Straightforward migration unsuccessful, trying advanced one...
 cd `dirname $3`
 CONTEXT=${PWD}
 cd ${LOCAL1}
@@ -47,4 +47,4 @@ while [ $? -eq 0 ]; do
 	grep todo $2 > /dev/null
 done
 
-echo "Advanced migration successful."
+echo "[XBGF2CBGF]" $1: Advanced migration successful.

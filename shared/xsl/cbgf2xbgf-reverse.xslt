@@ -321,24 +321,35 @@
 		<xsl:param name="structure"/>
 		<xsl:param name="replace"/>
 		<xsl:param name="with"/>
-		<xsl:element name="{name($structure)}">
-			<xsl:value-of select="text()"/>
-			<xsl:for-each select="$structure/*">
-				<xsl:choose>
-					<xsl:when test="local-name()='nonterminal' and . = $replace">
-						<nonterminal>
-							<xsl:value-of select="$with"/>
-						</nonterminal>
-					</xsl:when>
-					<xsl:otherwise>
+		<xsl:choose>
+			<xsl:when test="local-name($structure)='nonterminal' and . = $replace">
+				<nonterminal>
+					<xsl:value-of select="$with"/>
+				</nonterminal>
+			</xsl:when>
+			<xsl:when test="name($structure)=local-name($structure) and (local-name($structure)!='nonterminal' or . != $replace)">
+				<xsl:element name="{local-name($structure)}">
+					<xsl:value-of select="text()"/>
+					<xsl:for-each select="$structure/*">
 						<xsl:call-template name="copy-structure-rename-nonterminal">
 							<xsl:with-param name="structure" select="."/>
 							<xsl:with-param name="replace" select="$replace"/>
 							<xsl:with-param name="with" select="$with"/>
 						</xsl:call-template>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:for-each>
-		</xsl:element>
+					</xsl:for-each>
+				</xsl:element>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:element name="bgf:{local-name($structure)}">
+					<xsl:for-each select="$structure/*">
+						<xsl:call-template name="copy-structure-rename-nonterminal">
+							<xsl:with-param name="structure" select="."/>
+							<xsl:with-param name="replace" select="$replace"/>
+							<xsl:with-param name="with" select="$with"/>
+						</xsl:call-template>
+					</xsl:for-each>
+				</xsl:element>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 </xsl:stylesheet>
