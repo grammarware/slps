@@ -227,6 +227,102 @@
 			<add>
 				<xsl:value-of select="add/bgf:production[1]/nonterminal"/>
 			</add>
+			<to>
+				<xsl:value-of select="to/bgf:production[1]/nonterminal"/>
+			</to>
 		</xbgf:unite>
+	</xsl:template>
+	<xsl:template match="cbgf:split-unite">
+		<xsl:variable name="n1" select="add/bgf:production[1]/nonterminal"/>
+		<xsl:variable name="n2" select="to/bgf:production[1]/nonterminal"/>
+		<xbgf:introduce>
+			<xsl:copy-of select="add/bgf:production"/>
+		</xbgf:introduce>
+		<xsl:for-each select="add/bgf:production">
+			<xbgf:remove>
+				<vertical>
+					<xsl:call-template name="copy-structure-rename-nonterminal">
+						<xsl:with-param name="structure" select="."/>
+						<xsl:with-param name="replace" select="$n1"/>
+						<xsl:with-param name="with" select="$n2"/>
+					</xsl:call-template>
+				</vertical>
+			</xbgf:remove>
+		</xsl:for-each>
+		<xsl:for-each select="in/*">
+			<xbgf:replace>
+				<bgf:expression>
+					<nonterminal>
+						<xsl:value-of select="$n2"/>
+					</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>
+						<xsl:value-of select="$n1"/>
+					</nonterminal>
+				</bgf:expression>
+				<in>
+					<xsl:copy-of select="."/>
+				</in>
+			</xbgf:replace>
+		</xsl:for-each>
+	</xsl:template>
+	<xsl:template match="cbgf:equate-clone">
+		<xbgf:equate>
+			<align>
+				<xsl:value-of select="align/bgf:production[1]/nonterminal"/>
+			</align>
+			<with>
+				<xsl:value-of select="with"/>
+			</with>
+		</xbgf:equate>
+	</xsl:template>
+	<xsl:template match="cbgf:clone-equate">
+		<xsl:variable name="n1" select="align/bgf:production[1]/nonterminal"/>
+		<xsl:variable name="n2" select="with"/>
+		<xbgf:introduce>
+			<xsl:copy-of select="align/bgf:production"/>
+		</xbgf:introduce>
+		<xsl:for-each select="in/*">
+			<xbgf:replace>
+				<bgf:expression>
+					<nonterminal>
+						<xsl:value-of select="$n2"/>
+					</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>
+						<xsl:value-of select="$n1"/>
+					</nonterminal>
+				</bgf:expression>
+				<in>
+					<xsl:copy-of select="."/>
+				</in>
+			</xbgf:replace>
+		</xsl:for-each>
+	</xsl:template>
+	<xsl:template name="copy-structure-rename-nonterminal">
+		<xsl:param name="structure"/>
+		<xsl:param name="replace"/>
+		<xsl:param name="with"/>
+		<xsl:element name="{$structure/local-name()}">
+			<xsl:for-each select="$structure/*">
+				<xsl:value-of select="text()"/>
+				<xsl:choose>
+					<xsl:when test="local-name()='nonterminal' and . = $replace">
+						<nonterminal>
+							<xsl:value-of select="$with"/>
+						</nonterminal>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="copy-structure-rename-nonterminal">
+							<xsl:with-param name="structure" select="."/>
+							<xsl:with-param name="replace" select="$replace"/>
+							<xsl:with-param name="with" select="$with"/>
+						</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</xsl:element>
 	</xsl:template>
 </xsl:stylesheet>

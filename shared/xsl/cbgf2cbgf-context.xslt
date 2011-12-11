@@ -63,9 +63,31 @@
 		</cbgf:unlabel-designate>
 	</xsl:template>
 	<xsl:template match="cbgf:equate-clone">
+		<xsl:variable name="n1" select="todo/align"/>
+		<xsl:variable name="n2" select="todo/with"/>
 		<cbgf:equate-clone>
-			<!-- TODO -->
-			<xsl:copy-of select="*"/>
+			<align>
+				<xsl:copy-of select="$cntxt/bgf:production[nonterminal=$n1]"/>
+			</align>
+			<with>
+				<xsl:value-of select="$n2"/>
+			</with>
+			<in>
+				<xsl:for-each select="$cntxt/bgf:production[*//nonterminal=$n1]">
+					<xsl:choose>
+						<xsl:when test="label">
+							<label>
+								<xsl:value-of select="label"/>
+							</label>
+						</xsl:when>
+						<xsl:otherwise>
+							<nonterminal>
+								<xsl:value-of select="nonterminal"/>
+							</nonterminal>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:for-each>
+			</in>
 		</cbgf:equate-clone>
 	</xsl:template>
 	<xsl:template match="cbgf:unite-split">
@@ -79,7 +101,20 @@
 				<xsl:copy-of select="$cntxt/bgf:production[nonterminal=$n2]"/>
 			</to>
 			<in>
-				<xsl:copy-of select="$cntxt/bgf:production[.//nonterminal=$n1]/nonterminal"/>
+				<xsl:for-each select="$cntxt/bgf:production[*//nonterminal=$n1]">
+					<xsl:choose>
+						<xsl:when test="label">
+							<label>
+								<xsl:value-of select="label"/>
+							</label>
+						</xsl:when>
+						<xsl:otherwise>
+							<nonterminal>
+								<xsl:value-of select="nonterminal"/>
+							</nonterminal>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:for-each>
 			</in>
 		</cbgf:unite-split>
 	</xsl:template>

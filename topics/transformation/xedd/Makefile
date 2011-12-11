@@ -2,20 +2,20 @@ all:
 
 m:
 	# suppose we have lll2gen.spec.bgf; let's rerun xedd just to get coupled
-	./xedd.py lll1to2.xedd LLL1.edd LLL2gen.edd lll1to2.coupled.cbgf
+	./xedd.py lll1to2.xedd LLL1.edd LLL2gen.edd lll1to2.coupled.cbgf lll1to2.reformat.cbgf
+
+m2:
+	# This scenario propagates changes from the notation to its parser, to its grammar, to its beautified grammar and to its definition "in itself"
+	# Changes from LLL1 to LLL2
+	./xedd.py lll1to2.xedd LLL1.edd LLL2gen.edd lll1to2.coupled.cbgf lll1to2.reformat.cbgf
+	../../../shared/tools/edd2rsc LLL2gen.edd LLL2gen
+	../../../shared/tools/rsc2bgf LLL2gen.rsc lll2gen.raw.bgf SL
+	../../../shared/tools/normbgf lll2gen.raw.bgf lll2gen.spec.bgf
 	../../../shared/tools/cbgf lll1to2.coupled.cbgf lll1.spec.bgf lll2gen.spec.bgf
 	../../../shared/tools/cbgf2 lll1to2.coupled.cbgf lll1.spec2doc.cbgf lll2gen.spec2doc.cbgf
 	../../../shared/tools/cbgf2xbgf lll2gen.spec2doc.cbgf lll2gen.forward.xbgf /dev/null
 	../../../shared/tools/xbgf lll2gen.forward.xbgf lll2gen.spec.bgf lll2gen.doc.bgf
 	../../../shared/tools/bgfpp lll2gen.doc.bgf LLL2.edd lll2gen.doc.lll2
-
-m2:
-	# This scenario propagates changes from the notation to its parser, to its grammar, to its beautified grammar and to its definition "in itself"
-	# Changes from LLL1 to LLL2
-	./xedd.py lll1to2.xedd LLL1.edd LLL2gen.edd lll1to2.coupled.cbgf
-	../../../shared/tools/edd2rsc LLL2gen.edd LLL2gen
-	../../../shared/tools/rsc2bgf LLL2gen.rsc lll2gen.raw.bgf SL
-	../../../shared/tools/normbgf lll2gen.raw.bgf lll2gen.spec.bgf
 
 lll:
 	for f in ../../../shared/bgf/*.bgf ; do ../../../shared/tools/bgfpp "$$f" LLL1.edd llls/`basename "$$f" .bgf`.lll ; done
@@ -38,12 +38,19 @@ migrate1:
 	rm -f mllls/*
 	ls -1 llls | xargs -n1 -I {} make {}.migrate1
 
+migrate2:
+	rm -f mllls/*
+	ls -1 llls | xargs -n1 -I {} make {}.migrate2
+
 %.migrate1:
 	../../../shared/tools/bgfreformat llls/$* LLL1.edd LLL1t.edd mllls/`basename $* .lll`.lll
 
+%.migrate2:
+	../../../shared/tools/bgfreformat llls/$* LLL1.edd LLL1t.edd mllls/`basename $* .lll`.lll lll1to2.reformat.cbgf
+
 specprop1:
 	# This scenario propagates changes from the notation to its parser, to its grammar, to its beautified grammar and to its definition "in itself"
-	./xedd.py lll1.try.xedd LLL1.edd LLL1t.edd lll1t.coupled.cbgf
+	./xedd.py lll1.try.xedd LLL1.edd LLL1t.edd lll1t.coupled.cbgf lll1t.reformat.cbgf
 	# running Rascal from command line
 	../../../shared/tools/edd2rsc LLL1t.edd LLL1t
 	#cp backup/lll1t.rsc .

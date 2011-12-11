@@ -588,13 +588,7 @@
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="with">
-					<xsd:complexType>
-						<xsd:sequence>
-							<xsd:element ref="bgf:production" maxOccurs="unbounded"/>
-						</xsd:sequence>
-					</xsd:complexType>
-				</xsd:element>
+				<xsd:element name="with" type="bgf:nonterminal"/>
 				<xsd:element name="in">
 					<xsd:complexType>
 						<xsd:sequence>
@@ -615,13 +609,7 @@
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="with">
-					<xsd:complexType>
-						<xsd:sequence>
-							<xsd:element ref="bgf:production" maxOccurs="unbounded"/>
-						</xsd:sequence>
-					</xsd:complexType>
-				</xsd:element>
+				<xsd:element name="with" type="bgf:nonterminal"/>
 				<xsd:element name="in">
 					<xsd:complexType>
 						<xsd:sequence>
@@ -660,6 +648,7 @@
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="split-unite">
+		<!-- TODO: internal names like "add" and "to" make no sense -->
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="add">
