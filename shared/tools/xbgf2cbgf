@@ -7,13 +7,44 @@ cd ..
 SHARED=${PWD}
 cd ${LOCAL1}
 
-if [ $# -ne 2 ]; then
+if [ $# -lt 2 ]; then
 	echo "This tool migrates an XBGF transformation sequence to CBGF"
-    echo "Usage: xbgf2cbgf <XBGF-input> <CBGF-output>"
+    echo "Usage: xbgf2cbgf <XBGF-input> <CBGF-output> [<BGF-input>]"
+    exit 1
+elif [ $# -gt 3 ]; then
+	echo "This tool migrates an XBGF transformation sequence to CBGF"
+    echo "Usage: xbgf2cbgf <XBGF-input> <CBGF-output> [<BGF-input>]"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
-else
-	xsltproc ${SHARED}/xsl/xbgf2cbgf.xslt $1 > $2
 fi
+
+xsltproc ${SHARED}/xsl/xbgf2cbgf.xslt $1 > $2
+grep todo $2 > /dev/null
+if [ $? -ne 0 ]; then
+	echo "Migration successful."
+	exit 0
+elif [ $# -eq 2 ]; then
+	echo "BGF not given, advanced migration impossible".
+	exit 1
+fi
+
+echo "Straightforward migration unsuccessful, trying advanced one..."
+cd `dirname $3`
+CONTEXT=${PWD}
+cd ${LOCAL1}
+
+grep todo $2 > /dev/null
+while [ $? -eq 0 ]; do
+	xsltproc ${SHARED}/xsl/cbgf-split.xslt $2 > $2.split.cbgf
+	${SHARED}/tools/cbgf2xbgf $2.split.cbgf $2.forward.xbgf /dev/null
+	${SHARED}/tools/xbgf $2.forward.xbgf $3 $3.xformed.bgf
+	#echo xsltproc --stringparam ${CONTEXT}/`basename $3.xformed.bgf` ${SHARED}/xsl/xbgf2cbgf-context.xslt $1  $2
+	xsltproc --stringparam context ${CONTEXT}/`basename $3.xformed.bgf` ${SHARED}/xsl/cbgf2cbgf-context.xslt $2 > $2.new
+	echo "One step done."
+	mv $2.new $2
+	grep todo $2 > /dev/null
+done
+
+echo "Advanced migration successful."

@@ -112,7 +112,7 @@
 	<xsl:template match="xbgf:inline">
 		<cbgf:inline-extract>
 			<todo>
-				<xsl:copy-of select="*"/>
+				<xsl:value-of select="."/>
 			</todo>
 		</cbgf:inline-extract>
 	</xsl:template>
@@ -209,5 +209,61 @@
 		<cbgf:abstractize-concretize>
 			<xsl:copy-of select="*"/>
 		</cbgf:abstractize-concretize>
+	</xsl:template>
+	<xsl:template match="xbgf:rassoc|xbgf:lassoc">
+		<cbgf:assoc-iterate>
+			<xsl:choose>
+				<xsl:when test="count(bgf:production/bgf:expression/sequence/*)=3">
+					<bgf:production>
+						<xsl:copy-of select="bgf:production/label"/>
+						<xsl:copy-of select="bgf:production/nonterminal"/>
+						<bgf:expression>
+							<sequence>
+								<xsl:copy-of select="bgf:production/bgf:expression/sequence/bgf:expression[1]"/>
+								<bgf:expression>
+									<star>
+										<bgf:expression>
+											<sequence>
+												<xsl:copy-of select="bgf:production/bgf:expression/sequence/bgf:expression[2]"/>
+												<xsl:copy-of select="bgf:production/bgf:expression/sequence/bgf:expression[3]"/>
+											</sequence>
+										</bgf:expression>
+									</star>
+								</bgf:expression>
+							</sequence>
+						</bgf:expression>
+					</bgf:production>
+				</xsl:when>
+				<xsl:when test="count(bgf:production/bgf:expression/sequence/*)=2">
+					<bgf:production>
+						<xsl:copy-of select="bgf:production/label"/>
+						<xsl:copy-of select="bgf:production/nonterminal"/>
+						<bgf:expression>
+							<plus>
+								<xsl:copy-of select="bgf:production/bgf:expression/sequence/bgf:expression[1]"/>
+							</plus>
+						</bgf:expression>
+					</bgf:production>
+				</xsl:when>
+				<xsl:otherwise>
+					<todo>UNKNOWN ASSOC PATTERN</todo>
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:copy-of select="bgf:production"/>
+		</cbgf:assoc-iterate>
+	</xsl:template>
+	<xsl:template match="xbgf:equate">
+		<cbgf:equate-clone>
+			<todo>
+				<xsl:copy-of select="*"/>
+			</todo>
+		</cbgf:equate-clone>
+	</xsl:template>
+	<xsl:template match="xbgf:unite">
+		<cbgf:unite-split>
+			<todo>
+				<xsl:copy-of select="*"/>
+			</todo>
+		</cbgf:unite-split>
 	</xsl:template>
 </xsl:stylesheet>

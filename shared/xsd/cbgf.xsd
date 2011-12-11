@@ -58,7 +58,9 @@
 					* distribute (too automatic)
 					* import (sugar?)
 					* equate (needs split)
-					* rassoc/lassoc (legacy?)
+				
+				tricky:
+					* rassoc/lassoc
 			-->
 			<xsd:element ref="cbgf:massage-massage"/>
 			<xsd:element ref="cbgf:factor-factor"/>
@@ -68,6 +70,10 @@
 			<xsd:element ref="cbgf:introduce-eliminate"/>
 			<xsd:element ref="cbgf:vertical-horizontal"/>
 			<xsd:element ref="cbgf:horizontal-vertical"/>
+			<xsd:element ref="cbgf:assoc-iterate"/>
+			<xsd:element ref="cbgf:iterate-assoc"/>
+			<xsd:element ref="cbgf:equate-clone"/>
+			<xsd:element ref="cbgf:clone-equate"/>
 		</xsd:choice>
 	</xsd:group>
 	<xsd:group name="increasing-decreasing-transformation">
@@ -84,6 +90,8 @@
 			<xsd:element ref="cbgf:narrow-widen"/>
 			<xsd:element ref="cbgf:upgrade-downgrade"/>
 			<xsd:element ref="cbgf:downgrade-upgrade"/>
+			<xsd:element ref="cbgf:unite-split"/>
+			<xsd:element ref="cbgf:split-unite"/>
 		</xsd:choice>
 	</xsd:group>
 	<xsd:group name="concrete-revising-transformation">
@@ -400,6 +408,24 @@
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
+	<xsd:element name="assoc-iterate">
+		<!-- experimental, no natural reverse in XBGF -->
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bgf:production"/>
+				<xsd:element ref="bgf:production"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="iterate-assoc">
+		<!-- experimental, no natural reverse in XBGF -->
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="bgf:production"/>
+				<xsd:element ref="bgf:production"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
 	<xsd:element name="inject-project">
 		<!-- already pretty bx by design -->
 		<xsd:complexType>
@@ -550,6 +576,114 @@
 			<xsd:choice>
 				<xsd:element ref="bgf:production"/>
 			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="equate-clone">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="align">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="with">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="in">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:group ref="xbgf:scope" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="clone-equate">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="align">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="with">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="in">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:group ref="xbgf:scope" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="unite-split">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="add">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="to">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="in">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:group ref="xbgf:scope" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="split-unite">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="add">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="to">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="in">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:group ref="xbgf:scope" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="reroot-reroot">

@@ -23,26 +23,17 @@
 			<from>b</from>
 			<to>binary</to>
 		</selector>
-		<in>
-			<nonterminal>expr</nonterminal>
-		</in>
 	</xbgf:rename>
 	<xbgf:rename>
 		<selector>
 			<from>a</from>
 			<to>apply</to>
 		</selector>
-		<in>
-			<nonterminal>expr</nonterminal>
-		</in>
 	</xbgf:rename>
 	<xbgf:rename>
 		<selector>
 			<from>i</from>
 			<to>ifThenElse</to>
 		</selector>
-		<in>
-			<nonterminal>expr</nonterminal>
-		</in>
 	</xbgf:rename>
 </xbgf:sequence>

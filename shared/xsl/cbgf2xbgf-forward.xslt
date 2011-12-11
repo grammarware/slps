@@ -139,6 +139,24 @@
 			<xsl:copy-of select="nonterminal"/>
 		</xbgf:vertical>
 	</xsl:template>
+	<xsl:template match="cbgf:assoc-iterate">
+		<!-- TODO: right or left? -->
+		<xbgf:lassoc>
+			<xsl:copy-of select="bgf:production[2]"/>
+		</xbgf:lassoc>
+	</xsl:template>
+	<xsl:template match="cbgf:iterate-assoc">
+		<xbgf:remove>
+			<vertical>
+				<xsl:copy-of select="bgf:production[1]"/>
+			</vertical>
+		</xbgf:remove>
+		<xbgf:add>
+			<vertical>
+				<xsl:copy-of select="bgf:production[2]"/>
+			</vertical>
+		</xbgf:add>
+	</xsl:template>
 	<xsl:template match="cbgf:inject-project">
 		<xbgf:inject>
 			<xsl:copy-of select="*"/>
@@ -203,5 +221,12 @@
 		<xbgf:abstractize>
 			<xsl:copy-of select="*"/>
 		</xbgf:abstractize>
+	</xsl:template>
+	<xsl:template match="cbgf:unite-split">
+		<xbgf:unite>
+			<add>
+				<xsl:value-of select="add/bgf:production[1]/nonterminal"/>
+			</add>
+		</xbgf:unite>
 	</xsl:template>
 </xsl:stylesheet>
