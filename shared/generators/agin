@@ -16,5 +16,5 @@ elif [ ! -r $1 ]; then
 	exit 1
 else
 	rm -f $2
-	python ${SLPS}/topics/mutation/aggressive-inline/unchain.py $1 $2
+	python ${SLPS}/topics/mutation/inline/unchain.py $1 $2
 fi
