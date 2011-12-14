@@ -20,6 +20,6 @@ else
 	else
 		xpath $1 `cat ${SLPS}/topics/investigation/analysis/listtops.xpath` 1> $2.tmp 2> /dev/null
 	fi
-	python ${SLPS}/shared/python/reroot2nts.py $2.tmp $2
+	python ${SLPS}/topics/mutation/reroot/reroot2nts.py $2.tmp $2
 	rm -f $2.tmp
 fi

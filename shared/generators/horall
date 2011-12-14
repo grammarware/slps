@@ -9,12 +9,12 @@ cd ${LOCAL1}
 
 if [ $# -ne 2 ]; then
 	echo "Making all productions horizontal"
-	echo "Usage: agin <BGF-input> <XBGF-input>"
+	echo "Usage: horall <BGF-input> <XBGF-input>"
 	exit 1
 elif [ ! -r $1 ]; then
 	echo "Oops: $1 not found or not readable."
 	exit 1
 else
 	rm -f $2
-	python ${SLPS}/topics/transformation/horizontal/hor.py $1 $2
+	python ${SLPS}/topics/mutation/horizontal/hor.py $1 $2
 fi

@@ -9,12 +9,12 @@ cd ${LOCAL1}
 
 if [ $# -ne 2 ]; then
 	echo "Distributing wherever possible"
-	echo "Usage: agin <BGF-input> <XBGF-input>"
+	echo "Usage: distrall <BGF-input> <XBGF-input>"
 	exit 1
 elif [ ! -r $1 ]; then
 	echo "Oops: $1 not found or not readable."
 	exit 1
 else
 	rm -f $2
-	python ${SLPS}/topics/transformation/normalization/distrall.py $1 $2
+	python ${SLPS}/topics/mutation/distribute/distrall.py $1 $2
 fi
