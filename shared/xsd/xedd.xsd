@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:edd="http://planet-sl.org/edd" xmlns:xedd="http://planet-sl.org/xedd" targetNamespace="http://planet-sl.org/xedd">
 	<xsd:annotation>
 		<xsd:documentation>
@@ -7,7 +7,7 @@
 	    </xsd:documentation>
 	</xsd:annotation>
 	<!--
-		TODO: edd.xsd is legacy for now; needs major update, and I mean MAJOR
+		TODO: edd.xsd contains some legacy for now; needs major refactoring to be included here
 		<xsd:import namespace="http://planet-sl.org/edd" schemaLocation="edd.xsd"/>
 	-->
 	<xsd:element name="evolution">
@@ -25,6 +25,8 @@
 	<xsd:group name="step">
 		<xsd:choice>
 			<xsd:element ref="xedd:rename"/>
+			<xsd:element ref="xedd:introduce"/>
+			<xsd:element ref="xedd:eliminate"/>
 		</xsd:choice>
 	</xsd:group>
 	<xsd:element name="rename">
@@ -36,11 +38,37 @@
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
+	<xsd:element name="introduce">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="metasymbol" type="xedd:confixMetasymbols"/>
+				<xsd:element name="start" type="xsd:string"/>
+				<xsd:element name="end" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="eliminate">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="metasymbol" type="xedd:metasymbols"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
 	<xsd:simpleType name="metasymbols">
 		<xsd:restriction base="xsd:token">
 			<xsd:enumeration value="terminator"/>
 			<xsd:enumeration value="defining"/>
 			<xsd:enumeration value="definition-separator"/>
+			<xsd:enumeration value="group"/>
+			<xsd:enumeration value="seplist-plus"/>
+			<xsd:enumeration value="seplist-star"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="confixMetasymbols">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="group"/>
+			<xsd:enumeration value="seplist-plus"/>
+			<xsd:enumeration value="seplist-star"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 </xsd:schema>
