@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xedd:evolution xmlns:xedd="http://planet-sl.org/xedd">
+	<xedd:rename>
+		<metasymbol>terminator</metasymbol>
+		<from>;</from>
+		<to>.</to>
+	</xedd:rename>
+</xedd:evolution>

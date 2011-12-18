@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xedd:evolution xmlns:xedd="http://planet-sl.org/xedd">
+	<xedd:introduce>
+		<metasymbol>group</metasymbol>
+		<start>(</start>
+		<end>)</end>
+	</xedd:introduce>
+	<xedd:introduce>
+		<metasymbol>seplist-star</metasymbol>
+		<start>{</start>
+		<end>}*</end>
+	</xedd:introduce>
+	<xedd:introduce>
+		<metasymbol>seplist-plus</metasymbol>
+		<start>{</start>
+		<end>}+</end>
+	</xedd:introduce>
+</xedd:evolution>

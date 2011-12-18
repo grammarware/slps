@@ -113,6 +113,22 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
+        <xsd:element name="seplistplus">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="bgf:expression"/>
+              <xsd:element ref="bgf:expression"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="sepliststar">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="bgf:expression"/>
+              <xsd:element ref="bgf:expression"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>

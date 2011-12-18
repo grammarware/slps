@@ -761,6 +761,13 @@ massage_rules(','([X,*(','([Y,X]))]),','([*(','([X,Y])),X])).
 %massage_rules(?(','([*(X),*(Y)])),','([*(X),*(Y)])).
 %massage_rules(?(';'([X,Y])),';'([?(X),?(Y)])).
 
+%% Separator lists
+massage_rules(slp(X,Y),','([X,*(','([Y,X]))])).
+massage_rules(slp(X,Y),','([*(','([X,Y])),X])).
+massage_rules(sls(X,Y),?(','([X,*(','([Y,X]))]))).
+massage_rules(sls(X,Y),?(','([*(','([X,Y])),X]))).
+massage_rules(sls(X,Y),?(slp(X,Y))).
+
 % We can add a selectable epsilon anywhere
 massage_rules(','(L1),','(L2))
  :-
@@ -1348,7 +1355,7 @@ unchain(P1,g(Rs,Ps1),g(Rs,Ps4))
       [P1]),
     append(Ps1a,Ps1b,Ps2),
     def(Ps2,N2,N2Ps),
-    member(p(_,_,X),N2Ps),
+    [p(_,_,X)] = N2Ps,
     require(
        (\+ member(N2,Rs) ),
        'Nonterminal ~q must not be root.',

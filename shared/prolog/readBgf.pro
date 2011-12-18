@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Comstruct Prolog-based BGF representation from XML representation %
+% Construct Prolog-based BGF representation from XML representation %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 xmlToG(G,g(Rs2,Ps2))
@@ -133,4 +133,22 @@ xmlToX(X1,'+'(X3))
     !,
     child(element,X1,X2),
     xmlToExpression(X2,X3),
+    !.
+
+xmlToX(X1,sls(X4,X5)) 
+ :-
+    self(name(sepliststar),X1),
+    !,
+    children(name(bgf:expression),X1,[X2,X3]),
+    xmlToExpression(X2,X4),
+    xmlToExpression(X3,X5),
+    !.
+
+xmlToX(X1,slp(X4,X5)) 
+ :-
+    self(name(seplistplus),X1),
+    !,
+    children(name(bgf:expression),X1,[X2,X3]),
+    xmlToExpression(X2,X4),
+    xmlToExpression(X3,X5),
     !.

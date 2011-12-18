@@ -84,6 +84,22 @@ xToXml('*'(M),X)
     xToExpression(X1,X2),
     e(star,[],[X2],X).
 
+xToXml(sls(M1,M2),X) 
+ :-
+    xToXml(M1,X1),
+    xToXml(M2,X2),
+    xToExpression(X1,X3),
+    xToExpression(X2,X4),
+    e(sepliststar,[],[X3,X4],X).
+
+xToXml(slp(M1,M2),X) 
+ :-
+    xToXml(M1,X1),
+    xToXml(M2,X2),
+    xToExpression(X1,X3),
+    xToExpression(X2,X4),
+    e(seplistplus,[],[X3,X4],X).
+
 xToXml({M},X) 
  :-
     xToXml(M,X1),

@@ -15,7 +15,7 @@ rootNs(g(Rs1,_),Rs2)
     !.
 
 
-% Return all nontmerinals defined by a grammar
+% Return all nonterminals defined by a grammar
 
 definedNs(g(_,Ps),Ns)
  :-
@@ -512,7 +512,8 @@ eqXs(';',[[X1|Xs1]],[Xs2])
     !,
     append(Xs2a,Xs2b,Xs3),
     eqXs(';',[Xs1],[Xs3]).
-
+eqXs(sls,[X1,X2],[X3,X4]) :- eqX(X1,X3), eqX(X2,X4).
+eqXs(slp,[X1,X2],[X3,X4]) :- eqX(X1,X3), eqX(X2,X4).
 
 % Subtracting subset test on sets of expressions
 
