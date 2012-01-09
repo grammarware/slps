@@ -9,8 +9,8 @@ cd ${LOCAL}
 if [ $# -eq 1 ]; then
     OUTPUT=/dev/stdout
 elif [ $# -ne 2 ]; then
-    echo "Pretty-prints XBGF."
-    echo "Usage: xbgf2xbnf <input-xbgf-document> [<output-text>]"
+    echo "Pretty-prints ΞBGF."
+    echo "Usage: cbgf2cbnf <input-cbgf-document> [<output-text>]"
     echo "When output file is not specified, stdout is used."
     exit 1
 else
@@ -21,5 +21,5 @@ if [ ! -r $1 ]; then
     exit 1
 fi
 
-xsltproc ${SLPS}/shared/xsl/xbgf2xbnf.xslt $1 > ${OUTPUT}
+xsltproc ${SLPS}/shared/xsl/cbgf2cbnf.xslt $1 > ${OUTPUT}
 
