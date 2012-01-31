@@ -13,8 +13,33 @@ public class Tool {
 
 	private static Document doc;
 	private static Element root;
+	
+	// Adds a regular nonterminal or a built-in nonterminal depending on the class
+	// Detects only String and int
+	public static void addNT(Class<?> c, Element expr)
+	{
+		if (c == int.class)
+		{
+			Element v = doc.createElement("value");
+			expr.appendChild(v);
+			v.appendChild(doc.createTextNode("int"));
+		}
+		else if (c == String.class)
+		{
+			Element v = doc.createElement("value");
+			expr.appendChild(v);
+			v.appendChild(doc.createTextNode("string"));
+		}
+		else
+		{
+			Element nt = doc.createElement("nonterminal");
+			expr.appendChild(nt);
+			nt.appendChild(doc.createTextNode(c.getSimpleName()));
+		}
+	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 
 		String dirname = args[0]; // the basedir for the classes to be scanned
 		String pkgname = args[1]; // the package holding the relevant classes
@@ -35,20 +60,23 @@ public class Tool {
 		String pkgdirname = dirname + File.separatorChar + pkgname;
 		File pkgdir = new File(pkgdirname);
 		if (!pkgdir.exists())
-			throw new RuntimeException("Can't find package directory "
-					+ pkgdirname + "!");
+			throw new RuntimeException("Can't find package directory " + pkgdirname + "!");
 		Collection<Class<?>> classes = new LinkedList<Class<?>>();
-		for (String f : pkgdir.list()) {
+		for (String f : pkgdir.list())
+		{
 			int len = f.length();
-			if (len > 5 && f.substring(len - 6).equals(".class")) {
+			if (len > 5 && f.substring(len - 6).equals(".class"))
+			{
 				String classname = pkgname + "." + f.substring(0, len - 6);
-				try {
+				try
+				{
 					Class<?> clss = Class.forName(classname);
 					System.out.println("Loaded " + clss.getName() + ".");
 					classes.add(clss);
-				} catch (ClassNotFoundException e) {
-					throw new RuntimeException("Can't load class " + classname
-							+ "!");
+				}
+				catch (ClassNotFoundException e)
+				{
+					throw new RuntimeException("Can't load class " + classname + "!");
 				}
 			}
 		}
@@ -57,7 +85,8 @@ public class Tool {
 			throw new RuntimeException("No classes found!");
 
 		// Generate one nonterminal per class
-		for (Class<?> clss : classes) {
+		for (Class<?> clss : classes)
+		{
 			Element rule = doc.createElement("bgf:production");
 			Element nonterminal = doc.createElement("nonterminal");
 			Element rhs = doc.createElement("bgf:expression");
@@ -71,10 +100,12 @@ public class Tool {
 			String compositor;
 			String unit;
 
-			if (clss.isEnum()) {
+			if (clss.isEnum())
+			{
 				compositor = "choice";
 				unit = "empty";
-				for (Object c : clss.getEnumConstants()) {
+				for (Object c : clss.getEnumConstants())
+				{
 					Element selectable = doc.createElement("selectable");
 					tmp.add(selectable);
 					Element selector = doc.createElement("selector");
@@ -111,9 +142,7 @@ public class Tool {
 				for (Field f : clss.getFields())
 				{
 					if (List.class.isAssignableFrom(f.getType()))
-					{
 						fs.add(new Feature(f.getName(),f.getType(),(Class<?>)((ParameterizedType)f.getGenericType()).getActualTypeArguments()[0]));
-					}
 					else
 						fs.add(new Feature(f.getName(),f.getType()));
 				}
@@ -129,7 +158,8 @@ public class Tool {
 							fs.add(new Feature(m.getName().substring(3),m.getReturnType()));
 					}
 					
-				for (Feature f : fs) {
+				for (Feature f : fs)
+				{
 					Element selectable = doc.createElement("selectable");
 					tmp.add(selectable);
 					Element selector = doc.createElement("selector");
@@ -137,46 +167,27 @@ public class Tool {
 					selector.appendChild(doc.createTextNode(f.getName()));
 					Element expr = doc.createElement("bgf:expression");
 					selectable.appendChild(expr);
-					if (f.getType() == LinkedList.class || f.getType() == List.class)
+					if (List.class.isAssignableFrom(f.getType()))
 					{
 						Element coll = doc.createElement("star");
 						expr.appendChild(coll);
 						Element inner = doc.createElement("bgf:expression");
 						coll.appendChild(inner);
 						if (f.getInnerType() != null)
-						{
-							Element nt = doc.createElement("nonterminal");
-							inner.appendChild(nt);
-							nt.appendChild(doc.createTextNode(f.getInnerType().getSimpleName()));
-						}
+							addNT(f.getInnerType(),inner);
 						else
 							inner.appendChild(doc.createElement("any"));						
 					}
-					else if (f.getType() == int.class)
-					{
-						Element v = doc.createElement("value");
-						expr.appendChild(v);
-						v.appendChild(doc.createTextNode("int"));
-					}
-					else if (f.getType() == String.class)
-					{
-						Element v = doc.createElement("value");
-						expr.appendChild(v);
-						v.appendChild(doc.createTextNode("string"));
-					}
 					else
-					{
-						Element nt = doc.createElement("nonterminal");
-						expr.appendChild(nt);
-						nt.appendChild(doc.createTextNode(f.getType().getSimpleName()));
-					}
+						addNT(f.getType(),expr);
 				}
 			}
 			if (tmp.size() == 0)
 				rhs.appendChild(doc.createElement(unit));
 			else if (tmp.size() == 1)
 				rhs.appendChild(tmp.iterator().next());
-			else {
+			else
+				{
 				Element sequence = doc.createElement(compositor);
 				rhs.appendChild(sequence);
 				for (Element e : tmp) {
@@ -196,16 +207,19 @@ public class Tool {
 
 	}
 	
-	static class Feature {
+	static class Feature
+	{
 		private String name;
 		private Class<?> type;
 		private Class<?> intype;
-		public Feature(String name, Class<?> type) {
+		public Feature(String name, Class<?> type)
+		{
 			this.name = name;
 			this.type = type;
 			this.intype = null;
 		}
-		public Feature(String name, Class<?> type, Class<?> intype) {
+		public Feature(String name, Class<?> type, Class<?> intype)
+		{
 			this.name = name;
 			this.type = type;
 			this.intype = intype;
