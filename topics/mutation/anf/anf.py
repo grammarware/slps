@@ -77,6 +77,14 @@ if __name__ == "__main__":
 			ip.setLabel('')
 			s.addParam(ip)
 			xbgf.addStep(s)
+		# does not work because some choices will disappear by in-place normalisation that XBGF does
+		# if p.expr.wrapped.__class__.__name__ == 'Choice':
+		# 	print('Verticalize',p.nt)
+		# 	s = XBGF3.Step('vertical')
+		# 	n = XBGF3.Nonterminal()
+		# 	n.setName(p.nt)
+		# 	s.addParam(n)
+		# 	xbgf.addStep(s)
 	#xbgf.write('</xbgf:sequence>')
 	#xbgf.close()
 	top = metrics3.top(bgf)
