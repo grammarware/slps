@@ -109,14 +109,19 @@ public class Tool {
 				// Iterate over the features of a class
 				Collection<Feature> fs = new LinkedList<Feature>();
 				for (Field f : clss.getFields())
-					fs.add(new Feature(f.getName(),f.getType()));
+				{
+					if (f.getType()==LinkedList.class || f.getType()==List.class)
+						fs.add(new Feature(f.getName(),f.getType(),(Class<?>)((ParameterizedType)f.getGenericType()).getActualTypeArguments()[0]));
+					else
+						fs.add(new Feature(f.getName(),f.getType()));
+				}
 				for (Method m : clss.getMethods())
 					if (m.getDeclaringClass() == clss
 					&&	m.getParameterTypes().length == 0
 					&&  m.getName().length() > 3
 					&&  m.getName().startsWith("get"))
-						fs.add(new Feature(m.getName().substring(3),m.getReturnType()));				
-				
+					fs.add(new Feature(m.getName().substring(3),m.getReturnType()));
+					
 				for (Feature f : fs) {
 					Element selectable = doc.createElement("selectable");
 					tmp.add(selectable);
@@ -125,13 +130,20 @@ public class Tool {
 					selector.appendChild(doc.createTextNode(f.getName()));
 					Element expr = doc.createElement("bgf:expression");
 					selectable.appendChild(expr);
-					if (f.getType() == LinkedList.class 
-					|| f.getType() == List.class) {
+					if (f.getType() == LinkedList.class || f.getType() == List.class)
+					{
 						Element coll = doc.createElement("star");
 						expr.appendChild(coll);
 						Element inner = doc.createElement("bgf:expression");
 						coll.appendChild(inner);
-						inner.appendChild(doc.createElement("any"));						
+						if (f.getInnerType() != null)
+						{
+							Element nt = doc.createElement("nonterminal");
+							inner.appendChild(nt);
+							nt.appendChild(doc.createTextNode(f.getInnerType().getSimpleName()));
+						}
+						else
+							inner.appendChild(doc.createElement("any"));						
 					}
 					else if (f.getType() == int.class)
 					{
@@ -180,12 +192,20 @@ public class Tool {
 	static class Feature {
 		private String name;
 		private Class<?> type;
+		private Class<?> intype;
 		public Feature(String name, Class<?> type) {
 			this.name = name;
 			this.type = type;
+			this.intype = null;
+		}
+		public Feature(String name, Class<?> type, Class<?> intype) {
+			this.name = name;
+			this.type = type;
+			this.intype = intype;
 		}
 		public String getName() { return name; }
 		public Class<?> getType() { return type; }
+		public Class<?> getInnerType() { return intype; }
 	}
 	
 }

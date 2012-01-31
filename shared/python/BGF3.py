@@ -25,7 +25,7 @@ class Grammar:
 	def addProd(self,p):
 		self.prods.append(p)
 	def getProdsOfN(self,n):
-		return filter(lambda x:x.nt==n,self.prods)
+		return list(filter(lambda x:x.nt==n,self.prods))
 	def getXml(self):
 		#print 'Getting the XML of grammar...'
 		self.ex = ET.Element(slpsns.bgf_('grammar'))

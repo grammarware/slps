@@ -42,7 +42,7 @@ def abstr(e):
 
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
-		print('This tool generates an XBGF script to horizontalize all vertical nonterminals present in the grammar.')
+		print('This tool generates an XBGF script to convert a grammar to the Abstract Normal Form.')
 		print('Usage:')
 		print('      '+sys.argv[0]+' <bgf-input> <xbgf-output>')
 		sys.exit(1)
