@@ -110,8 +110,10 @@ public class Tool {
 				Collection<Feature> fs = new LinkedList<Feature>();
 				for (Field f : clss.getFields())
 				{
-					if (f.getType()==LinkedList.class || f.getType()==List.class)
+					if (List.class.isAssignableFrom(f.getType()))
+					{
 						fs.add(new Feature(f.getName(),f.getType(),(Class<?>)((ParameterizedType)f.getGenericType()).getActualTypeArguments()[0]));
+					}
 					else
 						fs.add(new Feature(f.getName(),f.getType()));
 				}
@@ -120,7 +122,12 @@ public class Tool {
 					&&	m.getParameterTypes().length == 0
 					&&  m.getName().length() > 3
 					&&  m.getName().startsWith("get"))
-					fs.add(new Feature(m.getName().substring(3),m.getReturnType()));
+					{
+						if (List.class.isAssignableFrom(m.getReturnType()))
+							fs.add(new Feature(m.getName().substring(3),m.getReturnType(),(Class<?>)((ParameterizedType)m.getGenericReturnType()).getActualTypeArguments()[0]));
+						else
+							fs.add(new Feature(m.getName().substring(3),m.getReturnType()));
+					}
 					
 				for (Feature f : fs) {
 					Element selectable = doc.createElement("selectable");
