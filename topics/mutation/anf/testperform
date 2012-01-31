@@ -1,0 +1,5 @@
+#!/bin/sh
+
+./anf.py tests/`basename $1 .bgf`.bgf xbgf/`basename $1 .bgf`.normalize.xbgf
+xbgf xbgf/`basename $1 .bgf`.normalize.xbgf tests/`basename $1 .bgf`.bgf normal/`basename $1 .bgf`.normal.bgf
+bgf2bnf normal/`basename $1 .bgf`.normal.bgf normal/`basename $1 .bgf`.normal.bnf
