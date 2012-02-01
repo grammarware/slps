@@ -131,6 +131,10 @@ class Expression:
 		return self.wrapped.getXml()
 	def __str__(self):
 		return str(self.wrapped)
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.wrapped == other.wrapped
 
 # terminal::terminal
 class Terminal:
@@ -147,6 +151,10 @@ class Terminal:
 		return self.ex
 	def __str__(self):
 		return '"'+self.data+'"'
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.data == other.data
 
 # nonterminal::nonterminal
 class Nonterminal:
@@ -163,6 +171,10 @@ class Nonterminal:
 		return self.ex
 	def __str__(self):
 		return self.data
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.data == other.data
 
 # selectable::(selector::selector expression)
 class Selectable:
@@ -193,6 +205,10 @@ class Selectable:
 			return self.sel+'::('+str(self.expr)+')'
 		else:
 			return self.sel+'::'+str(self.expr)
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.sel == other.sel and self.expr == other.expr
 
 # epsilon::EPSILON
 class Epsilon:
@@ -207,6 +223,8 @@ class Epsilon:
 		return self.ex
 	def __str__(self):
 		return 'EPSILON'
+	def __eq__(self,other):
+		return other.__class__.__name__ == 'Epsilon'
 
 # any::EPSILON
 class Any:
@@ -221,6 +239,8 @@ class Any:
 		return self.ex
 	def __str__(self):
 		return 'ANY'
+	def __eq__(self,other):
+		return other.__class__.__name__ == 'Any'
 
 # empty::EPSILON
 class Empty:
@@ -235,6 +255,8 @@ class Empty:
 		return self.ex
 	def __str__(self):
 		return 'EMPTY'
+	def __eq__(self,other):
+		return other.__class__.__name__ == 'Empty'
 
 # value::value
 class Value:
@@ -253,6 +275,10 @@ class Value:
 		return self.ex
 	def __str__(self):
 		return self.data.upper()[:3]
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.data == other.data
 
 # sequence::(expression+)
 class Sequence:
@@ -284,6 +310,15 @@ class Sequence:
 		for el in self.data:
 			s += str(el)+' '
 		return s.strip()
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		if len(self.data) != len(other.data):
+			return False
+		res = True
+		for i in range(0,len(self.data)):
+			res &= self.data[i] == other.data[i]
+		return res
 
 # choice::(expression+)
 class Choice:
@@ -315,6 +350,19 @@ class Choice:
 		for el in self.data:
 			a.append(str(el))
 		return a
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		if len(self.data) != len(other.data):
+			return False
+		unmatched = other.data[:]
+		for e in self.data:
+			for u in unmatched:
+				if e == u:
+					unmatched.remove(e)
+					break
+				return False
+		return len(unmatched)==0
 
 # marked::expression
 class Marked:
@@ -332,6 +380,10 @@ class Marked:
 		return self.ex
 	def __str__(self):
 		return '<'+str(self.data)+'>'
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.data == other.data
 
 # optional::expression
 class Optional:
@@ -349,6 +401,10 @@ class Optional:
 		return self.ex
 	def __str__(self):
 		return str(self.data)+'?'
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.data == other.data
 
 # star::expression
 class Star:
@@ -366,6 +422,10 @@ class Star:
 		return self.ex
 	def __str__(self):
 		return str(self.data)+'*'
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.data == other.data
 
 # plus::expression
 class Plus:
@@ -383,6 +443,10 @@ class Plus:
 		return self.ex
 	def __str__(self):
 		return str(self.data)+'+'
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.data == other.data
 
 # sepliststar
 class SepListStar:
@@ -408,6 +472,10 @@ class SepListStar:
 		return self.ex
 	def __str__(self):
 		return '{'+str(self.item)+' '+str(self.sep)+'}*'
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.item == other.item and self.sep == other.sep
 
 # seplistplus
 class SepListPlus:
@@ -433,3 +501,7 @@ class SepListPlus:
 		return self.ex
 	def __str__(self):
 		return '{'+str(self.item)+' '+str(self.sep)+'}+'
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.item == other.item and self.sep == other.sep

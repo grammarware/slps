@@ -16,14 +16,6 @@ master = BGF3.Grammar()
 # current version dictionary
 cvdict = {}
 
-def hashlist(l):
-	# lists cannot be hashed naturally
-	l2 = l[:]
-	l2.sort()
-	return ''.join(l2)
-	#return tuple(l2)
-	#return l2
-
 def makeSignature(d,ss):
 	# Input: sequence
 	sign = {}
@@ -75,7 +67,7 @@ def makeSignature(d,ss):
 		return [('+',str(ss.data.wrapped))]
 	else:
 		print('!!! Signatures not implemented for',ss.__class__.__name__)
-	return [(hashlist(sign[k]),k) for k in sign]
+	return [(joinsort('',sign[k]),k) for k in sign]
 
 def findOneMatch(x,ysign):
 	return (x[0],x[1],list(map(lambda a:a[1],filter(lambda a:a[0]==x[0],ysign))))
@@ -207,13 +199,14 @@ def match(key,xnt,xs,ynt,ys):
 			else:
 				dicts[key][None].append(match[1])
 		#print('DICTS:',dicts[key])
+		cvdict = {}
 	else:
 		print('     ⇒ Multiple mapping versions:')
 		cx = 0
 		for version in alltriplets:
 			cvdict = {m[1]:m[2] for m in version}
 			cx +=1
-			print('     ? Version',cx,':',', '.join([str(t[2])+' is '+str(t[1]) for t in version]))
+			print('     ? Version',cx,':',joinsort(', ',[str(t[2])+' is '+str(t[1]) for t in version]))
 			unmatched = list(map(lambda a:a[2],filter(lambda a:a[1]==None,version)))
 			disregard = appnd(setmin(snd(xsign),snd(version)),list(map(lambda a:a[1],filter(lambda a:a[2]==None,version))))
 			disq = False
@@ -233,18 +226,15 @@ def match(key,xnt,xs,ynt,ys):
 				for x in disregard:
 					cs2 += getSign(xsign,x)
 				# extra normalisation
-				cs1l = list(cs1)
-				cs2l = list(cs2)
-				cs1l.sort()
-				cs2l.sort()
-				cs1 = ''.join(cs1l)
-				cs2 = ''.join(cs2l)
+				cs1 = joinsort('',list(cs1))
+				cs2 = joinsort('',list(cs2))
 				if cs1 == cs2:
 					ver2 = [(cs1,'+'.join(disregard),'+'.join(unmatched))]
 					for m in version:
 						if m[2] not in unmatched and m[1] not in disregard:
 							ver2.append(m)
 					alltriplets.append(ver2)
+					print('      ✗ version disqualified, an adapted variant is proposed')
 				else:
 					print('      ✗ version disqualified')
 			else:
@@ -264,6 +254,7 @@ def match(key,xnt,xs,ynt,ys):
 					else:
 						dicts[key][None].append(match[1])
 				#print('DICTS:',dicts[key])
+			cvdict = {}
 
 def ppseplist(s,z):
 	l = list(z)
@@ -287,6 +278,9 @@ def sameThing(xkey,x,ykey,y):
 				return cvdict[x.wrapped.data] == y.wrapped.data
 			else:
 				return x.wrapped.data == y.wrapped.data
+		elif x.wrapped.__class__.__name__ == 'Value':
+			# only if values are equal
+			return x.wrapped.data == y.wrapped.data
 		elif x.wrapped.__class__.__name__ == 'Sequence' and len(x.wrapped.data) == len(y.wrapped.data):
 			res = True
 			for i in range(0,len(x.wrapped.data)):
@@ -318,10 +312,14 @@ def sameThing(xkey,x,ykey,y):
 
 def moreLiberalSign(x,y):
 	# x is more liberal than y
+	# very hacky: only covers certain cases, but at least robust (will be no false positives)
 	if y.replace('+','*')==x:
-		# very hacky: only covers certain cases, but at least robust (will be no false positives)
 		return True
+	if x.find('/')>-1 and y.find('/')>-1:
+		if joinsort('/',map(lambda a:a.replace('#','•'),x.split('/'))) == joinsort('/',map(lambda a:a.replace('#','•'),y.split('/'))):
+			return True
 	return False
+
 def moreLiberal(x,y):
 	# x is more liberal than y
 	xc = x.expr.wrapped.__class__.__name__
@@ -394,6 +392,11 @@ def checkCandidates(indent,key,nt,candidates,masterprods):
 			print(indent,' ⇒ not a good candidate because',nt,'is undefined')
 	return good
 
+def joinsort(sep,xs):
+	ys = list(xs)
+	ys.sort()
+	return sep.join(ys)
+
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
 		print('This tool does guided grammar convergence.')
@@ -437,7 +440,9 @@ if __name__ == "__main__":
 			print('  √ Defined in the master grammar as',ppseplist(';',map(lambda x:str(x.expr),masterprods)))
 		else:
 			print('  √ Undefined in the master grammar.')
-		print('  √ Master signatures:',[makeSignature(p.nt,p.expr) for p in masterprods])
+		msigs = [makeSignature(p.nt,p.expr) for p in masterprods]
+		mprodsig = list(map(lambda a:joinsort('/',fst(a)),msigs))
+		print('  √ Master prodsig:',mprodsig)
 		for key in bgfs:
 			bgf = bgfs[key]
 			if nt not in dicts[key]:
@@ -452,7 +457,7 @@ if __name__ == "__main__":
 				print('  √ Undefined in',key)
 			if len(myprods) == 0:
 				if len(masterprods) == 0:
-					print('    ☯ Both nonterminals are undefined.')
+					print('    ☯ Both are undefined.')
 				else:
 					# TODO
 					print('    ✗ One is defined, the other one is not, we have a problem.')
@@ -470,20 +475,77 @@ if __name__ == "__main__":
 				else:
 					match(key,dicts[key][nt],myprods[0].expr.wrapped,nt,masterprods[0].expr.wrapped)
 			else:
-				print('    √ Signatures:',[makeSignature(p.nt,p.expr) for p in myprods])
-				oldnt = myprods[0].nt
-				newprods = []
-				for p in myprods:
-					if p.expr.wrapped.__class__.__name__ == 'Nonterminal':
-						# singletons shall be unfolded!
-						unt = p.expr.wrapped.data
-						newprods.extend(bgf.getProdsOfN(unt))
-					else:
-						newprods.append(p)
-				print('    √ Unfolded s:',[makeSignature(oldnt,p.expr) for p in newprods])
-				print('    ✗ Dealing with multiple rules is not yet implemented.')
-				#print('■')
-				#sys.exit(1)
+				sigs = [makeSignature(p.nt,p.expr) for p in myprods]
+				prodsig = list(map(lambda a:joinsort('/',fst(a)),sigs))
+				#prodsig.sort()
+				print('    √ Prodsig: ',prodsig)
+				if prodsig == ['1']*len(prodsig):
+					oldnt = myprods[0].nt
+					newprods = []
+					for p in myprods:
+						if p.expr.wrapped.__class__.__name__ == 'Nonterminal':
+							# singletons shall be unfolded!
+							unt = p.expr.wrapped.data
+							newprods.extend(bgf.getProdsOfN(unt))
+						else:
+							newprods.append(p)
+					myprods = newprods
+					sigs = [makeSignature(oldnt,p.expr) for p in newprods]
+					prodsig = list(map(lambda a:joinsort('/',fst(a)),sigs))
+					print('    √ Unfolded:',prodsig)
+				print('    √ Signats:',sigs)
+				versions = []
+				for i in range(0,len(msigs)):
+					versions.append([])
+					for j in range(0,len(sigs)):
+						if mprodsig[i] == prodsig[j]:
+							versions[i].append(myprods[j].expr)
+							#versions[i].append(str(myprods[j].expr))
+					if len(versions[i]) == 0:
+						# print('    ☯ TRY')
+						for j in range(0,len(sigs)):
+							if moreLiberalSign(mprodsig[i],prodsig[j]):
+								versions[i].append(myprods[j].expr)
+								print('    ☯ Suggesting a liberation-based version with',mprodsig[i],'<:',prodsig[j])
+								#versions[i].append(str(myprods[j].expr))						
+				limit = 3
+				while max(map(len,versions)) > 1:
+					limit -= 1
+					print('    √ Versions:',list(map(lambda a:list(map(str,a)),versions)))
+					# while we have more than one version...
+					i = 0
+					while len(versions[i]) <= 1:
+						i += 1
+					print('    ? Trying to match',' or '.join(map(str,versions[i])),'to',masterprods[i].expr)
+					for p in versions[i]:
+						#print('??? same thing:',p,masterprods[i].expr)
+						if sameThing(key,p,None,masterprods[i].expr):
+							print('      ⇒',p.wrapped.data,'maps to',masterprods[i].expr.wrapped.data)
+							dicts[key][masterprods[i].expr.wrapped.data] = p.wrapped.data
+							for k in range(0,len(versions)):
+								if k==i:
+									versions[k] = [p]
+								# this relies on overloaded expression equality
+								elif p in versions[k]:
+									versions[k].remove(p)
+					#good = checkCandidates('   ',key,nt,versions[i],master.getProdsOfN(nt))
+					if limit==0:
+						print('—————REACHED THE LIMIT—————')
+						break
+				# recording the result
+				if limit:
+					print('    √ Experiments are settled.')
+					for i in range(0,len(versions)):
+						if versions[i]:
+							expr1 = versions[i][0]
+						else:
+							expr2 = None
+						expr2 = masterprods[i].expr.wrapped
+						print('      √ Successfully matched',expr1,'with',expr2)
+				else:
+					print('    ✗ Dealing with multiple rules was unsuccessful.')
+					print('■')
+					sys.exit(1)
 			# print('    ',myprods[0].expr.wrapped.__class__.__name__)
 			# TODO make it work for more rules
 			#print(myprods[0].nt)
@@ -491,6 +553,7 @@ if __name__ == "__main__":
 			ntsdone.append(nt)
 			# cheap way to say "now do all referenced nonterminals that you haven't done yet"
 			for k in dicts[key]:
-				if k and k not in ntsdone and k not in nts2go:
+				if k and k not in ntsdone and k not in nts2go and k not in ['string','int']:
 					nts2go.append(k)
+	print('■')
 	sys.exit(0)

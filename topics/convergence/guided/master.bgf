@@ -27,12 +27,12 @@ lexpr ::= number
 		<bgf:expression>
 			<sequence>
 				<bgf:expression>
-					<nonterminal>name</nonterminal>
+					<value>string</value>
 				</bgf:expression>
 				<bgf:expression>
 					<plus>
 						<bgf:expression>
-							<nonterminal>name</nonterminal>
+							<value>string</value>
 						</bgf:expression>
 					</plus>
 				</bgf:expression>
@@ -45,13 +45,13 @@ lexpr ::= number
 	<bgf:production>
 		<nonterminal>expression</nonterminal>
 		<bgf:expression>
-			<nonterminal>name</nonterminal>
+			<value>string</value>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
 		<nonterminal>expression</nonterminal>
 		<bgf:expression>
-			<nonterminal>number</nonterminal>
+			<value>int</value>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
@@ -59,7 +59,7 @@ lexpr ::= number
 		<bgf:expression>
 			<sequence>
 				<bgf:expression>
-					<nonterminal>name</nonterminal>
+					<value>string</value>
 				</bgf:expression>
 				<bgf:expression>
 					<plus>
