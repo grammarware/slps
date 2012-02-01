@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+program ::= function+ trailing??
+function ::= name argument+ expression (separator+)??
+expression ::= aexpr | argument | bexpr | cexpr | lexpr
+bexpr ::= expr expr
+aexpr ::= name expression+
+cexpr ::= expr expr expr
+expression ::= expression
+argument ::= name
+lexpr ::= number
+-->
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+	<root>program</root>
+	<bgf:production>
+		<nonterminal>program</nonterminal>
+		<bgf:expression>
+			<plus>
+				<bgf:expression>
+					<nonterminal>function</nonterminal>
+				</bgf:expression>
+			</plus>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>function</nonterminal>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>name</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<plus>
+						<bgf:expression>
+							<nonterminal>name</nonterminal>
+						</bgf:expression>
+					</plus>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>expression</nonterminal>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>expression</nonterminal>
+		<bgf:expression>
+			<nonterminal>name</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>expression</nonterminal>
+		<bgf:expression>
+			<nonterminal>number</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>expression</nonterminal>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>name</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<plus>
+						<bgf:expression>
+							<nonterminal>expression</nonterminal>
+						</bgf:expression>
+					</plus>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>expression</nonterminal>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>expression</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>operator</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>expression</nonterminal>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>expression</nonterminal>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>expression</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>expression</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>expression</nonterminal>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</bgf:production>
+	<!--
+	<bgf:production>
+		<nonterminal>operator</nonterminal>
+		<bgf:expression>
+			<choice>
+				<bgf:expression>
+					<nonterminal>plus</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>minus</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>equals</nonterminal>
+				</bgf:expression>
+			</choice>
+		</bgf:expression>
+	</bgf:production>
+	-->
+</bgf:grammar>
