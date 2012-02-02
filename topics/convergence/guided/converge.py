@@ -16,6 +16,22 @@ master = BGF3.Grammar()
 # current version dictionary
 cvdict = {}
 
+def bind(key,nt1,nt2):
+	global dicts
+	if nt1:
+		if nt1 in dicts[key]:
+			if nt2 in dicts[key][nt1].split('+'):
+				print('~~~Confirmed binding',nt1,'to',nt2,'in',key)
+			else:
+				print('~~~Contradicting binding',nt1,'to',dicts[key][nt1],'or',nt2,'in',key)
+				dicts[key][nt1] += '+'+nt2
+				#print('■')
+				#sys.exit(1)
+		else:
+			dicts[key][nt1] = nt2
+	else:
+		dicts[key][None].append(nt2)
+
 def makeSignature(d,ss):
 	# Input: sequence
 	sign = {}
@@ -47,9 +63,9 @@ def makeSignature(d,ss):
 				if q == '1':
 					q = '0'
 				elif q == '+':
-					q = '#'
+					q = '⊕'
 				elif q == '*':
-					q = '•'
+					q = '⊛'
 				else:
 					print('ERROR: Please rewrite the code of makeSignature!')
 			if nt in sign:
@@ -93,10 +109,11 @@ def fetch(xs,k):
 	return list(map(lambda a:a[1],l))
 
 def cartesian(ss):
+	# [(a,b)] ⇒ [(a,b)]
 	# [(a,b),(x),(1,2)] ⇒ [(a,x,1),(a,x,2),(b,x,1),(b,x,2)]
-	# (a,b) x [(x,1),(x,2)]
-	# [(a,x),(b,x)] x (1,2)
 	res = []
+	if len(ss)==1:
+		return ss
 	for x in ss[0]:
 		for y in ss[1]:
 			res.append([x,y])
@@ -120,7 +137,7 @@ def setmin(bs,cs):
 def getSign(xsign,x):
 	return list(map(lambda a:a[0],filter(lambda a:a[1]==x,xsign)))[0]
 
-def match(key,xnt,xs,ynt,ys):
+def match(ident,key,xnt,xs,ynt,ys):
 	global cvdict
 	# Input: sequences
 	xsign = makeSignature(xnt,xs)
@@ -163,7 +180,7 @@ def match(key,xnt,xs,ynt,ys):
 	#
 	if len(alltriplets) == 1:
 		# only one version to assume
-		print('    √ Only one version:')
+		print(ident,'√ Only one version:')
 		version = alltriplets[0]
 		cvdict = {m[1]:m[2] for m in version}
 		unmatched = list(map(lambda a:a[2],filter(lambda a:a[1]==None,version)))
@@ -177,7 +194,7 @@ def match(key,xnt,xs,ynt,ys):
 				sign_dis = list(filter(lambda a:a[1]==dis,xsign))[0]
 				#print('sign_un=',sign_un,'sign_dis=',sign_dis)
 				if moreLiberalSign(sign_dis[0],sign_un[0]):
-					print('     ☯ Disregarding more liberal signature,')
+					print(ident,'☯ Disregarding more liberal signature,')
 					ver2 = []
 					for m in version:
 						if m[2]==un:
@@ -190,31 +207,31 @@ def match(key,xnt,xs,ynt,ys):
 					version = ver2
 					disregard = appnd(setmin(snd(xsign),snd(version)),list(map(lambda a:a[1],filter(lambda a:a[2]==None,version))))
 		for dis in disregard:
-			print('     ☯ Disregarding',dis+',')
+			print(ident,'☯ Disregarding',dis+',')
 		#print('DICTS:',dicts[key])
 		for match in version:
 			if match[2]:
-				print('      ⇒ in',key+':',match[2],'maps to',match[1],'with signature',match[0])
-				dicts[key][match[2]] = match[1]
+				print(ident,' ⇒ in',key+':',match[2],'maps to',match[1],'with signature',match[0])
+				bind(key,match[2],match[1])
 			else:
-				dicts[key][None].append(match[1])
+				bind(key,None,match[1])
 		#print('DICTS:',dicts[key])
 		cvdict = {}
 	else:
-		print('     ⇒ Multiple mapping versions:')
+		print(ident,'⇒ Multiple mapping versions:')
 		cx = 0
 		for version in alltriplets:
 			cvdict = {m[1]:m[2] for m in version}
 			cx +=1
-			print('     ? Version',cx,':',joinsort(', ',[str(t[2])+' is '+str(t[1]) for t in version]))
+			print(ident,'? Version',cx,':',joinsort(', ',[str(t[2])+' is '+str(t[1]) for t in version]))
 			unmatched = list(map(lambda a:a[2],filter(lambda a:a[1]==None,version)))
 			disregard = appnd(setmin(snd(xsign),snd(version)),list(map(lambda a:a[1],filter(lambda a:a[2]==None,version))))
 			disq = False
-			#print('      ~version~>',version)
+			#print(ident,' ~version~>',version)
 			for match in version:
-				good = checkCandidates('      ',key,match[2],[match[1]],master.getProdsOfN(match[2]))
+				good = checkCandidates(ident+' ',key,match[2],[match[1]],master.getProdsOfN(match[2]))
 				if len(good)!=1:
-					print('       ✗ stop checking')
+					print(ident,'  ✗ stop checking')
 					disq = True
 					break
 			if disq:
@@ -234,25 +251,25 @@ def match(key,xnt,xs,ynt,ys):
 						if m[2] not in unmatched and m[1] not in disregard:
 							ver2.append(m)
 					alltriplets.append(ver2)
-					print('      ✗ version disqualified, an adapted variant is proposed')
+					print(ident,' ✗ version disqualified, an adapted variant is proposed')
 				else:
-					print('      ✗ version disqualified')
+					print(ident,' ✗ version disqualified')
 			else:
-				print('      √ version approved')
+				print(ident,' √ version approved')
 				#print('VERSION:',version)
 				for dis in setmin(disregard,'+'.join(list(map(lambda x:x[1],filter(lambda x:x[1] and x[1].find('+')>-1,version)))).split('+')):
-					print('     ☯ Disregarding',dis+',')
+					print(ident,'☯ Disregarding',dis+',')
 				#print('DICTS:',dicts[key])
 				for match in version:
 					if match[2]:
 						if match[1].find('+')>-1:
-							print('       ⇒',match[2],'maps to',match[1].replace('+',' and '),'with signature',match[0])
-							dicts[key][match[2]] = match[1]#.split('+')
+							print(ident,'  ⇒',match[2],'maps to',match[1].replace('+',' and '),'with signature',match[0])
+							bind(key,match[2],match[1])#.split('+')
 						else:
-							print('       ⇒',match[2],'maps to',match[1],'with signature',match[0])
-							dicts[key][match[2]] = match[1]
+							print(ident,'  ⇒',match[2],'maps to',match[1],'with signature',match[0])
+							bind(key,match[2],match[1])
 					else:
-						dicts[key][None].append(match[1])
+						bind(key,None,match[1])
 				#print('DICTS:',dicts[key])
 			cvdict = {}
 
@@ -270,7 +287,10 @@ def sameThing(xkey,x,ykey,y):
 	# x and y are the same thing
 	if x.wrapped.__class__.__name__ == y.wrapped.__class__.__name__:
 		if y.wrapped.__class__.__name__ in ('Plus','Star','Optional'):
-			# we don't check for contents
+			# we don't check for contents for now (TODO)
+			return True
+		elif y.wrapped.__class__.__name__ in ('Any','Empty','Epsilon'):
+			# we never check for contents
 			return True
 		elif x.wrapped.__class__.__name__ == 'Nonterminal':
 			# only if nonterminal names are equal
@@ -315,9 +335,8 @@ def moreLiberalSign(x,y):
 	# very hacky: only covers certain cases, but at least robust (will be no false positives)
 	if y.replace('+','*')==x:
 		return True
-	if x.find('/')>-1 and y.find('/')>-1:
-		if joinsort('/',map(lambda a:a.replace('#','•'),x.split('/'))) == joinsort('/',map(lambda a:a.replace('#','•'),y.split('/'))):
-			return True
+	if joinsort('/',map(lambda a:a.replace('⊕','⊛'),x.split('/'))) == joinsort('/',map(lambda a:a.replace('⊕','⊛'),y.split('/'))):
+		return True
 	return False
 
 def moreLiberal(x,y):
@@ -397,6 +416,39 @@ def joinsort(sep,xs):
 	ys.sort()
 	return sep.join(ys)
 
+def acceptBinding(key,xs,ys):
+	global dicts
+	# ys is from the master grammar
+	print('        ∑',xs.__class__.__name__,ys.__class__.__name__)
+	if xs.__class__.__name__ in ('Value','Nonterminal') and ys.__class__.__name__ in ('Value','Nonterminal'):
+		if ys.data in dicts[key]:
+			# know
+			if dicts[key][ys.data] == xs.data:
+				return
+			else:
+				print('          ∆',ys.data,'was thought to be mapped to',dicts[key][ys.data],'yet now it maps to',xs.data)
+				print('■')
+				sys.exit(1)
+		else:
+			# don't know
+			dicts[key][ys.data] = xs.data
+			return
+	elif xs.__class__.__name__ == 'Sequence' and ys.__class__.__name__ == 'Sequence':
+		if len(xs.data) != len(ys.data):
+			print('          ∆ Directly matching symbol sequences of different length is impossible.')
+			print('■')
+			sys.exit(1)
+		for i in range(0,len(xs.data)):
+			acceptBinding(key,xs.data[i].wrapped,ys.data[i].wrapped)
+		return
+	elif xs.__class__.__name__ in ('Plus','Star','Optional') and ys.__class__.__name__ in ('Plus','Star','Optional'):
+		acceptBinding(key,xs.data.wrapped,ys.data.wrapped)
+		return
+	print('          ∆ Undecisive.')
+	print('■')
+	sys.exit(1)
+	pass
+
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
 		print('This tool does guided grammar convergence.')
@@ -418,13 +470,13 @@ if __name__ == "__main__":
 		bgf = bgfs[key]
 		if len(bgf.roots) == 1:
 			print('  ⇒ In',key+':',nt,'maps to',bgf.roots[0])
-			dicts[key][nt] = bgf.roots[0]
+			bind(key,nt,bgf.roots[0])
 		else:
 			print('  ⇒ Unconclusive for',key,'— looking ahead at definitions:')
 			good = checkCandidates('   ',key,nt,bgf.roots,master.getProdsOfN(nt))
 			if len(good) == 1:
 				print('    ⇒ Hence, in',key+':',nt,'maps to',good[0])
-				dicts[key][nt] = good[0]
+				bind(key,nt,good[0])
 			else:
 				print('  ⇒ Utterly unconclusive for',key)
 				print('■')
@@ -446,9 +498,13 @@ if __name__ == "__main__":
 		for key in bgfs:
 			bgf = bgfs[key]
 			if nt not in dicts[key]:
-				print('  √ A grammar still',key,'has multiple roots:',bgf.roots)
-				print('■')
-				sys.exit(1)
+				#print('  √ A grammar still',key,'has multiple roots:',bgf.roots)
+				print('  ✗ Suddenly,',key,'has no match for',nt)
+				# TODO?
+				continue
+				#print('■')
+				#sys.exit(1)
+			print('  √ Called',dicts[key][nt],'in',key)
 			# now it should be mapped
 			myprods = bgf.getProdsOfN(dicts[key][nt])
 			if myprods:
@@ -460,20 +516,39 @@ if __name__ == "__main__":
 					print('    ☯ Both are undefined.')
 				else:
 					# TODO
-					print('    ✗ One is defined, the other one is not, we have a problem.')
+					print('    ✗ Expected definition of',nt,'('+dicts[key][nt]+')','is not found in',key)
+					print('■')
+					sys.exit(1)
 			elif len(myprods) == 1:
-				if sameThing(key,myprods[0].expr,None,masterprods[0].expr):
-					print('    ⇒',masterprods[0].expr.wrapped.data,'maps to',myprods[0].expr.wrapped.data,'in',key)
-					nnt = str(masterprods[0].expr.wrapped.data)
-					dicts[key][nnt] = str(myprods[0].expr.wrapped.data)
-					if nnt not in ntsdone and nnt not in nts2go:
-						nts2go.append(nnt)
-				elif moreLiberal(myprods[0],masterprods[0]):
-					print('    ☯ Disregarding more liberal specification,')
-					print('     ⇒',masterprods[0].expr.wrapped.data,'maps to',myprods[0].expr.wrapped.data)
-					dicts[key][str(masterprods[0].expr.wrapped.data)] = str(myprods[0].expr.wrapped.data)
+				if masterprods:
+					# TODO: how about master having multiple rules where key grammar has one?
+					# Answer: a case of addV-equivalence, which is “more liberal” anyway
+					if sameThing(key,myprods[0].expr,None,masterprods[0].expr):
+						print('    ⇒',masterprods[0].expr.wrapped.data,'maps to',myprods[0].expr.wrapped.data,'in',key)
+						nnt = str(masterprods[0].expr.wrapped.data)
+						bind(key,nnt,str(myprods[0].expr.wrapped.data))
+						if nnt not in ntsdone and nnt not in nts2go and nnt not in ['string','int']:
+							nts2go.append(nnt)
+					elif moreLiberal(myprods[0],masterprods[0]):
+						print('    ☯ Disregarding more liberal specification,')
+						print('     ⇒',masterprods[0].expr.wrapped.data,'maps to',myprods[0].expr.wrapped.data)
+						bind(key,str(masterprods[0].expr.wrapped.data),str(myprods[0].expr.wrapped.data))
+					else:
+						match('    ',key,dicts[key][nt],myprods[0].expr.wrapped,nt,masterprods[0].expr.wrapped)
 				else:
-					match(key,dicts[key][nt],myprods[0].expr.wrapped,nt,masterprods[0].expr.wrapped)
+					# undefined in the master grammar
+					if sameThing(key,myprods[0].expr,None,BGF3.Expression(BGF3.Empty())):
+						print('    ☯ Strictly speaking, undefined is φ, so')
+						print('    ⇒ None maps to',myprods[0].expr.wrapped.data,'in',key)
+						print('■TODO')
+						sys.exit(1)							
+					elif sameThing(key,myprods[0].expr,None,BGF3.Expression(BGF3.Epsilon())):
+						print('    ☯ Considering undefined as ε,')
+						print('     ⇒ Trivial match in',key)
+					else:
+						print('    ✗ Desperately unmatched part.')
+						print('■')
+						sys.exit(1)							
 			else:
 				sigs = [makeSignature(p.nt,p.expr) for p in myprods]
 				prodsig = list(map(lambda a:joinsort('/',fst(a)),sigs))
@@ -517,11 +592,22 @@ if __name__ == "__main__":
 					while len(versions[i]) <= 1:
 						i += 1
 					print('    ? Trying to match',' or '.join(map(str,versions[i])),'to',masterprods[i].expr)
+					#print('DICTS:',dicts[key])
 					for p in versions[i]:
 						#print('??? same thing:',p,masterprods[i].expr)
 						if sameThing(key,p,None,masterprods[i].expr):
 							print('      ⇒',p.wrapped.data,'maps to',masterprods[i].expr.wrapped.data)
-							dicts[key][masterprods[i].expr.wrapped.data] = p.wrapped.data
+							bind(key,masterprods[i].expr.wrapped.data,p.wrapped.data)
+							for k in range(0,len(versions)):
+								if k==i:
+									versions[k] = [p]
+								# this relies on overloaded expression equality
+								elif p in versions[k]:
+									versions[k].remove(p)
+						elif masterprods[i].expr.wrapped.data in dicts[key] and dicts[key][masterprods[i].expr.wrapped.data] == p.wrapped.data:
+							# this should be generalised in order to work on sequences
+							# i.e., matching a b+ to c d+ or e f+
+							print('      ≈ It was known that',p.wrapped.data,'maps to',masterprods[i].expr.wrapped.data)
 							for k in range(0,len(versions)):
 								if k==i:
 									versions[k] = [p]
@@ -534,14 +620,30 @@ if __name__ == "__main__":
 						break
 				# recording the result
 				if limit:
+					unmatched = [p.expr for p in myprods]
 					print('    √ Experiments are settled.')
+					print('    √ Versions:',list(map(lambda a:list(map(str,a)),versions)))
 					for i in range(0,len(versions)):
 						if versions[i]:
-							expr1 = versions[i][0]
+							expr1 = versions[i][0].wrapped
+							expr2 = masterprods[i].expr.wrapped
+							print('      √ Successfully matched',expr1,'with',expr2)
+							match('      ',key,dicts[key][nt],expr1,nt,expr2)
+							# the following line does not work directly as expected
+							#unmatched.remove(expr1)
+							for e in unmatched:
+								if e.wrapped == expr1:
+									unmatched.remove(e)
+									break
 						else:
-							expr2 = None
-						expr2 = masterprods[i].expr.wrapped
-						print('      √ Successfully matched',expr1,'with',expr2)
+							expr2 = masterprods[i].expr.wrapped
+							print('      ✗ No matching for',expr2,'found!')
+							#print(list(map(str,myprods)))
+							#print('■')
+							#sys.exit(1)
+						# acceptBinding(key,expr1,expr2)
+					if unmatched:
+						print('    ! Unmatched productions:',list(map(str,unmatched)))
 				else:
 					print('    ✗ Dealing with multiple rules was unsuccessful.')
 					print('■')
@@ -555,5 +657,24 @@ if __name__ == "__main__":
 			for k in dicts[key]:
 				if k and k not in ntsdone and k not in nts2go and k not in ['string','int']:
 					nts2go.append(k)
+	allnts = []
+	for key in dicts:
+		for nt in dicts[key]:
+			if nt and nt not in allnts:
+				allnts.append(nt)
+	print('√ Disregarded nonterminals:\n • ',end='')
+	for key in dicts:
+		for nt in dicts[key][None]:
+			print(key+'.'+nt+', ',end='')
+	print('…')
+	for nt in allnts:
+		print('√',nt,'maps to:\n • ',end='')
+		for key in dicts:
+			if nt in dicts[key]:
+				for n in dicts[key][nt].split('+'):
+					print(key+'.'+n+', ',end='')
+			else:
+				print(key+'.???, ',end='')
+		print()
 	print('■')
 	sys.exit(0)
