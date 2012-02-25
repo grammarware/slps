@@ -2,6 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
+<!-- RELAXATION -->
   <xbgf:replace>
     <bgf:expression>
       <selectable>

@@ -99,6 +99,13 @@
 		</testing>
 	</source>
 	<source>
+		<name>rascal</name>
+		<grammar>
+			<extraction><expand>tools</expand>/rsc2bgf <expand>fl</expand>/rascal1/FL.rsc
+      </extraction>
+		</grammar>
+	</source>
+	<source>
 		<name>txl</name>
 		<grammar>
 			<extraction><expand>tools</expand>/txl2bgf <expand>fl</expand>/txl/FL.Txl
@@ -142,13 +149,6 @@
 		</testing>
 	</source>
 	<source>
-		<name>om</name>
-		<grammar>
-			<extraction><expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
-      </extraction>
-		</grammar>
-	</source>
-	<source>
 		<name>jaxb</name>
 		<derived>
 			<from>xsd</from>
@@ -156,6 +156,13 @@
 		</derived>
 		<grammar>
 			<extraction><expand>tools</expand>/java2bgf <expand>fl</expand>/java3 fl
+      </extraction>
+		</grammar>
+	</source>
+	<source>
+		<name>om</name>
+		<grammar>
+			<extraction><expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
       </extraction>
 		</grammar>
 	</source>
@@ -187,6 +194,18 @@
 		</branch>
 	</target>
 	<target>
+		<name>scannerless</name>
+		<branch>
+			<input>rascal</input>
+			<structural-matching>
+				<perform>multipleNewlines-rascal</perform>
+			</structural-matching>
+		</branch>
+		<branch>
+			<input>sdf</input>
+		</branch>
+	</target>
+	<target>
 		<name>unlayered</name>
 		<branch>
 			<input>topdown</input>
@@ -195,7 +214,7 @@
 			</structural-matching>
 		</branch>
 		<branch>
-			<input>sdf</input>
+			<input>scannerless</input>
 			<nominal-matching>
 				<automated>
 					<method>case</method>
@@ -224,7 +243,7 @@
 				<perform>designate-txl</perform>
 			</structural-matching>
 			<relaxation>
-				<perform>multipleNewlines</perform>
+				<perform>multipleNewlines-txl</perform>
 			</relaxation>
 		</branch>
 	</target>

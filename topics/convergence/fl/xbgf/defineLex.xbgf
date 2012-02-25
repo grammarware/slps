@@ -2,6 +2,7 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
   <!-- GENERALITY -->
+  <!-- EXTENSION -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>name</nonterminal>
@@ -11,6 +12,7 @@
     </bgf:production>
   </xbgf:define>
   <!-- GENERALITY -->
+  <!-- EXTENSION -->
   <xbgf:define>
     <bgf:production>
       <nonterminal>int</nonterminal>
