@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
+	<xbgf:replace>
+		<bgf:expression>
+			<nonterminal>Function</nonterminal>
+		</bgf:expression>
+		<bgf:expression>
+			<nonterminal>Argument</nonterminal>
+		</bgf:expression>
+		<in>
+			<nonterminal>ApplyExp</nonterminal>
+		</in>
+	</xbgf:replace>
+</xbgf:sequence>

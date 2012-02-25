@@ -58,6 +58,8 @@ class Label:
 		e = ET.Element('label')
 		e.text = self.name
 		return e
+	def __str__(self):
+		return self.name
 
 class Root:
 	def __init__(self,n):

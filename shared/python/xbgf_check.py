@@ -45,9 +45,9 @@ if __name__ == "__main__":
   print '}',
  if sum(early)+sum(final) != cx[1]+cx[2]:
   if sum(cx) != realSum:
-   print 'TAGERROR','ERROR'
+   print 'TAGERROR',sum(cx),realSum,'ERROR'
   else:
-   print 'TAGERROR'
+   print 'TAGERROR',sum(early)+sum(final),cx[1]+cx[2]
   sys.exit(1)
  if sum(cx) != realSum:
   print 'ERROR'

@@ -5,7 +5,7 @@ import IO;
 import ParseTree;
 
 syntax Program = Function+ LO;
-syntax Function = Name Name+ "=" Expr ";" ;
+syntax Function = Name Name+ "=" Expr Newline ;
 syntax Expr =
 	binary: Expr Ops Expr
 	| apply: Name Expr+
@@ -13,12 +13,13 @@ syntax Expr =
 	| "(" Expr ")"
 	| argument: Name
 	| literal: Int ;
-lexical Ops =
+syntax Ops =
 	minus: "-"
 	| plus: "+"
 	| equal: "==" ;
 lexical Name = [a-z]+ !>> [a-z] ;
 lexical Int = [0] | [1-9][0-9]* !>> [0-9] ;
+lexical Newline = ";" ;
 layout LO = [\ \t\n\r]? ;
 
 public void main(list[str] args)

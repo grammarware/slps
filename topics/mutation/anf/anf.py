@@ -102,7 +102,7 @@ if __name__ == "__main__":
 		if x != y:
 			# reroot only if not vacuous
 			xbgf.addStep(s)
-			#print('Tops:',top,', bottoms:',bot,', leaves:',lea)
+			print('Tops:',top,', bottoms:',bot,', leaves:',lea)
 			print("Reroot to",x)
 	ET.ElementTree(xbgf.getXml()).write(sys.argv[2])
 	sys.exit(0)

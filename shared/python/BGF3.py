@@ -34,6 +34,8 @@ class Grammar:
 		for e in self.prods:
 			self.ex.append(e.getXml())
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		s = ''
 		#for e in self.roots:
@@ -70,6 +72,8 @@ class Production:
 		ET.SubElement(self.ex,'nonterminal').text = str(self.nt)
 		self.ex.append(self.expr.getXml())
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		s = ''
 		if self.label != '':
@@ -129,6 +133,8 @@ class Expression:
 	def getXml(self):
 		#print 'Getting the XML of expression...'
 		return self.wrapped.getXml()
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return str(self.wrapped)
 	def __eq__(self,other):
@@ -149,6 +155,8 @@ class Terminal:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		ET.SubElement(self.ex,'terminal').text = self.data
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return '"'+self.data+'"'
 	def __eq__(self,other):
@@ -169,6 +177,8 @@ class Nonterminal:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		ET.SubElement(self.ex,'nonterminal').text = self.data
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return self.data
 	def __eq__(self,other):
@@ -196,6 +206,8 @@ class Selectable:
 		ET.SubElement(self.xml,'selector').text = self.sel
 		self.xml.append(self.expr.getXml())
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		name = self.expr.__class__.__name__
 		if name == 'Expression':
@@ -221,6 +233,8 @@ class Epsilon:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		ET.SubElement(self.ex,'epsilon')
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return 'EPSILON'
 	def __eq__(self,other):
@@ -237,6 +251,8 @@ class Any:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		ET.SubElement(self.ex,'any')
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return 'ANY'
 	def __eq__(self,other):
@@ -253,6 +269,8 @@ class Empty:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		ET.SubElement(self.ex,'empty')
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return 'EMPTY'
 	def __eq__(self,other):
@@ -273,8 +291,10 @@ class Value:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		ET.SubElement(self.ex,'value').text = self.data
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
-		return self.data.upper()[:3]
+		return self.data#.upper()[:3]
 	def __eq__(self,other):
 		if self.__class__.__name__ != other.__class__.__name__:
 			return False
@@ -303,6 +323,8 @@ class Sequence:
 			for el in self.data:
 				self.xml.append(el.getXml())
 			return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return '(' + self.unbracketed() + ')'
 	def unbracketed(self):
@@ -343,6 +365,8 @@ class Choice:
 			for el in self.data:
 				self.xml.append(el.getXml())
 			return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return '('+' | '.join(self.asArray())+')'
 	def asArray(self):
@@ -378,6 +402,8 @@ class Marked:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		ET.SubElement(self.ex,'marked').append(self.data.getXml())
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return '<'+str(self.data)+'>'
 	def __eq__(self,other):
@@ -399,6 +425,8 @@ class Optional:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		ET.SubElement(self.ex,'optional').append(self.data.getXml())
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return str(self.data)+'?'
 	def __eq__(self,other):
@@ -420,6 +448,8 @@ class Star:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		ET.SubElement(self.ex,'star').append(self.data.getXml())
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return str(self.data)+'*'
 	def __eq__(self,other):
@@ -441,6 +471,8 @@ class Plus:
 		self.ex = ET.Element(slpsns.bgf_('expression'))
 		ET.SubElement(self.ex,'plus').append(self.data.getXml())
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return str(self.data)+'+'
 	def __eq__(self,other):
@@ -470,6 +502,8 @@ class SepListStar:
 		self.xml.append(self.item.getXml())
 		self.xml.append(self.sep.getXml())
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return '{'+str(self.item)+' '+str(self.sep)+'}*'
 	def __eq__(self,other):
@@ -499,9 +533,20 @@ class SepListPlus:
 		self.xml.append(self.item.getXml())
 		self.xml.append(self.sep.getXml())
 		return self.ex
+	def who(self):
+		return self.__class__.__name__
 	def __str__(self):
 		return '{'+str(self.item)+' '+str(self.sep)+'}+'
 	def __eq__(self,other):
 		if self.__class__.__name__ != other.__class__.__name__:
 			return False
 		return self.item == other.item and self.sep == other.sep
+
+# scope!
+class Scope:
+	def __init__(self,s):
+		self.data = s
+	def getXml(self):
+		self.ex = ET.Element('in')
+		self.ex.append(self.data.getXml())
+		return self.ex
