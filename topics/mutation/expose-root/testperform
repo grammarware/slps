@@ -1,0 +1,7 @@
+#!/bin/sh
+
+../../../shared/generators/reroot2top $1 `basename $1 .bgf`.reroot.xbgf
+cp $1 $1.root.bgf
+../../../shared/tools/xbgf `basename $1 .bgf`.reroot.xbgf $1 $1.root.bgf
+xsltproc generate.xslt $1.root.bgf > $1.expose.xbgf
+../../../shared/tools/xbgf $1.expose.xbgf $1.root.bgf $1.ready.bgf

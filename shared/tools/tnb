@@ -1,0 +1,10 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+${SLPS}/topics/investigation/analysis/listtopsbottoms.py $@
+

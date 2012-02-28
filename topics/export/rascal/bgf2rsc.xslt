@@ -152,6 +152,13 @@ module </xsl:text>
 	<xsl:template name="no-parenthesis">
 		<xsl:param name="expr"/>
 		<xsl:choose>
+			<xsl:when test="$expr/selectable">
+				<xsl:value-of select="$expr/selectable/selector"/>
+				<xsl:text>: </xsl:text>
+				<xsl:call-template name="no-parenthesis">
+					<xsl:with-param name="expr" select="$expr/selectable/bgf:expression"/>
+				</xsl:call-template>
+			</xsl:when>
 			<xsl:when test="$expr/sequence">
 				<xsl:apply-templates select="$expr/sequence/bgf:expression[1]/*"/>
 				<xsl:for-each select="$expr/sequence/bgf:expression[position()&gt;1]">
