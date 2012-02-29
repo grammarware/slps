@@ -5,11 +5,11 @@ c.1.bgf:
 	cp ../../grammars/c/iso-9899-tc3/grammar.bgf c.1.bgf
 
 c.2.bgf: refactor.exbgf c.1.bgf
-	exbgf2xbgf refactor.exbgf c.1.bgf refactor.xbgf
+	exbgf2xbgf refactor.exbgf refactor.xbgf
 	xbgf refactor.xbgf c.1.bgf c.2.bgf
 
 c.3.bgf: skeletify.exbgf c.2.bgf
-	exbgf2xbgf skeletify.exbgf c.2.bgf skeletify.xbgf
+	exbgf2xbgf skeletify.exbgf skeletify.xbgf
 	xbgf skeletify.xbgf c.2.bgf c.3.bgf
 
 c.4.bgf: c.3.bgf

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- from generalizeNames -->
+	<xbgf:deyaccify>
+		<nonterminal>QualifiedIdentifier</nonterminal>
+	</xbgf:deyaccify>
+	<!-- ex-deyaccifyModifiers -->
+
+	<exbgf:promoteY2S>
+		<nonterminal>Modifiers</nonterminal>
+		<starof>Modifier</starof>
+		<newname>ModifiersOpt</newname>
+	</exbgf:promoteY2S>
+	<!-- 
+   - Fail: SwitchBlockStatementGroups.
+      - [], *(n(SwitchBlockStatementGroup))
+     vs.
+      - [], ;([n(SwitchBlockStatementGroup), ,([n(SwitchBlockStatementGroups), n(SwitchBlockStatementGroup)])])
+  -->
+	<exbgf:promoteY2S>
+		<nonterminal>SwitchBlockStatementGroups</nonterminal>
+		<starof>SwitchBlockStatementGroup</starof>
+	</exbgf:promoteY2S>
+	<!--  
+   - Fail: Catches.
+      - [], ,([n(CatchClause), *(n(CatchClause))])
+     vs.
+      - [], ;([n(CatchClause), ,([n(Catches), n(CatchClause)])])
+  -->
+	<xbgf:deyaccify>
+		<nonterminal>Catches</nonterminal>
+	</xbgf:deyaccify>
+	<!-- 
+   - Fail: BlockStatements.
+      - [], *(n(BlockStatement))
+     vs.
+      - [], ;([n(BlockStatement), ,([n(BlockStatements), n(BlockStatement)])])
+  -->
+	<xbgf:deyaccify>
+		<nonterminal>BlockStatements</nonterminal>
+	</xbgf:deyaccify>
+</exbgf:sequence>

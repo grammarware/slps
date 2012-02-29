@@ -96,10 +96,9 @@
       </preparation>
       <nominal-matching>
         <perform>rename-read1</perform>
+        <perform>unite-read1</perform>
       </nominal-matching>
       <structural-matching>
-        <perform>generalizeModifiers-read1</perform>
-        <perform>generalizeNames-read1</perform>
         <perform>refactor-read1</perform>
       </structural-matching>
     </branch>
@@ -125,13 +124,11 @@
         <perform>correct-read2</perform>
       </preparation>
       <nominal-matching>
+        <perform>unite-read2</perform>
         <perform>rename-read2</perform>
       </nominal-matching>
       <structural-matching>
-        <perform>deyaccifyModifiers-read2</perform>
-        <perform>generalizeModifiers-read2</perform> <!-- should be moved to relaxation!!! -->
-        <perform>generalizeNames</perform>
-        <perform>deyaccifyStatements</perform>
+        <perform>deyaccify-read2</perform>
         <perform>refactorTypes-read2</perform>
         <perform>refactorExpressions</perform>
         <perform>inlineStatements</perform>
@@ -176,20 +173,21 @@
         <perform>correct-read3</perform>
       </preparation>
       <nominal-matching>
+        <perform>unite-read3</perform>
         <perform>rename-read3</perform>
       </nominal-matching>
       <structural-matching>
-        <perform>deyaccifyStatements</perform>
-        <perform>inlineForStatement</perform>
+        <perform>deyaccify-read3</perform>
+        <!-- <perform>inlineForStatement</perform> -->
         <perform>inlineStatements</perform>
         <perform>refactorStatements-read3</perform>
         <perform>refactorClasses-read3</perform>
         <perform>refactorEnums</perform>
       </structural-matching>
       <relaxation>
-        <perform>generalizeModifiers-read3</perform>
+        <!-- <perform>generalizeModifiers-read3</perform> -->
         <perform>relaxClasses-read3</perform>
-        <perform>generalizeNames</perform>
+        <!-- <perform>generalizeNames</perform> --> 
         <perform>refactorTypes-read3</perform>
         <perform>generalizeStatements</perform>
         <perform>refactorInterfaces-read3</perform>

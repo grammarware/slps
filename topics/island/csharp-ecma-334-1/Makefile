@@ -8,19 +8,19 @@ cs.2.bgf: cs.1.bgf
 	subgrammar cs.1.bgf compilation-unit cs.2.bgf
 
 cs.3.bgf: cs.2.bgf refactor.using.exbgf
-	exbgf2xbgf refactor.using.exbgf cs.2.bgf refactor.using.xbgf
+	exbgf2xbgf refactor.using.exbgf refactor.using.xbgf
 	xbgf refactor.using.xbgf cs.2.bgf cs.3.bgf
 
 cs.4.bgf: cs.3.bgf refactor.global.exbgf
-	exbgf2xbgf refactor.global.exbgf cs.3.bgf refactor.global.xbgf
+	exbgf2xbgf refactor.global.exbgf refactor.global.xbgf
 	xbgf refactor.global.xbgf cs.3.bgf cs.4.bgf
 
 cs.5.bgf: cs.4.bgf refactor.namespace.exbgf
-	exbgf2xbgf refactor.namespace.exbgf cs.4.bgf refactor.namespace.xbgf
+	exbgf2xbgf refactor.namespace.exbgf refactor.namespace.xbgf
 	xbgf refactor.namespace.xbgf cs.4.bgf cs.5.bgf
 
 cs.6.bgf: cs.5.bgf skeletify.exbgf
-	exbgf2xbgf skeletify.exbgf cs.5.bgf skeletify.xbgf
+	exbgf2xbgf skeletify.exbgf skeletify.xbgf
 	xbgf skeletify.xbgf cs.5.bgf cs.6.bgf
 
 cs.7.bgf: cs.6.bgf

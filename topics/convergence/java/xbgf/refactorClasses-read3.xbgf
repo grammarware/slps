@@ -128,6 +128,12 @@
   </xbgf:massage>
 
   <!-- modifiers -->
+<xbgf:unfold>
+	<nonterminal>ModifiersOpt</nonterminal>
+	<in>
+		<nonterminal>NormalClassDeclaration</nonterminal>
+	</in>
+</xbgf:unfold>
   <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
@@ -137,11 +143,11 @@
           <bgf:expression>
             <marked>
               <bgf:expression>
-                <optional>
+                <star>
                   <bgf:expression>
-                    <nonterminal>Modifiers</nonterminal>
+                    <nonterminal>Modifier</nonterminal>
                   </bgf:expression>
-                </optional>
+                </star>
               </bgf:expression>
             </marked>
           </bgf:expression>
@@ -227,6 +233,12 @@
       </bgf:expression>
     </bgf:production>
   </xbgf:appear>
+<xbgf:fold>
+	<nonterminal>ModifiersOpt</nonterminal>
+	<in>
+		<nonterminal>ClassMemberDeclaration</nonterminal>
+	</in>
+</xbgf:fold>
   <xbgf:horizontal><nonterminal>ClassMemberDeclaration</nonterminal></xbgf:horizontal>
 
   <!-- 

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- modifiers -->
+	<!--
+	Unified modifiers should look like this:
+
+	ModifiersOpt:
+	   { Modifier }
+	ClassBodyDeclaration is defined as:
+	   ";"
+	   [ "static" ] Block
+	   ModifiersOpt MemberDecl
+	InterfaceBodyDeclaration is defined as:
+	   ";"
+	   ModifiersOpt InterfaceMemberDecl
+	ClassOrInterfaceDeclaration is defined as:
+	   ModifiersOpt ( ClassDeclaration | InterfaceDeclaration )
+
+	Non-unified modifiers take this form:
+
+	InterfaceDeclaration is defined as:
+	   [ InterfaceModifiers ] "interface" Identifier [ ExtendsInterfaces ] InterfaceBody
+	AbstractMethodModifiers is defined as:
+	   AbstractMethodModifier
+	   AbstractMethodModifiers AbstractMethodModifier
+	ConstantDeclaration is defined as:
+	   [ ConstantModifiers ] Type VariableDeclarators
+	InterfaceModifiers is defined as:
+	   InterfaceModifier
+	   InterfaceModifiers InterfaceModifier
+	FieldDeclaration is defined as:
+	   [ FieldModifiers ] Type VariableDeclarators ";"
+	MethodModifiers is defined as:
+	   MethodModifier
+	   MethodModifiers MethodModifier
+	AbstractMethodDeclaration is defined as:
+	   [ AbstractMethodModifiers ] ResultType MethodDeclarator [ Throws ] ";"
+	ClassDeclaration is defined as:
+	   [ ClassModifiers ] "class" Identifier [ Super ] [ Interfaces ] ClassBody
+	FieldModifiers is defined as:
+	   FieldModifier
+	   FieldModifiers FieldModifier
+	ConstructorModifiers is defined as:
+	   ConstructorModifier
+	   ConstructorModifiers ConstructorModifier
+	ClassModifiers is defined as:
+	   ClassModifier
+	   ClassModifiers ClassModifier
+	MethodHeader is defined as:
+	   [ MethodModifiers ] ResultType MethodDeclarator [ Throws ]
+	ConstantModifiers is defined as:
+	   ConstantModifier
+	   ConstantModifiers ConstantModifer
+	-->
+	<exbgf:uniteMany>
+		<add>ClassModifier</add>
+		<add>InterfaceModifier</add>
+		<add>ConstructorModifier</add>
+		<add>AbstractMethodModifier</add>
+		<add>MethodModifier</add>
+		<add>FieldModifier</add>
+		<add>ConstantModifier</add>
+		<yield>Modifier</yield>
+	</exbgf:uniteMany>
+	<exbgf:uniteMany>
+		<add>ClassModifiers</add>
+		<add>InterfaceModifiers</add>
+		<add>ConstructorModifiers</add>
+		<add>AbstractMethodModifiers</add>
+		<add>MethodModifiers</add>
+		<add>FieldModifiers</add>
+		<!-- <add>ConstantModifiers</add> --> <!-- cannot because it is defined as right recursion, not left -->
+		<yield>Modifiers</yield>
+	</exbgf:uniteMany>
+	<!--
+	  MethodName is defined as:
+	     Identifier
+	     AmbiguousName "." Identifier
+	  TypeName is defined as:
+	     Identifier
+	     PackageOrTypeName "." Identifier
+	  PackageName is defined as:
+	     Identifier
+	     PackageName "." Identifier
+	  PackageOrTypeName is defined as:
+	     Identifier
+	     PackageOrTypeName "." Identifier
+	  AmbiguousName is defined as:
+	     Identifier
+	     AmbiguousName "." Identifier
+	  ExpressionName is defined as:
+	     Identifier
+	     AmbiguousName "." Identifier
+
+	vs
+
+	  QualifiedIdentifier is defined as:
+	     Identifier { "." Identifier }
+
+	  -->
+	<exbgf:uniteMany>
+		<add>AmbiguousName</add>
+		<add>MethodName</add>
+		<add>TypeName</add>
+		<add>PackageName</add>
+		<add>PackageOrTypeName</add>
+		<add>ExpressionName</add>
+		<add>ClassName</add>
+		<yield>QualifiedIdentifier</yield>
+	</exbgf:uniteMany>
+</exbgf:sequence>

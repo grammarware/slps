@@ -3,28 +3,6 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
-  <!-- followed by a series of unites in generalizeModifiers -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>ClassModifier</from>
-      <to>Modifier</to>
-    </nonterminal>
-  </xbgf:rename>
-  <xbgf:rename>
-    <nonterminal>
-      <from>ClassModifiers</from>
-      <to>Modifiers</to>
-    </nonterminal>
-  </xbgf:rename>
-
-  <!-- followed by unites in generalizeNames -->
-  <xbgf:rename>
-    <nonterminal>
-      <from>AmbiguousName</from>
-      <to>Name</to>
-    </nonterminal>
-  </xbgf:rename>
-
   <!-- further explored in refactorExpressions -->
   <xbgf:rename>
     <nonterminal>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- modifiers -->
+	<exbgf:uniteMany>
+		<add>ClassModifier</add>
+		<add>InterfaceModifier</add>
+		<add>ConstructorModifier</add>
+		<add>AbstractMethodModifier</add>
+		<add>MethodModifier</add>
+		<add>FieldModifier</add>
+		<add>ConstantModifier</add>
+		<yield>Modifier</yield>
+	</exbgf:uniteMany>
+	<exbgf:uniteMany>
+		<add>ClassModifiers</add>
+		<add>InterfaceModifiers</add>
+		<add>ConstructorModifiers</add>
+		<add>AbstractMethodModifiers</add>
+		<add>MethodModifiers</add>
+		<add>FieldModifiers</add>
+		<add>ConstantModifiers</add>
+		<yield>Modifiers</yield>
+	</exbgf:uniteMany>
+	<!--
+	  MethodName is defined as:
+	     Identifier
+	     AmbiguousName "." Identifier
+	  TypeName is defined as:
+	     Identifier
+	     PackageOrTypeName "." Identifier
+	  PackageName is defined as:
+	     Identifier
+	     PackageName "." Identifier
+	  AmbiguousName is defined as:
+	     Identifier
+	     AmbiguousName "." Identifier
+	  ExpressionName is defined as:
+	     Identifier
+	     AmbiguousName "." Identifier
+
+	vs
+
+	  QualifiedIdentifier is defined as:
+	     Identifier { "." Identifier }
+	-->
+	<exbgf:uniteMany>
+		<add>AmbiguousName</add>
+		<add>MethodName</add>
+		<add>TypeName</add>
+		<add>PackageName</add>
+		<add>ExpressionName</add>
+		<yield>Name</yield>
+	</exbgf:uniteMany>
+</exbgf:sequence>

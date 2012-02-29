@@ -3,6 +3,8 @@
   xmlns:bgf="http://planet-sl.org/bgf"
   xmlns:xbgf="http://planet-sl.org/xbgf">
 
+  <xbgf:deyaccify><nonterminal>Name</nonterminal></xbgf:deyaccify>
+
   <!-- 
    - Fail: ClassOrInterfaceType.
       - [], ;([n(ClassType), n(InterfaceType)])

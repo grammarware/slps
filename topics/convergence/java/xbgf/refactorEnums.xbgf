@@ -33,6 +33,12 @@
      vs.
       - [], ,([*(n(Modifier)), t(enum), n(Identifier), ?(,([t(implements), n(TypeList)])), n(EnumBody)])
   -->
+<xbgf:unfold>
+	<nonterminal>ModifiersOpt</nonterminal>
+	<in>
+		<nonterminal>EnumDeclaration</nonterminal>
+	</in>
+</xbgf:unfold>
   <!-- RELAXATION -->
   <xbgf:disappear>
     <bgf:production>
@@ -42,11 +48,11 @@
           <bgf:expression>
             <marked>
               <bgf:expression>
-                <optional>
+                <star>
                   <bgf:expression>
-                    <nonterminal>Modifiers</nonterminal>
+                    <nonterminal>Modifier</nonterminal>
                   </bgf:expression>
-                </optional>
+                </star>
               </bgf:expression>
             </marked>
           </bgf:expression>
