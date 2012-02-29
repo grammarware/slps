@@ -514,6 +514,13 @@
 					</link>
 				</source>
 				<toolset ref="lll"/>
+				<toolset>
+					<name>Post-extraction</name>
+					<link>
+						<xbgf>cs/csharp-ecma-334-1-post-extract</xbgf>
+						<name>post-extract</name>
+					</link>
+				</toolset>
 			</grammar>
 			<grammar>
 				<name>Extracted</name>
