@@ -1,0 +1,21 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+cd `dirname $2`
+WHERE=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 3 ]; then
+    echo "Processes Extended XBGF and generates normal XBGF."
+    echo "Usage: exbgf2xbgf <input-exbgf-document> <input-bgf-grammar> <output-xbgf-document>"
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+else
+	xsltproc --stringparam bgf ${WHERE}/$2 ${SLPS}/shared/xsl/exbgf2xbgf.xslt $1 > $3
+fi

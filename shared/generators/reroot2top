@@ -8,7 +8,7 @@ SLPS=${PWD}
 cd ${LOCAL1}
 
 if [ $# -ne 2 ]; then
-	echo "Usage: reroot2top <BGF-input> <XBGF-input>"
+	echo "Usage: reroot2top <BGF-input> <XBGF-output>"
 	exit 1
 elif [ ! -r $1 ]; then
 	echo "Oops: $1 not found or not readable."
