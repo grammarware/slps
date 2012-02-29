@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:bgf="http://planet-sl.org/bgf">
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
 	<xbgf:rename>
 		<nonterminal>
 			<from>using-directive-insides</from>
@@ -9,16 +9,11 @@
 	<xbgf:undefine>
 		<nonterminal>not-semicolon</nonterminal>
 	</xbgf:undefine>
-	<xbgf:rename>
-		<nonterminal>
-			<from>global-attribute-section-insides</from>
-			<to>not-right-square-bracket</to>
-		</nonterminal>
-	</xbgf:rename>
-	<xbgf:unite>
+	<exbgf:uniteMany>
+		<add>global-attribute-section-insides</add>
 		<add>attribute-section-insides</add>
-		<to>not-right-square-bracket</to>
-	</xbgf:unite>
+		<yield>not-right-square-bracket</yield>
+	</exbgf:uniteMany>
 	<xbgf:undefine>
 		<nonterminal>not-right-square-bracket</nonterminal>
 	</xbgf:undefine>
@@ -205,51 +200,27 @@
 	<xbgf:horizontal>
 		<nonterminal>namespace-member-declaration</nonterminal>
 	</xbgf:horizontal>
-	<xbgf:rename>
-		<nonterminal>
-			<from>class-base</from>
-			<to>not-left-curly</to>
-		</nonterminal>
-	</xbgf:rename>
-	<xbgf:unite>
+	<exbgf:uniteMany>
+		<add>class-base</add>
 		<add>struct-interfaces</add>
-		<to>not-left-curly</to>
-	</xbgf:unite>
-	<xbgf:unite>
 		<add>interface-base</add>
-		<to>not-left-curly</to>
-	</xbgf:unite>
-	<xbgf:unite>
 		<add>enum-base</add>
-		<to>not-left-curly</to>
-	</xbgf:unite>
+		<yield>not-left-curly</yield>
+	</exbgf:uniteMany>
 	<xbgf:undefine>
 		<nonterminal>not-left-curly</nonterminal>
 	</xbgf:undefine>
-	<xbgf:rename>
-		<nonterminal>
-			<from>namespace-body-insides</from>
-			<to>not-right-curly</to>
-		</nonterminal>
-	</xbgf:rename>
-	<xbgf:unite>
-		<add>class-member-declarations</add>
-		<to>not-right-curly</to>
-	</xbgf:unite>
-	<xbgf:unite>
-		<add>struct-member-declarations</add>
-		<to>not-right-curly</to>
-	</xbgf:unite>
-	<xbgf:unite>
-		<add>interface-member-declarations</add>
-		<to>not-right-curly</to>
-	</xbgf:unite>
-	<xbgf:unite>
+	<exbgf:uniteMany>
 		<add>enum-body-insides</add>
-		<to>not-right-curly</to>
-	</xbgf:unite>
+		<add>namespace-body-insides</add>
+		<add>class-member-declarations</add>
+		<add>struct-member-declarations</add>
+		<add>interface-member-declarations</add>
+		<add>enum-member-declarations</add>
+		<yield>balanced-curlies</yield>
+	</exbgf:uniteMany>
 	<xbgf:undefine>
-		<nonterminal>not-right-curly</nonterminal>
+		<nonterminal>balanced-curlies</nonterminal>
 	</xbgf:undefine>
 	<xbgf:rename>
 		<nonterminal>
@@ -260,20 +231,12 @@
 	<xbgf:undefine>
 		<nonterminal>not-right-parenthesis</nonterminal>
 	</xbgf:undefine>
-	<xbgf:rename>
-		<nonterminal>
-			<from>qualified-identifier</from>
-			<to>not-whitespace</to>
-		</nonterminal>
-	</xbgf:rename>
-	<xbgf:unite>
+	<exbgf:uniteMany>
+		<add>qualified-identifier</add>
 		<add>identifier</add>
-		<to>not-whitespace</to>
-	</xbgf:unite>
-	<xbgf:unite>
 		<add>type</add>
-		<to>not-whitespace</to>
-	</xbgf:unite>
+		<yield>not-whitespace</yield>
+	</exbgf:uniteMany>
 	<xbgf:undefine>
 		<nonterminal>not-whitespace</nonterminal>
 	</xbgf:undefine>
@@ -292,34 +255,18 @@
 			<nonterminal>namespace-member-declaration</nonterminal>
 		</in>
 	</xbgf:widen>
-	<xbgf:massage>
-		<bgf:expression>
-			<optional>
-				<bgf:expression>
-					<optional>
-						<bgf:expression>
-							<terminal>;</terminal>
-						</bgf:expression>
-					</optional>
-				</bgf:expression>
-			</optional>
-		</bgf:expression>
-		<bgf:expression>
-			<optional>
-				<bgf:expression>
-					<terminal>;</terminal>
-				</bgf:expression>
-			</optional>
-		</bgf:expression>
-	</xbgf:massage>
+	<exbgf:massageDouble>
+		<optional/>
+		<terminal>;</terminal>
+	</exbgf:massageDouble>
 	<xbgf:widen>
 		<bgf:expression>
-			<nonterminal>not-right-curly</nonterminal>
+			<nonterminal>balanced-curlies</nonterminal>
 		</bgf:expression>
 		<bgf:expression>
 			<optional>
 				<bgf:expression>
-					<nonterminal>not-right-curly</nonterminal>
+					<nonterminal>balanced-curlies</nonterminal>
 				</bgf:expression>
 			</optional>
 		</bgf:expression>
@@ -327,26 +274,10 @@
 			<nonterminal>namespace-member-declaration</nonterminal>
 		</in>
 	</xbgf:widen>
-	<xbgf:massage>
-		<bgf:expression>
-			<optional>
-				<bgf:expression>
-					<optional>
-						<bgf:expression>
-							<nonterminal>not-right-curly</nonterminal>
-						</bgf:expression>
-					</optional>
-				</bgf:expression>
-			</optional>
-		</bgf:expression>
-		<bgf:expression>
-			<optional>
-				<bgf:expression>
-					<nonterminal>not-right-curly</nonterminal>
-				</bgf:expression>
-			</optional>
-		</bgf:expression>
-	</xbgf:massage>
+	<exbgf:massageDouble>
+		<optional/>
+		<nonterminal>balanced-curlies</nonterminal>
+	</exbgf:massageDouble>
 	<xbgf:factor>
 		<bgf:expression>
 			<choice>
@@ -395,7 +326,7 @@
 						<bgf:expression>
 							<optional>
 								<bgf:expression>
-									<nonterminal>not-right-curly</nonterminal>
+									<nonterminal>balanced-curlies</nonterminal>
 								</bgf:expression>
 							</optional>
 						</bgf:expression>
@@ -456,7 +387,7 @@
 						<bgf:expression>
 							<optional>
 								<bgf:expression>
-									<nonterminal>not-right-curly</nonterminal>
+									<nonterminal>balanced-curlies</nonterminal>
 								</bgf:expression>
 							</optional>
 						</bgf:expression>
@@ -517,7 +448,7 @@
 						<bgf:expression>
 							<optional>
 								<bgf:expression>
-									<nonterminal>not-right-curly</nonterminal>
+									<nonterminal>balanced-curlies</nonterminal>
 								</bgf:expression>
 							</optional>
 						</bgf:expression>
@@ -578,7 +509,7 @@
 						<bgf:expression>
 							<optional>
 								<bgf:expression>
-									<nonterminal>not-right-curly</nonterminal>
+									<nonterminal>balanced-curlies</nonterminal>
 								</bgf:expression>
 							</optional>
 						</bgf:expression>
@@ -639,7 +570,7 @@
 						<bgf:expression>
 							<optional>
 								<bgf:expression>
-									<nonterminal>not-right-curly</nonterminal>
+									<nonterminal>balanced-curlies</nonterminal>
 								</bgf:expression>
 							</optional>
 						</bgf:expression>
@@ -779,7 +710,7 @@
 								<bgf:expression>
 									<optional>
 										<bgf:expression>
-											<nonterminal>not-right-curly</nonterminal>
+											<nonterminal>balanced-curlies</nonterminal>
 										</bgf:expression>
 									</optional>
 								</bgf:expression>
@@ -876,7 +807,7 @@
 							<bgf:expression>
 								<optional>
 									<bgf:expression>
-										<nonterminal>not-right-curly</nonterminal>
+										<nonterminal>balanced-curlies</nonterminal>
 									</bgf:expression>
 								</optional>
 							</bgf:expression>
@@ -915,4 +846,4 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:extract>
-</xbgf:sequence>
+</exbgf:sequence>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:bgf="http://planet-sl.org/bgf">
+	<xbgf:rename>
+		<nonterminal>
+			<from>Name</from>
+			<to>NotWhitespace</to>
+		</nonterminal>
+	</xbgf:rename>
+	<xbgf:rename>
+		<nonterminal>
+			<from>Expr</from>
+			<to>NotNewline</to>
+		</nonterminal>
+	</xbgf:rename>
+	<xbgf:undefine>
+		<nonterminal>NotNewline</nonterminal>
+	</xbgf:undefine>
+</xbgf:sequence>

@@ -1,34 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:bgf="http://planet-sl.org/bgf">
-	<xbgf:vertical>
-		<nonterminal>using-directives</nonterminal>
-	</xbgf:vertical>
-	<xbgf:deyaccify>
-		<nonterminal>using-directives</nonterminal>
-	</xbgf:deyaccify>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<exbgf:deyaccifyH>using-directives</exbgf:deyaccifyH>
 	<xbgf:inline>using-directives</xbgf:inline>
 	<xbgf:inline>using-alias-directive</xbgf:inline>
 	<xbgf:inline>using-namespace-directive</xbgf:inline>
-	<xbgf:massage>
-		<bgf:expression>
-			<optional>
-				<bgf:expression>
-					<plus>
-						<bgf:expression>
-							<nonterminal>using-directive</nonterminal>
-						</bgf:expression>
-					</plus>
-				</bgf:expression>
-			</optional>
-		</bgf:expression>
-		<bgf:expression>
-			<star>
-				<bgf:expression>
-					<nonterminal>using-directive</nonterminal>
-				</bgf:expression>
-			</star>
-		</bgf:expression>
-	</xbgf:massage>
+	<exbgf:massageOP2S>
+		<nonterminal>using-directive</nonterminal>
+	</exbgf:massageOP2S>
 	<xbgf:factor>
 		<bgf:expression>
 			<choice>
@@ -127,4 +105,4 @@
 		</bgf:production>
 	</xbgf:extract>
 	<xbgf:inline>using-directive</xbgf:inline>
-</xbgf:sequence>
+</exbgf:sequence>

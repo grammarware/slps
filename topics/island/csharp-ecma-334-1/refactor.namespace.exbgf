@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:bgf="http://planet-sl.org/bgf">
-	<xbgf:vertical>
-		<nonterminal>namespace-member-declarations</nonterminal>
-	</xbgf:vertical>
-	<xbgf:deyaccify>
-		<nonterminal>namespace-member-declarations</nonterminal>
-	</xbgf:deyaccify>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<exbgf:deyaccifyH>namespace-member-declarations</exbgf:deyaccifyH>
 	<xbgf:inline>namespace-declaration</xbgf:inline>
 	<xbgf:inline>type-declaration</xbgf:inline>
 	<xbgf:inline>namespace-member-declarations</xbgf:inline>
@@ -14,106 +9,28 @@
 	<xbgf:inline>interface-declaration</xbgf:inline>
 	<xbgf:inline>enum-declaration</xbgf:inline>
 	<xbgf:inline>delegate-declaration</xbgf:inline>
-	<xbgf:massage>
-		<bgf:expression>
-			<optional>
-				<bgf:expression>
-					<plus>
-						<bgf:expression>
-							<nonterminal>namespace-member-declaration</nonterminal>
-						</bgf:expression>
-					</plus>
-				</bgf:expression>
-			</optional>
-		</bgf:expression>
-		<bgf:expression>
-			<star>
-				<bgf:expression>
-					<nonterminal>namespace-member-declaration</nonterminal>
-				</bgf:expression>
-			</star>
-		</bgf:expression>
-	</xbgf:massage>
-	<xbgf:vertical>
-		<nonterminal>attribute-sections</nonterminal>
-	</xbgf:vertical>
-	<xbgf:deyaccify>
-		<nonterminal>attribute-sections</nonterminal>
-	</xbgf:deyaccify>
+	<exbgf:massageOP2S>
+		<nonterminal>namespace-member-declaration</nonterminal>
+	</exbgf:massageOP2S>
+	<exbgf:deyaccifyH>attribute-sections</exbgf:deyaccifyH>
 	<xbgf:inline>attribute-sections</xbgf:inline>
 	<xbgf:inline>attributes</xbgf:inline>
-	<xbgf:massage>
-		<bgf:expression>
-			<optional>
-				<bgf:expression>
-					<plus>
-						<bgf:expression>
-							<nonterminal>attribute-section</nonterminal>
-						</bgf:expression>
-					</plus>
-				</bgf:expression>
-			</optional>
-		</bgf:expression>
-		<bgf:expression>
-			<star>
-				<bgf:expression>
-					<nonterminal>attribute-section</nonterminal>
-				</bgf:expression>
-			</star>
-		</bgf:expression>
-	</xbgf:massage>
-	<xbgf:vertical>
-		<nonterminal>class-modifiers</nonterminal>
-	</xbgf:vertical>
-	<xbgf:deyaccify>
-		<nonterminal>class-modifiers</nonterminal>
-	</xbgf:deyaccify>
-	<xbgf:vertical>
-		<nonterminal>struct-modifiers</nonterminal>
-	</xbgf:vertical>
-	<xbgf:deyaccify>
-		<nonterminal>struct-modifiers</nonterminal>
-	</xbgf:deyaccify>
-	<xbgf:vertical>
-		<nonterminal>interface-modifiers</nonterminal>
-	</xbgf:vertical>
-	<xbgf:deyaccify>
-		<nonterminal>interface-modifiers</nonterminal>
-	</xbgf:deyaccify>
-	<xbgf:vertical>
-		<nonterminal>enum-modifiers</nonterminal>
-	</xbgf:vertical>
-	<xbgf:deyaccify>
-		<nonterminal>enum-modifiers</nonterminal>
-	</xbgf:deyaccify>
-	<xbgf:vertical>
-		<nonterminal>delegate-modifiers</nonterminal>
-	</xbgf:vertical>
-	<xbgf:deyaccify>
-		<nonterminal>delegate-modifiers</nonterminal>
-	</xbgf:deyaccify>
-	<xbgf:rename>
-		<nonterminal>
-			<from>class-modifier</from>
-			<to>modifier</to>
-		</nonterminal>
-	</xbgf:rename>
-	<xbgf:unite>
+	<exbgf:massageOP2S>
+		<nonterminal>attribute-section</nonterminal>
+	</exbgf:massageOP2S>
+	<exbgf:deyaccifyH>class-modifiers</exbgf:deyaccifyH>
+	<exbgf:deyaccifyH>struct-modifiers</exbgf:deyaccifyH>
+	<exbgf:deyaccifyH>interface-modifiers</exbgf:deyaccifyH>
+	<exbgf:deyaccifyH>enum-modifiers</exbgf:deyaccifyH>
+	<exbgf:deyaccifyH>delegate-modifiers</exbgf:deyaccifyH>
+	<exbgf:uniteMany>
+		<add>class-modifier</add>
 		<add>struct-modifier</add>
-		<to>modifier</to>
-	</xbgf:unite>
-	<xbgf:unite>
 		<add>interface-modifier</add>
-		<to>modifier</to>
-	</xbgf:unite>
-	<xbgf:unite>
 		<add>enum-modifier</add>
-		<to>modifier</to>
-	</xbgf:unite>
-	<xbgf:unite>
 		<add>delegate-modifier</add>
-		<to>modifier</to>
-	</xbgf:unite>
+		<yield>modifier</yield>
+	</exbgf:uniteMany>
 	<xbgf:horizontal>
 		<nonterminal>modifier</nonterminal>
 	</xbgf:horizontal>
@@ -122,26 +39,9 @@
 	<xbgf:inline>interface-modifiers</xbgf:inline>
 	<xbgf:inline>enum-modifiers</xbgf:inline>
 	<xbgf:inline>delegate-modifiers</xbgf:inline>
-	<xbgf:massage>
-		<bgf:expression>
-			<optional>
-				<bgf:expression>
-					<plus>
-						<bgf:expression>
-							<nonterminal>modifier</nonterminal>
-						</bgf:expression>
-					</plus>
-				</bgf:expression>
-			</optional>
-		</bgf:expression>
-		<bgf:expression>
-			<star>
-				<bgf:expression>
-					<nonterminal>modifier</nonterminal>
-				</bgf:expression>
-			</star>
-		</bgf:expression>
-	</xbgf:massage>
+	<exbgf:massageOP2S>
+		<nonterminal>modifier</nonterminal>
+	</exbgf:massageOP2S>
 	<xbgf:factor>
 		<bgf:expression>
 			<choice>
@@ -419,4 +319,4 @@
 		</bgf:production>
 	</xbgf:extract>
 	<xbgf:inline>namespace-body</xbgf:inline>
-</xbgf:sequence>
+</exbgf:sequence>
