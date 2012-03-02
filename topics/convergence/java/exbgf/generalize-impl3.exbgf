@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- ISSUE PERMISSIVENESS
+   - Fail: ElementValue.
+      - [], ;([n(ConditionalExpression), n(Annotation), n(ElementValueArrayInitializer)])
+     vs.
+      - [], ;([n(Expression1), n(Annotation), n(ElementValueArrayInitializer)])
+      
+Later should be a massage (AB|AB?)->AB?
+
+  -->
+	<!-- RELAXATION -->
+	<xbgf:unite>
+		<add>ConditionalExpression</add>
+		<to>Expression1</to>
+	</xbgf:unite>
+	<exbgf:massageO2C>
+		<nonterminal>Expression1Rest</nonterminal>
+	</exbgf:massageO2C>
+	<exbgf:distributeV>Expression1</exbgf:distributeV>
+	<xbgf:factor>
+		<bgf:expression>
+			<choice>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>Expression2</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>Expression1Rest</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>Expression2</nonterminal>
+				</bgf:expression>
+			</choice>
+		</bgf:expression>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>Expression2</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<choice>
+						<bgf:expression>
+							<nonterminal>Expression1Rest</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<epsilon/>
+						</bgf:expression>
+					</choice>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</xbgf:factor>
+	<exbgf:massageC2O>
+		<nonterminal>Expression1Rest</nonterminal>
+	</exbgf:massageC2O>
+</exbgf:sequence>

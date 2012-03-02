@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- unites in refactorTypes -->
+	<exbgf:renameN>
+		<from>PrimitiveType</from>
+		<to>BasicType</to>
+	</exbgf:renameN>
+	<exbgf:renameN>
+		<from>InterfaceTypeList</from>
+		<to>TypeList</to>
+	</exbgf:renameN>
+	<exbgf:renameN>
+		<from>ActualTypeArgument</from>
+		<to>TypeArgument</to>
+	</exbgf:renameN>
+	<!-- further explored in refactorExpressions -->
+	<exbgf:renameN>
+		<from>ConditionalExpression</from>
+		<to>Expression1</to>
+	</exbgf:renameN>
+	<exbgf:renameN>
+		<from>ConditionalOrExpression</from>
+		<to>Expression2</to>
+	</exbgf:renameN>
+	<exbgf:renameN>
+		<from>UnaryExpression</from>
+		<to>Expression3</to>
+	</exbgf:renameN>
+	<!-- needed for refactorInterfaces -->
+	<exbgf:renameN>
+		<from>InterfaceMemberDeclaration</from>
+		<to>InterfaceBodyDeclaration</to>
+	</exbgf:renameN>
+</exbgf:sequence>

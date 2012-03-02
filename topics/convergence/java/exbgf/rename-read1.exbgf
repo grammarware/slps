@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- further explored in refactorExpressions -->
+	<exbgf:renameN>
+		<from>AssignmentExpression</from>
+		<to>Expression1</to>
+	</exbgf:renameN>
+	<exbgf:renameN>
+		<from>ConditionalOrExpression</from>
+		<to>Expression2</to>
+	</exbgf:renameN>
+	<exbgf:renameN>
+		<from>UnaryExpression</from>
+		<to>Expression3</to>
+	</exbgf:renameN>
+</exbgf:sequence>

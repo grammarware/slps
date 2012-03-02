@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- ISSUE PERMISSIVENESS
+  (LocalVariableDeclaration as ForInit -> is a part of ForVarControl)
+   - Fail: ForInit.
+      - [], ,([?(t(final)), n(Type), n(VariableDeclarators)])
+  -->
+	<!-- RELAXATION -->
+	<exbgf:removeV>
+		<bgf:production>
+			<nonterminal>ForInit</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<terminal>final</terminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>VariableDeclarators</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:removeV>
+	<!-- 
+   - Fail: Statement.
+      - [], ,([t(for), t((), ?(n(ForInit)), t((;)), ?(n(Expression)), t((;)), ?(n(ForUpdate)), t()), n(Statement)])
+      - [], n(ExpressionStatement)
+     vs.
+      - [], ,([n(StatementExpression), t((;))])
+      - [], ,([t(for), t((), n(ForControl), t()), n(Statement)])
+      - [], ,([t(assert), n(Expression), ?(,([t(:), n(Expression)])), t((;))])
+  -->
+	<!-- 
+   - Fail: Statement.
+      - [], n(ExpressionStatement)
+     vs.
+      - [], ,([n(StatementExpression), t((;))])
+  -->
+	<xbgf:inline>ExpressionStatement</xbgf:inline>
+	<!-- ISSUE EXTEND 
+   - Fail: Statement.
+      - [], ,([t(for), t((), ?(n(ForInit)), t((;)), ?(n(Expression)), t((;)), ?(n(ForUpdate)), t()), n(Statement)])
+     vs.
+      - [], ,([t(for), t((), n(ForControl), t()), n(Statement)])
+   - Fail: ForControl.
+      - [], ,([?(n(ForInit)), t((;)), ?(n(Expression)), t((;)), ?(n(ForUpdate))])
+     vs.
+      - [], ,([n(ForInit), t((;)), ?(n(Expression)), t((;)), ?(n(ForUpdate))])
+      - [], n(ForVarControl)
+  -->
+	<xbgf:extract>
+		<bgf:production>
+			<nonterminal>ForControl</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>ForInit</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>;</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>Expression</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>;</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>ForUpdate</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:extract>
+	<!-- EXTENSION -->
+	<exbgf:narrowO21>
+		<nonterminal>ForInit</nonterminal>
+	</exbgf:narrowO21>
+	<xbgf:introduce>
+		<bgf:production>
+			<nonterminal>VariableDeclaratorsRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>VariableDeclaratorRest</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<star>
+							<bgf:expression>
+								<sequence>
+									<bgf:expression>
+										<terminal>,</terminal>
+									</bgf:expression>
+									<bgf:expression>
+										<nonterminal>VariableDeclarator</nonterminal>
+									</bgf:expression>
+								</sequence>
+							</bgf:expression>
+						</star>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:introduce>
+	<xbgf:introduce>
+		<bgf:production>
+			<nonterminal>ForVarControlRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>VariableDeclaratorsRest</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>;</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>Expression</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>;</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>ForUpdate</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+		<bgf:production>
+			<nonterminal>ForVarControlRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>:</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Expression</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:introduce>
+	<xbgf:introduce>
+		<bgf:production>
+			<nonterminal>ForVarControl</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<terminal>final</terminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>Annotations</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>ForVarControlRest</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:introduce>
+	<!-- EXTENSION -->
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>ForControl</nonterminal>
+			<bgf:expression>
+				<nonterminal>ForVarControl</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND
+   - Fail: Statement.
+     vs.
+      - [], ,([t(assert), n(Expression), ?(,([t(:), n(Expression)])), t((;))])
+  -->
+	<!-- EXTENSION -->
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>Statement</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>assert</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Expression</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<sequence>
+									<bgf:expression>
+										<terminal>:</terminal>
+									</bgf:expression>
+									<bgf:expression>
+										<nonterminal>Expression</nonterminal>
+									</bgf:expression>
+								</sequence>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>;</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+</exbgf:sequence>

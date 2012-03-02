@@ -322,7 +322,7 @@ def runTransforms(cut,current,whichtypes):
     continue
    if a in autoactions.keys():
     #print 'Automated action',a,'spotted!
-    run = automethods[autoactions[a]]+' bgf/'+current.bgfFileName()+' xbgf/'+a+'.xbgf'
+    run = automethods[autoactions[a]]+' bgf/'+current.bgfFileName()+' '+tools['extension']+'/'+a+'.'+tools['extension']
     writeLog(run)
     if os.system(run+shutup):
      problem = True
@@ -330,9 +330,9 @@ def runTransforms(cut,current,whichtypes):
      ontheroll = False
     else:
      print '[PASS]',
-    print 'Generated',ttype[a],a+'.xbgf','from',current.bgfFileName()
+    print 'Generated',ttype[a],a+'.'+tools['extension'],'from',current.bgfFileName()
     if ontheroll:
-     run = tools['transformer']+' xbgf/'+a+'.xbgf bgf/'+current.bgfFileName()+' bgf/'+current.futureBgfFileName(a)
+     run = tools['transformer']+' '+tools['extension']+'/'+a+'.'+tools['extension']+' bgf/'+current.bgfFileName()+' bgf/'+current.futureBgfFileName(a)
      writeLog(run)
      if os.system(run+shutup):
       problem = True
@@ -342,10 +342,10 @@ def runTransforms(cut,current,whichtypes):
       ontheroll = False
      else:
       print '[PASS]',
-     print 'Applied generated',a+'.xbgf','to',current.bgfFileName()
+     print 'Applied generated',a+'.'+tools['extension'],'to',current.bgfFileName()
    else:
     #??? 
-    run = tools['transformer']+' xbgf/'+a+'.xbgf bgf/'+current.bgfFileName()+' bgf/'+current.futureBgfFileName(a)
+    run = tools['transformer']+' '+tools['extension']+'/'+a+'.'+tools['extension']+' bgf/'+current.bgfFileName()+' bgf/'+current.futureBgfFileName(a)
     writeLog(run)
     if os.system(run+shutup):
      problem = True
@@ -355,7 +355,7 @@ def runTransforms(cut,current,whichtypes):
      ontheroll = False
     else:
      print '[PASS]',
-    print 'Applied',ttype[a].replace('-',' '),a+'.xbgf','to',current.bgfFileName()
+    print 'Applied',ttype[a].replace('-',' '),a+'.'+tools['extension'],'to',current.bgfFileName()
   else:
    failed.append(current[:])
    failed[-1].append(a)
@@ -459,7 +459,7 @@ def chainXBTF(testcase,steps,t):
   else:
    # name it as input.transformationName.btf
    re = '.'.join(fr.split('.')[:-1])+'.'+step+'.btf'
-  run = treeTools['transformer']+' xbgf/'+step+'.xbgf '+fr+' '+re
+  run = treeTools['transformer']+' '+tools['extension']+'/'+step+'.'+tools['extension']+' '+fr+' '+re
   writeLog(run)
   #print 'Performing coupled',step,'on',fr,'-',
   if os.system(run+shutup):
@@ -583,7 +583,7 @@ def checkConsistency():
  try:
   for a in actions:
    if a not in autoactions.keys():
-    open('xbgf/'+a+'.xbgf','r').close()
+    open(tools['extension']+'/'+a+'.'+tools['extension'],'r').close()
  except IOError, e:
   print '[FAIL] Undefined action used: need',e.filename
   #sysexit(8)
@@ -594,10 +594,12 @@ def checkConsistency():
    sysexit(18)
 
 if __name__ == "__main__":
- print 'Language Covergence Infrastructure v1.17'
+ print 'Language Covergence Infrastructure v1.18'
  if len(sys.argv) == 3:
   log = open(sys.argv[1].split('.')[0]+'.log','w')
   readConfiguration(sys.argv[1])
+  if 'extension' not in tools.keys():
+   tools['extension'] = 'xbgf'
   checkConsistency()
   makeGraph()
   extractAll()
@@ -613,7 +615,7 @@ if __name__ == "__main__":
    print '[WARN] No testing performed.'
   # DEBUG - no diagram
   dumpGraph(sys.argv[2])
-  #print '[WARN] Diagram generation disabled.'
+  # print '[WARN] Diagram generation disabled.'
   if problem:
    sysexit(100)
   log.close()

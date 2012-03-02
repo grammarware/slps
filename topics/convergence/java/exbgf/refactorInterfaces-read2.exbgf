@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!--
+  Expressions in the syntax appendix look like this:
+  
+  InterfaceDeclaration is defined as:
+     "interface" Identifier [ "extends" TypeList ] InterfaceBody
+  InterfaceBody is defined as:
+     "{" { InterfaceBodyDeclaration } "}"
+  InterfaceBodyDeclaration is defined as:
+     ";"
+     ModifiersOpt InterfaceMemberDecl
+  InterfaceMemberDecl is defined as:
+     InterfaceMethodOrFieldDecl
+     "void" Identifier VoidInterfaceMethodDeclaratorRest
+     ClassOrInterfaceDeclaration
+  InterfaceMethodOrFieldDecl is defined as:
+     Type Identifier InterfaceMethodOrFieldRest
+  InterfaceMethodOrFieldRest is defined as:
+     ConstantDeclaratorsRest ";"
+     InterfaceMethodDeclaratorRest
+  ConstantDeclaratorsRest is defined as:
+     ConstantDeclaratorRest { "," ConstantDeclarator }
+  InterfaceMethodDeclaratorRest is defined as:
+     FormalParameters BracketsOpt [ "throws" QualifiedIdentifierList ] ";"
+  VoidInterfaceMethodDeclaratorRest is defined as:
+     FormalParameters [ "throws" QualifiedIdentifierList ] ";"
+
+
+  While in the text of the spec it is yaccified:
+
+  InterfaceDeclaration is defined as:
+     [ InterfaceModifiers ] "interface" Identifier [ ExtendsInterfaces ] InterfaceBody
+  ExtendsInterfaces is defined as:
+     "extends" InterfaceType
+     ExtendsInterfaces "," InterfaceType
+  InterfaceBody is defined as:
+     { [ InterfaceMemberDeclarations ] }
+  InterfaceMemberDeclarations is defined as:
+     InterfaceMemberDeclaration
+     InterfaceMemberDeclarations InterfaceMemberDeclaration
+  InterfaceMemberDeclaration is defined as:
+     ConstantDeclaration
+     AbstractMethodDeclaration
+     ClassDeclaration
+     InterfaceDeclaration
+     ";"
+  ConstantDeclaration is defined as:
+     [ ConstantModifiers ] Type VariableDeclarators
+  AbstractMethodDeclaration is defined as:
+     [ AbstractMethodModifiers ] ResultType MethodDeclarator [ Throws ] ";"
+  MethodDeclarator is defined as:
+     Identifier "(" [ FormalParameterList ] ")"
+  -->
+	<!--  
+   - Fail: InterfaceDeclaration.
+      - [], ,([t(interface), n(Identifier), ?(,([t(extends), n(TypeList)])), n(InterfaceBody)])
+     vs.
+      - [], ,([n(ModifiersOpt), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
+  -->
+	<xbgf:unfold>
+		<nonterminal>ModifiersOpt</nonterminal>
+		<in>
+			<nonterminal>InterfaceDeclaration</nonterminal>
+		</in>
+	</xbgf:unfold>
+	<!-- RELAXATION -->
+	<xbgf:disappear>
+		<bgf:production>
+			<nonterminal>InterfaceDeclaration</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<star>
+									<bgf:expression>
+										<nonterminal>Modifier</nonterminal>
+									</bgf:expression>
+								</star>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>interface</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>ExtendsInterfaces</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>InterfaceBody</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:disappear>
+	<!-- TODO: weird case of exbgf:inlineY with a fold in between -->
+	<xbgf:deyaccify>
+		<nonterminal>ExtendsInterfaces</nonterminal>
+	</xbgf:deyaccify>
+	<xbgf:fold>
+		<nonterminal>TypeList</nonterminal>
+		<in>
+			<nonterminal>ExtendsInterfaces</nonterminal>
+		</in>
+	</xbgf:fold>
+	<xbgf:inline>ExtendsInterfaces</xbgf:inline>
+	<!-- 
+   - Fail: InterfaceBody.
+      - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
+     vs.
+      - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
+  -->
+	<exbgf:inlineY>InterfaceMemberDeclarations</exbgf:inlineY>
+	<exbgf:massageOP2S>
+		<nonterminal>InterfaceBodyDeclaration</nonterminal>
+	</exbgf:massageOP2S>
+	<!-- 
+   - Fail: InterfaceBodyDeclaration.
+      - [], ;([t((;)), ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
+     vs.
+      - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration), n(ClassOrInterfaceDeclaration), t((;))])
+  -->
+	<xbgf:inline>ConstantDeclaration</xbgf:inline>
+	<xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
+	<!-- this one already had modifiers introduced by earlier transformations -->
+	<xbgf:appear>
+		<bgf:production>
+			<nonterminal>InterfaceBodyDeclaration</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<star>
+									<bgf:expression>
+										<nonterminal>Modifier</nonterminal>
+									</bgf:expression>
+								</star>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:appear>
+	<xbgf:fold>
+		<nonterminal>ModifiersOpt</nonterminal>
+		<in>
+			<nonterminal>InterfaceBodyDeclaration</nonterminal>
+		</in>
+	</xbgf:fold>
+	<exbgf:distributeH>InterfaceBodyDeclaration</exbgf:distributeH>
+	<!-- Serious lack of everything -->
+	<!-- RELAXATION -->
+	<!-- TODO: why are we dumping ConstantDeclaration??? -->
+	<exbgf:removeV>
+		<bgf:production>
+			<nonterminal>InterfaceBodyDeclaration</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>ModifiersOpt</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>VariableDeclarators</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:removeV>
+	<!-- 
+   - Fail: InterfaceBodyDeclaration.
+      - [], ;([t((;)), ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
+     vs.
+      - [], t((;))
+      - [], ,([n(ModifiersOpt), n(ClassOrInterfaceDeclaration)])
+      - [], ,([n(ModifiersOpt), t(void), n(Identifier), n(FormalParameters), ?(,([t(throws), n(TypeList)])), t((;))])
+      - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(FormalParameters), ?(,([t(throws), n(TypeList)])), t((;))])
+      - [], ,([n(ModifiersOpt), n(Type), n(VariableDeclarator), *(,([t((,)), n(VariableDeclarator)]))])
+  -->
+	<exbgf:shielded>
+		<entity>
+			<sequence>
+				<bgf:expression>
+					<terminal>void</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>Identifier</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>FormalParameters</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>BracketsOpt</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<optional>
+						<bgf:expression>
+							<nonterminal>Throws</nonterminal>
+						</bgf:expression>
+					</optional>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>;</terminal>
+				</bgf:expression>
+			</sequence>
+		</entity>
+		<xbgf:extract>
+			<bgf:production>
+				<nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>FormalParameters</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>BracketsOpt</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<optional>
+								<bgf:expression>
+									<nonterminal>Throws</nonterminal>
+								</bgf:expression>
+							</optional>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>;</terminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+			<in>
+				<nonterminal>SHIELDED-BY-EXBGF</nonterminal>
+			</in>
+		</xbgf:extract>
+		<xbgf:extract>
+			<bgf:production>
+				<nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>Type</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>Identifier</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>FormalParameters</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>BracketsOpt</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<optional>
+								<bgf:expression>
+									<nonterminal>Throws</nonterminal>
+								</bgf:expression>
+							</optional>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>;</terminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</xbgf:extract>
+		<!--  InterfaceMemberDecl is defined as:
+ InterfaceMethodOrFieldDecl
+ "void" Identifier VoidInterfaceMethodDeclaratorRest
+ ClassOrInterfaceDeclaration
+-->
+		<xbgf:horizontal>
+			<nonterminal>InterfaceBodyDeclaration</nonterminal>
+		</xbgf:horizontal>
+		<xbgf:factor>
+			<bgf:expression>
+				<choice>
+					<bgf:expression>
+						<sequence>
+							<bgf:expression>
+								<nonterminal>ModifiersOpt</nonterminal>
+							</bgf:expression>
+							<bgf:expression>
+								<nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
+							</bgf:expression>
+						</sequence>
+					</bgf:expression>
+					<bgf:expression>
+						<sequence>
+							<bgf:expression>
+								<nonterminal>ModifiersOpt</nonterminal>
+							</bgf:expression>
+							<bgf:expression>
+								<nonterminal>SHIELDED-BY-EXBGF</nonterminal>
+							</bgf:expression>
+						</sequence>
+					</bgf:expression>
+					<bgf:expression>
+						<sequence>
+							<bgf:expression>
+								<nonterminal>ModifiersOpt</nonterminal>
+							</bgf:expression>
+							<bgf:expression>
+								<nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+							</bgf:expression>
+						</sequence>
+					</bgf:expression>
+				</choice>
+			</bgf:expression>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>ModifiersOpt</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<choice>
+							<bgf:expression>
+								<nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
+							</bgf:expression>
+							<bgf:expression>
+								<nonterminal>SHIELDED-BY-EXBGF</nonterminal>
+							</bgf:expression>
+							<bgf:expression>
+								<nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+							</bgf:expression>
+						</choice>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</xbgf:factor>
+		<exbgf:extractC>
+			<bgf:production>
+				<nonterminal>InterfaceMemberDecl</nonterminal>
+				<bgf:expression>
+					<choice>
+						<bgf:expression>
+							<nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>SHIELDED-BY-EXBGF</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+						</bgf:expression>
+					</choice>
+				</bgf:expression>
+			</bgf:production>
+		</exbgf:extractC>
+	</exbgf:shielded>
+	<xbgf:extract>
+		<bgf:production>
+			<nonterminal>InterfaceMethodOrFieldRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>FormalParameters</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>BracketsOpt</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>Throws</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>;</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+		<in>
+			<nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
+		</in>
+	</xbgf:extract>
+	<!-- 
+   - Fail: InterfaceMethodOrFieldRest.
+      - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
+     vs.
+      - [], ,([n(FormalParameters), ?(,([t(throws), n(TypeList)])), t((;))])
+  -->
+	<xbgf:chain>
+		<bgf:production>
+			<nonterminal>InterfaceMethodOrFieldRest</nonterminal>
+			<bgf:expression>
+				<nonterminal>InterfaceMethodDeclaratorRest</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:chain>
+	<!--
+   - Fail: InterfaceMethodOrFieldRest.
+      - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
+     vs.
+      - [], n(InterfaceMethodDeclaratorRest)
+  -->
+	<xbgf:introduce>
+		<bgf:production>
+			<nonterminal>ConstantDeclaratorRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>BracketsOpt</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>=</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>VariableInitializer</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:introduce>
+	<xbgf:introduce>
+		<bgf:production>
+			<nonterminal>ConstantDeclarator</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>ConstantDeclaratorRest</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:introduce>
+	<xbgf:introduce>
+		<bgf:production>
+			<nonterminal>ConstantDeclaratorsRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>ConstantDeclaratorRest</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<star>
+							<bgf:expression>
+								<sequence>
+									<bgf:expression>
+										<terminal>,</terminal>
+									</bgf:expression>
+									<bgf:expression>
+										<nonterminal>ConstantDeclarator</nonterminal>
+									</bgf:expression>
+								</sequence>
+							</bgf:expression>
+						</star>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:introduce>
+	<!-- CORRECTION -->
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>InterfaceMethodOrFieldRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>ConstantDeclaratorsRest</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>;</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<xbgf:vertical>
+		<nonterminal>InterfaceBodyDeclaration</nonterminal>
+	</xbgf:vertical>
+	<xbgf:inline>Throws</xbgf:inline>
+</exbgf:sequence>

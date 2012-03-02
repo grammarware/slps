@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!--  in the extracted version root is undefined -->
+	<xbgf:reroot>
+		<root>CompilationUnit</root>
+	</xbgf:reroot>
+	<!-- ISSUE CORRECT SPECERROR
+   Typo in JLS3 (propagated from earlier versions):
+     - Fail: ConstantModifiers.
+      - [], ;([n(ConstantModifier), ,([n(ConstantModifier), n(ConstantModifiers)])])
+     vs.
+      - [], ;([n(ConstantModifier), ,([n(ConstantModifier), n(ConstantModifers)])])
+  -->
+	<!-- INITCORR -->
+	<xbgf:unite>
+		<add>ConstantModifers</add>
+		<to>ConstantModifiers</to>
+	</xbgf:unite>
+	<!-- ISSUE CORRECT SPECERROR
+	  The definition of TypeParameters was manually parsed from the following:
+	      <blockquote><pre>
+	<em>TypeParameters ::= &lt; TypeParameterList &gt;
+	</em>
+	<em>TypeParameterList    ::= TypeParameterList , TypeParameter
+	</em>
+	                      |<em>  TypeParameter
+	</em></pre></blockquote>
+  -->
+	<!-- GENERALITY -->
+	<!-- POSTEXTR -->
+	<xbgf:define>
+		<bgf:production>
+			<nonterminal>TypeParameters</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>&lt;</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>TypeParameterList</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>&gt;</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:define>
+	<!-- GENERALITY -->
+	<!-- INITCORR -->
+	<exbgf:defineH>
+		<bgf:production>
+			<nonterminal>TypeParameterList</nonterminal>
+			<bgf:expression>
+				<choice>
+					<bgf:expression>
+						<sequence>
+							<bgf:expression>
+								<nonterminal>TypeParameterList</nonterminal>
+							</bgf:expression>
+							<bgf:expression>
+								<terminal>,</terminal>
+							</bgf:expression>
+							<bgf:expression>
+								<nonterminal>TypeParameter</nonterminal>
+							</bgf:expression>
+						</sequence>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>TypeParameter</nonterminal>
+					</bgf:expression>
+				</choice>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:defineH>
+	<!--ISSUE CORRECT SPECERROR
+   - Fail: ConstructorDeclarator.
+      - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
+     vs.
+      - [], ,([n(SimpleTypeName), t((), ?(n(FormalParameterList)), t())])
+      
+  SimpleTypeName is not defined formally in the JLS2
+  -->
+	<!-- CORRECTION -->
+	<xbgf:unite>
+		<add>SimpleTypeName</add>
+		<to>Identifier</to>
+	</xbgf:unite>
+	<!-- ISSUE CORRECT SPECERROR
+  Left forgotten and undefined -->
+	<!-- GENERALITY -->
+	<!-- INITCORR -->
+	<exbgf:defineH>
+		<bgf:production>
+			<nonterminal>ClassName</nonterminal>
+			<bgf:expression>
+				<choice>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<sequence>
+							<bgf:expression>
+								<nonterminal>AmbiguousName</nonterminal>
+							</bgf:expression>
+							<bgf:expression>
+								<terminal>.</terminal>
+							</bgf:expression>
+							<bgf:expression>
+								<nonterminal>Identifier</nonterminal>
+							</bgf:expression>
+						</sequence>
+					</bgf:expression>
+				</choice>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:defineH>
+	<!-- ISSUE CORRECT SPECERROR
+  "Expression1" and "Expression2" define different "Expression"s in AssertStatement actually -->
+	<!-- INITCORR -->
+	<xbgf:unite>
+		<add>Expression1</add>
+		<to>Expression</to>
+	</xbgf:unite>
+	<!-- INITCORR -->
+	<xbgf:unite>
+		<add>Expression2</add>
+		<to>Expression</to>
+	</xbgf:unite>
+	<!-- ISSUE CORRECT SPECERROR
+  The productions were "repeated for convenience", but repeated incorrectly, which led to this ugly thing:
+  
+  p([], 'CastExpression',
+  ;([','([t('('), n('PrimitiveType'), t(')'), n('UnaryExpression')]),
+     ','([t('('), n('ReferenceType'), t(')'), n('UnaryExpressionNotPlusMinus')]),
+     ','([t('('), n('PrimitiveType'), ?(n('Dims')), t(')'), n('UnaryExpression')])])),
+  -->
+	<xbgf:horizontal>
+		<nonterminal>CastExpression</nonterminal>
+	</xbgf:horizontal>
+	<xbgf:factor>
+		<bgf:expression>
+			<choice>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>(</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>PrimitiveType</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>)</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>UnaryExpression</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>(</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>PrimitiveType</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<optional>
+								<bgf:expression>
+									<nonterminal>Dims</nonterminal>
+								</bgf:expression>
+							</optional>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>)</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>UnaryExpression</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</choice>
+		</bgf:expression>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<terminal>(</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>PrimitiveType</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<choice>
+						<bgf:expression>
+							<epsilon/>
+						</bgf:expression>
+						<bgf:expression>
+							<optional>
+								<bgf:expression>
+									<nonterminal>Dims</nonterminal>
+								</bgf:expression>
+							</optional>
+						</bgf:expression>
+					</choice>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>)</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>UnaryExpression</nonterminal>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</xbgf:factor>
+	<exbgf:massageC2O>
+		<optional>
+			<bgf:expression>
+				<nonterminal>Dims</nonterminal>
+			</bgf:expression>
+		</optional>
+	</exbgf:massageC2O>
+	<exbgf:massageDouble>
+		<optional/>
+		<nonterminal>Dims</nonterminal>
+	</exbgf:massageDouble>
+	<xbgf:vertical>
+		<nonterminal>CastExpression</nonterminal>
+	</xbgf:vertical>
+	<!-- ISSUE CORRECT SPECERROR
+  A mess due to duplicate definitions:
+  
+   - Fail: TypeName.
+      - [], ;([  n(Identifier),
+              ,([n(PackageOrTypeName), t(.), n(Identifier)])])
+     vs.
+      - [], ;([  n(Identifier),
+              ,([n(TypeName), t(.), n(Identifier)]),
+              ,([n(PackageOrTypeName), t(.), n(Identifier)])])
+  -->
+	<!-- CORRECTION -->
+	<xbgf:remove>
+		<vertical>
+			<bgf:production>
+				<nonterminal>TypeName</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>TypeName</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>.</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>Identifier</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</vertical>
+	</xbgf:remove>
+	<!-- ISSUE CORRECT
+  as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
+  9.6 should permit the old syntax too:
+  AnnotationTypeElementDeclaration:
+    AbstractMethodModifiersopt Type Identifier ( ) Dimsopt DefaultValueopt ;
+  -->
+	<!-- KNOWNBUG -->
+	<xbgf:appear>
+		<bgf:production>
+			<nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>AbstractMethodModifiers</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>(</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>)</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<optional>
+									<bgf:expression>
+										<nonterminal>Dims</nonterminal>
+									</bgf:expression>
+								</optional>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>DefaultValue</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>;</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:appear>
+	<!-- ISSUE CORRECT
+    as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
+
+18.1 has no definition of FormalParameter, and should use this, as should 8.4.1 and 14.20:
+
+  FormalParameter:
+    VariableModifiers_opt Type VariableDeclaratorId
+    -->
+	<!-- KNOWNBUG -->
+	<exbgf:widen12O>
+		<nonterminal>VariableModifiers</nonterminal>
+		<in>FormalParameter</in>
+	</exbgf:widen12O>
+	<!-- ISSUE CORRECT
+    as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
+
+  8.4.1 should also say:
+
+  LastFormalParameter:
+    VariableModifiers_opt Type ..._opt VariableDeclaratorId
+    FormalParameter
+  -->
+	<!-- KNOWNBUG -->
+	<exbgf:widen12O>
+		<nonterminal>VariableModifiers</nonterminal>
+		<in>LastFormalParameter</in>
+	</exbgf:widen12O>
+	<!-- ISSUE CORRECT
+    NOT in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
+
+    the same problem
+  -->
+	<!-- KNOWNBUG -->
+	<xbgf:widen>
+		<bgf:expression>
+			<nonterminal>VariableModifiers</nonterminal>
+		</bgf:expression>
+		<bgf:expression>
+			<optional>
+				<bgf:expression>
+					<nonterminal>VariableModifiers</nonterminal>
+				</bgf:expression>
+			</optional>
+		</bgf:expression>
+		<in>
+			<nonterminal>LocalVariableDeclaration</nonterminal>
+		</in>
+	</xbgf:widen>
+</exbgf:sequence>

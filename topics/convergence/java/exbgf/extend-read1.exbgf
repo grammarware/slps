@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- ISSUE PERMISSIVENESS
+     - Fail: ConstantDeclaration.
+      - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarator)])
+     vs.
+      - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators)])
+  -->
+	<!-- EXTENSION -->
+	<xbgf:upgrade>
+		<bgf:production>
+			<nonterminal>ConstantDeclaration</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>ConstantModifiers</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<nonterminal>VariableDeclarators</nonterminal>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+		<bgf:production>
+			<nonterminal>VariableDeclarators</nonterminal>
+			<bgf:expression>
+				<nonterminal>VariableDeclarator</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:upgrade>
+	<!-- ISSUE EXTEND 
+    - Fail: FieldAccess.
+      - [], ;([,([n(Primary), t(.), n(Identifier)]), ,([t(super), t(.), n(Identifier)])])
+     vs.
+      - [], ;([,([n(Primary), t(.), n(Identifier)]), ,([t(super), t(.), n(Identifier)]), ,([n(ClassName), t(.), t(super), t(.), n(Identifier)])])
+ -->
+	<xbgf:introduce>
+		<bgf:production>
+			<nonterminal>ClassName</nonterminal>
+			<bgf:expression>
+				<nonterminal>Identifier</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+		<bgf:production>
+			<nonterminal>ClassName</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>AmbiguousName</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>.</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:introduce>
+	<!-- EXTENSION -->
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>FieldAccess</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>ClassName</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>.</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>super</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>.</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- 
+     - Fail: PrimaryNoNewArray.
+      - [], ;([  n(Literal),
+                 t(this),
+              ,([t((), n(Expression), t())]),
+                 n(ClassInstanceCreationExpression),
+                 n(FieldAccess),
+                 n(MethodInvocation),
+                 n(ArrayAccess)])
+     vs.
+      - [], ;([  n(Literal),
+              ,([n(Type), t(.), t(class)]),
+              ,([t(void), t(.), t(class)]),
+                 t(this),
+              ,([n(ClassName), t(.), t(this)]),
+              ,([t((), n(Expression), t())]),
+                 n(ClassInstanceCreationExpression),
+                 n(FieldAccess),
+                 n(MethodInvocation),
+                 n(ArrayAccess)])
+    -->
+	<exbgf:addV>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>PrimaryNoNewArray</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>.</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>class</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>PrimaryNoNewArray</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>void</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>.</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>class</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>PrimaryNoNewArray</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>ClassName</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>.</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>this</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND
+     - Fail: LocalVariableDeclaration.
+      - [], ,([n(Type), n(VariableDeclarators)])
+     vs.
+      - [], ,([?(t(final)), n(Type), n(VariableDeclarators)])
+   -->
+	<!-- EXTENSION -->
+	<xbgf:appear>
+		<bgf:production>
+			<nonterminal>LocalVariableDeclaration</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<optional>
+									<bgf:expression>
+										<terminal>final</terminal>
+									</bgf:expression>
+								</optional>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>VariableDeclarators</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:appear>
+	<!-- ISSUE EXTEND 
+     - Fail: MethodModifier.
+      - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(synchronized), t(native)])
+     vs.
+      - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(synchronized), t(native), t(strictfp)])
+   -->
+	<!-- EXTENSION -->
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>MethodModifier</nonterminal>
+			<bgf:expression>
+				<terminal>strictfp</terminal>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND 
+     - Fail: ClassBodyDeclaration.
+      - [], ;([n(ClassMemberDeclaration), n(StaticInitializer), n(ConstructorDeclaration)])
+     vs.
+      - [], ;([n(ClassMemberDeclaration), n(InstanceInitializer), n(StaticInitializer), n(ConstructorDeclaration)])
+   -->
+	<xbgf:introduce>
+		<bgf:production>
+			<nonterminal>InstanceInitializer</nonterminal>
+			<bgf:expression>
+				<nonterminal>Block</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:introduce>
+	<!-- EXTENSION -->
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>ClassBodyDeclaration</nonterminal>
+			<bgf:expression>
+				<nonterminal>InstanceInitializer</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND 
+     - Fail: ClassMemberDeclaration.
+      - [], ;([n(FieldDeclaration), n(MethodDeclaration)])
+     vs.
+      - [], ;([n(FieldDeclaration), n(MethodDeclaration), n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
+  -->
+	<exbgf:addV>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>ClassMemberDeclaration</nonterminal>
+			<bgf:expression>
+				<nonterminal>ClassDeclaration</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>ClassMemberDeclaration</nonterminal>
+			<bgf:expression>
+				<nonterminal>InterfaceDeclaration</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>ClassMemberDeclaration</nonterminal>
+			<bgf:expression>
+				<terminal>;</terminal>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND 
+     - Fail: InterfaceMemberDeclaration.
+      - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration)])
+     vs.
+      - [], ;([n(ConstantDeclaration), n(AbstractMethodDeclaration), n(ClassDeclaration), n(InterfaceDeclaration), t((;))])
+  -->
+	<exbgf:addV>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>InterfaceMemberDeclaration</nonterminal>
+			<bgf:expression>
+				<nonterminal>ClassDeclaration</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>InterfaceMemberDeclaration</nonterminal>
+			<bgf:expression>
+				<nonterminal>InterfaceDeclaration</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>InterfaceMemberDeclaration</nonterminal>
+			<bgf:expression>
+				<terminal>;</terminal>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND 
+     - Fail: BlockStatement.
+      - [], ;([n(LocalVariableDeclarationStatement), n(Statement)])
+     vs.
+      - [], ;([n(LocalVariableDeclarationStatement), n(ClassDeclaration), n(Statement)])
+   -->
+	<!-- EXTENSION -->
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>BlockStatement</nonterminal>
+			<bgf:expression>
+				<nonterminal>ClassDeclaration</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND 
+     - Fail: ClassModifier.
+      - [], ;([t(public), t(abstract), t(final)])
+     vs.
+      - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(final), t(strictfp)])
+  -->
+	<exbgf:addV>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>ClassModifier</nonterminal>
+			<bgf:expression>
+				<terminal>protected</terminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>ClassModifier</nonterminal>
+			<bgf:expression>
+				<terminal>private</terminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>ClassModifier</nonterminal>
+			<bgf:expression>
+				<terminal>static</terminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>ClassModifier</nonterminal>
+			<bgf:expression>
+				<terminal>strictfp</terminal>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND 
+     - Fail: ExplicitConstructorInvocation.
+      - [], ;([,([t(this), t((), ?(n(ArgumentList)), t()), t((;))]), ,([t(super), t((), ?(n(ArgumentList)), t()), t((;))])])
+     vs.
+      - [], ;([,([t(this), t((), ?(n(ArgumentList)), t()), t((;))]), ,([t(super), t((), ?(n(ArgumentList)), t()), t((;))]), ,([n(Primary), t(.), t(super), t((), ?(n(ArgumentList)), t()), t((;))])])
+  -->
+	<!-- EXTENSION -->
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>ExplicitConstructorInvocation</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>Primary</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>.</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>super</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>(</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>ArgumentList</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>)</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>;</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND
+     - Fail: MethodInvocation.
+      - [], ;([,([n(MethodName), t((), ?(n(ArgumentList)), t())]), ,([n(Primary), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())])])
+     vs.
+      - [], ;([,([n(MethodName), t((), ?(n(ArgumentList)), t())]), ,([n(Primary), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())]), ,([n(ClassName), t(.), t(super), t(.), n(Identifier), t((), ?(n(ArgumentList)), t())])])
+  -->
+	<!-- EXTENSION -->
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>MethodInvocation</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>ClassName</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>.</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>super</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>.</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>(</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>ArgumentList</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>)</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND 
+     - Fail: InterfaceModifier.
+      - [], ;([t(public), t(abstract)])
+     vs.
+      - [], ;([t(public), t(protected), t(private), t(abstract), t(static), t(strictfp)])
+  -->
+	<exbgf:addV>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>InterfaceModifier</nonterminal>
+			<bgf:expression>
+				<terminal>protected</terminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>InterfaceModifier</nonterminal>
+			<bgf:expression>
+				<terminal>private</terminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>InterfaceModifier</nonterminal>
+			<bgf:expression>
+				<terminal>static</terminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>InterfaceModifier</nonterminal>
+			<bgf:expression>
+				<terminal>strictfp</terminal>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND 
+     - Fail: ArrayCreationExpression.
+      - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(TypeName), n(DimExprs), ?(n(Dims))])])
+     vs.
+      - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(TypeName), n(DimExprs), ?(n(Dims))]), ,([t(new), n(PrimitiveType), n(Dims), n(ArrayInitializer)]), ,([t(new), n(TypeName), n(Dims), n(ArrayInitializer)])])
+  -->
+	<exbgf:addV>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>ArrayCreationExpression</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>new</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>PrimitiveType</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Dims</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>ArrayInitializer</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>ArrayCreationExpression</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>new</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>TypeName</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Dims</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>ArrayInitializer</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+	<!-- ISSUE EXTEND
+     - Fail: FormalParameter.
+      - [], ,([n(Type), n(VariableDeclaratorId)])
+     vs.
+      - [], ,([?(t(final)), n(Type), n(VariableDeclaratorId)])
+  -->
+	<!-- EXTENSION -->
+	<xbgf:appear>
+		<bgf:production>
+			<nonterminal>FormalParameter</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<optional>
+									<bgf:expression>
+										<terminal>final</terminal>
+									</bgf:expression>
+								</optional>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>VariableDeclaratorId</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:appear>
+</exbgf:sequence>

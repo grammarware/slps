@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- 
+  This nonterminal is used more consistently in the collected part -->
+	<xbgf:fold>
+		<nonterminal>QualifiedIdentifier</nonterminal>
+	</xbgf:fold>
+	<!-- 
+   - Fail: Catches.
+      - [], ,([n(CatchClause), *(n(CatchClause))])
+     vs.
+      - [], +n(CatchClause)
+  -->
+	<exbgf:massage1S2P>
+		<nonterminal>CatchClause</nonterminal>
+		<!-- <in>Catches</in> -->
+	</exbgf:massage1S2P>
+	<!-- getting rid of explicit suffixes -->
+	<exbgf:atomic>
+		<exbgf:inlineV>PrefixOp</exbgf:inlineV>
+		<exbgf:inlineV>PostfixOp</exbgf:inlineV>
+		<exbgf:distributeH>Expression3</exbgf:distributeH>
+	</exbgf:atomic>
+	<!-- pushing optionals outside -->
+	<exbgf:reextract>
+		<bgf:production>
+			<nonterminal>Expression1Rest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>?</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Expression</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>:</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Expression1</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:reextract>
+	<exbgf:massageDouble>
+		<optional/>
+		<nonterminal>Expression1Rest</nonterminal>
+	</exbgf:massageDouble>
+	<exbgf:inlineV>MemberDecl</exbgf:inlineV>
+	<!--  <xbgf:distribute>
+    <nonterminal>ClassBodyDeclaration</nonterminal>
+  </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>ClassBodyDeclaration</nonterminal>
+  </xbgf:vertical>
+  <xbgf:distribute>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:distribute>
+  
+  <xbgf:vertical>
+    <nonterminal>Statement</nonterminal>
+  </xbgf:vertical>-->
+	<xbgf:fold>
+		<nonterminal>ParExpression</nonterminal>
+	</xbgf:fold>
+</exbgf:sequence>

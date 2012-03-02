@@ -154,6 +154,8 @@ def readConfiguration (cfg):
    tools[xmlnode.tag] = expandxml(xmlnode.findall('grammar')[0],{})
    if xmlnode.findall('tree'):
     treeTools[xmlnode.tag] = expandxml(xmlnode.findall('tree')[0],{})
+   if xmlnode.findall('extension'):
+    tools['extension'] = xmlnode.findtext('extension')
  print 'Read',
  if shortcuts:
   print len(shortcuts),'shortcuts,',

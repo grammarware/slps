@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- in the extracted version root is undefined -->
+	<xbgf:reroot>
+		<root>CompilationUnit</root>
+	</xbgf:reroot>
+	<!-- ISSUE CORRECT SPECERROR
+   This was an error in the JLS1
+  
+     - Fail: ConstantModifiers.
+      - [], ;([t(public), t(static), t(final)])
+     vs.
+      - [], ;([n(ConstantModifier), ,([n(ConstantModifiers), n(ConstantModifer)])])
+  -->
+	<exbgf:chainV>
+		<from>ConstantModifiers</from>
+		<to>ConstantModifier</to>
+	</exbgf:chainV>
+	<!-- CORRECTION -->
+	<xbgf:add>
+		<vertical>
+			<bgf:production>
+				<nonterminal>ConstantModifiers</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>ConstantModifiers</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>ConstantModifier</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</vertical>
+	</xbgf:add>
+	<!-- ISSUE CORRECT SPECERROR
+  The authors fix an old problem here. (fixed partially
+  
+     - Fail: ConstantDeclaration.
+      - [], ,([n(ConstantModifiers), n(Type), n(VariableDeclarator)])
+     vs.
+      - [], ,([?(n(ConstantModifiers)), n(Type), n(VariableDeclarators)])
+  -->
+	<!-- CORRECTION -->
+	<exbgf:widen12O>
+		<nonterminal>ConstantModifiers</nonterminal>
+		<in>ConstantDeclaration</in>
+	</exbgf:widen12O>
+	<!-- ISSUE CORRECT SPECERROR
+   - Fail: ConstructorDeclarator.
+      - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
+     vs.
+      - [], ,([n(SimpleTypeName), t((), ?(n(FormalParameterList)), t())])
+      
+  SimpleTypeName is not defined formally in the JLS1
+  -->
+	<!-- CORRECTION -->
+	<xbgf:unite>
+		<add>SimpleTypeName</add>
+		<to>Identifier</to>
+	</xbgf:unite>
+	<!-- ISSUE CORRECT SPECERROR
+       Another typo of JLS2 -->
+	<!-- INITCORR -->
+	<xbgf:unite>
+		<add>Identifer</add>
+		<to>Identifier</to>
+	</xbgf:unite>
+	<!--  ISSUE CORRECT SPECERROR
+  The productions were "repeated for convenience", but repeated incorrectly, which led to this ugly thing:
+  
+  CastExpression
+      - [], ;([,([t((), n(PrimitiveType), t()), n(UnaryExpression)]),
+               ,([t((), n(ReferenceType), t()), n(UnaryExpressionNotPlusMinus)]),
+               ,([t((), n(PrimitiveType), ?(n(Dims)), t()), n(UnaryExpression)])])
+  -->
+	<xbgf:horizontal>
+		<nonterminal>CastExpression</nonterminal>
+	</xbgf:horizontal>
+	<xbgf:factor>
+		<bgf:expression>
+			<choice>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>(</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>PrimitiveType</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>)</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>UnaryExpression</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>(</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>PrimitiveType</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<optional>
+								<bgf:expression>
+									<nonterminal>Dims</nonterminal>
+								</bgf:expression>
+							</optional>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>)</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>UnaryExpression</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</choice>
+		</bgf:expression>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<terminal>(</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>PrimitiveType</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<choice>
+						<bgf:expression>
+							<epsilon/>
+						</bgf:expression>
+						<bgf:expression>
+							<optional>
+								<bgf:expression>
+									<nonterminal>Dims</nonterminal>
+								</bgf:expression>
+							</optional>
+						</bgf:expression>
+					</choice>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>)</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>UnaryExpression</nonterminal>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</xbgf:factor>
+	<exbgf:massageC2O>
+		<optional>
+			<bgf:expression>
+				<nonterminal>Dims</nonterminal>
+			</bgf:expression>
+		</optional>
+	</exbgf:massageC2O>
+	<exbgf:massageDouble>
+		<optional/>
+		<nonterminal>Dims</nonterminal>
+	</exbgf:massageDouble>
+	<xbgf:vertical>
+		<nonterminal>CastExpression</nonterminal>
+	</xbgf:vertical>
+</exbgf:sequence>

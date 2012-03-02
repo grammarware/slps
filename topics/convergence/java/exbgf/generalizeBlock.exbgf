@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- ISSUE CORRECT
+  - Fail: MethodBody.
+      - [], ;([n(Block), t((;))])
+     vs.
+      - [], n(Block)
+  -->
+	<!-- CORRECTION -->
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>MethodBody</nonterminal>
+			<bgf:expression>
+				<terminal>;</terminal>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
+</exbgf:sequence>

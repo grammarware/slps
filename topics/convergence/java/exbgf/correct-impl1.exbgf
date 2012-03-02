@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- in the extracted version root is undefined -->
+	<xbgf:reroot>
+		<root>CompilationUnit</root>
+	</xbgf:reroot>
+	<!-- not used in other versions -->
+	<xbgf:eliminate>
+		<nonterminal>Goal</nonterminal>
+	</xbgf:eliminate>
+</exbgf:sequence>

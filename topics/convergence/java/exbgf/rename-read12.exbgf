@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- see extend-doc12 for details -->
+	<exbgf:renameN>
+		<from>FormalParameterList</from>
+		<to>FormalParameters</to>
+	</exbgf:renameN>
+	<exbgf:renameN>
+		<from>ClassTypeList</from>
+		<to>ExceptionTypeList</to>
+	</exbgf:renameN>
+</exbgf:sequence>

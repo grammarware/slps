@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- in the extracted version root is undefined -->
+	<xbgf:reroot>
+		<root>CompilationUnit</root>
+	</xbgf:reroot>
+	<!-- ISSUE CORRECT SPECERROR
+  There's no such thing as TypeName
+  
+Annotation:
+        </em><code>@</code><em> TypeName [<code>(</code> [Identifier <code>=</code>] ElementValue<code>)</code>]
+  -->
+	<!-- KNOWNBUG -->
+	<xbgf:unite>
+		<add>TypeName</add>
+		<to>QualifiedIdentifier</to>
+	</xbgf:unite>
+	<!-- ISSUE CORRECT SPECERROR
+  Real error in JLS3:
+   - Fail: Expression2Rest.
+      - [], ;([,([t(instanceof), n(Type)]), *(,([n(InfixOp), n(Expression3)]))])
+     vs.
+      - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
+  -->
+	<!-- KNOWNBUG -->
+	<xbgf:project>
+		<bgf:production>
+			<nonterminal>Expression2Rest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<nonterminal>Expression3</nonterminal>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>instanceof</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:project>
+	<!-- ISSUE CORRECT SPECERROR 
+  lacking definition copied from JLS2 with proper renaming -->
+	<!-- GENERALITY -->
+	<!-- KNOWNBUG -->
+	<xbgf:define>
+		<bgf:production>
+			<nonterminal>ForUpdate</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>StatementExpression</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Expressions</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:define>
+	<!-- KNOWNBUG -->
+	<xbgf:unite>
+		<add>MoreStatementExpressions</add>
+		<to>Expressions</to>
+	</xbgf:unite>
+	<!--   ISSUE CORRECT SPECERROR
+  - Fail: Statement.
+      - [], ;([n(Block),
+              ,([t(break), ?(n(Identifier))]),
+     vs.
+      - [], ;([n(Block),
+               ,([t(break), ?(n(Identifier)), t((;))]),
+  -->
+	<!-- CORRECTION -->
+	<xbgf:concretize>
+		<bgf:production>
+			<nonterminal>Statement</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>break</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>Identifier</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<terminal>;</terminal>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:concretize>
+	<!--   ISSUE CORRECT SPECERROR
+         same with continue -->
+	<!-- CORRECTION -->
+	<xbgf:concretize>
+		<bgf:production>
+			<nonterminal>Statement</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>continue</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>Identifier</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<terminal>;</terminal>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:concretize>
+	<!-- ISSUE CORRECT 
+  forgotten comma
+  ElementValues:
+        ElementValue [ ElementValues ]
+  should be
+  ElementValues:
+        ElementValue [ "," ElementValues ]
+        
+   The XBGF command could've been concretize!
+  -->
+	<!-- KNOWNBUG -->
+	<xbgf:concretize>
+		<bgf:production>
+			<nonterminal>ElementValues</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>ElementValue</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<sequence>
+									<bgf:expression>
+										<marked>
+											<bgf:expression>
+												<terminal>,</terminal>
+											</bgf:expression>
+										</marked>
+									</bgf:expression>
+									<bgf:expression>
+										<nonterminal>ElementValues</nonterminal>
+									</bgf:expression>
+								</sequence>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:concretize>
+	<!--   undefine lexical term -->
+	<!-- GENERALITY -->
+	<!-- RELAXATION -->
+	<xbgf:undefine>
+		<nonterminal>Identifier</nonterminal>
+	</xbgf:undefine>
+	<!-- ISSUE CORRECT SPECERROR -->
+	<!-- not right because VariableDeclarator starts with Identifier:
+  
+AnnotationTypeElementRest:
+        Type Identifier AnnotationMethodOrConstantRest ";"
+AnnotationMethodOrConstantRest:
+        AnnotationMethodRest
+AnnotationMethodOrConstantRest:
+        AnnotationConstantRest
+AnnotationMethodRest:
+        "(" ")" DefaultValue ?
+AnnotationConstantRest:
+        VariableDeclarators
+  -->
+	<!-- CORRECTION -->
+	<xbgf:project>
+		<bgf:production>
+			<nonterminal>AnnotationTypeElementRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<nonterminal>Identifier</nonterminal>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>AnnotationMethodOrConstantRest</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>;</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:project>
+	<!-- CORRECTION -->
+	<xbgf:inject>
+		<bgf:production>
+			<nonterminal>AnnotationMethodOrConstantRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<nonterminal>Identifier</nonterminal>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>AnnotationMethodRest</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:inject>
+	<!-- ISSUE CORRECT SPECERROR - forgotten definition -->
+	<!--    as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
+18.1 has no definition of FormalParameter, and should use this, as should 8.4.1 and 14.20:
+
+  FormalParameter:
+    VariableModifiers_opt Type VariableDeclaratorId
+    
+    VVZ does not agree to this fix, it should be in the same way it was in JLS2:
+
+FormalParameter:
+    "final"? Type VariableDeclaratorId
+    
+    -->
+	<!-- GENERALITY -->
+	<!-- KNOWNBUG -->
+	<xbgf:define>
+		<bgf:production>
+			<nonterminal>FormalParameter</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<terminal>final</terminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>VariableDeclaratorId</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:define>
+	<!-- ISSUE CORRECT
+  as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
+* 18.1 does not permit the obsolescent array syntax in a method declaration of an annotation type:
+  AnnotationMethodRest:
+    () {[]} [DefaultValue]
+      where {[]} means 0 or more []'s. [DefaultValue] means 0 or 1 DefaultValue.
+  -->
+	<!-- KNOWNBUG -->
+	<xbgf:appear>
+		<bgf:production>
+			<nonterminal>AnnotationMethodRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>(</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>)</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<star>
+									<bgf:expression>
+										<sequence>
+											<bgf:expression>
+												<terminal>[</terminal>
+											</bgf:expression>
+											<bgf:expression>
+												<terminal>]</terminal>
+											</bgf:expression>
+										</sequence>
+									</bgf:expression>
+								</star>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>DefaultValue</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:appear>
+	<!-- I S S U E   C O R R E C T 
+  as in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6442525
+* 18.1 defines TypeArgument incorrectly, e.g. '? extends int' is legal.
+  Correct are ActualTypeArgument and Wildcard from 4.5.1. They use ReferenceType, which is in 4.3 but not 18.1.
+  -->
+</exbgf:sequence>

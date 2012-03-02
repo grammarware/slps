@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- ISSUE EXTRACTERROR
+  The extractor can't tell if {} are terminals or BNF
+  
+   - Fail: Block.
+      - [], *(n(BlockStatements))
+     vs.
+      - [], ,([t({), n(BlockStatements), t(})])
+  -->
+	<!-- REVISE -->
+	<!-- POSTEXTR -->
+	<xbgf:replace>
+		<bgf:expression>
+			<star>
+				<bgf:expression>
+					<nonterminal>BlockStatements</nonterminal>
+				</bgf:expression>
+			</star>
+		</bgf:expression>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<terminal>{</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>BlockStatements</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>}</terminal>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</xbgf:replace>
+	<!-- ISSUE EXTRACTERROR
+   - Fail: AnnotationTypeBody.
+      - [], *(?(n(AnnotationTypeElementDeclarations)))
+     vs.
+      - [], ,([t({), ?(n(AnnotationTypeElementDeclarations)), t(})])
+  -->
+	<!-- REVISE -->
+	<!-- POSTEXTR -->
+	<exbgf:redefine>
+		<bgf:production>
+			<nonterminal>AnnotationTypeBody</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>{</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>AnnotationTypeElementDeclarations</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>}</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:redefine>
+	<!-- ISSUE EXTRACTERROR ({} parsed as iteration)
+ArrayInitializer:
+        { [VariableInitializer {, VariableInitializer} [,]] }
+  -->
+	<!-- REVISE -->
+	<!-- POSTEXTR -->
+	<exbgf:redefine>
+		<bgf:production>
+			<nonterminal>ArrayInitializer</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>{</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<sequence>
+									<bgf:expression>
+										<nonterminal>VariableInitializer</nonterminal>
+									</bgf:expression>
+									<bgf:expression>
+										<star>
+											<bgf:expression>
+												<sequence>
+													<bgf:expression>
+														<terminal>,</terminal>
+													</bgf:expression>
+													<bgf:expression>
+														<nonterminal>VariableInitializer</nonterminal>
+													</bgf:expression>
+												</sequence>
+											</bgf:expression>
+										</star>
+									</bgf:expression>
+									<bgf:expression>
+										<optional>
+											<bgf:expression>
+												<terminal>,</terminal>
+											</bgf:expression>
+										</optional>
+									</bgf:expression>
+								</sequence>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>}</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:redefine>
+	<!-- ISSUE EXTRACTERROR  (lacking colon)
+ForControl:
+        ForVarControl
+        ForInit;   [Expression]   ; [ForUpdate]
+
+ForVarControl
+        [</em><code>final</code><em>] [Annotations] Type Identifier ForVarControlRest
+
+being parsed as 
+ForControl:
+        ForVarControl
+ForControl:
+        ForInit ";" Expression ? ";" ForUpdate ?
+ForControl:
+        "final" ? Annotations ? Type Identifier ForVarControlRest
+  -->
+	<xbgf:extract>
+		<bgf:production>
+			<nonterminal>ForVarControl</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<terminal>final</terminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>Annotations</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Type</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>ForVarControlRest</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:extract>
+</exbgf:sequence>

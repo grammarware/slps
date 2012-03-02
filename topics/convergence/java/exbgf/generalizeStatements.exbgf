@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- ISSUE CORRECT 
+   - Fail: SwitchBlockStatementGroup.
+      - [], ,([n(SwitchLabels), n(BlockStatements)])
+     vs.
+      - [], ,([n(SwitchLabels), +n(BlockStatement)])
+  -->
+	<!-- CORRECTION -->
+	<exbgf:widenP2S>
+		<nonterminal>BlockStatement</nonterminal>
+		<in>SwitchBlockStatementGroup</in>
+	</exbgf:widenP2S>
+	<xbgf:fold>
+		<nonterminal>BlockStatements</nonterminal>
+	</xbgf:fold>
+</exbgf:sequence>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- ISSUE EXTRACTERROR
+	Unopened tag:
+	<em>InterfaceDeclaration:
+	      NormalInterfaceDeclaration
+	      AnnotationTypeDeclaration</em>
+	      </pre></blockquote>
+
+	-->
+	<!-- GENERALITY -->
+	<!-- POSTEXTR -->
+	<exbgf:defineH>
+		<bgf:production>
+			<nonterminal>InterfaceDeclaration</nonterminal>
+			<bgf:expression>
+				<choice>
+					<bgf:expression>
+						<nonterminal>NormalInterfaceDeclaration</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>AnnotationTypeDeclaration</nonterminal>
+					</bgf:expression>
+				</choice>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:defineH>
+	<!-- ISSUE EXTRACTERROR
+  Bad layout makes the extractor to force line continuation:
+   - Fail: NormalInterfaceDeclaration.
+      - [], ,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
+     vs.
+      - [], ;([,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(TypeParameters))]), ,([?(n(ExtendsInterfaces)), n(InterfaceBody)])])
+  -->
+	<!-- REVISE -->
+	<!-- POSTEXTR -->
+	<exbgf:redefine>
+		<bgf:production>
+			<nonterminal>NormalInterfaceDeclaration</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>InterfaceModifiers</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>interface</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>ExtendsInterfaces</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>InterfaceBody</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:redefine>
+	<!-- ISSUE EXTRACTERROR
+  Extractor error:
+   - Fail: ElementValueArrayInitializer.
+      - [], ,([t({), ?(n(ElementValues)), ?(t((,))), t(})])
+     vs.
+      - [], *(,([?(n(ElementValues)), ?(t((,)))]))
+  -->
+	<!-- REVISE -->
+	<!-- POSTEXTR -->
+	<exbgf:redefine>
+		<bgf:production>
+			<nonterminal>ElementValueArrayInitializer</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>{</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>ElementValues</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<terminal>,</terminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>}</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:redefine>
+	<!-- ISSUE EXTRACTERROR
+  extractor's problem -->
+	<!-- REVISE -->
+	<!-- POSTEXTR -->
+	<exbgf:metachangeT2N>ClassName</exbgf:metachangeT2N>
+</exbgf:sequence>

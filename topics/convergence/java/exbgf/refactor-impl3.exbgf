@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
+	<!-- 
+   - Fail: Annotations.
+      - [], ,([n(Annotation), ?(n(Annotations))])
+     vs.
+      - [], ;([n(Annotation), ,([n(Annotations), n(Annotation)])])
+  -->
+	<exbgf:massageO2C>
+		<nonterminal>Annotations</nonterminal>
+		<in>Annotations</in>
+	</exbgf:massageO2C>
+	<exbgf:deyaccifyC>Annotations</exbgf:deyaccifyC>
+	<!-- 
+   - Fail: Catches.
+      - [], ,([n(CatchClause), *(n(CatchClause))])
+     vs.
+      - [], +n(CatchClause)
+  -->
+	<exbgf:massage1S2P>
+		<nonterminal>CatchClause</nonterminal>
+	</exbgf:massage1S2P>
+	<!--  
+  ','([n('Primary'), *(n('Selector')), *(n('PostfixOp'))])
+  vs 
+  ;([n('Primary'), n('QualifiedIdentifier'), ','([n('PostfixExpression'), n('PostfixOp')])])
+  -->
+	<!-- CORRECTION -->
+	<!-- REVISE -->
+	<xbgf:replace>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>Primary</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<star>
+						<bgf:expression>
+							<nonterminal>Selector</nonterminal>
+						</bgf:expression>
+					</star>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+		<bgf:expression>
+			<choice>
+				<bgf:expression>
+					<nonterminal>Primary</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>QualifiedIdentifier</nonterminal>
+				</bgf:expression>
+			</choice>
+		</bgf:expression>
+	</xbgf:replace>
+	<xbgf:eliminate>
+		<nonterminal>Selector</nonterminal>
+	</xbgf:eliminate>
+	<!-- we don't need minimised lookahead here -->
+	<exbgf:inlineV>InterfaceMemberDecl</exbgf:inlineV>
+	<xbgf:inline>InterfaceMethodOrFieldDecl</xbgf:inline>
+	<exbgf:inlineV>InterfaceMethodOrFieldRest</exbgf:inlineV>
+	<xbgf:inline>InterfaceGenericMethodDecl</xbgf:inline>
+	<xbgf:inline>InterfaceMethodDeclaratorRest</xbgf:inline>
+	<xbgf:inline>VoidInterfaceMethodDeclaratorRest</xbgf:inline>
+	<exbgf:atomic>
+		<xbgf:inline>ConstantDeclaratorsRest</xbgf:inline>
+		<xbgf:inline>FormalParameters</xbgf:inline>
+	</exbgf:atomic>
+	<exbgf:distributeH>InterfaceBodyDeclaration</exbgf:distributeH>
+</exbgf:sequence>
