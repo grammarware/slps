@@ -1,0 +1,5 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:distribute>
+    <nonterminal>InterfaceBodyDeclaration</nonterminal>
+  </xbgf:distribute>
+
+  </xbgf:sequence>

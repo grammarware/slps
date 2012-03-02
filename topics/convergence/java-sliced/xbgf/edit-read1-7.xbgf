@@ -1,0 +1,10 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:fold>
+    <nonterminal>PackageOrTypeName</nonterminal>
+    <in>
+      <nonterminal>TypeName</nonterminal>
+    </in>
+  </xbgf:fold>
+
+  
+  
+  </xbgf:sequence>

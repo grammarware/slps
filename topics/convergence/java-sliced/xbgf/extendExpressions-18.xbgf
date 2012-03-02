@@ -1,0 +1,35 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:add>
+    <horizontal>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>Expression3</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <choice>
+                <bgf:expression>
+                  <marked>
+                    <bgf:expression>
+                      <nonterminal>QualifiedIdentifier</nonterminal>
+                    </bgf:expression>
+                  </marked>
+                </bgf:expression>
+                <bgf:expression>
+                  <nonterminal>Primary</nonterminal>
+                </bgf:expression>
+              </choice>
+            </bgf:expression>
+            <bgf:expression>
+              <star>
+                <bgf:expression>
+                  <nonterminal>PostfixOp</nonterminal>
+                </bgf:expression>
+              </star>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </horizontal>
+  </xbgf:add>
+
+  
+  </xbgf:sequence>

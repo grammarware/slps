@@ -1,0 +1,18 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:add>
+    <vertical>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>InterfaceMethodOrFieldRest</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>ConstantDeclaratorsRest</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>;</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
+  </xbgf:sequence>

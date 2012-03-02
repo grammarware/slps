@@ -1,0 +1,22 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:introduce>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>AdditionalBoundList</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>AdditionalBound</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>AdditionalBoundList</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>AdditionalBoundList</nonterminal>
+      <bgf:expression>
+        <nonterminal>AdditionalBound</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  </xbgf:sequence>

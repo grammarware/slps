@@ -130,7 +130,30 @@
   -->
 	<xbgf:inline>ConstantDeclaration</xbgf:inline>
 	<xbgf:inline>AbstractMethodDeclaration</xbgf:inline>
+	<!-- <xbgf:dump/> -->
 	<!-- this one already had modifiers introduced by earlier transformations -->
+	<!-- 
+	InterfaceBodyDeclaration:
+	        ModifiersOpt Type VariableDeclarators
+	InterfaceBodyDeclaration:
+	        ModifiersOpt ResultType MethodDeclarator Throws? ";"
+	InterfaceBodyDeclaration:
+	        ClassDeclaration
+	InterfaceBodyDeclaration:
+	        InterfaceDeclaration
+	InterfaceBodyDeclaration:
+	        ";"
+	 -->
+	<!-- TODO dead code??? -->
+	<!-- 	<exbgf:atomicV>
+			<context>InterfaceBodyDeclaration</context>
+			<xbgf:fold>
+				<nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+				<in>
+					<nonterminal>InterfaceBodyDeclaration</nonterminal>
+				</in>
+			</xbgf:fold>
+		</exbgf:atomicV>-->
 	<xbgf:appear>
 		<bgf:production>
 			<nonterminal>InterfaceBodyDeclaration</nonterminal>

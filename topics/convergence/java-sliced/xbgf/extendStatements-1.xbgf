@@ -1,0 +1,30 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:remove>
+    <vertical>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>ForInit</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <terminal>final</terminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Type</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>VariableDeclarators</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:remove>
+
+  
+
+  
+
+  </xbgf:sequence>

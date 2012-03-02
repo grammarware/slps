@@ -1,0 +1,22 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:introduce>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
+      <bgf:expression>
+        <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>AnnotationTypeElementDeclarations</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  </xbgf:sequence>

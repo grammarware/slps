@@ -1,0 +1,15 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:rename>
+    <nonterminal>
+      <from>FormalParameterList</from>
+      <to>FormalParameters</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassTypeList</from>
+      <to>ExceptionTypeList</to>
+    </nonterminal>
+  </xbgf:rename>
+
+</xbgf:sequence>

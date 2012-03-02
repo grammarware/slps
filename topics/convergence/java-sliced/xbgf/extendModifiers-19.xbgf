@@ -1,0 +1,7 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:fold>
+    <nonterminal>VariableModifiers</nonterminal>
+    <in>
+      <nonterminal>LocalVariableDeclaration</nonterminal>
+    </in>
+  </xbgf:fold>
+  </xbgf:sequence>

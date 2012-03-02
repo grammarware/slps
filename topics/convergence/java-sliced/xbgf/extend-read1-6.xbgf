@@ -1,0 +1,24 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:add>
+    <vertical>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>PrimaryNoNewArray</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>ClassName</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>this</terminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
+
+  
+  
+  </xbgf:sequence>

@@ -1,0 +1,7 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>TypeDeclSpecifier</nonterminal>
+    <in>
+      <nonterminal>WildcardBounds</nonterminal>
+    </in>
+  </xbgf:unfold>
+  </xbgf:sequence>

@@ -1,0 +1,4 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:distribute>
+    <nonterminal>CastExpression</nonterminal>
+  </xbgf:distribute>
+  </xbgf:sequence>

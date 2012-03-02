@@ -1,0 +1,40 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>TMP</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>LeftHandSide</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>AssignmentOperator</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:massage>
+      <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+        <sequence>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <nonterminal>TMP</nonterminal>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TMP</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+      <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+        <plus>
+          <bgf:expression>
+            <nonterminal>TMP</nonterminal>
+          </bgf:expression>
+        </plus>
+      </bgf:expression>
+    </xbgf:massage>
+    <xbgf:inline>TMP</xbgf:inline>
+  </xbgf:sequence>

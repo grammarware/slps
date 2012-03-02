@@ -1,0 +1,28 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:define>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ConstantDeclaratorsRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ConstantDeclaratorRest</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <star>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>,</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>ConstantDeclarator</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </star>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  
+  </xbgf:sequence>

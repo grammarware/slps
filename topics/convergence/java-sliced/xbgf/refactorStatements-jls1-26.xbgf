@@ -1,0 +1,12 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:replace>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>StatementNoShortIf</nonterminal>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>Statement</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>Statement</nonterminal>
+    </in>
+  </xbgf:replace>
+  </xbgf:sequence>

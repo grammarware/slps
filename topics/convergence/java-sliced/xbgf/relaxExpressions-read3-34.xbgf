@@ -1,0 +1,9 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>QualifiedIdentifier</nonterminal>
+    <in>
+      <nonterminal>PrimaryNoNewArray</nonterminal>
+    </in>
+  </xbgf:unfold>
+
+  
+  </xbgf:sequence>

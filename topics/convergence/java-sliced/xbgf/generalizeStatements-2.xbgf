@@ -1,0 +1,4 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:fold>
+    <nonterminal>BlockStatements</nonterminal>
+  </xbgf:fold>
+</xbgf:sequence>

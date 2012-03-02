@@ -1,0 +1,13 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:replace>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>Expression2</nonterminal>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>Expression3</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>Expression2</nonterminal>
+    </in>
+  </xbgf:replace>
+
+  </xbgf:sequence>

@@ -1,0 +1,539 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:define>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>InterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>NormalInterfaceDeclaration</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>AnnotationTypeDeclaration</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:vertical>
+    <nonterminal>InterfaceDeclaration</nonterminal>
+  </xbgf:vertical>
+
+  
+  
+  
+  <xbgf:redefine>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>NormalInterfaceDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>InterfaceModifiers</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>interface</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ExtendsInterfaces</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>InterfaceBody</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:redefine>
+
+  
+  
+  
+  <xbgf:redefine>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ElementValueArrayInitializer</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>{</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>ElementValues</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <terminal>,</terminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>}</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:redefine>
+
+  
+  
+  
+  <xbgf:replace>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <terminal>ClassName</terminal>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ClassName</nonterminal>
+    </bgf:expression>
+  </xbgf:replace>
+
+<xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
+
+  
+  
+  <xbgf:unite>
+    <add>ConstantModifers</add>
+    <to>ConstantModifiers</to>
+  </xbgf:unite>
+
+  
+  
+  
+  <xbgf:define>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>TypeParameters</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>&lt;</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TypeParameterList</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>&gt;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  
+  
+  <xbgf:define>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>TypeParameterList</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>TypeParameterList</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>,</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>TypeParameter</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>TypeParameter</nonterminal>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:vertical>
+    <nonterminal>TypeParameterList</nonterminal>
+  </xbgf:vertical>
+
+  
+  
+  <xbgf:unite>
+    <add>SimpleTypeName</add>
+    <to>Identifier</to>
+  </xbgf:unite>
+
+  
+  
+  
+  <xbgf:define>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ClassName</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>AmbiguousName</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>.</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:vertical>
+    <nonterminal>ClassName</nonterminal>
+  </xbgf:vertical>
+
+  
+  
+  <xbgf:unite>
+    <add>Expression1</add>
+    <to>Expression</to>
+  </xbgf:unite>
+  
+  <xbgf:unite>
+    <add>Expression2</add>
+    <to>Expression</to>
+  </xbgf:unite>
+
+  
+  <xbgf:horizontal><nonterminal>CastExpression</nonterminal></xbgf:horizontal>
+  <xbgf:factor>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>PrimitiveType</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>UnaryExpression</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>PrimitiveType</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>Dims</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>UnaryExpression</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <sequence>
+        <bgf:expression>
+          <terminal>(</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>PrimitiveType</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <epsilon />
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>Dims</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>)</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>UnaryExpression</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  <xbgf:massage>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <choice>
+        <bgf:expression>
+          <epsilon />
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <optional>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:massage>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <optional>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <optional>
+        <bgf:expression>
+          <nonterminal>Dims</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:vertical>
+    <nonterminal>CastExpression</nonterminal>
+  </xbgf:vertical>
+
+  
+  
+  <xbgf:remove>
+    <vertical>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>TypeName</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>TypeName</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>.</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Identifier</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:remove>
+
+  
+  
+  <xbgf:appear>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>AnnotationTypeElementDeclaration</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>AbstractMethodModifiers</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>(</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>)</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <optional>
+                  <bgf:expression>
+                    <nonterminal>Dims</nonterminal>
+                  </bgf:expression>
+                </optional>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>DefaultValue</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>;</terminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:appear>
+
+  
+  
+  <xbgf:widen>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>VariableModifiers</nonterminal>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <optional>
+        <bgf:expression>
+          <nonterminal>VariableModifiers</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <in>
+      <nonterminal>FormalParameter</nonterminal>
+    </in>
+  </xbgf:widen>
+
+  
+  
+  <xbgf:widen>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>VariableModifiers</nonterminal>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <optional>
+        <bgf:expression>
+          <nonterminal>VariableModifiers</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <in>
+      <nonterminal>LastFormalParameter</nonterminal>
+    </in>
+  </xbgf:widen>
+  
+  
+  <xbgf:widen>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>VariableModifiers</nonterminal>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <optional>
+        <bgf:expression>
+          <nonterminal>VariableModifiers</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <in>
+      <nonterminal>LocalVariableDeclaration</nonterminal>
+    </in>
+  </xbgf:widen>
+<xbgf:rename>
+    <nonterminal>
+      <from>ClassModifier</from>
+      <to>Modifier</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassModifiers</from>
+      <to>Modifiers</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  
+  <xbgf:rename>
+    <nonterminal>
+      <from>AmbiguousName</from>
+      <to>QualifiedIdentifier</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  
+  <xbgf:rename>
+    <nonterminal>
+      <from>PrimitiveType</from>
+      <to>BasicType</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>InterfaceTypeList</from>
+      <to>TypeList</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ActualTypeArgument</from>
+      <to>TypeArgument</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  
+  <xbgf:rename>
+    <nonterminal>
+      <from>ConditionalExpression</from>
+      <to>Expression1</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ConditionalOrExpression</from>
+      <to>Expression2</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>UnaryExpression</from>
+      <to>Expression3</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  
+  <xbgf:rename>
+    <nonterminal>
+      <from>InterfaceMemberDeclaration</from>
+      <to>InterfaceBodyDeclaration</to>
+    </nonterminal>
+  </xbgf:rename>
+
+</xbgf:sequence>

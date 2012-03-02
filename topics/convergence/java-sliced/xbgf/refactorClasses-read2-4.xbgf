@@ -1,0 +1,20 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:horizontal><nonterminal>InterfaceBodyDeclaration</nonterminal></xbgf:horizontal>
+    <xbgf:extract>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <nonterminal>ClassDeclaration</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>InterfaceDeclaration</nonterminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    <xbgf:vertical>
+      <nonterminal>InterfaceBodyDeclaration</nonterminal>
+    </xbgf:vertical>
+  </xbgf:sequence>

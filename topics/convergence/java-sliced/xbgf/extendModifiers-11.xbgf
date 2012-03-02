@@ -1,0 +1,25 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:yaccify>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ConstantModifiers</nonterminal>
+      <bgf:expression>
+        <nonterminal>ConstantModifier</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ConstantModifiers</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>ConstantModifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ConstantModifiers</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:yaccify>
+
+  
+  
+  </xbgf:sequence>

@@ -1,0 +1,13 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:narrow>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <optional>
+        <bgf:expression>
+          <nonterminal>ForInit</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ForInit</nonterminal>
+    </bgf:expression>
+  </xbgf:narrow>
+  </xbgf:sequence>

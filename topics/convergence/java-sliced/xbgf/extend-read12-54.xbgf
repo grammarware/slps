@@ -1,0 +1,20 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:upgrade>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ExceptionTypeList</nonterminal>
+      <bgf:expression>
+        <marked>
+          <bgf:expression>
+            <nonterminal>ExceptionType</nonterminal>
+          </bgf:expression>
+        </marked>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ExceptionType</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  
+  </xbgf:sequence>

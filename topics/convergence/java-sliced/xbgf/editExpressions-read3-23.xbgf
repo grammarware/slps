@@ -1,0 +1,20 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>Expressions</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <terminal>,</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>StatementExpression</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+  </xbgf:sequence>

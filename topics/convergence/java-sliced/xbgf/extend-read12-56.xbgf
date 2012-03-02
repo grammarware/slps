@@ -1,0 +1,12 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>SurgeryOnTypeName</nonterminal>
+      <bgf:expression>
+        <nonterminal>TypeName</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <in>
+      <nonterminal>ArrayCreationExpression</nonterminal>
+    </in>
+  </xbgf:extract>
+  </xbgf:sequence>

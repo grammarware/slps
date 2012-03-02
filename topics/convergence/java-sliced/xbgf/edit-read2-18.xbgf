@@ -1,0 +1,8 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>TypeList</nonterminal>
+    <in>
+      <nonterminal>VoidInterfaceMethodDeclaratorRest</nonterminal>
+    </in>
+  </xbgf:unfold>
+  
+  </xbgf:sequence>

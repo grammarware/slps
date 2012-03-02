@@ -1,0 +1,22 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>PostfixOp</nonterminal>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <terminal>++</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>--</terminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </bgf:production>
+      <in>
+        <nonterminal>PostfixExpression</nonterminal>
+      </in>
+    </xbgf:extract>
+    <xbgf:vertical>
+      <nonterminal>PostfixOp</nonterminal>
+    </xbgf:vertical>
+  </xbgf:sequence>

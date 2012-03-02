@@ -1,0 +1,21 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:add>
+    <vertical>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>VariableModifiers</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>VariableModifiers</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>VariableModifier</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
+
+  
+  
+  </xbgf:sequence>

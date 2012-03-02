@@ -1,0 +1,63 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:appear>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>IdentifierSuffix</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>.</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <choice>
+              <bgf:expression>
+                <terminal>class</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>ExplicitGenericInvocation</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>this</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>super</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>Arguments</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+              <bgf:expression>
+                <sequence>
+                  <bgf:expression>
+                    <terminal>new</terminal>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <marked>
+                      <bgf:expression>
+                        <optional>
+                          <bgf:expression>
+                            <nonterminal>NonWildcardTypeArguments</nonterminal>
+                          </bgf:expression>
+                        </optional>
+                      </bgf:expression>
+                    </marked>
+                  </bgf:expression>
+                  <bgf:expression>
+                    <nonterminal>InnerCreator</nonterminal>
+                  </bgf:expression>
+                </sequence>
+              </bgf:expression>
+            </choice>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:appear>
+
+  
+  
+  
+  
+
+</xbgf:sequence>

@@ -1,0 +1,16 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:introduce>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>DefaultValue</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>default</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ElementValue</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  </xbgf:sequence>

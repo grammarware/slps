@@ -1,0 +1,27 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:add>
+    <vertical>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>ArrayCreationExpression</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>new</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>TypeName</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ArrayInitializer</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
+
+  
+  
+  </xbgf:sequence>

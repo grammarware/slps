@@ -1,0 +1,11 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:undefine>
+    <nonterminal>MultiplicativeExpression</nonterminal>
+    <nonterminal>AdditiveExpression</nonterminal>
+    <nonterminal>ShiftExpression</nonterminal>
+    <nonterminal>RelationalExpression</nonterminal>
+    <nonterminal>EqualityExpression</nonterminal>
+    <nonterminal>AndExpression</nonterminal>
+    <nonterminal>ExclusiveOrExpression</nonterminal>
+    <nonterminal>InclusiveOrExpression</nonterminal>
+  </xbgf:undefine>
+  </xbgf:sequence>

@@ -1,0 +1,27 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
+
+  
+  <xbgf:eliminate><nonterminal>Goal</nonterminal></xbgf:eliminate>
+
+<xbgf:rename>
+    <nonterminal>
+      <from>UnaryExpression</from>
+      <to>Expression3</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ConditionalOrExpression</from>
+      <to>Expression2</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>AssignmentExpression</from>
+      <to>Expression1</to>
+    </nonterminal>
+  </xbgf:rename>
+
+</xbgf:sequence>

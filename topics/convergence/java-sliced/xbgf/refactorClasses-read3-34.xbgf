@@ -1,0 +1,7 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>Dims</nonterminal>
+    <in>
+      <nonterminal>BracketsOpt</nonterminal>
+    </in>
+  </xbgf:unfold>
+  </xbgf:sequence>

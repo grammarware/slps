@@ -1,0 +1,11 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:horizontal><nonterminal>ReferenceType</nonterminal></xbgf:horizontal>
+    <xbgf:unfold>
+      <nonterminal>ReferenceType</nonterminal>
+      <in>
+        <nonterminal>ArrayType</nonterminal>
+      </in>
+    </xbgf:unfold>
+    <xbgf:vertical>
+      <nonterminal>ReferenceType</nonterminal>
+    </xbgf:vertical>
+  </xbgf:sequence>

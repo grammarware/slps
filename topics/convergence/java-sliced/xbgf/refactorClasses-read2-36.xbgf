@@ -1,0 +1,13 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>MethodOrFieldRest</nonterminal>
+      <bgf:expression>
+        <nonterminal>MethodDeclaratorRest</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <in>
+      <nonterminal>MethodOrFieldDecl</nonterminal>
+    </in>
+  </xbgf:extract>
+  
+  </xbgf:sequence>

@@ -1,0 +1,46 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unite>
+      <add>ConditionalAndExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    
+    <xbgf:unite>
+      <add>InclusiveOrExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    
+    <xbgf:unite>
+      <add>ExclusiveOrExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    
+    <xbgf:unite>
+      <add>AndExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    
+    <xbgf:unite>
+      <add>EqualityExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    
+    <xbgf:unite>
+      <add>RelationalExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    
+    <xbgf:unite>
+      <add>ShiftExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    
+    <xbgf:unite>
+      <add>AdditiveExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    
+    <xbgf:unite>
+      <add>MultiplicativeExpression</add>
+      <to>Expression2</to>
+    </xbgf:unite>
+    <xbgf:horizontal><nonterminal>Expression2</nonterminal></xbgf:horizontal>
+  </xbgf:sequence>

@@ -1,0 +1,45 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:upgrade>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>RelationalExpression</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>RelationalExpression</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <terminal>instanceof</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>Type</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>TypeDeclSpecifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>TypeArguments</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>BracketsOpt</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+
+  
+  </xbgf:sequence>

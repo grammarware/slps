@@ -1,0 +1,19 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ForVarControlRest</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>:</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>Expression</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <in>
+      <nonterminal>ForControl</nonterminal>
+    </in>
+  </xbgf:extract>
+  </xbgf:sequence>

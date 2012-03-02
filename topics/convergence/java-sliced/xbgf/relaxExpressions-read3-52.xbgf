@@ -1,0 +1,28 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:narrow>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <star>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Expression1</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>AssignmentOperator</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <sequence>
+        <bgf:expression>
+          <nonterminal>Expression1</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>AssignmentOperator</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:narrow>
+  
+  </xbgf:sequence>

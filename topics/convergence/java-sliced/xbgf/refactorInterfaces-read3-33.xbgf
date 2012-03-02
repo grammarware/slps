@@ -1,0 +1,5 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unite>
+    <add>ExceptionTypeList</add>
+    <to>QualifiedIdentifierList</to>
+  </xbgf:unite>
+  </xbgf:sequence>

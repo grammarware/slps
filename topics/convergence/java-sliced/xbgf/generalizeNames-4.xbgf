@@ -1,0 +1,6 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unite>
+    <add>PackageOrTypeName</add>
+    <to>QualifiedIdentifier</to>
+  </xbgf:unite>
+  
+  </xbgf:sequence>

@@ -1,0 +1,9 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:replace>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>FormalParameterList</nonterminal>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>FormalParameterDecls</nonterminal>
+    </bgf:expression>
+  </xbgf:replace>
+  </xbgf:sequence>

@@ -1,0 +1,12 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>AnnotationConstantRest</nonterminal>
+      <bgf:expression>
+        <nonterminal>VariableDeclarators</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <in>
+      <nonterminal>AnnotationTypeElementRest</nonterminal>
+    </in>
+  </xbgf:extract>
+  </xbgf:sequence>

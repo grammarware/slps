@@ -1,0 +1,20 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:upgrade>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>InterfaceTypeList</nonterminal>
+      <bgf:expression>
+        <marked>
+          <bgf:expression>
+            <nonterminal>Type</nonterminal>
+          </bgf:expression>
+        </marked>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>Type</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassOrInterfaceType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  
+  </xbgf:sequence>

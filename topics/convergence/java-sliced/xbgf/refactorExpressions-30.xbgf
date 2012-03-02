@@ -1,0 +1,6 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:undefine>
+    <nonterminal>LeftHandSide</nonterminal>
+    <nonterminal>Assignment</nonterminal>
+  </xbgf:undefine>
+  
+  </xbgf:sequence>

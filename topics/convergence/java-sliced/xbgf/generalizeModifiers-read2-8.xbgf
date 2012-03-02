@@ -1,0 +1,14 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ModifiersOpt</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <nonterminal>Modifier</nonterminal>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+
+</xbgf:sequence>

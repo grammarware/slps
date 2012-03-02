@@ -1,0 +1,31 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:introduce>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>Creator</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <optional>
+              <bgf:expression>
+                <nonterminal>NonWildcardTypeArguments</nonterminal>
+              </bgf:expression>
+            </optional>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>CreatedName</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <choice>
+              <bgf:expression>
+                <nonterminal>ArrayCreatorRest</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>ClassCreatorRest</nonterminal>
+              </bgf:expression>
+            </choice>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  
+  </xbgf:sequence>

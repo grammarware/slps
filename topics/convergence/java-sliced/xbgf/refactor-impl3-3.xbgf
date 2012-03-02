@@ -1,0 +1,5 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:vertical>
+      <nonterminal>Annotations</nonterminal>
+    </xbgf:vertical>
+    <xbgf:deyaccify><nonterminal>Annotations</nonterminal></xbgf:deyaccify>
+  </xbgf:sequence>

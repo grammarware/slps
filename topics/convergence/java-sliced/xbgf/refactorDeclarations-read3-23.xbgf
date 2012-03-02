@@ -1,0 +1,20 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:widen>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <plus>
+        <bgf:expression>
+          <nonterminal>dotId</nonterminal>
+        </bgf:expression>
+      </plus>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <star>
+        <bgf:expression>
+          <nonterminal>dotId</nonterminal>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+    <in>
+      <nonterminal>ImportDeclaration</nonterminal>
+    </in>
+  </xbgf:widen>
+  </xbgf:sequence>

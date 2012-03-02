@@ -1,0 +1,7 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>ParExpression</nonterminal>
+    <in>
+      <nonterminal>Expression3</nonterminal>
+    </in>
+  </xbgf:unfold>
+  </xbgf:sequence>

@@ -1,0 +1,6 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unite>
+    <add>AbstractMethodModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  
+  </xbgf:sequence>

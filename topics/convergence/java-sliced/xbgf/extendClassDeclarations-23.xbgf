@@ -1,0 +1,17 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:introduce>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>GenericMethodOrConstructorDecl</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>TypeParameters</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>GenericMethodOrConstructorRest</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+  
+  </xbgf:sequence>

@@ -1,0 +1,11 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:fold>
+    <nonterminal>ClassOrInterfaceType</nonterminal>
+    <in>
+      <nonterminal>ArrayCreationExpression</nonterminal>
+    </in>
+  </xbgf:fold>
+
+  
+  
+  
+  </xbgf:sequence>

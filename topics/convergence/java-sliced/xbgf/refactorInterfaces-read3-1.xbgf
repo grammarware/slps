@@ -1,0 +1,8 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>ModifiersOpt</nonterminal>
+    <in>
+      <nonterminal>NormalInterfaceDeclaration</nonterminal>
+    </in>
+  </xbgf:unfold>
+  
+  </xbgf:sequence>

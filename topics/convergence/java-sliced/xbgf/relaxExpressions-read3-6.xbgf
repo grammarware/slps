@@ -1,0 +1,32 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:widen>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <sequence>
+        <bgf:expression>
+          <nonterminal>InfixOp</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Expression3</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <star>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>InfixOp</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Expression3</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+    <in>
+      <nonterminal>Expression2</nonterminal>
+    </in>
+  </xbgf:widen>
+
+  
+  </xbgf:sequence>

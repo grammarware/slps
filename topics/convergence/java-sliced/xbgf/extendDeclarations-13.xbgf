@@ -1,0 +1,18 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:introduce>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ExplicitGenericInvocation</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <nonterminal>NonWildcardTypeArguments</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <nonterminal>ExplicitGenericInvocationSuffix</nonterminal>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+
+  
+  </xbgf:sequence>

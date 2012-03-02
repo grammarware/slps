@@ -1,0 +1,15 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>SwitchBlockStatementGroups</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <nonterminal>SwitchBlockStatementGroup</nonterminal>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+
+  
+  </xbgf:sequence>

@@ -1,0 +1,47 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:vertical>
+      <nonterminal>ClassBodyDeclaration</nonterminal>
+    </xbgf:vertical>
+
+    
+    
+    <xbgf:appear>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>ClassBodyDeclaration</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <marked>
+                <bgf:expression>
+                  <star>
+                    <bgf:expression>
+                      <nonterminal>Modifier</nonterminal>
+                    </bgf:expression>
+                  </star>
+                </bgf:expression>
+              </marked>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:appear>
+    <xbgf:fold>
+      <nonterminal>ModifiersOpt</nonterminal>
+    </xbgf:fold>
+
+    
+    
+    <xbgf:remove>
+      <vertical>
+        <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+          <nonterminal>ClassBodyDeclaration</nonterminal>
+          <bgf:expression>
+            <nonterminal>FieldDeclaration</nonterminal>
+          </bgf:expression>
+        </bgf:production>
+      </vertical>
+    </xbgf:remove>
+    <xbgf:eliminate><nonterminal>FieldDeclaration</nonterminal></xbgf:eliminate>
+  </xbgf:sequence>

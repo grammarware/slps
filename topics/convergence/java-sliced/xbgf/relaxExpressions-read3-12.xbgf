@@ -1,0 +1,9 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>AssignmentExpression</nonterminal>
+    <in>
+      <nonterminal>Expression</nonterminal>
+    </in>
+  </xbgf:unfold>
+
+  
+  </xbgf:sequence>

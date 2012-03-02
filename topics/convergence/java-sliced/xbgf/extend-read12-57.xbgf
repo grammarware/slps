@@ -1,0 +1,29 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:massage>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>TypeName</nonterminal>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <choice>
+        <bgf:expression>
+          <selectable>
+            <selector>ClassType</selector>
+            <bgf:expression>
+              <nonterminal>TypeName</nonterminal>
+            </bgf:expression>
+          </selectable>
+        </bgf:expression>
+        <bgf:expression>
+          <selectable>
+            <selector>InterfaceType</selector>
+            <bgf:expression>
+              <nonterminal>TypeName</nonterminal>
+            </bgf:expression>
+          </selectable>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <in>
+      <nonterminal>SurgeryOnTypeName</nonterminal>
+    </in>
+  </xbgf:massage>
+  </xbgf:sequence>

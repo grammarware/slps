@@ -1,0 +1,13 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>IdentifierSuffix</nonterminal>
+      <bgf:expression>
+        <nonterminal>Arguments</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <in>
+      <nonterminal>Primary</nonterminal>
+    </in>
+  </xbgf:extract>
+  
+  </xbgf:sequence>

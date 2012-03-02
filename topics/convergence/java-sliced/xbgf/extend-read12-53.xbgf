@@ -1,0 +1,18 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:introduce>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ExceptionType</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ExceptionType</nonterminal>
+      <bgf:expression>
+        <nonterminal>TypeVariable</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:introduce>
+
+  
+  
+  </xbgf:sequence>

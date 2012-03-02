@@ -1,0 +1,35 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:add>
+    <vertical>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>LastFormalParameter</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>VariableModifiers</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Type</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <terminal>...</terminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>VariableDeclaratorId</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
+
+  
+  
+  </xbgf:sequence>

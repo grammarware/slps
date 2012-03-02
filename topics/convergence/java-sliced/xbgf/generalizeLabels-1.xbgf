@@ -1,0 +1,22 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:extract>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>SwitchLabels</nonterminal>
+        <bgf:expression>
+          <nonterminal>SwitchLabel</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </xbgf:extract>
+    
+    <xbgf:widen>
+      <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>SwitchLabel</nonterminal>
+      </bgf:expression>
+      <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+        <plus>
+          <bgf:expression>
+            <nonterminal>SwitchLabel</nonterminal>
+          </bgf:expression>
+        </plus>
+      </bgf:expression>
+    </xbgf:widen>
+  </xbgf:sequence>

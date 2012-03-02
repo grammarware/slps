@@ -1,0 +1,37 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:factor>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <choice>
+        <bgf:expression>
+          <nonterminal>Block</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>static</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Block</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <sequence>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <epsilon />
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>static</terminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Block</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  </xbgf:sequence>

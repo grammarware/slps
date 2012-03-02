@@ -1,0 +1,7 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>PackageName</nonterminal>
+    <in>
+      <nonterminal>TypeImportOnDemandDeclaration</nonterminal>
+    </in>
+  </xbgf:unfold>
+  </xbgf:sequence>

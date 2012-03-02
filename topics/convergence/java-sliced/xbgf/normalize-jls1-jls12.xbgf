@@ -1,0 +1,28 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:rename>
+    <nonterminal>
+      <from>Name</from>
+      <to>QualifiedIdentifier</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>InterfaceMemberDeclaration</from>
+      <to>InterfaceBodyDeclaration</to>
+    </nonterminal>
+  </xbgf:rename>
+
+  
+  <xbgf:rename>
+    <nonterminal>
+      <from>PrimitiveType</from>
+      <to>BasicType</to>
+    </nonterminal>
+  </xbgf:rename>
+  <xbgf:rename>
+    <nonterminal>
+      <from>ClassTypeList</from>
+      <to>TypeList</to>
+    </nonterminal>
+  </xbgf:rename>
+
+</xbgf:sequence>

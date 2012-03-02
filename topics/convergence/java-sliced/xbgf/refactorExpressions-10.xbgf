@@ -1,0 +1,12 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:remove>
+    <vertical>
+      <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+        <nonterminal>PostfixExpression</nonterminal>
+        <bgf:expression>
+          <nonterminal>QualifiedIdentifier</nonterminal>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:remove>
+  
+  </xbgf:sequence>

@@ -1,0 +1,6 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+  </xbgf:unfold>
+
+  
+  </xbgf:sequence>

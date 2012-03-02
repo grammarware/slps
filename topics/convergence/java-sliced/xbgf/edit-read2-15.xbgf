@@ -1,0 +1,8 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>BracketsOpt</nonterminal>
+    <in>
+      <nonterminal>MethodDeclaratorRest</nonterminal>
+    </in>
+  </xbgf:unfold>
+  
+  </xbgf:sequence>

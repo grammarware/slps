@@ -1,0 +1,11 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:horizontal><nonterminal>PrefixOp</nonterminal></xbgf:horizontal>
+    <xbgf:inline>PrefixOp</xbgf:inline>
+    <xbgf:horizontal><nonterminal>PostfixOp</nonterminal></xbgf:horizontal>
+    <xbgf:inline>PostfixOp</xbgf:inline>
+    <xbgf:distribute>
+      <nonterminal>Expression3</nonterminal>
+    </xbgf:distribute>
+    <xbgf:vertical>
+      <nonterminal>Expression3</nonterminal>
+    </xbgf:vertical>
+  </xbgf:sequence>

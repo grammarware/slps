@@ -1,0 +1,7 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:unfold>
+    <nonterminal>FormalParameters</nonterminal>
+    <in>
+      <nonterminal>MethodDeclarator</nonterminal>
+    </in>
+  </xbgf:unfold>
+  </xbgf:sequence>

@@ -1,0 +1,27 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:upgrade>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>Super</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <terminal>extends</terminal>
+          </bgf:expression>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <nonterminal>ClassOrInterfaceType</nonterminal>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>ClassOrInterfaceType</nonterminal>
+      <bgf:expression>
+        <nonterminal>ClassType</nonterminal>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:upgrade>
+  
+  </xbgf:sequence>

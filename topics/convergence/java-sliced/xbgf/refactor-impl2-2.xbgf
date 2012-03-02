@@ -1,0 +1,29 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:massage>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <sequence>
+        <bgf:expression>
+          <nonterminal>CatchClause</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <star>
+            <bgf:expression>
+              <nonterminal>CatchClause</nonterminal>
+            </bgf:expression>
+          </star>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+      <plus>
+        <bgf:expression>
+          <nonterminal>CatchClause</nonterminal>
+        </bgf:expression>
+      </plus>
+    </bgf:expression>
+    <in>
+      <nonterminal>Catches</nonterminal>
+    </in>
+  </xbgf:massage>
+
+  
+  </xbgf:sequence>
