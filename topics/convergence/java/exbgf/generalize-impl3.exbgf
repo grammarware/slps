@@ -18,42 +18,22 @@ Later should be a massage (AB|AB?)->AB?
 		<nonterminal>Expression1Rest</nonterminal>
 	</exbgf:massageO2C>
 	<exbgf:distributeV>Expression1</exbgf:distributeV>
-	<xbgf:factor>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<nonterminal>Expression2</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>Expression1Rest</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>Expression2</nonterminal>
-				</bgf:expression>
-			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<nonterminal>Expression2</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<nonterminal>Expression1Rest</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-					</choice>
-				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</xbgf:factor>
+	<exbgf:factor-out>
+		<start>
+			<bgf:expression>
+				<nonterminal>Expression2</nonterminal>
+			</bgf:expression>
+		</start>
+		<choice>
+			<bgf:expression>
+				<nonterminal>Expression1Rest</nonterminal>
+			</bgf:expression>
+			<bgf:expression>
+				<epsilon/>
+			</bgf:expression>
+		</choice>
+		<tail/>
+	</exbgf:factor-out>
 	<exbgf:massageC2O>
 		<nonterminal>Expression1Rest</nonterminal>
 	</exbgf:massageC2O>

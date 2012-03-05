@@ -17,23 +17,21 @@
 		<to>ConstantModifier</to>
 	</exbgf:chainV>
 	<!-- CORRECTION -->
-	<xbgf:add>
-		<vertical>
-			<bgf:production>
-				<nonterminal>ConstantModifiers</nonterminal>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<nonterminal>ConstantModifiers</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>ConstantModifier</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</bgf:production>
-		</vertical>
-	</xbgf:add>
+	<exbgf:addV>
+		<bgf:production>
+			<nonterminal>ConstantModifiers</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>ConstantModifiers</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>ConstantModifier</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:addV>
 	<!-- ISSUE CORRECT SPECERROR
   The authors fix an old problem here. (fixed partially
   
@@ -75,96 +73,48 @@
                ,([t((), n(ReferenceType), t()), n(UnaryExpressionNotPlusMinus)]),
                ,([t((), n(PrimitiveType), ?(n(Dims)), t()), n(UnaryExpression)])])
   -->
-	<xbgf:horizontal>
-		<nonterminal>CastExpression</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:factor>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>(</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>PrimitiveType</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>)</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>UnaryExpression</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>(</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>PrimitiveType</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<optional>
-								<bgf:expression>
-									<nonterminal>Dims</nonterminal>
-								</bgf:expression>
-							</optional>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>)</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>UnaryExpression</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
+	<exbgf:atomicV>
+		<context>CastExpression</context>
+		<exbgf:factor-out>
+			<start>
 				<bgf:expression>
 					<terminal>(</terminal>
 				</bgf:expression>
 				<bgf:expression>
 					<nonterminal>PrimitiveType</nonterminal>
 				</bgf:expression>
+			</start>
+			<choice>
 				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-						<bgf:expression>
-							<optional>
-								<bgf:expression>
-									<nonterminal>Dims</nonterminal>
-								</bgf:expression>
-							</optional>
-						</bgf:expression>
-					</choice>
+					<epsilon/>
 				</bgf:expression>
+				<bgf:expression>
+					<optional>
+						<bgf:expression>
+							<nonterminal>Dims</nonterminal>
+						</bgf:expression>
+					</optional>
+				</bgf:expression>
+			</choice>
+			<tail>
 				<bgf:expression>
 					<terminal>)</terminal>
 				</bgf:expression>
 				<bgf:expression>
 					<nonterminal>UnaryExpression</nonterminal>
 				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</xbgf:factor>
-	<exbgf:massageC2O>
-		<optional>
-			<bgf:expression>
-				<nonterminal>Dims</nonterminal>
-			</bgf:expression>
-		</optional>
-	</exbgf:massageC2O>
-	<exbgf:massageDouble>
-		<optional/>
-		<nonterminal>Dims</nonterminal>
-	</exbgf:massageDouble>
-	<xbgf:vertical>
-		<nonterminal>CastExpression</nonterminal>
-	</xbgf:vertical>
+			</tail>
+		</exbgf:factor-out>
+		<exbgf:massageC2O>
+			<optional>
+				<bgf:expression>
+					<nonterminal>Dims</nonterminal>
+				</bgf:expression>
+			</optional>
+		</exbgf:massageC2O>
+		<exbgf:massage-double>
+			<optional/>
+			<nonterminal>Dims</nonterminal>
+		</exbgf:massage-double>
+	</exbgf:atomicV>
 </exbgf:sequence>

@@ -160,12 +160,12 @@
 			</bgf:expression>
 		</bgf:production>
 	</exbgf:removeV>
-	<exbgf:eliminateMany>
+	<exbgf:eliminate-many>
 		<nonterminal>ArrayCreationExpression</nonterminal>
 		<nonterminal>DimExprs</nonterminal>
 		<nonterminal>DimExpr</nonterminal>
 		<nonterminal>Dims</nonterminal>
-	</exbgf:eliminateMany>
+	</exbgf:eliminate-many>
 	<xbgf:introduce>
 		<bgf:production>
 			<nonterminal>ArrayCreatorRest</nonterminal>
@@ -716,11 +716,11 @@
 			</bgf:expression>
 		</bgf:production>
 	</exbgf:removeV>
-	<exbgf:eliminateMany>
+	<exbgf:eliminate-many>
 		<nonterminal>ArrayAccess</nonterminal>
 		<nonterminal>MethodInvocation</nonterminal>
 		<nonterminal>ClassInstanceCreationExpression</nonterminal>
-	</exbgf:eliminateMany>
+	</exbgf:eliminate-many>
 	<!--
    - Fail: Primary.
       - [], ,([n(Identifier), *(,([t(.), n(Identifier)])), ?(n(IdentifierSuffix))])

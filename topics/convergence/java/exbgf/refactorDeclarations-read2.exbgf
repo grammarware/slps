@@ -15,52 +15,29 @@
 	<xbgf:horizontal>
 		<nonterminal>VariableDeclarator</nonterminal>
 	</xbgf:horizontal>
-	<xbgf:factor>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<nonterminal>VariableDeclaratorId</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<nonterminal>VariableDeclaratorId</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>=</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>VariableInitializer</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<nonterminal>VariableDeclaratorId</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-						<bgf:expression>
-							<sequence>
-								<bgf:expression>
-									<terminal>=</terminal>
-								</bgf:expression>
-								<bgf:expression>
-									<nonterminal>VariableInitializer</nonterminal>
-								</bgf:expression>
-							</sequence>
-						</bgf:expression>
-					</choice>
-				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</xbgf:factor>
+	<exbgf:factor-out>
+		<start>
+			<bgf:expression>
+				<nonterminal>VariableDeclaratorId</nonterminal>
+			</bgf:expression>
+		</start>
+		<choice>
+			<bgf:expression>
+				<epsilon/>
+			</bgf:expression>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>=</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>VariableInitializer</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</choice>
+		<tail/>
+	</exbgf:factor-out>
 	<exbgf:massageC2O>
 		<sequence>
 			<bgf:expression>
@@ -113,14 +90,8 @@
       - [], ,([?(n(PackageDeclaration)), ?(n(ImportDeclarations)), ?(n(TypeDeclarations))])
   -->
 	<xbgf:inline>PackageDeclaration</xbgf:inline>
-	<exbgf:inlineY>ImportDeclarations</exbgf:inlineY>
-	<exbgf:massageOP2S>
-		<nonterminal>ImportDeclaration</nonterminal>
-	</exbgf:massageOP2S>
-	<exbgf:inlineY>TypeDeclarations</exbgf:inlineY>
-	<exbgf:massageOP2S>
-		<nonterminal>TypeDeclaration</nonterminal>
-	</exbgf:massageOP2S>
+	<exbgf:inlineYO starof="ImportDeclaration">ImportDeclarations</exbgf:inlineYO>
+	<exbgf:inlineYO starof="TypeDeclaration">TypeDeclarations</exbgf:inlineYO>
 	<!-- 
    - Fail: ImportDeclaration.
       - [], ,([t(import), n(Identifier), *(,([t(.), n(Identifier)])), ?(,([t(.), t(*)])), t((;))])
@@ -139,74 +110,36 @@
 	<xbgf:horizontal>
 		<nonterminal>ImportDeclaration</nonterminal>
 	</xbgf:horizontal>
-	<xbgf:factor>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>import</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>QualifiedIdentifier</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>;</terminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>import</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>QualifiedIdentifier</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>.</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>*</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>;</terminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<terminal>import</terminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>QualifiedIdentifier</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-						<bgf:expression>
-							<sequence>
-								<bgf:expression>
-									<terminal>.</terminal>
-								</bgf:expression>
-								<bgf:expression>
-									<terminal>*</terminal>
-								</bgf:expression>
-							</sequence>
-						</bgf:expression>
-					</choice>
-				</bgf:expression>
-				<bgf:expression>
-					<terminal>;</terminal>
-				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</xbgf:factor>
+	<exbgf:factor-out>
+		<start>
+			<bgf:expression>
+				<terminal>import</terminal>
+			</bgf:expression>
+			<bgf:expression>
+				<nonterminal>QualifiedIdentifier</nonterminal>
+			</bgf:expression>
+		</start>
+		<choice>
+			<bgf:expression>
+				<epsilon/>
+			</bgf:expression>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>.</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>*</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</choice>
+		<tail>
+			<bgf:expression>
+				<terminal>;</terminal>
+			</bgf:expression>
+		</tail>
+	</exbgf:factor-out>
 	<exbgf:massageC2O>
 		<sequence>
 			<bgf:expression>

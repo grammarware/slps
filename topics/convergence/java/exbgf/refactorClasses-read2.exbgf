@@ -141,10 +141,7 @@
      vs.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
   -->
-	<exbgf:inlineY>ClassBodyDeclarations</exbgf:inlineY>
-	<exbgf:massageOP2S>
-		<nonterminal>ClassBodyDeclaration</nonterminal>
-	</exbgf:massageOP2S>
+	<exbgf:inlineYO starof="ClassBodyDeclaration">ClassBodyDeclarations</exbgf:inlineYO>
 	<!--   
    - Fail: ClassDeclaration.
       - [], ,([t(class), n(Identifier), ?(,([t(extends), n(Type)])), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
@@ -218,42 +215,22 @@
 	<exbgf:inlineV>ResultType</exbgf:inlineV>
 	<xbgf:inline>MethodHeader</xbgf:inline>
 	<!-- refactor alternatives to BNF optional -->
-	<xbgf:factor>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<nonterminal>Block</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>static</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>Block</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>static</terminal>
-						</bgf:expression>
-					</choice>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>Block</nonterminal>
-				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</xbgf:factor>
+	<exbgf:factor-out>
+		<start/><choice>
+			<bgf:expression>
+				<epsilon/>
+			</bgf:expression>
+			<bgf:expression>
+				<terminal>static</terminal>
+			</bgf:expression>
+		</choice>
+		<tail>
+			<bgf:expression>
+				<nonterminal>Block</nonterminal>
+			</bgf:expression>
+		</tail>
+	</exbgf:factor-out>
+	
 	<exbgf:massageC2O>
 		<terminal>static</terminal>
 	</exbgf:massageC2O>

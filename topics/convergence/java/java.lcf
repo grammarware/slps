@@ -172,16 +172,13 @@
 			</nominal-matching>
 			<structural-matching>
 				<perform>deyaccify-read3</perform>
-				<!-- <perform>inlineForStatement</perform> -->
 				<perform>inlineStatements</perform>
 				<perform>refactorStatements-read3</perform>
 				<perform>refactorClasses-read3</perform>
 				<perform>refactorEnums</perform>
 			</structural-matching>
 			<relaxation>
-				<!-- <perform>generalizeModifiers-read3</perform> -->
 				<perform>relaxClasses-read3</perform>
-				<!-- <perform>generalizeNames</perform> -->
 				<perform>refactorTypes-read3</perform>
 				<perform>generalizeStatements</perform>
 				<perform>refactorInterfaces-read3</perform>

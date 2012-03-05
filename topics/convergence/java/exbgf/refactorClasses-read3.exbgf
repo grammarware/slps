@@ -96,11 +96,13 @@
      vs.
       - [], ,([t({), ?(n(ClassBodyDeclarations)), t(})])
   -->
-	<exbgf:inlineY>ClassBodyDeclarations</exbgf:inlineY>
-	<exbgf:massageOP2S>
-		<nonterminal>ClassBodyDeclaration</nonterminal>
-	</exbgf:massageOP2S>
-	<!-- modifiers -->
+	<exbgf:inlineYO starof="ClassBodyDeclaration">ClassBodyDeclarations</exbgf:inlineYO>
+	<!-- 
+	- Fail (1/1): NormalClassDeclaration.
+	      - [], ,([n(ModifiersOpt), t(class), n(Identifier), ?(n(TypeParameters)), ?(n(Super)), ?(n(Interfaces)), n(ClassBody)])
+	     vs.
+	      - [], ,([t(class), n(Identifier), ?(n(TypeParameters)), ?(n(Super)), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
+	 -->
 	<xbgf:unfold>
 		<nonterminal>ModifiersOpt</nonterminal>
 		<in>
@@ -158,7 +160,33 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:disappear>
-	<!-- RELAXATION -->
+	<xbgf:inline>Interfaces</xbgf:inline>
+	<!-- 
+	- Fail (4/1): ClassBodyDeclaration.
+      - [], n(ConstructorDeclaration)
+      - [], n(StaticInitializer)
+      - [], n(InstanceInitializer)
+      - [], n(ClassMemberDeclaration)
+     vs.
+      - [], ;([,([n(ModifiersOpt), n(Type), n(VariableDeclarators), t(;)]), ,([n(ModifiersOpt), ?(n(TypeParameters)), n(ResultType), n(Identifier), n(MethodDeclaratorRest)]), ,([n(ModifiersOpt), n(ClassDeclaration)]), ,([n(ModifiersOpt), n(InterfaceDeclaration)]), t(;), ,([?(t(static)), n(Block)]), ,([n(ModifiersOpt), ?(n(TypeParameters)), n(Identifier), n(ConstructorDeclaratorRest)])])
+    -->
+	<xbgf:inline>ConstructorDeclaration</xbgf:inline>
+	<xbgf:inline>InstanceInitializer</xbgf:inline>
+	<xbgf:inline>StaticInitializer</xbgf:inline>
+	<!-- 
+	ClassMemberDeclaration:
+	        FieldDeclaration
+	ClassMemberDeclaration:
+	        MethodDeclaration
+	ClassMemberDeclaration:
+	        ClassDeclaration
+	ClassMemberDeclaration:
+	        InterfaceDeclaration
+	ClassMemberDeclaration:
+	        ";"
+	 -->
+	<xbgf:inline>FieldDeclaration</xbgf:inline>
+	<xbgf:inline>MethodDeclaration</xbgf:inline>
 	<xbgf:appear>
 		<bgf:production>
 			<nonterminal>ClassMemberDeclaration</nonterminal>
@@ -212,72 +240,190 @@
 			<nonterminal>ClassMemberDeclaration</nonterminal>
 		</in>
 	</xbgf:fold>
-	<xbgf:horizontal>
-		<nonterminal>ClassMemberDeclaration</nonterminal>
-	</xbgf:horizontal>
+	<exbgf:inlineV>ClassMemberDeclaration</exbgf:inlineV>
 	<!-- 
-   - Fail: NormalClassDeclaration.
-      - [], ,([t(class), n(Identifier), ?(,([t(extends), n(Type)])), ?(,([t(implements), n(TypeList)])), n(ClassBody)])
+	- Fail (4/1): ClassBodyDeclaration.
+      - [], ,([n(ModifiersOpt), n(ConstructorDeclarator), ?(n(Throws)), n(ConstructorBody)])
+      - [], ,([t(static), n(Block)])
+      - [], n(Block)
+      - [], ;([,([n(ModifiersOpt), n(Type), n(VariableDeclarators), t(;)]), ,([n(MethodHeader), n(MethodBody)]), ,([n(ModifiersOpt), n(ClassDeclaration)]), ,([n(ModifiersOpt), n(InterfaceDeclaration)]), t(;)])
      vs.
-      - [], ,([n(ModifiersOpt), t(class), n(Identifier), ?(n(Super)), ?(n(Interfaces)), n(ClassBody)])
-  -->
-	<xbgf:inline>Interfaces</xbgf:inline>
-	<!-- 
-   - Fail: ClassBodyDeclaration.
-      - [], ;([... ,([?(t(static)), n(Block)]), ...])
-     vs.
-      - [], ;([..., n(InstanceInitializer), n(StaticInitializer), ...])
-  -->
-	<xbgf:inline>InstanceInitializer</xbgf:inline>
-	<xbgf:inline>StaticInitializer</xbgf:inline>
-	<xbgf:horizontal>
-		<nonterminal>ClassBodyDeclaration</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:factor>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<nonterminal>Block</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>static</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>Block</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>static</terminal>
-						</bgf:expression>
-					</choice>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>Block</nonterminal>
-				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</xbgf:factor>
+      - [], ;([,([n(ModifiersOpt), n(Type), n(VariableDeclarators), t(;)]), ,([n(ModifiersOpt), ?(n(TypeParameters)), n(ResultType), n(Identifier), n(MethodDeclaratorRest)]), ,([n(ModifiersOpt), n(ClassDeclaration)]), ,([n(ModifiersOpt), n(InterfaceDeclaration)]), t(;), ,([?(t(static)), n(Block)]), ,([n(ModifiersOpt), ?(n(TypeParameters)), n(Identifier), n(ConstructorDeclaratorRest)])])
+    -->
+	<!-- TODO: massage instead of factor? -->
+	<exbgf:factor-out>
+		<context>ClassBodyDeclaration</context>
+		<start/>
+		<choice>
+			<bgf:expression>
+				<epsilon/>
+			</bgf:expression>
+			<bgf:expression>
+				<terminal>static</terminal>
+			</bgf:expression>
+		</choice>
+		<tail>
+			<bgf:expression>
+				<nonterminal>Block</nonterminal>
+			</bgf:expression>
+		</tail>
+	</exbgf:factor-out>
 	<exbgf:massageC2O>
 		<terminal>static</terminal>
 	</exbgf:massageC2O>
+	<!-- proceeding with inlines -->
+	<xbgf:inline>ConstructorDeclarator</xbgf:inline>
+	<exbgf:inlineY>MethodDeclarator</exbgf:inlineY>
+	<xbgf:inline>MethodHeader</xbgf:inline>
+	<!-- <exbgf:inlineV>MethodBody</exbgf:inlineV> -->
+	<!-- [Dims] vs BracketsOpt-->
+	<exbgf:extract-twice>
+		<bgf:production>
+			<nonterminal>BracketsOpt</nonterminal>
+			<bgf:expression>
+				<optional>
+					<bgf:expression>
+						<nonterminal>Dims</nonterminal>
+					</bgf:expression>
+				</optional>
+			</bgf:expression>
+		</bgf:production>
+		<!-- not 100% clean: deyaccification has impact on everyone, not just BracketsOpt -->
+		<exbgf:unfoldY>
+			<nonterminal>Dims</nonterminal>
+			<in>BracketsOpt</in>
+		</exbgf:unfoldY>
+		<exbgf:massageOP2S>
+			<sequence>
+				<bgf:expression>
+					<terminal>[</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>]</terminal>
+				</bgf:expression>
+			</sequence>
+		</exbgf:massageOP2S>
+	</exbgf:extract-twice>
 	<!-- 
-   - Fail: FormalParameters.
-      - [], ,([t((), ?(n(FormalParameterDecls)), t())])
+	- Fail (7/1): ClassBodyDeclaration.
+      - [], ,([n(ModifiersOpt), ?(n(TypeParameters)), n(Identifier), t((), ?(n(FormalParameterList)), t()), ?(n(Throws)), n(ConstructorBody)])
+      - [], ,([n(ModifiersOpt), ?(n(TypeParameters)), n(ResultType), n(Identifier), t((), ?(n(FormalParameterList)), t()), n(BracketsOpt), ?(n(Throws)), n(MethodBody)])
      vs.
-      - [], ;([n(FormalParameter), ,([n(FormalParameters), t((,)), n(FormalParameter)])])
-  -->
+      - [], ;([
+			,([n(ModifiersOpt), ?(n(TypeParameters)), n(ResultType), n(Identifier), n(MethodDeclaratorRest)]),
+			,([n(ModifiersOpt), ?(n(TypeParameters)), n(Identifier), n(ConstructorDeclaratorRest)])])
+    -->
+	<xbgf:extract>
+		<bgf:production>
+			<nonterminal>ConstructorDeclaratorRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>(</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>FormalParameterList</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>)</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>Throws</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>ConstructorBody</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:extract>
+	<xbgf:extract>
+		<bgf:production>
+			<nonterminal>MethodDeclaratorRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>(</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>FormalParameterList</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>)</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>BracketsOpt</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>Throws</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>MethodBody</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:extract>
+	<xbgf:horizontal>
+		<nonterminal>ClassBodyDeclaration</nonterminal>
+	</xbgf:horizontal>
+	<!-- 
+	- Fail (2/1): FormalParameters.
+      - [], ,([n(FormalParameters), t(,), n(FormalParameter)])
+      - [], n(FormalParameter)
+     vs.
+      - [], ,([t((), ?(n(FormalParameterDecls)), t())])
+    -->
+	<exbgf:reextractY>
+		<bgf:production>
+			<nonterminal>FormalParameters</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>(</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<optional>
+							<bgf:expression>
+								<nonterminal>FormalParameterList</nonterminal>
+							</bgf:expression>
+						</optional>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>)</terminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:reextractY>
+	<xbgf:unfold>
+		<nonterminal>FormalParameters</nonterminal>
+		<in>
+			<nonterminal>AbstractMethodDeclaration</nonterminal>
+		</in>
+	</xbgf:unfold>
+	<!-- 
+	- Fail (1/1): FormalParameterList.
+      - [], ,([n(FormalParameter), *(,([t(,), n(FormalParameter)])), t(,), n(LastFormalParameter)])
+     vs.
+      - [], ,([n(FormalParameters), t(,), n(LastFormalParameter)])
+	 -->
 	<xbgf:introduce>
 		<bgf:production>
 			<nonterminal>FormalParameterDeclsRest</nonterminal>
@@ -324,6 +470,19 @@
 				</sequence>
 			</bgf:expression>
 		</bgf:production>
+		<bgf:production>
+			<nonterminal>FormalParameterDeclsRest</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>...</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>VariableDeclaratorId</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
 	</xbgf:introduce>
 	<xbgf:extract>
 		<bgf:production>
@@ -354,163 +513,51 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:extract>
-	<!-- BREFACTOR -->
-	<exbgf:redefine>
-		<bgf:production>
-			<nonterminal>FormalParameters</nonterminal>
-			<bgf:expression>
-				<sequence>
-					<bgf:expression>
-						<terminal>(</terminal>
-					</bgf:expression>
-					<bgf:expression>
-						<optional>
-							<bgf:expression>
-								<nonterminal>FormalParameterDecls</nonterminal>
-							</bgf:expression>
-						</optional>
-					</bgf:expression>
-					<bgf:expression>
-						<terminal>)</terminal>
-					</bgf:expression>
-				</sequence>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:redefine>
-	<!-- RELAXATION -->
-	<exbgf:addV>
-		<bgf:production>
-			<nonterminal>FormalParameterDeclsRest</nonterminal>
-			<bgf:expression>
-				<sequence>
-					<bgf:expression>
-						<terminal>...</terminal>
-					</bgf:expression>
-					<bgf:expression>
-						<nonterminal>VariableDeclaratorId</nonterminal>
-					</bgf:expression>
-				</sequence>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:addV>
 	<!-- 
-   - Fail: ClassBodyDeclaration.
-      - [], ;([t((;)), ... ,([n(ModifiersOpt), n(MemberDecl)])])
+	- Fail (1/1): FormalParameters.
+      - [], ,([t((), ?(n(FormalParameterList)), t())])
      vs.
-      - [], ;([n(ClassMemberDeclaration), ... , n(ConstructorDeclaration)])
-  -->
-	<xbgf:inline>ClassMemberDeclaration</xbgf:inline>
-	<xbgf:inline>ConstructorDeclaration</xbgf:inline>
-	<xbgf:inline>MethodDeclaration</xbgf:inline>
-	<xbgf:inline>ConstructorDeclarator</xbgf:inline>
-	<xbgf:inline>MethodHeader</xbgf:inline>
-	<xbgf:inline>FieldDeclaration</xbgf:inline>
-	<!-- 
-  MethodDeclarator is defined as:
-     Identifier "(" [ FormalParameterList ] ")"
-     MethodDeclarator "[" "]"
-  -->
-	<exbgf:inlineY>MethodDeclarator</exbgf:inlineY>
-	<!--   BREFACTOR 
-      - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(Identifier), t((), ?(n(FormalParameterList)), t()), ?(n(Throws)), n(ConstructorBody)])
-  -->
+      - [], ,([t((), ?(n(FormalParameterDecls)), t())])
+    -->
 	<exbgf:renameN>
+		<!-- TODO: move to BUGCORRECTION	 -->
 		<from>FormalParameterList</from>
 		<to>FormalParameterDecls</to>
-		<in>ClassBodyDeclaration</in>
+		<in>FormalParameters</in>
 	</exbgf:renameN>
-	<xbgf:fold>
-		<nonterminal>FormalParameters</nonterminal>
-		<in>
-			<nonterminal>ClassBodyDeclaration</nonterminal>
-		</in>
-	</xbgf:fold>
-	<xbgf:extract>
-		<bgf:production>
-			<nonterminal>ConstructorDeclaratorRest</nonterminal>
-			<bgf:expression>
-				<sequence>
-					<bgf:expression>
-						<nonterminal>FormalParameters</nonterminal>
-					</bgf:expression>
-					<bgf:expression>
-						<optional>
-							<bgf:expression>
-								<nonterminal>Throws</nonterminal>
-							</bgf:expression>
-						</optional>
-					</bgf:expression>
-					<bgf:expression>
-						<nonterminal>ConstructorBody</nonterminal>
-					</bgf:expression>
-				</sequence>
-			</bgf:expression>
-		</bgf:production>
-	</xbgf:extract>
-	<!-- [Dims] vs BracketsOpt-->
-	<xbgf:extract>
-		<bgf:production>
-			<nonterminal>BracketsOpt</nonterminal>
-			<bgf:expression>
-				<optional>
-					<bgf:expression>
-						<nonterminal>Dims</nonterminal>
-					</bgf:expression>
-				</optional>
-			</bgf:expression>
-		</bgf:production>
-	</xbgf:extract>
-	<xbgf:deyaccify>
-		<nonterminal>Dims</nonterminal>
-	</xbgf:deyaccify>
-	<xbgf:unfold>
-		<nonterminal>Dims</nonterminal>
-		<in>
-			<nonterminal>BracketsOpt</nonterminal>
-		</in>
-	</xbgf:unfold>
-	<exbgf:massageOP2S>
-		<sequence>
-			<bgf:expression>
-				<terminal>[</terminal>
-			</bgf:expression>
-			<bgf:expression>
-				<terminal>]</terminal>
-			</bgf:expression>
-		</sequence>
-	</exbgf:massageOP2S>
-	<!--
-      - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(ResultType), n(MethodDeclarator), ?(n(Throws)), n(MethodBody)])
-  -->
-	<xbgf:fold>
-		<nonterminal>BracketsOpt</nonterminal>
-	</xbgf:fold>
-	<xbgf:extract>
-		<bgf:production>
-			<nonterminal>MethodDeclaratorRest</nonterminal>
-			<bgf:expression>
-				<sequence>
-					<bgf:expression>
-						<nonterminal>FormalParameters</nonterminal>
-					</bgf:expression>
-					<bgf:expression>
-						<nonterminal>BracketsOpt</nonterminal>
-					</bgf:expression>
-					<bgf:expression>
-						<optional>
-							<bgf:expression>
-								<nonterminal>Throws</nonterminal>
-							</bgf:expression>
-						</optional>
-					</bgf:expression>
-					<bgf:expression>
-						<nonterminal>MethodBody</nonterminal>
-					</bgf:expression>
-				</sequence>
-			</bgf:expression>
-		</bgf:production>
-		<in>
-			<nonterminal>ClassBodyDeclaration</nonterminal>
-		</in>
-	</xbgf:extract>
+	<!-- 
+	- Fail (1/1): FormalParameterList.
+      - [], ,([n(FormalParameter), *(,([t(,), n(FormalParameter)])), t(,), n(LastFormalParameter)])
+     vs.
+      - [], ,([n(FormalParameters), t(,), n(LastFormalParameter)])
+    -->
+	<exbgf:shieldedD>
+		<!-- TODO: also a BUG? -->
+		<entity>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>FormalParameter</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<star>
+						<bgf:expression>
+							<sequence>
+								<bgf:expression>
+									<terminal>,</terminal>
+								</bgf:expression>
+								<bgf:expression>
+									<nonterminal>FormalParameter</nonterminal>
+								</bgf:expression>
+							</sequence>
+						</bgf:expression>
+					</star>
+				</bgf:expression>
+			</sequence>
+		</entity>
+		<exbgf:renameN>
+			<from>SHIELDED-ENTITY</from>
+			<to>FormalParameters</to>
+			<in>FormalParameterList</in>
+		</exbgf:renameN>
+	</exbgf:shieldedD>
 </exbgf:sequence>

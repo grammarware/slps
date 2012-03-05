@@ -47,38 +47,36 @@
       - [], ,([t(if), n(ParExpression), n(Statement)])
   -->
 	<!-- RELAXATION -->
-	<xbgf:remove>
-		<vertical>
-			<bgf:production>
-				<nonterminal>Statement</nonterminal>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>if</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>(</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>Expression</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>)</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>StatementNoShortIf</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>else</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>Statement</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</bgf:production>
-		</vertical>
-	</xbgf:remove>
+	<exbgf:removeV>
+		<bgf:production>
+			<nonterminal>Statement</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>if</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>(</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Expression</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>)</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>StatementNoShortIf</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<terminal>else</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Statement</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</exbgf:removeV>
 	<!-- RELAXATION -->
 	<xbgf:appear>
 		<bgf:production>
@@ -128,18 +126,12 @@
 	<xbgf:undefine>
 		<nonterminal>StatementNoShortIf</nonterminal>
 	</xbgf:undefine>
-	<xbgf:eliminate>
+	<exbgf:eliminate-many>
 		<nonterminal>WhileStatementNoShortIf</nonterminal>
-	</xbgf:eliminate>
-	<xbgf:eliminate>
 		<nonterminal>IfThenElseStatementNoShortIf</nonterminal>
-	</xbgf:eliminate>
-	<xbgf:eliminate>
 		<nonterminal>ForStatementNoShortIf</nonterminal>
-	</xbgf:eliminate>
-	<xbgf:eliminate>
 		<nonterminal>LabeledStatementNoShortIf</nonterminal>
-	</xbgf:eliminate>
+	</exbgf:eliminate-many>
 	<!-- ISSUE CORRECT
   The collected grammar permits the use of SwitchLabels.
   
@@ -212,28 +204,13 @@
      vs.
       - [], ;([n(LocalVariableDeclarationStatement), n(ClassDeclaration), n(Statement)])
   -->
+	<!-- a bit brutal because ClassOrInterfaceDeclaration is not yet defined -->
 	<!-- CORRECTION -->
-	<xbgf:remove>
-		<vertical>
-			<bgf:production>
-				<nonterminal>BlockStatement</nonterminal>
-				<bgf:expression>
-					<nonterminal>ClassDeclaration</nonterminal>
-				</bgf:expression>
-			</bgf:production>
-		</vertical>
-	</xbgf:remove>
-	<!-- CORRECTION -->
-	<xbgf:add>
-		<vertical>
-			<bgf:production>
-				<nonterminal>BlockStatement</nonterminal>
-				<bgf:expression>
-					<nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-				</bgf:expression>
-			</bgf:production>
-		</vertical>
-	</xbgf:add>
+	<exbgf:renameN>
+		<from>ClassDeclaration</from>
+		<to>ClassOrInterfaceDeclaration</to>
+		<in>BlockStatement</in>
+	</exbgf:renameN>
 	<!-- CORRECTION -->
 	<xbgf:appear>
 		<bgf:production>

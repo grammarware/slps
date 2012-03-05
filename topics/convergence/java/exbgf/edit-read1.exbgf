@@ -27,49 +27,25 @@
 	</xbgf:introduce>
 	<!--
   Local substitution:
-  
-     - Fail: TypeImportOnDemandDeclaration.
+       - Fail: TypeImportOnDemandDeclaration.
       - [], ,([t(import), n(PackageName), t(.), t(*), t((;))])
      vs.
       - [], ,([t(import), n(PackageOrTypeName), t(.), t(*), t((;))])
-  -->
-	<xbgf:deyaccify>
-		<nonterminal>PackageName</nonterminal>
-	</xbgf:deyaccify>
-	<xbgf:deyaccify>
-		<nonterminal>PackageOrTypeName</nonterminal>
-	</xbgf:deyaccify>
-	<xbgf:unfold>
-		<nonterminal>PackageName</nonterminal>
-		<in>
-			<nonterminal>TypeImportOnDemandDeclaration</nonterminal>
-		</in>
-	</xbgf:unfold>
-	<xbgf:fold>
-		<nonterminal>PackageOrTypeName</nonterminal>
-		<in>
-			<nonterminal>TypeImportOnDemandDeclaration</nonterminal>
-		</in>
-	</xbgf:fold>
-	<!-- 
-  Local substitution:
      - Fail: TypeName.
       - [], ;([n(Identifier), ,([n(PackageName), t(.), n(Identifier)])])
      vs.
       - [], ;([n(Identifier), ,([n(PackageOrTypeName), t(.), n(Identifier)])])
-   -->
-	<xbgf:unfold>
+  -->
+	<exbgf:unfoldY>
 		<nonterminal>PackageName</nonterminal>
-		<in>
-			<nonterminal>TypeName</nonterminal>
-		</in>
-	</xbgf:unfold>
-	<xbgf:fold>
+		<in>TypeImportOnDemandDeclaration</in>
+		<in>TypeName</in>
+	</exbgf:unfoldY>
+	<exbgf:foldY>
 		<nonterminal>PackageOrTypeName</nonterminal>
-		<in>
-			<nonterminal>TypeName</nonterminal>
-		</in>
-	</xbgf:fold>
+		<in>TypeImportOnDemandDeclaration</in>
+		<in>TypeName</in>
+	</exbgf:foldY>
 	<!-- 
   Local substitute + add + horizontal:
      - Fail: ClassInstanceCreationExpression.
@@ -117,8 +93,8 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:upgrade>
-	<!-- EXTENSION -->
 	<exbgf:addV>
+		<!-- EXTENSION -->
 		<bgf:production>
 			<nonterminal>ClassInstanceCreationExpression</nonterminal>
 			<bgf:expression>
@@ -148,9 +124,7 @@
 				</sequence>
 			</bgf:expression>
 		</bgf:production>
-	</exbgf:addV>
-	<!-- EXTENSION -->
-	<exbgf:addV>
+		<!-- EXTENSION -->
 		<bgf:production>
 			<nonterminal>ClassInstanceCreationExpression</nonterminal>
 			<bgf:expression>
@@ -191,65 +165,10 @@
 			</bgf:expression>
 		</bgf:production>
 	</exbgf:addV>
-	<xbgf:horizontal>
-		<nonterminal>ClassInstanceCreationExpression</nonterminal>
-	</xbgf:horizontal>
-	<xbgf:factor>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>new</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>ClassOrInterfaceType</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>(</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<optional>
-								<bgf:expression>
-									<nonterminal>ArgumentList</nonterminal>
-								</bgf:expression>
-							</optional>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>)</terminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>new</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>ClassOrInterfaceType</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>(</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<optional>
-								<bgf:expression>
-									<nonterminal>ArgumentList</nonterminal>
-								</bgf:expression>
-							</optional>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>)</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>ClassBody</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
+	<exbgf:atomicV>
+		<context>ClassInstanceCreationExpression</context>
+		<exbgf:factor-out>
+			<start>
 				<bgf:expression>
 					<terminal>new</terminal>
 				</bgf:expression>
@@ -269,23 +188,19 @@
 				<bgf:expression>
 					<terminal>)</terminal>
 				</bgf:expression>
+			</start>
+			<choice>
 				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>ClassBody</nonterminal>
-						</bgf:expression>
-					</choice>
+					<epsilon/>
 				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</xbgf:factor>
-	<exbgf:massageC2O>
-		<nonterminal>ClassBody</nonterminal>
-	</exbgf:massageC2O>
-	<xbgf:vertical>
-		<nonterminal>ClassInstanceCreationExpression</nonterminal>
-	</xbgf:vertical>
+				<bgf:expression>
+					<nonterminal>ClassBody</nonterminal>
+				</bgf:expression>
+			</choice>
+			<tail/>
+		</exbgf:factor-out>
+		<exbgf:massageC2O>
+			<nonterminal>ClassBody</nonterminal>
+		</exbgf:massageC2O>
+	</exbgf:atomicV>
 </exbgf:sequence>

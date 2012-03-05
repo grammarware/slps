@@ -9,20 +9,21 @@
   -->
 	<exbgf:inlineV>ArrayCreationExpression</exbgf:inlineV>
 	<exbgf:inlineV>PrimaryNoNewArray</exbgf:inlineV>
-	<exbgf:inlineY>Dims</exbgf:inlineY>
-	<exbgf:inlineY>DimExprs</exbgf:inlineY>
-	<xbgf:inline>DimExpr</xbgf:inline>
-	<!-- this should be killed later -->
-	<exbgf:massageOP2S>
-		<sequence>
-			<bgf:expression>
-				<terminal>[</terminal>
-			</bgf:expression>
-			<bgf:expression>
-				<terminal>]</terminal>
-			</bgf:expression>
-		</sequence>
-	</exbgf:massageOP2S>
+	<exbgf:shielded>
+		<entity>
+			<sequence>
+				<bgf:expression>
+					<terminal>[</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>]</terminal>
+				</bgf:expression>
+			</sequence>
+		</entity>
+		<exbgf:inlineYO starof="SHIELDED-ENTITY">Dims</exbgf:inlineYO>
+		<exbgf:inlineY>DimExprs</exbgf:inlineY>
+		<xbgf:inline>DimExpr</xbgf:inline>
+	</exbgf:shielded>
 	<xbgf:fold>
 		<nonterminal>BracketsOpt</nonterminal>
 		<in>
@@ -56,64 +57,28 @@
      vs.
       - [], ,([t(super), n(SuperSuffix)])
   -->
-		<xbgf:factor>
-			<bgf:expression>
-				<choice>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<terminal>super</terminal>
-							</bgf:expression>
-							<bgf:expression>
-								<terminal>.</terminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>Identifier</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>Arguments</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<terminal>super</terminal>
-							</bgf:expression>
-							<bgf:expression>
-								<terminal>.</terminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>Identifier</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-				</choice>
-			</bgf:expression>
-			<bgf:expression>
-				<sequence>
-					<bgf:expression>
-						<terminal>super</terminal>
-					</bgf:expression>
-					<bgf:expression>
-						<terminal>.</terminal>
-					</bgf:expression>
-					<bgf:expression>
-						<nonterminal>Identifier</nonterminal>
-					</bgf:expression>
-					<bgf:expression>
-						<choice>
-							<bgf:expression>
-								<nonterminal>Arguments</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<epsilon/>
-							</bgf:expression>
-						</choice>
-					</bgf:expression>
-				</sequence>
-			</bgf:expression>
-		</xbgf:factor>
+		<exbgf:factor-out>
+			<start>
+				<bgf:expression>
+					<terminal>super</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>.</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>Identifier</nonterminal>
+				</bgf:expression>
+			</start>
+			<choice>
+				<bgf:expression>
+					<nonterminal>Arguments</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<epsilon/>
+				</bgf:expression>
+			</choice>
+			<tail/>
+		</exbgf:factor-out>
 		<exbgf:massageC2O>
 			<nonterminal>Arguments</nonterminal>
 		</exbgf:massageC2O>

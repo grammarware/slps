@@ -118,10 +118,7 @@
      vs.
       - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
   -->
-	<exbgf:inlineY>InterfaceMemberDeclarations</exbgf:inlineY>
-	<exbgf:massageOP2S>
-		<nonterminal>InterfaceBodyDeclaration</nonterminal>
-	</exbgf:massageOP2S>
+	<exbgf:inlineYO starof="InterfaceBodyDeclaration">InterfaceMemberDeclarations</exbgf:inlineYO>
 	<!-- 
    - Fail: InterfaceBodyDeclaration.
       - [], ;([t((;)), ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
@@ -183,29 +180,29 @@
 			<nonterminal>InterfaceBodyDeclaration</nonterminal>
 		</in>
 	</xbgf:fold>
-	<exbgf:distributeH>InterfaceBodyDeclaration</exbgf:distributeH>
-	<!-- Serious lack of everything -->
-	<!-- RELAXATION -->
-	<!-- TODO: why are we dumping ConstantDeclaration??? -->
-	<exbgf:removeV>
-		<bgf:production>
-			<nonterminal>InterfaceBodyDeclaration</nonterminal>
-			<bgf:expression>
-				<sequence>
-					<bgf:expression>
-						<nonterminal>ModifiersOpt</nonterminal>
-					</bgf:expression>
-					<bgf:expression>
-						<nonterminal>Type</nonterminal>
-					</bgf:expression>
-					<bgf:expression>
-						<nonterminal>VariableDeclarators</nonterminal>
-					</bgf:expression>
-				</sequence>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:removeV>
-	<!-- 
+	<exbgf:atomicC>
+		<context>InterfaceBodyDeclaration</context>
+		<!-- RELAXATION -->
+		<!-- TODO: why are we dumping ConstantDeclaration??? -->
+		<exbgf:removeV>
+			<bgf:production>
+				<nonterminal>InterfaceBodyDeclaration</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>ModifiersOpt</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>Type</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>VariableDeclarators</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</exbgf:removeV>
+		<!-- 
    - Fail: InterfaceBodyDeclaration.
       - [], ;([t((;)), ,([n(ModifiersOpt), n(InterfaceMemberDecl)])])
      vs.
@@ -215,6 +212,7 @@
       - [], ,([n(ModifiersOpt), n(Type), n(Identifier), n(FormalParameters), ?(,([t(throws), n(TypeList)])), t((;))])
       - [], ,([n(ModifiersOpt), n(Type), n(VariableDeclarator), *(,([t((,)), n(VariableDeclarator)]))])
   -->
+	</exbgf:atomicC>
 	<exbgf:shielded>
 		<entity>
 			<sequence>
@@ -267,7 +265,7 @@
 				</bgf:expression>
 			</bgf:production>
 			<in>
-				<nonterminal>SHIELDED-BY-EXBGF</nonterminal>
+				<nonterminal>SHIELDED-ENTITY</nonterminal>
 			</in>
 		</xbgf:extract>
 		<xbgf:extract>
@@ -301,88 +299,27 @@
 				</bgf:expression>
 			</bgf:production>
 		</xbgf:extract>
-		<!--  InterfaceMemberDecl is defined as:
- InterfaceMethodOrFieldDecl
- "void" Identifier VoidInterfaceMethodDeclaratorRest
- ClassOrInterfaceDeclaration
--->
-		<xbgf:horizontal>
-			<nonterminal>InterfaceBodyDeclaration</nonterminal>
-		</xbgf:horizontal>
-		<xbgf:factor>
-			<bgf:expression>
-				<choice>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>ModifiersOpt</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>ModifiersOpt</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>SHIELDED-BY-EXBGF</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>ModifiersOpt</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-				</choice>
-			</bgf:expression>
-			<bgf:expression>
-				<sequence>
-					<bgf:expression>
-						<nonterminal>ModifiersOpt</nonterminal>
-					</bgf:expression>
-					<bgf:expression>
-						<choice>
-							<bgf:expression>
-								<nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>SHIELDED-BY-EXBGF</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-							</bgf:expression>
-						</choice>
-					</bgf:expression>
-				</sequence>
-			</bgf:expression>
-		</xbgf:factor>
-		<exbgf:extractC>
-			<bgf:production>
-				<nonterminal>InterfaceMemberDecl</nonterminal>
+		<!-- this cannot be in the context of exbgf:pull-out because InterfaceBodyDeclaration will not be possible to verticalise back-->
+		<exbgf:pull-out>
+			<nonterminal>InterfaceMemberDecl</nonterminal>
+			<start>
 				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>SHIELDED-BY-EXBGF</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>ClassOrInterfaceDeclaration</nonterminal>
-						</bgf:expression>
-					</choice>
+					<nonterminal>ModifiersOpt</nonterminal>
 				</bgf:expression>
-			</bgf:production>
-		</exbgf:extractC>
+			</start>
+			<choice>
+				<bgf:expression>
+					<nonterminal>InterfaceMethodOrFieldDecl</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>SHIELDED-ENTITY</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>ClassOrInterfaceDeclaration</nonterminal>
+				</bgf:expression>
+			</choice>
+			<tail/>
+		</exbgf:pull-out>
 	</exbgf:shielded>
 	<xbgf:extract>
 		<bgf:production>

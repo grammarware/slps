@@ -155,17 +155,15 @@ vs
 	<exbgf:distributeH>Expression3</exbgf:distributeH>
 	<xbgf:inline>PostDecrementExpression</xbgf:inline>
 	<xbgf:inline>PostIncrementExpression</xbgf:inline>
-	<!-- RELAXATION -->
 	<exbgf:removeV>
+		<!-- RELAXATION -->
 		<bgf:production>
 			<nonterminal>PostfixExpression</nonterminal>
 			<bgf:expression>
 				<nonterminal>QualifiedIdentifier</nonterminal>
 			</bgf:expression>
 		</bgf:production>
-	</exbgf:removeV>
-	<!-- RELAXATION -->
-	<exbgf:removeV>
+		<!-- RELAXATION -->
 		<bgf:production>
 			<nonterminal>PostfixExpression</nonterminal>
 			<bgf:expression>
@@ -183,8 +181,8 @@ vs
 	<xbgf:deyaccify>
 		<nonterminal>PostfixExpression</nonterminal>
 	</xbgf:deyaccify>
-	<!-- RELAXATION -->
 	<exbgf:addH>
+		<!-- RELAXATION -->
 		<bgf:production>
 			<nonterminal>PostfixExpression</nonterminal>
 			<bgf:expression>
@@ -736,42 +734,22 @@ vs
 	<xbgf:horizontal>
 		<nonterminal>ConditionalExpression</nonterminal>
 	</xbgf:horizontal>
-	<xbgf:factor>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<nonterminal>Expression2</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<nonterminal>Expression2</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>Expression1Rest</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<nonterminal>Expression2</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>Expression1Rest</nonterminal>
-						</bgf:expression>
-					</choice>
-				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</xbgf:factor>
+	<exbgf:factor-out>
+		<start>
+			<bgf:expression>
+				<nonterminal>Expression2</nonterminal>
+			</bgf:expression>
+		</start>
+		<choice>
+			<bgf:expression>
+				<epsilon/>
+			</bgf:expression>
+			<bgf:expression>
+				<nonterminal>Expression1Rest</nonterminal>
+			</bgf:expression>
+		</choice>
+		<tail/>
+	</exbgf:factor-out>
 	<exbgf:massageC2O>
 		<nonterminal>Expression1Rest</nonterminal>
 	</exbgf:massageC2O>

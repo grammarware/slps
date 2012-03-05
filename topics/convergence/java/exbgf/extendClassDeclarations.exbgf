@@ -343,115 +343,50 @@
   -->
 	<exbgf:atomicI>
 		<context>ClassBodyDeclaration</context>
-		<xbgf:factor>
-			<bgf:expression>
-				<choice>
-					<bgf:expression>
-						<sequence>
+		<exbgf:factor-out>
+			<start>
 							<bgf:expression>
 								<nonterminal>ModifiersOpt</nonterminal>
 							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>MethodOrFieldDecl</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>ModifiersOpt</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<terminal>void</terminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>Identifier</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>MethodDeclaratorRest</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>ModifiersOpt</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>Identifier</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>ConstructorDeclaratorRest</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>ModifiersOpt</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>ClassDeclaration</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>ModifiersOpt</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>InterfaceDeclaration</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-				</choice>
-			</bgf:expression>
-			<bgf:expression>
-				<sequence>
-					<bgf:expression>
-						<nonterminal>ModifiersOpt</nonterminal>
-					</bgf:expression>
-					<bgf:expression>
-						<choice>
-							<bgf:expression>
-								<nonterminal>MethodOrFieldDecl</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<sequence>
-									<bgf:expression>
-										<terminal>void</terminal>
-									</bgf:expression>
-									<bgf:expression>
-										<nonterminal>Identifier</nonterminal>
-									</bgf:expression>
-									<bgf:expression>
-										<nonterminal>MethodDeclaratorRest</nonterminal>
-									</bgf:expression>
-								</sequence>
-							</bgf:expression>
-							<bgf:expression>
-								<sequence>
-									<bgf:expression>
-										<nonterminal>Identifier</nonterminal>
-									</bgf:expression>
-									<bgf:expression>
-										<nonterminal>ConstructorDeclaratorRest</nonterminal>
-									</bgf:expression>
-								</sequence>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>ClassDeclaration</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>InterfaceDeclaration</nonterminal>
-							</bgf:expression>
-						</choice>
-					</bgf:expression>
-				</sequence>
-			</bgf:expression>
-		</xbgf:factor>
-		<xbgf:extract>
+			</start>
+			<choice>
+				<bgf:expression>
+					<nonterminal>MethodOrFieldDecl</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>void</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>Identifier</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>MethodDeclaratorRest</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>Identifier</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>ConstructorDeclaratorRest</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>ClassDeclaration</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>InterfaceDeclaration</nonterminal>
+				</bgf:expression>
+			</choice>
+			<tail/>
+		</exbgf:factor-out>
+	
+		<exbgf:extractC>
 			<bgf:production>
 				<nonterminal>MemberDecl</nonterminal>
 				<bgf:expression>
@@ -491,11 +426,8 @@
 					</choice>
 				</bgf:expression>
 			</bgf:production>
-		</xbgf:extract>
+		</exbgf:extractC>
 	</exbgf:atomicI>
-	<xbgf:vertical>
-		<nonterminal>MemberDecl</nonterminal>
-	</xbgf:vertical>
 	<!-- ISSUE EXTEND
    - Fail: MemberDecl.
       - [], ,([t(void), n(Identifier), n(MethodDeclaratorRest)])

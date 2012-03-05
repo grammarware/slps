@@ -43,10 +43,10 @@
 			</bgf:expression>
 		</bgf:production>
 	</exbgf:reextract>
-	<exbgf:massageDouble>
+	<exbgf:massage-double>
 		<optional/>
 		<nonterminal>Expression1Rest</nonterminal>
-	</exbgf:massageDouble>
+	</exbgf:massage-double>
 	<exbgf:inlineV>MemberDecl</exbgf:inlineV>
 	<!--  <xbgf:distribute>
     <nonterminal>ClassBodyDeclaration</nonterminal>
