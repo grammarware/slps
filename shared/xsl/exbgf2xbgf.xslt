@@ -1443,15 +1443,28 @@
 			Factor an expression in a concise way.
 			If context is given, it is assumed to be defined vertically (so we transparently horizontalize it during this operation).
 			exbgf:factor-out(s,c,t) = xbgf:factor ( choice(s c1 t, s c2 t, ...), sequence(s c t) )
+			
+			Possibly includes exbgf:massageC2O
 		-->
 		<xsl:choose>
-			<xsl:when test="context">
+			<xsl:when test="context and not(optional)">
 				<xbgf:horizontal>
 					<nonterminal>
 						<xsl:value-of select="context"/>
 					</nonterminal>
 				</xbgf:horizontal>
 				<xsl:message>[EXBGF] factor-out ::= horizontal + factor + vertical</xsl:message>
+			</xsl:when>
+			<xsl:when test="context and optional">
+				<xbgf:horizontal>
+					<nonterminal>
+						<xsl:value-of select="context"/>
+					</nonterminal>
+				</xbgf:horizontal>
+				<xsl:message>[EXBGF] factor-out ::= horizontal + factor + massage + vertical</xsl:message>
+			</xsl:when>
+			<xsl:when test="not(context) and optional">
+				<xsl:message>[EXBGF] factor-out ::= factor + massage</xsl:message>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:message>[EXBGF] factor-out ::= factor</xsl:message>
@@ -1469,18 +1482,91 @@
 							</sequence>
 						</bgf:expression>
 					</xsl:for-each>
+					<xsl:if test="optional">
+						<bgf:expression>
+							<sequence>
+								<xsl:copy-of select="start/*"/>
+								<xsl:copy-of select="optional/*"/>
+								<xsl:copy-of select="tail/*"/>
+							</sequence>
+						</bgf:expression>
+						<bgf:expression>
+							<sequence>
+								<xsl:copy-of select="start/*"/>
+								<xsl:copy-of select="tail/*"/>
+							</sequence>
+						</bgf:expression>
+					</xsl:if>
 				</choice>
 			</bgf:expression>
 			<bgf:expression>
 				<sequence>
 					<xsl:copy-of select="start/*"/>
-					<bgf:expression>
-						<xsl:copy-of select="choice"/>
-					</bgf:expression>
+					<xsl:if test="choice">
+						<bgf:expression>
+							<xsl:copy-of select="choice"/>
+						</bgf:expression>
+					</xsl:if>
+					<xsl:if test="optional">
+						<bgf:expression>
+							<choice>
+								<xsl:copy-of select="optional/*"/>
+								<bgf:expression>
+									<epsilon/>
+								</bgf:expression>
+							</choice>
+						</bgf:expression>
+					</xsl:if>
 					<xsl:copy-of select="tail/*"/>
 				</sequence>
 			</bgf:expression>
 		</xbgf:factor>
+		<xsl:if test="optional and not(optional/bgf:expression/plus)">
+			<xbgf:massage>
+				<bgf:expression>
+					<choice>
+						<xsl:copy-of select="optional/*"/>
+						<bgf:expression>
+							<epsilon/>
+						</bgf:expression>
+					</choice>
+				</bgf:expression>
+				<bgf:expression>
+					<xsl:copy-of select="optional"/>
+				</bgf:expression>
+				<xsl:if test="context">
+					<in>
+						<nonterminal>
+							<xsl:value-of select="context[1]"/>
+						</nonterminal>
+					</in>
+				</xsl:if>
+			</xbgf:massage>
+		</xsl:if>
+		<xsl:if test="optional and optional/bgf:expression/plus">
+			<xbgf:massage>
+				<bgf:expression>
+					<choice>
+						<xsl:copy-of select="optional/*"/>
+						<bgf:expression>
+							<epsilon/>
+						</bgf:expression>
+					</choice>
+				</bgf:expression>
+				<bgf:expression>
+					<star>
+						<xsl:copy-of select="optional/bgf:expression/plus/*"/>
+					</star>
+				</bgf:expression>
+				<xsl:if test="context">
+					<in>
+						<nonterminal>
+							<xsl:value-of select="context[1]"/>
+						</nonterminal>
+					</in>
+				</xsl:if>
+			</xbgf:massage>
+		</xsl:if>
 		<xsl:if test="context">
 			<xbgf:vertical>
 				<nonterminal>

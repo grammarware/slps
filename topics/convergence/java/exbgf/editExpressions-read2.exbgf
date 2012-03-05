@@ -333,8 +333,8 @@
 		<exbgf:widen12O>
 			<nonterminal>IdentifierSuffix</nonterminal>
 		</exbgf:widen12O>
-		<!-- RELAXATION -->
 		<exbgf:addV>
+			<!-- RELAXATION -->
 			<bgf:production>
 				<nonterminal>IdentifierSuffix</nonterminal>
 				<bgf:expression>

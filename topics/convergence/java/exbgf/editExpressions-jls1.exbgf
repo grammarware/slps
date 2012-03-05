@@ -69,19 +69,13 @@
 					<nonterminal>Identifier</nonterminal>
 				</bgf:expression>
 			</start>
-			<choice>
+			<optional>
 				<bgf:expression>
 					<nonterminal>Arguments</nonterminal>
 				</bgf:expression>
-				<bgf:expression>
-					<epsilon/>
-				</bgf:expression>
-			</choice>
+			</optional>
 			<tail/>
 		</exbgf:factor-out>
-		<exbgf:massageC2O>
-			<nonterminal>Arguments</nonterminal>
-		</exbgf:massageC2O>
 		<xbgf:extract>
 			<bgf:production>
 				<nonterminal>SuperSuffix</nonterminal>

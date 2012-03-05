@@ -133,10 +133,7 @@
 					<nonterminal>Statement</nonterminal>
 				</bgf:expression>
 			</start>
-			<choice>
-				<bgf:expression>
-					<epsilon/>
-				</bgf:expression>
+			<optional>
 				<bgf:expression>
 					<sequence>
 						<bgf:expression>
@@ -147,19 +144,9 @@
 						</bgf:expression>
 					</sequence>
 				</bgf:expression>
-			</choice>
+			</optional>
 			<tail/>
 		</exbgf:factor-out>
-		<exbgf:massageC2O>
-			<sequence>
-				<bgf:expression>
-					<terminal>else</terminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>Statement</nonterminal>
-				</bgf:expression>
-			</sequence>
-		</exbgf:massageC2O>
 	</exbgf:atomicV>
 	<!-- Getting rid of all of them -->
 	<!-- BREFACTOR -->
@@ -372,10 +359,7 @@
 				<nonterminal>VariableDeclaratorId</nonterminal>
 			</bgf:expression>
 		</start>
-		<choice>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
+		<optional>
 			<bgf:expression>
 				<sequence>
 					<bgf:expression>
@@ -386,19 +370,9 @@
 					</bgf:expression>
 				</sequence>
 			</bgf:expression>
-		</choice>
+		</optional>
 		<tail/>
 	</exbgf:factor-out>
-	<exbgf:massageC2O>
-		<sequence>
-			<bgf:expression>
-				<terminal>=</terminal>
-			</bgf:expression>
-			<bgf:expression>
-				<nonterminal>VariableInitializer</nonterminal>
-			</bgf:expression>
-		</sequence>
-	</exbgf:massageC2O>
 	<xbgf:unfold>
 		<nonterminal>VariableDeclaratorId</nonterminal>
 		<in>

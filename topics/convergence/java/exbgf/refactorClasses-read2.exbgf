@@ -216,24 +216,18 @@
 	<xbgf:inline>MethodHeader</xbgf:inline>
 	<!-- refactor alternatives to BNF optional -->
 	<exbgf:factor-out>
-		<start/><choice>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
+		<start/>
+		<optional>
 			<bgf:expression>
 				<terminal>static</terminal>
 			</bgf:expression>
-		</choice>
+		</optional>
 		<tail>
 			<bgf:expression>
 				<nonterminal>Block</nonterminal>
 			</bgf:expression>
 		</tail>
 	</exbgf:factor-out>
-	
-	<exbgf:massageC2O>
-		<terminal>static</terminal>
-	</exbgf:massageC2O>
 	<!-- next step -->
 	<xbgf:extract>
 		<bgf:production>

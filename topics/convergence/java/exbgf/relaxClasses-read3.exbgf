@@ -5,7 +5,8 @@
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(Identifier), n(ConstructorDeclaratorRest)])
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), ;([n(Type), t(void)]), n(Identifier), n(MethodDeclaratorRest)])
   -->
-	<exbgf:factor-out>
+	<exbgf:pull-out>
+		<nonterminal>GenericMethodOrConstructorRest</nonterminal>
 		<start>
 			<bgf:expression>
 				<nonterminal>ModifiersOpt</nonterminal>
@@ -44,42 +45,10 @@
 			</bgf:expression>
 		</choice>
 		<tail/>
-	</exbgf:factor-out>
-	<exbgf:extractC>
-		<bgf:production>
-			<nonterminal>GenericMethodOrConstructorRest</nonterminal>
-			<bgf:expression>
-				<choice>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>Identifier</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>ConstructorDeclaratorRest</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>ResultType</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>Identifier</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>MethodDeclaratorRest</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-				</choice>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:extractC>
+	</exbgf:pull-out>
 	<!-- 
       - [], ,([*(n(Modifier)), ?(n(TypeParameters)), n(GenericMethodOrConstructorRest)])
-  -->
+	-->
 	<xbgf:extract>
 		<bgf:production>
 			<nonterminal>GenericMethodOrConstructorDecl</nonterminal>
@@ -302,98 +271,53 @@
       - [], ,([*(n(Modifier)), n(ClassDeclaration)])
       - [], ,([*(n(Modifier)), n(GenericMethodOrConstructorDecl)])
   -->
-	<exbgf:atomicV>
+	<exbgf:pull-out>
+		<nonterminal>MemberDecl</nonterminal>
 		<context>ClassBodyDeclaration</context>
-		<exbgf:factor-out>
-			<start>
-				<bgf:expression>
-					<nonterminal>ModifiersOpt</nonterminal>
-				</bgf:expression>
-			</start>
-			<choice>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<nonterminal>Identifier</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>ConstructorDeclaratorRest</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>MethodOrFieldDecl</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>void</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>Identifier</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>VoidMethodDeclaratorRest</nonterminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>InterfaceDeclaration</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>ClassDeclaration</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>GenericMethodOrConstructorDecl</nonterminal>
-				</bgf:expression>
-			</choice>
-			<tail/>
-		</exbgf:factor-out>
-		<exbgf:extractC>
-			<bgf:production>
-				<nonterminal>MemberDecl</nonterminal>
-				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<sequence>
-								<bgf:expression>
-									<nonterminal>Identifier</nonterminal>
-								</bgf:expression>
-								<bgf:expression>
-									<nonterminal>ConstructorDeclaratorRest</nonterminal>
-								</bgf:expression>
-							</sequence>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>MethodOrFieldDecl</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<sequence>
-								<bgf:expression>
-									<terminal>void</terminal>
-								</bgf:expression>
-								<bgf:expression>
-									<nonterminal>Identifier</nonterminal>
-								</bgf:expression>
-								<bgf:expression>
-									<nonterminal>VoidMethodDeclaratorRest</nonterminal>
-								</bgf:expression>
-							</sequence>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>InterfaceDeclaration</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>ClassDeclaration</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>GenericMethodOrConstructorDecl</nonterminal>
-						</bgf:expression>
-					</choice>
-				</bgf:expression>
-			</bgf:production>
-		</exbgf:extractC>
-	</exbgf:atomicV>
+		<start>
+			<bgf:expression>
+				<nonterminal>ModifiersOpt</nonterminal>
+			</bgf:expression>
+		</start>
+		<choice>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>ConstructorDeclaratorRest</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+			<bgf:expression>
+				<nonterminal>MethodOrFieldDecl</nonterminal>
+			</bgf:expression>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<terminal>void</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>Identifier</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>VoidMethodDeclaratorRest</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+			<bgf:expression>
+				<nonterminal>InterfaceDeclaration</nonterminal>
+			</bgf:expression>
+			<bgf:expression>
+				<nonterminal>ClassDeclaration</nonterminal>
+			</bgf:expression>
+			<bgf:expression>
+				<nonterminal>GenericMethodOrConstructorDecl</nonterminal>
+			</bgf:expression>
+		</choice>
+		<tail/>
+	</exbgf:pull-out>
 	<!-- 
    - Fail: ClassOrInterfaceDeclaration.
       - [], ,([n(ModifiersOpt), ;([n(ClassDeclaration), n(InterfaceDeclaration)])])

@@ -1344,7 +1344,7 @@
 				<terminal>{</terminal>
 			</bgf:expression>
 		</start>
-		<choice>
+		<optional>
 			<bgf:expression>
 				<sequence>
 					<bgf:expression>
@@ -1373,42 +1373,11 @@
 					</bgf:expression>
 				</sequence>
 			</bgf:expression>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
-		</choice>
+		</optional>
 		<tail>
 			<bgf:expression>
 				<terminal>}</terminal>
 			</bgf:expression>
 		</tail>
 	</exbgf:factor-out>
-	<exbgf:massageC2O>
-		<sequence>
-			<bgf:expression>
-				<nonterminal>VariableInitializer</nonterminal>
-			</bgf:expression>
-			<bgf:expression>
-				<star>
-					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<terminal>,</terminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>VariableInitializer</nonterminal>
-							</bgf:expression>
-						</sequence>
-					</bgf:expression>
-				</star>
-			</bgf:expression>
-			<bgf:expression>
-				<optional>
-					<bgf:expression>
-						<terminal>,</terminal>
-					</bgf:expression>
-				</optional>
-			</bgf:expression>
-		</sequence>
-	</exbgf:massageC2O>
 </exbgf:sequence>

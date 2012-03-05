@@ -24,17 +24,11 @@ Later should be a massage (AB|AB?)->AB?
 				<nonterminal>Expression2</nonterminal>
 			</bgf:expression>
 		</start>
-		<choice>
+		<optional>
 			<bgf:expression>
 				<nonterminal>Expression1Rest</nonterminal>
 			</bgf:expression>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
-		</choice>
+		</optional>
 		<tail/>
 	</exbgf:factor-out>
-	<exbgf:massageC2O>
-		<nonterminal>Expression1Rest</nonterminal>
-	</exbgf:massageC2O>
 </exbgf:sequence>

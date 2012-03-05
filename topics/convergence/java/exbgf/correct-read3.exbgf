@@ -146,10 +146,7 @@
 					<nonterminal>PrimitiveType</nonterminal>
 				</bgf:expression>
 			</start>
-			<choice>
-				<bgf:expression>
-					<epsilon/>
-				</bgf:expression>
+			<optional>
 				<bgf:expression>
 					<optional>
 						<bgf:expression>
@@ -157,7 +154,7 @@
 						</bgf:expression>
 					</optional>
 				</bgf:expression>
-			</choice>
+			</optional>
 			<tail>
 				<bgf:expression>
 					<terminal>)</terminal>
@@ -167,13 +164,6 @@
 				</bgf:expression>
 			</tail>
 		</exbgf:factor-out>
-		<exbgf:massageC2O>
-			<optional>
-				<bgf:expression>
-					<nonterminal>Dims</nonterminal>
-				</bgf:expression>
-			</optional>
-		</exbgf:massageC2O>
 		<exbgf:massage-double>
 			<optional/>
 			<nonterminal>Dims</nonterminal>

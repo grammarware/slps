@@ -189,18 +189,12 @@
 					<terminal>)</terminal>
 				</bgf:expression>
 			</start>
-			<choice>
-				<bgf:expression>
-					<epsilon/>
-				</bgf:expression>
+			<optional>
 				<bgf:expression>
 					<nonterminal>ClassBody</nonterminal>
 				</bgf:expression>
-			</choice>
+			</optional>
 			<tail/>
 		</exbgf:factor-out>
-		<exbgf:massageC2O>
-			<nonterminal>ClassBody</nonterminal>
-		</exbgf:massageC2O>
 	</exbgf:atomicV>
 </exbgf:sequence>

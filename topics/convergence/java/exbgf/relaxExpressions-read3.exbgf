@@ -303,19 +303,13 @@
 				<nonterminal>Expression3</nonterminal>
 			</bgf:expression>
 		</start>
-		<choice>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
+		<optional>
 			<bgf:expression>
 				<nonterminal>Expression2Rest</nonterminal>
 			</bgf:expression>
-		</choice>
+		</optional>
 		<tail/>
 	</exbgf:factor-out>
-	<exbgf:massageC2O>
-		<nonterminal>Expression2Rest</nonterminal>
-	</exbgf:massageC2O>
 	<!-- 
    - Fail: Expression1.
       - [], ;([n(Expression2), ,([n(Expression2), t(?), n(Expression), t(:), n(Expression1)])])
@@ -352,19 +346,13 @@
 				<nonterminal>Expression2</nonterminal>
 			</bgf:expression>
 		</start>
-		<choice>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
+		<optional>
 			<bgf:expression>
 				<nonterminal>Expression1Rest</nonterminal>
 			</bgf:expression>
-		</choice>
+		</optional>
 		<tail/>
 	</exbgf:factor-out>
-	<exbgf:massageC2O>
-		<nonterminal>Expression1Rest</nonterminal>
-	</exbgf:massageC2O>
 	<!-- Prefixes -->
 	<xbgf:inline>PreIncrementExpression</xbgf:inline>
 	<xbgf:inline>PreDecrementExpression</xbgf:inline>
@@ -898,7 +886,7 @@
 	</xbgf:eliminate>
 	<exbgf:factor-out>
 		<start/>
-		<choice>
+		<optional>
 			<bgf:expression>
 				<plus>
 					<bgf:expression>
@@ -913,26 +901,13 @@
 					</bgf:expression>
 				</plus>
 			</bgf:expression>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
-		</choice>
+		</optional>
 		<tail>
 			<bgf:expression>
 				<nonterminal>Expression1</nonterminal>
 			</bgf:expression>
 		</tail>
 	</exbgf:factor-out>
-	<exbgf:massageC2S>
-		<sequence>
-			<bgf:expression>
-				<nonterminal>Expression1</nonterminal>
-			</bgf:expression>
-			<bgf:expression>
-				<nonterminal>AssignmentOperator</nonterminal>
-			</bgf:expression>
-		</sequence>
-	</exbgf:massageC2S>
 	<!-- a job for lassoc/rassoc??? -->
 	<!-- RELAXATION -->
 	<exbgf:narrowS21>

@@ -432,7 +432,7 @@
 				<terminal>(</terminal>
 			</bgf:expression>
 		</start>
-		<choice>
+		<optional>
 			<bgf:expression>
 				<sequence>
 					<bgf:expression>
@@ -443,10 +443,7 @@
 					</bgf:expression>
 				</sequence>
 			</bgf:expression>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
-		</choice>
+		</optional>
 		<tail>
 			<bgf:expression>
 				<nonterminal>ElementValue</nonterminal>
@@ -456,16 +453,7 @@
 			</bgf:expression>
 		</tail>
 	</exbgf:factor-out>
-	<exbgf:massageC2O>
-		<sequence>
-			<bgf:expression>
-				<nonterminal>Identifier</nonterminal>
-			</bgf:expression>
-			<bgf:expression>
-				<terminal>=</terminal>
-			</bgf:expression>
-		</sequence>
-	</exbgf:massageC2O>
+	<!-- the case is too complicated to let exbgf:factor-out treat it automatically -->
 	<exbgf:massageC2O>
 		<sequence>
 			<bgf:expression>

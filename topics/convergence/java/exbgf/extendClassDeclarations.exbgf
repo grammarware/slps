@@ -345,9 +345,9 @@
 		<context>ClassBodyDeclaration</context>
 		<exbgf:factor-out>
 			<start>
-							<bgf:expression>
-								<nonterminal>ModifiersOpt</nonterminal>
-							</bgf:expression>
+				<bgf:expression>
+					<nonterminal>ModifiersOpt</nonterminal>
+				</bgf:expression>
 			</start>
 			<choice>
 				<bgf:expression>
@@ -385,7 +385,6 @@
 			</choice>
 			<tail/>
 		</exbgf:factor-out>
-	
 		<exbgf:extractC>
 			<bgf:production>
 				<nonterminal>MemberDecl</nonterminal>

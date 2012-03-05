@@ -740,19 +740,13 @@ vs
 				<nonterminal>Expression2</nonterminal>
 			</bgf:expression>
 		</start>
-		<choice>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
+		<optional>
 			<bgf:expression>
 				<nonterminal>Expression1Rest</nonterminal>
 			</bgf:expression>
-		</choice>
+		</optional>
 		<tail/>
 	</exbgf:factor-out>
-	<exbgf:massageC2O>
-		<nonterminal>Expression1Rest</nonterminal>
-	</exbgf:massageC2O>
 	<!-- last effort for Expression1-->
 	<!-- BREFACTOR -->
 	<xbgf:undefine>

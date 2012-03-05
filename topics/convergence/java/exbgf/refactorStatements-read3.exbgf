@@ -22,7 +22,7 @@
 					<nonterminal>Expression</nonterminal>
 				</bgf:expression>
 			</start>
-			<choice>
+			<optional>
 				<bgf:expression>
 					<sequence>
 						<bgf:expression>
@@ -33,26 +33,13 @@
 						</bgf:expression>
 					</sequence>
 				</bgf:expression>
-				<bgf:expression>
-					<epsilon/>
-				</bgf:expression>
-			</choice>
+			</optional>
 			<tail>
 				<bgf:expression>
 					<terminal>;</terminal>
 				</bgf:expression>
 			</tail>
 		</exbgf:factor-out>
-		<exbgf:massageC2O>
-			<sequence>
-				<bgf:expression>
-					<terminal>:</terminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>Expression</nonterminal>
-				</bgf:expression>
-			</sequence>
-		</exbgf:massageC2O>
 		<!--
      - Fail: Statement.
       - [], ;([

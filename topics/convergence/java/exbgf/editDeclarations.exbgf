@@ -484,10 +484,7 @@
 				<nonterminal>QualifiedIdentifier</nonterminal>
 			</bgf:expression>
 		</start>
-		<choice>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
+		<optional>
 			<bgf:expression>
 				<sequence>
 					<bgf:expression>
@@ -498,23 +495,13 @@
 					</bgf:expression>
 				</sequence>
 			</bgf:expression>
-		</choice>
+		</optional>
 		<tail>
 			<bgf:expression>
 				<terminal>;</terminal>
 			</bgf:expression>
 		</tail>
 	</exbgf:factor-out>
-	<exbgf:massageC2O>
-		<sequence>
-			<bgf:expression>
-				<terminal>.</terminal>
-			</bgf:expression>
-			<bgf:expression>
-				<terminal>*</terminal>
-			</bgf:expression>
-		</sequence>
-	</exbgf:massageC2O>
 	<!--  
    - Fail: ArrayInitializer.
       - [], ,([t({), ?(n(VariableInitializers)), ?(t((,))), t(})])
@@ -1082,7 +1069,7 @@
 				<terminal>{</terminal>
 			</bgf:expression>
 		</start>
-		<choice>
+		<optional>
 			<bgf:expression>
 				<sequence>
 					<bgf:expression>
@@ -1115,48 +1102,13 @@
 					</bgf:expression>
 				</sequence>
 			</bgf:expression>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
-		</choice>
+		</optional>
 		<tail>
 			<bgf:expression>
 				<terminal>}</terminal>
 			</bgf:expression>
 		</tail>
 	</exbgf:factor-out>
-	<exbgf:massageC2O>
-		<sequence>
-			<bgf:expression>
-				<sequence>
-					<bgf:expression>
-						<nonterminal>VariableInitializer</nonterminal>
-					</bgf:expression>
-					<bgf:expression>
-						<star>
-							<bgf:expression>
-								<sequence>
-									<bgf:expression>
-										<terminal>,</terminal>
-									</bgf:expression>
-									<bgf:expression>
-										<nonterminal>VariableInitializer</nonterminal>
-									</bgf:expression>
-								</sequence>
-							</bgf:expression>
-						</star>
-					</bgf:expression>
-				</sequence>
-			</bgf:expression>
-			<bgf:expression>
-				<optional>
-					<bgf:expression>
-						<terminal>,</terminal>
-					</bgf:expression>
-				</optional>
-			</bgf:expression>
-		</sequence>
-	</exbgf:massageC2O>
 	<!-- BREFACTOR 
   Can't really match this
   
@@ -1592,7 +1544,8 @@ Block:
   -->
 	<exbgf:atomicV>
 		<context>ClassBodyDeclaration</context>
-		<exbgf:factor-out>
+		<exbgf:pull-out>
+			<nonterminal>MethodOrFieldRest</nonterminal>
 			<start>
 				<bgf:expression>
 					<nonterminal>ModifiersOpt</nonterminal>
@@ -1613,22 +1566,7 @@ Block:
 				</bgf:expression>
 			</choice>
 			<tail/>
-		</exbgf:factor-out>
-		<exbgf:extractC>
-			<bgf:production>
-				<nonterminal>MethodOrFieldRest</nonterminal>
-				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<nonterminal>MethodDeclaratorRest</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>VariableDeclaratorRest</nonterminal>
-						</bgf:expression>
-					</choice>
-				</bgf:expression>
-			</bgf:production>
-		</exbgf:extractC>
+		</exbgf:pull-out>
 		<xbgf:extract>
 			<bgf:production>
 				<nonterminal>MethodOrFieldDecl</nonterminal>

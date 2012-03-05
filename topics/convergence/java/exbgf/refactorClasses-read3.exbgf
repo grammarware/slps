@@ -250,27 +250,20 @@
      vs.
       - [], ;([,([n(ModifiersOpt), n(Type), n(VariableDeclarators), t(;)]), ,([n(ModifiersOpt), ?(n(TypeParameters)), n(ResultType), n(Identifier), n(MethodDeclaratorRest)]), ,([n(ModifiersOpt), n(ClassDeclaration)]), ,([n(ModifiersOpt), n(InterfaceDeclaration)]), t(;), ,([?(t(static)), n(Block)]), ,([n(ModifiersOpt), ?(n(TypeParameters)), n(Identifier), n(ConstructorDeclaratorRest)])])
     -->
-	<!-- TODO: massage instead of factor? -->
 	<exbgf:factor-out>
 		<context>ClassBodyDeclaration</context>
 		<start/>
-		<choice>
-			<bgf:expression>
-				<epsilon/>
-			</bgf:expression>
+		<optional>
 			<bgf:expression>
 				<terminal>static</terminal>
 			</bgf:expression>
-		</choice>
+		</optional>
 		<tail>
 			<bgf:expression>
 				<nonterminal>Block</nonterminal>
 			</bgf:expression>
 		</tail>
 	</exbgf:factor-out>
-	<exbgf:massageC2O>
-		<terminal>static</terminal>
-	</exbgf:massageC2O>
 	<!-- proceeding with inlines -->
 	<xbgf:inline>ConstructorDeclarator</xbgf:inline>
 	<exbgf:inlineY>MethodDeclarator</exbgf:inlineY>
