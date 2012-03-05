@@ -140,23 +140,12 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:introduce>
-	<xbgf:chain>
-		<bgf:production>
-			<nonterminal>ClassDeclaration</nonterminal>
-			<bgf:expression>
-				<nonterminal>NormalClassDeclaration</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</xbgf:chain>
 	<!-- EXTENSION -->
-	<exbgf:addV>
-		<bgf:production>
-			<nonterminal>ClassDeclaration</nonterminal>
-			<bgf:expression>
-				<nonterminal>EnumDeclaration</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:addV>
+	<exbgf:chainX>
+		<from>ClassDeclaration</from>
+		<to>NormalClassDeclaration</to>
+		<to>EnumDeclaration</to>
+	</exbgf:chainX>
 	<xbgf:introduce>
 		<bgf:production>
 			<nonterminal>EnumConstantName</nonterminal>

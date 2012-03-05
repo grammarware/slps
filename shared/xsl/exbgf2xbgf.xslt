@@ -37,7 +37,7 @@
 		<!-- 
 			An atomic transformation sequence, shielding an entity with a temporarily introduced nonterminal that disappears during transformation.
 		-->
-		<xsl:message>[EXBGF] shieldedD ::= extract + ...</xsl:message>
+		<xsl:message>[EXBGF] shieldedD ::= extract + ... + eliminate</xsl:message>
 		<xbgf:extract>
 			<bgf:production>
 				<nonterminal>SHIELDED-ENTITY</nonterminal>
@@ -50,6 +50,22 @@
 		<xbgf:eliminate>
 			<nonterminal>SHIELDED-ENTITY</nonterminal>
 		</xbgf:eliminate>
+	</xsl:template>
+	<xsl:template match="exbgf:shieldedU">
+		<!-- 
+			An atomic transformation sequence, shielding an entity that does not exist by the beginning of transformation.
+		-->
+		<xsl:message>[EXBGF] shieldedU ::= introduce + ... + inline</xsl:message>
+		<xbgf:introduce>
+			<bgf:production>
+				<nonterminal>SHIELDED-ENTITY</nonterminal>
+				<bgf:expression>
+					<xsl:copy-of select="entity/*"/>
+				</bgf:expression>
+			</bgf:production>
+		</xbgf:introduce>
+		<xsl:apply-templates select="*[local-name()!='entity']"/>
+		<xbgf:inline>SHIELDED-ENTITY</xbgf:inline>
 	</xsl:template>
 	<xsl:template match="exbgf:tempunfold">
 		<!-- 
@@ -919,6 +935,45 @@
 				<xsl:value-of select="to"/>
 			</nonterminal>
 		</xbgf:vertical>
+	</xsl:template>
+	<xsl:template match="exbgf:chainX">
+		<!--
+			Chains a nonterminal and adds another vertical production to it.
+			
+			In other words, goes from A: XYZ to A: B; B: XYZ; A: CD
+			Conceptually, an injection in the nonterminal call graph.
+			
+			= chain + addV
+		-->
+		<xsl:message>[EXBGF] chainX ::= chain + add</xsl:message>
+		<xbgf:chain>
+			<bgf:production>
+				<nonterminal>
+					<xsl:value-of select="from"/>
+				</nonterminal>
+				<bgf:expression>
+					<nonterminal>
+						<xsl:value-of select="to[1]"/>
+					</nonterminal>
+				</bgf:expression>
+			</bgf:production>
+		</xbgf:chain>
+		<xsl:for-each select="to[position()&gt;1]">
+			<xbgf:add>
+				<vertical>
+					<bgf:production>
+						<nonterminal>
+							<xsl:value-of select="../from"/>
+						</nonterminal>
+						<bgf:expression>
+							<nonterminal>
+								<xsl:value-of select="."/>
+							</nonterminal>
+						</bgf:expression>
+					</bgf:production>
+				</vertical>
+			</xbgf:add>
+		</xsl:for-each>
 	</xsl:template>
 	<xsl:template match="exbgf:introduceH">
 		<!--

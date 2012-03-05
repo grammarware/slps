@@ -104,14 +104,12 @@
   -->
 	<!-- GENERALITY -->
 	<!-- INITCORR -->
-	<xbgf:replace>
-		<bgf:expression>
-			<nonterminal>Expr</nonterminal>
-		</bgf:expression>
-		<bgf:expression>
-			<nonterminal>Expression</nonterminal>
-		</bgf:expression>
-	</xbgf:replace>
+	<exbgf:renameN>
+		<from>Expr</from>
+		<to>Expression</to>
+		<in>Expression3</in>
+	</exbgf:renameN>
+
 	<!-- ISSUE CORRECT INCOMPATIBILITY
    - Fail: VoidInterfaceMethodDeclaratorRest.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(QualifiedIdentifierList)])), t((;))])
@@ -191,18 +189,15 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:define>
-	<!-- ISSUE CORRECT SPECERROR unused non-terminal -->
-	<xbgf:eliminate>
+	<!-- unused non-terminals -->
+	<exbgf:eliminate-many>
+		<!-- ISSUE CORRECT SPECERROR  -->
 		<nonterminal>ArgumentsOpt</nonterminal>
-	</xbgf:eliminate>
-	<!-- ISSUE CORRECT SPECERROR unused non-terminal -->
-	<xbgf:eliminate>
+		<!-- ISSUE CORRECT SPECERROR  -->
 		<nonterminal>VoidMethodDeclaratorRest</nonterminal>
-	</xbgf:eliminate>
-	<!-- ISSUE CORRECT SPECERROR unused non-terminal -->
-	<xbgf:eliminate>
+		<!-- ISSUE CORRECT SPECERROR  -->
 		<nonterminal>VariableDeclaratorsRest</nonterminal>
-	</xbgf:eliminate>
+	</exbgf:eliminate-many>
 	<!--   undefine lexical term -->
 	<!-- GENERALITY -->
 	<!-- RELAXATION -->
@@ -215,7 +210,7 @@
       - [], ;([,([t(instanceof), n(Type)]), *(,([n(InfixOp), n(Expression3)]))])
      vs.
       - [], ;([*(,([n(InfixOp), n(Expression3)])), ,([n(Expression3), t(instanceof), n(Type)])])
-  -->
+	-->
 	<!-- KNOWNBUG -->
 	<xbgf:project>
 		<bgf:production>

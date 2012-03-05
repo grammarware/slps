@@ -419,18 +419,10 @@
      vs.
       - [], ;([n(NormalClassDeclaration), n(EnumDeclaration)])
   -->
-	<xbgf:chain>
-		<bgf:production>
-			<nonterminal>ClassDeclaration</nonterminal>
-			<bgf:expression>
-				<nonterminal>NormalClassDeclaration</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</xbgf:chain>
 	<!-- EXTENSION -->
 	<xbgf:appear>
 		<bgf:production>
-			<nonterminal>NormalClassDeclaration</nonterminal>
+			<nonterminal>ClassDeclaration</nonterminal>
 			<bgf:expression>
 				<sequence>
 					<bgf:expression>
@@ -639,14 +631,11 @@
 		</bgf:production>
 	</xbgf:introduce>
 	<!-- EXTENSION -->
-	<exbgf:addV>
-		<bgf:production>
-			<nonterminal>ClassDeclaration</nonterminal>
-			<bgf:expression>
-				<nonterminal>EnumDeclaration</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:addV>
+	<exbgf:chainX>
+		<from>ClassDeclaration</from>
+		<to>NormalClassDeclaration</to>
+		<to>EnumDeclaration</to>
+	</exbgf:chainX>
 	<!-- ISSUE EXTEND
      - Fail: InterfaceDeclaration.
       - [], ,([?(n(InterfaceModifiers)), t(interface), n(Identifier), ?(n(ExtendsInterfaces)), n(InterfaceBody)])
@@ -812,23 +801,11 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:import>
-	<xbgf:chain>
-		<bgf:production>
-			<nonterminal>InterfaceDeclaration</nonterminal>
-			<bgf:expression>
-				<nonterminal>NormalInterfaceDeclaration</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</xbgf:chain>
-	<!-- EXTENSION -->
-	<exbgf:addV>
-		<bgf:production>
-			<nonterminal>InterfaceDeclaration</nonterminal>
-			<bgf:expression>
-				<nonterminal>AnnotationTypeDeclaration</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:addV>
+	<exbgf:chainX>
+		<from>InterfaceDeclaration</from>
+		<to>NormalInterfaceDeclaration</to>
+		<to>AnnotationTypeDeclaration</to>
+	</exbgf:chainX>
 	<!-- ISSUE EXTEND 
      - Fail: ForStatement.
       - [], ,([t(for), t((), ?(n(ForInit)), t((;)), ?(n(Expression)), t((;)), ?(n(ForUpdate)), t()), n(Statement)])
@@ -875,23 +852,12 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:introduce>
-	<xbgf:chain>
-		<bgf:production>
-			<nonterminal>ForStatement</nonterminal>
-			<bgf:expression>
-				<nonterminal>BasicForStatement</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</xbgf:chain>
-	<!-- EXTENSION -->
-	<exbgf:addV>
-		<bgf:production>
-			<nonterminal>ForStatement</nonterminal>
-			<bgf:expression>
-				<nonterminal>EnhancedForStatement</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:addV>
+	<exbgf:chainX>
+		<from>ForStatement</from>
+		<to>BasicForStatement</to>
+		<to>EnhancedForStatement</to>
+	</exbgf:chainX>
+	
 	<!-- ISSUE EXTEND GENERALIZE
      - Fail: AbstractMethodDeclaration.
       - [], ,([?(n(AbstractMethodModifiers)), n(ResultType), n(MethodDeclarator), ?(n(Throws)), t((;))])

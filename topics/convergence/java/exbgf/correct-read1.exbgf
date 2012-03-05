@@ -12,6 +12,7 @@
      vs.
       - [], ;([n(ConstantModifier), ,([n(ConstantModifiers), n(ConstantModifer)])])
   -->
+	<!-- cannot combine the following two since VariableModifier must be fresh for chaining -->
 	<exbgf:chainV>
 		<from>ConstantModifiers</from>
 		<to>ConstantModifier</to>

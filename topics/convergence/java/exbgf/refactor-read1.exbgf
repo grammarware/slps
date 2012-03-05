@@ -24,8 +24,8 @@
 	</xbgf:horizontal>
 	<!-- GENERALITY -->
 	<!-- RELAXATION -->
-	<xbgf:replace>
-		<bgf:expression>
+	<exbgf:shieldedD>
+		<entity>
 			<choice>
 				<bgf:expression>
 					<nonterminal>ClassType</nonterminal>
@@ -34,14 +34,13 @@
 					<nonterminal>InterfaceType</nonterminal>
 				</bgf:expression>
 			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<nonterminal>Name</nonterminal>
-		</bgf:expression>
-		<in>
-			<nonterminal>ClassOrInterfaceType</nonterminal>
-		</in>
-	</xbgf:replace>
+		</entity>
+		<exbgf:renameN>
+			<from>SHIELDED-ENTITY</from>
+			<to>Name</to>
+			<in>ClassOrInterfaceType</in>
+		</exbgf:renameN>
+	</exbgf:shieldedD>
 	<xbgf:fold>
 		<nonterminal>ClassOrInterfaceType</nonterminal>
 		<in>
@@ -96,11 +95,8 @@
   -->
 	<!-- GENERALITY -->
 	<!-- RELAXATION -->
-	<xbgf:replace>
-		<bgf:expression>
-			<nonterminal>ReferenceType</nonterminal>
-		</bgf:expression>
-		<bgf:expression>
+	<exbgf:shieldedU>
+		<entity>
 			<choice>
 				<bgf:expression>
 					<nonterminal>Expression</nonterminal>
@@ -116,11 +112,13 @@
 					</sequence>
 				</bgf:expression>
 			</choice>
-		</bgf:expression>
-		<in>
-			<nonterminal>CastExpression</nonterminal>
-		</in>
-	</xbgf:replace>
+		</entity>
+		<exbgf:renameN>
+			<from>ReferenceType</from>
+			<to>SHIELDED-ENTITY</to>
+			<in>CastExpression</in>
+		</exbgf:renameN>
+	</exbgf:shieldedU>
 	<exbgf:distributeH>CastExpression</exbgf:distributeH>
 	<!-- BREFACTOR 
    - Fail: ConstantDeclaration.
@@ -131,8 +129,8 @@
   FieldDeclaration is completely structurally different, so this is the only way.
   Possibly a spec error - there should be multiple modifiers allowed, really.
   -->
-	<xbgf:replace>
-		<bgf:expression>
+	<exbgf:shieldedD>
+		<entity>
 			<sequence>
 				<bgf:expression>
 					<optional>
@@ -148,14 +146,13 @@
 					<nonterminal>VariableDeclarator</nonterminal>
 				</bgf:expression>
 			</sequence>
-		</bgf:expression>
-		<bgf:expression>
-			<nonterminal>FieldDeclaration</nonterminal>
-		</bgf:expression>
-		<in>
-			<nonterminal>ConstantDeclaration</nonterminal>
-		</in>
-	</xbgf:replace>
+		</entity>
+		<exbgf:renameN>
+			<from>SHIELDED-ENTITY</from>
+			<to>FieldDeclaration</to>
+			<in>ConstantDeclaration</in>
+		</exbgf:renameN>
+	</exbgf:shieldedD>
 	<!-- 
    - Fail: ArrayType.
       - [], ,([n(Type), t([), t(])])

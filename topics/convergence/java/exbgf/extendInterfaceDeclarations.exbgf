@@ -2,14 +2,6 @@
 <exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
 	<!-- ISSUE EXTEND
   annotated declarations -->
-	<xbgf:chain>
-		<bgf:production>
-			<nonterminal>InterfaceDeclaration</nonterminal>
-			<bgf:expression>
-				<nonterminal>NormalInterfaceDeclaration</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</xbgf:chain>
 	<xbgf:introduce>
 		<bgf:production>
 			<nonterminal>DefaultValue</nonterminal>
@@ -190,14 +182,13 @@
 		</bgf:production>
 	</xbgf:introduce>
 	<!-- EXTENSION -->
-	<exbgf:addV>
-		<bgf:production>
-			<nonterminal>InterfaceDeclaration</nonterminal>
-			<bgf:expression>
-				<nonterminal>AnnotationTypeDeclaration</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:addV>
+	<exbgf:chainX>
+		<from>InterfaceDeclaration</from>
+		<to>NormalInterfaceDeclaration</to>
+		<to>AnnotationTypeDeclaration</to>
+	</exbgf:chainX>
+	
+
 	<!-- EXTENSION -->
 	<exbgf:addV>
 		<bgf:production>

@@ -355,20 +355,6 @@
      vs.
       - [], ,([n(FormalParameters), ?(,([t(throws), n(TypeList)])), t((;))])
   -->
-	<xbgf:chain>
-		<bgf:production>
-			<nonterminal>InterfaceMethodOrFieldRest</nonterminal>
-			<bgf:expression>
-				<nonterminal>InterfaceMethodDeclaratorRest</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</xbgf:chain>
-	<!--
-   - Fail: InterfaceMethodOrFieldRest.
-      - [], ;([,([n(ConstantDeclaratorsRest), t((;))]), n(InterfaceMethodDeclaratorRest)])
-     vs.
-      - [], n(InterfaceMethodDeclaratorRest)
-  -->
 	<xbgf:introduce>
 		<bgf:production>
 			<nonterminal>ConstantDeclaratorRest</nonterminal>
@@ -428,22 +414,24 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:introduce>
-	<!-- CORRECTION -->
-	<exbgf:addV>
-		<bgf:production>
-			<nonterminal>InterfaceMethodOrFieldRest</nonterminal>
-			<bgf:expression>
-				<sequence>
-					<bgf:expression>
-						<nonterminal>ConstantDeclaratorsRest</nonterminal>
-					</bgf:expression>
-					<bgf:expression>
-						<terminal>;</terminal>
-					</bgf:expression>
-				</sequence>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:addV>
+	<exbgf:shieldedU>
+		<!-- CORRECTION -->
+		<entity>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>ConstantDeclaratorsRest</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>;</terminal>
+				</bgf:expression>
+			</sequence>
+		</entity>
+		<exbgf:chainX>
+			<from>InterfaceMethodOrFieldRest</from>
+			<to>InterfaceMethodDeclaratorRest</to>
+			<to>SHIELDED-ENTITY</to>
+		</exbgf:chainX>
+	</exbgf:shieldedU>
 	<xbgf:vertical>
 		<nonterminal>InterfaceBodyDeclaration</nonterminal>
 	</xbgf:vertical>

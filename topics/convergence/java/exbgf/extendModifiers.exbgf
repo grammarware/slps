@@ -348,14 +348,11 @@
 			<nonterminal>LocalVariableDeclaration</nonterminal>
 		</in>
 	</xbgf:fold>
-	<xbgf:chain>
-		<bgf:production>
-			<nonterminal>VariableModifiers</nonterminal>
-			<bgf:expression>
-				<nonterminal>VariableModifier</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</xbgf:chain>
+	<!-- cannot combine the following two since VariableModifier must be fresh for chaining -->
+	<exbgf:chainX>
+		<from>VariableModifiers</from>
+		<to>VariableModifier</to>
+	</exbgf:chainX>
 	<!-- EXTENSION -->
 	<exbgf:addV>
 		<bgf:production>
