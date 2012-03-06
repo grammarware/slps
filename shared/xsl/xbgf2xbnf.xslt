@@ -103,6 +103,12 @@
 </xsl:text>
   </xsl:template>
 
+  <xsl:template match="xbgf:dump">
+    <xsl:value-of select="local-name()" />
+    <xsl:text>;
+</xsl:text>
+  </xsl:template>
+
   <xsl:template match="xbgf:inline">
     <xsl:value-of select="local-name()" />
     <xsl:text>(</xsl:text>

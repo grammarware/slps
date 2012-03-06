@@ -18,5 +18,5 @@ else
 	    exit 1
 	fi
     done
-    swipl -q -t "halt(1)" -f ${LOCAL2}/prolog/cli/gdt.pro -- $* | grep -v Ok
+    swipl -q -t "halt(1)" -f ${LOCAL2}/prolog/cli/gdt.pro -- $* | grep -v Ok | grep -v Intersection
 fi
