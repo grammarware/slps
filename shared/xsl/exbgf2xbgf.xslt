@@ -29,8 +29,15 @@
 					<xsl:copy-of select="entity/*"/>
 				</bgf:expression>
 			</bgf:production>
+			<xsl:if test="context">
+				<in>
+					<nonterminal>
+						<xsl:value-of select="context"/>
+					</nonterminal>
+				</in>
+			</xsl:if>
 		</xbgf:extract>
-		<xsl:apply-templates select="*[local-name()!='entity']"/>
+		<xsl:apply-templates select="*[local-name()!='entity' and local-name()!='context']"/>
 		<xbgf:inline>SHIELDED-ENTITY</xbgf:inline>
 	</xsl:template>
 	<xsl:template match="exbgf:shieldedD">
@@ -773,6 +780,31 @@
 			</bgf:expression>
 		</xbgf:massage>
 	</xsl:template>
+	<xsl:template match="exbgf:inlineYF">
+		<!--
+			Inlining a yaccified nonterminal, with additional folding in between deyaccification and inlining.
+			equivalent to xbgf:deyaccify + xbgf:fold + xbgf:inline
+		-->
+		<xsl:message>[EXBGF] inlineYF ::= deyaccify + fold + inline</xsl:message>
+		<xbgf:deyaccify>
+			<nonterminal>
+				<xsl:value-of select="."/>
+			</nonterminal>
+		</xbgf:deyaccify>
+		<xbgf:fold>
+			<nonterminal>
+				<xsl:value-of select="@fold"/>
+			</nonterminal>
+			<in>
+				<nonterminal>
+					<xsl:value-of select="."/>
+				</nonterminal>
+			</in>
+		</xbgf:fold>
+		<xbgf:inline>
+			<xsl:value-of select="."/>
+		</xbgf:inline>
+	</xsl:template>
 	<!--
 		Inlining a plus to become a star (instead of optional plus).
 		Does not work as intended, because it needs an immediate input grammar.
@@ -795,21 +827,28 @@
 				</bgf:expression>
 			</xbgf:massage>
 		</xsl:template> -->
-	<xsl:template match="exbgf:uniteMany">
+	<xsl:template match="exbgf:unite-many">
 		<!--
 			Making one fresh nonterminal out of definitions of multiple nonterminals.
 		-->
-		<xsl:message>[EXBGF] uniteMany ::= rename + unite...</xsl:message>
-		<xbgf:rename>
-			<nonterminal>
-				<from>
-					<xsl:value-of select="add[1]"/>
-				</from>
-				<to>
-					<xsl:value-of select="yield"/>
-				</to>
-			</nonterminal>
-		</xbgf:rename>
+		<xsl:choose>
+			<xsl:when test="add[1]!=''">
+				<xsl:message>[EXBGF] unite-many ::= rename + unite...</xsl:message>
+				<xbgf:rename>
+					<nonterminal>
+						<from>
+							<xsl:value-of select="add[1]"/>
+						</from>
+						<to>
+							<xsl:value-of select="yield"/>
+						</to>
+					</nonterminal>
+				</xbgf:rename>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:message>[EXBGF] unite-many ::= unite...</xsl:message>
+			</xsl:otherwise>
+		</xsl:choose>
 		<xsl:for-each select="add[position()&gt;1]">
 			<xbgf:unite>
 				<add>
@@ -1047,11 +1086,34 @@
 		<xsl:message>[EXBGF] extract-twice ::= extract + ... + fold</xsl:message>
 		<xbgf:extract>
 			<xsl:copy-of select="bgf:production"/>
+			<xsl:if test="in">
+				<in>
+					<nonterminal>
+						<xsl:value-of select="in[1]"/>
+					</nonterminal>
+				</in>
+			</xsl:if>
 		</xbgf:extract>
-		<xsl:apply-templates select="*[local-name()!='production']"/>
-		<xbgf:fold>
-			<xsl:copy-of select="bgf:production/nonterminal"/>
-		</xbgf:fold>
+		<xsl:apply-templates select="*[local-name()!='production' and local-name()!='in']"/>
+		<xsl:choose>
+			<xsl:when test="in">
+				<xsl:for-each select="in[position()&gt;1]">
+					<xbgf:fold>
+						<xsl:copy-of select="../bgf:production/nonterminal"/>
+						<in>
+							<nonterminal>
+								<xsl:value-of select="."/>
+							</nonterminal>
+						</in>
+					</xbgf:fold>
+				</xsl:for-each>
+			</xsl:when>
+			<xsl:otherwise>
+				<xbgf:fold>
+					<xsl:copy-of select="bgf:production/nonterminal"/>
+				</xbgf:fold>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	<xsl:template match="exbgf:redefine">
 		<!--
@@ -1161,6 +1223,24 @@
 				<xsl:copy-of select="bgf:production"/>
 			</horizontal>
 		</xbgf:add>
+	</xsl:template>
+	<xsl:template match="exbgf:addX">
+		<!--
+			Adds a production rule vertically to a previously horizontal definition.
+			
+			= vertical + addV
+		-->
+		<xsl:message>[EXBGF] addX ::= vertical + add</xsl:message>
+		<xbgf:vertical>
+			<xsl:copy-of select="bgf:production[1]/nonterminal"/>
+		</xbgf:vertical>
+		<xsl:for-each select="bgf:production">
+			<xbgf:add>
+				<vertical>
+					<xsl:copy-of select="."/>
+				</vertical>
+			</xbgf:add>
+		</xsl:for-each>
 	</xsl:template>
 	<xsl:template match="exbgf:removeV">
 		<!--
@@ -1434,9 +1514,20 @@
 			Unfolds a nonterminal in multiple scopes.
 		-->
 		<xsl:message>[EXBGF] unfold ::= unfold...</xsl:message>
-		<xsl:for-each select="in">
+		<xsl:for-each select="nonterminal">
+			<xsl:call-template name="unfold-in-context">
+				<xsl:with-param name="nt" select="."/>
+				<xsl:with-param name="context" select="../in"/>
+			</xsl:call-template>
+		</xsl:for-each>
+	</xsl:template>
+	<xsl:template name="unfold-in-context">
+		<xsl:param name="nt"/>
+		<xsl:param name="context"/>
+		<!-- Unfolds a nonterminal in multiple scopes. -->
+		<xsl:for-each select="$context">
 			<xbgf:unfold>
-				<xsl:copy-of select="../nonterminal"/>
+				<xsl:copy-of select="$nt"/>
 				<in>
 					<nonterminal>
 						<xsl:value-of select="."/>

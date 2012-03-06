@@ -368,15 +368,6 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:introduce>
-	<!-- EXTENSION -->
-	<exbgf:addV>
-		<bgf:production>
-			<nonterminal>ImportDeclaration</nonterminal>
-			<bgf:expression>
-				<nonterminal>SingleStaticImportDeclaration</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</exbgf:addV>
 	<xbgf:introduce>
 		<bgf:production>
 			<nonterminal>StaticImportOnDemandDeclaration</nonterminal>
@@ -404,8 +395,15 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:introduce>
-	<!-- EXTENSION -->
 	<exbgf:addV>
+		<!-- EXTENSION -->
+		<bgf:production>
+			<nonterminal>ImportDeclaration</nonterminal>
+			<bgf:expression>
+				<nonterminal>SingleStaticImportDeclaration</nonterminal>
+			</bgf:expression>
+		</bgf:production>
+		<!-- EXTENSION -->
 		<bgf:production>
 			<nonterminal>ImportDeclaration</nonterminal>
 			<bgf:expression>
@@ -857,7 +855,6 @@
 		<to>BasicForStatement</to>
 		<to>EnhancedForStatement</to>
 	</exbgf:chainX>
-	
 	<!-- ISSUE EXTEND GENERALIZE
      - Fail: AbstractMethodDeclaration.
       - [], ,([?(n(AbstractMethodModifiers)), n(ResultType), n(MethodDeclarator), ?(n(Throws)), t((;))])
@@ -1189,18 +1186,11 @@
   -->
 	<exbgf:atomicV>
 		<context>FormalParameters</context>
-		<xbgf:unfold>
+		<exbgf:unfold>
 			<nonterminal>FormalParameters</nonterminal>
-			<in>
-				<nonterminal>MethodDeclarator</nonterminal>
-			</in>
-		</xbgf:unfold>
-		<xbgf:unfold>
-			<nonterminal>FormalParameters</nonterminal>
-			<in>
-				<nonterminal>ConstructorDeclarator</nonterminal>
-			</in>
-		</xbgf:unfold>
+			<in>MethodDeclarator</in>
+			<in>ConstructorDeclarator</in>
+		</exbgf:unfold>
 		<xbgf:extract>
 			<bgf:production>
 				<nonterminal>FormalParameterList</nonterminal>
@@ -1390,54 +1380,48 @@
       - [], ,([t(new), n(ClassOrInterfaceType), n(Dims), n(ArrayInitializer)])
       - [], ,([t(new), n(ClassOrInterfaceType), n(DimExprs), ?(n(Dims))])
   -->
-	<xbgf:extract>
-		<bgf:production>
-			<nonterminal>SurgeryOnTypeName</nonterminal>
-			<bgf:expression>
-				<nonterminal>TypeName</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-		<in>
-			<nonterminal>ArrayCreationExpression</nonterminal>
-		</in>
-	</xbgf:extract>
-	<exbgf:massage12C>
-		<nonterminal>TypeName</nonterminal>
-		<selector>ClassType</selector>
-		<selector>InterfaceType</selector>
-		<in>SurgeryOnTypeName</in>
-	</exbgf:massage12C>
-	<xbgf:vertical>
-		<nonterminal>SurgeryOnTypeName</nonterminal>
-	</xbgf:vertical>
-	<xbgf:fold>
-		<nonterminal>ClassType</nonterminal>
-		<in>
-			<label>ClassType</label>
-		</in>
-	</xbgf:fold>
-	<xbgf:unlabel>
-		<label>ClassType</label>
-	</xbgf:unlabel>
-	<xbgf:fold>
-		<nonterminal>InterfaceType</nonterminal>
-		<in>
-			<label>InterfaceType</label>
-		</in>
-	</xbgf:fold>
-	<xbgf:unlabel>
-		<label>InterfaceType</label>
-	</xbgf:unlabel>
-	<exbgf:atomicV>
-		<context>ClassOrInterfaceType</context>
-		<xbgf:horizontal>
-			<nonterminal>SurgeryOnTypeName</nonterminal>
-		</xbgf:horizontal>
+	<exbgf:shielded>
+		<entity>
+			<nonterminal>TypeName</nonterminal>
+		</entity>
+		<context>ArrayCreationExpression</context>
+		<exbgf:massage12C>
+			<nonterminal>TypeName</nonterminal>
+			<selector>ClassType</selector>
+			<selector>InterfaceType</selector>
+			<in>SHIELDED-ENTITY</in>
+		</exbgf:massage12C>
+		<xbgf:vertical>
+			<nonterminal>SHIELDED-ENTITY</nonterminal>
+		</xbgf:vertical>
 		<xbgf:fold>
-			<nonterminal>ClassOrInterfaceType</nonterminal>
+			<nonterminal>ClassType</nonterminal>
+			<in>
+				<label>ClassType</label>
+			</in>
 		</xbgf:fold>
-		<xbgf:inline>SurgeryOnTypeName</xbgf:inline>
-	</exbgf:atomicV>
+		<xbgf:unlabel>
+			<label>ClassType</label>
+		</xbgf:unlabel>
+		<xbgf:fold>
+			<nonterminal>InterfaceType</nonterminal>
+			<in>
+				<label>InterfaceType</label>
+			</in>
+		</xbgf:fold>
+		<xbgf:unlabel>
+			<label>InterfaceType</label>
+		</xbgf:unlabel>
+		<exbgf:atomicV>
+			<context>ClassOrInterfaceType</context>
+			<xbgf:horizontal>
+				<nonterminal>SHIELDED-ENTITY</nonterminal>
+			</xbgf:horizontal>
+			<xbgf:fold>
+				<nonterminal>ClassOrInterfaceType</nonterminal>
+			</xbgf:fold>
+		</exbgf:atomicV>
+	</exbgf:shielded>
 	<!-- ISSUE EXTEND -->
 	<xbgf:introduce>
 		<bgf:production>
@@ -1552,23 +1536,16 @@
      vs.
       - [], ,([n(TypeDeclSpecifier), ?(n(TypeArguments))])
   -->
-	<xbgf:extract>
+	<exbgf:extract-twice>
 		<bgf:production>
 			<nonterminal>TypeDeclSpecifier</nonterminal>
 			<bgf:expression>
 				<nonterminal>TypeName</nonterminal>
 			</bgf:expression>
 		</bgf:production>
-		<in>
-			<nonterminal>ClassType</nonterminal>
-		</in>
-	</xbgf:extract>
-	<xbgf:fold>
-		<nonterminal>TypeDeclSpecifier</nonterminal>
-		<in>
-			<nonterminal>InterfaceType</nonterminal>
-		</in>
-	</xbgf:fold>
+		<in>ClassType</in>
+		<in>InterfaceType</in>
+	</exbgf:extract-twice>
 	<!-- EXTENSION -->
 	<exbgf:addV>
 		<bgf:production>

@@ -150,27 +150,14 @@
 			</bgf:expression>
 		</bgf:production>
 	</xbgf:appear>
-	<!-- TODO: deyaccify + ... + inline -->
-	<xbgf:deyaccify>
-		<nonterminal>ExtendsInterfaces</nonterminal>
-	</xbgf:deyaccify>
-	<xbgf:fold>
-		<nonterminal>TypeList</nonterminal>
-		<in>
-			<nonterminal>ExtendsInterfaces</nonterminal>
-		</in>
-	</xbgf:fold>
-	<xbgf:inline>ExtendsInterfaces</xbgf:inline>
+	<exbgf:inlineYF fold="TypeList">ExtendsInterfaces</exbgf:inlineYF>
 	<!-- 
    - Fail: InterfaceBody.
       - [], ,([t({), *(n(InterfaceBodyDeclaration)), t(})])
      vs.
       - [], ,([t({), ?(n(InterfaceMemberDeclarations)), t(})])
   -->
-	<exbgf:inlineY>InterfaceMemberDeclarations</exbgf:inlineY>
-	<exbgf:massageOP2S>
-		<nonterminal>InterfaceBodyDeclaration</nonterminal>
-	</exbgf:massageOP2S>
+	<exbgf:inlineYO starof="InterfaceBodyDeclaration">InterfaceMemberDeclarations</exbgf:inlineYO>
 	<!-- 
    - Fail: InterfaceBodyDeclaration.
       - [], ;([t((;)), ,([*(n(Modifier)), n(InterfaceMemberDecl)])])
@@ -293,7 +280,8 @@
      ElementValuePairs "," ElementValuePair
   
   so we effectively "narrow" it (by executing remove instead of deyaccify/narrow)
-  (also because narrow(*(L),true) doesn't work)
+
+	the following removeV + inline are equivalent to deyacify + disappear + inline
   -->
 	<!-- RELAXATION -->
 	<exbgf:removeV>

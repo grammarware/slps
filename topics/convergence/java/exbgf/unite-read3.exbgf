@@ -52,7 +52,7 @@
 	   ConstantModifier
 	   ConstantModifiers ConstantModifer
 	-->
-	<exbgf:uniteMany>
+	<exbgf:unite-many>
 		<add>ClassModifier</add>
 		<add>InterfaceModifier</add>
 		<add>ConstructorModifier</add>
@@ -61,8 +61,8 @@
 		<add>FieldModifier</add>
 		<add>ConstantModifier</add>
 		<yield>Modifier</yield>
-	</exbgf:uniteMany>
-	<exbgf:uniteMany>
+	</exbgf:unite-many>
+	<exbgf:unite-many>
 		<add>ClassModifiers</add>
 		<add>InterfaceModifiers</add>
 		<add>ConstructorModifiers</add>
@@ -71,7 +71,7 @@
 		<add>FieldModifiers</add>
 		<!-- <add>ConstantModifiers</add> --> <!-- cannot because it is defined as right recursion, not left -->
 		<yield>Modifiers</yield>
-	</exbgf:uniteMany>
+	</exbgf:unite-many>
 	<!--
 	  MethodName is defined as:
 	     Identifier
@@ -98,7 +98,7 @@
 	     Identifier { "." Identifier }
 
 	  -->
-	<exbgf:uniteMany>
+	<exbgf:unite-many>
 		<add>AmbiguousName</add>
 		<add>MethodName</add>
 		<add>TypeName</add>
@@ -107,5 +107,5 @@
 		<add>ExpressionName</add>
 		<add>ClassName</add>
 		<yield>QualifiedIdentifier</yield>
-	</exbgf:uniteMany>
+	</exbgf:unite-many>
 </exbgf:sequence>
