@@ -23,14 +23,14 @@
 	<exbgf:deyaccifyH>interface-modifiers</exbgf:deyaccifyH>
 	<exbgf:deyaccifyH>enum-modifiers</exbgf:deyaccifyH>
 	<exbgf:deyaccifyH>delegate-modifiers</exbgf:deyaccifyH>
-	<exbgf:uniteMany>
+	<exbgf:unite-many>
 		<add>class-modifier</add>
 		<add>struct-modifier</add>
 		<add>interface-modifier</add>
 		<add>enum-modifier</add>
 		<add>delegate-modifier</add>
 		<yield>modifier</yield>
-	</exbgf:uniteMany>
+	</exbgf:unite-many>
 	<xbgf:horizontal>
 		<nonterminal>modifier</nonterminal>
 	</xbgf:horizontal>

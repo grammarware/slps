@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
-	<xbgf:rename>
-		<nonterminal>
+	<exbgf:renameN>
 			<from>using-directive-insides</from>
 			<to>not-semicolon</to>
-		</nonterminal>
-	</xbgf:rename>
+	</exbgf:renameN>
 	<xbgf:undefine>
 		<nonterminal>not-semicolon</nonterminal>
 	</xbgf:undefine>
-	<exbgf:uniteMany>
+	<exbgf:unite-many>
 		<add>global-attribute-section-insides</add>
 		<add>attribute-section-insides</add>
 		<yield>not-right-square-bracket</yield>
-	</exbgf:uniteMany>
+	</exbgf:unite-many>
 	<xbgf:undefine>
 		<nonterminal>not-right-square-bracket</nonterminal>
 	</xbgf:undefine>
@@ -200,17 +198,17 @@
 	<xbgf:horizontal>
 		<nonterminal>namespace-member-declaration</nonterminal>
 	</xbgf:horizontal>
-	<exbgf:uniteMany>
+	<exbgf:unite-many>
 		<add>class-base</add>
 		<add>struct-interfaces</add>
 		<add>interface-base</add>
 		<add>enum-base</add>
 		<yield>not-left-curly</yield>
-	</exbgf:uniteMany>
+	</exbgf:unite-many>
 	<xbgf:undefine>
 		<nonterminal>not-left-curly</nonterminal>
 	</xbgf:undefine>
-	<exbgf:uniteMany>
+	<exbgf:unite-many>
 		<add>enum-body-insides</add>
 		<add>namespace-body-insides</add>
 		<add>class-member-declarations</add>
@@ -218,47 +216,35 @@
 		<add>interface-member-declarations</add>
 		<add>enum-member-declarations</add>
 		<yield>balanced-curlies</yield>
-	</exbgf:uniteMany>
+	</exbgf:unite-many>
 	<xbgf:undefine>
 		<nonterminal>balanced-curlies</nonterminal>
 	</xbgf:undefine>
-	<xbgf:rename>
-		<nonterminal>
+	<exbgf:renameN>
 			<from>formal-parameter-list</from>
 			<to>not-right-parenthesis</to>
-		</nonterminal>
-	</xbgf:rename>
+
+	</exbgf:renameN>
 	<xbgf:undefine>
 		<nonterminal>not-right-parenthesis</nonterminal>
 	</xbgf:undefine>
-	<exbgf:uniteMany>
+	<exbgf:unite-many>
 		<add>qualified-identifier</add>
 		<add>identifier</add>
 		<add>type</add>
 		<yield>not-whitespace</yield>
-	</exbgf:uniteMany>
+	</exbgf:unite-many>
 	<xbgf:undefine>
 		<nonterminal>not-whitespace</nonterminal>
 	</xbgf:undefine>
-	<xbgf:widen>
-		<bgf:expression>
+	<exbgf:widen12O>
 			<terminal>;</terminal>
-		</bgf:expression>
-		<bgf:expression>
-			<optional>
-				<bgf:expression>
-					<terminal>;</terminal>
-				</bgf:expression>
-			</optional>
-		</bgf:expression>
-		<in>
-			<nonterminal>namespace-member-declaration</nonterminal>
-		</in>
-	</xbgf:widen>
-	<exbgf:massageDouble>
+		<in>namespace-member-declaration</in>
+	</exbgf:widen12O>
+	<exbgf:massage-double>
 		<optional/>
 		<terminal>;</terminal>
-	</exbgf:massageDouble>
+	</exbgf:massage-double>
 	<xbgf:widen>
 		<bgf:expression>
 			<nonterminal>balanced-curlies</nonterminal>
@@ -274,10 +260,10 @@
 			<nonterminal>namespace-member-declaration</nonterminal>
 		</in>
 	</xbgf:widen>
-	<exbgf:massageDouble>
+	<exbgf:massage-double>
 		<optional/>
 		<nonterminal>balanced-curlies</nonterminal>
-	</exbgf:massageDouble>
+	</exbgf:massage-double>
 	<xbgf:factor>
 		<bgf:expression>
 			<choice>
