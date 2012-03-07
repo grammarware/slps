@@ -7,102 +7,40 @@
 	<exbgf:massageOP2S>
 		<nonterminal>using-directive</nonterminal>
 	</exbgf:massageOP2S>
-	<xbgf:factor>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>using</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>identifier</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>=</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>namespace-or-type-name</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>;</terminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>using</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>namespace-name</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>;</terminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<terminal>using</terminal>
-				</bgf:expression>
-				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<sequence>
-								<bgf:expression>
-									<nonterminal>identifier</nonterminal>
-								</bgf:expression>
-								<bgf:expression>
-									<terminal>=</terminal>
-								</bgf:expression>
-								<bgf:expression>
-									<nonterminal>namespace-or-type-name</nonterminal>
-								</bgf:expression>
-							</sequence>
-						</bgf:expression>
-						<bgf:expression>
-							<sequence>
-								<bgf:expression>
-									<nonterminal>namespace-name</nonterminal>
-								</bgf:expression>
-							</sequence>
-						</bgf:expression>
-					</choice>
-				</bgf:expression>
-				<bgf:expression>
-					<terminal>;</terminal>
-				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</xbgf:factor>
-	<xbgf:extract>
-		<bgf:production>
-			<nonterminal>using-directive-insides</nonterminal>
+	<exbgf:pull-out>
+		<nonterminal>using-directive-insides</nonterminal>
+		<start>
 			<bgf:expression>
-				<choice>
+				<terminal>using</terminal>
+			</bgf:expression>
+		</start>
+		<choice>
+			<bgf:expression>
+				<sequence>
 					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>identifier</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<terminal>=</terminal>
-							</bgf:expression>
-							<bgf:expression>
-								<nonterminal>namespace-or-type-name</nonterminal>
-							</bgf:expression>
-						</sequence>
+						<nonterminal>identifier</nonterminal>
 					</bgf:expression>
+					<bgf:expression>
+						<terminal>=</terminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>namespace-or-type-name</nonterminal>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+			<bgf:expression>
+				<sequence>
 					<bgf:expression>
 						<nonterminal>namespace-name</nonterminal>
 					</bgf:expression>
-				</choice>
+				</sequence>
 			</bgf:expression>
-		</bgf:production>
-	</xbgf:extract>
+		</choice>
+		<tail>
+			<bgf:expression>
+				<terminal>;</terminal>
+			</bgf:expression>
+		</tail>
+	</exbgf:pull-out>
 	<xbgf:inline>using-directive</xbgf:inline>
 </exbgf:sequence>

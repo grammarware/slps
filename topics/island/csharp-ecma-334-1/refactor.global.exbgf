@@ -1,111 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
 	<exbgf:deyaccifyH>global-attribute-sections</exbgf:deyaccifyH>
-	<xbgf:unchain>
-		<bgf:production>
-			<nonterminal>global-attributes</nonterminal>
-			<bgf:expression>
-				<nonterminal>global-attribute-sections</nonterminal>
-			</bgf:expression>
-		</bgf:production>
-	</xbgf:unchain>
-	<xbgf:inline>global-attributes</xbgf:inline>
+	<exbgf:double-inline chainto="global-attribute-sections">global-attributes</exbgf:double-inline>
 	<exbgf:massageOP2S>
 		<nonterminal>global-attribute-section</nonterminal>
 	</exbgf:massageOP2S>
-	<xbgf:factor>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>[</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>global-attribute-target-specifier</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>attribute-list</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>]</terminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-				<bgf:expression>
-					<sequence>
-						<bgf:expression>
-							<terminal>[</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>global-attribute-target-specifier</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<nonterminal>attribute-list</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>,</terminal>
-						</bgf:expression>
-						<bgf:expression>
-							<terminal>]</terminal>
-						</bgf:expression>
-					</sequence>
-				</bgf:expression>
-			</choice>
-		</bgf:expression>
-		<bgf:expression>
-			<sequence>
-				<bgf:expression>
-					<terminal>[</terminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>global-attribute-target-specifier</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<choice>
-						<bgf:expression>
-							<nonterminal>attribute-list</nonterminal>
-						</bgf:expression>
-						<bgf:expression>
-							<sequence>
-								<bgf:expression>
-									<nonterminal>attribute-list</nonterminal>
-								</bgf:expression>
-								<bgf:expression>
-									<terminal>,</terminal>
-								</bgf:expression>
-							</sequence>
-						</bgf:expression>
-					</choice>
-				</bgf:expression>
-				<bgf:expression>
-					<terminal>]</terminal>
-				</bgf:expression>
-			</sequence>
-		</bgf:expression>
-	</xbgf:factor>
-	<xbgf:extract>
-		<bgf:production>
-			<nonterminal>global-attribute-section-insides</nonterminal>
+	<exbgf:pull-out>
+		<nonterminal>global-attribute-section-insides</nonterminal>
+		<start>
 			<bgf:expression>
-				<choice>
+				<terminal>[</terminal>
+			</bgf:expression>
+			<bgf:expression>
+				<nonterminal>global-attribute-target-specifier</nonterminal>
+			</bgf:expression>
+		</start>
+		<choice>
+			<bgf:expression>
+				<nonterminal>attribute-list</nonterminal>
+			</bgf:expression>
+			<bgf:expression>
+				<sequence>
 					<bgf:expression>
 						<nonterminal>attribute-list</nonterminal>
 					</bgf:expression>
 					<bgf:expression>
-						<sequence>
-							<bgf:expression>
-								<nonterminal>attribute-list</nonterminal>
-							</bgf:expression>
-							<bgf:expression>
-								<terminal>,</terminal>
-							</bgf:expression>
-						</sequence>
+						<terminal>,</terminal>
 					</bgf:expression>
-				</choice>
+				</sequence>
 			</bgf:expression>
-		</bgf:production>
-	</xbgf:extract>
+		</choice>
+		<tail>
+			<bgf:expression>
+				<terminal>]</terminal>
+			</bgf:expression>
+		</tail>
+	</exbgf:pull-out>
 	<xbgf:inline>global-attribute-section</xbgf:inline>
 	<xbgf:inline>global-attribute-target-specifier</xbgf:inline>
 	<xbgf:inline>global-attribute-target</xbgf:inline>

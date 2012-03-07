@@ -1,36 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <exbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:exbgf="http://planet-sl.org/exbgf">
-	<xbgf:rename>
-		<nonterminal>
-			<from>init-declarator-list</from>
-			<to>neither-semicolon-nor-specifier</to>
-		</nonterminal>
-	</xbgf:rename>
-	<xbgf:undefine>
-		<nonterminal>neither-semicolon-nor-specifier</nonterminal>
-	</xbgf:undefine>
-	<exbgf:uniteMany>
+	<exbgf:renameN>
+		<from>init-declarator-list</from>
+		<to>neither-semicolon-nor-specifier</to>
+	</exbgf:renameN>
+	<exbgf:unite-many>
 		<add>block-item-list</add>
 		<add>struct-declaration-list</add>
 		<add>enumerator-list</add>
 		<yield>balanced-curlies</yield>
-	</exbgf:uniteMany>
-	<xbgf:undefine>
-		<nonterminal>balanced-curlies</nonterminal>
-	</xbgf:undefine>
-	<exbgf:uniteMany>
+	</exbgf:unite-many>
+	<exbgf:unite-many>
 		<add>direct-declarator-inside-square-brackets</add>
 		<yield>balanced-square-brackets</yield>
-	</exbgf:uniteMany>
-	<xbgf:undefine>
-		<nonterminal>balanced-square-brackets</nonterminal>
-	</xbgf:undefine>
-	<exbgf:uniteMany>
+	</exbgf:unite-many>
+	<exbgf:unite-many>
 		<add>direct-declarator-bracketed-recursion</add>
 		<add>direct-declarator-inside-parenthesis</add>
 		<yield>balanced-parenthesis</yield>
-	</exbgf:uniteMany>
+	</exbgf:unite-many>
 	<xbgf:undefine>
+		<nonterminal>neither-semicolon-nor-specifier</nonterminal>
 		<nonterminal>balanced-parenthesis</nonterminal>
+		<nonterminal>balanced-square-brackets</nonterminal>
+		<nonterminal>balanced-curlies</nonterminal>
 	</xbgf:undefine>
 </exbgf:sequence>

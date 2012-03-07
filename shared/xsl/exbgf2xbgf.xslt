@@ -739,6 +739,26 @@
 			</bgf:production>
 		</xbgf:extract>
 	</xsl:template>
+	<xsl:template match="exbgf:double-inline">
+		<!--
+			Inlining a nonterminal that is defined with a chain production rule.
+			
+			Can be implemented as inline + inline, but we go beyond that.
+		-->
+		<xsl:message>[EXBGF] double-inline ::= unchain + inline</xsl:message>
+		<xbgf:unchain>
+			<bgf:production>
+				<nonterminal><xsl:value-of select="."/></nonterminal>
+				<bgf:expression>
+					<nonterminal><xsl:value-of select="@chainto"/></nonterminal>
+				</bgf:expression>
+			</bgf:production>
+		</xbgf:unchain>
+		<xbgf:inline>
+			<xsl:value-of select="."/>
+		</xbgf:inline>
+
+	</xsl:template>
 	<xsl:template match="exbgf:inlineYO">
 		<!--
 			Inlining a nonterminal that is defined as a yaccified plus, in an optional context.
@@ -910,6 +930,28 @@
 			Properly inline a nonterminal defined with yaccified production rules.
 		-->
 		<xsl:message>[EXBGF] inlineY ::= deyaccify + inline</xsl:message>
+		<xbgf:deyaccify>
+			<nonterminal>
+				<xsl:value-of select="."/>
+			</nonterminal>
+		</xbgf:deyaccify>
+		<xbgf:inline>
+			<xsl:value-of select="."/>
+		</xbgf:inline>
+	</xsl:template>
+	<xsl:template match="exbgf:inlineYH">
+		<!--
+			Properly inline a nonterminal defined with horizontal yaccified production rules.
+			
+			= exbgf:deyaccifyH + xbgf:inline
+			= xbgf:vertical + exbgf:inlineY
+		-->
+		<xsl:message>[EXBGF] inlineYH ::= vertical + deyaccify + inline</xsl:message>
+		<xbgf:vertical>
+			<nonterminal>
+				<xsl:value-of select="."/>
+			</nonterminal>
+		</xbgf:vertical>
 		<xbgf:deyaccify>
 			<nonterminal>
 				<xsl:value-of select="."/>
