@@ -86,3 +86,45 @@ class Nonterminal:
 		return self.ex
 	def __str__(self):
 		return self.data
+
+# nonterminal in renameN, vertical in addV, etc
+class Wrapping:
+	def __init__(self,name):
+		self.name = name
+		self.data = []
+	def parse(self,welem):
+		self.name = welem.tag
+		self.data = []
+		for e in welem.findall('*'):
+			self.data.append(XBGF3.Leaf(e.tag,e.text))
+			# self.data[-1].parse(e)
+	def setName(self,name):
+		self.name = name
+	def addChild(self,c):
+		self.data.append(c)
+	def getXml(self):
+		self.ex = ET.Element(self.name)
+		for e in self.data:
+			self.ex.append(e.getXml())
+		return self.ex
+	def __str__(self):
+		return self.name+'('+self.data+')'
+
+# from, to, etc
+class Leaf:
+	def __init__(self,name,data):
+		self.name = name
+		self.data = data
+	def parse(self,welem):
+		self.name = welem.tag
+		self.data = welem.findtext()
+	def setName(self,name):
+		self.name = name
+	def setValue(self,name):
+		self.data = name
+	def getXml(self):
+		self.ex = ET.Element(self.name)
+		self.ex.text = self.data
+		return self.ex
+	def __str__(self):
+		return self.name+':'+self.data

@@ -487,10 +487,10 @@
 	<xsd:element name="permute-permute">
 		<!-- one there, one back -->
 		<xsd:complexType>
-			<xsd:choice>
+			<xsd:sequence>
 				<xsd:element ref="bgf:production"/>
 				<xsd:element ref="bgf:production"/>
-			</xsd:choice>
+			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="rename-rename">

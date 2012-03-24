@@ -1,0 +1,3 @@
+This directory contains somewhat more advanced DOT generation than BGF2DOT.
+It is used for constructing, researching and visualising grammatical levels.
+For the simple version, please look at shared/xsl/bgf2dot.xslt

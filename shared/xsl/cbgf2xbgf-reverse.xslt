@@ -209,7 +209,11 @@
 	</xsl:template>
 	<xsl:template match="cbgf:reroot-reroot">
 		<xbgf:reroot>
-			<xsl:copy-of select="from/*"/>
+			<xsl:for-each select="from/root">
+				<root>
+					<xsl:value-of select="."/>
+				</root>
+			</xsl:for-each>
 		</xbgf:reroot>
 	</xsl:template>
 	<xsl:template match="cbgf:replace-replace">

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo [Test Case] `basename $1`
+./bgf2dot.py $1 $1.dot > /dev/null
+dot -Tpdf $1.dot > $1.pdf
