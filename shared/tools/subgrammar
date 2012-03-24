@@ -15,4 +15,4 @@ elif [ ! -r $1 ]; then
     exit 1
 fi
 
-${SLPS}/topics/investigation/subgrammar/subgrammar.py $@
+${SLPS}/topics/mutation/subgrammar/subgrammar.py $@

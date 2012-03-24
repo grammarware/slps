@@ -15,5 +15,5 @@ elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
 else
-    xsltproc ${SLPS}/topics/presentation/metrics/bgf-overview.xslt $1
+    xsltproc ${SLPS}/topics/investigation/analysis/bgf-overview.xslt $1
 fi
