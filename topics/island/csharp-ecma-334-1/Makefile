@@ -18,7 +18,6 @@ cs.5.bgf: cs.4.bgf adapt.namespace.exbgf
 
 cs.6.bgf: cs.5.bgf simplify.namespace.exbgf
 	exbgf simplify.namespace.exbgf cs.5.bgf cs.6.bgf
-	bgf2html cs.6.bgf cs.html
 
 cs.7.bgf: cs.6.bgf skeletonise.exbgf
 	exbgf skeletonise.exbgf cs.6.bgf cs.7.bgf
@@ -27,6 +26,10 @@ cs.9.bgf: cs.7.bgf
 	subgrammar cs.7.bgf compilation-unit cs.8.bgf
 	../../mutation/inline-trivial/inline.py cs.8.bgf inline-chains.xbgf
 	xbgf inline-chains.xbgf cs.8.bgf cs.9.bgf
+
+cs.a.bgf: cs.9.bgf
+	../../mutation/naming/enforce.py l- C! cs.9.bgf enforce-naming.xbgf
+	xbgf enforce-naming.xbgf cs.9.bgf cs.a.bgf
 
 cs.adt1.bgf: cs.8.bgf
 	../../mutation/anf/anf.py cs.8.bgf cs.anf.xbgf
