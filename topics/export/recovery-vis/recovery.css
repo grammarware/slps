@@ -1,0 +1,31 @@
+pre
+{
+border: 1px solid black;
+border-spacing: 2px;
+border-collapse: collapse;
+background-color: #cccccc;
+padding: 5px;
+}
+
+.box {border: 1px solid black; /*padding:1px; */}
+.t { background-color: #99cccc; }
+.nt { background-color: #99cc99; }
+.meta { background-color: #cc9999; }
+
+/* the rest is (arguably) not used */
+
+h1, table { text-align: center; }
+.label, .sel { color: green; }
+.marked { background-color: #FFE5B4;}
+/*.nt { color: blue; font-weight: bold; }*/
+/*.t { color: red;  font-style:italic; }*/
+/*.meta { color: green; font-style:italic; font-family: Roman, "Times New Roman", serif; }*/
+h6 { text-align: right; }
+.date { font-size: small; }
+
+.note
+{
+text-align: right;
+font-weight: bold;
+margin: 0px;
+}

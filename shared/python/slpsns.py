@@ -8,6 +8,7 @@ xbgfns = 'http://planet-sl.org/xbgf'
 cbgfns = 'http://planet-sl.org/cbgf'
 eddns  = 'http://planet-sl.org/edd'
 xeddns = 'http://planet-sl.org/xedd'
+rplns  = 'http://planet-sl.org/rpl'
 xsdns  = 'http://www.w3.org/2001/XMLSchema'
 htmlns = 'http://www.w3.org/1999/xhtml'
 
@@ -20,16 +21,19 @@ def init(ET):
 	ET._namespace_map[cbgfns] = 'cbgf'
 	ET._namespace_map[eddns]  =  'edd'
 	ET._namespace_map[xeddns] = 'xedd'
+	ET._namespace_map[rplns]  =  'rpl'
 	ET._namespace_map[xsdns]  =  'xsd'
 	ET._namespace_map[htmlns] = 'html'
 
-def lcf_(x):  return '{'+lcfns+'}'+x
-def ldf_(x):  return '{'+ldfns+'}'+x
+def lcf_(x):  return '{'+lcfns+'}' +x
+def ldf_(x):  return '{'+ldfns+'}' +x
 def xldf_(x): return '{'+xldfns+'}'+x
-def bgf_(x):  return '{'+bgfns+'}'+x
+def bgf_(x):  return '{'+bgfns+'}' +x
 def xbgf_(x): return '{'+xbgfns+'}'+x
 def cbgf_(x): return '{'+cbgfns+'}'+x
-def xsd_(x):  return '{'+xsdns+'}'+x
-def edd_(x):  return '{'+eddns+'}'+x
+def xsd_(x):  return '{'+xsdns+'}' +x
+def edd_(x):  return '{'+eddns+'}' +x
 def xedd_(x): return '{'+xeddns+'}'+x
+def rpl_(x):  return '{'+rplns+'}' +x
 def htm_(x):  return '{'+htmlns+'}'+x
+
