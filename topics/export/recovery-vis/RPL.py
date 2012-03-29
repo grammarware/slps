@@ -41,7 +41,9 @@ class RPL:
 	def parse(self):
 		self.xml = ET.parse(self.name)
 		for e in self.xml.findall('*'):
-			if e.tag == slpsns.rpl_('message'):
+			if e.tag == slpsns.rpl_('title'):
+				self.data.append(Title(e.text))
+			elif e.tag == slpsns.rpl_('message'):
 				self.data.append(Message(e.text))
 			elif e.tag == slpsns.rpl_('step'):
 				self.data.append(Step(e.text))
@@ -107,12 +109,19 @@ class Token (AnyElement):
 		else:
 			return self.boxwrap(self.data)
 
+class Title (AnyElement):
+	def __init__(self,data):
+		self.tag = 'title'
+		super(Title,self).__init__(data,'')
+	def getHTML(self):
+		return '<h1>'+self.data+'</h1>'
+
 class Message (AnyElement):
 	def __init__(self,data):
 		self.tag = 'message'
 		super(Message,self).__init__(data,'')
 	def getHTML(self):
-		return '<h1>'+self.data+'</h1>'
+		return '<h3>'+self.data+'</h3>'
 
 class Step (AnyElement):
 	def __init__(self,data):

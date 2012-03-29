@@ -8,6 +8,7 @@ sys.path.append(os.getcwd().split('projects')[0]+'projects/slps/shared/python')
 
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
+		print('This is the minimal visualiser of RPLs (recovery process logs) that presents only those steps that change anything.')
 		print('Usage:')
 		print('	rpl2htm.py <input-recovery-process-log> <output-hypertext>')
 		sys.exit(-1)
@@ -16,9 +17,21 @@ if __name__ == "__main__":
 	html = open(sys.argv[2],'w')
 	hypertext = '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>'+\
 			'<title>Grammar Recovery, visualised: '+rpl.name+'</title><link href="recovery.css" rel="stylesheet" type="text/css"/></head><body>'
+	htdata = []
 	for x in rpl.data:
-		hypertext += x.getHTML()+'\n'
+		htdata.append(x.getHTML())
+	for i in range(1,len(htdata)):
+		j = i-1
+		while j>0 and htdata[j].find('pre>')<0:
+			j -= 1
+		if htdata[i] == htdata[j]:
+			htdata[i] = ''
+	for i in range(0,len(htdata)-1):
+		if htdata[i][:4] == '<h2>' and htdata[i+1]=='':
+			htdata[i] = htdata[i].replace('h2>','h3>')
+	for x in htdata:
+		hypertext += x + '\n'
 	hypertext += '<hr></body></html>'
 	html.write(hypertext)
 	html.close()
-	sys.exit(1)
+	sys.exit(0)

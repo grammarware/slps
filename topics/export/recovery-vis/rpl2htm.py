@@ -8,6 +8,7 @@ sys.path.append(os.getcwd().split('projects')[0]+'projects/slps/shared/python')
 
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
+		print('This is the trivial visualiser of RPLs (recovery process logs).')
 		print('Usage:')
 		print('	rpl2htm.py <input-recovery-process-log> <output-hypertext>')
 		sys.exit(-1)
@@ -16,4 +17,4 @@ if __name__ == "__main__":
 	html = open(sys.argv[2],'w')
 	html.write(rpl.getHTML())
 	html.close()
-	sys.exit(1)
+	sys.exit(0)

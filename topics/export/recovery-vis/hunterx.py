@@ -72,10 +72,15 @@ specials = \
 	]
 specials.extend(metasymbols)
 
-def reportonstep(s):
+def recordStep(s):
 	global vis
 	print('STEP '+s)
 	vis.add(RPL.Step(s))
+
+def recordMsg(s):
+	global vis
+	print('STEP '+s)
+	vis.add(RPL.Message(s))
 
 def reportprods(prods,terminator,final):
 	global vis
@@ -166,7 +171,7 @@ def removeComments(ts,s,e):
 		i = ts.index(s)
 		# special case
 		if i>1 and 'start-terminal-symbol' in config.keys() and ts[i-1:i+2]==[config['start-terminal-symbol'],s,config['end-terminal-symbol']]:
-			reportonstep('0: adjusted for the comment starting symbol being used as a terminal.')
+			recordStep('0: adjusted for the comment starting symbol being used as a terminal.')
 			nts = ts[:i-1]
 			nts.append(ts[i-1]+ts[i]+ts[i+1])
 			nts.extend(ts[i+2:])
@@ -174,7 +179,7 @@ def removeComments(ts,s,e):
 			continue
 		j = endOfContext(ts,i,e)
 		if j<0:
-			reportonstep('0 error: mismatched comment delimiters.')
+			recordMsg('0 error: mismatched comment delimiters.')
 			j = i
 		nts = ts[:i]
 		nts.extend(ts[j:])
@@ -321,7 +326,7 @@ def useTerminatorSymbol(ts,t):
 			ps[-1].append(x)
 	#ps = list(filter(lambda x:x!=[],ps))
 	if 'start-label-symbol' in config.keys() or 'end-label-symbol' in config.keys():
-		reportonstep('4: guessing defining-symbol in a grammar with labels not implemented yet!')
+		recordMsg('4: guessing defining-symbol in a grammar with labels not implemented yet!')
 		return None,None
 	dss = list(map(lambda x:'' if len(x)<2 else x[1],filter(lambda x:x!=[],ps)))
 	bestds,bestdsvalue = bestFrequency(calculateFrequencies(filter(lambda x:x!='',dss)))
@@ -355,7 +360,7 @@ def useDefiningSymbol(ts,d):
 						# everything is fine
 						p = [ts[poss[i]-3],ts[poss[i]-1]]
 					else:
-						reportonstep('4 problem: start-label-symbol mismatch!')
+						recordMsg('4 problem: start-label-symbol mismatch!')
 						# todo: recover
 				else:
 					# no starting symbol for the label
@@ -390,7 +395,7 @@ def useDefiningSymbol(ts,d):
 	# all left hand sides need to be nonterminals!
 	for i in range(0,len(prods)):
 		if prods[i][1][0] == config['start-terminal-symbol'] and prods[i][1][-1] == config['end-terminal-symbol']:
-			reportonstep('4 warning: terminal on the left hand side of a production, fixed by turning it back into a nonterminal.')
+			recordMsg('4 warning: terminal on the left hand side of a production, fixed by turning it back into a nonterminal.')
 			prods[i][1] = prods[i][1][1:-1]
 	return prods
 
@@ -475,7 +480,7 @@ def assembleBracketedSymbols(ts,start,end,preserveSpace):
 				inside = False
 			elif ts[i] == start:
 				# we do not allow nested bracketed symbols
-				reportonstep('x ERROR: unbalanced bracketed metasymbols',repr(start),'and',repr(end))
+				recordMsg('x ERROR: unbalanced bracketed metasymbols',repr(start),'and',repr(end))
 				if preserveSpace:
 					last = tss[-1].split(' ')
 					tss[-1] = last[0]
@@ -508,7 +513,7 @@ def findGroups(ats,start,end):
 				level -= 1
 				poss[1][lp.pop(level)] = (i,j)
 	if len(poss[0]) != len(poss[1]):
-		reportonstep('8 deadlock: number of start-group-symbol and end-group-symbol occurrences do not match.')
+		recordMsg('8 deadlock: number of start-group-symbol and end-group-symbol occurrences do not match.')
 		return ats
 	if debug and poss[0]:
 		print('poss >>>>>',poss)
@@ -560,7 +565,7 @@ def findSpecialGroups(ats,start,end):
 				level -= 1
 				poss[1][lp.pop(level)] = (i,j)
 	if len(poss[0]) != len(poss[1]):
-		reportonstep('8 deadlock: number of start-?-symbol and end-?-symbol occurrences do not match.')
+		recordMsg('8 deadlock: number of start-?-symbol and end-?-symbol occurrences do not match.')
 		return ats
 	if debug and poss[0]:
 		print('poss >>>>>',poss)
@@ -757,7 +762,7 @@ def map2expr(ss):
 			es.append(e)
 			i += 1
 		elif ss[i] in metasymbols:
-			reportonstep('9:',ss[i],'found untouched at serialisation stage, turned into a terminal symbol "'+config[ss[i].lower()]+'"')
+			recordMsg('9:',ss[i],'found untouched at serialisation stage, turned into a terminal symbol "'+config[ss[i].lower()]+'"')
 			print(ss)
 			ss[i] = config['start-terminal-symbol'] + config[ss[i].lower()] + config['end-terminal-symbol']
 			continue
@@ -959,7 +964,7 @@ def decomposeSymbols(p,defd):
 		#	else:
 		#		pos = False
 		if pos:
-			reportonstep('8:',x,'matches as',var)
+			recordMsg('8:',x,'matches as',var)
 			q.extend(var)
 			# todo: need to be adjusted if the order of phases is changed
 			#q.append(config['start-terminal-symbol']+t+config['end-terminal-symbol'])
@@ -1064,15 +1069,15 @@ def balanceProd(p):
 				else:
 					fail = True
 			if fail:
-				reportonstep('7: Cannot forward balance a production',p,'- reverting',oldpi,'to a terminal.')
+				recordMsg('7: Cannot forward balance a production',p,'- reverting',oldpi,'to a terminal.')
 				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
 				i += 1
 			elif p[i] == oldpi:
-				reportonstep('7: Problem at',oldpi,'in',p[1],'- converted back to a terminal symbol.')
+				recordMsg('7: Problem at',oldpi,'in',p[1],'- converted back to a terminal symbol.')
 				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
 				i += 1
 			else:
-				reportonstep('7: Rebalanced ambiguity of',oldpi,'with',p[i],'in',p[1])
+				recordMsg('7: Rebalanced ambiguity of',oldpi,'with',p[i],'in',p[1])
 				i = j
 		else:
 			i = j
@@ -1117,16 +1122,16 @@ def balanceProd(p):
 			# 			amb.append(k.upper())
 			# 	print('>>>',amb)
 			if fail:
-				reportonstep('7: Cannot backward balance a production',p,'- reverting',oldpi,'to a terminal.')
+				recordMsg('7: Cannot backward balance a production',p,'- reverting',oldpi,'to a terminal.')
 				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
 				i -= 1
 			elif p[i] == oldpi:
 				print(p)
-				reportonstep('7: Problem at',oldpi,'in',p[1],'- converted back to a terminal symbol.')
+				recordMsg('7: Problem at',oldpi,'in',p[1],'- converted back to a terminal symbol.')
 				p[i] = config['start-terminal-symbol']+config[oldpi.lower()]+config['end-terminal-symbol']
 				i -= 1
 			else:
-				reportonstep('7: Rebalanced ambiguity of',oldpi,'with',p[i],'in',p[1])
+				recordMsg('7: Rebalanced ambiguity of',oldpi,'with',p[i],'in',p[1])
 				i = j
 		else:
 			i = j
@@ -1139,7 +1144,7 @@ def postfix2confix(p):
 		while s in p:
 			w = p.index(s)
 			if w == 0:
-				reportonstep('7: Impossible place for postfix operator at',p[1],'- converted to a terminal.')
+				recordMsg('7: Impossible place for postfix operator at',p[1],'- converted to a terminal.')
 				p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 				continue
 			if p[w-1] == 'END-GROUP-SYMBOL':
@@ -1147,13 +1152,13 @@ def postfix2confix(p):
 				# i.e., (a b)? will be [a b], not [(a b)]
 				j = startOfContext(p,w-1,'START-GROUP-SYMBOL')
 				if j<0:
-					reportonstep('7: Impossible to balance the group preceding a postfix operator at',p[1],'- converted it to a terminal')
+					recordMsg('7: Impossible to balance the group preceding a postfix operator at',p[1],'- converted it to a terminal')
 					p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 					continue
 				else:
 					# nice message to get, but clutters the output
 					if debug:
-						reportonstep('7: Converted postfix metasymbol to confix notation.')
+						recordMsg('7: Converted postfix metasymbol to confix notation.')
 					#print('<<<p<<<',p)
 					p[w-1] = s.replace('POSTFIX','END')
 					p[j+1] = s.replace('POSTFIX','START')
@@ -1166,13 +1171,13 @@ def postfix2confix(p):
 				# i.e., {a b}? will be [{a b}], not [a b]
 				j = startOfContext(p,w-1,p[w-1].replace('END','START'))
 				if j<0:
-					reportonstep('7: Impossible to balance the group preceding a postfix operator, converted it to a terminal')
+					recordMsg('7: Impossible to balance the group preceding a postfix operator, converted it to a terminal')
 					p[w] = config['start-terminal-symbol']+p[w]+config['end-terminal-symbol']
 					continue
 				else:
 					# nice message to get, but clutters the output
 					if debug:
-						reportonstep('7: Converted postfix metasymbol to confix notation.')
+						recordMsg('7: Converted postfix metasymbol to confix notation.')
 					print('<<<p<<<',p)
 					q = p[:j+1]
 					q.append(s.replace('POSTFIX','START'))
@@ -1184,7 +1189,7 @@ def postfix2confix(p):
 			else:
 				# nice message to get, but clutters the output
 				if debug:
-					reportonstep('7: Converted postfix metasymbol to confix notation.')
+					recordMsg('7: Converted postfix metasymbol to confix notation.')
 				# single element
 				q = p[:w-1]
 				q.append(s.replace('POSTFIX','START'))
@@ -1199,8 +1204,8 @@ def useTerminatorToFixProds(ps,ts):
 	nps = []
 	for p in ps:
 		if ts not in p:
-			#reportonstep('4 warning: a production is disregarded due to the lack of terminator symbol:',p)
-			reportonstep('4 warning: a production for '+p[1].strip()+' without terminator-symbol, appended one.')
+			#recordMsg('4 warning: a production is disregarded due to the lack of terminator symbol:',p)
+			recordMsg('4 warning: a production for '+p[1].strip()+' without terminator-symbol, appended one.')
 			p.append(ts)
 			print(p)
 		while ts in p:
@@ -1213,7 +1218,7 @@ def useTerminatorToFixProds(ps,ts):
 					while x in tail:
 						tail.remove(x)
 				if len(tail)>0:
-					reportonstep('4 problem: terminator-symbol without proper defining-symbol context.',tail)
+					recordMsg('4 problem: terminator-symbol without proper defining-symbol context.',tail)
 					return nps
 				else:
 					p = tail
@@ -1224,7 +1229,7 @@ def useTerminatorToFixProds(ps,ts):
 					while x in nt:
 						nt.remove(x)
 				if len(nt) != 1:
-					reportonstep('4 problem: cannot determine nonterminal name from',nt)
+					recordMsg('4 problem: cannot determine nonterminal name from',nt)
 					nt = ' '.join(nt)
 				else:
 					nt = nt[0]
@@ -1289,13 +1294,13 @@ def convertNonalphanumerics2Terminals(p):
 		if x[0]==' ' or x[-1]==' ':
 			x = x.strip()
 		if x in ('_','-') or x.isdigit():
-			reportonstep('5 warning:',repr(x),'is assumed to be an invalid nonterminal name, converted to a terminal symbol.')
+			recordMsg('5 warning:',repr(x),'is assumed to be an invalid nonterminal name, converted to a terminal symbol.')
 			q.append(config['start-terminal-symbol'] + x + config['end-terminal-symbol'])
 			continue
 		string = x[0]
 		alpha = isAlphaNum(x[0])
 		if alpha and not (x[0].isalpha() or x[0] in nonterminals_start):
-			reportonstep('5 warning: the first letter of',x,'does not seem right, will be separated.')
+			recordMsg('5 warning: the first letter of',x,'does not seem right, will be separated.')
 			alpha = False
 		for s in x[1:]:
 			if alpha == isAlphaNum(s):
@@ -1395,14 +1400,14 @@ if __name__ == "__main__":
 	readConfig(sys.argv[2])
 	# vis.write('<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>')
 	# vis.write('<title>Grammar Recovery, visualised: '+sys.argv[1]+'</title><link href="recovery.css" rel="stylesheet" type="text/css"/></head><body>')
-	vis.add(RPL.Message('Grammar Recovery, visualised: '+sys.argv[1]))
+	vis.add(RPL.Title('Grammar Recovery, visualised: '+sys.argv[1]))
 	# default values for some metasymbols
 	for x in defaults.keys():
 		if x not in config.keys():
 			config[x] = defaults[x]
 	f = open(sys.argv[1],'r')
 	# STEP 0: read the file, remove whitespace (?)
-	reportonstep('0: reading the input file.')
+	recordStep('0: reading the input file.')
 	lines = f.readlines()
 	# vis.write('<pre>'+''.join(lines)+'</pre>')
 	ts = RPL.TokenSeq()
@@ -1416,7 +1421,7 @@ if __name__ == "__main__":
 		for line in lines:
 			(line,inside,chunks) = processLine(line,inside,chunks)
 		lines = chunks
-		reportonstep('0 found',len(lines),'in grammar chunks between designated delimiters.')
+		recordMsg('0 found',len(lines),'in grammar chunks between designated delimiters.')
 		if debug:
 			print('Perceived lines:',lines)
 	if len(lines) == 0:
@@ -1432,7 +1437,7 @@ if __name__ == "__main__":
 		for line in lines:
 			if line[:len(config['line-continuation-symbol'])] == config['line-continuation-symbol']:
 				if debug:
-					reportonstep('0: concatenating',repr(nlines[-1]),'and',repr(line))
+					recordMsg('0: concatenating',repr(nlines[-1]),'and',repr(line))
 				# [:-1] because there is still the \n character at the end of the last line
 				nlines[-1] = nlines[-1][:-1] + sep + line
 				cx += 1
@@ -1440,9 +1445,9 @@ if __name__ == "__main__":
 				nlines.append(line)
 		lines = nlines
 		if cx > 0:
-			reportonstep('0: found',cx,'line continuations.')
+			recordMsg('0: found',cx,'line continuations.')
 		else:
-			reportonstep('0: line continuation specified, but not encountered.')
+			recordMsg('0: line continuation specified, but not encountered.')
 	# STEP 1: assemble terminal symbols
 	#print(ignore_lines)
 	for sign in ignore_lines:
@@ -1456,10 +1461,10 @@ if __name__ == "__main__":
 		if debug:
 			print('Token stream:',tokens)
 			reporttokens(tokens)
-		reportonstep('1: removing whitespace and comments, assembling terminal symbols.')
+		recordStep('1: removing whitespace and comments, assembling terminal symbols.')
 		for k in masked.keys():
 			if len(k)>1 and k.find('@@@')<0:
-				reportonstep('1: going to glue tokens that resemble masked terminal', repr(k))
+				recordMsg('1: going to glue tokens that resemble masked terminal', repr(k))
 				tokens = mapglue(tokens,k)
 				if debug:
 					print('Token stream:',tokens)
@@ -1479,22 +1484,22 @@ if __name__ == "__main__":
 		tokens = [config['start-terminal-symbol']+masked[x]+config['end-terminal-symbol'] if x in masked.keys() else x for x in tokens]
 		tokens = assembleBracketedSymbols(tokens,config['start-terminal-symbol'],config['end-terminal-symbol'],False)
 	else:
-		reportonstep('1 was of limited use, sorry: start-terminal-symbol and end-terminal-symbol are not both specified.')
+		recordMsg('1 was of limited use, sorry: start-terminal-symbol and end-terminal-symbol are not both specified.')
 		# technically we still need them to denote terminals in our internal representation
 		config['start-terminal-symbol'] = config['end-terminal-symbol'] = '"'
 		tokens = [config['start-terminal-symbol']+masked[x]+config['end-terminal-symbol'] if x in masked.keys() else x for x in tokens]
 	# if we know special rules for telling terminals from nonterminals, now is the time to use them!
 	if 'terminal-if-uppercase' in config.keys():
-		reportonstep('1: all UPPERCASE tokens are considered terminals.')
+		recordMsg('1: all UPPERCASE tokens are considered terminals.')
 		tokens = nt2t(tokens,isUpperCase)
 	if 'terminal-if-lowercase' in config.keys():
-		reportonstep('1: all lowercase tokens are considered terminals.')
+		recordMsg('1: all lowercase tokens are considered terminals.')
 		tokens = nt2t(tokens,isLowerCase)
 	if 'terminal-if-camelcase' in config.keys():
-		reportonstep('1: all CamelCase tokens are considered terminals.')
+		recordMsg('1: all CamelCase tokens are considered terminals.')
 		tokens = nt2t(tokens,isCamelCase)
 	if 'terminal-if-mixedcase' in config.keys():
-		reportonstep('1: all mixedCase tokens are considered terminals.')
+		recordMsg('1: all mixedCase tokens are considered terminals.')
 		tokens = nt2t(tokens,isMixedCase)
 	# spaces instead of weird occurrences of start-terminal-symbols
 	tokens = [config['start-terminal-symbol']+x+config['end-terminal-symbol']
@@ -1506,43 +1511,43 @@ if __name__ == "__main__":
 		print('Token stream:',tokens)
 		reporttokens(tokens)
 	# STEP 2: assemble nonterminal symbols
-	reportonstep('2: assembling nonterminal symbols.')
+	recordStep('2: assembling nonterminal symbols.')
 	if 'start-nonterminal-symbol' in config.keys() and 'end-nonterminal-symbol' in config.keys():
 		tokens = assembleBracketedSymbols(tokens,config['start-nonterminal-symbol'],config['end-nonterminal-symbol'],True)
 	else:
-		reportonstep('2 skipped, sorry: start-nonterminal-symbol and end-nonterminal-symbol are not both specified.')
+		recordMsg('2 skipped, sorry: start-nonterminal-symbol and end-nonterminal-symbol are not both specified.')
 	# if we know special rules for telling terminals from nonterminals, now is the time to use them!
 	if 'nonterminal-if-uppercase' in config.keys():
-		reportonstep('2: all UPPERCASE tokens are considered nonterminals.')
+		recordMsg('2: all UPPERCASE tokens are considered nonterminals.')
 		tokens = t2nt(tokens,isUpperCase)
 	if 'nonterminal-if-lowercase' in config.keys():
-		reportonstep('2: all lowercase tokens are considered nonterminals.')
+		recordMsg('2: all lowercase tokens are considered nonterminals.')
 		tokens = t2nt(tokens,isLowerCase)
 	if 'nonterminal-if-camelcase' in config.keys():
-		reportonstep('2: all CamelCase tokens are considered nonterminals.')
+		recordMsg('2: all CamelCase tokens are considered nonterminals.')
 		tokens = t2nt(tokens,isCamelCase)
 	if 'nonterminal-if-mixedcase' in config.keys():
-		reportonstep('2: all mixedCase tokens are considered nonterminals.')
+		recordMsg('2: all mixedCase tokens are considered nonterminals.')
 		tokens = t2nt(tokens,isMixedCase)
 	if 'nonterminal-if-contains' in config.keys():
-		reportonstep('2: all tokens containing',repr(config['nonterminal-if-contains']),'are considered nonterminals.')
+		recordMsg('2: all tokens containing',repr(config['nonterminal-if-contains']),'are considered nonterminals.')
 		tokens = t2nt(tokens,lambda x:x.find(config['nonterminal-if-contains'])>-1)
 	# STEP 3: assembling composite metasymbols together
 	if debug:
 		print('Token stream:',tokens)
 		reporttokens(tokens)
-	reportonstep('3: assembling metasymbols according to their possible values.')
+	recordStep('3: assembling metasymbols according to their possible values.')
 	tokens = assembleQualifiedNumbers(tokens)
 	for k in config.keys():
 		if len(config[k])>1 and (config[k].find('\n')<0 or 'consider-indentation' not in config.keys()):
 			if k in defaults.keys() and config[k] != defaults[k]:
-				reportonstep('3: going to glue tokens that resemble metasymbol', repr(config[k]),'('+k+')')
+				recordMsg('3: going to glue tokens that resemble metasymbol', repr(config[k]),'('+k+')')
 			tokens = mapglue(tokens,config[k])
 	# treat "multiple" productions
 	if 'multiple-defining-symbol' in config.keys():
 		for i in range(0,len(tokens)):
 			if tokens[i] == config['multiple-defining-symbol']:
-				reportonstep('3 found a multiple choice production.')
+				recordMsg('3 found a multiple choice production.')
 				tokens[i] = config['defining-symbol']
 				j = i-1
 				while tokens[j] in ignore_tokens:
@@ -1552,7 +1557,7 @@ if __name__ == "__main__":
 		print('Token stream:',tokens)
 		reporttokens(tokens)
 	# STEP 4: slice according to defining-symbol
-	reportonstep('4: splitting the token stream into productions.')
+	recordStep('4: splitting the token stream into productions.')
 	if 'consider-indentation' in config.keys():
 		# rewrite tokens with tabulation
 		tokens = considerIndentation(tokens)
@@ -1569,21 +1574,21 @@ if __name__ == "__main__":
 		# STEP 4: we do not have defining-symbol, too bad
 		if 'terminator-symbol' in config.keys():
 			# STEP 4: at least the terminator-symbol is here, can work with that
-			reportonstep('4: using terminator-symbol to slice token stream into productions.')
+			recordMsg('4: using terminator-symbol to slice token stream into productions.')
 			prob,ds = useTerminatorSymbol(tokens,config['terminator-symbol'])
 			if ds:
 				if prob == 100:
-					reportonstep('4: inferred defining symbol is',repr(ds)+'.')
+					recordMsg('4: inferred defining symbol is',repr(ds)+'.')
 				else:
-					reportonstep('4: the most probable defining symbol is',repr(ds),'with',str(int(prob))+'% certainty.')
+					recordMsg('4: the most probable defining symbol is',repr(ds),'with',str(int(prob))+'% certainty.')
 				config['defining-symbol'] = ds
 			else:
-				reportonstep('4 skipped, sorry: could not infer defining-symbol.')
+				recordMsg('4 skipped, sorry: could not infer defining-symbol.')
 				print(ds,tokens)
 				sys.exit(-1)
 		else:
 			# STEP 4: we're screwed
-			reportonstep('4 in a pinch: neither defining-symbol nor terminator-symbol are specified!')
+			recordMsg('4 in a pinch: neither defining-symbol nor terminator-symbol are specified!')
 			popular = calculateFrequencies(tokens)
 			highest = max(popular.values())
 			solution = ['','',0]
@@ -1592,21 +1597,21 @@ if __name__ == "__main__":
 					# TODO: threshold justification
 					prob,ds = useTerminatorSymbol(tokens,sym)
 					if ds:
-						reportonstep('4 could have gone for terminator-symbol',repr(sym),'('+str(int(100.0*popular[sym]/highest))+'%) and defining-symbol',repr(ds),'('+str(int(prob))+'%)...')
+						recordMsg('4 could have gone for terminator-symbol',repr(sym),'('+str(int(100.0*popular[sym]/highest))+'%) and defining-symbol',repr(ds),'('+str(int(prob))+'%)...')
 						if prob*popular[sym]/highest > solution[2]:
 							solution = sym,ds,prob*popular[sym]/highest
 			if solution[2] < 50:
-				reportonstep('4 skipped, sorry: inference failed.')
+				recordMsg('4 skipped, sorry: inference failed.')
 				sys.exit(-1)
 			else:
 				config['defining-symbol'] = solution[1]
-				reportonstep('4 assumes defining-symbol is',repr(solution[1])+'.')
+				recordMsg('4 assumes defining-symbol is',repr(solution[1])+'.')
 	# STEP 4: we do now have defining-symbol, yay!
-	reportonstep('4: using defining-symbol to slice token stream into productions.')
+	recordStep('4: using defining-symbol to slice token stream into productions.')
 	prods = useDefiningSymbol(tokens,config['defining-symbol'])
 	if debug:
 		reportprods(prods,False,False)
-	reportonstep('4: inferring terminator-symbol by looking at the productions.')
+	recordMsg('4: inferring terminator-symbol by looking at the productions.')
 	if 'terminator-symbol' in config.keys():
 		# we do have the terminator, but suppose we also had defining symbol!
 		# TODO otherwise
@@ -1620,25 +1625,25 @@ if __name__ == "__main__":
 		else:
 			(need2fix,ts,prob) = findMostProbableTail(prods,config['terminator-symbol'])
 		if ''.join(ts) == config['terminator-symbol']:
-			reportonstep('4 confirmed terminator-symbol, congratulations!')
+			recordMsg('4 confirmed terminator-symbol, congratulations!')
 		else:
-			reportonstep('4 would have thought that terminator-symbol is '+repr(''.join(ts))+' and not '+repr(config['terminator-symbol']))
+			recordMsg('4 would have thought that terminator-symbol is '+repr(''.join(ts))+' and not '+repr(config['terminator-symbol']))
 		# now let's fix productions that were joined together
 		prods = useTerminatorToFixProds(prods,config['terminator-symbol'])
 	else:
 		ts = findCommonTail(prods[:-1])
 		if ts:
-			reportonstep('4 successful: inferred terminator-symbol:',ts)
+			recordMsg('4 successful: inferred terminator-symbol:',ts)
 			config['terminator-symbol'] = ts
 			need2fix = [-1]
 		else:
 			(need2fix,ts,prob) = findMostProbableTail(prods,'')
 			if ts:
-				reportonstep('4 successful: inferred the most probable terminator-symbol:',repr(ts[0]),',','%i'%prob+'% sure')
+				recordMsg('4 successful: inferred the most probable terminator-symbol:',repr(ts[0]),',','%i'%prob+'% sure')
 				config['terminator-symbol'] = ts[0]
 			else:
 				# ORLY?
-				reportonstep('4 unsuccessful, sorry: will assume terminator-symbol to be empty.')
+				recordMsg('4 unsuccessful, sorry: will assume terminator-symbol to be empty.')
 				for p in prods:
 					print('%40s'%p[1],'>>>>>>',p[-2:])
 				config['terminator-symbol'] = ''
@@ -1666,7 +1671,7 @@ if __name__ == "__main__":
 		for x in ii:
 			prods = [list(filter(lambda y:y!=x,p)) for p in prods]
 	if poststep4 > 0:
-		reportonstep('4 also adjusted '+str(poststep4)+' productions that did not quite fit the expectations.')
+		recordMsg('4 also adjusted '+str(poststep4)+' productions that did not quite fit the expectations.')
 	if 'possible-terminator-symbol' in config.keys():
 		no = yes = 0
 		for i in range(0,len(prods)):
@@ -1678,7 +1683,7 @@ if __name__ == "__main__":
 				prods[i] = prods[i][:j]
 			else:
 				no += 1
-		reportonstep('4 found '+str(yes)+' productions using possible terminator symbol and '+str(no)+' productions not using it.')
+		recordMsg('4 found '+str(yes)+' productions using possible terminator symbol and '+str(no)+' productions not using it.')
 	if debug:
 		reportprods(prods,True,False)
 	# STEP 4b: splitting the token stream into productions according to terminator-symbol; inferring defining-symbol
@@ -1715,17 +1720,17 @@ if __name__ == "__main__":
 			reportprods(prods,True,False)
 	# STEP 4 end: removing extra whitespace
 	if ' ' in ignore_tokens:
-		reportonstep('4 took care of extra spaces that were left unused at this point.')
+		recordMsg('4 took care of extra spaces that were left unused at this point.')
 		prods = [[x.strip() for x in p] for p in prods]
 		if debug:
 			reportprods(prods,True,False)
 	# STEP 5: non-alphanumerics
-	reportonstep('5 (part of rule 5): converting non-alphanumeric nonterminal symbols to terminals.')
+	recordStep('5 (part of rule 5): converting non-alphanumeric nonterminal symbols to terminals.')
 	prods = list(map(convertNonalphanumerics2Terminals,prods))
 	# STEP 5: decomposition
 	defined.extend(always_nonterminals)
 	if 'decompose-symbols' in config.keys():
-		reportonstep('5 (part of rule 4): decomposing compound symbols.')
+		recordStep('5 (part of rule 4): decomposing compound symbols.')
 		prods = [decomposeSymbols(x,defined) for x in prods]
 		if debug:
 			reportprods(prods,True,False)
@@ -1737,28 +1742,28 @@ if __name__ == "__main__":
 		s = z.lower()
 		if s in config.keys():
 			if s in defaults.keys() and config[s] != defaults[s]:
-				reportonstep('6: marking',repr(config[s]),'as',s+'.')
+				recordStep('6: marking',repr(config[s]),'as',s+'.')
 			step6 = True
 			prods = [[s.upper() if x==config[s] else x for x in p] for p in prods]
 			#prods = list(map(lambda p:list(map(lambda x:s.upper() if x==config[s] else x,p)),prods))
 	if not step6:
-		reportonstep('6 skipped: sorry, no metasymbols specified.')
+		recordMsg('6 skipped: sorry, no metasymbols specified.')
 	# STEP 7: validating metasymbols
 	if debug:
 		reportprods(prods,True,False)
 	prods = list(map(postfix2confix,prods))
 	if debug:
-		reportonstep('X: postfix to confix')
+		recordStep('X: postfix to confix')
 		reportprods(prods,True,False)
 	prods = list(map(balanceProd,prods))
 	if debug:
-		reportonstep('X: balance productions')
+		recordStep('X: balance productions')
 		reportprods(prods,True,False)
 	# STEP 8: various commands
-	reportonstep('8: executing special extraction commands.')
+	recordStep('8: executing special extraction commands.')
 	step8 = False
 	if len(ignore_tokens)>0:
-		reportonstep('8: ignoring extra tokens.')
+		recordStep('8: ignoring extra tokens.')
 		step8 = True
 		for x in ignore_tokens:
 			prods = [list(filter(lambda y:y!=x,p)) for p in prods]
@@ -1767,20 +1772,20 @@ if __name__ == "__main__":
 			reportprods(prods,True,False)
 	# quite usual trick, harmless for most grammars
 	if 'terminal-if-undefined' in config.keys():
-		reportonstep('8 (rule 5): turning undefined nonterminals into terminals.')
+		recordStep('8 (rule 5): turning undefined nonterminals into terminals.')
 		step8 = True
 		prods = [[convert2terminal(x,defined) for x in p] for p in prods]
 		if debug:
 			reportprods(prods,True,False)
 	# should be used very carefully because it is common for grammars to have terminals and nonterminals with the "same" name
 	if 'nonterminal-if-defined' in config.keys():
-		reportonstep('8 (rule 6): turning terminals that look like defined nonterminals into nonterminals.')
+		recordStep('8 (rule 6): turning terminals that look like defined nonterminals into nonterminals.')
 		step8 = True
 		prods = [[convert2nonterminal(x,defined) for x in p] for p in prods]
 		if debug:
 			reportprods(prods,True,False)
 	if 'glue-nonalphanumeric-terminals' in config.keys():
-		reportonstep('8 (part of rule 3): glueing non-alphanumeric terminal symbols together.')
+		recordStep('8 (part of rule 3): glueing non-alphanumeric terminal symbols together.')
 		step8 = True
 		prods = list(map(glueTerminals,prods))
 		if debug:
@@ -1788,7 +1793,7 @@ if __name__ == "__main__":
 	#for p in prods:
 	#	print(p[1],'is defined as',p[2:])
 	if not step8:
-		reportonstep('8 skipped, sorry: no special commands found in the configuration.')
+		recordMsg('8 skipped, sorry: no special commands found in the configuration.')
 	# STEP X: validating bracketing?
 	# ...
 	# RESULT

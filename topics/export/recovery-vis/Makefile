@@ -1,6 +1,10 @@
-all: test1/test.src
+all:
 	# ../../recovery/hunter/hunter.py test1/test.src test1/test.edd test1/test.out
 	./hunterx.py test1/test.src test1/test.edd test1/test.out
+	./rpl2htm.py recovery.rpl recovery2.html
+	./rpl2htm-min.py recovery.rpl recovery3.html
+
+rest:
 	gdt test1/test.bgf test1/test.out
 	@echo ----------
 	@cat test1/test.src
