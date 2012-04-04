@@ -96,6 +96,28 @@
 			<xsl:text>*</xsl:text>
 		</span>
 	</xsl:template>
+	<xsl:template match="sepliststar">
+		<span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+			<xsl:text>{</xsl:text>
+		</span>
+		<xsl:apply-templates select="*[1]"/>
+		<xsl:text> </xsl:text>
+		<xsl:apply-templates select="*[2]"/>
+		<span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+			<xsl:text>}*</xsl:text>
+		</span>
+	</xsl:template>
+	<xsl:template match="seplistplus">
+		<span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+			<xsl:text>{</xsl:text>
+		</span>
+		<xsl:apply-templates select="*[1]"/>
+		<xsl:text> </xsl:text>
+		<xsl:apply-templates select="*[2]"/>
+		<span xmlns="http://www.w3.org/1999/xhtml" class="meta">
+			<xsl:text>}+</xsl:text>
+		</span>
+	</xsl:template>
 	<xsl:template match="optional">
 		<xsl:apply-templates select="./*"/>
 		<span xmlns="http://www.w3.org/1999/xhtml" class="meta">

@@ -27,9 +27,10 @@ cs.9.bgf: cs.7.bgf
 	../../mutation/inline-trivial/inline.py cs.8.bgf inline-chains.xbgf
 	xbgf inline-chains.xbgf cs.8.bgf cs.9.bgf
 
-cs.a.bgf: cs.9.bgf
+cs.rsc: cs.9.bgf
 	../../mutation/naming/enforce.py l- C! cs.9.bgf enforce-naming.xbgf
 	xbgf enforce-naming.xbgf cs.9.bgf cs.a.bgf
+	xsltproc --stringparam grammarname CS --stringparam imports IslandLibrary ../../export/rascal/bgf2rsc.xslt cs.a.bgf > cs.b.rsc
 
 cs.adt1.bgf: cs.8.bgf
 	../../mutation/anf/anf.py cs.8.bgf cs.anf.xbgf

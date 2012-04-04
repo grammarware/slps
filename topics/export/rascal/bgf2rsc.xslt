@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bgf="http://planet-sl.org/bgf" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.0">
 	<xsl:output method="text" encoding="UTF-8" omit-xml-declaration="yes"/>
 	<xsl:param name="grammarname"/>
+	<xsl:param name="imports" default="''"/>
 	<xsl:template match="/bgf:grammar">
 		<xsl:text>@contributor{bgf2src automated exporter - SLPS}
 module </xsl:text>
@@ -11,6 +12,13 @@ module </xsl:text>
 		<xsl:text>
 
 </xsl:text>
+		<xsl:if test="$imports">
+			<xsl:text>import </xsl:text>
+			<xsl:value-of select="$imports"/>
+			<xsl:text>
+
+</xsl:text>
+		</xsl:if>
 		<xsl:apply-templates select="./bgf:*"/>
 	</xsl:template>
 	<xsl:template match="bgf:production">
