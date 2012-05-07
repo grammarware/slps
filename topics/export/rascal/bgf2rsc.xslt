@@ -15,7 +15,7 @@ module </xsl:text>
 		<xsl:if test="$imports">
 			<xsl:text>import </xsl:text>
 			<xsl:value-of select="$imports"/>
-			<xsl:text>
+			<xsl:text>;
 
 </xsl:text>
 		</xsl:if>
