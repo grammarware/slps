@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
-	<xbgf:lassoc>
+	<xbgf:iterate>
 		<bgf:production>
-			<label>sequence</label>
+			<label>binary</label>
 			<nonterminal>expr</nonterminal>
 			<bgf:expression>
 				<sequence>
 					<bgf:expression>
-						<nonterminal>expr</nonterminal>
+						<star>
+							<bgf:expression>
+								<sequence>
+									<bgf:expression>
+										<nonterminal>expr</nonterminal>
+									</bgf:expression>
+									<bgf:expression>
+										<nonterminal>op</nonterminal>
+									</bgf:expression>
+								</sequence>
+							</bgf:expression>
+						</star>
 					</bgf:expression>
 					<bgf:expression>
 						<nonterminal>expr</nonterminal>
@@ -15,5 +26,5 @@
 				</sequence>
 			</bgf:expression>
 		</bgf:production>
-	</xbgf:lassoc>
+	</xbgf:iterate>
 </xbgf:sequence>

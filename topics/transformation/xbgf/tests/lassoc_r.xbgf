@@ -2,12 +2,15 @@
 <xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
 	<xbgf:lassoc>
 		<bgf:production>
-			<label>sequence</label>
+			<label>binary</label>
 			<nonterminal>expr</nonterminal>
 			<bgf:expression>
 				<sequence>
 					<bgf:expression>
 						<nonterminal>expr</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<nonterminal>op</nonterminal>
 					</bgf:expression>
 					<bgf:expression>
 						<nonterminal>expr</nonterminal>

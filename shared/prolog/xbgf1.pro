@@ -521,7 +521,7 @@ new(Ps1,N,G1,G2)
 %
 % p([l(import)], f, +n(p))
 %
-% T.B.D.
+% Add multiple possibly connected definitions for fresh nonterminals
 %
 
 import(Ps0,g(Rs,Ps1),g(Rs,Ps2))
@@ -541,6 +541,25 @@ import(Ps0,g(Rs,Ps1),g(Rs,Ps2))
       [DU01]),
     append(Ps1,Ps0,Ps2).
 
+%
+% p([l(iterate)], f, n(p))
+%
+% Interpret separator list iteratively
+%
+iterate(P1,G1,G2)
+ :-
+    iter(P1,G1,G2).
+
+iter(P1,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    P1 = p(As,N,X1),
+    findP(Ps1,As,N,P2,Ps2a,Ps2b),
+    P2 = p(As,N,X2),
+    require(
+      xbgf1:assoc_rules(N,X2,X1),
+      '~q must admit associativity transformation.',
+      [P1]),
+    append(Ps2a,[P1|Ps2b],Ps2).
 
 %
 % p([l(lassoc)], f, n(p))
@@ -565,6 +584,7 @@ assoc(P1,g(Rs,Ps1),g(Rs,Ps2))
 
 assoc_rules(N,X1,X2) :- assoc_rule1(N,X1,X2).
 assoc_rules(N,X1,X2) :- assoc_rule2(N,X1,X2).
+assoc_rules(N,X1,X2) :- assoc_rule3(N,X1,X2).
 
 assoc_rule1(
   N,
@@ -572,6 +592,11 @@ assoc_rule1(
   ','([n(N),'*'(','([X,n(N)]))])).
 
 assoc_rule2(
+  N,
+  ','([n(N),X,n(N)]), 
+  ','(['*'(','([n(N),X])),n(N)])).
+
+assoc_rule3(
   N,
   ','([n(N),n(N)]), 
   +(n(N))).

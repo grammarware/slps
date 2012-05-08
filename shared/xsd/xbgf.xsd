@@ -134,9 +134,10 @@
       <xsd:element ref="xbgf:vertical"/>
       <xsd:element ref="xbgf:horizontal"/>
       <xsd:element ref="xbgf:equate"/>
-      <!-- do we need them? -->
+
       <xsd:element ref="xbgf:rassoc"/>
       <xsd:element ref="xbgf:lassoc"/>
+      <xsd:element ref="xbgf:iterate"/>
     </xsd:choice>
   </xsd:group>
   <xsd:group name="increasing-transformation">
@@ -672,6 +673,19 @@
       <xsd:sequence>
         <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
       </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="iterate">
+    <xsd:annotation>
+      <xsd:documentation>
+        The reverse of <ldf:keyword>rassoc</ldf:keyword>/<ldf:keyword>lassoc</ldf:keyword>.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:element ref="bgf:production"/>
+      </xsd:choice>
     </xsd:complexType>
   </xsd:element>
 

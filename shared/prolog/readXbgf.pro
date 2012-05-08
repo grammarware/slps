@@ -182,6 +182,12 @@ xml2xbgf(T,import(Ps2))
     children(name(bgf:production),T,Ps1),
     maplist(xmlToP,Ps1,Ps2).
 
+xml2xbgf(T,iterate(P2))
+ :-
+    self(name(xbgf:iterate),T),
+    child(name(bgf:production),T,P1),
+    xmlToP(P1,P2).
+
 xml2xbgf(T,lassoc(P2))
  :-
     self(name(xbgf:lassoc),T),
