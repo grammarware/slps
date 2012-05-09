@@ -318,6 +318,16 @@ xml2xbgf(T,detour(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
+xml2xbgf(T,split(N,Ps2,Ls2))
+ :-
+    self(name(xbgf:split),T),
+    child(name(nonterminal),T,Nonterminal),
+    children(name(bgf:production),T,Ps1),
+    children(name(label),T,Ls1),
+    content(Nonterminal,N),
+    maplist(xmlToP,Ps1,Ps2),
+    maplist(content,Ls1,Ls2).
+
 xml2xbgf(T,stripL(L))
  :-
     self(name(xbgf:strip),T),

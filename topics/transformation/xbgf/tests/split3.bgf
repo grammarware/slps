@@ -1,21 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
 	<bgf:production>
+		<label>A</label>
 		<nonterminal>foo</nonterminal>
 		<bgf:expression>
 			<terminal>a</terminal>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
-		<nonterminal>foo</nonterminal>
+		<label>B</label>
+		<nonterminal>wez</nonterminal>
 		<bgf:expression>
-			<terminal>b</terminal>
+			<nonterminal>foo</nonterminal>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
-		<nonterminal>bar</nonterminal>
+		<label>D</label>
+		<nonterminal>foo</nonterminal>
 		<bgf:expression>
-			<terminal>d</terminal>
+			<nonterminal>foo</nonterminal>
 		</bgf:expression>
 	</bgf:production>
 </bgf:grammar>

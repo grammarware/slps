@@ -1295,6 +1295,51 @@ detour(P1,g(Rs,Ps1),g(Rs,Ps2))
 	append(Ps1,[P1],Ps2).
 
 %
+% p([l(split)], f, ','([n(n), n(n)]))
+%
+% Nonterminal splitting, a form of "de-unification"
+%
+% TODO: works only on labels, should eventually be implemented for all kinds of scopes/contexts
+%
+split(N1,Ps0,Ls1,g(Rs,Ps1),g(Rs,Ps2))
+ :-
+    allNs(g(Rs,Ps1),Ns1),
+    definedNs(g([],Ps0),[N0]),
+	require(
+       (member(N1,Ns1)),
+       'Source name ~q for splitting must not be fresh.',
+       [N1]),
+	require(
+       (\+ member(N0,Ns1)),
+       'Target name ~q for splitting must be fresh.',
+       [N0]),
+    changelhs(N0,N1,Ps0,Ps0p),
+    removeprods(Ps0p,g(Rs,Ps1),g(Rs,Ps3)),
+    import(Ps0,g(Rs,Ps3),g(Rs,Ps4)),
+    replaceLs(n(N1),n(N0),Ls1,g(Rs,Ps4),g(Rs,Ps2)).
+
+changelhs(_,_,[],[]).
+changelhs(N1,N2,[P1|Ps1],[P2|Ps2])
+ :- 
+    P1 = p(L,N3,X),
+    (
+      N1 == N3,
+	  P2 = p(L,N2,X)
+	;
+	  P2 = p(L,N3,X)
+	),
+    changelhs(N1,N2,Ps1,Ps2).
+
+removeprods([],G1,G1).
+removeprods([P0|Ps0],g(Rs,Ps1),g(Rs,Ps3)) :- removeV(P0,g(Rs,Ps1),g(Rs,Ps2)), removeprods(Ps0,g(Rs,Ps2),g(Rs,Ps3)).
+
+replaceLs(_,_,[],G1,G1).
+replaceLs(X1,X2,[L1|Ls],g(Rs,Ps1),g(Rs,Ps3))
+ :- 
+    replaceL(X1,X2,L1,g(Rs,Ps1),g(Rs,Ps2)),
+    replaceLs(X1,X2,Ls,g(Rs,Ps2),g(Rs,Ps3)).
+
+%
 % p([l(stripL)], f, n(l))
 % p([l(stripLs)], f, true)
 % p([l(stripS)], f, n(s))

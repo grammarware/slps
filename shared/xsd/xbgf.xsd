@@ -167,6 +167,7 @@
       <xsd:element ref="xbgf:disappear"/>
       <xsd:element ref="xbgf:narrow"/>
       <xsd:element ref="xbgf:downgrade"/>
+      <xsd:element ref="xbgf:split"/>
     </xsd:choice>
   </xsd:group>
   <xsd:group name="concrete-revising-transformation">
@@ -1158,6 +1159,21 @@
       <xsd:sequence>
         <xsd:element name="add" type="bgf:nonterminal"/>
         <xsd:element name="to" type="bgf:nonterminal"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="split">
+    <xsd:annotation>
+      <xsd:documentation>
+        The reverse of <ldf:keyword>unite</ldf:keyword>.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="nonterminal" type="bgf:nonterminal"/>
+        <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
+        <xsd:group ref="xbgf:scope"  minOccurs="0"  maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
