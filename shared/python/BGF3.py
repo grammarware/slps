@@ -550,3 +550,18 @@ class Scope:
 		self.ex = ET.Element('in')
 		self.ex.append(self.data.getXml())
 		return self.ex
+
+# label as scope
+class LabelText:
+	def __init__(self,data):
+		self.data = data
+	def parse(self,welem):
+		self.data = welem.findtext()
+	def setLabel(self,name):
+		self.data = name
+	def getXml(self):
+		self.ex = ET.Element('label')
+		self.ex.text = self.data
+		return self.ex
+	def __str__(self):
+		return '['+self.data+']'
