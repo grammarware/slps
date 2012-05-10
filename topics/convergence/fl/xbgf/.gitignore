@@ -1,0 +1,10 @@
+anonymize-antlr.xbgf
+rename-jaxb.xbgf
+rename-model.xbgf
+rename-om.xbgf
+rename-sdf.xbgf
+reroot-lower.xbgf
+reroot-upper.xbgf
+stripSelectors.xbgf
+stripTerminals.xbgf
+

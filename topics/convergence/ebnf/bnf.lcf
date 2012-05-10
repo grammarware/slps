@@ -19,9 +19,9 @@
 		<comparator>
 			<grammar><expand>tools</expand>/gdt</grammar>
 		</comparator>
-		<validator>
-			<grammar><expand>tools</expand>/validate bgf</grammar>
-		</validator>
+		<!-- <validator>
+				<grammar><expand>tools</expand>/validate bgf</grammar>
+			</validator> -->
 		<generator>
 			<name>stript</name>
 			<command><expand>slps</expand>/shared/generators/striptxbgf</command>
@@ -39,6 +39,18 @@
 			<extraction>cp bnf.bgf</extraction>
 		</grammar>
 	</source>
+	<source>
+		<name>ebnf-bgf</name>
+		<grammar>
+			<extraction>cp ../../grammars/metasyntax/ebnf-bgf/grammar.bgf</extraction>
+		</grammar>
+	</source>
+	<!-- <source>
+			<name>ebnf-bgf</name>
+			<grammar>
+				<extraction>cp ../../grammars/metasyntax/ebnf-bgf/grammar.bgf</extraction>
+			</grammar>
+		</source> -->
 	<target>
 		<name>grammarFormat</name>
 		<branch>

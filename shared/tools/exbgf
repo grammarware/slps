@@ -1,0 +1,20 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 3 ]; then
+    echo "Transparently executes Extended XBGF."
+    echo "Usage: exbgf <input-exbgf-sequence> <input-bgf-grammar> <output-bgf-grammar>"
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+elif [ ! -r $2 ]; then
+    echo "Oops: $2 not found or not readable."
+else
+	${SLPS}/shared/tools/exbgf2xbgf $1 $1.xbgf
+	${SLPS}/shared/tools/xbgf $1.xbgf $2 $3
+	rm $1.xbgf
+fi
