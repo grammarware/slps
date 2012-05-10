@@ -1,0 +1,4 @@
+*.eqs
+*.tbl
+*.def
+Tokens.*

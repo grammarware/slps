@@ -1,6 +1,6 @@
-fl = ../../../../slps/topics/fl
+fl = ../../fl
 xsd = ${fl}/xsd/fl.xsd
-factorial = ${fl}/xsd/factorial.xml
+factorial = ${fl}/shared/factorial.xml
 bgf = ../../../shared/xsd/bgf.xsd
 xbgf = ../../../shared/xsd/xbgf.xsd
 btf = ../../../shared/xsd/btf.xsd

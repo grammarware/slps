@@ -106,7 +106,7 @@ def removeComments(ts,s,e):
 		j = endOfContext(ts,i,e)
 		if j<0:
 			print('STEP 0 error: mismatched comment delimiters.')
-			j = i
+			j = i+1
 		nts = ts[:i]
 		nts.extend(ts[j:])
 		#print('<<<',ts)

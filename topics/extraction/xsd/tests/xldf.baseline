@@ -59,6 +59,7 @@
 	<root>inline</root>
 	<root>introduce</root>
 	<root>import</root>
+	<root>iterate</root>
 	<root>lassoc</root>
 	<root>massage</root>
 	<root>narrow</root>
@@ -78,6 +79,7 @@
 	<root>undefine</root>
 	<root>unfold</root>
 	<root>unite</root>
+	<root>split</root>
 	<root>equate</root>
 	<root>abstractize</root>
 	<root>anonymize</root>
@@ -2885,6 +2887,36 @@
 						</bgf:expression>
 					</selectable>
 				</bgf:expression>
+				<bgf:expression>
+					<selectable>
+						<selector>seplistplus</selector>
+						<bgf:expression>
+							<sequence>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+							</sequence>
+						</bgf:expression>
+					</selectable>
+				</bgf:expression>
+				<bgf:expression>
+					<selectable>
+						<selector>sepliststar</selector>
+						<bgf:expression>
+							<sequence>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+							</sequence>
+						</bgf:expression>
+					</selectable>
+				</bgf:expression>
 			</choice>
 		</bgf:expression>
 	</bgf:production>
@@ -3076,6 +3108,9 @@
 				<bgf:expression>
 					<nonterminal>lassoc</nonterminal>
 				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>iterate</nonterminal>
+				</bgf:expression>
 			</choice>
 		</bgf:expression>
 	</bgf:production>
@@ -3116,6 +3151,9 @@
 				</bgf:expression>
 				<bgf:expression>
 					<nonterminal>downgrade</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>split</nonterminal>
 				</bgf:expression>
 			</choice>
 		</bgf:expression>
@@ -3440,6 +3478,12 @@
 					<nonterminal>production</nonterminal>
 				</bgf:expression>
 			</plus>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>iterate</nonterminal>
+		<bgf:expression>
+			<nonterminal>production</nonterminal>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
@@ -3897,6 +3941,35 @@
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
+		<nonterminal>split</nonterminal>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<selectable>
+						<selector>nonterminal</selector>
+						<bgf:expression>
+							<nonterminal>nonterminal</nonterminal>
+						</bgf:expression>
+					</selectable>
+				</bgf:expression>
+				<bgf:expression>
+					<plus>
+						<bgf:expression>
+							<nonterminal>production</nonterminal>
+						</bgf:expression>
+					</plus>
+				</bgf:expression>
+				<bgf:expression>
+					<star>
+						<bgf:expression>
+							<nonterminal>scope</nonterminal>
+						</bgf:expression>
+					</star>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
 		<nonterminal>equate</nonterminal>
 		<bgf:expression>
 			<sequence>
@@ -4189,6 +4262,36 @@
 						<selector>star</selector>
 						<bgf:expression>
 							<nonterminal>expression</nonterminal>
+						</bgf:expression>
+					</selectable>
+				</bgf:expression>
+				<bgf:expression>
+					<selectable>
+						<selector>seplistplus</selector>
+						<bgf:expression>
+							<sequence>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+							</sequence>
+						</bgf:expression>
+					</selectable>
+				</bgf:expression>
+				<bgf:expression>
+					<selectable>
+						<selector>sepliststar</selector>
+						<bgf:expression>
+							<sequence>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+							</sequence>
 						</bgf:expression>
 					</selectable>
 				</bgf:expression>

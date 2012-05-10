@@ -356,6 +356,36 @@
 						</bgf:expression>
 					</selectable>
 				</bgf:expression>
+				<bgf:expression>
+					<selectable>
+						<selector>seplistplus</selector>
+						<bgf:expression>
+							<sequence>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+							</sequence>
+						</bgf:expression>
+					</selectable>
+				</bgf:expression>
+				<bgf:expression>
+					<selectable>
+						<selector>sepliststar</selector>
+						<bgf:expression>
+							<sequence>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+								<bgf:expression>
+									<nonterminal>expression</nonterminal>
+								</bgf:expression>
+							</sequence>
+						</bgf:expression>
+					</selectable>
+				</bgf:expression>
 			</choice>
 		</bgf:expression>
 	</bgf:production>

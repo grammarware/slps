@@ -8,7 +8,7 @@ Main.eqs: *.sdf *.asf
 	eqs-dump -m Main -o Main.eqs
 
 Main.tbl: *.sdf
-	cp ../sdf2bgf/Tokens.* .
+	cp ../sdf/Tokens.* .
 	@if [ -r /usr/local/bin/pack-sdf ]; then \
 		make tblpack; \
 	else \

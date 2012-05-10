@@ -4,36 +4,73 @@
 	<bgf:production>
 		<nonterminal>configuration</nonterminal>
 		<bgf:expression>
-			<plus>
+			<sequence>
 				<bgf:expression>
-					<nonterminal>definition</nonterminal>
+					<star>
+						<bgf:expression>
+							<selectable>
+								<selector>shortcut</selector>
+								<bgf:expression>
+									<nonterminal>shortcut</nonterminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+					</star>
 				</bgf:expression>
-			</plus>
+				<bgf:expression>
+					<selectable>
+						<selector>tools</selector>
+						<bgf:expression>
+							<nonterminal>tools</nonterminal>
+						</bgf:expression>
+					</selectable>
+				</bgf:expression>
+				<bgf:expression>
+					<plus>
+						<bgf:expression>
+							<selectable>
+								<selector>source</selector>
+								<bgf:expression>
+									<nonterminal>source</nonterminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+					</plus>
+				</bgf:expression>
+				<bgf:expression>
+					<plus>
+						<bgf:expression>
+							<selectable>
+								<selector>target</selector>
+								<bgf:expression>
+									<nonterminal>target</nonterminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+					</plus>
+				</bgf:expression>
+				<bgf:expression>
+					<star>
+						<bgf:expression>
+							<selectable>
+								<selector>testset</selector>
+								<bgf:expression>
+									<nonterminal>testset</nonterminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+					</star>
+				</bgf:expression>
+			</sequence>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
-		<nonterminal>definition</nonterminal>
+		<nonterminal>tools</nonterminal>
 		<bgf:expression>
-			<choice>
+			<sequence>
 				<bgf:expression>
 					<selectable>
-						<selector>shortcut</selector>
-						<bgf:expression>
-							<nonterminal>shortcut</nonterminal>
-						</bgf:expression>
-					</selectable>
-				</bgf:expression>
-				<bgf:expression>
-					<selectable>
-						<selector>generator</selector>
-						<bgf:expression>
-							<nonterminal>generator</nonterminal>
-						</bgf:expression>
-					</selectable>
-				</bgf:expression>
-				<bgf:expression>
-					<selectable>
-						<selector>tool</selector>
+						<selector>transformer</selector>
 						<bgf:expression>
 							<nonterminal>tool</nonterminal>
 						</bgf:expression>
@@ -41,29 +78,37 @@
 				</bgf:expression>
 				<bgf:expression>
 					<selectable>
-						<selector>source</selector>
+						<selector>comparator</selector>
 						<bgf:expression>
-							<nonterminal>source</nonterminal>
+							<nonterminal>tool</nonterminal>
 						</bgf:expression>
 					</selectable>
 				</bgf:expression>
 				<bgf:expression>
-					<selectable>
-						<selector>target</selector>
+					<optional>
 						<bgf:expression>
-							<nonterminal>target</nonterminal>
+							<selectable>
+								<selector>validator</selector>
+								<bgf:expression>
+									<nonterminal>tool</nonterminal>
+								</bgf:expression>
+							</selectable>
 						</bgf:expression>
-					</selectable>
+					</optional>
 				</bgf:expression>
 				<bgf:expression>
-					<selectable>
-						<selector>testset</selector>
+					<star>
 						<bgf:expression>
-							<nonterminal>testset</nonterminal>
+							<selectable>
+								<selector>generator</selector>
+								<bgf:expression>
+									<nonterminal>generator</nonterminal>
+								</bgf:expression>
+							</selectable>
 						</bgf:expression>
-					</selectable>
+					</star>
 				</bgf:expression>
-			</choice>
+			</sequence>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
@@ -440,14 +485,6 @@
 			<sequence>
 				<bgf:expression>
 					<selectable>
-						<selector>name</selector>
-						<bgf:expression>
-							<nonterminal>toolType</nonterminal>
-						</bgf:expression>
-					</selectable>
-				</bgf:expression>
-				<bgf:expression>
-					<selectable>
 						<selector>grammar</selector>
 						<bgf:expression>
 							<nonterminal>xstring</nonterminal>
@@ -467,37 +504,6 @@
 					</optional>
 				</bgf:expression>
 			</sequence>
-		</bgf:expression>
-	</bgf:production>
-	<bgf:production>
-		<nonterminal>toolType</nonterminal>
-		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<selectable>
-						<selector>validation</selector>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-					</selectable>
-				</bgf:expression>
-				<bgf:expression>
-					<selectable>
-						<selector>comparison</selector>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-					</selectable>
-				</bgf:expression>
-				<bgf:expression>
-					<selectable>
-						<selector>transformation</selector>
-						<bgf:expression>
-							<epsilon/>
-						</bgf:expression>
-					</selectable>
-				</bgf:expression>
-			</choice>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
