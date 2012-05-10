@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# m2 file.mbgf 1 one.bgf 2 two.bgf
+# $0    $1    $2    $3   $4    $5
+./mbgf2xbgf.py $1 $2 $4 tmp.xbgf
+xbgf tmp.xbgf $3 $3.tmp
+gdts $3.tmp $5
+rm tmp.xbgf
+./mbgf2xbgf.py $1 $4 $2 tmp.xbgf
+xbgf tmp.xbgf $5 $5.tmp
+gdts $5.tmp $3
