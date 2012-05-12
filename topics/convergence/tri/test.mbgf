@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="dcg">snapshot/dcg.bgf</src>
+		<src name="sdf">snapshot/sdf.bgf</src>
+		<src name="rsc">snapshot/rascal.bgf</src>
+	</sources>
+	<naming-convention>
+		<default>l!</default>
+		<src name="dcg">l!</src>
+		<src name="sdf,rsc">C!</src>
+	</naming-convention>
+	<!-- should be possible to do individual name bindings -->
+	<width>
+		<bgf:expression>
+			<nonterminal>newline</nonterminal>
+		</bgf:expression>
+		<src name="dcg,sdf">+</src>
+		<src name="rsc">!</src>
+		<in>
+			<nonterminal>function</nonterminal>
+		</in>
+	</width>
+	<unification id="uni">
+		<nonterminal>expr</nonterminal>
+		<src name="dcg">
+			<bgf:production>
+				<label>literal</label>
+				<nonterminal>atom</nonterminal>
+				<bgf:expression>
+					<nonterminal>int</nonterminal>
+				</bgf:expression>
+			</bgf:production>
+			<bgf:production>
+				<label>argument</label>
+				<nonterminal>atom</nonterminal>
+				<bgf:expression>
+					<nonterminal>name</nonterminal>
+				</bgf:expression>
+			</bgf:production>
+			<bgf:production>
+				<nonterminal>atom</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>(</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>expr</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>)</terminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+			<in>
+				<label>apply</label>
+				<label>binary</label>
+			</in>
+		</src>
+	</unification>
+	<iteration depends="uni">
+		<label>binary</label>
+		<name>expr</name>
+		<separator>ops</separator>
+		<src name="dcg">iterate</src>
+		<src name="sdf,rsc">lassoc</src>
+	</iteration>
+</mbgf:sequence>
