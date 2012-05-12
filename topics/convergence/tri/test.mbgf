@@ -5,12 +5,20 @@
 		<src name="sdf">snapshot/sdf.bgf</src>
 		<src name="rsc">snapshot/rascal.bgf</src>
 	</sources>
-	<naming-convention>
-		<default>l!</default>
-		<src name="dcg">l!</src>
-		<src name="sdf,rsc">C!</src>
-	</naming-convention>
+	<!-- <naming-convention>
+		<default>l_</default>
+		<src name="dcg">l_</src>
+		<src name="sdf,rsc">C_</src>
+	</naming-convention> -->
 	<!-- should be possible to do individual name bindings -->
+	<name-bind><name>program</name><src name="dcg">program</src><src name="sdf,rsc">Program</src></name-bind>
+	<name-bind><name>function</name><src name="dcg">function</src><src name="sdf,rsc">Function</src></name-bind>
+	<name-bind><name>expr</name><src name="dcg">expr</src><src name="sdf,rsc">Expr</src></name-bind>
+	<name-bind><name>name</name><src name="dcg">name</src><src name="sdf,rsc">Name</src></name-bind>
+	<name-bind><name>newline</name><src name="dcg">newline</src><src name="sdf,rsc">Newline</src></name-bind>
+	<name-bind><name>int</name><src name="dcg">int</src><src name="sdf,rsc">Int</src></name-bind>
+	<name-bind><name>ops</name><src name="dcg">ops</src><src name="sdf,rsc">Ops</src></name-bind>
+	
 	<width>
 		<bgf:expression>
 			<nonterminal>newline</nonterminal>

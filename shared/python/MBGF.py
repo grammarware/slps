@@ -4,14 +4,26 @@ sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
 import slpsns, BGF3
 import xml.etree.ElementTree as ET
 
+cx = {}
+
 class TopModel:
+	def getData(self, id):
+		if id in self.data.keys():
+			return self.data[id]
+		else:
+			return ''
 	def who(self):
 		return self.__class__.__name__
 	def parsebasic(self, xml):
+		global cx
 		if 'id' in xml.attrib:
 			self.id = xml.attrib['id']
 		else:
-			self.id = self.who()
+			if self.who() in cx:
+				cx[self.who()] += 1
+			else:
+				cx[self.who()] = 1
+			self.id = self.who()+str(cx[self.who()])
 		if 'depends' in xml.attrib:
 			self.depends = xml.attrib['depends']
 		else:
@@ -26,6 +38,27 @@ class SrcSimpleModel (TopModel):
 				self.data[s] = ss.text
 
 class SrcProdModel (TopModel):
+	def getNTs(self,id):
+		nts = []
+		for p in self.getProds(id):
+			if p.nt not in nts:
+				nts.append(p.nt)
+		return nts
+	def getProds(self,id):
+		if id in self.data.keys():
+			return self.data[id][0]
+		else:
+			return []
+	def getScope(self,id):
+		if id in self.data.keys():
+			return self.data[id][1]
+		else:
+			return []
+	def getData(self, id):
+		if id in self.data.keys():
+			return '; '.join(map(str,self.data[id][0])).replace(':\n        ',' ← ')
+		else:
+			return '∅'
 	def parse(self, xml):
 		self.parsebasic(xml)
 		for ss in xml.findall('src'):
@@ -35,7 +68,7 @@ class SrcProdModel (TopModel):
 					xp = BGF3.Production()
 					xp.parse(p)
 					self.data[s][0].append(xp)
-				self.data[s][1] = xml.findall('in')
+				self.data[s][1] = ss.findall('in/*')
 
 #
 # <sources>
@@ -56,6 +89,21 @@ class NamingConvention (SrcSimpleModel):
 	def __init__(self, xml):
 		self.default = xml.findtext('default')
 		self.parse(xml)
+	def getSpecifics(self):
+		return self.default
+	
+# <name-bind>
+# 	<name>function</name>
+# 	<src name="dcg">function</src>
+# 	<src name="sdf,rsc">Function</src>
+# </name-bind>
+class NameBind (SrcSimpleModel):
+	def __init__(self, xml):
+		self.nt = xml.findtext('name')
+		self.parse(xml)
+	def getSpecifics(self):
+		return self.nt
+	
 
 # <width>
 # 	<bgf:expression>
@@ -74,6 +122,8 @@ class Width (SrcSimpleModel):
 		# apply namemap!!!
 		self.parse(xml)
 		self.scope = xml.findall('in')
+	def getSpecifics(self):
+		return str(self.expr)	
 
 # <unification>
 # 	<nonterminal>expr</nonterminal>
@@ -87,6 +137,8 @@ class Unification (SrcProdModel):
 	def __init__(self, xml):
 		self.nt = xml.findtext('nonterminal')
 		self.parse(xml)
+	def getSpecifics(self):
+		return 'n('+self.nt+')'
 
 # <iteration>
 # 	<label>binary</label>
@@ -101,3 +153,5 @@ class Iteration (SrcSimpleModel):
 		self.nt = xml.findtext('name')
 		self.sep = xml.findtext('separator')
 		self.parse(xml)
+	def getSpecifics(self):
+		return ', '.join(('['+self.label+']','n('+self.nt+')','n('+self.sep+')'))
