@@ -28,6 +28,10 @@ class TopModel:
 			self.depends = xml.attrib['depends']
 		else:
 			self.depends = ''
+		if 'blocks' in xml.attrib:
+			self.blocks = xml.attrib['blocks']
+		else:
+			self.blocks = ''
 		self.data = {}
 
 class SrcSimpleModel (TopModel):

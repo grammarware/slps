@@ -68,7 +68,7 @@
 			</in>
 		</src>
 	</unification>
-	<iteration depends="uni">
+	<iteration id="iter" depends="uni:unite">
 		<label>binary</label>
 		<name>expr</name>
 		<separator>ops</separator>

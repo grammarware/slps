@@ -62,6 +62,7 @@ if __name__ == "__main__":
 		# executing
 		print('Inferring unidirectional grammar transformations from',inname,'to',outname,'...')
 		pbyid = {}
+		xbgfsbyid = {}
 		unscheduled = []
 		for p in predicates:
 			# print(p.who(),'#',p.id,'@',p.depends)
@@ -70,21 +71,10 @@ if __name__ == "__main__":
 			else:
 				unscheduled.append(p.id)
 				pbyid[p.id] = p
-		scheduled = []
-		while len(unscheduled)>0:
-			for i in range(0,len(unscheduled)):
-				candidate = pbyid[unscheduled[i]]
-				if not(candidate.depends) or candidate.depends in scheduled:
-					scheduled.append(unscheduled[i])
-					unscheduled.remove(unscheduled[i])
-					break
-			else:
-				print('Failed to schedule',unscheduled)
-				sys.exit(2)
-		print('Scheduled order:',scheduled)
-		for id in scheduled:
+		for id in unscheduled:
 			p = pbyid[id]
-			print('[MBGF]',p.who(),'(',p.getSpecifics(),',',p.getData(inname),',',p.getData(outname),')', end=' ::= ')
+			xbgfsbyid[id] = []
+			print('[MBGF] (#'+p.id+')',p.who(),'(',p.getSpecifics(),',',p.getData(inname),',',p.getData(outname),')', end=' ::= ')
 			if p.who() == 'NamingConvention':
 				if p.getData(inname) == p.getData(outname):
 					print('id')
@@ -103,7 +93,7 @@ if __name__ == "__main__":
 					w.addChild(XBGF3.Leaf('from',n1))
 					w.addChild(XBGF3.Leaf('to',n2))
 					ren.addParam(w)
-					xbgf.addStep(ren)
+					xbgfsbyid[id].append(ren)
 			elif p.who() == 'Width':
 				exp = p.expr
 				applynamemap(exp)
@@ -158,7 +148,7 @@ if __name__ == "__main__":
 					else:
 						print('ERROR: unknown out modifier!')
 						sys.exit(1)
-					xbgf.addStep(ren)
+					xbgfsbyid[id].append(ren)
 			elif p.who() == 'Unification':
 				n0 = p.nt
 				n1 = p.getNTs(inname)
@@ -173,7 +163,7 @@ if __name__ == "__main__":
 					ren = XBGF3.Step('unite')
 					ren.addParam(XBGF3.Leaf('add',n1[0]))
 					ren.addParam(XBGF3.Leaf('to',n3))
-					xbgf.addStep(ren)
+					xbgfsbyid[id].append(ren)
 				elif n2:
 					# print('[MBGF] unification('+n2+','+n0+') ::= split('+n3+','+n0+')')
 					print('split('+n3+','+n0+')')
@@ -185,7 +175,7 @@ if __name__ == "__main__":
 						ren.addParam(BGF3.LabelText(l.text))
 					# print('!!!',e.findall('add')[outnum-1].attrib)
 					# ren.addParam(XBGF3.Leaf('to',n3))
-					xbgf.addStep(ren)
+					xbgfsbyid[id].append(ren)
 				else:
 					# TODO: check for the situation when both n1 and n2 are not empty
 					# print('[MBGF] unification(∅,'+n2+') ::= id')
@@ -227,7 +217,7 @@ if __name__ == "__main__":
 					e.add(BGF3.Expression(e2))
 					p.setExpr(BGF3.Expression(e))
 					ren.addParam(p)
-					xbgf.addStep(ren)
+					xbgfsbyid[id].append(ren)
 				elif k1.endswith('assoc') and k2=='iterate':
 					if n in namemap:
 						n1 = namemap[n]
@@ -269,12 +259,62 @@ if __name__ == "__main__":
 						e.setExpr(BGF3.Expression(e2))
 					p.setExpr(BGF3.Expression(e))
 					ren.addParam(p)
-					xbgf.addStep(ren)
+					xbgfsbyid[id].append(ren)
 				else:
 					print('PROBLEM')
 					sys.exit(1)
 			else:
 				print('UNKNOWN COMMAND')
+		scheduled = []
+		depends = {}
+		impact = []
+		for i in unscheduled:
+			if len(xbgfsbyid[i]) == 0:
+				unscheduled.remove(i)
+			elif pbyid[i].depends:
+				step,state = pbyid[i].depends.split(':')
+				print('Step',i,'depends on state',state,'of step',step)
+				if xbgfsbyid[step][0].name == state:
+					# step should happen before i
+					depends[i] = step
+				else:
+					# i should happen before step
+					depends[step] = i
+				# impact.append(step)
+		print('Scheduling',unscheduled,'...')
+		if depends:
+			print('Dependencies:',depends)
+		while len(unscheduled)>0:
+			for i in range(0,len(unscheduled)):
+				candidate = pbyid[unscheduled[i]]
+				# if not candidate.blocks or candidate.blocks not in unscheduled:
+				# 	scheduled.append(unscheduled[i])
+				# 	unscheduled.remove(unscheduled[i])
+				# 	break
+				if unscheduled[i] not in depends or depends[unscheduled[i]] in scheduled:
+					scheduled.append(unscheduled[i])
+					unscheduled.remove(unscheduled[i])
+					break
+				# 	
+				# if not candidate.depends and unscheduled[i] not in impact:
+				# 	scheduled.append(unscheduled[i])
+				# 	unscheduled.remove(unscheduled[i])
+				# 	break
+				# elif candidate.depends:
+				# 	step,state = candidate.depends.split(':')
+				# 	print('Step',unscheduled[i],'depends on state',state,'of step',step)
+				# 	if step in unscheduled:
+				# 		print(xbgfsbyid[step][0].name)
+				# elif candidate.depends in scheduled:
+				# 	# TODO think of a better way of representing dependencies between predicates
+				# 	if 
+			else:
+				print('Failed to schedule',unscheduled)
+				sys.exit(2)
+		print('Scheduled order:',scheduled)
+		for id in scheduled:
+			for cmd in xbgfsbyid[id]:
+				xbgf.addStep(cmd)
 		ET.ElementTree(xbgf.getXml()).write(sys.argv[4])
-		print('Success',predicates)
+		print('Success.')
         

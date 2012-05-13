@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# m3 file.mbgf one two three
+# $0    $1     $2  $3    $4
+./m2 $1 $2 $3
+./m2 $1 $2 $4
+./m2 $1 $3 $4
