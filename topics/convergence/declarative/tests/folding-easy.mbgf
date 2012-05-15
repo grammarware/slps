@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
 	<sources>
-		<src name="a">folding-abc-1.bgf</src>
-		<src name="b">folding-abc-2.bgf</src>
-		<src name="c">folding-abc-3.bgf</src>
+		<src name="a">folding-easy-1.bgf</src>
+		<src name="b">folding-easy-2.bgf</src>
+		<src name="c">folding-easy-3.bgf</src>
 	</sources>
 	<folding>
 		<src name="b">

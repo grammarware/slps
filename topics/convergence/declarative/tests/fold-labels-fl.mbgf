@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">fold-labels-fl-1.bgf</src>
+		<src name="b">fold-labels-fl-2.bgf</src>
+		<src name="c">fold-labels-fl-3.bgf</src>
+	</sources>
+	<folding id="fld" depends="sels:deanonymize">
+		<src name="a,c">
+			<bgf:production>
+				<nonterminal>z</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<selectable>
+								<selector>begin</selector>
+								<bgf:expression>
+									<terminal>(</terminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+						<bgf:expression>
+							<star>
+								<bgf:expression>
+									<nonterminal>foo</nonterminal>
+								</bgf:expression>
+							</star>
+						</bgf:expression>
+						<bgf:expression>
+							<selectable>
+								<selector>end</selector>
+								<bgf:expression>
+									<terminal>)</terminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</folding>
+	<selectables id="sels" depends="fld:extract">
+		<src name="a,b">
+			<bgf:production>
+				<nonterminal>z</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>begin</selector>
+										<bgf:expression>
+											<terminal>(</terminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<star>
+								<bgf:expression>
+									<nonterminal>foo</nonterminal>
+								</bgf:expression>
+							</star>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>end</selector>
+										<bgf:expression>
+											<terminal>)</terminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</selectables>
+</mbgf:sequence>

@@ -309,16 +309,19 @@ if __name__ == "__main__":
 				ps1 = p.getProds(inname)
 				ps2 = p.getProds(outname)
 				if ps1 and ps2:
-					# reanonymize
-					print('anonymize('+p.getData(inname)+') ∘ deanonymize('+p.getData(outname)+')')
-					ren = XBGF3.Step('anonymize')
-					applynamemap(ps1[0].expr)
-					ren.addParam(ps1[0])
-					xbgfsbyid[id].append(ren)
-					ren = XBGF3.Step('deanonymize')
-					applynamemap(ps2[0].expr)
-					ren.addParam(ps2[0])
-					xbgfsbyid[id].append(ren)
+					if p.getData(inname) == p.getData(outname):
+						print('id')
+					else:
+						# reanonymize
+						print('anonymize('+p.getData(inname)+') ∘ deanonymize('+p.getData(outname)+')')
+						ren = XBGF3.Step('anonymize')
+						applynamemap(ps1[0].expr)
+						ren.addParam(ps1[0])
+						xbgfsbyid[id].append(ren)
+						ren = XBGF3.Step('deanonymize')
+						applynamemap(ps2[0].expr)
+						ren.addParam(ps2[0])
+						xbgfsbyid[id].append(ren)
 				elif ps1 and not ps2:
 					ren = XBGF3.Step('anonymize')
 					applynamemap(ps1[0].expr)
@@ -430,7 +433,7 @@ if __name__ == "__main__":
 			elif pbyid[i].depends:
 				step,state = pbyid[i].depends.split(':')
 				print('Step',i,'depends on state',state,'of step',step)
-				if xbgfsbyid[step][0].name == state:
+				if len(xbgfsbyid[step])>0 and xbgfsbyid[step][0].name == state:
 					# step should happen before i
 					depends[i] = step
 				else:
