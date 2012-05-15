@@ -9,12 +9,31 @@ import BGF3,XBGF3,MBGF
 namemap = {}
 
 def applynamemap(e):
+	# print('\n!!!',namemap)
+	# print('Traversing',e.who(),'...')
 	if e.who()=='Expression':
 		applynamemap(e.wrapped)
 		return
 	elif e.who()=='Nonterminal':
 		if e.data in namemap:
 			e.data = namemap[e.data]
+		return
+	elif e.who() in ('Terminal','Any','Empty','Epsilon'):
+		return
+	elif e.who() in ('Plus','Star','Marked'):
+		applynamemap(e.data.wrapped)
+		return
+	elif e.who()=='Selectable':
+		applynamemap(e.expr.wrapped)
+		return
+	elif e.who() in ('SepListPlus','SepListStar'):
+		applynamemap(e.item.wrapped)
+		applynamemap(e.sep.wrapped)
+		return
+	elif e.who() in ('Sequence','Choice'):
+		# print('<--',list(map(str,e.data)))
+		list(map(applynamemap,e.data))
+		# print('-->',list(map(str,e.data)))
 		return
 	print('[MBGF] applynamemap error:',e.who())
 	sys.exit(1)
@@ -55,6 +74,8 @@ if __name__ == "__main__":
 				predicates.append(MBGF.Unification(e))
 			elif e.tag=='iteration':
 				predicates.append(MBGF.Iteration(e))
+			elif e.tag=='anonymity':
+				predicates.append(MBGF.Anonymity(e))
 			else:
 				print('Predicate',e.tag,'not supported.')
 				# print(sources)
@@ -263,6 +284,31 @@ if __name__ == "__main__":
 				else:
 					print('PROBLEM')
 					sys.exit(1)
+			elif p.who() == 'Anonymity':
+				ps1 = p.getProds(inname)
+				ps2 = p.getProds(outname)
+				# print(ps1.__class__,ps2)
+				# print('!!!',ps1,ps2)
+				# print('!!!',bool(ps1),bool(ps2==''))
+				if ps1 and not ps2:
+					# anonymize
+					ren = XBGF3.Step('anonymize')
+					applynamemap(ps1[0].expr)
+					ren.addParam(ps1[0])
+					xbgfsbyid[id].append(ren)
+					print('anonymize('+p.getData(inname)+')')
+				elif not ps1 and ps2:
+					# anonymize
+					ren = XBGF3.Step('deanonymize')
+					applynamemap(ps2[0].expr)
+					ren.addParam(ps2[0])
+					xbgfsbyid[id].append(ren)
+					print('deanonymize('+p.getData(outname)+')')
+				elif not ps1 and not ps2:
+					# id
+					print('id')
+				else:
+					print('Weird: from',ps1,'to',ps2)
 			else:
 				print('UNKNOWN COMMAND')
 		scheduled = []

@@ -11,7 +11,7 @@ class TopModel:
 		if id in self.data.keys():
 			return self.data[id]
 		else:
-			return ''
+			return None
 	def who(self):
 		return self.__class__.__name__
 	def parsebasic(self, xml):
@@ -159,3 +159,20 @@ class Iteration (SrcSimpleModel):
 		self.parse(xml)
 	def getSpecifics(self):
 		return ', '.join(('['+self.label+']','n('+self.nt+')','n('+self.sep+')'))
+
+# <anonymity>
+# 	<src name="...">
+# 		<bgf:production>
+# 			...
+# 			<marked>
+# 			...
+# 			</marked>
+# 			...
+# 		</bgf:production>
+# 	</src>
+# </anonymity>
+class Anonymity (SrcProdModel):
+	def __init__(self, xml):
+		self.parse(xml)
+	def getSpecifics(self):
+		return ''
