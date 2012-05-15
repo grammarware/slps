@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">selectables-many-1.bgf</src>
+		<src name="b">selectables-many-2.bgf</src>
+		<src name="c">selectables-many-3.bgf</src>
+	</sources>
+	<selectables>
+		<src name="b">
+			<bgf:production>
+				<nonterminal>x</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>FOO</selector>
+										<bgf:expression>
+											<nonterminal>foo</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>BAR</selector>
+										<bgf:expression>
+											<nonterminal>bar</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+		<src name="c">
+			<bgf:production>
+				<nonterminal>x</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>f</selector>
+										<bgf:expression>
+											<nonterminal>foo</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>b</selector>
+										<bgf:expression>
+											<nonterminal>bar</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</selectables>
+</mbgf:sequence>

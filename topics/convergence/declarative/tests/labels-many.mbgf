@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">labels-many-1.bgf</src>
+		<src name="b">labels-many-2.bgf</src>
+		<src name="c">labels-many-3.bgf</src>
+	</sources>
+	<production-label>
+		<src name="b">
+			<bgf:production>
+				<label>FooBar</label>
+				<nonterminal>x</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>foo</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>bar</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+			<src name="c">
+				<bgf:production>
+					<label>foo_bar</label>
+					<nonterminal>x</nonterminal>
+					<bgf:expression>
+						<sequence>
+							<bgf:expression>
+								<nonterminal>foo</nonterminal>
+							</bgf:expression>
+							<bgf:expression>
+								<nonterminal>bar</nonterminal>
+							</bgf:expression>
+						</sequence>
+					</bgf:expression>
+				</bgf:production>
+			</src>
+	</production-label>
+</mbgf:sequence>

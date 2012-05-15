@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">folding-abc-1.bgf</src>
+		<src name="b">folding-abc-2.bgf</src>
+		<src name="c">folding-abc-3.bgf</src>
+	</sources>
+	<folding>
+		<src name="b">
+			<bgf:production>
+				<nonterminal>y</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>bar</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>wez</terminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</folding>
+</mbgf:sequence>

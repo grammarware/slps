@@ -308,7 +308,18 @@ if __name__ == "__main__":
 			elif p.who() == 'Selectables':
 				ps1 = p.getProds(inname)
 				ps2 = p.getProds(outname)
-				if ps1 and not ps2:
+				if ps1 and ps2:
+					# reanonymize
+					print('anonymize('+p.getData(inname)+') ∘ deanonymize('+p.getData(outname)+')')
+					ren = XBGF3.Step('anonymize')
+					applynamemap(ps1[0].expr)
+					ren.addParam(ps1[0])
+					xbgfsbyid[id].append(ren)
+					ren = XBGF3.Step('deanonymize')
+					applynamemap(ps2[0].expr)
+					ren.addParam(ps2[0])
+					xbgfsbyid[id].append(ren)
+				elif ps1 and not ps2:
 					ren = XBGF3.Step('anonymize')
 					applynamemap(ps1[0].expr)
 					ren.addParam(ps1[0])
@@ -323,7 +334,7 @@ if __name__ == "__main__":
 				elif (not ps1 and not ps2) or str(ps1[0]) == str(ps2[0]):
 					print('id')
 				else:
-					print('Weird: from',ps1,'to',ps2)
+					print('Weird in Selectables: from',ps1,'to',ps2)
 			elif p.who() == 'TopChoice':
 				n = p.nt
 				if n in namemap:
@@ -373,7 +384,7 @@ if __name__ == "__main__":
 					print('extract('+p.getData(outname)+')')
 					ren = XBGF3.Step('extract')
 					for ps in p.getProds(outname):
-						applynamemap(ps)
+						applynamemap(ps.expr)
 						ren.addParam(ps)
 					xbgfsbyid[id].append(ren)
 					pass
@@ -383,7 +394,17 @@ if __name__ == "__main__":
 			elif p.who() == 'ProdLabel':
 				ps1 = p.getProds(inname)
 				ps2 = p.getProds(outname)
-				if ps1 and not ps2:
+				if ps1 and ps2:
+					# relabel
+					print('unlabel('+ps1[0].label+') ∘ designate('+p.getData(outname)+')')
+					ren = XBGF3.Step('unlabel')
+					ren.addParam(XBGF3.Label(ps1[0].label))
+					xbgfsbyid[id].append(ren)
+					ren = XBGF3.Step('designate')
+					applynamemap(ps2[0].expr)
+					ren.addParam(ps2[0])
+					xbgfsbyid[id].append(ren)
+				elif ps1 and not ps2:
 					print('unlabel('+ps1[0].label+')')
 					ren = XBGF3.Step('unlabel')
 					ren.addParam(XBGF3.Label(ps1[0].label))
