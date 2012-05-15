@@ -60,7 +60,7 @@ class SrcProdModel (TopModel):
 			return []
 	def getData(self, id):
 		if id in self.data.keys():
-			return '; '.join(map(str,self.data[id][0])).replace(':\n        ',' ← ')
+			return '; '.join(map(str,self.data[id][0])).replace(':\n        ',' ← ').replace('\n        ',' | ')
 		else:
 			return '∅'
 	def parse(self, xml):
@@ -130,7 +130,7 @@ class Width (SrcSimpleModel):
 		return str(self.expr)	
 
 # <unification>
-# 	<nonterminal>expr</nonterminal>
+# 	<name>expr</name>
 # 	<src name="dcg" labels="apply,binary">
 # 		<bgf:production>
 #		...
@@ -139,7 +139,7 @@ class Width (SrcSimpleModel):
 # </unification>
 class Unification (SrcProdModel):
 	def __init__(self, xml):
-		self.nt = xml.findtext('nonterminal')
+		self.nt = xml.findtext('name')
 		self.parse(xml)
 	def getSpecifics(self):
 		return 'n('+self.nt+')'
@@ -160,7 +160,7 @@ class Iteration (SrcSimpleModel):
 	def getSpecifics(self):
 		return ', '.join(('['+self.label+']','n('+self.nt+')','n('+self.sep+')'))
 
-# <anonymity>
+# <selectables>
 # 	<src name="...">
 # 		<bgf:production>
 # 			...
@@ -170,8 +170,22 @@ class Iteration (SrcSimpleModel):
 # 			...
 # 		</bgf:production>
 # 	</src>
-# </anonymity>
-class Anonymity (SrcProdModel):
+# </selectables>
+class Selectables (SrcProdModel):
+	def __init__(self, xml):
+		self.parse(xml)
+	def getSpecifics(self):
+		return '—'
+
+# <production-label>
+# 	<src name="...">
+# 		<bgf:production>
+#			<label>...</label>
+# 			...
+# 		</bgf:production>
+# 	</src>
+# </production-label>
+class ProdLabel (SrcProdModel):
 	def __init__(self, xml):
 		self.parse(xml)
 	def getSpecifics(self):
@@ -185,6 +199,21 @@ class Anonymity (SrcProdModel):
 class TopChoice (SrcSimpleModel):
 	def __init__(self, xml):
 		self.nt = xml.findtext('name')
+		self.parse(xml)
+	def getSpecifics(self):
+		return 'n('+self.nt+')'
+
+# <folding>
+# 	<name>apply</name>
+# 	<src name="ant">
+# 		<bgf:production>
+# 		...
+# 		</bgf:production>
+# 	</src>
+# </folding>
+class Folding (SrcProdModel):
+	def __init__(self, xml):
+		self.nt = xml.findtext('src/'+slpsns.bgf_('production')+'/nonterminal')
 		self.parse(xml)
 	def getSpecifics(self):
 		return 'n('+self.nt+')'

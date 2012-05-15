@@ -11,7 +11,7 @@
 		<src name="dcg">l_</src>
 		<src name="sdf,rsc">C_</src>
 	</naming-convention> -->
-	<!-- should be possible to do individual name bindings -->
+	<!-- also possible to do individual name bindings -->
 	<name-bind>
 		<name>program</name>
 		<src name="ant,dcg">program</src>
@@ -60,17 +60,17 @@
 		</in>
 	</width>
 	<unification id="uni">
-		<nonterminal>expr</nonterminal>
+		<name>expr</name>
 		<src name="ant,dcg">
 			<bgf:production>
-				<label>literal</label>
+				<!-- <label>literal</label> -->
 				<nonterminal>atom</nonterminal>
 				<bgf:expression>
 					<nonterminal>int</nonterminal>
 				</bgf:expression>
 			</bgf:production>
 			<bgf:production>
-				<label>argument</label>
+				<!-- <label>argument</label> -->
 				<nonterminal>atom</nonterminal>
 				<bgf:expression>
 					<nonterminal>name</nonterminal>
@@ -106,7 +106,7 @@
 		<src name="sdf,rsc">lassoc</src>
 	</iteration>
 	<!-- at this point sdf, rsc and dcg converged; working with antlr -->
-	<anonymity>
+	<selectables>
 		<src name="ant">
 			<bgf:production>
 				<nonterminal>program</nonterminal>
@@ -128,8 +128,8 @@
 				</bgf:expression>
 			</bgf:production>
 		</src>
-	</anonymity>
-	<anonymity>
+	</selectables>
+	<selectables>
 		<src name="ant">
 			<bgf:production>
 				<nonterminal>function</nonterminal>
@@ -189,8 +189,8 @@
 				</bgf:expression>
 			</bgf:production>
 		</src>
-	</anonymity>
-	<!-- <anonymity depends="uni:split">
+	</selectables>
+	<!-- <selectables depends="uni:split">
 		<src name="ant">
 			<bgf:production>
 				<nonterminal>binary</nonterminal>
@@ -244,8 +244,8 @@
 				</bgf:expression>
 			</bgf:production>
 		</src>
-	</anonymity>
-	<anonymity depends="uni:split">
+	</selectables>
+	<selectables depends="uni:split">
 		<src name="ant">
 			<bgf:production>
 				<nonterminal>apply</nonterminal>
@@ -283,8 +283,8 @@
 				</bgf:expression>
 			</bgf:production>
 		</src>
-	</anonymity>
-	<anonymity>
+	</selectables>
+	<selectables>
 		<src name="ant">
 			<bgf:production>
 				<nonterminal>ifThenElse</nonterminal>
@@ -339,10 +339,487 @@
 				</bgf:expression>
 			</bgf:production>
 		</src>
-	</anonymity> -->
-	<top-choice>
+	</selectables> -->
+	<top-choice id="tc">
 		<name>ops</name>
 		<src name="ant">horizontal</src>
 		<src name="dcg,sdf,rsc">vertical</src>
 	</top-choice>
+	<selectables depends="tc:horizontal">
+		<src name="dcg,sdf,rsc">
+			<bgf:production>
+				<nonterminal>ops</nonterminal>
+				<bgf:expression>
+					<choice>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>equal</selector>
+										<bgf:expression>
+											<terminal>==</terminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>plus</selector>
+										<bgf:expression>
+											<terminal>+</terminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>minus</selector>
+										<bgf:expression>
+											<terminal>-</terminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+					</choice>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</selectables>
+	<selectables>
+		<src name="ant">
+			<bgf:production>
+				<nonterminal>expr</nonterminal>
+				<bgf:expression>
+					<choice>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>b</selector>
+										<bgf:expression>
+											<nonterminal>binary</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>a</selector>
+										<bgf:expression>
+											<nonterminal>apply</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>i</selector>
+										<bgf:expression>
+											<nonterminal>ifThenElse</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+					</choice>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</selectables>
+	<folding>
+		<src name="ant">
+			<bgf:production>
+				<nonterminal>apply</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<selectable>
+								<selector>i</selector>
+								<bgf:expression>
+									<nonterminal>name</nonterminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+						<bgf:expression>
+							<plus>
+								<bgf:expression>
+									<selectable>
+										<selector>a</selector>
+										<bgf:expression>
+											<nonterminal>atom</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</plus>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</folding>
+	<folding>
+		<src name="ant">
+			<bgf:production>
+				<nonterminal>ifThenElse</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>if</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<selectable>
+								<selector>c</selector>
+								<bgf:expression>
+									<nonterminal>expr</nonterminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>then</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<selectable>
+								<selector>e1</selector>
+								<bgf:expression>
+									<nonterminal>expr</nonterminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>else</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<selectable>
+								<selector>e2</selector>
+								<bgf:expression>
+									<nonterminal>expr</nonterminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</folding>
+	<folding id="fld">
+		<src name="ant">
+			<bgf:production>
+				<nonterminal>binary</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<selectable>
+								<selector>l</selector>
+								<bgf:expression>
+									<nonterminal>atom</nonterminal>
+								</bgf:expression>
+							</selectable>
+						</bgf:expression>
+						<bgf:expression>
+							<star>
+								<bgf:expression>
+									<sequence>
+										<bgf:expression>
+											<selectable>
+												<selector>o</selector>
+												<bgf:expression>
+													<nonterminal>ops</nonterminal>
+												</bgf:expression>
+											</selectable>
+										</bgf:expression>
+										<bgf:expression>
+											<selectable>
+												<selector>r</selector>
+												<bgf:expression>
+													<nonterminal>atom</nonterminal>
+												</bgf:expression>
+											</selectable>
+										</bgf:expression>
+									</sequence>
+								</bgf:expression>
+							</star>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</folding>
+	<top-choice depends="fld:inline">
+		<name>expr</name>
+		<src name="ant">vertical</src>
+		<!-- <src name="dcg,sdf,rsc">vertical</src> -->
+	</top-choice>
+	<selectables>
+		<src name="ant">
+			<bgf:production>
+				<nonterminal>expr</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>l</selector>
+										<bgf:expression>
+											<nonterminal>expr</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<star>
+								<bgf:expression>
+									<sequence>
+										<bgf:expression>
+											<marked>
+												<bgf:expression>
+													<selectable>
+														<selector>o</selector>
+														<bgf:expression>
+															<nonterminal>ops</nonterminal>
+														</bgf:expression>
+													</selectable>
+												</bgf:expression>
+											</marked>
+										</bgf:expression>
+										<bgf:expression>
+											<marked>
+												<bgf:expression>
+													<selectable>
+														<selector>r</selector>
+														<bgf:expression>
+															<nonterminal>expr</nonterminal>
+														</bgf:expression>
+													</selectable>
+												</bgf:expression>
+											</marked>
+										</bgf:expression>
+									</sequence>
+								</bgf:expression>
+							</star>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</selectables>
+	<selectables>
+		<src name="ant">
+			<bgf:production>
+				<nonterminal>expr</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>i</selector>
+										<bgf:expression>
+											<nonterminal>name</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<plus>
+								<bgf:expression>
+									<marked>
+										<bgf:expression>
+											<selectable>
+												<selector>a</selector>
+												<bgf:expression>
+													<nonterminal>expr</nonterminal>
+												</bgf:expression>
+											</selectable>
+										</bgf:expression>
+									</marked>
+								</bgf:expression>
+							</plus>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</selectables>
+	<selectables>
+		<src name="ant">
+			<bgf:production>
+				<nonterminal>expr</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>if</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>c</selector>
+										<bgf:expression>
+											<nonterminal>expr</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>then</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>e1</selector>
+										<bgf:expression>
+											<nonterminal>expr</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>else</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>e2</selector>
+										<bgf:expression>
+											<nonterminal>expr</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</selectables>
+	<selectables>
+		<src name="ant">
+			<bgf:production>
+				<nonterminal>expr</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>(</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<marked>
+								<bgf:expression>
+									<selectable>
+										<selector>e</selector>
+										<bgf:expression>
+											<nonterminal>expr</nonterminal>
+										</bgf:expression>
+									</selectable>
+								</bgf:expression>
+							</marked>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>)</terminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</selectables>
+	<production-label>
+		<src name="dcg">
+			<bgf:production>
+				<label>ifThenElse</label>
+				<nonterminal>expr</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<terminal>if</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>expr</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>then</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>expr</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>else</terminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>expr</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</production-label>
+	<production-label>
+		<src name="dcg">
+			<bgf:production>
+				<label>apply</label>
+				<nonterminal>expr</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>name</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<plus>
+								<bgf:expression>
+									<nonterminal>atom</nonterminal>
+								</bgf:expression>
+							</plus>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</production-label>
+	<production-label>
+		<src name="dcg">
+			<bgf:production>
+				<label>binary</label>
+				<nonterminal>expr</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>atom</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<star>
+								<bgf:expression>
+									<sequence>
+										<bgf:expression>
+											<nonterminal>ops</nonterminal>
+										</bgf:expression>
+										<bgf:expression>
+											<nonterminal>atom</nonterminal>
+										</bgf:expression>
+									</sequence>
+								</bgf:expression>
+							</star>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</production-label>
 </mbgf:sequence>

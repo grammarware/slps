@@ -74,10 +74,14 @@ if __name__ == "__main__":
 				predicates.append(MBGF.Unification(e))
 			elif e.tag=='iteration':
 				predicates.append(MBGF.Iteration(e))
-			elif e.tag=='anonymity':
-				predicates.append(MBGF.Anonymity(e))
+			elif e.tag=='selectables':
+				predicates.append(MBGF.Selectables(e))
+			elif e.tag=='production-label':
+				predicates.append(MBGF.ProdLabel(e))
 			elif e.tag=='top-choice':
 				predicates.append(MBGF.TopChoice(e))
+			elif e.tag=='folding':
+				predicates.append(MBGF.Folding(e))
 			else:
 				print('Predicate',e.tag,'not supported.')
 				# print(sources)
@@ -278,28 +282,22 @@ if __name__ == "__main__":
 				else:
 					print('PROBLEM')
 					sys.exit(1)
-			elif p.who() == 'Anonymity':
+			elif p.who() == 'Selectables':
 				ps1 = p.getProds(inname)
 				ps2 = p.getProds(outname)
-				# print(ps1.__class__,ps2)
-				# print('!!!',ps1,ps2)
-				# print('!!!',bool(ps1),bool(ps2==''))
 				if ps1 and not ps2:
-					# anonymize
 					ren = XBGF3.Step('anonymize')
 					applynamemap(ps1[0].expr)
 					ren.addParam(ps1[0])
 					xbgfsbyid[id].append(ren)
 					print('anonymize('+p.getData(inname)+')')
 				elif not ps1 and ps2:
-					# anonymize
 					ren = XBGF3.Step('deanonymize')
 					applynamemap(ps2[0].expr)
 					ren.addParam(ps2[0])
 					xbgfsbyid[id].append(ren)
 					print('deanonymize('+p.getData(outname)+')')
-				elif not ps1 and not ps2:
-					# id
+				elif (not ps1 and not ps2) or str(ps1[0]) == str(ps2[0]):
 					print('id')
 				else:
 					print('Weird: from',ps1,'to',ps2)
@@ -313,10 +311,17 @@ if __name__ == "__main__":
 				k2 = p.getData(outname)
 				if k1==k2:
 					print('id')
+					continue
 				elif k1 == 'horizontal' and k2 == 'vertical':
 					cmd = 'vertical'
 				elif k2 == 'horizontal' and k1 == 'vertical':
 					cmd = 'horizontal'
+				elif k1 == None and k2 != None:
+					cmd = k2
+				elif k2 == None and k1 != None:
+					# print('nonsymmetric-id') #???
+					# continue
+					cmd = k1
 				else:
 					print('ERROR: unknown presets:',k1,'vs',k2)
 					sys.exit(2)
@@ -326,11 +331,55 @@ if __name__ == "__main__":
 				p.setName(n1)
 				ren.addParam(p)
 				xbgfsbyid[id].append(ren)
+			elif p.who() == 'Folding':
+				n1 = p.getNTs(inname)
+				n2 = p.getNTs(outname)
+				if not n1 and not n2 or n1 == n2:
+					print('id')
+					continue
+				elif n1 and not n2:
+					if n1[0] in namemap:
+						n0 = namemap[n1[0]]
+					else:
+						n0 = n1[0]
+					print('inline('+n0+')')
+					ren = XBGF3.TStep('inline')
+					ren.setData(n0)
+					xbgfsbyid[id].append(ren)
+				elif n2 and not n1:
+					print('extract('+p.getData(outname)+')')
+					ren = XBGF3.Step('extract')
+					for ps in p.getProds(outname):
+						applynamemap(ps)
+						ren.addParam(ps)
+					xbgfsbyid[id].append(ren)
+					pass
+				else:
+					print('!!!',n0,n1,n2)
+					sys.exit(-1)
+			elif p.who() == 'ProdLabel':
+				ps1 = p.getProds(inname)
+				ps2 = p.getProds(outname)
+				if ps1 and not ps2:
+					print('unlabel('+ps1[0].label+')')
+					ren = XBGF3.Step('unlabel')
+					ren.addParam(XBGF3.Label(ps1[0].label))
+					xbgfsbyid[id].append(ren)
+				elif not ps1 and ps2:
+					print('designate('+p.getData(outname)+')')
+					ren = XBGF3.Step('designate')
+					applynamemap(ps2[0].expr)
+					ren.addParam(ps2[0])
+					xbgfsbyid[id].append(ren)
+				elif (not ps1 and not ps2) or str(ps1[0]) == str(ps2[0]):
+					print('id')
+				else:
+					print('Weird in ProdLabel: from',ps1,'to',ps2)
 			else:
 				print('UNKNOWN COMMAND')
 		scheduled = []
 		depends = {}
-		impact = []
+		# impact = []
 		for i in unscheduled:
 			if len(xbgfsbyid[i]) == 0:
 				unscheduled.remove(i)

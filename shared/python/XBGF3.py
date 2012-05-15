@@ -51,6 +51,23 @@ class Step:
 			self.ex.append(p.getXml())
 		return self.ex
 
+class TStep:
+	def __init__(self,op):
+		self.name = op
+		self.data = ''
+	def parse(self,ee):
+		self.name = ee.tag
+		self.data = ee.text
+	def setName(self,n):
+		self.name = n
+	def setData(self,p):
+		self.data = p
+	def getXml(self):
+		#print 'Getting the XML of production...'
+		self.ex = ET.Element(slpsns.xbgf_(self.name))
+		self.ex.text = self.data
+		return self.ex
+
 class Label:
 	def __init__(self,n):
 		self.name = n
