@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">unification-easy-1.bgf</src>
+		<src name="b">unification-easy-2.bgf</src>
+		<src name="c">unification-easy-3.bgf</src>
+	</sources>
+	<unification>
+		<name>x</name>
+		<src name="a">
+			<bgf:production>
+				<nonterminal>y</nonterminal>
+				<bgf:expression>
+					<terminal>b</terminal>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</unification>
+</mbgf:sequence>

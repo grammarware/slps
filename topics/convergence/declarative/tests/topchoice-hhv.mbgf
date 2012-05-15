@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">topchoice-hhv-1.bgf</src>
+		<src name="b">topchoice-hhv-2.bgf</src>
+		<src name="c">topchoice-hhv-3.bgf</src>
+	</sources>
+	<top-choice>
+		<name>x</name>
+		<src name="a,b">horizontal</src>
+		<src name="c">vertical</src>
+	</top-choice>
+</mbgf:sequence>

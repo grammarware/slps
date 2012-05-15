@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">naming-dde-1.bgf</src>
+		<src name="b">naming-dde-2.bgf</src>
+		<src name="c">naming-dde-3.bgf</src>
+	</sources>
+	<name-bind>
+		<name>x</name>
+		<src name="a,c">d</src>
+		<src name="b">e</src>
+	</name-bind>
+</mbgf:sequence>

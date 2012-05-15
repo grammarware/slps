@@ -154,11 +154,19 @@ class Unification (SrcProdModel):
 class Iteration (SrcSimpleModel):
 	def __init__(self, xml):
 		self.label = xml.findtext('label')
+		if not self.label:
+			self.label = ''
 		self.nt = xml.findtext('name')
 		self.sep = xml.findtext('separator')
 		self.parse(xml)
 	def getSpecifics(self):
-		return ', '.join(('['+self.label+']','n('+self.nt+')','n('+self.sep+')'))
+		s = ''
+		if self.label:
+			s += '['+self.label+'], '
+		s += 'n('+self.nt+')'
+		if self.sep:
+			s += ', n('+self.sep+')'
+		return s
 
 # <selectables>
 # 	<src name="...">

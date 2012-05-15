@@ -184,7 +184,24 @@ if __name__ == "__main__":
 					n3 = namemap[n0]
 				else:
 					n3 = n0
-				if n1:
+				if n1 and n2:
+					if p.getData(inname) == p.getData(outname):
+						print('id')
+					else:
+						# resplit!
+						print('unite('+n1[0]+','+n3+') ∘ split('+n3+','+n2[0]+')')
+						ren = XBGF3.Step('unite')
+						ren.addParam(XBGF3.Leaf('add',n1[0]))
+						ren.addParam(XBGF3.Leaf('to',n3))
+						xbgfsbyid[id].append(ren)
+						ren = XBGF3.Step('split')
+						ren.addParam(XBGF3.Leaf('nonterminal',n3))
+						for q in p.getProds(outname):
+							ren.addParam(q)
+						for l in p.getScope(outname):
+							ren.addParam(BGF3.LabelText(l.text))
+						xbgfsbyid[id].append(ren)
+				elif n1:
 					# print('[MBGF] unification('+n1+','+n0+') ::= unite('+n1+','+n3+')')
 					print('unite('+n1[0]+','+n3+')')
 					ren = XBGF3.Step('unite')
@@ -226,7 +243,10 @@ if __name__ == "__main__":
 					print('id')
 				elif k1=='iterate' and k2.endswith('assoc'):
 					# print('[MBGF] iteration('+l+','+n+','+s+','+k1+','+k2+') ::= '+k2+'(['+l+'] '+n1+' ← '+n1+' '+s1+' '+n1+')')
-					print(k2+'(['+l+'] '+n1+' ← '+n1+' '+s1+' '+n1+')')
+					if s1:
+						print(k2+'(['+l+'] '+n1+' ← '+n1+' '+s1+' '+n1+')')
+					else:
+						print(k2+'(['+l+'] '+n1+' ← '+n1+' '+n1+')')
 					ren = XBGF3.Step(k2)
 					p = BGF3.Production()
 					p.setLabel(l)
@@ -279,6 +299,9 @@ if __name__ == "__main__":
 					p.setExpr(BGF3.Expression(e))
 					ren.addParam(p)
 					xbgfsbyid[id].append(ren)
+				elif k1 == 'rassoc' and k2 == 'lassoc' or k1 == 'lassoc' and k2 == 'rassoc':
+					# nothing to do here (at the grammar level)
+					print('id')
 				else:
 					print('PROBLEM')
 					sys.exit(1)

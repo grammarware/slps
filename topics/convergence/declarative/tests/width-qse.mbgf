@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">width-qse-1.bgf</src>
+		<src name="b">width-qse-2.bgf</src>
+		<src name="c">width-qse-3.bgf</src>
+	</sources>
+	<width>
+		<bgf:expression>
+			<nonterminal>foo</nonterminal>
+		</bgf:expression>
+		<src name="a">?</src>
+		<src name="b">*</src>
+		<src name="c">!</src>
+	</width>
+</mbgf:sequence>

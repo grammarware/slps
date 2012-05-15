@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">iteration-irl-1.bgf</src>
+		<src name="b">iteration-irl-2.bgf</src>
+		<src name="c">iteration-irl-3.bgf</src>
+	</sources>
+	<iteration>
+		<name>x</name>
+		<separator>op</separator>
+		<src name="a">iterate</src>
+		<src name="b">lassoc</src>
+		<src name="c">rassoc</src>
+	</iteration>
+</mbgf:sequence>
