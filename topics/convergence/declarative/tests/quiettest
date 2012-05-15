@@ -1,0 +1,5 @@
+#!/bin/sh
+
+/bin/echo -n $1
+/bin/echo -n '          '
+(./testperform $1 >/dev/null 2>/dev/null && echo OK) || echo FAIL

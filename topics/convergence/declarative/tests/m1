@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# m1 file.mbgf one two
+# $0    $1     $2  $3
+../../tri/mbgf2xbgf.py $1 $2 $3 tmp.xbgf
+xbgf tmp.xbgf `xpath $1 'mbgf:sequence/sources/src[@name="'$2'"]/text()' 2> /dev/null` tmp1.bgf
+gdt tmp1.bgf `xpath $1 'mbgf:sequence/sources/src[@name="'$3'"]/text()' 2> /dev/null` || exit -1
+rm tmp.xbgf tmp1.bgf
