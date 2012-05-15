@@ -175,4 +175,16 @@ class Anonymity (SrcProdModel):
 	def __init__(self, xml):
 		self.parse(xml)
 	def getSpecifics(self):
-		return ''
+		return '—'
+
+# <top-choice>
+# 	<name>ops</name>
+# 	<src name="ant">horizontal</src>
+# 	<src name="dcg,sdf,rsc">vertical</src>
+# </top-choice>
+class TopChoice (SrcSimpleModel):
+	def __init__(self, xml):
+		self.nt = xml.findtext('name')
+		self.parse(xml)
+	def getSpecifics(self):
+		return 'n('+self.nt+')'

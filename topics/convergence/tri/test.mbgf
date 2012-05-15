@@ -340,4 +340,9 @@
 			</bgf:production>
 		</src>
 	</anonymity> -->
+	<top-choice>
+		<name>ops</name>
+		<src name="ant">horizontal</src>
+		<src name="dcg,sdf,rsc">vertical</src>
+	</top-choice>
 </mbgf:sequence>

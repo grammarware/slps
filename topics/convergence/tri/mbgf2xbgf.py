@@ -76,6 +76,8 @@ if __name__ == "__main__":
 				predicates.append(MBGF.Iteration(e))
 			elif e.tag=='anonymity':
 				predicates.append(MBGF.Anonymity(e))
+			elif e.tag=='top-choice':
+				predicates.append(MBGF.TopChoice(e))
 			else:
 				print('Predicate',e.tag,'not supported.')
 				# print(sources)
@@ -207,18 +209,18 @@ if __name__ == "__main__":
 				s = p.sep
 				k1 = p.getData(inname)
 				k2 = p.getData(outname)
+				if n in namemap:
+					n1 = namemap[n]
+				else:
+					n1 = n
+				if s in namemap:
+					s1 = namemap[s]
+				else:
+					s1 = s
 				if k1==k2:
 					# print('[MBGF] iteration('+l+','+n+','+s+','+k1+','+k2+') ::= id')
 					print('id')
 				elif k1=='iterate' and k2.endswith('assoc'):
-					if n in namemap:
-						n1 = namemap[n]
-					else:
-						n1 = n
-					if s in namemap:
-						s1 = namemap[s]
-					else:
-						s1 = s
 					# print('[MBGF] iteration('+l+','+n+','+s+','+k1+','+k2+') ::= '+k2+'(['+l+'] '+n1+' ← '+n1+' '+s1+' '+n1+')')
 					print(k2+'(['+l+'] '+n1+' ← '+n1+' '+s1+' '+n1+')')
 					ren = XBGF3.Step(k2)
@@ -240,14 +242,6 @@ if __name__ == "__main__":
 					ren.addParam(p)
 					xbgfsbyid[id].append(ren)
 				elif k1.endswith('assoc') and k2=='iterate':
-					if n in namemap:
-						n1 = namemap[n]
-					else:
-						n1 = n
-					if s in namemap:
-						s1 = namemap[s]
-					else:
-						s1 = s
 					if s1:
 						ass = n1+' ('+s1+' '+n1+')*'
 					else:
@@ -309,6 +303,29 @@ if __name__ == "__main__":
 					print('id')
 				else:
 					print('Weird: from',ps1,'to',ps2)
+			elif p.who() == 'TopChoice':
+				n = p.nt
+				if n in namemap:
+					n1 = namemap[n]
+				else:
+					n1 = n
+				k1 = p.getData(inname)
+				k2 = p.getData(outname)
+				if k1==k2:
+					print('id')
+				elif k1 == 'horizontal' and k2 == 'vertical':
+					cmd = 'vertical'
+				elif k2 == 'horizontal' and k1 == 'vertical':
+					cmd = 'horizontal'
+				else:
+					print('ERROR: unknown presets:',k1,'vs',k2)
+					sys.exit(2)
+				print(cmd+'('+n1+')')
+				ren = XBGF3.Step(cmd)
+				p = XBGF3.Nonterminal()
+				p.setName(n1)
+				ren.addParam(p)
+				xbgfsbyid[id].append(ren)
 			else:
 				print('UNKNOWN COMMAND')
 		scheduled = []
