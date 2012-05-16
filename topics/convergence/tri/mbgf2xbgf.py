@@ -380,6 +380,7 @@ if __name__ == "__main__":
 					else:
 						n0 = n1[0]
 					print('inline('+n0+')')
+					print('>>>',namemap)
 					ren = XBGF3.TStep('inline')
 					ren.setData(n0)
 					xbgfsbyid[id].append(ren)

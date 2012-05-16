@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">fold-names-ordered-1.bgf</src>
+		<src name="b">fold-names-ordered-2.bgf</src>
+		<src name="c">fold-names-ordered-3.bgf</src>
+	</sources>
+	<name-bind>
+		<name>a</name>
+		<src name="a,c">a</src>
+		<src name="b">x</src>
+	</name-bind>
+	<name-bind>
+		<name>b</name>
+		<src name="a,c">b</src>
+		<src name="b">y</src>
+	</name-bind>
+	<name-bind depends="fld:extract">
+		<name>c</name>
+		<src name="a,c">c</src>
+		<src name="b">z</src>
+	</name-bind>
+	<folding id="fld">
+		<src name="a,b">
+			<bgf:production>
+				<nonterminal>c</nonterminal>
+				<bgf:expression>
+					<sequence>
+						<bgf:expression>
+							<nonterminal>d</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>e</nonterminal>
+						</bgf:expression>
+					</sequence>
+				</bgf:expression>
+			</bgf:production>
+		</src>
+	</folding>
+</mbgf:sequence>
