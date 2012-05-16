@@ -1,4 +1,0 @@
-#!/bin/sh
-
-echo 'Exporting the grammar as hypertext...'
-bgf2html $2 testmatch/$1/`basename $2 .bgf`.html
