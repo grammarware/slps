@@ -9,8 +9,8 @@
 		<bgf:expression>
 			<nonterminal>foo</nonterminal>
 		</bgf:expression>
-		<src name="a">!</src>
-		<src name="b">*</src>
-		<src name="c">+</src>
+		<state src="a">!</state>
+		<state src="b">*</state>
+		<state src="c">+</state>
 	</width>
 </mbgf:sequence>

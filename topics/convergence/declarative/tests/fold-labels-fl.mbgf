@@ -6,7 +6,7 @@
 		<src name="c">fold-labels-fl-3.bgf</src>
 	</sources>
 	<folding id="fld" depends="sels:deanonymize">
-		<src name="a,c">
+		<state src="a,c">
 			<bgf:production>
 				<nonterminal>z</nonterminal>
 				<bgf:expression>
@@ -37,10 +37,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</folding>
 	<selectables id="sels" depends="fld:extract">
-		<src name="a,b">
+		<state src="a,b">
 			<bgf:production>
 				<nonterminal>z</nonterminal>
 				<bgf:expression>
@@ -79,6 +79,6 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 </mbgf:sequence>

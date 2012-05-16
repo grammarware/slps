@@ -7,16 +7,16 @@
 	</sources>
 	<name-bind>
 		<name>a</name>
-		<src name="a,c">a</src>
-		<src name="b">x</src>
+		<state src="a,c">a</state>
+		<state src="b">x</state>
 	</name-bind>
 	<name-bind>
 		<name>b</name>
-		<src name="a,c">b</src>
-		<src name="b">y</src>
+		<state src="a,c">b</state>
+		<state src="b">y</state>
 	</name-bind>
 	<folding>
-		<src name="a,b">
+		<state src="a,b">
 			<bgf:production>
 				<nonterminal>c</nonterminal>
 				<bgf:expression>
@@ -30,6 +30,6 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</folding>
 </mbgf:sequence>

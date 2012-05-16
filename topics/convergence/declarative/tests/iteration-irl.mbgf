@@ -8,8 +8,8 @@
 	<iteration>
 		<name>x</name>
 		<separator>op</separator>
-		<src name="a">iterate</src>
-		<src name="b">lassoc</src>
-		<src name="c">rassoc</src>
+		<state src="a">iterate</state>
+		<state src="b">lassoc</state>
+		<state src="c">rassoc</state>
 	</iteration>
 </mbgf:sequence>

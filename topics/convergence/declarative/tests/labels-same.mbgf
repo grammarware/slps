@@ -6,7 +6,7 @@
 		<src name="c">labels-same-3.bgf</src>
 	</sources>
 	<production-label>
-		<src name="b">
+		<state src="b">
 			<bgf:production>
 				<label>FooBar</label>
 				<nonterminal>x</nonterminal>
@@ -21,6 +21,6 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</production-label>
 </mbgf:sequence>

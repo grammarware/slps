@@ -2,30 +2,30 @@ tools = ../../../shared/tools
 validator = ${tools}/validate
 
 d:
-	./mbgf2xbgf.py test.3bgf 2 1 test.2to1.xbgf
+	./mbgf2xbgf.py test.mbgf sdf dcg test.2to1.xbgf
 	xbgf test.2to1.xbgf bgf/sdf.bgf bgf/sdf.2.bgf
 	gdts bgf/sdf.2.bgf bgf/dcg.bgf
 
 tst:
-	./m2 test.3bgf 2 bgf/sdf.bgf 3 bgf/rascal.bgf
+	./m2 test.mbgf sdf rsc
 
 go:
-	./mbgf2xbgf.py test.3bgf 3 2 test.3to2.xbgf
+	./mbgf2xbgf.py test.mbgf 3 2 test.3to2.xbgf
 	xbgf test.3to2.xbgf bgf/rascal.bgf bgf/rascal.2.bgf
 	gdts bgf/rascal.2.bgf bgf/sdf.bgf
-	./mbgf2xbgf.py test.3bgf 1 2 test.1to2.xbgf
+	./mbgf2xbgf.py test.mbgf 1 2 test.1to2.xbgf
 	xbgf test.1to2.xbgf bgf/dcg.bgf bgf/dcg.2.bgf
 	gdts bgf/dcg.2.bgf bgf/sdf.bgf
 
 t:
-	./mbgf2xbgf.py test.3bgf 1 3 test.res.xbgf
+	./mbgf2xbgf.py test.mbgf 1 3 test.res.xbgf
 	xbgf2xbnf test.res.xbgf
 
 try:
-	xsltproc --stringparam in 1 --stringparam out 2 ~/projects/slps/shared/xsl/mbgf2xbgf.xslt test.3bgf > test.1to2.xbgf
+	xsltproc --stringparam in 1 --stringparam out 2 ~/projects/slps/shared/xsl/mbgf2xbgf.xslt test.mbgf > test.1to2.xbgf
 	xbgf test.1to2.xbgf bgf/dcg.bgf bgf/dcg.2.bgf
 	gdts bgf/dcg.2.bgf bgf/rascal.bgf
-	xsltproc --stringparam in 3 --stringparam out 2 ~/projects/slps/shared/xsl/mbgf2xbgf.xslt test.3bgf > test.1to2.xbgf
+	xsltproc --stringparam in 3 --stringparam out 2 ~/projects/slps/shared/xsl/mbgf2xbgf.xslt test.mbgf > test.1to2.xbgf
 	xbgf test.1to2.xbgf bgf/dcg.bgf bgf/dcg.2.bgf
 
 build:

@@ -6,7 +6,7 @@
 		<src name="c">folding-easy-3.bgf</src>
 	</sources>
 	<folding>
-		<src name="b">
+		<state src="b">
 			<bgf:production>
 				<nonterminal>y</nonterminal>
 				<bgf:expression>
@@ -20,6 +20,6 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</folding>
 </mbgf:sequence>

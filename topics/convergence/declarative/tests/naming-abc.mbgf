@@ -7,8 +7,8 @@
 	</sources>
 	<name-bind>
 		<name>x</name>
-		<src name="a">a</src>
-		<src name="b">b</src>
-		<src name="c">c</src>
+		<state src="a">a</state>
+		<state src="b">b</state>
+		<state src="c">c</state>
 	</name-bind>
 </mbgf:sequence>

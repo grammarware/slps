@@ -7,8 +7,8 @@
 	</sources>
 	<iteration>
 		<name>x</name>
-		<src name="a">iterate</src>
-		<src name="b">lassoc</src>
-		<src name="c">iterate</src>
+		<state src="a">iterate</state>
+		<state src="b">lassoc</state>
+		<state src="c">iterate</state>
 	</iteration>
 </mbgf:sequence>

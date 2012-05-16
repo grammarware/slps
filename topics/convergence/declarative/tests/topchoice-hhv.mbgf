@@ -7,7 +7,7 @@
 	</sources>
 	<top-choice>
 		<name>x</name>
-		<src name="a,b">horizontal</src>
-		<src name="c">vertical</src>
+		<state src="a,b">horizontal</state>
+		<state src="c">vertical</state>
 	</top-choice>
 </mbgf:sequence>

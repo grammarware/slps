@@ -8,60 +8,60 @@
 	</sources>
 	<!-- <naming-convention>
 		<default>l_</default>
-		<src name="dcg">l_</src>
-		<src name="sdf,rsc">C_</src>
+		<state src="dcg">l_</state>
+		<state src="sdf,rsc">C_</state>
 	</naming-convention> -->
 	<!-- also possible to do individual name bindings -->
 	<name-bind>
 		<name>program</name>
-		<src name="ant,dcg">program</src>
-		<src name="sdf,rsc">Program</src>
+		<state src="ant,dcg">program</state>
+		<state src="sdf,rsc">Program</state>
 	</name-bind>
 	<name-bind>
 		<name>function</name>
-		<src name="ant,dcg">function</src>
-		<src name="sdf,rsc">Function</src>
+		<state src="ant,dcg">function</state>
+		<state src="sdf,rsc">Function</state>
 	</name-bind>
 	<name-bind>
 		<name>expr</name>
-		<src name="ant,dcg">expr</src>
-		<src name="sdf,rsc">Expr</src>
+		<state src="ant,dcg">expr</state>
+		<state src="sdf,rsc">Expr</state>
 	</name-bind>
 	<name-bind>
 		<name>name</name>
-		<src name="ant">ID</src>
-		<src name="dcg">name</src>
-		<src name="sdf,rsc">Name</src>
+		<state src="ant">ID</state>
+		<state src="dcg">name</state>
+		<state src="sdf,rsc">Name</state>
 	</name-bind>
 	<name-bind>
 		<name>newline</name>
-		<src name="ant">NEWLINE</src>
-		<src name="dcg">newline</src>
-		<src name="sdf,rsc">Newline</src>
+		<state src="ant">NEWLINE</state>
+		<state src="dcg">newline</state>
+		<state src="sdf,rsc">Newline</state>
 	</name-bind>
 	<name-bind>
 		<name>int</name>
-		<src name="ant,dcg">int</src>
-		<src name="sdf,rsc">Int</src>
+		<state src="ant,dcg">int</state>
+		<state src="sdf,rsc">Int</state>
 	</name-bind>
 	<name-bind>
 		<name>ops</name>
-		<src name="ant,dcg">ops</src>
-		<src name="sdf,rsc">Ops</src>
+		<state src="ant,dcg">ops</state>
+		<state src="sdf,rsc">Ops</state>
 	</name-bind>
 	<width>
 		<bgf:expression>
 			<nonterminal>newline</nonterminal>
 		</bgf:expression>
-		<src name="ant,dcg,sdf">+</src>
-		<src name="rsc">!</src>
+		<state src="ant,dcg,sdf">+</state>
+		<state src="rsc">!</state>
 		<in>
 			<nonterminal>function</nonterminal>
 		</in>
 	</width>
 	<unification id="uni">
 		<name>expr</name>
-		<src name="ant,dcg">
+		<state src="ant,dcg">
 			<bgf:production>
 				<!-- <label>literal</label> -->
 				<nonterminal>atom</nonterminal>
@@ -96,18 +96,18 @@
 				<label>apply</label>
 				<label>binary</label>
 			</in>
-		</src>
+		</state>
 	</unification>
 	<iteration id="iter" depends="uni:unite">
 		<label>binary</label>
 		<name>expr</name>
 		<separator>ops</separator>
-		<src name="ant,dcg">iterate</src>
-		<src name="sdf,rsc">lassoc</src>
+		<state src="ant,dcg">iterate</state>
+		<state src="sdf,rsc">lassoc</state>
 	</iteration>
 	<!-- at this point sdf, rsc and dcg converged; working with antlr -->
 	<selectables>
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>program</nonterminal>
 				<bgf:expression>
@@ -127,10 +127,10 @@
 					</plus>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 	<selectables>
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>function</nonterminal>
 				<bgf:expression>
@@ -188,10 +188,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 	<!-- <selectables depends="uni:split">
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>binary</nonterminal>
 				<bgf:expression>
@@ -243,10 +243,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 	<selectables depends="uni:split">
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>apply</nonterminal>
 				<bgf:expression>
@@ -282,10 +282,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 	<selectables>
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>ifThenElse</nonterminal>
 				<bgf:expression>
@@ -338,15 +338,15 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables> -->
 	<top-choice id="tc">
 		<name>ops</name>
-		<src name="ant">horizontal</src>
-		<src name="dcg,sdf,rsc">vertical</src>
+		<state src="ant">horizontal</state>
+		<state src="dcg,sdf,rsc">vertical</state>
 	</top-choice>
 	<selectables depends="tc:horizontal">
-		<src name="dcg,sdf,rsc">
+		<state src="dcg,sdf,rsc">
 			<bgf:production>
 				<nonterminal>ops</nonterminal>
 				<bgf:expression>
@@ -390,10 +390,10 @@
 					</choice>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 	<selectables>
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>expr</nonterminal>
 				<bgf:expression>
@@ -437,10 +437,10 @@
 					</choice>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 	<folding>
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>apply</nonterminal>
 				<bgf:expression>
@@ -468,10 +468,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</folding>
 	<folding>
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>ifThenElse</nonterminal>
 				<bgf:expression>
@@ -512,10 +512,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</folding>
 	<folding id="fld">
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>binary</nonterminal>
 				<bgf:expression>
@@ -555,15 +555,15 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</folding>
 	<top-choice depends="fld:inline">
 		<name>expr</name>
-		<src name="ant">vertical</src>
-		<!-- <src name="dcg,sdf,rsc">vertical</src> -->
+		<state src="ant">vertical</state>
+		<!-- <state src="dcg,sdf,rsc">vertical</state> -->
 	</top-choice>
 	<selectables>
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>expr</nonterminal>
 				<bgf:expression>
@@ -615,10 +615,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 	<selectables>
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>expr</nonterminal>
 				<bgf:expression>
@@ -654,10 +654,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 	<selectables>
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>expr</nonterminal>
 				<bgf:expression>
@@ -710,10 +710,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 	<selectables>
-		<src name="ant">
+		<state src="ant">
 			<bgf:production>
 				<nonterminal>expr</nonterminal>
 				<bgf:expression>
@@ -739,10 +739,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 	<production-label>
-		<src name="dcg">
+		<state src="dcg">
 			<bgf:production>
 				<label>ifThenElse</label>
 				<nonterminal>expr</nonterminal>
@@ -769,10 +769,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</production-label>
 	<production-label>
-		<src name="dcg">
+		<state src="dcg">
 			<bgf:production>
 				<label>apply</label>
 				<nonterminal>expr</nonterminal>
@@ -791,10 +791,10 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</production-label>
 	<production-label>
-		<src name="dcg">
+		<state src="dcg">
 			<bgf:production>
 				<label>binary</label>
 				<nonterminal>expr</nonterminal>
@@ -820,6 +820,6 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</production-label>
 </mbgf:sequence>

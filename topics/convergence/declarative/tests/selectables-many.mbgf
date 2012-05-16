@@ -6,7 +6,7 @@
 		<src name="c">selectables-many-3.bgf</src>
 	</sources>
 	<selectables>
-		<src name="b">
+		<state src="b">
 			<bgf:production>
 				<nonterminal>x</nonterminal>
 				<bgf:expression>
@@ -38,8 +38,8 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
-		<src name="c">
+		</state>
+		<state src="c">
 			<bgf:production>
 				<nonterminal>x</nonterminal>
 				<bgf:expression>
@@ -71,6 +71,6 @@
 					</sequence>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</selectables>
 </mbgf:sequence>

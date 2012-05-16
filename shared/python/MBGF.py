@@ -33,13 +33,16 @@ class TopModel:
 		else:
 			self.blocks = ''
 		self.data = {}
+		self.ids = {}
 
 class SrcSimpleModel (TopModel):
 	def parse(self, xml):
 		self.parsebasic(xml)
-		for ss in xml.findall('src'):
-			for s in ss.attrib['name'].split(','):
+		for ss in xml.findall('state'):
+			for s in ss.attrib['src'].split(','):
 				self.data[s] = ss.text
+				if 'id' in ss.attrib:
+					self.ids[s] = ss.attrib['id']
 
 class SrcProdModel (TopModel):
 	def getNTs(self,id):
@@ -65,8 +68,8 @@ class SrcProdModel (TopModel):
 			return '∅'
 	def parse(self, xml):
 		self.parsebasic(xml)
-		for ss in xml.findall('src'):
-			for s in ss.attrib['name'].split(','):
+		for ss in xml.findall('state'):
+			for s in ss.attrib['src'].split(','):
 				self.data[s] = [[],[]]
 				for p in ss.findall(slpsns.bgf_('production')):
 					xp = BGF3.Production()
@@ -82,7 +85,9 @@ class SrcProdModel (TopModel):
 # </sources>
 class Sources (SrcSimpleModel):
 	def __init__(self, xml):
-		self.parse(xml)
+		self.parsebasic(xml)
+		for s in xml.findall('src'):
+			self.data[s.attrib['name']] = s.text
 
 # <naming-convention>
 # 	<default>l!</default>
@@ -221,7 +226,7 @@ class TopChoice (SrcSimpleModel):
 # </folding>
 class Folding (SrcProdModel):
 	def __init__(self, xml):
-		self.nt = xml.findtext('src/'+slpsns.bgf_('production')+'/nonterminal')
+		self.nt = xml.findtext('state/'+slpsns.bgf_('production')+'/nonterminal')
 		self.parse(xml)
 	def getSpecifics(self):
 		return 'n('+self.nt+')'

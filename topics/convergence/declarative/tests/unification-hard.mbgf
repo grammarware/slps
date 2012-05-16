@@ -7,15 +7,15 @@
 	</sources>
 	<unification>
 		<name>x</name>
-		<src name="b">
+		<state src="b">
 			<bgf:production>
 				<nonterminal>z</nonterminal>
 				<bgf:expression>
 					<terminal>c</terminal>
 				</bgf:expression>
 			</bgf:production>
-		</src>
-		<src name="c">
+		</state>
+		<state src="c">
 			<bgf:production>
 				<nonterminal>z</nonterminal>
 				<bgf:expression>
@@ -28,6 +28,6 @@
 					<terminal>c</terminal>
 				</bgf:expression>
 			</bgf:production>
-		</src>
+		</state>
 	</unification>
 </mbgf:sequence>
