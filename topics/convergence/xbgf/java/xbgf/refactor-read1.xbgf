@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- 
+   - Fail: ClassOrInterfaceType.
+      - [], ;([n(ClassType), n(InterfaceType)])
+     vs.
+      - [], n(Name)
+   - Fail: ClassType.
+      - [], n(Name)
+     vs.
+      - [], n(ClassOrInterfaceType)
+   - Fail: InterfaceType.
+      - [], n(Name)
+     vs.
+      - [], n(ClassOrInterfaceType)
+      
+      NB: The following two folds are virtually chain transformations, but performed for an existing definition.
+  -->
+  <xbgf:horizontal><nonterminal>ClassOrInterfaceType</nonterminal></xbgf:horizontal>
+  <!-- GENERALITY -->
+  <!-- RELAXATION -->
+  <xbgf:replace>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>ClassType</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>InterfaceType</nonterminal>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>Name</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>ClassOrInterfaceType</nonterminal>
+    </in>
+  </xbgf:replace>
+  <xbgf:fold>
+    <nonterminal>ClassOrInterfaceType</nonterminal>
+    <in>
+      <nonterminal>ClassType</nonterminal>
+    </in>
+  </xbgf:fold>
+  <xbgf:fold>
+    <nonterminal>ClassOrInterfaceType</nonterminal>
+    <in>
+      <nonterminal>InterfaceType</nonterminal>
+    </in>
+  </xbgf:fold>
+
+  <!-- 
+  - Fail: MethodHeader.
+      - [], ,([?(n(MethodModifiers)), n(ResultType), n(MethodDeclarator), ?(n(Throws))])
+     vs.
+      - [], ;([,([?(n(Modifiers)), n(Type), n(MethodDeclarator), ?(n(Throws))]),
+               ,([?(n(Modifiers)), t(void), n(MethodDeclarator), ?(n(Throws))])])
+  - Fail: AbstractMethodDeclaration.
+      - [], ,([?(n(Modifiers)), n(ResultType), n(MethodDeclarator), ?(n(Throws)), t((;))])
+     vs.
+      - [], ,([n(MethodHeader), t((;))])
+  -->
+  <xbgf:fold>
+    <nonterminal>MethodHeader</nonterminal>
+    <in>
+      <nonterminal>AbstractMethodDeclaration</nonterminal>
+    </in>
+  </xbgf:fold>
+  <xbgf:horizontal><nonterminal>ResultType</nonterminal></xbgf:horizontal>
+  <xbgf:inline>ResultType</xbgf:inline>
+  <xbgf:distribute>
+    <nonterminal>MethodHeader</nonterminal>
+  </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>MethodHeader</nonterminal>
+  </xbgf:vertical>
+
+  <!-- 
+   - Fail: ArrayCreationExpression.
+      - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(Name), n(DimExprs), ?(n(Dims))])])
+     vs.
+      - [], ;([,([t(new), n(PrimitiveType), n(DimExprs), ?(n(Dims))]), ,([t(new), n(ClassOrInterfaceType), n(DimExprs), ?(n(Dims))])])
+   -->
+  <xbgf:fold>
+    <nonterminal>ClassOrInterfaceType</nonterminal>
+    <in>
+      <nonterminal>ArrayCreationExpression</nonterminal>
+    </in>
+  </xbgf:fold>
+
+  <!-- 
+   - Fail: CastExpression.
+      - [], ;([,([t((), n(PrimitiveType), ?(n(Dims)), t()), n(UnaryExpression)]),
+               ,([t((), n(ReferenceType), t()), n(UnaryExpressionNotPlusMinus)])])
+     vs.
+      - [], ;([,([t((), n(PrimitiveType), ?(n(Dims)), t()), n(UnaryExpression)]),
+               ,([t((), n(Expression), t()), n(UnaryExpressionNotPlusMinus)]),
+               ,([t((), n(Name), n(Dims), t()), n(UnaryExpressionNotPlusMinus)])])
+  -->
+  <!-- GENERALITY -->
+  <!-- RELAXATION -->
+  <xbgf:replace>
+    <bgf:expression>
+      <nonterminal>ReferenceType</nonterminal>
+    </bgf:expression>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <nonterminal>Expression</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>Name</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <in>
+      <nonterminal>CastExpression</nonterminal>
+    </in>
+  </xbgf:replace>
+  <xbgf:distribute>
+    <nonterminal>CastExpression</nonterminal>
+  </xbgf:distribute>
+  <xbgf:vertical>
+    <nonterminal>CastExpression</nonterminal>
+  </xbgf:vertical>
+
+  <!-- BREFACTOR 
+   - Fail: ConstantDeclaration.
+      - [], ,([?(n(Modifiers)), n(Type), n(VariableDeclarator)])
+     vs.
+      - [], n(FieldDeclaration)
+      
+  FieldDeclaration is completely structurally different, so this is the only way.
+  Possibly a spec error - there should be multiple modifiers allowed, really.
+  -->
+  <xbgf:replace>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Modifiers</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>Type</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>VariableDeclarator</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+    <bgf:expression>
+      <nonterminal>FieldDeclaration</nonterminal>
+    </bgf:expression>
+    <in>
+      <nonterminal>ConstantDeclaration</nonterminal>
+    </in>
+  </xbgf:replace>
+
+  <!-- 
+   - Fail: ArrayType.
+      - [], ,([n(Type), t([), t(])])
+     vs.
+      - [], ;([,([n(PrimitiveType), t([), t(])]), ,([n(Name), t([), t(])]), ,([n(ArrayType), t([), t(])])])
+  -->
+  <xbgf:atomic>
+    <xbgf:horizontal><nonterminal>Type</nonterminal></xbgf:horizontal>
+    <xbgf:unfold>
+      <nonterminal>Type</nonterminal>
+      <in>
+        <nonterminal>ArrayType</nonterminal>
+      </in>
+    </xbgf:unfold>
+    <xbgf:vertical>
+      <nonterminal>Type</nonterminal>
+    </xbgf:vertical>
+  </xbgf:atomic>
+  <xbgf:atomic>
+    <xbgf:horizontal><nonterminal>ReferenceType</nonterminal></xbgf:horizontal>
+    <xbgf:unfold>
+      <nonterminal>ReferenceType</nonterminal>
+      <in>
+        <nonterminal>ArrayType</nonterminal>
+      </in>
+    </xbgf:unfold>
+    <xbgf:vertical>
+      <nonterminal>ReferenceType</nonterminal>
+    </xbgf:vertical>
+  </xbgf:atomic>
+  <xbgf:unfold>
+    <nonterminal>ClassOrInterfaceType</nonterminal>
+    <in>
+      <nonterminal>ArrayType</nonterminal>
+    </in>
+  </xbgf:unfold>
+  <xbgf:distribute>
+    <nonterminal>ArrayType</nonterminal>
+  </xbgf:distribute>
+
+  <xbgf:vertical>
+    <nonterminal>ArrayType</nonterminal>
+  </xbgf:vertical>
+
+</xbgf:sequence>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- 
+   - Fail: SwitchBlockStatementGroups.
+      - [], *(n(SwitchBlockStatementGroup))
+     vs.
+      - [], ;([n(SwitchBlockStatementGroup), ,([n(SwitchBlockStatementGroups), n(SwitchBlockStatementGroup)])])
+  -->
+  <xbgf:deyaccify><nonterminal>SwitchBlockStatementGroups</nonterminal></xbgf:deyaccify>
+  <xbgf:inline>SwitchBlockStatementGroups</xbgf:inline>
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <plus>
+            <bgf:expression>
+              <nonterminal>SwitchBlockStatementGroup</nonterminal>
+            </bgf:expression>
+          </plus>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <star>
+        <bgf:expression>
+          <nonterminal>SwitchBlockStatementGroup</nonterminal>
+        </bgf:expression>
+      </star>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:extract>
+    <bgf:production>
+      <nonterminal>SwitchBlockStatementGroups</nonterminal>
+      <bgf:expression>
+        <star>
+          <bgf:expression>
+            <nonterminal>SwitchBlockStatementGroup</nonterminal>
+          </bgf:expression>
+        </star>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:extract>
+
+  <!--  
+   - Fail: Catches.
+      - [], ,([n(CatchClause), *(n(CatchClause))])
+     vs.
+      - [], ;([n(CatchClause), ,([n(Catches), n(CatchClause)])])
+  -->
+  <xbgf:deyaccify><nonterminal>Catches</nonterminal></xbgf:deyaccify>
+
+  <!-- 
+   - Fail: BlockStatements.
+      - [], *(n(BlockStatement))
+     vs.
+      - [], ;([n(BlockStatement), ,([n(BlockStatements), n(BlockStatement)])])
+  -->
+  <xbgf:deyaccify><nonterminal>BlockStatements</nonterminal></xbgf:deyaccify>
+
+</xbgf:sequence>

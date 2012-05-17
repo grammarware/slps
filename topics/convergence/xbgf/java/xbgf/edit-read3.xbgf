@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!--  somehow NonWildcardTypeArguments was used anyway
+   - Fail: Primary.
+      - [], ,([n(NonWildcardTypeArguments), ;([n(ExplicitGenericInvocationSuffix), ,([t(this), n(Arguments)])])])
+     vs.
+  -->
+  <!-- CORRECTION -->
+  <xbgf:add>
+    <vertical>
+      <bgf:production>
+        <nonterminal>Primary</nonterminal>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <nonterminal>NonWildcardTypeArguments</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <choice>
+                <bgf:expression>
+                  <nonterminal>ExplicitGenericInvocationSuffix</nonterminal>
+                </bgf:expression>
+                <bgf:expression>
+                  <sequence>
+                    <bgf:expression>
+                      <terminal>this</terminal>
+                    </bgf:expression>
+                    <bgf:expression>
+                      <nonterminal>Arguments</nonterminal>
+                    </bgf:expression>
+                  </sequence>
+                </bgf:expression>
+              </choice>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </bgf:production>
+    </vertical>
+  </xbgf:add>
+
+  <!-- finishing touches -->
+  <xbgf:eliminate><nonterminal>FormalParameterList</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>LastFormalParameter</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>NonWildTypeArguments</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>ReferenceTypeList</nonterminal></xbgf:eliminate>
+  <xbgf:eliminate><nonterminal>TypeDeclSpecifier</nonterminal></xbgf:eliminate>
+
+</xbgf:sequence>

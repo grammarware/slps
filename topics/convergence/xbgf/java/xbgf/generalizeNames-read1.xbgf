@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!--
+  MethodName is defined as:
+     Identifier
+     AmbiguousName "." Identifier
+  TypeName is defined as:
+     Identifier
+     PackageOrTypeName "." Identifier
+  PackageName is defined as:
+     Identifier
+     PackageName "." Identifier
+  PackageOrTypeName is defined as:
+     Identifier
+     PackageOrTypeName "." Identifier
+  AmbiguousName is defined as:
+     Identifier
+     AmbiguousName "." Identifier
+  ExpressionName is defined as:
+     Identifier
+     AmbiguousName "." Identifier
+     
+vs
+
+  QualifiedIdentifier is defined as:
+     Identifier { "." Identifier }
+  
+  -->
+
+  <!-- ISSUE PERMISSIVENESS -->
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>MethodName</add>
+    <to>Name</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>TypeName</add>
+    <to>Name</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>PackageName</add>
+    <to>Name</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>ExpressionName</add>
+    <to>Name</to>
+  </xbgf:unite>
+
+  <xbgf:deyaccify><nonterminal>Name</nonterminal></xbgf:deyaccify>
+
+</xbgf:sequence>

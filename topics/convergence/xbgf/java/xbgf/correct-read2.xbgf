@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- in the extracted version root is undefined -->
+  <xbgf:reroot>
+    <root>CompilationUnit</root>
+  </xbgf:reroot>
+
+  <!-- ISSUE CORRECT SPECERROR
+  This is an error (typo) in JLS2.
+  
+     - Fail: ConstantModifiers.
+      - [], ;([n(ConstantModifier), ,([n(ConstantModifiers), n(ConstantModifier)])])
+     vs.
+      - [], ;([n(ConstantModifier), ,([n(ConstantModifiers), n(ConstantModifer)])])
+  -->
+  <!-- INITCORR -->
+  <xbgf:unite>
+    <add>ConstantModifer</add>
+    <to>ConstantModifier</to>
+  </xbgf:unite>
+
+  <!-- ISSUE CORRECT SPECERROR
+  Another typo of JLS2 -->
+  <!-- INITCORR -->
+  <xbgf:unite>
+    <add>Identifer</add>
+    <to>Identifier</to>
+  </xbgf:unite>
+
+  <!-- ISSUE CORRECT SPECERROR
+  Left forgotten and undefined -->
+  <!-- GENERALITY -->
+  <!-- INITCORR -->
+  <xbgf:define>
+    <bgf:production>
+      <nonterminal>ClassName</nonterminal>
+      <bgf:expression>
+        <choice>
+          <bgf:expression>
+            <nonterminal>Identifier</nonterminal>
+          </bgf:expression>
+          <bgf:expression>
+            <sequence>
+              <bgf:expression>
+                <nonterminal>AmbiguousName</nonterminal>
+              </bgf:expression>
+              <bgf:expression>
+                <terminal>.</terminal>
+              </bgf:expression>
+              <bgf:expression>
+                <nonterminal>Identifier</nonterminal>
+              </bgf:expression>
+            </sequence>
+          </bgf:expression>
+        </choice>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:define>
+  <xbgf:vertical>
+    <nonterminal>ClassName</nonterminal>
+  </xbgf:vertical>
+
+  <!-- ISSUE CORRECT SPECERROR
+   - Fail: ConstructorDeclarator.
+      - [], ,([n(Identifier), t((), ?(n(FormalParameterList)), t())])
+     vs.
+      - [], ,([n(SimpleTypeName), t((), ?(n(FormalParameterList)), t())])
+      
+  SimpleTypeName is not defined formally in the JLS2
+  -->
+  <!-- CORRECTION -->
+  <xbgf:unite>
+    <add>SimpleTypeName</add>
+    <to>Identifier</to>
+  </xbgf:unite>
+
+  <!-- ISSUE CORRECT SPECERROR
+  The productions were "repeated for convenience", but repeated incorrectly, which led to this ugly thing:
+  
+  p([], 'CastExpression',
+  ;([','([t('('), n('PrimitiveType'), t(')'), n('UnaryExpression')]),
+     ','([t('('), n('ReferenceType'), t(')'), n('UnaryExpressionNotPlusMinus')]),
+     ','([t('('), n('PrimitiveType'), ?(n('Dims')), t(')'), n('UnaryExpression')])])),
+  -->
+  <xbgf:horizontal><nonterminal>CastExpression</nonterminal></xbgf:horizontal>
+  <xbgf:factor>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>PrimitiveType</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>UnaryExpression</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+        <bgf:expression>
+          <sequence>
+            <bgf:expression>
+              <terminal>(</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>PrimitiveType</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>Dims</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+            <bgf:expression>
+              <terminal>)</terminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>UnaryExpression</nonterminal>
+            </bgf:expression>
+          </sequence>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <sequence>
+        <bgf:expression>
+          <terminal>(</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>PrimitiveType</nonterminal>
+        </bgf:expression>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <epsilon/>
+            </bgf:expression>
+            <bgf:expression>
+              <optional>
+                <bgf:expression>
+                  <nonterminal>Dims</nonterminal>
+                </bgf:expression>
+              </optional>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+        <bgf:expression>
+          <terminal>)</terminal>
+        </bgf:expression>
+        <bgf:expression>
+          <nonterminal>UnaryExpression</nonterminal>
+        </bgf:expression>
+      </sequence>
+    </bgf:expression>
+  </xbgf:factor>
+  <xbgf:massage>
+    <bgf:expression>
+      <choice>
+        <bgf:expression>
+          <epsilon/>
+        </bgf:expression>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </choice>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:massage>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <optional>
+            <bgf:expression>
+              <nonterminal>Dims</nonterminal>
+            </bgf:expression>
+          </optional>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+    <bgf:expression>
+      <optional>
+        <bgf:expression>
+          <nonterminal>Dims</nonterminal>
+        </bgf:expression>
+      </optional>
+    </bgf:expression>
+  </xbgf:massage>
+  <xbgf:vertical>
+    <nonterminal>CastExpression</nonterminal>
+  </xbgf:vertical>
+
+</xbgf:sequence>

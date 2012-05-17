@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- 
+   - Fail: Name.
+      - [], ;([n(SimpleName), n(QualifiedName)])
+     vs.
+      - [], ,([n(Identifier), *(,([t(.), n(Identifier)]))])
+  -->
+  <xbgf:inline>SimpleName</xbgf:inline>
+  <xbgf:inline>QualifiedName</xbgf:inline>
+  <xbgf:deyaccify><nonterminal>Name</nonterminal></xbgf:deyaccify>
+
+</xbgf:sequence>

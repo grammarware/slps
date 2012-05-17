@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence
+  xmlns:bgf="http://planet-sl.org/bgf"
+  xmlns:xbgf="http://planet-sl.org/xbgf">
+
+  <!-- 
+   - Fail: FieldDeclaration.
+      - [], ,([?(n(FieldModifiers)), n(Type), n(VariableDeclarators), t((;))])
+     vs.
+      - [], ,([?(n(Modifiers)), n(Type), n(VariableDeclarators), t((;))])
+   (and many similar ones)
+  -->
+
+  <!-- ISSUE PERMISSIVENESS -->
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>InterfaceModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>ConstructorModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>AbstractMethodModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>MethodModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>FieldModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <!-- NB: was a weird name (plural) -->
+  <xbgf:unite>
+    <add>ConstantModifier</add>
+    <to>Modifier</to>
+  </xbgf:unite>
+
+  <!-- ISSUE PERMISSIVENESS plural -->
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>ConstantModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>InterfaceModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>ConstructorModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>AbstractMethodModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>MethodModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+  <!-- RELAXATION -->
+  <xbgf:unite>
+    <add>FieldModifiers</add>
+    <to>Modifiers</to>
+  </xbgf:unite>
+
+</xbgf:sequence>
