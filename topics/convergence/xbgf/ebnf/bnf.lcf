@@ -2,7 +2,7 @@
 <lcf:configuration xmlns:lcf="http://planet-sl.org/lcf">
 	<shortcut>
 		<name>slps</name>
-		<expansion>../../..</expansion>
+		<expansion>../../../..</expansion>
 	</shortcut>
 	<shortcut>
 		<name>schemata</name>
@@ -42,7 +42,7 @@
 	<source>
 		<name>ebnf-bgf</name>
 		<grammar>
-			<extraction>cp ../../grammars/metasyntax/ebnf-bgf/grammar.bgf</extraction>
+			<extraction>cp ../../../grammars/metasyntax/ebnf-bgf/grammar.bgf</extraction>
 		</grammar>
 	</source>
 	<!-- <source>

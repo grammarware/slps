@@ -2,11 +2,11 @@
 <lcf:configuration xmlns:lcf="http://planet-sl.org/lcf">
 	<shortcut>
 		<name>slps</name>
-		<expansion>../../..</expansion>
+		<expansion>../../../..</expansion>
 	</shortcut>
 	<shortcut>
 		<name>grammars</name>
-		<expansion>../../grammars</expansion>
+		<expansion>../../../grammars</expansion>
 	</shortcut>
 	<shortcut>
 		<name>tools</name>

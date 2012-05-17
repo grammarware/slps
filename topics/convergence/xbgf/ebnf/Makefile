@@ -1,4 +1,4 @@
-validator = ../../../shared/tools/validate
+validator = ../../../../shared/tools/validate
 
 all:
 	make clean
@@ -6,7 +6,7 @@ all:
 	make check
 
 test:
-	../../../shared/tools/lci bnf.lcf architecture
+	../../lci/lci.py bnf.lcf architecture
 
 check:
 	${validator} lcf bnf.lcf

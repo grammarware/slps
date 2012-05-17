@@ -1,20 +1,11 @@
-tools = ../../../shared/tools
+tools = ../../../../shared/tools
 validator = ${tools}/validate
 
 build:
 
 test:
-	# make xbgfs
 	${tools}/lci java.lcf architecture
 
-# xbgfs:
-# 	exbgf2xbgf exbgf/unite-read1.exbgf xbgf/unite-read1.xbgf
-# 	exbgf2xbgf exbgf/unite-read2.exbgf xbgf/unite-read2.xbgf
-# 	exbgf2xbgf exbgf/unite-read3.exbgf xbgf/unite-read3.xbgf
-# 	exbgf2xbgf exbgf/deyaccify-read2.exbgf xbgf/deyaccify-read2.xbgf
-# 	exbgf2xbgf exbgf/deyaccify-read3.exbgf xbgf/deyaccify-read3.xbgf
-# 	exbgf2xbgf exbgf/inlineStatements.exbgf xbgf/inlineStatements.xbgf
-# 
 check:
 	${validator} lcf java.lcf
 	ls -1 xbgf/*.xbgf | xargs -n1 ${validator} xbgf
