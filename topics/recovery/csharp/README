@@ -1,16 +1,30 @@
-See COPYING for copyright matters.
+This directory contains a grammar recovery case study of ISO/ECMA C# 1.0.
+It was done in 2005 by Vadim Zaytsev from Vrije Universiteit.
+The same person donated all the sources and scripts later to SLPS.
+
 See http://www.cs.vu.nl/grammarware/browsable/CSharp for an on-line version.
-See http://grammarware.net/text/2005/toosharp.pdf for the paper:
+See http://grammarware.net/writes/#Too-Sharp2005 for the paper:
 
-@inproceedings{TooSharp2005,
-		author = "Vadim Zaytsev",
-		title = "{Correct C\# Grammar too Sharp for ISO}",
-		booktitle = "{Pre-proceedings of the International Summer School on Generative and Transformational Techniques in Software Engineering (GTTSE 2005), Part II, Participants Workshop}",
-		year = 2005,
-		pages = "154--155",
-		address = "Braga, Portugal",
-		month = "July",
-		publisher = "Technical Report, TR-CCTC/DI-36, Universidade do Minho",
-		note = "Extended abstract",
-		}
+@inproceedings{Too-Sharp2005,
+	author = "Vadim Zaytsev",
+	title = "{Correct C\# Grammar too Sharp for ISO}",
+	booktitle = "{Participants Workshop, Part II of the Pre-proceedings of the International Summer School on Generative and Transformational Techniques in Software Engineering (GTTSE 2005)}",
+	year = 2005,
+	pages = "154--155",
+	address = "Braga, Portugal",
+	month = "July",
+	publisher = "Technical Report, TR-CCTC/DI-36, Universidade do Minho",
+	note = "Extended abstract",
+}
 
+For a more detailed report on the same case study, consider reading §3 “Case study on Recovery” of the author’s thesis.
+See http://grammarware.net/writes/#Zaytsev-Thesis2010 for the full text. §3 is on pages 53–72 of the PDF.
+
+@phdthesis{Zaytsev-Thesis2010,
+	author = "Vadim Zaytsev",
+	title = "{Recovery, Convergence and Documentation of Languages}",
+	year = 2010,
+	month = "October",
+	school = "{Vrije Universiteit}",
+	address = "Amsterdam, The Netherlands",
+}
