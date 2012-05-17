@@ -1,0 +1,19 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:anonymize>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <label>argument</label>
+      <nonterminal>expr</nonterminal>
+      <bgf:expression>
+	<marked>
+	  <bgf:expression>
+	    <selectable>
+	      <selector>name</selector>
+	      <bgf:expression>
+		<value>string</value>
+	      </bgf:expression>
+	    </selectable>
+	  </bgf:expression>
+	</marked>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:anonymize>
+  </xbgf:sequence>

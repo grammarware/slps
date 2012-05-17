@@ -1,0 +1,16 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:widen>
+		<bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+			<nonterminal>Newline</nonterminal>
+		</bgf:expression>
+		<bgf:expression xmlns:bgf="http://planet-sl.org/bgf">
+			<plus>
+				<bgf:expression>
+					<nonterminal>Newline</nonterminal>
+				</bgf:expression>
+			</plus>
+		</bgf:expression>
+		<in>
+			<nonterminal>Function</nonterminal>
+		</in>
+	</xbgf:widen>
+</xbgf:sequence>

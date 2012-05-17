@@ -1,0 +1,14 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:abstractize>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <label>minus</label>
+      <nonterminal>ops</nonterminal>
+      <bgf:expression>
+	<marked>
+	  <bgf:expression>
+	    <terminal>-</terminal>
+	  </bgf:expression>
+	</marked>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:abstractize>
+</xbgf:sequence>

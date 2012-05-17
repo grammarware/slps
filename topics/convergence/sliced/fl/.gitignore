@@ -1,0 +1,7 @@
+TMP-res
+architecture_*
+*.log
+*.txt
+*~
+*.user
+*.suo

@@ -1,0 +1,39 @@
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf"><xbgf:deanonymize>
+    <bgf:production xmlns:bgf="http://planet-sl.org/bgf">
+      <nonterminal>Binary</nonterminal>
+      <bgf:expression>
+        <sequence>
+          <bgf:expression>
+            <marked>
+              <bgf:expression>
+                <selectable>
+                  <selector>ops</selector>
+                  <bgf:expression>
+                    <nonterminal>Ops</nonterminal>
+                  </bgf:expression>
+                </selectable>
+              </bgf:expression>
+            </marked>
+          </bgf:expression>
+          <bgf:expression>
+            <selectable>
+              <selector>left</selector>
+              <bgf:expression>
+                <nonterminal>Expr</nonterminal>
+              </bgf:expression>
+            </selectable>
+          </bgf:expression>
+          <bgf:expression>
+            <selectable>
+              <selector>right</selector>
+              <bgf:expression>
+                <nonterminal>Expr</nonterminal>
+              </bgf:expression>
+            </selectable>
+          </bgf:expression>
+        </sequence>
+      </bgf:expression>
+    </bgf:production>
+  </xbgf:deanonymize>
+  
+</xbgf:sequence>

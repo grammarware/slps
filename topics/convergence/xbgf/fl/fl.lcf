@@ -2,7 +2,7 @@
 <lcf:configuration xmlns:lcf="http://planet-sl.org/lcf">
 	<shortcut>
 		<name>slps</name>
-		<expansion>../../..</expansion>
+		<expansion>../../../..</expansion>
 	</shortcut>
 	<shortcut>
 		<name>fl</name>
