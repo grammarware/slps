@@ -1223,6 +1223,9 @@ def convertNonalphanumerics2Terminals(p):
 			print('STEP 5 warning:',repr(x),'is assumed to be an invalid nonterminal name, converted to a terminal symbol.')
 			q.append(config['start-terminal-symbol'] + x + config['end-terminal-symbol'])
 			continue
+		if not x:
+			# empty!
+			continue
 		string = x[0]
 		alpha = isAlphaNum(x[0])
 		if alpha and not (x[0].isalpha() or x[0] in nonterminals_start):
