@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
+	<xbgf:rename>
+		<nonterminal>
+			<from>Prg</from>
+			<to>Program</to>
+		</nonterminal>
+	</xbgf:rename>
+</xbgf:sequence>
