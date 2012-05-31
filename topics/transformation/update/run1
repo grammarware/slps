@@ -1,35 +1,40 @@
 #!/bin/sh
 
 echo [Test Update] $1
-# let's try f of G1
+# let's try ƒ of G1
 ../../../shared/tools/xbgf tests/$1/f.xbgf tests/$1/g1.bgf tests/$1/g2.bgf
 if [ $? -ne 0 ]
 	then
 		echo "OUTCOME for $1: Impossible output — bad f."
-		exit
+		exit -1
 fi
 # let's try ∆ of G1
 ../../../shared/tools/xbgf tests/$1/d.xbgf tests/$1/g1.bgf tests/$1/g3.bgf
 if [ $? -ne 0 ]
 	then
 		echo "OUTCOME for $1: Impossible output — incompatible ∆."
-		exit
+		exit -1
 fi
-# let's try f of ∆ of G1 and ∆ of f of G1
+# let's try ƒ of ∆ of G1 and ∆ of ƒ of G1
 ../../../shared/tools/xbgf tests/$1/f.xbgf tests/$1/g3.bgf tests/$1/g4.bgf && ../../../shared/tools/xbgf tests/$1/d.xbgf tests/$1/g2.bgf tests/$1/g5.bgf && gdt tests/$1/g4.bgf tests/$1/g5.bgf
 if [ $? -eq 0 ]
 	then
 		echo "OUTCOME for $1: f and ∆ are independent; any composition is valid."
+		cp tests/$1/f.xbgf tests/$1/g.xbgf
+		cp tests/$1/d.xbgf tests/$1/e.xbgf
 		exit
 fi
-# let's try f of ∆ of G1 and ∆ of f of G1
+# let's try to reverse ∆ and try to obtain G2=ƒ(G1) from G3=∆(G1) as ƒ(∆r(∆(G1)))
 ../../../shared/tools/xbgf2cbgf tests/$1/d.xbgf tests/$1/d.cbgf tests/$1/g1.bgf
 ../../../shared/tools/cbgf2xbgf tests/$1/d.cbgf /dev/null tests/$1/d-1.xbgf
 ../../../shared/tools/appendxbgf tests/$1/d-1-f.xbgf tests/$1/d-1.xbgf tests/$1/f.xbgf
 ../../../shared/tools/xbgf tests/$1/d-1-f.xbgf tests/$1/g3.bgf tests/$1/g6.bgf && gdt tests/$1/g2.bgf tests/$1/g6.bgf
 if [ $? -eq 0 ]
 	then
-		echo "OUTCOME for $1: ∆ messes with input of f; a composition with reversed ∆ is valid."
+		echo "OUTCOME for $1: ∆ messes with the input of f; a composition with reversed ∆ is valid (but not necessarily correct)."
+		cp tests/$1/d-1-f.xbgf tests/$1/g.xbgf
+		cp id.xbgf tests/$1/e.xbgf
 		exit
 fi
 echo "OUTCOME for $1: f and ∆ are incompatible."
+exit -1

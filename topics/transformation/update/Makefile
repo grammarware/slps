@@ -1,6 +1,6 @@
 all:
 	make build
-	make test
+	make test1
 
 check:
 	ls -1 tests/*/*.xbgf | xargs -n1 ../../../shared/tools/validate xbgf
@@ -14,15 +14,15 @@ build:
 	cp ../../convergence/xbgf/fl/snapshot/rascal.bgf tests/input/g1.bgf
 	cp ../../convergence/xbgf/fl/snapshot/rascal.bgf tests/incompatible/g1.bgf
 
-test:
-	./testperform bad-f
-	./testperform bad-d
-	./testperform independent
-	./testperform input
-	./testperform incompatible
+test1:
+	@./run1 bad-f || echo OUTCOME is ERROR
+	@./run1 bad-d || echo OUTCOME is ERROR
+	@./run1 independent || echo OUTCOME is ERROR
+	@./run1 input || echo OUTCOME is ERROR
+	@./run1 incompatible || echo OUTCOME is ERROR
 
 quiet:
-	make test | grep OUTCOME
+	make test1 | grep OUTCOME
 
 clean:
-	rm -f tests/*/g?.bgf tests/*/*.cbgf tests/*/d-1*.xbgf
+	rm -f tests/*/g?.bgf tests/*/*.cbgf tests/*/d-1*.xbgf tests/*/e.xbgf tests/*/g.xbgf

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+echo [Show Update] $1
+/bin/echo -n "ƒ = "
+../../../shared/tools/xbgf2xbnf tests/$1/f.xbgf
+/bin/echo -n "∆ = "
+../../../shared/tools/xbgf2xbnf tests/$1/d.xbgf
+
+(./run1 $1 || echo OUTCOME is ERROR) | grep OUTCOME
+
+/bin/echo -n "g = "
+if [ ! -r tests/$1/g.xbgf ]
+	then
+    	echo "∅"
+else
+	../../../shared/tools/xbgf2xbnf tests/$1/g.xbgf
+	# perl -pi -w -e 's/;\n/ ∘ /g;' tmp.xbnf
+	# cat tmp.xbnf
+fi
+/bin/echo -n "Γ = "
+if [ ! -r tests/$1/e.xbgf ]
+	then
+    	echo "∅"
+else
+	../../../shared/tools/xbgf2xbnf tests/$1/e.xbgf
+fi
