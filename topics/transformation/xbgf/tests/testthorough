@@ -3,8 +3,8 @@
 echo [Test XBGF] `basename $1 .xbgf`
 rm -f `basename $1 .xbgf`.log
 touch `basename $1 .xbgf`.log
-../../../../shared/tools/checkxml bgf `basename $1 .xbgf`.bgf >> `basename $1 .xbgf`.log 2>&1 || exit -1
-../../../../shared/tools/checkxml xbgf `basename $1 .xbgf`.xbgf >> `basename $1 .xbgf`.log 2>&1 || exit -1
+../../../../shared/tools/validate bgf `basename $1 .xbgf`.bgf >> `basename $1 .xbgf`.log 2>&1 || exit -1
+../../../../shared/tools/validate xbgf `basename $1 .xbgf`.xbgf >> `basename $1 .xbgf`.log 2>&1 || exit -1
 ../../../../shared/tools/showbgf `basename $1 .xbgf`.bgf >> `basename $1 .xbgf`.log 2>&1 || exit -1
 ../../../../shared/tools/showxbgf `basename $1 .xbgf`.xbgf >> `basename $1 .xbgf`.log 2>&1 || exit -1
 ../../../../shared/tools/xbgf `basename $1 .xbgf`.xbgf `basename $1 .xbgf`.bgf `basename $1 .xbgf`.out >> `basename $1 .xbgf`.log 2>&1 || exit -1

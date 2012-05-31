@@ -1,5 +1,5 @@
 test:
-	ls -1 tests/*.bgf | xargs -n1  ../../shared/tools/checkxml bgf
+	ls -1 tests/*.bgf | xargs -n1  ../../shared/tools/validate bgf
 	../../shared/tools/gdt tests/foobar.pretty.bgf tests/foobar.ugly.bgf
 	! ../../shared/tools/gdt tests/foobar.pretty.bgf tests/foobar.term.bgf
 	../../shared/tools/gdt tests/foo.b.a.r.bgf tests/foo.b.r.a.bgf
