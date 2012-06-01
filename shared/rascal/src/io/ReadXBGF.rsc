@@ -1,18 +1,19 @@
-@contributor{Vadim Zaytsev - vadim@grammarware.net - CWI}
+@contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module io::ReadXBGF
 
 import IO;
 import syntax::BGF;
 import syntax::XBGF;
 import lang::xml::DOM;
+import io::ReadBGF;
 
 public XBGFSequence readXBGF(loc f)
 {
 	Node N = parseXMLDOMTrim(readFile(f));
-	XBGFSequence xbgfs = [];
-	//XBGFCommand x;
 	if (document(element(namespace(_,"http://planet-sl.org/xbgf"),"sequence",L)) := N)
-		return [mapxbgf(element(namespace("xbgf","http://planet-sl.org/xbgf"),name,kids)) | element(namespace(_,"http://planet-sl.org/xbgf"),name,kids) <- L];
+		return [mapxbgf(step) | step <- L, element(namespace(_,"http://planet-sl.org/xbgf"),name,kids) := step];
+	else
+		throw "<f> is not an XBGF file";
 }
 
 XBGFCommand mapxbgf(Node el)
@@ -99,65 +100,19 @@ XBGFCommand mapxbgf(Node el)
  				case element(_,"atomic",L): return atomic([mapxbgf(element(namespace("xbgf","http://planet-sl.org/xbgf"),name,kids)) | element(namespace(_,"http://planet-sl.org/xbgf"),name,kids) <- L]);
  				case element(_,"strip",[element(none(),str s,[])]): return strip(s);
 		 		// default
-		 		case element(_,elname,elkids):
-		 			{
-		 				println("ERROR mapping "+elname);
-		 				println(elkids);
-		 				return;
-		 			}
+		 		default:
+		 			if(element(_,elname,elkids):=el)
+		 				throw "ERROR mapping <elname> with kids:\n<elkids>";
+	 				else
+		 				throw "Unknown ERROR in mapxbgf";
 	 		}
  		}
 	else
- 		{
- 			println("ERROR with:");
- 			println(el);
- 		}
+		throw "ERROR with:\n<el>";
 }
 
 BGFContext mapcontext(Node n)
-{return globally();}
-
-BGFProduction mapprod(Node n)
 {
-	str label = "";
-	str lhs = "";
-	BGFExpression rhs;
-	if (element(namespace(_,"http://planet-sl.org/bgf"),"production",kids) := n)
-	{
-		for (k <- kids)
-			switch (k)
-			{
-				case element(none(),"label",[charData(str s)]) : label = s;
-				case element(none(),"nonterminal",[charData(str s)]) : lhs = s;
-				case element(namespace(_,"http://planet-sl.org/bgf"),"expression",[expr]): rhs = mapexpr(expr);
-			}
-		return production (label, lhs, rhs);
-	}
-	else
-		{println("ERROR in mapprod");println(n);return;}
-}
-
-BGFExpression mapexpr(Node n)
-{
-	switch(n)
-	{
-		case element(namespace(_,"http://planet-sl.org/bgf"),"expression",[e]): return mapexpr(e);
-		case element(none(),"epsilon",[]): return epsilon();
-		case element(none(),"empty",[]): return empty();
-		case element(none(),"value",[charData("string")]): return val(string());
-		case element(none(),"value",[charData("int")]): return val(integer());
-		case element(none(),"any",[]): return anything();
-		case element(none(),"terminal",[charData(str s)]): return terminal(s);
-		case element(none(),"nonterminal",[charData(str s)]): return nonterminal(s);
-		case element(none(),"selectable",[element(none(),"selector",[charData(str s)]),expr]): return selectable(s,mapexpr(expr));
-		case element(none(),"sequence",kids): return sequence([mapexpr(k) | k <- kids]);
-		case element(none(),"choice",kids): return choice([mapexpr(k) | k <- kids]);
-		case element(none(),"marked",[expr]): return marked(mapexpr(expr));
-		case element(none(),"optional",[expr]): return optional(mapexpr(expr));
-		case element(none(),"plus",[expr]): return plus(mapexpr(expr));
-		case element(none(),"star",[expr]): return star(mapexpr(expr));
-		case element(none(),"starsepplus",[e1,e2]): return starsepplus(mapexpr(e1),mapexpr(e2));
-		case element(none(),"starsepstar",[e1,e2]): return starsepstar(mapexpr(e1),mapexpr(e2));
-		default: {println("ERROR in mapexpr");println(n);return;}
-	}
+	// TODO: not implemented
+	return globally();
 }

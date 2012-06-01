@@ -1,5 +1,9 @@
-@contributor{Vadim Zaytsev - vadim@grammarware.net - CWI}
+@contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module syntax::BGF
+
+data BGFGrammar =
+	grammar (list[str] roots, list[BGFProduction] prods)
+;
 
 data BGFProduction =
 	production (str label, str lhs, BGFExpression rhs)

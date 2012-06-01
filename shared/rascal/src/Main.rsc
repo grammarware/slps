@@ -1,4 +1,4 @@
-@contributor{Vadim Zaytsev - vadim@grammarware.net - CWI}
+@contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module Main
 
 import IO;
