@@ -49,7 +49,7 @@ XBGFCommand mapxbgf(Node el)
 				case element(_,"fold",[element(none(),"nonterminal",[charData(str s)])]): return fold(s,globally());
 				case element(_,"fold",[element(none(),"nonterminal",[charData(str s)]),w]): return fold(s,mapcontext(w));
 				case element(_,"horizontal",[w]): return horizontal(mapcontext(w));
-				case element(_,"import",ps): return \import([mapprod(p) | p <- ps]);
+				case element(_,"import",ps): return importG([mapprod(p) | p <- ps]);
 				case element(_,"inject",[prod]): return inject(mapprod(prod));
 				case element(_,"inline",[charData(str s)]): return inline(s);
 				case element(_,"introduce",ps): return introduce([mapprod(p) | p <- ps]);

@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xbgf:sequence
-  xmlns:bgf="http://planet-sl.org/bgf"
-  xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:appear>
-    <bgf:production>
-      <nonterminal>foo</nonterminal>
-      <bgf:expression>
-        <sequence>
-          <bgf:expression>
-            <nonterminal>bar</nonterminal>
-          </bgf:expression>
-          <bgf:expression>
-            <marked>
-              <bgf:expression>
-                <optional>
-                  <bgf:expression>
-                    <nonterminal>qux</nonterminal>
-                  </bgf:expression>
-                </optional>
-              </bgf:expression>
-            </marked>
-          </bgf:expression>
-        </sequence>
-      </bgf:expression>
-    </bgf:production>
-  </xbgf:appear>
+<xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
+	<xbgf:appear>
+		<bgf:production>
+			<nonterminal>foo</nonterminal>
+			<bgf:expression>
+				<sequence>
+					<bgf:expression>
+						<nonterminal>bar</nonterminal>
+					</bgf:expression>
+					<bgf:expression>
+						<marked>
+							<bgf:expression>
+								<optional>
+									<bgf:expression>
+										<nonterminal>qux</nonterminal>
+									</bgf:expression>
+								</optional>
+							</bgf:expression>
+						</marked>
+					</bgf:expression>
+				</sequence>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:appear>
 </xbgf:sequence>

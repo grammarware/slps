@@ -21,10 +21,10 @@ public BGFExpression normalise(BGFExpression e)
 		case optional(epsilon()) => epsilon()
 		case plus(epsilon()) => epsilon()
 		case star(epsilon()) => epsilon()
-		case sequence([*L1,sequence(L),*L2]) => sequence(L1+L+L2)
-		case sequence([*L1,epsilon(),*L2]) => sequence(L1+L2)
-		case choice([*L1,choice(L),*L2]) => choice(L1+L+L2)
-		case choice([*L1,X1,*L2,X1,*L3]) => choice([*L1,X1,*L2,*L3])
+		case sequence([L1*,sequence(L),L2*]) => sequence(L1+L+L2)
+		case sequence([L1*,epsilon(),L2*]) => sequence(L1+L2)
+		case choice([L1*,choice(L),L2*]) => choice(L1+L+L2)
+		case choice([L1*,X1,L2*,X1,L3*]) => choice([*L1,X1,*L2,*L3])
 	};
 }
 
@@ -52,4 +52,7 @@ test bool n12(){return normalise(tw(choice([choice([terminal("1"),terminal("2")]
                                ==tw(choice([terminal("1"),terminal("2"),terminal("3")]));}
 test bool n13(){return normalise(tw(choice([terminal("1"),terminal("2"),terminal("2"),terminal("3")])))
                                ==tw(choice([terminal("1"),terminal("2"),terminal("3")]));}
-                               
+test bool n14(){return normalise(production("","N",sequence([epsilon(),nonterminal("a"),nonterminal("b")])))
+							  == production("","N",sequence([nonterminal("a"),nonterminal("b")]));}
+
+							  

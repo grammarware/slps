@@ -30,7 +30,7 @@ data XBGFCommand =
 	| factor(BGFExpression e1, BGFExpression e2, XBGFContext w)
 	| fold(str x, XBGFContext w)
 	| horizontal(XBGFContext w)
-	| \import(list[BGFProduction] ps)
+	| importG(list[BGFProduction] ps)
 	| inject(BGFProduction p) // marked
 	| inline(str x)
 	| introduce(list[BGFProduction] ps)

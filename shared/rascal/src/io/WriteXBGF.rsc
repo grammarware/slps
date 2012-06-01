@@ -51,7 +51,7 @@ Node xbgf2xml(XBGFCommand step)
 		case fold(str s,globally()): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"fold",[element(none(),"nonterminal",[charData(s)])]);
 		case fold(str s, w): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"fold",[element(none(),"nonterminal",[charData(s)]),element(none(),"in",[context2xml(w)])]);
 		case horizontal(w): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"horizontal",[context2xml(w)]);
-		case \import(ps): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"import",[prod2xml(p) | p <- ps]);
+		case importG(ps): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"import",[prod2xml(p) | p <- ps]);
 		case inject(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"inject",[prod2xml(prod)]);
 		case inline(str s): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"inline",[charData(s)]);
 		case introduce(ps): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"introduce",[prod2xml(p) | p <- ps]);

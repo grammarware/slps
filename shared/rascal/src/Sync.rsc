@@ -14,17 +14,7 @@ public void main()
 {
 	loc base = |home:///projects/slps/topics/transformation/xbgf/tests|;
 	int cx = 1;
-	str buffer = "";
-	for (f <- listEntries(base), endsWith(f,".xbgf"))
-	{
-		xbgf = readXBGF(base+f);
-		bgf = readBGF(base+replaceLast(f,".xbgf",".bgf"));
-		bl = readBGF(base+replaceLast(f,".xbgf",".baseline"));
-		buffer += "test bool x<cx>() { return transform(<xbgf>,<bgf>)==<bl>; }\n";
-		cx+=1;
-	}
-	writeFile(|project://slps/src/transform/XBGFTest.rsc|,
-		"@contributor{Super Awesome Automated XBGF Test Suite Synchroniser}
+	str buffer = "@contributor{Super Awesome Automated XBGF Test Suite Synchroniser}
 		'@contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 		'module transform::XBGFTest
 		'
@@ -32,6 +22,15 @@ public void main()
 		'import syntax::XBGF;
 		'import transform::XBGF;
 		'
-		'"+replaceAll(buffer,"import","\\import"));
+		'";
+	for (f <- listEntries(base), endsWith(f,".xbgf"))
+	{
+		xbgf = readXBGF(base+f);
+		bgf = readBGF(base+replaceLast(f,".xbgf",".bgf"));
+		bl = readBGF(base+replaceLast(f,".xbgf",".baseline"));
+		buffer += "test bool test_<replaceLast(f,".xbgf","")>() { return transform(<xbgf>,<bgf>)==<bl>; }\n";
+		cx+=1;
+	}
+	writeFile(|project://slps/src/transform/XBGFTest.rsc|, buffer);
 }
 

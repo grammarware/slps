@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+	<bgf:production>
+		<nonterminal>foo</nonterminal>
+		<bgf:expression>
+			<terminal>1</terminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>expr</nonterminal>
+		<bgf:expression>
+			<nonterminal>int</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>bar</nonterminal>
+		<bgf:expression>
+			<terminal>2</terminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>expr</nonterminal>
+		<bgf:expression>
+			<nonterminal>real</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>wez</nonterminal>
+		<bgf:expression>
+			<terminal>3</terminal>
+		</bgf:expression>
+	</bgf:production>
+</bgf:grammar>
