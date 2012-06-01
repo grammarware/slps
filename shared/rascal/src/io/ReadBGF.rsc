@@ -10,7 +10,7 @@ public BGFGrammar readBGF(loc f)
 	if (document(element(namespace(_,"http://planet-sl.org/bgf"),"grammar",L)) := parseXMLDOMTrim(readFile(f)))
 		return grammar([s | element(none(),"root",[charData(s)]) <- L],[mapprod(p) | p <- L, element(namespace(_,"http://planet-sl.org/bgf"),name,kids) := p]);
 	else
-		throw "<f> is not an BGF file";
+		throw "<f> is not a proper BGF file";
 }
 
 public BGFProduction mapprod(Node n)

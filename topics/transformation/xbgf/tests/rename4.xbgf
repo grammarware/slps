@@ -2,9 +2,9 @@
 <xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
 	<xbgf:rename>
 		<selector>
+			<in>binary</in>
 			<from>op</from>
 			<to>operator</to>
-			<in>binary</in>
 		</selector>
 	</xbgf:rename>
 </xbgf:sequence>

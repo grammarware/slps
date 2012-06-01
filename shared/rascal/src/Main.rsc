@@ -5,21 +5,26 @@ import IO;
 import syntax::BGF;
 import syntax::XBGF;
 import io::ReadXBGF;
+import io::WriteXBGF;
 //import lang::xml::DOM;
 
 public void main()
 {
-	println(readXBGF(|project://slps/tests/undefine1.xbgf|));
+	XBGFSequence x;
+	x = readXBGF(|project://slps/tests/long.xbgf|);
+	iprintln(x);
+	writeXBGF(x,|project://slps/res/long.xbgf|);
 }
 
 public bool tryAll()
 {
 	loc base = |project://slps/tests|;
+	loc outp = |project://slps/res|;
 	for (f <- listEntries(base))
 	{
 		if (f == ".gitignore") continue;
 		println(f);
-		println(readXBGF(base+f));
+		writeXBGF(readXBGF(base+f),outp+f);
 	}
 	return true;
 }

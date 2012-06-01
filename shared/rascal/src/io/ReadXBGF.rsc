@@ -13,7 +13,7 @@ public XBGFSequence readXBGF(loc f)
 	if (document(element(namespace(_,"http://planet-sl.org/xbgf"),"sequence",L)) := N)
 		return [mapxbgf(step) | step <- L, element(namespace(_,"http://planet-sl.org/xbgf"),name,kids) := step];
 	else
-		throw "<f> is not an XBGF file";
+		throw "<f> is not a proper XBGF file";
 }
 
 XBGFCommand mapxbgf(Node el)
@@ -29,8 +29,8 @@ XBGFCommand mapxbgf(Node el)
 		 		case element(_,"anonymize",[prod]): return anonymize(mapprod(prod));
 		 		case element(_,"appear",[prod]): return appear(mapprod(prod));
 		 		case element(_,"chain",[prod]): return chain(mapprod(prod));
-		 		// clone(str x, str y, BGFContext w)
-		 		// concatT(list[str] xs, str y, BGFContext w)
+		 		// clone(str x, str y, XBGFContext w)
+		 		// concatT(list[str] xs, str y, XBGFContext w)
 		 		case element(_,"concretize",[prod]): return concretize(mapprod(prod));
 		 		case element(_,"deanonymize",[prod]): return deanonymize(mapprod(prod));
 		 		case element(_,"define",ps): return define([mapprod(p) | p <- ps]);
@@ -70,7 +70,7 @@ XBGFCommand mapxbgf(Node el)
 				case element(_,"rename",[element(none(),"nonterminal",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameN(s1, s2, globally());
 				case element(_,"rename",[element(none(),"nonterminal",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)]),w])]): return renameN(s1, s2, mapcontext(w));
 				case element(_,"rename",[element(none(),"selector",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameS(s1, s2, globally());
-				case element(_,"rename",[element(none(),"selector",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)]),w])]): return renameS(s1, s2, mapcontext(w));
+				case element(_,"rename",[element(none(),"selector",[element(none(),"in",[charData(str w)]),element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameS(s1, s2, inlabel(w));
 				case element(_,"rename",[element(none(),"terminal",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameT(s1, s2, globally());
 				case element(_,"rename",[element(none(),"terminal",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)]),w])]): return renameT(s1, s2, mapcontext(w));
 		 		case element(_,"replace",[e1,e2]): return replace(mapexpr(e1),mapexpr(e2),globally());
@@ -80,11 +80,11 @@ XBGFCommand mapxbgf(Node el)
 				// also, the current structure is too hard to match in a one-liner in Rascal 
 				//case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),ps*,element(none(),"label",[charData(str s)])]): return splitN(s,[mapprod(p) | p <- ps],mapcontext(element(none(),"label",[charData(s)])));
 				//case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),ps*]): return splitN(s,[mapprod(p) | p <- ps],globally());
-				// splitN(str x, list[BGFProduction] ps, BGFContext w)
+				// splitN(str x, list[BGFProduction] ps, XBGFContext w)
 				case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),p]): return splitN(s,[mapprod(p)],globally());
 				case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),p,w]): return splitN(s,[mapprod(p)],mapcontext(w));
 				// TODO: not implemented anywhere
-				// splitT(str x, list[str] ys, BGFContext w)
+				// splitT(str x, list[str] ys, XBGFContext w)
 				case element(_,"unchain",[prod]): return unchain(mapprod(prod));
 				case element(_,"undefine",xs): return undefine([s | element(none(),"nonterminal",[charData(s)]) <- xs]);
 				case element(_,"unfold",[element(none(),"nonterminal",[charData(str s)])]): return unfold(s,globally());
@@ -97,7 +97,7 @@ XBGFCommand mapxbgf(Node el)
 				case element(_,"widen",[e1,e2,w]): return widen(mapexpr(e1),mapexpr(e2),mapcontext(w));
 		 		case element(_,"yaccify",ps): return yaccify([mapprod(p) | p <- ps]);
 		 		// legacy
- 				case element(_,"atomic",L): return atomic([mapxbgf(element(namespace("xbgf","http://planet-sl.org/xbgf"),name,kids)) | element(namespace(_,"http://planet-sl.org/xbgf"),name,kids) <- L]);
+ 				case element(_,"atomic",L): return atomic([mapxbgf(x) | x <- L, element(namespace(_,"http://planet-sl.org/xbgf"),_,_) := x]);
  				case element(_,"strip",[element(none(),str s,[])]): return strip(s);
 		 		// default
 		 		default:
@@ -111,8 +111,14 @@ XBGFCommand mapxbgf(Node el)
 		throw "ERROR with:\n<el>";
 }
 
-BGFContext mapcontext(Node n)
+XBGFContext mapcontext(Node n)
 {
-	// TODO: not implemented
-	return globally();
+	switch(n)
+	{
+		case element(none(),"label",[charData(str s)]): return inlabel(s);
+		case element(none(),"nonterminal",[charData(str s)]): return innt(s);
+		case element(none(),"in",[charData(str s)]): return inlabel(s); // conceptually wrong yet happens in renameS
+		case element(none(),"in",[w]): return mapcontext(w);
+		default: throw "ERROR in context: <n>";
+	}
 }
