@@ -1,27 +1,10 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - CWI}
-module XBGF
+module io::ReadXBGF
 
 import IO;
-import XBGFSyntax;
+import syntax::BGF;
+import syntax::XBGF;
 import lang::xml::DOM;
-
-public void main()
-{
-	println(readXBGF(|project://xbgf/tests/undefine1.xbgf|));
-}
-
-public bool tryAll()
-{
-	loc base = |project://xbgf/tests|;
-	for (f <- listEntries(base))
-	{
-		if (f == ".gitignore") continue;
-		println(f);
-		println(readXBGF(base+f));
-	}
-	return true;
-}
-
 
 public XBGFSequence readXBGF(loc f)
 {
