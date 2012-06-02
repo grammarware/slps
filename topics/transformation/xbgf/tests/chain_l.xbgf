@@ -1,7 +1,6 @@
-<xbgf:sequence
-  xmlns:bgf="http://planet-sl.org/bgf"
-  xmlns:xbgf="http://planet-sl.org/xbgf">
-  <xbgf:unchain>
+<?xml version="1.0" encoding="UTF-8"?>
+<xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
+  <xbgf:chain>
     <bgf:production>
       <label>binary</label>
       <nonterminal>expr</nonterminal>
@@ -9,5 +8,5 @@
         <nonterminal>binexpr</nonterminal>
       </bgf:expression>
     </bgf:production>
-  </xbgf:unchain>
+  </xbgf:chain>
 </xbgf:sequence>

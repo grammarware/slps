@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+	<bgf:production>
+		<label>constant</label>
+		<nonterminal>expr</nonterminal>
+		<bgf:expression>
+			<nonterminal>int</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<label>binary</label>
+		<nonterminal>expr</nonterminal>
+		<bgf:expression>
+			<nonterminal>binexpr</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>binexpr</nonterminal>
+		<bgf:expression>
+			<sequence>
+				<bgf:expression>
+					<nonterminal>expr</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>op</nonterminal>
+				</bgf:expression>
+				<bgf:expression>
+					<nonterminal>expr</nonterminal>
+				</bgf:expression>
+			</sequence>
+		</bgf:expression>
+	</bgf:production>
+</bgf:grammar>
