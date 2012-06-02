@@ -503,7 +503,7 @@ introduce(Ps1,G1,G2)
     ps2n(Ps1,N),
     require(
       ( \+ member(N,Uses) ),
-      'Nonterminal ~q must not be fresh.',
+      'Nonterminal ~q must be fresh.',
       [N]),
     new(Ps1,N,G1,G2).
 
@@ -1448,7 +1448,7 @@ unchain(P1,g(Rs,Ps1),g(Rs,Ps4))
     allNs(Ps4,Ns),
     require(
       (\+ member(N2,Ns) ),
-      'Nonterminal ~q must appear occur exactly once.',
+      'Nonterminal ~q must occur exactly once.',
       [N2]).
 
 

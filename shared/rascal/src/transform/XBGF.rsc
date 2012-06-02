@@ -3,6 +3,7 @@ module transform::XBGF
 
 import IO;
 import List;
+import Set; // toList
 import syntax::BGF;
 import syntax::XBGF;
 import normal::BGF;
@@ -190,16 +191,22 @@ BGFGrammar runDeanonymize(BGFProduction p1, grammar(roots, ps))
 	return grammar(roots, ps - p3 + p2);
 }
 
-BGFGrammar runDefine(list[BGFProduction] ps, BGFGrammar g)
+BGFGrammar runDefine(list[BGFProduction] ps1, grammar(roots, ps2))
 {
-	// TODO
-	return g;
+	if ({str n} := definedNs(ps1))
+	{
+		if (n notin usedNs(ps2)) throw "Nonterminal <n> must not be fresh, use introduce instead.";
+		return grammar(roots, ps2 + ps1);
+	}
+	else throw "Multiple defined nonterminals found.";
 }
 
-BGFGrammar runDesignate(BGFProduction p, BGFGrammar g)
+BGFGrammar runDesignate(production(str l,str n,BGFExpression e), grammar(rs,ps))
+//BGFGrammar runUnlabel(str x, grammar(rs,ps))
 {
-	// TODO
-	return g;
+	if (l == "") throw "Production <production(l,n,e)> must be labeled.";
+	if (production("",n,e) notin ps) throw "Production rule defining <n> as <e> not found.";
+	return grammar(rs,replaceP(ps,production("",n,e),production(l,n,e)));
 }
 
 BGFGrammar runDetour(BGFProduction p, BGFGrammar g)
@@ -236,10 +243,14 @@ BGFGrammar runDowngrade(BGFProduction p1,BGFProduction p2, BGFGrammar g)
 	return g;
 }
 
-BGFGrammar runEliminate(str x, BGFGrammar g)
+BGFGrammar runEliminate(str x, grammar(roots, ps))
 {
-	// TODO
-	return g;
+	// TODO: can we eliminate root?
+	if (x in roots) throw "Cannot eliminate root nonterminal <x>";
+	if (x notin definedNs(ps)) throw "Nonterminal <x> must be defined.";
+	<ps1,_,ps3> = splitPbyW(ps,innt(x));
+	if (x in usedNs(ps1+ps3)) throw "Nonterminal <x> must not be used.";
+	return grammar(roots, ps1 + ps3);
 }
 
 BGFGrammar runEquate(str x, str y, BGFGrammar g)
@@ -293,10 +304,15 @@ BGFGrammar runInline(str x, BGFGrammar g)
 	return g;
 }
 
-BGFGrammar runIntroduce(list[BGFProduction] ps, BGFGrammar g)
+BGFGrammar runIntroduce(list[BGFProduction] ps1, grammar(roots, ps2))
 {
-	// TODO
-	return g;
+	if ({str n} := definedNs(ps1))
+	{
+		if (n in usedNs(ps2)) throw "Nonterminal <n> must be fresh, use define instead.";
+		if (n in definedNs(ps2)) throw "Definition for <n> clashes with existing definition.";
+		return grammar(roots, ps2 + ps1);
+	}
+	else throw "Multiple defined nonterminals found.";
 }
 
 BGFGrammar runIterate(BGFProduction p, BGFGrammar g)
@@ -345,10 +361,18 @@ BGFGrammar runRAssoc(BGFProduction p, BGFGrammar g)
 	return g;
 }
 
-BGFGrammar runRedefine(list[BGFProduction] ps, BGFGrammar g)
+BGFGrammar runRedefine(list[BGFProduction] ps1, grammar(list[str] rs, ps2))
 {
-	// TODO
-	return g;
+	// inlined superposition of undefine and define, with two exceptional details:
+	// (1) if ps1.n is a root, undefine would have stripped it from this status
+	// (2) redefine preserves original order of production rules
+	if ({str x} := definedNs(ps1))
+	{
+		if (x notin definedNs(ps2)) throw "Nonterminal <x> must be defined.";
+		if (x notin usedNs(ps2)) throw "Nonterminal <x> must be used.";
+		<ps3,_,ps4> = splitPbyW(ps2,innt(x));
+		return grammar(rs,ps3 + ps1 + ps4); 
+	}
 }
 
 BGFGrammar runRemoveH(BGFProduction p1, grammar(roots, ps))
@@ -411,10 +435,12 @@ BGFGrammar runReplace(BGFExpression e1, BGFExpression e2, XBGFContext w, grammar
 	return grammar(roots, ps1 + ps4 + ps3);
 }
 
-BGFGrammar runReroot(list[str] xs, BGFGrammar g)
+BGFGrammar runReroot(list[str] xs, grammar(rs, ps))
 {
-	// TODO
-	return g;
+	if (toSet(xs) == toSet(rs)) throw "Vacuous reroot of <xs>.";
+	// xbgf1.pro only asked for it to be a subset of allNs, not definedNs; we're more strict here
+	if (toSet(xs) <= definedNs(ps)) return grammar(xs,ps);
+	else throw "Not all nonterminals in <xs> are defined.";
 }
 
 BGFGrammar runSplitN(str x, list[BGFProduction] ps, XBGFContext w, BGFGrammar g)
@@ -423,10 +449,12 @@ BGFGrammar runSplitN(str x, list[BGFProduction] ps, XBGFContext w, BGFGrammar g)
 	return g;
 }
 
-BGFGrammar runSplitT(str x, list[str] ys, XBGFContext w, BGFGrammar g)
+BGFGrammar runSplitT(str x, list[str] ys, XBGFContext w, grammar(rs, ps))
 {
-	// TODO
-	return g;
+	<ps1,ps2,ps3> = splitPbyW(ps, w);
+	BGFGrammar g2 = runReplace(terminal(x),sequence([terminal(y) | y <- ys]),grammar([],ps2));
+	if (grammar(_, ps4) := runReplace(terminal(x),sequence([terminal(y) | y <- ys]),grammar([],ps2)))
+		return grammar(rs,ps1 + normalise(ps2) + ps3);
 }
 
 BGFGrammar runUnchain(BGFProduction p, grammar(roots, ps))
@@ -446,10 +474,22 @@ BGFGrammar runUnchain(BGFProduction p, grammar(roots, ps))
 		}
 	else throw "Production <p> must be a chain production.";
 }
-BGFGrammar runUndefine(list[str] xs, BGFGrammar g)
+
+//TODO: undefine only one nonterminal per transformation
+BGFGrammar runUndefine(list[str] xs, grammar(roots, ps))
 {
-	// TODO
-	return g;
+	list[BGFProduction] myps = ps;
+	list[str] rs = roots;
+	for (str x <- xs)
+	{
+		if (x notin definedNs(ps)) throw "Nonterminal <x> must be defined.";
+		if (x notin usedNs(ps)) throw "Nonterminal <x> must be used.";
+		//throw "Cannot undefine root nonterminal <x>."; // check was not in xbgf1.pro
+		rs -= x;
+		<ps1,_,ps3> = splitPbyW(myps,innt(x));
+		myps = ps1 + ps3;
+	}
+	return grammar(roots,myps);
 }
 
 BGFGrammar runUnfold(str x, XBGFContext w, BGFGrammar g)
@@ -464,10 +504,14 @@ BGFGrammar runUnite(str x, str y, BGFGrammar g)
 	return g;
 }
 
-BGFGrammar runUnlabel(str x, BGFGrammar g)
+BGFGrammar runUnlabel(str x, grammar(rs,ps))
 {
-	// TODO
-	return g;
+	if (x == "") throw "Please specify which label to unlabel.";
+	<ps1,ps2,ps3> = splitPbyW(ps,inlabel(x));
+	if ([production(str l, str x, BGFExpression e)] := ps2)
+		return grammar(rs, ps1 + production("", x, e) + ps3);
+	else
+		throw "Label <x> is not found or not unique"; // the latter should never happen
 }
 
 BGFGrammar runUpgrade(BGFProduction p1, BGFProduction p2, BGFGrammar g)
@@ -605,15 +649,17 @@ bool narrowing(plus(e),e) = true;
 bool narrowing(optional(e),e) = true;
 bool narrowing(_,_) = false;
 
-list[str] allNs(list[BGFProduction] ps)
-{
-	list[str] ns = [];
-	// defined
-	for (production(_,str s,_) <- ps)
-		if (s notin ns) ns += s;
-	// used
-	for (/nonterminal(str s) := ps)
-		if (s notin ns) ns += s;
-	return ns;
-}
+set[str] allNs(list[BGFProduction] ps) = definedNs(ps) + usedNs(ps);
+set[str] usedNs(list[BGFProduction] ps) = {s | /nonterminal(str s) := ps};
+set[str] definedNs(list[BGFProduction] ps) = {s | production(_,str s,_) <- ps};
 
+list[BGFProduction] replaceP(list[BGFProduction] ps, p1, p2)
+{
+	list[BGFProduction] ps2 = [];
+	for (p <- ps)
+		if (p == p1)
+			ps2 += p2;
+		else
+			ps2 += p;
+	return ps2;
+}
