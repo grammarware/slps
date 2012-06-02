@@ -54,8 +54,8 @@ public BGFExpression mapexpr(Node n)
 		case element(none(),"optional",[expr]): return optional(mapexpr(expr));
 		case element(none(),"plus",[expr]): return plus(mapexpr(expr));
 		case element(none(),"star",[expr]): return star(mapexpr(expr));
-		case element(none(),"starsepplus",[e1,e2]): return starsepplus(mapexpr(e1),mapexpr(e2));
-		case element(none(),"starsepstar",[e1,e2]): return starsepstar(mapexpr(e1),mapexpr(e2));
+		case element(none(),"seplistplus",[e1,e2]): return seplistplus(mapexpr(e1),mapexpr(e2));
+		case element(none(),"sepliststar",[e1,e2]): return sepliststar(mapexpr(e1),mapexpr(e2));
 		default: throw "ERROR in mapexpr:\n<n>";
 	}
 }

@@ -55,8 +55,8 @@ public Node expr2xml(BGFExpression ex)
 		case optional(expr): e = element(none(),"optional",[expr2xml(expr)]);
 		case plus(expr): e = element(none(),"plus",[expr2xml(expr)]);
 		case star(expr): e = element(none(),"star",[expr2xml(expr)]);
-		case starsepplus(e1,e2): e = element(none(),"starsepplus",[expr2xml(e1),expr2xml(e2)]);
-		case starsepstar(e1,e2): e = element(none(),"starsepstar",[expr2xml(e1),expr2xml(e2)]);
+		case seplistplus(e1,e2): e = element(none(),"seplistplus",[expr2xml(e1),expr2xml(e2)]);
+		case sepliststar(e1,e2): e = element(none(),"sepliststar",[expr2xml(e1),expr2xml(e2)]);
 		default: throw "ERROR: expression expected in place of <ex>";
 	}
 	return element(namespace("bgf","http://planet-sl.org/bgf"),"expression",[e]);

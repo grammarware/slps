@@ -209,16 +209,50 @@ BGFGrammar runDesignate(production(str l,str n,BGFExpression e), grammar(rs,ps))
 	return grammar(rs,replaceP(ps,production("",n,e),production(l,n,e)));
 }
 
-BGFGrammar runDetour(BGFProduction p, BGFGrammar g)
+BGFGrammar runDetour(BGFProduction p, grammar(rs, ps))
 {
-	// TODO
-	return g;
+	if (production(_,x,nonterminal(x)) := p)
+	{
+		// xbgf1.pro only aksed for x to be used, not necessarily defined; we're more strict here
+		if (x notin definedNs(ps)) throw "Nonterminal <x> must already be defined.";
+		<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
+		return grammar(rs, ps1 + ps2 + p + ps3);
+	}
+	else
+		throw "Production <p> is not a reflexive chain production.";
 }
 
-BGFGrammar runDeyaccify(str x, BGFGrammar g)
+BGFGrammar runDeyaccify(str n, grammar(rs,ps))
 {
-	// TODO
-	return g;
+	if (n notin definedNs(ps)) throw "Nonterminal <n> is not defined.";
+	<ps1,ps2,ps3> = splitPbyW(ps,innt(n));
+	if (size(ps2) == 1) throw "Nonterminal <n> must be defined vertically for deyaccification to work.";
+	if (size(ps2) > 2) throw "No deyaccification patterns for <size(ps2)> production rules known.";
+	BGFProduction p;
+	// TODO figure out a way to do the same as with yaccify
+	switch(toSet(ps2))
+	{
+		case {production(_,n,sequence([nonterminal(n),x])),
+		      production(_,n,x)}:
+		  p = production("",n,plus(x));
+		case {production(_,n,sequence([x,nonterminal(n)])),
+		      production(_,n,x)}:
+		  p = production("",n,plus(x));
+		case {production(_,n,sequence([nonterminal(n),x])),
+		      production(_,n,y)}:
+		  p = production("",n,sequence([y,star(x)]));
+		case {production(_,n,sequence([x,nonterminal(n)])),
+		      production(_,n,y)}:
+		  p = production("",n,sequence([star(x),y]));
+		case {production(_,n,sequence([x,nonterminal(n)])),
+		      production(_,n,epsilon())}:
+		  p = production("",n,star(x));
+		case {production(_,n,sequence([nonterminal(n),x])),
+		      production(_,n,epsilon())}:
+		  p = production("",n,star(x));
+		default: throw "Nonterminal <x> is not deyaccifiable.";
+	};
+	return grammar(rs, ps1 + p + ps3);
 }
 
 BGFGrammar runDisappear(BGFProduction p1, grammar(roots, ps))
@@ -329,8 +363,10 @@ BGFGrammar runLAssoc(BGFProduction p, BGFGrammar g)
 
 BGFGrammar runMassage(BGFExpression e1, BGFExpression e2, XBGFContext w, BGFGrammar g)
 {
-	// TODO
-	return g;
+	if (massage_eq({e1,e2}))
+		return runReplace(e1,e2,w,g);
+	else
+		throw "<e1> and <e2> are not massage-equivalent.";
 }
 
 BGFGrammar runNarrow(BGFExpression e1, BGFExpression e2, XBGFContext w, g)
@@ -417,22 +453,42 @@ BGFGrammar runRenameS(str x, str y, XBGFContext w, BGFGrammar g)
 	return g;
 }
 
-BGFGrammar runRenameT(str x, str y, XBGFContext w, BGFGrammar g)
+BGFGrammar runRenameT(str x, str y, XBGFContext w, grammar(rs, ps))
 {
-	// TODO
-	return g;
+	ts = allTs(ps);
+	if (x notin ts) throw "Source name <x> for renaming must not be fresh.";
+	if (y in ts) throw "Target name <x> for renaming must be fresh.";
+	return runReplace(terminal(x),terminal(y),w,grammar(rs,ps));
 }
 
-BGFGrammar runReplace(BGFExpression e1, BGFExpression e2, XBGFContext w, grammar(roots, ps))
+BGFGrammar runReplace(BGFExpression e1, BGFExpression e2, XBGFContext w, grammar(rs, ps))
 {
 	<ps1,ps2,ps3> = splitPbyW(ps,w);
 	e3 = normalise(e1);
 	e4 = normalise(e2);
 	//println(ps);
-	ps4 = visit(ps2){case e3 => e4};
+	ps4 = visit(ps2)
+	{
+		case e3 => e4
+		//case choice(L) => visitChoice(L,e3,e4)
+		case choice(L):
+			if (choice(L2) := e3)
+				if (toSet(L2) == toSet(L))
+					insert e4;
+				elseif (toSet(L2) < toSet(L))
+					insert choice(L - L2 + e4);
+				//insert 0;
+	};
 	if (ps2 == ps4)
 		throw "Vacuous replace of <e3> by <e4> in context <w>.";
-	return grammar(roots, ps1 + ps4 + ps3);
+	return grammar(rs, ps1 + ps4 + ps3);
+}
+
+BGFExpression visitChoice(list[BGFExpression] L, BGFExpression e1, BGFExpression e2)
+{
+	//if(choice(L2) := e1)
+	//{}
+	//else
 }
 
 BGFGrammar runReroot(list[str] xs, grammar(rs, ps))
@@ -533,10 +589,17 @@ BGFGrammar runWiden(BGFExpression e1, BGFExpression e2, XBGFContext w, BGFGramma
 	return runReplace(e1,e2,w,g); 
 }
 
-BGFGrammar runYaccify(list[BGFProduction] ps, BGFGrammar g)
+BGFGrammar runYaccify(list[BGFProduction] ps1, grammar(rs,ps2))
 {
-	// TODO
-	return g;
+	if ({str x} := definedNs(ps1))
+	{
+		<ps3,ps4,ps5> = splitPbyW(ps2,innt(x));
+		if ([dyp1] := ps4 && [yp1,yp2] := ps1 && yaccification(dyp1,{yp1,yp2}))
+			return grammar(rs,ps3 + ps1 + ps5);
+		else
+			throw "<ps1> are not suitable as yaccification of <ps4>.";
+	}
+	else throw "Production rules must define just one nonterminal.";
 }
 
 BGFGrammar runAtomic(list[XBGFCommand] steps, BGFGrammar g) = transform(steps,g);
@@ -650,6 +713,7 @@ bool narrowing(optional(e),e) = true;
 bool narrowing(_,_) = false;
 
 set[str] allNs(list[BGFProduction] ps) = definedNs(ps) + usedNs(ps);
+set[str] allTs(list[BGFProduction] ps) = {s | /terminal(str s) := ps};
 set[str] usedNs(list[BGFProduction] ps) = {s | /nonterminal(str s) := ps};
 set[str] definedNs(list[BGFProduction] ps) = {s | production(_,str s,_) <- ps};
 
@@ -663,3 +727,65 @@ list[BGFProduction] replaceP(list[BGFProduction] ps, p1, p2)
 			ps2 += p;
 	return ps2;
 }
+
+bool yaccification(production(_,n,sequence([y,star(x)])),
+				  {production(_,n,sequence([nonterminal(n),x])),
+				   production(_,n,y)}) = true;
+bool yaccification(production(_,n,plus(x)),
+				  {production(_,n,sequence([nonterminal(n),x])),
+				   production(_,n,x)}) = true;
+bool yaccification(production(_,n,sequence([star(x),y])),
+				  {production(_,n,sequence([x,nonterminal(n)])),
+				   production(_,n,y)}) = true;
+bool yaccification(production(_,n,plus(x)),
+				  {production(_,n,sequence([x,nonterminal(n)])),
+				   production(_,n,x)}) = true;
+// the next two are not really necessary, if we figure out how to combine pattern matching with normalisations
+bool yaccification(production(_,n,star(x)),
+				  {production(_,n,sequence([x,nonterminal(n)])),
+				   production(_,n,epsilon())}) = true;
+bool yaccification(production(_,n,star(x)),
+				  {production(_,n,sequence([nonterminal(n),x])),
+				   production(_,n,epsilon())}) = true;
+bool yaccification(BGFProduction p,set[BGFProduction] ps) = false;
+//bool yaccification(_,_) = false;
+
+bool massage_eq({selectable(_,x),x}) = true; // deprecated, please use anonymize/deanonymize instead!
+bool massage_eq({optional(selectable(s,x)),selectable(s,optional(x))}) = true;
+bool massage_eq({star(selectable(s,x)),selectable(s,star(x))}) = true;
+bool massage_eq({plus(selectable(s,x)),selectable(s,plus(x))}) = true;
+
+bool massage_eq({optional(optional(x)),optional(x)}) = true;
+bool massage_eq({optional(star(x)),star(x)}) = true;
+bool massage_eq({optional(plus(x)),star(x)}) = true;
+bool massage_eq({star(optional(x)),star(x)}) = true;
+bool massage_eq({star(star(x)),star(x)}) = true;
+bool massage_eq({star(plus(x)),star(x)}) = true;
+bool massage_eq({plus(optional(x)),star(x)}) = true;
+bool massage_eq({plus(star(x)),star(x)}) = true;
+bool massage_eq({plus(plus(x)),plus(x)}) = true;
+// the following are not general enough
+bool massage_eq({optional(x),choice(L)}) = (x in L || optional(x) in L) && epsilon() in L; 
+bool massage_eq({star(x),choice(L)}) = (star(x) in L || plus(x) in L) && epsilon() in L;
+bool massage_eq({choice([selectable(s1,x),selectable(s2,x)]),x}) = true;
+
+// TODO choice-related massage patterns
+// x* = x* | x = x* | x? = x* | x+ = x+ | x?
+// x? = x? | x
+// x+ = x+ | x
+// TODO sequential combinations
+// x* = x* x* = x* x?
+// x+ = x+ x? = x+ x* = x x*
+// TODO separator lists
+bool massage_eq({sequence([x,optional(sequence([y,x]))]),sequence([optional(sequence([x,y])),x])}) = true;
+bool massage_eq({sequence([x,plus(sequence([y,x]))]),sequence([plus(sequence([x,y])),x])}) = true;
+bool massage_eq({sequence([x,star(sequence([y,x]))]),sequence([star(sequence([x,y])),x])}) = true;
+bool massage_eq({sequence([x,star(sequence([y,x]))]),seplistplus(x,y)}) = true;
+bool massage_eq({sequence([star(sequence([x,y])),x]),seplistplus(x,y)}) = true;
+bool massage_eq({optional(sequence([x,star(sequence([y,x]))])),sepliststar(x,y)}) = true;
+bool massage_eq({optional(sequence([star(sequence([x,y])),x])),sepliststar(x,y)}) = true;
+bool massage_eq({optional(seplistplus(x,y)),sepliststar(x,y)}) = true;
+// TODO selectable epsilon in a sequence 
+
+bool massage_eq(set[BGFExpression] s) = false;
+

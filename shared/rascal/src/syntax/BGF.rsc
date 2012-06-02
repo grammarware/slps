@@ -23,8 +23,8 @@ data BGFExpression =
 	| optional(BGFExpression expr)
 	| plus(BGFExpression expr)
 	| star(BGFExpression expr)
-	| starsepplus(BGFExpression expr, BGFExpression sep)
-	| starsepstar(BGFExpression expr, BGFExpression sep)
+	| seplistplus(BGFExpression expr, BGFExpression sep)
+	| sepliststar(BGFExpression expr, BGFExpression sep)
 ;
 
 data BGFValue = string() | integer();

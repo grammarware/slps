@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
   <bgf:production>
     <label>constant</label>
@@ -21,6 +22,24 @@
           <nonterminal>expr</nonterminal>
         </bgf:expression>
       </sequence>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
+    <nonterminal>op</nonterminal>
+    <bgf:expression>
+      <terminal>==</terminal>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
+    <nonterminal>op</nonterminal>
+    <bgf:expression>
+      <terminal>+</terminal>
+    </bgf:expression>
+  </bgf:production>
+  <bgf:production>
+    <nonterminal>op</nonterminal>
+    <bgf:expression>
+      <terminal>-</terminal>
     </bgf:expression>
   </bgf:production>
 </bgf:grammar>

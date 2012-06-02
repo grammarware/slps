@@ -4,7 +4,10 @@ module normal::BGF
 import syntax::BGF;
 
 public BGFGrammar normalise(grammar (list[str] roots, list[BGFProduction] prods))
-						  = grammar (roots, [normalise(p) | p <- prods]);
+						  = grammar (roots, normalise(prods));
+
+public list[BGFProduction] normalise(list[BGFProduction] prods)
+						= [normalise(p) | p <- prods]; 
 
 public BGFProduction normalise(production (str label, str lhs, BGFExpression rhs))
 							 = production (label, lhs, normalise(rhs));
