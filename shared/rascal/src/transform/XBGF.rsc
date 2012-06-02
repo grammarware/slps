@@ -53,10 +53,10 @@ public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 			case redefine(list[BGFProduction] ps): g1 = runRedefine(ps,g1);
 			case removeH(BGFProduction p): g1 = runRemoveH(p,g1);
 			case removeV(BGFProduction p): g1 = runRemoveV(p,g1);
-			case renameL(str x, str y, XBGFContext w): g1 = runRenameL(x,y,w,g1);
-			case renameN(str x, str y, XBGFContext w): g1 = runRenameN(x,y,w,g1);
+			case renameL(str x, str y): g1 = runRenameL(x,y,g1);
+			case renameN(str x, str y): g1 = runRenameN(x,y,g1);
 			case renameS(str x, str y, XBGFContext w): g1 = runRenameS(x,y,w,g1);
-			case renameT(str x, str y, XBGFContext w): g1 = runRenameT(x,y,w,g1);
+			case renameT(str x, str y): g1 = runRenameT(x,y,g1);
 			case replace(BGFExpression e1, BGFExpression e2, XBGFContext w): g1 = runReplace(e1,e2,w,g1);
 			case reroot(list[str] xs): g1 = runReroot(xs,g1);
 			case splitN(str x, list[BGFProduction] ps, XBGFContext w): g1 = runSplitN(x,ps,w,g1);
@@ -376,19 +376,31 @@ BGFGrammar runNarrow(BGFExpression e1, BGFExpression e2, XBGFContext w, g)
 	return runReplace(e1,e2,w,g); 
 }
 
-BGFGrammar runPermute(BGFProduction p, BGFGrammar g)
+BGFGrammar runPermute(BGFProduction p, grammar(rs, ps))
 {
-	// TODO
+	if (production(str l, str n, sequence(L1)) := p)
+	{
+		<ps1,ps2,ps3> = splitPbyW(ps,innt(n));
+		if ([production(_, n, sequence(L2))] := ps2)
+		{
+			if (toSet(L1) == toSet(L2))
+				return grammar(rs, ps1 + p + ps3);
+			else
+				throw "Phrases <L1> and <L2> must be permutations of each other.";
+		}
+		else throw "Permutation requires a single sequence instead of <ps2>.";
+	}
+	else throw "Permutation parameter requires a sequence instead of <p>.";
 	return g;
 }
 
-BGFGrammar runProject(BGFProduction p1, grammar(roots, ps))
+BGFGrammar runProject(BGFProduction p1, grammar(rs, ps))
 {
 	p2 = unmark(p1);
 	if (p2 notin ps)
 		throw "Production rule <p2> not found.";
 	p3 = demark(p1);
-	return grammar(roots, ps - p2 + p3);
+	return grammar(rs, ps - p2 + p3);
 }
 
 BGFGrammar runRAssoc(BGFProduction p, BGFGrammar g)
@@ -435,30 +447,45 @@ BGFGrammar runRemoveV(BGFProduction p1, grammar(roots, ps))
 	}
 }
 
-BGFGrammar runRenameL(str x, str y, XBGFContext w, BGFGrammar g)
+BGFGrammar runRenameL(str x, str y, grammar(rs, ps))
 {
-	// TODO
-	return g;
+	if (x == "") throw "Source label must not be empty for renaming, use designate.";
+	if (y == "") throw "Target label must not be empty for renaming, use unlabel.";
+	if (size([p | p <- ps, production(x, _, _) := p]) != 1)
+		throw "Source name <x> for renaming must be fresh and unique.";
+	if (size([p | p <- ps, production(y, _, _) := p]) != 0)
+		throw "Target name <y> for renaming must be fresh.";
+	<ps1,ps2,ps3> = splitPbyW(ps,inlabel(x));
+	if ([production(x, str n, BGFExpression e)] := ps2)
+		return grammar(rs, ps1 + production(y, n, e) + ps3);
+	else
+		throw "Label <x> is not found or not unique"; // the latter should never happen
 }
 
-BGFGrammar runRenameN(str x, str y, XBGFContext w, BGFGrammar g)
+BGFGrammar runRenameN(str x, str y, grammar(rs, ps))
 {
-	// TODO
-	return g;
+	ns = allNs(ps);
+	if (x notin ns) throw "Source name <x> for renaming must not be fresh.";
+	if (y in ns) throw "Target name <x> for renaming must be fresh.";
+	<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
+	return runReplace(nonterminal(x),nonterminal(y),globally(),grammar(rs,ps1 + [production(l,y,e) | p <- ps2, production(str l,x,BGFExpression e) := p] + ps3));
 }
 
-BGFGrammar runRenameS(str x, str y, XBGFContext w, BGFGrammar g)
+BGFGrammar runRenameS(str x, str y, XBGFContext w, grammar(rs, ps))
 {
-	// TODO
-	return g;
+	<ps1,ps2,ps3> = splitPbyW(ps,w);
+	if (/selectable(x,_) !:= ps2) throw "Source name <x> for renaming must not be fresh.";
+	if (/selectable(y,_) := ps2) throw "Target name <y> for renaming must be fresh.";
+	ps4 = visit(ps2){case selectable(x,BGFExpression e) => selectable(y,e)}
+	return grammar(rs, ps1 + ps4 + ps3);
 }
 
-BGFGrammar runRenameT(str x, str y, XBGFContext w, grammar(rs, ps))
+BGFGrammar runRenameT(str x, str y, grammar(rs, ps))
 {
 	ts = allTs(ps);
 	if (x notin ts) throw "Source name <x> for renaming must not be fresh.";
 	if (y in ts) throw "Target name <x> for renaming must be fresh.";
-	return runReplace(terminal(x),terminal(y),w,grammar(rs,ps));
+	return runReplace(terminal(x),terminal(y),globally(),grammar(rs,ps));
 }
 
 BGFGrammar runReplace(BGFExpression e1, BGFExpression e2, XBGFContext w, grammar(rs, ps))

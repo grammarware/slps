@@ -65,14 +65,11 @@ XBGFCommand mapxbgf(Node el)
 				case element(_,"redefine",ps): return redefine([mapprod(p) | p <- ps]);
 		 		case element(_,"remove",[element(none(),"horizontal",[prod])]): return removeH(mapprod(prod));
 		 		case element(_,"remove",[element(none(),"vertical",[prod])]): return removeV(mapprod(prod));
-				case element(_,"rename",[element(none(),"label",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameL(s1, s2, globally());
-				case element(_,"rename",[element(none(),"label",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)]),w])]): return renameL(s1, s2, mapcontext(w));
-				case element(_,"rename",[element(none(),"nonterminal",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameN(s1, s2, globally());
-				case element(_,"rename",[element(none(),"nonterminal",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)]),w])]): return renameN(s1, s2, mapcontext(w));
+				case element(_,"rename",[element(none(),"label",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameL(s1, s2);
+				case element(_,"rename",[element(none(),"nonterminal",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameN(s1, s2);
 				case element(_,"rename",[element(none(),"selector",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameS(s1, s2, globally());
 				case element(_,"rename",[element(none(),"selector",[element(none(),"in",[charData(str w)]),element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameS(s1, s2, inlabel(w));
-				case element(_,"rename",[element(none(),"terminal",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameT(s1, s2, globally());
-				case element(_,"rename",[element(none(),"terminal",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)]),w])]): return renameT(s1, s2, mapcontext(w));
+				case element(_,"rename",[element(none(),"terminal",[element(none(),"from",[charData(str s1)]),element(none(),"to",[charData(str s2)])])]): return renameT(s1, s2);
 		 		case element(_,"replace",[e1,e2]): return replace(mapexpr(e1),mapexpr(e2),globally());
 		 		case element(_,"replace",[e1,e2,w]): return replace(mapexpr(e1),mapexpr(e2),mapcontext(w));
 				case element(_,"reroot",roots): return reroot([r | element(none(),"root",[charData(r)]) <- roots]);

@@ -67,14 +67,11 @@ Node xbgf2xml(XBGFCommand step)
 		case redefine(ps): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"redefine",[prod2xml(p) | p <- ps]);
 		case removeH(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"remove",[element(none(),"horizontal",[prod2xml(prod)])]);
 		case removeV(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"remove",[element(none(),"vertical",[prod2xml(prod)])]);
-		case renameL(s1, s2, globally()): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"label",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)])])]);
-		case renameL(s1, s2, w): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"label",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)]),context2xml(w)])]);
-		case renameN(s1, s2, globally()): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"nonterminal",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)])])]);
-		case renameN(s1, s2, w): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"nonterminal",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)]),context2xml(w)])]);
+		case renameL(s1, s2): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"label",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)])])]);
+		case renameN(s1, s2): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"nonterminal",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)])])]);
 		case renameS(s1, s2, globally()): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"selector",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)])])]);
 		case renameS(s1, s2, inlabel(str s)): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"selector",[element(none(),"in",[charData(s)]),element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)])])]);
-		case renameT(s1, s2, globally()): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"terminal",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)])])]);
-		case renameT(s1, s2, w): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"terminal",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)]),context2xml(w)])]);
+		case renameT(s1, s2): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"terminal",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)])])]);
 		case replace(e1,e2,globally()): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"replace",[expr2xml(e1),expr2xml(e2)]);
 		case replace(e1,e2,w): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"replace",[expr2xml(e1),expr2xml(e2),element(none(),"in",[context2xml(w)])]);
 		case reroot(roots): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"reroot",[element(none(),"root",[charData(r)]) | r <- roots]);
