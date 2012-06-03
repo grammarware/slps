@@ -7,6 +7,7 @@ import Set; // toList
 import syntax::BGF;
 import syntax::XBGF;
 import normal::BGF;
+import diff::GDT;
 
 public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 {
@@ -39,7 +40,7 @@ public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 			case factor(BGFExpression e1, BGFExpression e2, XBGFContext w): g1 = runFactor(e1,e2,w,g1);
 			case fold(str x, XBGFContext w): g1 = runFold(x,w,g1);
 			case horizontal(XBGFContext w): g1 = runHorizontal(w,g1);
-			case \import(list[BGFProduction] ps): g1 = runImport(ps,g1);
+			case importG(list[BGFProduction] ps): g1 = runImport(ps,g1);
 			case inject(BGFProduction p): g1 = runInject(p,g1);
 			case inline(str x): g1 = runInline(x,g1);
 			case introduce(list[BGFProduction] ps): g1 = runIntroduce(ps,g1);
@@ -265,6 +266,7 @@ BGFGrammar runDisappear(BGFProduction p1, grammar(roots, ps))
 			throw "<p1> does not have an optional part marked.";
 	return grammar(roots, ps - p2 + demark(p1));
 }
+
 BGFGrammar runDistribute(XBGFContext w, BGFGrammar g)
 {
 	// TODO
@@ -277,20 +279,29 @@ BGFGrammar runDowngrade(BGFProduction p1,BGFProduction p2, BGFGrammar g)
 	return g;
 }
 
-BGFGrammar runEliminate(str x, grammar(roots, ps))
+BGFGrammar runEliminate(str x, grammar(rs, ps))
 {
 	// TODO: can we eliminate root?
-	if (x in roots) throw "Cannot eliminate root nonterminal <x>";
+	if (x in rs) throw "Cannot eliminate root nonterminal <x>";
 	if (x notin definedNs(ps)) throw "Nonterminal <x> must be defined.";
 	<ps1,_,ps3> = splitPbyW(ps,innt(x));
 	if (x in usedNs(ps1+ps3)) throw "Nonterminal <x> must not be used.";
-	return grammar(roots, ps1 + ps3);
+	return grammar(rs, ps1 + ps3);
 }
 
-BGFGrammar runEquate(str x, str y, BGFGrammar g)
+BGFGrammar runEquate(str x, str y, grammar(rs, ps))
 {
-	// TODO
-	return g;
+	if (x == y) throw "Nonterminal <x> is already equated with itself."; 
+	<ps1x,ps2x,ps3x> = splitPbyW(ps,innt(x));
+	<_,ps2y,_> = splitPbyW(ps,innt(y));
+	gxy = runRenameN(x,y,grammar([],ps2x));
+	gyy = grammar([],ps2y);
+	if (!gdt(gxy,gyy)) throw "Definitions of nonterminals <x> and <y> must be equal.";
+	//println(grammar(rs - x,ps1x + ps3x));
+	if (x in usedNs(ps1x + ps3x))
+		return runReplace(nonterminal(x),nonterminal(y),globally(),grammar(rs - x,ps1x + ps3x));
+	else
+		return grammar(rs - x,ps1x + ps3x);
 }
 
 BGFGrammar runExtract(BGFProduction p, XBGFContext w, BGFGrammar g)
@@ -317,19 +328,23 @@ BGFGrammar runHorizontal(XBGFContext w, BGFGrammar g)
 	return g;
 }
 
-BGFGrammar runImport(list[BGFProduction] ps, BGFGrammar g)
+BGFGrammar runImport(list[BGFProduction] ps1, grammar(rs, ps2))
 {
-	// TODO
-	return g;
+	defs1 = definedNs(ps1);
+	defs12 = defs1 & definedNs(ps2);
+	du12 = defs1 & usedNs(ps2);
+	if (!isEmpty(defs12)) throw "Import clashes with existing definitions <defs12>.";
+	if (!isEmpty(du12)) throw "Import clashes with existing definitions <du12>.";
+	return grammar(rs, ps1 + ps2);
 }
 
-BGFGrammar runInject(BGFProduction p1, grammar(roots, ps))
+BGFGrammar runInject(BGFProduction p1, grammar(rs, ps))
 {
 	p2 = demark(p1);
 	if (p2 notin ps)
 		throw "Production rule <p2> not found.";
 	p3 = unmark(p1);
-	return grammar(roots, ps - p2 + p3);
+	return grammar(rs, ps - p2 + p3);
 }
 
 BGFGrammar runInline(str x, BGFGrammar g)
@@ -468,7 +483,11 @@ BGFGrammar runRenameN(str x, str y, grammar(rs, ps))
 	if (x notin ns) throw "Source name <x> for renaming must not be fresh.";
 	if (y in ns) throw "Target name <x> for renaming must be fresh.";
 	<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
-	return runReplace(nonterminal(x),nonterminal(y),globally(),grammar(rs,ps1 + [production(l,y,e) | p <- ps2, production(str l,x,BGFExpression e) := p] + ps3));
+	list[BGFProduction] ps4 = ps1 + [production(l,y,e) | p <- ps2, production(str l,x,BGFExpression e) := p] + ps3;
+	if (x in usedNs(ps4))
+		return runReplace(nonterminal(x),nonterminal(y),globally(),grammar(rs,ps4));
+	else
+		return grammar(rs,ps4);
 }
 
 BGFGrammar runRenameS(str x, str y, XBGFContext w, grammar(rs, ps))
@@ -581,10 +600,17 @@ BGFGrammar runUnfold(str x, XBGFContext w, BGFGrammar g)
 	return g;
 }
 
-BGFGrammar runUnite(str x, str y, BGFGrammar g)
+BGFGrammar runUnite(str x, str y, grammar(rs,ps))
 {
-	// TODO
-	return g;
+	if (x == y) throw "Nonterminal <x> is already united with itself.";
+	used = allNs(ps);
+	if (x notin used || y notin used) throw "Both nonterminals <x> and <y> must not be fresh.";
+	<ps1x,ps2x,ps3x> = splitPbyW(ps,innt(x));
+	list[BGFProduction] ps4x = ps1x + [production(l,y,e) | p <- ps2x, production(str l,x,BGFExpression e) := p] + ps3x;
+	if (x in usedNs(ps4x))
+		return runReplace(nonterminal(x),nonterminal(y),globally(),grammar(rs,ps4x));
+	else
+		return grammar(rs,ps4x);
 }
 
 BGFGrammar runUnlabel(str x, grammar(rs,ps))
