@@ -30,8 +30,8 @@ Node xbgf2xml(XBGFCommand step)
 		case anonymize(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"anonymize",[prod2xml(prod)]);
 		case appear(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"appear",[prod2xml(prod)]);
 		case chain(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"chain",[prod2xml(prod)]);
-		// clone(str x, str y, XBGFContext w)
-		// concatT(list[str] xs, str y, XBGFContext w)
+		// clone(str x, str y, XBGFScope w)
+		// concatT(list[str] xs, str y, XBGFScope w)
 		case concretize(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"concretize",[prod2xml(prod)]);
 		case deanonymize(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"deanonymize",[prod2xml(prod)]);
 		case define(list[BGFProduction] ps): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"define",[prod2xml(p) | p <- ps]);
@@ -79,11 +79,11 @@ Node xbgf2xml(XBGFCommand step)
 		// also, the current structure is too hard to match in a one-liner in Rascal 
 		//case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),ps*,element(none(),"label",[charData(str s)])]): return splitN(s,[mapprod2xml(prod)(p) | p <- ps],mapcontext(element(none(),"label",[charData(s)])));
 		//case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),ps*]): return splitN(s,[mapprod2xml(prod)(p) | p <- ps],globally());
-		// splitN(str x, list[BGFProduction] ps, XBGFContext w)
-		case splitN(s,[p],globally()): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"split",[element(none(),"nonterminal",[charData(s)]),prod2xml(p)]);
+		// splitN(str x, list[BGFProduction] ps, XBGFScope w)
+		case splitN(s,[p],nowhere()): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"split",[element(none(),"nonterminal",[charData(s)]),prod2xml(p)]);
 		case splitN(s,[p],w): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"split",[element(none(),"nonterminal",[charData(s)]),prod2xml(p),context2xml(w)]);
 		// TODO: not implemented anywhere
-		// splitT(str x, list[str] ys, XBGFContext w)
+		// splitT(str x, list[str] ys, XBGFScope w)
 		case unchain(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"unchain",[prod2xml(prod)]);
 		case undefine(xs): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"undefine",[element(none(),"nonterminal",[charData(s)]) | s <- xs]);
 		case unfold(s,globally()): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"unfold",[element(none(),"nonterminal",[charData(s)])]);
@@ -104,7 +104,7 @@ Node xbgf2xml(XBGFCommand step)
 	}
 }
 
-Node context2xml(XBGFContext w)
+Node context2xml(XBGFScope w)
 {
 	switch(w)
 	{

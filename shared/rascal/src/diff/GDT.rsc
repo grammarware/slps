@@ -7,6 +7,31 @@ import normal::BGF;
 import List;
 import IO;
 
+tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] L1, list[BGFExpression] L2) = tryMatchChoices([],L1,[],L2,false);
+tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] es1, [], list[BGFExpression] es2, list[BGFExpression] L2, false) = <false,[],[]>; 
+tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] es1, [], list[BGFExpression] es2, list[BGFExpression] L2, true) = <true,es1,es2+L2>;
+tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] es1, list[BGFExpression] L1, list[BGFExpression] es2, [], bool hit) = <false,[],[]>;
+tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] es1, list[BGFExpression] L1, list[BGFExpression] es2, list[BGFExpression] L2, bool hit)
+{
+	println("tryMatchChoices(<es1>,<L1>,<es2>,<L2>,<hit>");
+	for (y <- L2)
+	{
+		for (x <- L1)
+			if (eqE(x,y))
+				{
+				println("-\> tryMatchChoices(<es1>,<L1-x>,<es2>,<L2-y>,true");
+				return tryMatchChoices(es1,L1-x,es2,L2-y,true);
+				}
+		if (hit)
+			es2 += y;
+		else
+			es1 += y;
+		L2 -= y;
+	}
+	return <false,[],[]>;
+}
+
+
 // expression equality
 public bool eqE(choice([BGFExpression e1]), choice([BGFExpression e2])) = eqE(e1,e2);
 public bool eqE(choice(L1), choice(L2))
@@ -30,7 +55,7 @@ public bool eqE(BGFExpression e1, BGFExpression e2) = e1 == e2; // default
 
 
 public bool eqP(production(str l,str x, BGFExpression e1), production(l,x, BGFExpression e2)) = eqE(e1,e2);
-public bool eqP(BGFExpression p1, BGFExpression p2) = p1 == p2;
+public bool eqP(BGFProduction p1, BGFProduction p2) = p1 == p2;
 
 // generic differ, returns unmatched production rules
 tuple[list[BGFProduction],list[BGFProduction]] gdt(list[BGFProduction] ps1, list[BGFProduction] ps2)

@@ -46,6 +46,22 @@
 		<xsl:text>);
 </xsl:text>
 	</xsl:template>
+	<xsl:template match="xbgf:split">
+		<xsl:value-of select="local-name()"/>
+			<xsl:text>(</xsl:text>
+<xsl:value-of select="nonterminal"/>
+		<xsl:text>,
+</xsl:text>
+		<xsl:for-each select="./bgf:production">
+			<xsl:text> </xsl:text>
+			<xsl:apply-templates select="."/>
+		</xsl:for-each>
+		<xsl:call-template name="context">
+			<xsl:with-param name="in" select="./in"/>
+		</xsl:call-template>
+		<xsl:text>);
+</xsl:text>
+	</xsl:template>
 	<xsl:template match="xbgf:add">
 		<xsl:choose>
 			<xsl:when test="./vertical">

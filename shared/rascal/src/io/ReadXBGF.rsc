@@ -29,8 +29,8 @@ XBGFCommand mapxbgf(Node el)
 		 		case element(_,"anonymize",[prod]): return anonymize(mapprod(prod));
 		 		case element(_,"appear",[prod]): return appear(mapprod(prod));
 		 		case element(_,"chain",[prod]): return chain(mapprod(prod));
-		 		// clone(str x, str y, XBGFContext w)
-		 		// concatT(list[str] xs, str y, XBGFContext w)
+		 		// clone(str x, str y, XBGFScope w)
+		 		// concatT(list[str] xs, str y, XBGFScope w)
 		 		case element(_,"concretize",[prod]): return concretize(mapprod(prod));
 		 		case element(_,"deanonymize",[prod]): return deanonymize(mapprod(prod));
 		 		case element(_,"define",ps): return define([mapprod(p) | p <- ps]);
@@ -77,11 +77,11 @@ XBGFCommand mapxbgf(Node el)
 				// also, the current structure is too hard to match in a one-liner in Rascal 
 				//case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),ps*,element(none(),"label",[charData(str s)])]): return splitN(s,[mapprod(p) | p <- ps],mapcontext(element(none(),"label",[charData(s)])));
 				//case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),ps*]): return splitN(s,[mapprod(p) | p <- ps],globally());
-				// splitN(str x, list[BGFProduction] ps, XBGFContext w)
-				case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),p]): return splitN(s,[mapprod(p)],globally());
+				// splitN(str x, list[BGFProduction] ps, XBGFScope w)
+				case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),p]): return splitN(s,[mapprod(p)],nowhere());
 				case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),p,w]): return splitN(s,[mapprod(p)],mapcontext(w));
 				// TODO: not implemented anywhere
-				// splitT(str x, list[str] ys, XBGFContext w)
+				// splitT(str x, list[str] ys, XBGFScope w)
 				case element(_,"unchain",[prod]): return unchain(mapprod(prod));
 				case element(_,"undefine",xs): return undefine([s | element(none(),"nonterminal",[charData(s)]) <- xs]);
 				case element(_,"unfold",[element(none(),"nonterminal",[charData(str s)])]): return unfold(s,globally());
@@ -108,7 +108,7 @@ XBGFCommand mapxbgf(Node el)
 		throw "ERROR with:\n<el>";
 }
 
-XBGFContext mapcontext(Node n)
+XBGFScope mapcontext(Node n)
 {
 	switch(n)
 	{
