@@ -34,8 +34,8 @@ public void main()
 		bl = readBGF(base+replaceLast(f,".xbgf",".baseline"));
 		//buffer += "test bool test_<replaceLast(f,".xbgf","")>() { return gdt(transform(<xbgf>,<bgf>),<bl>); }\n";
 		buffer += "\"<replaceLast(f,".xbgf","")>\": \<<xbgf>,<bgf>,<bl>\>,\n";
-		buffer2 += "test bool test_<replaceLast(f,".xbgf","")>() { \<xbgf,bgf1,bgf2\> = test_data[\"<replaceLast(f,".xbgf","")>\"]; return gdt(transform(xbgf,bgf1),bgf2); }\n";
-		buffer3 += "void show_<replaceLast(f,".xbgf","")>() { \<xbgf,bgf1,bgf2\> = test_data[\"<replaceLast(f,".xbgf","")>\"]; println(\"Input \<bgf1\>\");println(\"Transformations: \<xbgf\>\");println(\"Expected output \<bgf2\>\");println(\"Actual output \<transform(xbgf,bgf1)\>\"); }\n";
+		buffer2 += "test bool test_<replaceLast(f,".xbgf","")>() { \<xbgf,bgf1,bgf2\> = test_data[\"<replaceLast(f,".xbgf","")>\"]; return gdts(transform(xbgf,bgf1),bgf2); }\n";
+		buffer3 += "void show_<replaceLast(f,".xbgf","")>() { \<xbgf,bgf1,bgf2\> = test_data[\"<replaceLast(f,".xbgf","")>\"]; println(\"Input \<bgf1\>\");println(\"Transformations: \<xbgf\>\");println(\"Expected output \<bgf2\>\");bgf3=transform(xbgf,bgf1);println(\"Actual output \<bgf3\>\"); gdtv(bgf3,bgf2); }\n";
 	}
 	writeFile(|project://slps/src/transform/XBGFTest.rsc|, replaceLast(buffer,",","")+");\n\n"+buffer3+"\n\n"+buffer2);
 }

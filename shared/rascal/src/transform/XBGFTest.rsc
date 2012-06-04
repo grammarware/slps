@@ -154,291 +154,291 @@ map[str,tuple[XBGFSequence,BGFGrammar,BGFGrammar]] test_data = (
 "yaccify_right_plus": <[yaccify([production("","foo",nonterminal("bar")),production("","foo",sequence([nonterminal("bar"),nonterminal("foo")]))])],grammar([],[production("","foo",plus(nonterminal("bar")))]),grammar([],[production("","foo",nonterminal("bar")),production("","foo",sequence([nonterminal("bar"),nonterminal("foo")]))])>
 );
 
-void show_abridge() { <xbgf,bgf1,bgf2> = test_data["abridge"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_abstractize() { <xbgf,bgf1,bgf2> = test_data["abstractize"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_add_horizontal() { <xbgf,bgf1,bgf2> = test_data["add_horizontal"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_add_inside() { <xbgf,bgf1,bgf2> = test_data["add_inside"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_add_vertical() { <xbgf,bgf1,bgf2> = test_data["add_vertical"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_add_vertical_middle() { <xbgf,bgf1,bgf2> = test_data["add_vertical_middle"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_add_vertical_scattered() { <xbgf,bgf1,bgf2> = test_data["add_vertical_scattered"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_anonymize_multiple() { <xbgf,bgf1,bgf2> = test_data["anonymize_multiple"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_anonymize_single() { <xbgf,bgf1,bgf2> = test_data["anonymize_single"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_appear_q() { <xbgf,bgf1,bgf2> = test_data["appear_q"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_appear_s() { <xbgf,bgf1,bgf2> = test_data["appear_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_chain_l() { <xbgf,bgf1,bgf2> = test_data["chain_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_chain_n() { <xbgf,bgf1,bgf2> = test_data["chain_n"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_concretize() { <xbgf,bgf1,bgf2> = test_data["concretize"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_deanonymize_multiple() { <xbgf,bgf1,bgf2> = test_data["deanonymize_multiple"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_deanonymize_single() { <xbgf,bgf1,bgf2> = test_data["deanonymize_single"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_define() { <xbgf,bgf1,bgf2> = test_data["define"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_designate() { <xbgf,bgf1,bgf2> = test_data["designate"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_detour() { <xbgf,bgf1,bgf2> = test_data["detour"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_deyaccify_eps() { <xbgf,bgf1,bgf2> = test_data["deyaccify_eps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_deyaccify_left() { <xbgf,bgf1,bgf2> = test_data["deyaccify_left"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_deyaccify_left_plus() { <xbgf,bgf1,bgf2> = test_data["deyaccify_left_plus"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_deyaccify_right() { <xbgf,bgf1,bgf2> = test_data["deyaccify_right"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_deyaccify_right_plus() { <xbgf,bgf1,bgf2> = test_data["deyaccify_right_plus"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_disappear_q() { <xbgf,bgf1,bgf2> = test_data["disappear_q"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_disappear_s() { <xbgf,bgf1,bgf2> = test_data["disappear_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_distribute_l() { <xbgf,bgf1,bgf2> = test_data["distribute_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_distribute_nt() { <xbgf,bgf1,bgf2> = test_data["distribute_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_downgrade() { <xbgf,bgf1,bgf2> = test_data["downgrade"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_eliminate() { <xbgf,bgf1,bgf2> = test_data["eliminate"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_equate1() { <xbgf,bgf1,bgf2> = test_data["equate1"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_equate2() { <xbgf,bgf1,bgf2> = test_data["equate2"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_equate3() { <xbgf,bgf1,bgf2> = test_data["equate3"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_equate4() { <xbgf,bgf1,bgf2> = test_data["equate4"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_extract_l() { <xbgf,bgf1,bgf2> = test_data["extract_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_extract_nt() { <xbgf,bgf1,bgf2> = test_data["extract_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_extract_subch() { <xbgf,bgf1,bgf2> = test_data["extract_subch"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_extract_subseq_multiple() { <xbgf,bgf1,bgf2> = test_data["extract_subseq_multiple"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_extract_subseq_single() { <xbgf,bgf1,bgf2> = test_data["extract_subseq_single"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_factor_eps() { <xbgf,bgf1,bgf2> = test_data["factor_eps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_factor_global() { <xbgf,bgf1,bgf2> = test_data["factor_global"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_factor_local() { <xbgf,bgf1,bgf2> = test_data["factor_local"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_factor_nt() { <xbgf,bgf1,bgf2> = test_data["factor_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_fold() { <xbgf,bgf1,bgf2> = test_data["fold"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_fold_l() { <xbgf,bgf1,bgf2> = test_data["fold_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_fold_nt() { <xbgf,bgf1,bgf2> = test_data["fold_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_horizontal_l() { <xbgf,bgf1,bgf2> = test_data["horizontal_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_horizontal_n() { <xbgf,bgf1,bgf2> = test_data["horizontal_n"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_import() { <xbgf,bgf1,bgf2> = test_data["import"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_inject() { <xbgf,bgf1,bgf2> = test_data["inject"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_inline() { <xbgf,bgf1,bgf2> = test_data["inline"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_introduce() { <xbgf,bgf1,bgf2> = test_data["introduce"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_iterate_l() { <xbgf,bgf1,bgf2> = test_data["iterate_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_iterate_p() { <xbgf,bgf1,bgf2> = test_data["iterate_p"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_iterate_r() { <xbgf,bgf1,bgf2> = test_data["iterate_r"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_lassoc_l() { <xbgf,bgf1,bgf2> = test_data["lassoc_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_lassoc_p() { <xbgf,bgf1,bgf2> = test_data["lassoc_p"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_lassoc_r() { <xbgf,bgf1,bgf2> = test_data["lassoc_r"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_assoc_p() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_p"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_assoc_q() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_q"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_assoc_s() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_ep() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ep"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_eq() { <xbgf,bgf1,bgf2> = test_data["massage_ch_eq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_es() { <xbgf,bgf1,bgf2> = test_data["massage_ch_es"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_ex() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ex"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_ps() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_qp() { <xbgf,bgf1,bgf2> = test_data["massage_ch_qp"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_qs() { <xbgf,bgf1,bgf2> = test_data["massage_ch_qs"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_xp() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xp"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_xq() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_xs() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xs"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_xx1() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx1"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_xx2() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx2"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_ch_xx3() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx3"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_comp_pp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_pp"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_comp_pq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_pq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_comp_ps() { <xbgf,bgf1,bgf2> = test_data["massage_comp_ps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_comp_qp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qp"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_comp_qq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_comp_qs() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qs"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_comp_sp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_sp"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_comp_sq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_sq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_comp_ss() { <xbgf,bgf1,bgf2> = test_data["massage_comp_ss"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_complex() { <xbgf,bgf1,bgf2> = test_data["massage_complex"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_distr_ch() { <xbgf,bgf1,bgf2> = test_data["massage_distr_ch"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_sel_s() { <xbgf,bgf1,bgf2> = test_data["massage_sel_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_seq_pq() { <xbgf,bgf1,bgf2> = test_data["massage_seq_pq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_seq_ps() { <xbgf,bgf1,bgf2> = test_data["massage_seq_ps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_seq_sq() { <xbgf,bgf1,bgf2> = test_data["massage_seq_sq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_seq_ss() { <xbgf,bgf1,bgf2> = test_data["massage_seq_ss"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_massage_seq_xs() { <xbgf,bgf1,bgf2> = test_data["massage_seq_xs"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_narrow_global() { <xbgf,bgf1,bgf2> = test_data["narrow_global"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_narrow_l() { <xbgf,bgf1,bgf2> = test_data["narrow_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_narrow_nt() { <xbgf,bgf1,bgf2> = test_data["narrow_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_permute() { <xbgf,bgf1,bgf2> = test_data["permute"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_project() { <xbgf,bgf1,bgf2> = test_data["project"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_rassoc_p() { <xbgf,bgf1,bgf2> = test_data["rassoc_p"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_rassoc_s() { <xbgf,bgf1,bgf2> = test_data["rassoc_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_redefine() { <xbgf,bgf1,bgf2> = test_data["redefine"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_remove_horizontal() { <xbgf,bgf1,bgf2> = test_data["remove_horizontal"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_remove_inside() { <xbgf,bgf1,bgf2> = test_data["remove_inside"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_remove_vertical() { <xbgf,bgf1,bgf2> = test_data["remove_vertical"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_rename4() { <xbgf,bgf1,bgf2> = test_data["rename4"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_renameL() { <xbgf,bgf1,bgf2> = test_data["renameL"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_renameN() { <xbgf,bgf1,bgf2> = test_data["renameN"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_renameS() { <xbgf,bgf1,bgf2> = test_data["renameS"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_renameT() { <xbgf,bgf1,bgf2> = test_data["renameT"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_replace_choice() { <xbgf,bgf1,bgf2> = test_data["replace_choice"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_replace_choice_part() { <xbgf,bgf1,bgf2> = test_data["replace_choice_part"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_replace_global() { <xbgf,bgf1,bgf2> = test_data["replace_global"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_replace_l() { <xbgf,bgf1,bgf2> = test_data["replace_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_replace_nt() { <xbgf,bgf1,bgf2> = test_data["replace_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_replace_seq() { <xbgf,bgf1,bgf2> = test_data["replace_seq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_reroot() { <xbgf,bgf1,bgf2> = test_data["reroot"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_split1() { <xbgf,bgf1,bgf2> = test_data["split1"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_split2() { <xbgf,bgf1,bgf2> = test_data["split2"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_split3() { <xbgf,bgf1,bgf2> = test_data["split3"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_split4() { <xbgf,bgf1,bgf2> = test_data["split4"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_strip2() { <xbgf,bgf1,bgf2> = test_data["strip2"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_strip4() { <xbgf,bgf1,bgf2> = test_data["strip4"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_unchain_l() { <xbgf,bgf1,bgf2> = test_data["unchain_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_unchain_n() { <xbgf,bgf1,bgf2> = test_data["unchain_n"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_undefine1() { <xbgf,bgf1,bgf2> = test_data["undefine1"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_undefine2() { <xbgf,bgf1,bgf2> = test_data["undefine2"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_unfold() { <xbgf,bgf1,bgf2> = test_data["unfold"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_unfold_l() { <xbgf,bgf1,bgf2> = test_data["unfold_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_unfold_normalize() { <xbgf,bgf1,bgf2> = test_data["unfold_normalize"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_unfold_nt() { <xbgf,bgf1,bgf2> = test_data["unfold_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_unite_eq() { <xbgf,bgf1,bgf2> = test_data["unite_eq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_unite_normal() { <xbgf,bgf1,bgf2> = test_data["unite_normal"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_unlabel() { <xbgf,bgf1,bgf2> = test_data["unlabel"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_upgrade() { <xbgf,bgf1,bgf2> = test_data["upgrade"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_vertical_l() { <xbgf,bgf1,bgf2> = test_data["vertical_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_vertical_s() { <xbgf,bgf1,bgf2> = test_data["vertical_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_widen_global() { <xbgf,bgf1,bgf2> = test_data["widen_global"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_widen_l() { <xbgf,bgf1,bgf2> = test_data["widen_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_widen_nt() { <xbgf,bgf1,bgf2> = test_data["widen_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_widen_sub() { <xbgf,bgf1,bgf2> = test_data["widen_sub"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_yaccify_eps() { <xbgf,bgf1,bgf2> = test_data["yaccify_eps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_yaccify_left() { <xbgf,bgf1,bgf2> = test_data["yaccify_left"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_yaccify_left_plus() { <xbgf,bgf1,bgf2> = test_data["yaccify_left_plus"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_yaccify_right() { <xbgf,bgf1,bgf2> = test_data["yaccify_right"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
-void show_yaccify_right_plus() { <xbgf,bgf1,bgf2> = test_data["yaccify_right_plus"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");println("Actual output <transform(xbgf,bgf1)>"); }
+void show_abridge() { <xbgf,bgf1,bgf2> = test_data["abridge"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_abstractize() { <xbgf,bgf1,bgf2> = test_data["abstractize"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_add_horizontal() { <xbgf,bgf1,bgf2> = test_data["add_horizontal"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_add_inside() { <xbgf,bgf1,bgf2> = test_data["add_inside"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_add_vertical() { <xbgf,bgf1,bgf2> = test_data["add_vertical"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_add_vertical_middle() { <xbgf,bgf1,bgf2> = test_data["add_vertical_middle"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_add_vertical_scattered() { <xbgf,bgf1,bgf2> = test_data["add_vertical_scattered"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_anonymize_multiple() { <xbgf,bgf1,bgf2> = test_data["anonymize_multiple"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_anonymize_single() { <xbgf,bgf1,bgf2> = test_data["anonymize_single"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_appear_q() { <xbgf,bgf1,bgf2> = test_data["appear_q"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_appear_s() { <xbgf,bgf1,bgf2> = test_data["appear_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_chain_l() { <xbgf,bgf1,bgf2> = test_data["chain_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_chain_n() { <xbgf,bgf1,bgf2> = test_data["chain_n"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_concretize() { <xbgf,bgf1,bgf2> = test_data["concretize"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_deanonymize_multiple() { <xbgf,bgf1,bgf2> = test_data["deanonymize_multiple"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_deanonymize_single() { <xbgf,bgf1,bgf2> = test_data["deanonymize_single"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_define() { <xbgf,bgf1,bgf2> = test_data["define"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_designate() { <xbgf,bgf1,bgf2> = test_data["designate"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_detour() { <xbgf,bgf1,bgf2> = test_data["detour"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_deyaccify_eps() { <xbgf,bgf1,bgf2> = test_data["deyaccify_eps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_deyaccify_left() { <xbgf,bgf1,bgf2> = test_data["deyaccify_left"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_deyaccify_left_plus() { <xbgf,bgf1,bgf2> = test_data["deyaccify_left_plus"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_deyaccify_right() { <xbgf,bgf1,bgf2> = test_data["deyaccify_right"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_deyaccify_right_plus() { <xbgf,bgf1,bgf2> = test_data["deyaccify_right_plus"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_disappear_q() { <xbgf,bgf1,bgf2> = test_data["disappear_q"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_disappear_s() { <xbgf,bgf1,bgf2> = test_data["disappear_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_distribute_l() { <xbgf,bgf1,bgf2> = test_data["distribute_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_distribute_nt() { <xbgf,bgf1,bgf2> = test_data["distribute_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_downgrade() { <xbgf,bgf1,bgf2> = test_data["downgrade"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_eliminate() { <xbgf,bgf1,bgf2> = test_data["eliminate"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_equate1() { <xbgf,bgf1,bgf2> = test_data["equate1"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_equate2() { <xbgf,bgf1,bgf2> = test_data["equate2"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_equate3() { <xbgf,bgf1,bgf2> = test_data["equate3"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_equate4() { <xbgf,bgf1,bgf2> = test_data["equate4"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_extract_l() { <xbgf,bgf1,bgf2> = test_data["extract_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_extract_nt() { <xbgf,bgf1,bgf2> = test_data["extract_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_extract_subch() { <xbgf,bgf1,bgf2> = test_data["extract_subch"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_extract_subseq_multiple() { <xbgf,bgf1,bgf2> = test_data["extract_subseq_multiple"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_extract_subseq_single() { <xbgf,bgf1,bgf2> = test_data["extract_subseq_single"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_factor_eps() { <xbgf,bgf1,bgf2> = test_data["factor_eps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_factor_global() { <xbgf,bgf1,bgf2> = test_data["factor_global"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_factor_local() { <xbgf,bgf1,bgf2> = test_data["factor_local"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_factor_nt() { <xbgf,bgf1,bgf2> = test_data["factor_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_fold() { <xbgf,bgf1,bgf2> = test_data["fold"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_fold_l() { <xbgf,bgf1,bgf2> = test_data["fold_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_fold_nt() { <xbgf,bgf1,bgf2> = test_data["fold_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_horizontal_l() { <xbgf,bgf1,bgf2> = test_data["horizontal_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_horizontal_n() { <xbgf,bgf1,bgf2> = test_data["horizontal_n"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_import() { <xbgf,bgf1,bgf2> = test_data["import"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_inject() { <xbgf,bgf1,bgf2> = test_data["inject"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_inline() { <xbgf,bgf1,bgf2> = test_data["inline"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_introduce() { <xbgf,bgf1,bgf2> = test_data["introduce"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_iterate_l() { <xbgf,bgf1,bgf2> = test_data["iterate_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_iterate_p() { <xbgf,bgf1,bgf2> = test_data["iterate_p"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_iterate_r() { <xbgf,bgf1,bgf2> = test_data["iterate_r"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_lassoc_l() { <xbgf,bgf1,bgf2> = test_data["lassoc_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_lassoc_p() { <xbgf,bgf1,bgf2> = test_data["lassoc_p"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_lassoc_r() { <xbgf,bgf1,bgf2> = test_data["lassoc_r"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_assoc_p() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_p"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_assoc_q() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_q"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_assoc_s() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_ep() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ep"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_eq() { <xbgf,bgf1,bgf2> = test_data["massage_ch_eq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_es() { <xbgf,bgf1,bgf2> = test_data["massage_ch_es"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_ex() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ex"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_ps() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_qp() { <xbgf,bgf1,bgf2> = test_data["massage_ch_qp"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_qs() { <xbgf,bgf1,bgf2> = test_data["massage_ch_qs"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_xp() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xp"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_xq() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_xs() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xs"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_xx1() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx1"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_xx2() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx2"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_ch_xx3() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx3"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_comp_pp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_pp"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_comp_pq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_pq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_comp_ps() { <xbgf,bgf1,bgf2> = test_data["massage_comp_ps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_comp_qp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qp"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_comp_qq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_comp_qs() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qs"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_comp_sp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_sp"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_comp_sq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_sq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_comp_ss() { <xbgf,bgf1,bgf2> = test_data["massage_comp_ss"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_complex() { <xbgf,bgf1,bgf2> = test_data["massage_complex"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_distr_ch() { <xbgf,bgf1,bgf2> = test_data["massage_distr_ch"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_sel_s() { <xbgf,bgf1,bgf2> = test_data["massage_sel_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_seq_pq() { <xbgf,bgf1,bgf2> = test_data["massage_seq_pq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_seq_ps() { <xbgf,bgf1,bgf2> = test_data["massage_seq_ps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_seq_sq() { <xbgf,bgf1,bgf2> = test_data["massage_seq_sq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_seq_ss() { <xbgf,bgf1,bgf2> = test_data["massage_seq_ss"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_massage_seq_xs() { <xbgf,bgf1,bgf2> = test_data["massage_seq_xs"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_narrow_global() { <xbgf,bgf1,bgf2> = test_data["narrow_global"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_narrow_l() { <xbgf,bgf1,bgf2> = test_data["narrow_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_narrow_nt() { <xbgf,bgf1,bgf2> = test_data["narrow_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_permute() { <xbgf,bgf1,bgf2> = test_data["permute"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_project() { <xbgf,bgf1,bgf2> = test_data["project"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_rassoc_p() { <xbgf,bgf1,bgf2> = test_data["rassoc_p"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_rassoc_s() { <xbgf,bgf1,bgf2> = test_data["rassoc_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_redefine() { <xbgf,bgf1,bgf2> = test_data["redefine"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_remove_horizontal() { <xbgf,bgf1,bgf2> = test_data["remove_horizontal"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_remove_inside() { <xbgf,bgf1,bgf2> = test_data["remove_inside"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_remove_vertical() { <xbgf,bgf1,bgf2> = test_data["remove_vertical"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_rename4() { <xbgf,bgf1,bgf2> = test_data["rename4"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_renameL() { <xbgf,bgf1,bgf2> = test_data["renameL"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_renameN() { <xbgf,bgf1,bgf2> = test_data["renameN"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_renameS() { <xbgf,bgf1,bgf2> = test_data["renameS"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_renameT() { <xbgf,bgf1,bgf2> = test_data["renameT"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_replace_choice() { <xbgf,bgf1,bgf2> = test_data["replace_choice"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_replace_choice_part() { <xbgf,bgf1,bgf2> = test_data["replace_choice_part"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_replace_global() { <xbgf,bgf1,bgf2> = test_data["replace_global"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_replace_l() { <xbgf,bgf1,bgf2> = test_data["replace_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_replace_nt() { <xbgf,bgf1,bgf2> = test_data["replace_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_replace_seq() { <xbgf,bgf1,bgf2> = test_data["replace_seq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_reroot() { <xbgf,bgf1,bgf2> = test_data["reroot"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_split1() { <xbgf,bgf1,bgf2> = test_data["split1"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_split2() { <xbgf,bgf1,bgf2> = test_data["split2"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_split3() { <xbgf,bgf1,bgf2> = test_data["split3"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_split4() { <xbgf,bgf1,bgf2> = test_data["split4"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_strip2() { <xbgf,bgf1,bgf2> = test_data["strip2"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_strip4() { <xbgf,bgf1,bgf2> = test_data["strip4"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_unchain_l() { <xbgf,bgf1,bgf2> = test_data["unchain_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_unchain_n() { <xbgf,bgf1,bgf2> = test_data["unchain_n"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_undefine1() { <xbgf,bgf1,bgf2> = test_data["undefine1"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_undefine2() { <xbgf,bgf1,bgf2> = test_data["undefine2"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_unfold() { <xbgf,bgf1,bgf2> = test_data["unfold"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_unfold_l() { <xbgf,bgf1,bgf2> = test_data["unfold_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_unfold_normalize() { <xbgf,bgf1,bgf2> = test_data["unfold_normalize"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_unfold_nt() { <xbgf,bgf1,bgf2> = test_data["unfold_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_unite_eq() { <xbgf,bgf1,bgf2> = test_data["unite_eq"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_unite_normal() { <xbgf,bgf1,bgf2> = test_data["unite_normal"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_unlabel() { <xbgf,bgf1,bgf2> = test_data["unlabel"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_upgrade() { <xbgf,bgf1,bgf2> = test_data["upgrade"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_vertical_l() { <xbgf,bgf1,bgf2> = test_data["vertical_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_vertical_s() { <xbgf,bgf1,bgf2> = test_data["vertical_s"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_widen_global() { <xbgf,bgf1,bgf2> = test_data["widen_global"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_widen_l() { <xbgf,bgf1,bgf2> = test_data["widen_l"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_widen_nt() { <xbgf,bgf1,bgf2> = test_data["widen_nt"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_widen_sub() { <xbgf,bgf1,bgf2> = test_data["widen_sub"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_yaccify_eps() { <xbgf,bgf1,bgf2> = test_data["yaccify_eps"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_yaccify_left() { <xbgf,bgf1,bgf2> = test_data["yaccify_left"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_yaccify_left_plus() { <xbgf,bgf1,bgf2> = test_data["yaccify_left_plus"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_yaccify_right() { <xbgf,bgf1,bgf2> = test_data["yaccify_right"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
+void show_yaccify_right_plus() { <xbgf,bgf1,bgf2> = test_data["yaccify_right_plus"]; println("Input <bgf1>");println("Transformations: <xbgf>");println("Expected output <bgf2>");bgf3=transform(xbgf,bgf1);println("Actual output <bgf3>"); gdtv(bgf3,bgf2); }
 
 
-test bool test_abridge() { <xbgf,bgf1,bgf2> = test_data["abridge"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_abstractize() { <xbgf,bgf1,bgf2> = test_data["abstractize"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_add_horizontal() { <xbgf,bgf1,bgf2> = test_data["add_horizontal"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_add_inside() { <xbgf,bgf1,bgf2> = test_data["add_inside"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_add_vertical() { <xbgf,bgf1,bgf2> = test_data["add_vertical"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_add_vertical_middle() { <xbgf,bgf1,bgf2> = test_data["add_vertical_middle"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_add_vertical_scattered() { <xbgf,bgf1,bgf2> = test_data["add_vertical_scattered"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_anonymize_multiple() { <xbgf,bgf1,bgf2> = test_data["anonymize_multiple"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_anonymize_single() { <xbgf,bgf1,bgf2> = test_data["anonymize_single"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_appear_q() { <xbgf,bgf1,bgf2> = test_data["appear_q"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_appear_s() { <xbgf,bgf1,bgf2> = test_data["appear_s"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_chain_l() { <xbgf,bgf1,bgf2> = test_data["chain_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_chain_n() { <xbgf,bgf1,bgf2> = test_data["chain_n"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_concretize() { <xbgf,bgf1,bgf2> = test_data["concretize"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_deanonymize_multiple() { <xbgf,bgf1,bgf2> = test_data["deanonymize_multiple"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_deanonymize_single() { <xbgf,bgf1,bgf2> = test_data["deanonymize_single"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_define() { <xbgf,bgf1,bgf2> = test_data["define"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_designate() { <xbgf,bgf1,bgf2> = test_data["designate"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_detour() { <xbgf,bgf1,bgf2> = test_data["detour"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_deyaccify_eps() { <xbgf,bgf1,bgf2> = test_data["deyaccify_eps"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_deyaccify_left() { <xbgf,bgf1,bgf2> = test_data["deyaccify_left"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_deyaccify_left_plus() { <xbgf,bgf1,bgf2> = test_data["deyaccify_left_plus"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_deyaccify_right() { <xbgf,bgf1,bgf2> = test_data["deyaccify_right"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_deyaccify_right_plus() { <xbgf,bgf1,bgf2> = test_data["deyaccify_right_plus"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_disappear_q() { <xbgf,bgf1,bgf2> = test_data["disappear_q"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_disappear_s() { <xbgf,bgf1,bgf2> = test_data["disappear_s"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_distribute_l() { <xbgf,bgf1,bgf2> = test_data["distribute_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_distribute_nt() { <xbgf,bgf1,bgf2> = test_data["distribute_nt"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_downgrade() { <xbgf,bgf1,bgf2> = test_data["downgrade"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_eliminate() { <xbgf,bgf1,bgf2> = test_data["eliminate"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_equate1() { <xbgf,bgf1,bgf2> = test_data["equate1"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_equate2() { <xbgf,bgf1,bgf2> = test_data["equate2"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_equate3() { <xbgf,bgf1,bgf2> = test_data["equate3"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_equate4() { <xbgf,bgf1,bgf2> = test_data["equate4"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_extract_l() { <xbgf,bgf1,bgf2> = test_data["extract_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_extract_nt() { <xbgf,bgf1,bgf2> = test_data["extract_nt"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_extract_subch() { <xbgf,bgf1,bgf2> = test_data["extract_subch"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_extract_subseq_multiple() { <xbgf,bgf1,bgf2> = test_data["extract_subseq_multiple"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_extract_subseq_single() { <xbgf,bgf1,bgf2> = test_data["extract_subseq_single"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_factor_eps() { <xbgf,bgf1,bgf2> = test_data["factor_eps"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_factor_global() { <xbgf,bgf1,bgf2> = test_data["factor_global"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_factor_local() { <xbgf,bgf1,bgf2> = test_data["factor_local"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_factor_nt() { <xbgf,bgf1,bgf2> = test_data["factor_nt"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_fold() { <xbgf,bgf1,bgf2> = test_data["fold"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_fold_l() { <xbgf,bgf1,bgf2> = test_data["fold_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_fold_nt() { <xbgf,bgf1,bgf2> = test_data["fold_nt"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_horizontal_l() { <xbgf,bgf1,bgf2> = test_data["horizontal_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_horizontal_n() { <xbgf,bgf1,bgf2> = test_data["horizontal_n"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_import() { <xbgf,bgf1,bgf2> = test_data["import"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_inject() { <xbgf,bgf1,bgf2> = test_data["inject"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_inline() { <xbgf,bgf1,bgf2> = test_data["inline"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_introduce() { <xbgf,bgf1,bgf2> = test_data["introduce"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_iterate_l() { <xbgf,bgf1,bgf2> = test_data["iterate_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_iterate_p() { <xbgf,bgf1,bgf2> = test_data["iterate_p"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_iterate_r() { <xbgf,bgf1,bgf2> = test_data["iterate_r"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_lassoc_l() { <xbgf,bgf1,bgf2> = test_data["lassoc_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_lassoc_p() { <xbgf,bgf1,bgf2> = test_data["lassoc_p"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_lassoc_r() { <xbgf,bgf1,bgf2> = test_data["lassoc_r"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_assoc_p() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_p"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_assoc_q() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_q"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_assoc_s() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_s"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_ep() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ep"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_eq() { <xbgf,bgf1,bgf2> = test_data["massage_ch_eq"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_es() { <xbgf,bgf1,bgf2> = test_data["massage_ch_es"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_ex() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ex"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_ps() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ps"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_qp() { <xbgf,bgf1,bgf2> = test_data["massage_ch_qp"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_qs() { <xbgf,bgf1,bgf2> = test_data["massage_ch_qs"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_xp() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xp"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_xq() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xq"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_xs() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xs"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_xx1() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx1"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_xx2() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx2"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_ch_xx3() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx3"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_comp_pp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_pp"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_comp_pq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_pq"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_comp_ps() { <xbgf,bgf1,bgf2> = test_data["massage_comp_ps"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_comp_qp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qp"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_comp_qq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qq"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_comp_qs() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qs"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_comp_sp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_sp"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_comp_sq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_sq"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_comp_ss() { <xbgf,bgf1,bgf2> = test_data["massage_comp_ss"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_complex() { <xbgf,bgf1,bgf2> = test_data["massage_complex"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_distr_ch() { <xbgf,bgf1,bgf2> = test_data["massage_distr_ch"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_sel_s() { <xbgf,bgf1,bgf2> = test_data["massage_sel_s"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_seq_pq() { <xbgf,bgf1,bgf2> = test_data["massage_seq_pq"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_seq_ps() { <xbgf,bgf1,bgf2> = test_data["massage_seq_ps"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_seq_sq() { <xbgf,bgf1,bgf2> = test_data["massage_seq_sq"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_seq_ss() { <xbgf,bgf1,bgf2> = test_data["massage_seq_ss"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_massage_seq_xs() { <xbgf,bgf1,bgf2> = test_data["massage_seq_xs"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_narrow_global() { <xbgf,bgf1,bgf2> = test_data["narrow_global"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_narrow_l() { <xbgf,bgf1,bgf2> = test_data["narrow_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_narrow_nt() { <xbgf,bgf1,bgf2> = test_data["narrow_nt"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_permute() { <xbgf,bgf1,bgf2> = test_data["permute"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_project() { <xbgf,bgf1,bgf2> = test_data["project"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_rassoc_p() { <xbgf,bgf1,bgf2> = test_data["rassoc_p"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_rassoc_s() { <xbgf,bgf1,bgf2> = test_data["rassoc_s"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_redefine() { <xbgf,bgf1,bgf2> = test_data["redefine"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_remove_horizontal() { <xbgf,bgf1,bgf2> = test_data["remove_horizontal"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_remove_inside() { <xbgf,bgf1,bgf2> = test_data["remove_inside"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_remove_vertical() { <xbgf,bgf1,bgf2> = test_data["remove_vertical"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_rename4() { <xbgf,bgf1,bgf2> = test_data["rename4"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_renameL() { <xbgf,bgf1,bgf2> = test_data["renameL"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_renameN() { <xbgf,bgf1,bgf2> = test_data["renameN"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_renameS() { <xbgf,bgf1,bgf2> = test_data["renameS"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_renameT() { <xbgf,bgf1,bgf2> = test_data["renameT"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_replace_choice() { <xbgf,bgf1,bgf2> = test_data["replace_choice"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_replace_choice_part() { <xbgf,bgf1,bgf2> = test_data["replace_choice_part"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_replace_global() { <xbgf,bgf1,bgf2> = test_data["replace_global"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_replace_l() { <xbgf,bgf1,bgf2> = test_data["replace_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_replace_nt() { <xbgf,bgf1,bgf2> = test_data["replace_nt"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_replace_seq() { <xbgf,bgf1,bgf2> = test_data["replace_seq"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_reroot() { <xbgf,bgf1,bgf2> = test_data["reroot"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_split1() { <xbgf,bgf1,bgf2> = test_data["split1"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_split2() { <xbgf,bgf1,bgf2> = test_data["split2"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_split3() { <xbgf,bgf1,bgf2> = test_data["split3"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_split4() { <xbgf,bgf1,bgf2> = test_data["split4"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_strip2() { <xbgf,bgf1,bgf2> = test_data["strip2"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_strip4() { <xbgf,bgf1,bgf2> = test_data["strip4"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_unchain_l() { <xbgf,bgf1,bgf2> = test_data["unchain_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_unchain_n() { <xbgf,bgf1,bgf2> = test_data["unchain_n"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_undefine1() { <xbgf,bgf1,bgf2> = test_data["undefine1"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_undefine2() { <xbgf,bgf1,bgf2> = test_data["undefine2"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_unfold() { <xbgf,bgf1,bgf2> = test_data["unfold"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_unfold_l() { <xbgf,bgf1,bgf2> = test_data["unfold_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_unfold_normalize() { <xbgf,bgf1,bgf2> = test_data["unfold_normalize"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_unfold_nt() { <xbgf,bgf1,bgf2> = test_data["unfold_nt"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_unite_eq() { <xbgf,bgf1,bgf2> = test_data["unite_eq"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_unite_normal() { <xbgf,bgf1,bgf2> = test_data["unite_normal"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_unlabel() { <xbgf,bgf1,bgf2> = test_data["unlabel"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_upgrade() { <xbgf,bgf1,bgf2> = test_data["upgrade"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_vertical_l() { <xbgf,bgf1,bgf2> = test_data["vertical_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_vertical_s() { <xbgf,bgf1,bgf2> = test_data["vertical_s"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_widen_global() { <xbgf,bgf1,bgf2> = test_data["widen_global"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_widen_l() { <xbgf,bgf1,bgf2> = test_data["widen_l"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_widen_nt() { <xbgf,bgf1,bgf2> = test_data["widen_nt"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_widen_sub() { <xbgf,bgf1,bgf2> = test_data["widen_sub"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_yaccify_eps() { <xbgf,bgf1,bgf2> = test_data["yaccify_eps"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_yaccify_left() { <xbgf,bgf1,bgf2> = test_data["yaccify_left"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_yaccify_left_plus() { <xbgf,bgf1,bgf2> = test_data["yaccify_left_plus"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_yaccify_right() { <xbgf,bgf1,bgf2> = test_data["yaccify_right"]; return gdt(transform(xbgf,bgf1),bgf2); }
-test bool test_yaccify_right_plus() { <xbgf,bgf1,bgf2> = test_data["yaccify_right_plus"]; return gdt(transform(xbgf,bgf1),bgf2); }
+test bool test_abridge() { <xbgf,bgf1,bgf2> = test_data["abridge"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_abstractize() { <xbgf,bgf1,bgf2> = test_data["abstractize"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_add_horizontal() { <xbgf,bgf1,bgf2> = test_data["add_horizontal"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_add_inside() { <xbgf,bgf1,bgf2> = test_data["add_inside"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_add_vertical() { <xbgf,bgf1,bgf2> = test_data["add_vertical"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_add_vertical_middle() { <xbgf,bgf1,bgf2> = test_data["add_vertical_middle"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_add_vertical_scattered() { <xbgf,bgf1,bgf2> = test_data["add_vertical_scattered"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_anonymize_multiple() { <xbgf,bgf1,bgf2> = test_data["anonymize_multiple"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_anonymize_single() { <xbgf,bgf1,bgf2> = test_data["anonymize_single"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_appear_q() { <xbgf,bgf1,bgf2> = test_data["appear_q"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_appear_s() { <xbgf,bgf1,bgf2> = test_data["appear_s"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_chain_l() { <xbgf,bgf1,bgf2> = test_data["chain_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_chain_n() { <xbgf,bgf1,bgf2> = test_data["chain_n"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_concretize() { <xbgf,bgf1,bgf2> = test_data["concretize"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_deanonymize_multiple() { <xbgf,bgf1,bgf2> = test_data["deanonymize_multiple"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_deanonymize_single() { <xbgf,bgf1,bgf2> = test_data["deanonymize_single"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_define() { <xbgf,bgf1,bgf2> = test_data["define"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_designate() { <xbgf,bgf1,bgf2> = test_data["designate"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_detour() { <xbgf,bgf1,bgf2> = test_data["detour"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_deyaccify_eps() { <xbgf,bgf1,bgf2> = test_data["deyaccify_eps"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_deyaccify_left() { <xbgf,bgf1,bgf2> = test_data["deyaccify_left"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_deyaccify_left_plus() { <xbgf,bgf1,bgf2> = test_data["deyaccify_left_plus"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_deyaccify_right() { <xbgf,bgf1,bgf2> = test_data["deyaccify_right"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_deyaccify_right_plus() { <xbgf,bgf1,bgf2> = test_data["deyaccify_right_plus"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_disappear_q() { <xbgf,bgf1,bgf2> = test_data["disappear_q"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_disappear_s() { <xbgf,bgf1,bgf2> = test_data["disappear_s"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_distribute_l() { <xbgf,bgf1,bgf2> = test_data["distribute_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_distribute_nt() { <xbgf,bgf1,bgf2> = test_data["distribute_nt"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_downgrade() { <xbgf,bgf1,bgf2> = test_data["downgrade"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_eliminate() { <xbgf,bgf1,bgf2> = test_data["eliminate"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_equate1() { <xbgf,bgf1,bgf2> = test_data["equate1"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_equate2() { <xbgf,bgf1,bgf2> = test_data["equate2"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_equate3() { <xbgf,bgf1,bgf2> = test_data["equate3"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_equate4() { <xbgf,bgf1,bgf2> = test_data["equate4"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_extract_l() { <xbgf,bgf1,bgf2> = test_data["extract_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_extract_nt() { <xbgf,bgf1,bgf2> = test_data["extract_nt"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_extract_subch() { <xbgf,bgf1,bgf2> = test_data["extract_subch"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_extract_subseq_multiple() { <xbgf,bgf1,bgf2> = test_data["extract_subseq_multiple"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_extract_subseq_single() { <xbgf,bgf1,bgf2> = test_data["extract_subseq_single"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_factor_eps() { <xbgf,bgf1,bgf2> = test_data["factor_eps"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_factor_global() { <xbgf,bgf1,bgf2> = test_data["factor_global"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_factor_local() { <xbgf,bgf1,bgf2> = test_data["factor_local"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_factor_nt() { <xbgf,bgf1,bgf2> = test_data["factor_nt"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_fold() { <xbgf,bgf1,bgf2> = test_data["fold"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_fold_l() { <xbgf,bgf1,bgf2> = test_data["fold_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_fold_nt() { <xbgf,bgf1,bgf2> = test_data["fold_nt"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_horizontal_l() { <xbgf,bgf1,bgf2> = test_data["horizontal_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_horizontal_n() { <xbgf,bgf1,bgf2> = test_data["horizontal_n"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_import() { <xbgf,bgf1,bgf2> = test_data["import"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_inject() { <xbgf,bgf1,bgf2> = test_data["inject"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_inline() { <xbgf,bgf1,bgf2> = test_data["inline"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_introduce() { <xbgf,bgf1,bgf2> = test_data["introduce"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_iterate_l() { <xbgf,bgf1,bgf2> = test_data["iterate_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_iterate_p() { <xbgf,bgf1,bgf2> = test_data["iterate_p"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_iterate_r() { <xbgf,bgf1,bgf2> = test_data["iterate_r"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_lassoc_l() { <xbgf,bgf1,bgf2> = test_data["lassoc_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_lassoc_p() { <xbgf,bgf1,bgf2> = test_data["lassoc_p"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_lassoc_r() { <xbgf,bgf1,bgf2> = test_data["lassoc_r"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_assoc_p() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_p"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_assoc_q() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_q"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_assoc_s() { <xbgf,bgf1,bgf2> = test_data["massage_assoc_s"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_ep() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ep"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_eq() { <xbgf,bgf1,bgf2> = test_data["massage_ch_eq"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_es() { <xbgf,bgf1,bgf2> = test_data["massage_ch_es"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_ex() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ex"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_ps() { <xbgf,bgf1,bgf2> = test_data["massage_ch_ps"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_qp() { <xbgf,bgf1,bgf2> = test_data["massage_ch_qp"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_qs() { <xbgf,bgf1,bgf2> = test_data["massage_ch_qs"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_xp() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xp"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_xq() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xq"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_xs() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xs"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_xx1() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx1"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_xx2() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx2"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_ch_xx3() { <xbgf,bgf1,bgf2> = test_data["massage_ch_xx3"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_comp_pp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_pp"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_comp_pq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_pq"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_comp_ps() { <xbgf,bgf1,bgf2> = test_data["massage_comp_ps"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_comp_qp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qp"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_comp_qq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qq"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_comp_qs() { <xbgf,bgf1,bgf2> = test_data["massage_comp_qs"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_comp_sp() { <xbgf,bgf1,bgf2> = test_data["massage_comp_sp"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_comp_sq() { <xbgf,bgf1,bgf2> = test_data["massage_comp_sq"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_comp_ss() { <xbgf,bgf1,bgf2> = test_data["massage_comp_ss"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_complex() { <xbgf,bgf1,bgf2> = test_data["massage_complex"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_distr_ch() { <xbgf,bgf1,bgf2> = test_data["massage_distr_ch"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_sel_s() { <xbgf,bgf1,bgf2> = test_data["massage_sel_s"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_seq_pq() { <xbgf,bgf1,bgf2> = test_data["massage_seq_pq"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_seq_ps() { <xbgf,bgf1,bgf2> = test_data["massage_seq_ps"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_seq_sq() { <xbgf,bgf1,bgf2> = test_data["massage_seq_sq"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_seq_ss() { <xbgf,bgf1,bgf2> = test_data["massage_seq_ss"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_massage_seq_xs() { <xbgf,bgf1,bgf2> = test_data["massage_seq_xs"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_narrow_global() { <xbgf,bgf1,bgf2> = test_data["narrow_global"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_narrow_l() { <xbgf,bgf1,bgf2> = test_data["narrow_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_narrow_nt() { <xbgf,bgf1,bgf2> = test_data["narrow_nt"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_permute() { <xbgf,bgf1,bgf2> = test_data["permute"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_project() { <xbgf,bgf1,bgf2> = test_data["project"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_rassoc_p() { <xbgf,bgf1,bgf2> = test_data["rassoc_p"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_rassoc_s() { <xbgf,bgf1,bgf2> = test_data["rassoc_s"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_redefine() { <xbgf,bgf1,bgf2> = test_data["redefine"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_remove_horizontal() { <xbgf,bgf1,bgf2> = test_data["remove_horizontal"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_remove_inside() { <xbgf,bgf1,bgf2> = test_data["remove_inside"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_remove_vertical() { <xbgf,bgf1,bgf2> = test_data["remove_vertical"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_rename4() { <xbgf,bgf1,bgf2> = test_data["rename4"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_renameL() { <xbgf,bgf1,bgf2> = test_data["renameL"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_renameN() { <xbgf,bgf1,bgf2> = test_data["renameN"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_renameS() { <xbgf,bgf1,bgf2> = test_data["renameS"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_renameT() { <xbgf,bgf1,bgf2> = test_data["renameT"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_replace_choice() { <xbgf,bgf1,bgf2> = test_data["replace_choice"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_replace_choice_part() { <xbgf,bgf1,bgf2> = test_data["replace_choice_part"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_replace_global() { <xbgf,bgf1,bgf2> = test_data["replace_global"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_replace_l() { <xbgf,bgf1,bgf2> = test_data["replace_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_replace_nt() { <xbgf,bgf1,bgf2> = test_data["replace_nt"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_replace_seq() { <xbgf,bgf1,bgf2> = test_data["replace_seq"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_reroot() { <xbgf,bgf1,bgf2> = test_data["reroot"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_split1() { <xbgf,bgf1,bgf2> = test_data["split1"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_split2() { <xbgf,bgf1,bgf2> = test_data["split2"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_split3() { <xbgf,bgf1,bgf2> = test_data["split3"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_split4() { <xbgf,bgf1,bgf2> = test_data["split4"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_strip2() { <xbgf,bgf1,bgf2> = test_data["strip2"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_strip4() { <xbgf,bgf1,bgf2> = test_data["strip4"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_unchain_l() { <xbgf,bgf1,bgf2> = test_data["unchain_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_unchain_n() { <xbgf,bgf1,bgf2> = test_data["unchain_n"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_undefine1() { <xbgf,bgf1,bgf2> = test_data["undefine1"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_undefine2() { <xbgf,bgf1,bgf2> = test_data["undefine2"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_unfold() { <xbgf,bgf1,bgf2> = test_data["unfold"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_unfold_l() { <xbgf,bgf1,bgf2> = test_data["unfold_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_unfold_normalize() { <xbgf,bgf1,bgf2> = test_data["unfold_normalize"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_unfold_nt() { <xbgf,bgf1,bgf2> = test_data["unfold_nt"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_unite_eq() { <xbgf,bgf1,bgf2> = test_data["unite_eq"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_unite_normal() { <xbgf,bgf1,bgf2> = test_data["unite_normal"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_unlabel() { <xbgf,bgf1,bgf2> = test_data["unlabel"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_upgrade() { <xbgf,bgf1,bgf2> = test_data["upgrade"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_vertical_l() { <xbgf,bgf1,bgf2> = test_data["vertical_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_vertical_s() { <xbgf,bgf1,bgf2> = test_data["vertical_s"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_widen_global() { <xbgf,bgf1,bgf2> = test_data["widen_global"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_widen_l() { <xbgf,bgf1,bgf2> = test_data["widen_l"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_widen_nt() { <xbgf,bgf1,bgf2> = test_data["widen_nt"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_widen_sub() { <xbgf,bgf1,bgf2> = test_data["widen_sub"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_yaccify_eps() { <xbgf,bgf1,bgf2> = test_data["yaccify_eps"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_yaccify_left() { <xbgf,bgf1,bgf2> = test_data["yaccify_left"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_yaccify_left_plus() { <xbgf,bgf1,bgf2> = test_data["yaccify_left_plus"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_yaccify_right() { <xbgf,bgf1,bgf2> = test_data["yaccify_right"]; return gdts(transform(xbgf,bgf1),bgf2); }
+test bool test_yaccify_right_plus() { <xbgf,bgf1,bgf2> = test_data["yaccify_right_plus"]; return gdts(transform(xbgf,bgf1),bgf2); }
