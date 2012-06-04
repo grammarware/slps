@@ -13,15 +13,11 @@ tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpr
 tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] es1, list[BGFExpression] L1, list[BGFExpression] es2, [], bool hit) = <false,[],[]>;
 tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] es1, list[BGFExpression] L1, list[BGFExpression] es2, list[BGFExpression] L2, bool hit)
 {
-	println("tryMatchChoices(<es1>,<L1>,<es2>,<L2>,<hit>");
 	for (y <- L2)
 	{
 		for (x <- L1)
 			if (eqE(x,y))
-				{
-				println("-\> tryMatchChoices(<es1>,<L1-x>,<es2>,<L2-y>,true");
 				return tryMatchChoices(es1,L1-x,es2,L2-y,true);
-				}
 		if (hit)
 			es2 += y;
 		else
@@ -36,11 +32,9 @@ tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpr
 public bool eqE(choice([BGFExpression e1]), choice([BGFExpression e2])) = eqE(e1,e2);
 public bool eqE(choice(L1), choice(L2))
 {
-	//println("We\'re at eqE with:\n <L1>\nvs\n <L2>...");
 	for (x <- L1, y <- L2)
 		if (eqE(x,y))
 			return eqE(choice(L1 - x), choice(L2 - y));
-	//println("Unmatched <L1> with <L2> :(");
 	return false;
 }
 public bool eqE(sequence(L1), sequence(L2))
