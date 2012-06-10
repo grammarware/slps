@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module transform::Associativity
+module transform::library::Associativity
 
 import syntax::BGF;
 

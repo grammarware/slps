@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module transform::Width
+module transform::library::Width
 
 import syntax::BGF;
 

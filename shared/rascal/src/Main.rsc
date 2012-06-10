@@ -5,34 +5,22 @@ import String;
 import IO;
 import syntax::BGF;
 import syntax::XBGF;
-import io::ReadBGF;
-import io::ReadXBGF;
-import io::WriteXBGF;
-import transform::XBGF;
-//import lang::xml::DOM;
+import diff::GDT;
+import transform::library::Test;
+import transform::NegotiatedXBGF;
 
 public void main()
 {
-	XBGFSequence x;
-	x = readXBGF(|project://slps/tests/all/abridge.xbgf|);
-	println(x);
-	g1 = readBGF(|project://slps/tests/all/abridge.bgf|);
-	g2 = readBGF(|project://slps/tests/all/abridge.baseline|);
-	//writeXBGF(x,|project://slps/tests/all/abridge.bgf|);
-	g3 = transform(x,g1);
+	<_,g1,g2> = transform::library::Test::test_data["renameN"];
+	XBGFSequence x = [renameN("expression","exp")];
+	//XBGFSequence x = [renameN("expr","int")];
+	
+	<p,a,g3> = transform::NegotiatedXBGF::attemptTransform(x,g1);
+	iprintln(x);
+	println(g1);
 	println(g3);
 	println(g2);
-}
-
-public bool tryAll()
-{
-	loc base = |project://slps/tests/xbgf|;
-	loc outp = |project://slps/tests/xbgf-res|;
-	for (f <- listEntries(base))
-	{
-		if (f == ".gitignore") continue;
-		println(f);
-		writeXBGF(readXBGF(base+f),outp+f);
-	}
-	return true;
+	println(diff::GDT::gdtv(g3,g2));
+	println(p);
+	println(a);
 }

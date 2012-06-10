@@ -8,12 +8,13 @@ import syntax::BGF;
 import syntax::XBGF;
 import normal::BGF;
 import diff::GDT;
-import transform::Associativity;
-import transform::Factoring;
-import transform::Massage;
-import transform::Util;
-import transform::Width;
-import transform::Yacc;
+import transform::library::Associativity;
+import transform::library::Factoring;
+import transform::library::Massage;
+import transform::library::Util;
+import transform::library::Core;
+import transform::library::Width;
+import transform::library::Yacc;
 
 public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 {
@@ -161,7 +162,7 @@ BGFGrammar runAssoc(production(str l, str x, BGFExpression e1), grammar(rs, ps))
 {
 	<ps1,ps2,ps3> = splitPbyW(ps,comboscope(inlabel(l),innt(x)));
 	if ([production(l, x, BGFExpression e2)] := ps2)
-		if (transform::Associativity::admit(e1,e2))
+		if (transform::library::Associativity::admit(e1,e2))
 			return grammar(rs,ps1 + production(l, x, e1) + ps3);
 		else throw "<production(l,x,e1)> must admit associativity transformation.";
 	else throw "Cannot find the right production rule to match <production(l,x,e1)> in <ps2>.";
@@ -250,7 +251,7 @@ BGFGrammar runDeyaccify(str n, grammar(rs,ps))
 	<ps1,ps2,ps3> = splitPbyW(ps,innt(n));
 	if (size(ps2) == 1) throw "Nonterminal <n> must be defined vertically for deyaccification to work.";
 	if (size(ps2) > 2) throw "No deyaccification patterns for <size(ps2)> production rules known.";
-	return grammar(rs, ps1 + transform::Yacc::deyaccify(toSet(ps2)) + ps3);
+	return grammar(rs, ps1 + transform::library::Yacc::deyaccify(toSet(ps2)) + ps3);
 }
 
 BGFGrammar runDisappear(BGFProduction p1, grammar(rs, ps))
@@ -268,7 +269,7 @@ BGFGrammar runDistribute(XBGFScope w, grammar(rs, ps))
 {
 	<ps1,ps2,ps3> = splitPbyW(ps,w);
 	if (/choice(_) !:= ps2) throw "No choices found in the context <w>, nothing to distribute";
-	return grammar(rs,ps1 + normalise([transform::Factoring::makeDistributed(p) | p <- ps2]) + ps3);
+	return grammar(rs,ps1 + normalise([transform::library::Factoring::makeDistributed(p) | p <- ps2]) + ps3);
 }
 
 BGFGrammar runDowngrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
@@ -317,8 +318,8 @@ BGFGrammar runExtract(production(str l, str x, BGFExpression rhs), XBGFScope w, 
 
 BGFGrammar runFactor(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
 {
-	e3 = normalise(transform::Factoring::makeDistributed(e1));
-	e4 = normalise(transform::Factoring::makeDistributed(e2));
+	e3 = normalise(transform::library::Factoring::makeDistributed(e1));
+	e4 = normalise(transform::library::Factoring::makeDistributed(e2));
 	if (!eqE(e3, e4))
 		throw "Expressions <e1> and <e2> must be related by distribution.";
 	return runReplace(e1,e2,w,g);
@@ -388,7 +389,7 @@ BGFGrammar runIterate(production(str l, str x, BGFExpression e1), grammar(rs, ps
 {
 	<ps1,ps2,ps3> = splitPbyW(ps,comboscope(inlabel(l),innt(x)));
 	if ([production(l, x, BGFExpression e2)] := ps2)
-		if (transform::Associativity::admit(e2,e1))
+		if (transform::library::Associativity::admit(e2,e1))
 			return grammar(rs,ps1 + production(l, x, e1) + ps3);
 		else throw "<production(l,x,e1)> must admit associativity transformation.";
 	else throw "Cannot find the right production rule to match <production(l,x,e1)> in <ps2>.";
@@ -396,7 +397,7 @@ BGFGrammar runIterate(production(str l, str x, BGFExpression e1), grammar(rs, ps
 
 BGFGrammar runMassage(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
-	if (transform::Massage::massage_eq({e1,e2}))
+	if (transform::library::Massage::massage_eq({e1,e2}))
 		return runReplace(e1,e2,w,g);
 	else
 		throw "<e1> and <e2> are not massage-equivalent.";
@@ -404,7 +405,7 @@ BGFGrammar runMassage(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGramma
 
 BGFGrammar runNarrow(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
 {
-	if (!transform::Width::narrowing(e1,e2))
+	if (!transform::library::Width::narrowing(e1,e2))
 		throw "<e1> and <e2> are not in narrowing relation.";
 	return runReplace(e1,e2,w,g); 
 }
@@ -491,13 +492,8 @@ BGFGrammar runRenameN(str x, str y, grammar(rs, ps))
 {
 	ns = allNs(ps);
 	if (x notin ns) throw "Source name <x> for renaming must not be fresh.";
-	if (y in ns) throw "Target name <x> for renaming must be fresh.";
-	<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
-	list[BGFProduction] ps4 = ps1 + [production(l,y,e) | p <- ps2, production(str l,x,BGFExpression e) := p] + ps3;
-	if (x in usedNs(ps4))
-		return runReplace(nonterminal(x),nonterminal(y),globally(),grammar(rs,ps4));
-	else
-		return grammar(rs,ps4);
+	if (y in ns) throw "Target name <y> for renaming must be fresh.";
+	return transform::library::Core::performRenameN(x,y,grammar(rs,ps));
 }
 
 BGFGrammar runRenameS(str x, str y, XBGFScope w, grammar(rs, ps))
@@ -517,58 +513,14 @@ BGFGrammar runRenameT(str x, str y, grammar(rs, ps))
 	return runReplace(terminal(x),terminal(y),globally(),grammar(rs,ps));
 }
 
-list[BGFExpression] replaceSubsequence(list[BGFExpression] where, list[BGFExpression] what, list[BGFExpression] with)
-{
-	if (eqE(sequence(where),sequence(what))) return with;
-	int i = 0, len = size(what);
-	while (i+len<=size(where))
-	{
-		if (eqE(sequence(slice(where,i,len)),sequence(what)))
-			return slice(where,0,i) + with + slice(where,i+len,size(where)-i-len);
-		i+=1;
-	}
-	return where;
-}
-
-list[BGFExpression] replaceChoice(list[BGFExpression] where, list[BGFExpression] what, list[BGFExpression] with)
-{
-	if (eqE(choice(where),choice(what))) return with;
-	unmatched = where;
-	<res,es1,es2> = diff::GDT::tryMatchChoices(what,where);
-	if (res)
-		return es1 + with + es2;
-	else
-		return where;
-}
-
-list[BGFProduction] justReplace(BGFExpression e1, BGFExpression e2, list[BGFProduction] ps)
-{
-	list[BGFExpression] L5;
-	switch(e1)
-	{
-		case sequence(L1):
-		{
-			if (sequence(L4) := e2) L5 = L4; else L5 = [e2];
-			return visit(ps){case sequence(L2) => sequence(replaceSubsequence(L2,L1,L5))};
-		}
-		case choice(L1): 
-		{
-			if (choice(L4) := e2) L5 = L4; else L5 = [e2];
-			return visit(ps){case choice(L2) => choice(replaceChoice(L2,L1,L5))};
-		}
-		default:
-			return visit(ps){case e1 => e2}
-	}
-}
-
 BGFGrammar runReplace(BGFExpression e1, BGFExpression e2, XBGFScope w, grammar(rs, ps))
 {
 	list[BGFProduction] ps1,ps2,ps3,ps4;
 	<ps1,ps2,ps3> = splitPbyW(ps,w);
-	ps4 = justReplace(e1,e2,ps2);
+	ps4 = transform::library::Core::performReplace(e1,e2,ps2);
 	if (ps2 == ps4)
 		{
-			ps4 = justReplace(normalise(e1),normalise(e2),ps2); // TODO check if needed
+			ps4 = transform::library::Core::performReplace(normalise(e1),normalise(e2),ps2); // TODO check if needed
 			if (ps2 == ps4)
 				throw "Vacuous replace of <e1> by <e2> in context <w>.";
 		}
@@ -709,7 +661,7 @@ BGFGrammar runVertical(XBGFScope w, grammar(rs,ps))
 
 BGFGrammar runWiden(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
-	if (!transform::Width::narrowing(e2,e1))
+	if (!transform::library::Width::narrowing(e2,e1))
 		throw "<e2> and <e1> are not in widening relation.";
 	return runReplace(e1,e2,w,g); 
 }
@@ -719,7 +671,7 @@ BGFGrammar runYaccify(list[BGFProduction] ps1, grammar(rs,ps2))
 	if ({str x} := definedNs(ps1))
 	{
 		<ps3,ps4,ps5> = splitPbyW(ps2,innt(x));
-		if ([dyp1] := ps4 && [yp1,yp2] := ps1 && transform::Yacc::yaccification(dyp1,{yp1,yp2}))
+		if ([dyp1] := ps4 && [yp1,yp2] := ps1 && transform::library::Yacc::yaccification(dyp1,{yp1,yp2}))
 			return grammar(rs,ps3 + ps1 + ps5);
 		else
 			throw "<ps1> are not suitable as yaccification of <ps4>.";

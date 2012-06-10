@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module transform::Yacc
+module transform::library::Yacc
 
 import syntax::BGF;
 

@@ -1,6 +1,6 @@
 @contributor{Super Awesome Automated XBGF Test Suite Synchroniser}
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module transform::XBGFTest
+module transform::library::Test
 
 import IO;
 import syntax::BGF;

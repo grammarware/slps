@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module transform::Util
+module transform::library::Util
 
 import syntax::BGF;
 import syntax::XBGF;
@@ -7,6 +7,7 @@ import normal::BGF;
 import diff::GDT;
 import List;
 import Set; // toList
+import String; //size
 
 public BGFProduction unmark (BGFProduction p1)
 {
@@ -110,4 +111,23 @@ public list[BGFProduction] replaceP(list[BGFProduction] ps, p1, p2)
 		else
 			ps2 += p;
 	return ps2;
+}
+
+public int levenshtein(str x, str y)
+{
+	if (size(x) < size(y)) return levenshtein(y,x);
+	if (x=="") return size(y);
+	
+	prow = [0..size(y)];
+	for (i <- [0..size(x)-1])
+	{
+		crow = [i+1];
+		for (j <- [0..size(y)-1])
+			if (charAt(x,i) == charAt(y,j))
+				crow += min([ prow[j+1]+1, crow[j]+1, prow[j]   ]);
+			else
+				crow += min([ prow[j+1]+1, crow[j]+1, prow[j]+1 ]);
+		prow = crow;
+	} 
+	return prow[size(prow)-1];
 }

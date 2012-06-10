@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module transform::Factoring
+module transform::library::Factoring
 
 import syntax::BGF;
 

@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module transform::Massage
+module transform::library::Massage
 
 import syntax::BGF;
 import normal::BGF;
