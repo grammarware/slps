@@ -65,6 +65,13 @@
 		</testing>
 	</source>
 	<source>
+		<name>python</name>
+		<grammar>
+			<extraction><expand>tools</expand>/py2bgf <expand>fl</expand>/python/parser2.py
+      </extraction>
+		</grammar>
+	</source>
+	<source>
 		<name>dcg</name>
 		<grammar>
 			<extraction><expand>tools</expand>/dcg2bgf <expand>fl</expand>/prolog1/Parser.pro
@@ -166,6 +173,7 @@
       </extraction>
 		</grammar>
 	</source>
+	
 	<!--
   <source>
     <name>ldf</name>
@@ -177,16 +185,31 @@
   </source
 -->
 	<target>
-		<name>topdown</name>
-		<branch>
-			<input>dcg</input>
-		</branch>
+		<name>topdown1</name>
 		<branch>
 			<input>antlr</input>
 			<nominal-matching>
 				<perform>anonymize-antlr</perform>
 				<perform>rename-antlr</perform>
 			</nominal-matching>
+		</branch>
+		<branch>
+			<input>python</input>
+			<nominal-matching>
+				<perform>rename-python</perform>
+			</nominal-matching>
+			<structural-matching>
+				<perform>designate-python</perform>
+			</structural-matching>
+		</branch>
+	</target>
+	<target>
+		<name>topdown2</name>
+		<branch>
+			<input>dcg</input>
+		</branch>
+		<branch>
+			<input>topdown1</input>
 			<structural-matching>
 				<perform>unchain-antlr</perform>
 				<perform>designate-antlr</perform>
@@ -208,7 +231,7 @@
 	<target>
 		<name>unlayered</name>
 		<branch>
-			<input>topdown</input>
+			<input>topdown2</input>
 			<structural-matching>
 				<perform>removeLayers</perform>
 			</structural-matching>

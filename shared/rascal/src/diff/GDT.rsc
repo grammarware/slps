@@ -92,11 +92,21 @@ public bool gdtv(grammar(rs1,ps1), grammar(rs2,ps2))
 	<unmatched1,unmatched2> = gdt(ps1,ps2);
 	if (isEmpty(unmatched1) && isEmpty(unmatched2)) return true;
 	println("Grammars differ!");
-	for (u <- unmatched1)
-		println(u);
-	println("vs");
-	for (u <- unmatched2)
-		println(u);
+	//public set[str] definedNs(list[BGFProduction] ps) = {s | production(_,str s,_) <- ps};
+	for (nt <- {n | production(_, str n, _) <- unmatched1 + unmatched2})
+	{
+		println(" - Fail on <nt>:");
+		for (p <- unmatched1, production(_,nt,_) := p)
+			println("   - <p>");
+		println("   vs");
+		for (p <- unmatched2, production(_,nt,_) := p)
+			println("   - <p>");
+	}
+	//for (u <- unmatched1)
+	//	println(u);
+	//println("vs");
+	//for (u <- unmatched2)
+	//	println(u);
 	// TODO keep trying?
 	return false;
 }

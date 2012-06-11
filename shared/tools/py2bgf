@@ -17,6 +17,6 @@ elif [ ! -r $1 ]; then
 fi
 
 cp $1 ${SLPS}/shared/rascal/src/src.py
-cd ${SLPS}/shared/rascal/src && java -Xmx1G -Xss32m -jar ${SLPS}/download/rascal.jar extract::Python2BGF src.py $2
-mv ${SLPS}/shared/rascal/src/$2 ${LOCAL}
+cd ${SLPS}/shared/rascal/src && java -Xmx1G -Xss32m -jar ${SLPS}/download/rascal.jar extract::Python2BGF src.py tgt.bgf
+mv ${SLPS}/shared/rascal/src/tgt.bgf ${LOCAL}/$2
 rm ${SLPS}/shared/rascal/src/src.py

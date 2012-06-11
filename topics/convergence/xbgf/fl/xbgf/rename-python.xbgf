@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbgf:sequence xmlns:xbgf="http://planet-sl.org/xbgf" xmlns:bgf="http://planet-sl.org/bgf">
+	<xbgf:eliminate>
+		<nonterminal>_Literal</nonterminal>
+	</xbgf:eliminate>
+	<xbgf:vertical>
+		<nonterminal>atom</nonterminal>
+	</xbgf:vertical>
+	<xbgf:rename>
+		<nonterminal>
+			<from>literal</from>
+			<to>int</to>
+		</nonterminal>
+	</xbgf:rename>
+	<xbgf:rename>
+		<nonterminal>
+			<from>operators</from>
+			<to>ops</to>
+		</nonterminal>
+	</xbgf:rename>
+	<xbgf:inline>_IF</xbgf:inline>
+	<xbgf:inline>_THEN</xbgf:inline>
+	<xbgf:inline>_ELSE</xbgf:inline>
+	<xbgf:undefine>
+		<nonterminal>int</nonterminal>
+		<nonterminal>name</nonterminal>
+	</xbgf:undefine>
+	<xbgf:define>
+		<bgf:production>
+			<nonterminal>StringEnd</nonterminal>
+			<bgf:expression>
+				<epsilon/>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:define>
+	<xbgf:inline>StringEnd</xbgf:inline>
+</xbgf:sequence>
