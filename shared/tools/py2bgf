@@ -1,0 +1,22 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 2 ]; then
+    echo "This tool extracts a BGF grammar from a Python source, assuming PyParsing library."
+	echo "If you want faster performance, run it directly from the Rascal console."
+    echo "Usage: py2rsc <input-py> <output-bgf>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+cp $1 ${SLPS}/shared/rascal/src/src.py
+cd ${SLPS}/shared/rascal/src && java -Xmx1G -Xss32m -jar ${SLPS}/download/rascal.jar extract::Python2BGF src.py $2
+mv ${SLPS}/shared/rascal/src/$2 ${LOCAL}
+rm ${SLPS}/shared/rascal/src/src.py
