@@ -41,10 +41,10 @@ test:	all
 	diff ${factorial} ${temp}
 	rm -f ${temp}
 	@echo Testing Evaluator...
-	./TestEvaluator ${factorial} ${apply} 120
+	./TestEvaluator ${factorial} ${apply} `cat ../shared/fac5b.txt`
 	@echo Testing Optimizer...
 	./TestOptimizer < ${unoptimized} > ${temp}
-	diff ${optimized} ${temp}
+	diff -B ${optimized} ${temp}
 	rm -f ${temp}
 	@echo done
 

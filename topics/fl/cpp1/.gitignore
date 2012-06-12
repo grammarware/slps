@@ -1,0 +1,8 @@
+*.o
+FL.output
+FL.tab.*
+TestEvaluator
+TestIO
+TestOptimizer
+lex.yy.c
+

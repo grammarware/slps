@@ -6,7 +6,7 @@ xbgf = ../lci/xbgf
 build: limit.bgf limit.btf
 
 test:
-	swipl -q -f TestEvaluator.pro -t main -- 120 limit.btf fac 5
+	swipl -q -f TestEvaluator.pro -t main -- `cat ../shared/fac5b.txt` limit.btf `cat ../shared/fac5.txt`
 
 append.xbgf:
 	${tools}/appendxbgf append.xbgf \

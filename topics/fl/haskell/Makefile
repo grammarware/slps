@@ -7,7 +7,7 @@ test: TestIO TestEvaluator TestOptimizer
 	./TestIO ${factorial} ${temp}
 	diff ${factorial} ${temp}
 	rm -f temp.txt
-	./TestEvaluator ${factorial} ${apply} 120
+	./TestEvaluator ${factorial} ${apply} `cat ../shared/fac5b.txt`
 	./TestOptimizer ${unoptimized} ${optimized}
 	@echo Done.
 
