@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module FL
+module Concrete
 
 import IO;
 import ParseTree;
@@ -19,13 +19,19 @@ syntax Ops =
 	| equal: "==" ;
 lexical Name = [a-z]+ !>> [a-z] ;
 lexical Int = [0] | [1-9][0-9]* !>> [0-9] ;
-lexical Newline = ";" ;
-layout LO = [\ \t\n\r]? ;
+lexical Newline = "\n" ;
+layout LO = [\ \t]* ;
 
 public void main(list[str] args)
 {
 	loc src = |cwd:///|+args[0];
+	do(src);
+}
+
+public void main() = do(|home:///projects/slps/topics/fl/shared/factorial.txt|);
+
+void do(loc src)
+{
 	parse(#Program,src);
 	println("Done.");
 }
-
