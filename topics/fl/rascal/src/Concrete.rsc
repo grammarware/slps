@@ -1,7 +1,7 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module Concrete
 
-syntax Program = prg: {Function "\n"}+;
+start syntax Program = prg: {Function "\n"}+;
 syntax Function = fun: Name Name+ "=" Expr ;
 syntax Expr
 	= binary: Expr Ops Expr

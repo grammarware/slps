@@ -1,0 +1,21 @@
+#!/bin/sh
+
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 2 ]; then
+    echo "This tool extracts a BGF grammar from a Rascal syntax definition."
+    echo "Usage: rscs2rsc <input-src> <output-bgf>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+cp $1 ${SLPS}/shared/rascal/src/src.rsc
+cd ${SLPS}/shared/rascal/src && java -Xmx1G -Xss32m -jar ${SLPS}/download/rascal.jar extract::Rascal2BGF src.rsc tgt.bgf
+mv ${SLPS}/shared/rascal/src/tgt.bgf ${LOCAL}/$2
+rm ${SLPS}/shared/rascal/src/src.rsc

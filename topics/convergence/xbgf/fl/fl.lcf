@@ -108,7 +108,7 @@
 	<source>
 		<name>rascal</name>
 		<grammar>
-			<extraction><expand>tools</expand>/rsc2bgf <expand>fl</expand>/rascal1/FL.rsc
+			<extraction><expand>tools</expand>/rsc2bgf <expand>fl</expand>/rascal/FL.rsc
       </extraction>
 		</grammar>
 	</source>
