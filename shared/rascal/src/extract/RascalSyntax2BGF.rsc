@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module extract::Rascal2BGF
+module extract::RascalSyntax2BGF
 
 import lang::rascal::\syntax::RascalRascal;
 import lang::rascal::grammar::definition::Modules;
@@ -20,7 +20,7 @@ public void main(list[str] args)
 	println("Extraction completed.");
 }
 
-public void mn()
+public void main()
 {
 	Module pt = parse(#Module,|project://fl/src/Concrete.rsc|);
 	Grammar g = modules2grammar("Concrete", {pt});

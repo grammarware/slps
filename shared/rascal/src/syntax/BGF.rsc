@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module syntax::BGF
+module \syntax::BGF
 
 data BGFGrammar =
 	grammar (list[str] roots, list[BGFProduction] prods)

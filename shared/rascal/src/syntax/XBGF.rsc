@@ -1,7 +1,7 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module syntax::XBGF
+module \syntax::XBGF
 
-import syntax::BGF;
+import \syntax::BGF;
 
 alias XBGFSequence = list[XBGFCommand];
 

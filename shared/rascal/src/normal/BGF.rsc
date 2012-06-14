@@ -9,7 +9,10 @@ public BGFGrammar normalise(grammar (list[str] roots, list[BGFProduction] prods)
 public list[BGFProduction] normalise(list[BGFProduction] prods)
 						= [normalise(p) | p <- prods]; 
 
-public BGFProduction normalise(production (str label, str lhs, BGFExpression rhs))
+public BGFProduction normalise(production ("", str lhs, selectable(str label,BGFExpression rhs)))
+							 = production (label, lhs, normalise(rhs));
+
+public default BGFProduction normalise(production (str label, str lhs, BGFExpression rhs))
 							 = production (label, lhs, normalise(rhs));
 
 public BGFExpression normalise(BGFExpression e)
