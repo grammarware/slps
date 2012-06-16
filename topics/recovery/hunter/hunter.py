@@ -785,7 +785,7 @@ def glueTerminals(p):
 			q.append(y)
 			continue
 		x = y[1:-1]
-		if len(q)>0 and not isAlphaNum(q[-1][1:-1]) and not isAlphaNum(x):
+		if len(q)>0 and len(x)>0 and not isAlphaNum(q[-1][1:-1]) and q[-1][1:-1][-1]!=config['end-nonterminal-symbol'] and not isAlphaNum(x):
 			# addition on terminals
 			q[-1] = q[-1][:-1] + y[1:]
 		else:

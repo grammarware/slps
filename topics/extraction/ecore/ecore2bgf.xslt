@@ -13,6 +13,12 @@
     </bgf:grammar>
   </xsl:template>
 
+  <xsl:template match="/xmi:XMI">
+    <bgf:grammar>
+      <xsl:apply-templates select="ecore:EPackage/eClassifiers"/>
+    </bgf:grammar>
+  </xsl:template>
+
   <xsl:template match="eClassifiers">
     <xsl:variable name="ourEType" select="concat('#//',./@name)"/>
     <xsl:variable name="ourSuperType" select="substring(@eSuperTypes,4)"/>
