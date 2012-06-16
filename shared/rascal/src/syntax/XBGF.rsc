@@ -75,5 +75,4 @@ data XBGFScope =
 	| innt(str x)
 	| notinnt(str x)
 	| comboscope(XBGFScope w1, XBGFScope w2)
-	// TODO: combination
 ;

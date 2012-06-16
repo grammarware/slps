@@ -8,7 +8,14 @@ import syntax::BGF;
 import normal::BGF;
 import io::WriteBGF;
 
-layout LO = [\ \t\n\r]* !>> [\ \t\n\r];
+layout LAYOUTLIST = LAYOUT* !>> [\ \t\n\r/];
+lexical LAYOUT
+	= [\ \t\n\r]
+	| @category="Comment" "//" ![\n]* $
+	//| @category="Comment" Nested: "%" ![%\n] "%"
+	;
+// alias CBGFSequence = list[CBGFCommand];
+//syntax DataDef = "
 syntax DataDef =  Name "=" {DataExpr "|"}+ ";";
 lexical Name = [a-zA-Z_0-9]+ !>> [a-zA-Z_0-9] ; 
 syntax DataExpr
@@ -37,6 +44,7 @@ BGFGrammar process(loc src)
 	{
 		str name = trim(split("=",d)[0]);
 		println("Parsing <name>...");
+		//println(d);
 		ps += def2prod(parse(#DataDef,trim(d)));
 	}
 	return normalise(syntax::BGF::grammar([],ps));
