@@ -97,6 +97,7 @@ public tuple[list[BGFProduction],list[BGFProduction],list[BGFProduction]] splitP
 	return <ps1,ps2,ps3>;
 }
 
+// TODO moved to analyse::Metrics
 public set[str] allNs(list[BGFProduction] ps) = definedNs(ps) + usedNs(ps);
 public set[str] allTs(list[BGFProduction] ps) = {s | /terminal(str s) := ps};
 public set[str] usedNs(list[BGFProduction] ps) = {s | /nonterminal(str s) := ps};

@@ -45,6 +45,7 @@ public BGFExpression mapexpr(Node n)
 		case element(none(),"value",[charData("string")]): return val(string());
 		case element(none(),"value",[charData("int")]): return val(integer());
 		case element(none(),"any",[]): return anything();
+		case element(none(),"terminal",[]): return terminal(" ");// lang::xml::DOM does not preserve whitespace, so this can mean something like a newline
 		case element(none(),"terminal",[charData(str s)]): return terminal(s);
 		case element(none(),"nonterminal",[charData(str s)]): return nonterminal(s);
 		case element(none(),"selectable",[element(none(),"selector",[charData(str s)]),expr]): return selectable(s,mapexpr(expr));

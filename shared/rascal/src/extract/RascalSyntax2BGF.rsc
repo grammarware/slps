@@ -24,6 +24,8 @@ public void main()
 {
 	Module pt = parse(#Module,|project://fl/src/Concrete.rsc|);
 	Grammar g = modules2grammar("Concrete", {pt});
+	//Grammar g = module2grammar("Concrete", {pt});
+	iprintln(g);
 	iprintln(grammar2grammar(g));
 }
 
@@ -58,6 +60,7 @@ BGFExpression rhs2expr(list[Symbol] seq) = syntax::BGF::sequence([symbol2expr(s)
 BGFExpression symbol2expr(\sort(str x)) = syntax::BGF::nonterminal(x);
 BGFExpression symbol2expr(conditional(\sort(str x),{except(_)})) = syntax::BGF::nonterminal(x); // cannot represent better in BGF
 BGFExpression symbol2expr(\lex(str x)) = syntax::BGF::nonterminal(x);
+BGFExpression symbol2expr(ParseTree::\lit("\n")) = syntax::BGF::terminal("\\n"); //hack?
 BGFExpression symbol2expr(ParseTree::\lit(str x)) = syntax::BGF::terminal(x);
 BGFExpression symbol2expr(\iter-seps(Symbol item, list[Symbol] seps)) = iterseps2expr(item,[s | s <- seps, layouts(_) !:= s]);
 default BGFExpression symbol2expr(Symbol s) = epsilon();
