@@ -1,3 +1,5 @@
+all:
+
 build:
 	../../../../shared/tools/antlr2bgf ../../../fl/java1/FL.g antlr.bgf
 	../../../../shared/tools/dcg2bgf ../../../fl/prolog1/Parser.pro dcg.bgf
@@ -13,8 +15,15 @@ build:
 	../../../../shared/tools/txl2bgf ../../../fl/txl/FL.Txl txl.bgf
 
 test:
+	cbgf2xbgf antlr.cbgf antlr.xbgf /dev/null
+	xbgf antlr.xbgf antlr.bgf antlr.res.bgf
+	cbgf2xbgf rascal-c.cbgf rascal-c.xbgf /dev/null
+	xbgf rascal-c.xbgf rascal-c.bgf rascal-c.res.bgf
+	bgf2bnf rascal-c.res.bgf
+
+check:
 	ls -1 *.bgf | xargs -n1 ../../../../shared/tools/validate bgf
+	ls -1 *.cbgf | xargs -n1 ../../../../shared/tools/validate cbgf
 
 clean:
-	rm -rf *.bgf
-
+	rm -rf *.res *.xbgf *.cbgf

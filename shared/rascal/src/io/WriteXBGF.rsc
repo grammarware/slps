@@ -12,11 +12,6 @@ public void writeXBGF(XBGFSequence xbgf, loc f)
 	list[Node] xml = [xbgf2xml(x) | x <- xbgf];
 	//println(xml);
 	writeFile(f,xmlRaw(document(element(namespace("xbgf","http://planet-sl.org/xbgf"),"sequence",xml))));
-	//Node N = parseXMLDOMTrim(readFile(f));
-	//if (document(element(namespace(_,"http://planet-sl.org/xbgf"),"sequence",L)) := N)
-	//	return [mapxbgf(step) | step <- L, element(namespace(_,"http://planet-sl.org/xbgf"),name,kids) := step];
-	//else
-	//	throw "<f> is not a proper XBGF file";
 }
 
 Node xbgf2xml(XBGFCommand step)

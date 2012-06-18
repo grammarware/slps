@@ -7,33 +7,18 @@ import lang::xml::DOM;
 
 public void writeBGF(BGFGrammar bgf, loc f)
 {
-	//grammar (list[str] roots, list[BGFProduction] prods)
-	if (grammar(list[str] roots, list[BGFProduction] prods) := bgf)
-	{
-	list[Node] xml1 = [element(none(),"root",[charData(s)]) | s <- roots];
-	list[Node] xml2 = [prod2xml(p) | p <- prods];
-	//println(xml);
+	list[Node] xml1 = [element(none(),"root",[charData(s)]) | s <- bgf.roots];
+	list[Node] xml2 = [prod2xml(p) | p <- bgf.prods];
 	writeFile(f,xmlRaw(document(element(namespace("bgf","http://planet-sl.org/bgf"),"grammar",xml1+xml2))));
-	}
-	else throw "ERROR: grammar expected in place of <bgf>";
-	//Node N = parseXMLDOMTrim(readFile(f));
-	//if (document(element(namespace(_,"http://planet-sl.org/xbgf"),"sequence",L)) := N)
-	//	return [mapxbgf(step) | step <- L, element(namespace(_,"http://planet-sl.org/xbgf"),name,kids) := step];
-	//else
-	//	throw "<f> is not a proper XBGF file";
 }
 
 public Node prod2xml(BGFProduction p)
 {
-	if (production (str label, str lhs, BGFExpression rhs) := p)
-	{
-		list[Node] kids = [];
-		if (label!="") kids += element(none(),"label",[charData(label)]);
-		kids += element(none(),"nonterminal",[charData(lhs)]);
-		kids += expr2xml(rhs);
-		return element(namespace("bgf","http://planet-sl.org/bgf"),"production",kids);
-	}
-	else throw "ERROR: production rule expected in place of <p>";
+	list[Node] kids = [];
+	if (p.label!="") kids += element(none(),"label",[charData(p.label)]);
+	kids += element(none(),"nonterminal",[charData(p.lhs)]);
+	kids += expr2xml(p.rhs);
+	return element(namespace("bgf","http://planet-sl.org/bgf"),"production",kids);
 }
 
 public Node expr2xml(BGFExpression ex)

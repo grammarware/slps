@@ -2,6 +2,7 @@
 module syntax::CBGF
 
 import \syntax::BGF;
+import \syntax::XBGF;
 
 alias CBGFSequence = list[CBGFCommand];
 

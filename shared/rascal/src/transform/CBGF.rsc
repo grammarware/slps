@@ -4,7 +4,8 @@ module transform::CBGF // should be ΞBGF
 import syntax::BGF;
 import syntax::XBGF;
 import syntax::CBGF;
-import transform::library::Util;
+import analyse::Metrics;
+import Set;
 
 // forward execution
 public XBGFSequence forward(CBGFSequence cbgf) = [forward(step) | step <- cbgf];
@@ -25,14 +26,14 @@ XBGFCommand forward(designate_unlabel(BGFProduction p)) = designate(p);
 XBGFCommand forward(detour_abridge(BGFProduction p)) = detour(p);
 XBGFCommand forward(deyaccify_yaccify(list[BGFProduction] ps))
 	{
-		if ({str x} := transform::library::Util::definedNs(ps)) return deyaccify(x);
+		if ({str x} := analyse::Metrics::definedNs(ps)) return deyaccify(x);
 		else throw "<ps> must concern one nonterminal";
 	}
 XBGFCommand forward(disappear_appear(BGFProduction p)) = disappear(p);
 XBGFCommand forward(downgrade_upgrade(BGFProduction p1,BGFProduction p2)) = downgrade(p1,p2);
 XBGFCommand forward(eliminate_introduce(list[BGFProduction] ps))
 	{
-		if ({str x} := transform::library::Util::definedNs(ps)) return eliminate(x);
+		if ({str x} := analyse::Metrics::definedNs(ps)) return eliminate(x);
 		else throw "<ps> must concern one nonterminal";
 	}
 XBGFCommand forward(equate_clone(str x, str y, XBGFScope w)) = equate(x,y);
@@ -61,13 +62,13 @@ XBGFCommand forward(reroot_reroot(_,list[str] xs)) = reroot(xs);
 XBGFCommand forward(splitN_unite(str x, list[BGFProduction] ps, XBGFScope w)) = splitN(x,ps,w);
 XBGFCommand forward(splitT_concatT(str x, list[str] ys, XBGFScope w)) = splitT(x,ys,w);
 XBGFCommand forward(unchain_chain(BGFProduction p)) = unchain(p);
-XBGFCommand forward(undefine_define(list[BGFProduction] ps)) = undefine(toList(transform::library::Util::definedNs(ps)));
+XBGFCommand forward(undefine_define(list[BGFProduction] ps)) = undefine(toList(analyse::Metrics::definedNs(ps)));
 XBGFCommand forward(unfold_fold(str x, XBGFScope w)) = unfold(x,w);
 XBGFCommand forward(unite_splitN(str x, list[BGFProduction] ps, XBGFScope w))
 	{
 		// TODO: w
 		// TODO: check that x != y
-		if ({str y} := transform::library::Util::definedNs(ps)) return unite(x,y);
+		if ({str y} := analyse::Metrics::definedNs(ps)) return unite(x,y);
 		else throw "<ps> must concern one nonterminal";
 	}
 XBGFCommand forward(unlabel_designate(production(str l,_,_))) = unlabel(l);
@@ -91,7 +92,7 @@ XBGFCommand reverse(clone_equate(str x, str y, XBGFScope w)) = equate(x,y);
 XBGFCommand reverse(concatT_splitT(str y, list[str] xs, XBGFScope w)) = splitT(y,xs,w);
 XBGFCommand reverse(concretize_abstractize(BGFProduction p)) = abstractize(p);
 XBGFCommand reverse(deanonymize_anonymize(BGFProduction p)) = anonymize(p);
-XBGFCommand reverse(define_undefine(list[BGFProduction] ps)) = undefine(toList(transform::library::Util::definedNs(ps)));
+XBGFCommand reverse(define_undefine(list[BGFProduction] ps)) = undefine(toList(analyse::Metrics::definedNs(ps)));
 XBGFCommand reverse(designate_unlabel(production(str l,_,_))) = unlabel(l);
 XBGFCommand reverse(detour_abridge(BGFProduction p)) = abridge(p);
 XBGFCommand reverse(deyaccify_yaccify(list[BGFProduction] ps)) = yaccify(ps);
@@ -107,7 +108,7 @@ XBGFCommand reverse(inject_project(BGFProduction p)) = project(p);
 XBGFCommand reverse(inline_extract(BGFProduction p, XBGFScope w)) = extract(p,w);
 XBGFCommand reverse(introduce_eliminate(list[BGFProduction] ps))
 	{
-		if ({str x} := transform::library::Util::definedNs(ps)) return eliminate(x);
+		if ({str x} := analyse::Metrics::definedNs(ps)) return eliminate(x);
 		else throw "<ps> must concern one nonterminal";
 	}
 XBGFCommand reverse(iterate_assoc(BGFProduction p)) = rassoc(p); // TODO
@@ -129,7 +130,7 @@ XBGFCommand reverse(splitN_unite(str x, list[BGFProduction] ps, XBGFScope w))
 	{
 		// TODO: w
 		// TODO: check that x != y
-		if ({str y} := transform::library::Util::definedNs(ps)) return unite(x,y);
+		if ({str y} := analyse::Metrics::definedNs(ps)) return unite(x,y);
 		else throw "<ps> must concern one nonterminal";
 	}
 XBGFCommand reverse(splitT_concatT(str x, list[str] ys, XBGFScope w)) = splitT(x,ys,w);
@@ -143,7 +144,7 @@ XBGFCommand reverse(vertical_horizontal(XBGFScope w)) = horizontal(w);
 XBGFCommand reverse(widen_narrow(BGFExpression e1, BGFExpression e2, XBGFScope w)) = narrow(e2,e1,w);
 XBGFCommand reverse(yaccify_deyaccify(list[BGFProduction] ps))
 	{
-		if ({str x} := transform::library::Util::definedNs(ps)) return deyaccify(x);
+		if ({str x} := analyse::Metrics::definedNs(ps)) return deyaccify(x);
 		else throw "<ps> must concern one nonterminal";
 	}
 default XBGFCommand reverse(CBGFCommand step) {throw "Unknown CBGF command: <step>";}
