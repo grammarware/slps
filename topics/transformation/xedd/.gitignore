@@ -1,0 +1,4 @@
+*.cbgf.forward.xbgf
+*.cbgf.reverse.xbgf
+*.rsc
+tmp.bgf
