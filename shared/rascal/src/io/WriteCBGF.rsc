@@ -56,7 +56,7 @@ Node cbgf2xml(CBGFCommand step)
 		case removeH_addH(BGFProduction p): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"removeH-addH",[prod2xml(p)]);
 		case removeV_addV(BGFProduction p): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"removeV-addV",[prod2xml(p)]);
 		//case renameL_renameL(str x, str y): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"renameL-renameL",[prod2xml(prod)]);
-		case renameN_renameN(str s1, str s2): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"rename",[element(none(),"nonterminal",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)])])]);
+		case renameN_renameN(str s1, str s2): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"rename-rename",[element(none(),"nonterminal",[element(none(),"from",[charData(s1)]),element(none(),"to",[charData(s2)])])]);
 		//case renameS_renameS(str x, str y, XBGFScope w): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"renameS-renameS",[prod2xml(prod),element(none(),"in",[context2xml(w)])]);
 		//case renameT_renameT(str x, str y): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"renameT-renameT",[prod2xml(prod)]);
 		case replace_replace(BGFExpression e1, BGFExpression e2, XBGFScope w): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"replace-replace",[expr2xml(e1),expr2xml(e2),element(none(),"in",[context2xml(w)])]);

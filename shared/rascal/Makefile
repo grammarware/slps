@@ -12,5 +12,8 @@ check:
 	echo "Validating output files..."
 	ls -1 res/xbgf-res/*.xbgf | xargs -n1 ../tools/validate xbgf
 
+count:
+	wc -l src/*.rsc src/*/*.rsc src/*/*/*.rsc
+
 clean:
 	rm -f tests/*/*.xbgf
