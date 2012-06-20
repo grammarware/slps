@@ -17,11 +17,10 @@ import transform::XBGF;
 import transform::CBGF;
 
 list[str] sources =
-	["master","antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"];
+	["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"];
 
 alias PRODSIG = list[list[tuple[str,BGFExpression]]];
 
-//BGFProduction get1Prod(nt, grammar(_,[production(str l, nt, BGFExpression e)])) = production(l, nt, e);
 BGFProduction get1Prod(str nt, BGFGrammar g)
 {
 	if ([production(str l, nt, BGFExpression e)] := prodsOfN(nt,g.prods))
@@ -34,13 +33,6 @@ public str prodsig(str n, list[BGFProduction] ps) = prodsig(prodsOfN(n,ps));
 public str prodsig([]) = "";
 public str prodsig(list[BGFProduction] ps) = (prodsig(ps[0]) | it + "/" + prodsig(p) | p <- tail(ps));
 public str prodsig(BGFProduction p) = signature(p.rhs,p.lhs);
-//prodsig(
-//public list[list[tuple[str,BGFExpression]]] prodsig(str n, list[BGFProduction] ps) = prodsig(prodsOfN(n,ps));
-//public list[list[tuple[str,BGFExpression]]] prodsig([]) = [[]];
-//public list[list[tuple[str,BGFExpression]]] prodsig(list[BGFProduction] ps)
-//	//= (prodsig(ps[0]) | it + "/" + prodsig(p) | p <- tail(ps));
-//	= [prodsig(p) | p <- ps] ;
-//public list[tuple[str,BGFExpression]] prodsig(BGFProduction p) = [<signature(e,p.lhs),e> | BGFExpression e <- p.rhs];
 
 str signature(nonterminal(x),n) = x == n ? "0" : "1";
 str signature(optional(e),n) = nonterminal(n) := e ? "O" : "?";
@@ -79,17 +71,9 @@ bool same(sequence([e1]), sequence([e2])) = same(e1,e2);
 bool same(sequence(L1),sequence(L2)) = same(L1[0],L2[0]) && same(sequence(tail(L1)),sequence(tail(L1)));
 default bool same(BGFExpression e1, BGFExpression e2) = isAtomic(e1) && isAtomic(e2);
 
-//bool wider("*", "+") = true;
-//bool wider("*", "1") = true;
-//bool wider("*", "?") = true;
-//bool wider("+", "1") = true;
-//default bool wider(str ps1, str ps2) = false;
-
-//<bgfs[src],cbgfs[src]> = makeStep(bgfs[src],cbgfs[src],renameN_renameN(nt,masternt));
 tuple[BGFGrammar,CBGFSequence] makeStep(BGFGrammar g,CBGFSequence c,CBGFCommand s)
 	= <transform(forward([s]),g), c+s>;
 
-//list[str] checkMatch(str nt, list[BGFProduction] ps1, list[str] cnts, list[BGFProduction] ps2)
 list[str] checkMatch(str nt, BGFProduction p1, list[str] cnts, list[BGFProduction] gps)
 {
 	list[str] good = [];
@@ -101,14 +85,86 @@ list[str] checkMatch(str nt, BGFProduction p1, list[str] cnts, list[BGFProductio
 		{
 			if(same(p1.rhs,p2.rhs)) good += cnt;
 			elseif(wider(p2.rhs,p1.rhs)) good += cnt;
-			else
-				println("No luck matching <cnt>: <p1.rhs> vs <p2.rhs>.");
+			//else println("No luck matching <cnt>: <p1.rhs> vs <p2.rhs>.");
 		}
 		else 
 			throw "Cannot match one production rule with multiple."; 
 	}
 	return good;
-} 
+}
+
+map[str,list[str]] allCandidates(list[BGFProduction] ps1, list[BGFProduction] ps2)
+	= allCandidates(ps1[0], ps2[0]);
+
+map[str,list[str]] allCandidates(BGFProduction p1, BGFProduction p2)
+	= allCandidates(p1.rhs, p2.rhs);
+
+map[str,list[str]] addto(map[str,list[str]] repo, str where, str what)
+{
+	if (where in repo)
+		repo[where] += [what];
+	else
+		repo[where] = [what];
+	return repo;
+}
+
+map[str,list[str]] allCandidates(BGFExpression e1, BGFExpression e2)
+{
+	map[str,list[str]] cands = ();
+	println(" --- Searching for candidates of <e1> with <e2>...");
+	switch(e1)
+	{
+		case nonterminal(n1):
+			if (nonterminal(n2) := e2)
+				cands = addto(cands, n1, n2);
+			elseif (val(string()) := e2)
+				cands = addto(cands, n1, "STRING");
+			elseif (val(integer()) := e2)
+				cands = addto(cands, n1, "INTEGER");
+			else fail;
+		case val(string()):
+			if (nonterminal(n2) := e2)
+				cands = addto(cands, "STRING", n2);
+			elseif (val(string()) := e2)
+				cands = addto(cands, "STRING", "STRING");
+			elseif (val(integer()) := e2)
+				cands = addto(cands, "STRING", "INTEGER");
+			else fail;
+		case val(integer()):
+			if (nonterminal(n2) := e2)
+				cands = addto(cands, "INTEGER", n2);
+			elseif (val(string()) := e2)
+				cands = addto(cands, "INTEGER", "STRING");
+			elseif (val(integer()) := e2)
+				cands = addto(cands, "INTEGER", "INTEGER");
+			else fail;
+		case plus(e1a):
+			if (plus(e2a) := e2)
+				cands += allCandidates(e1a,e2a);
+			elseif (star(e2b) := e2)
+				cands += allCandidates(e1a,e2b);
+			else fail;
+		case star(e1a):
+			if (star(e2a) := e2)
+				cands += allCandidates(e1a,e2a);
+			else fail;
+		case sequence([e1a]):
+		{
+			//println(" Hardly trying <e1a> with <e2>...");
+			if (sequence([e2a]) := e2)
+				cands += allCandidates(e1a,e2a);
+			// TODO seq to seq
+		}
+		default:
+			for (sequence([*L1,e2a,*L2]) := e2)
+			{
+				//println(" Trying <e1> against <e2a>...");
+				cands += allCandidates(e1,e2a);
+			}
+	}
+	//iprintln(cands);
+	return cands;
+}
 
 public void main()
 {
@@ -116,7 +172,7 @@ public void main()
 	map[str,CBGFSequence] cbgfs = ();
 	map[str,map[str,str]] namebind = ();
 	println("Reading the grammars...");
-	//BGFGrammar master = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
+	bgfs["master"] = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
 	for (src <- sources)
 		bgfs[src] = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);
 	println("Parsing the grammarbase with <size(bgfs)> grammars is done.");
@@ -135,82 +191,41 @@ public void main()
 	list[str] checked = [];
 	list[str] tocheck = bgfs["master"].roots; //we assume is has length 1
 	str masternt;
+	map[str,map[str,list[str]]] candidates = (bgfs["master"].roots[0] : (src : bgfs[src].roots | src <- sources));
 	while(!isEmpty(tocheck))
 	{
 		<masternt,tocheck> = takeOneFrom(tocheck);
+		println(" * Checking <masternt>...");
 		for (src <- sources)
 		{
-			res = checkMatch(masternt,prodsOfN(masternt,bgfs["master"].prods)[0],bgfs[src].roots,bgfs[src].prods);
+			//println(bgfs[src]);
+			res = checkMatch(masternt,prodsOfN(masternt,bgfs["master"].prods)[0],candidates[masternt][src],bgfs[src].prods);
 			if ([nt] := res)
 			{
-				println(" * In <src>: maps to <nt>");
+				println("   * In <src>: maps to <nt>");
 				namebind[src][masternt] = nt;
 				if (nt != masternt)
 					<bgfs[src],cbgfs[src]> = makeStep(bgfs[src],cbgfs[src],renameN_renameN(nt,masternt));
+				for (p <- prodsOfN(masternt,bgfs[src].prods))
+					println("      * <p>");
+				//candidates += 
+				map[str,list[str]] newcands = allCandidates( prodsOfN(masternt,bgfs["master"].prods), prodsOfN(masternt,bgfs[src].prods) );
+				println( newcands );
+				for (k <- newcands)
+				{
+					if (k notin candidates)
+						candidates[k] = (); 
+					candidates[k][src] = newcands[k];
+				}
 			}
-			else throw "Multiple results for <masternt>: <res>!";
+			else //throw "     * No single result for <masternt>: <res>!";
+				println("     * No result for <masternt> in <src>: <res>!");
 		} 
+		checked += masternt;
+		nextnts = toList(analyse::Metrics::usedNs(prodsOfN(masternt,bgfs["master"].prods))) - checked;
+		// nextnts -> candidates???
+		tocheck += nextnts;
 	}
-	//str masternt, nt;
-	//PRODSIG ps, masterps;
-	//for (src <- sources)
-	//{
-	//	if(src=="master")
-	//	{
-	//		masternt = bgfs[src].roots[0];
-	//		masterps = prodsig(masternt,bgfs[src].prods);
-	//		println(" * In the master grammar, the root is called <masternt>, prodsig <masterps>");
-	//		//namemapping?
-	//		continue;
-	//	}
-	//	res = checkMatch(masternt,prodsOfN(masternt,bgfs["master"].prods)[0],bgfs[src].roots,bgfs[src].prods);
-	//	if ([nt] := res)
-	//	{
-	//		println(" * In <src>: maps to <nt>");
-	//		namebind[src][masternt] = nt;
-	//		if (nt != masternt)
-	//			<bgfs[src],cbgfs[src]> = makeStep(bgfs[src],cbgfs[src],renameN_renameN(nt,masternt));
-	//	}
-	//	else throw "Multiple results for <masternt>: <res>!";
-	//	//if (size(bgfs[src].roots)==1)
-	//	//{
-	//	//	nt = bgfs[src].roots[0];
-	//	//	ps = prodsig(nt,bgfs[src].prods);
-	//	//	println(" * In <src>: maps to <nt>, prodsig <ps>");
-	//	//	namebind[src][masternt] = nt;
-	//	//	if (nt != masternt)
-	//	//		<bgfs[src],cbgfs[src]> = makeStep(bgfs[src],cbgfs[src],renameN_renameN(nt,masternt));
-	//	//	if (ps == masterps)
-	//	//		println("Equal prodsigs")
-	//	//		; // equal prodsigs
-	//	//	else
-	//	//	{
-	//	//		e1 = get1Prod(masternt,bgfs[src]).rhs;
-	//	//		e2 = get1Prod(masternt,bgfs["master"]).rhs;
-	//	//		if (wider(e1,e2)) 
-	//	//			println("More liberal prodsigs")
-	//	//			//<bgfs[src],cbgfs[src]> = makeStep(bgfs[src],cbgfs[src],narrow_widen(e1,e2,innt(masternt)))
-	//	//			// too early
-	//	//		//(wider(ps,masterps))
-	//	//		// TODO: account for multiple steps
-	//	//		//<bgfs[src],cbgfs[src]> = makeStep(bgfs[src],cbgfs[src],narrow_widen(?,?));
-	//	//		;
-	//	//		else
-	//	//			throw "Prodsig mismatch";
-	//	//	}
-	//	//}
-	//	//else
-	//	//{
-	//	//	println(" * In <src>: unconclusive, looking at definitions of <bgfs[src].roots>");
-	//	//	for (r <- bgfs[src].roots)
-	//	//		println("    * <r>: prodsig <prodsig(r,bgfs[src].prods)>");
-	//	//}
-	//	////if (isEmpty(bgfs[src].roots))
-	//	////{
-	//	////	bgfs[src].roots = toList(topNs(bgfs[src]));
-	//	////	println("   * Roots in <src> changed to tops: <bgfs[src].roots>");
-	//	////}
-	//}
 	iprintln(namebind);
 	println("Writing CBGFs...");
 	for (src <- sources)
