@@ -18,6 +18,7 @@ import transform::CBGF;
 
 list[str] sources =
 	["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"];
+	//["antlr"];
 
 alias PRODSIG = list[list[tuple[str,BGFExpression]]];
 
@@ -46,10 +47,8 @@ default str signature(BGFExpression e, str n) = "_";
 
 bool wider(star(_), plus(_)) = true;
 bool wider(star(_), nonterminal(_)) = true;
-bool wider(star(_), val(_)) = true;
 bool wider(star(_), optional(_)) = true;
 bool wider(plus(_), nonterminal(_)) = true;
-bool wider(plus(_), val(_)) = true;
 bool wider(sequence([e1]),e2) = wider(e1,e2);
 bool wider(e1,sequence([e2])) = wider(e1,e2);
 //bool wider(sequence([e1,*L1]),sequence([*L2a,e2,*L2b]))
@@ -60,7 +59,7 @@ bool wider(sequence([*L1a,e1,*L1b]),e2) = wider(e1,e2);
 //bool wider(sequence(L1),sequence(L2)) = wider(L1[0],L2[0]) && wider(sequence(tail(L1)),sequence(tail(L1)));
 default bool wider(BGFExpression e1, BGFExpression e2) = same(e1,e2);
 
-bool isAtomic(val(_)) = true;
+//bool isAtomic(val(_)) = true;
 bool isAtomic(nonterminal(_)) = true;
 default bool isAtomic(BGFExpression _) = false;
 
@@ -69,7 +68,9 @@ bool same(plus(_),plus(_)) = true;
 bool same(optional(_),optional(_)) = true;
 bool same(sequence([e1]), sequence([e2])) = same(e1,e2);
 bool same(sequence(L1),sequence(L2)) = same(L1[0],L2[0]) && same(sequence(tail(L1)),sequence(tail(L1)));
-default bool same(BGFExpression e1, BGFExpression e2) = isAtomic(e1) && isAtomic(e2);
+bool same(nonterminal(_), nonterminal(_)) = true;
+default bool same(BGFExpression e1, BGFExpression e2) = false;
+//default bool same(BGFExpression e1, BGFExpression e2) = isAtomic(e1) && isAtomic(e2);
 
 tuple[BGFGrammar,CBGFSequence] makeStep(BGFGrammar g,CBGFSequence c,CBGFCommand s)
 	= <transform(forward([s]),g), c+s>;
@@ -108,6 +109,76 @@ map[str,list[str]] addto(map[str,list[str]] repo, str where, str what)
 	return repo;
 }
 
+map[str,str] makeSig(list[BGFExpression] L1)
+{
+	map[str,str] sig = ();
+	for (e1 <- L1)
+		switch (e1)
+		{
+			case nonterminal(str X):
+				if (X in sig) sig[X] += "1";
+				else sig[X] = "1";
+			case plus(nonterminal(str X)):
+				if (X in sig) sig[X] += "+";
+				else sig[X] = "+";
+			case star(nonterminal(str X)):
+				if (X in sig) sig[X] += "*";
+				else sig[X] = "*";
+			default:
+				println("Unhandled case in makeSig: <e1>");
+		}
+	return sig;
+}
+
+list[rel[str,str]] matchSigs(map[str,str] sig1, map[str,str] sig2)
+{
+	list[rel[str,str]] versions = [];
+	rel[str,str] version = {};
+	bool fs;
+	//println("Matching <sig1> with <sig2>...");
+	//for (x:s <- sig1)
+	for (x <- sig1)
+	{
+		str s = sig1[x];
+		//println("Matching of <x> : <s>...");
+		for (y <- sig2, sig2[y]==s)
+		{
+			<fs,nv> = mergeVersions({<x,y>},matchSigs(sig1-(x:s),sig2-(y:s)));
+			if (fs)
+				versions = nv;
+			//println("Versions: <versions>");
+		}
+	}
+	// unused in matches
+	return versions + {<"",y> | y:_ <- sig2};
+}
+
+list[rel[str,str]] reduceSearchSpace(list[rel[str,str]] vs)
+{
+	list[rel[str,str]] ss = [];
+	for (v <- vs)
+	{
+		bool inc = true;
+		for (y <- ss)
+			if (novoid(v) < novoid(y))
+				inc = false;
+		if (inc)
+			ss += v;
+	}
+	return ss;
+}
+
+rel[str,str] novoid (rel[str,str] v) = {<i1,i2> | <i1,i2> <- v, i1 != ""};
+
+tuple[bool,list[rel[str,str]]] mergeVersions(rel[str,str] n, list[rel[str,str]] vs)
+{
+	//println("Merging <n> with <vs>...");
+	if (isEmpty(vs))
+		return <false,vs>;
+	else
+		return <true,[v+n | v <- vs]>;
+}
+
 map[str,list[str]] allCandidates(BGFExpression e1, BGFExpression e2)
 {
 	map[str,list[str]] cands = ();
@@ -117,26 +188,6 @@ map[str,list[str]] allCandidates(BGFExpression e1, BGFExpression e2)
 		case nonterminal(n1):
 			if (nonterminal(n2) := e2)
 				cands = addto(cands, n1, n2);
-			elseif (val(string()) := e2)
-				cands = addto(cands, n1, "STRING");
-			elseif (val(integer()) := e2)
-				cands = addto(cands, n1, "INTEGER");
-			else fail;
-		case val(string()):
-			if (nonterminal(n2) := e2)
-				cands = addto(cands, "STRING", n2);
-			elseif (val(string()) := e2)
-				cands = addto(cands, "STRING", "STRING");
-			elseif (val(integer()) := e2)
-				cands = addto(cands, "STRING", "INTEGER");
-			else fail;
-		case val(integer()):
-			if (nonterminal(n2) := e2)
-				cands = addto(cands, "INTEGER", n2);
-			elseif (val(string()) := e2)
-				cands = addto(cands, "INTEGER", "STRING");
-			elseif (val(integer()) := e2)
-				cands = addto(cands, "INTEGER", "INTEGER");
 			else fail;
 		case plus(e1a):
 			if (plus(e2a) := e2)
@@ -147,6 +198,21 @@ map[str,list[str]] allCandidates(BGFExpression e1, BGFExpression e2)
 		case star(e1a):
 			if (star(e2a) := e2)
 				cands += allCandidates(e1a,e2a);
+			else fail;
+		case sequence(L1):
+			if (sequence(L2) := e2)
+			{
+				//println("--! <L1> vs <L2>");
+				//println("++! <makeSig(L1)> vs <makeSig(L2)>");
+				//println("==! <matchSigs(makeSig(L1),makeSig(L2))>");
+				list[rel[str,str]] versions = reduceSearchSpace(matchSigs(makeSig(L1),makeSig(L2)));
+				if (isEmpty(versions))
+				{
+					println("     * Hopeless matching of <L1> with <L2>.");
+					fail;
+				}
+				println("=====\> <versions>");
+			}
 			else fail;
 		case sequence([e1a]):
 		{
@@ -172,9 +238,16 @@ public void main()
 	map[str,CBGFSequence] cbgfs = ();
 	map[str,map[str,str]] namebind = ();
 	println("Reading the grammars...");
-	bgfs["master"] = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
-	for (src <- sources)
-		bgfs[src] = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);
+	//bgfs["master"] = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
+	for (src <- sources + "master")
+		{
+			bgfs[src] = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);
+			// we simplify our life by converting built-in types ("values") to regular nonterminals
+			if (/val(string()) := bgfs[src])
+				bgfs[src] = transform([replace(val(string()),nonterminal("STRING"),globally())],bgfs[src]);
+			if (/val(integer()) := bgfs[src])
+				bgfs[src] = transform([replace(val(integer()),nonterminal("INTEGER"),globally())],bgfs[src]);
+		}
 	println("Parsing the grammarbase with <size(bgfs)> grammars is done.");
 	println("Normalising the grammars...");
 	for (src <- sources)
@@ -196,6 +269,8 @@ public void main()
 	{
 		<masternt,tocheck> = takeOneFrom(tocheck);
 		println(" * Checking <masternt>...");
+		for (p <- prodsOfN(masternt,bgfs["master"].prods))
+			println("   * <p>");
 		for (src <- sources)
 		{
 			//println(bgfs[src]);
@@ -207,7 +282,7 @@ public void main()
 				if (nt != masternt)
 					<bgfs[src],cbgfs[src]> = makeStep(bgfs[src],cbgfs[src],renameN_renameN(nt,masternt));
 				for (p <- prodsOfN(masternt,bgfs[src].prods))
-					println("      * <p>");
+					println("     * <p>");
 				//candidates += 
 				map[str,list[str]] newcands = allCandidates( prodsOfN(masternt,bgfs["master"].prods), prodsOfN(masternt,bgfs[src].prods) );
 				println( newcands );

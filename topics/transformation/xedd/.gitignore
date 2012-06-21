@@ -1,4 +1,9 @@
-*.cbgf.forward.xbgf
-*.cbgf.reverse.xbgf
+*.forward.xbgf
+*.reverse.xbgf
 *.rsc
 tmp.bgf
+*.ll*
+*.res
+*.bgf
+*.edd
+*.draft
