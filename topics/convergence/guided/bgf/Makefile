@@ -26,4 +26,4 @@ check:
 	ls -1 *.cbgf | xargs -n1 ../../../../shared/tools/validate cbgf
 
 clean:
-	rm -rf *.res *.xbgf *.cbgf
+	rm -rf *.res.* *.xbgf *.cbgf

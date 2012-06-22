@@ -8,6 +8,7 @@ import diff::GDT;
 import List;
 import Set; // toList
 import String; //size
+import IO; //debugging only
 
 public BGFProduction unmark (BGFProduction p1)
 {
@@ -27,11 +28,10 @@ public BGFProduction demark (BGFProduction p1)
 		throw "<p1> must contain markers.";
 	p2 = innermost visit(p1)
 	{
-		case sequence([L1*,marked(BGFExpression e),L2*]) => sequence(L1 + L2)
-		case choice([L1*,marked(BGFExpression e),L2*]) => choice(L1 + L2)
-		case marked(_) => epsilon()
+		case sequence([*L1,marked(BGFExpression e),*L2]) => sequence(L1 + L2)
+		case choice([*L1,marked(BGFExpression e),*L2]) => choice(L1 + L2)
+		//case marked(_) => epsilon()
 	}
-	//return normalise(p2);
 	return p2;
 }
 

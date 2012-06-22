@@ -8,7 +8,8 @@ public set[str] allNs(list[BGFProduction] ps) = definedNs(ps) + usedNs(ps);
 public set[str] allNs(BGFGrammar g) = allNs(g.prods);
 
 @doc{Top nonterminals in a grammar: defined but not used}
-public set[str] topNs(list[BGFProduction] ps) = definedNs(ps) - usedNs(ps);
+public set[str] topNs(list[BGFProduction] ps) = definedNs(ps) - usedNRNs(ps);
+ // We allow top nonterminals to refer to themselves. In general, this is arguable.
 public set[str] topNs(BGFGrammar g) = topNs(g.prods);
 
 @doc{Bottom nonterminals in a grammar: used but not defined}
@@ -27,6 +28,10 @@ public set[str] allTs(BGFGrammar g) = allTs(g.prods);
 @doc{All nonterminals used in a grammar}
 public set[str] usedNs(list[BGFProduction] ps) = {s | /nonterminal(str s) := ps};
 public set[str] usedNs(BGFGrammar g) = usedNs(g.prods);
+
+@doc{All nonterminals used non-recursively in a grammar}
+public set[str] usedNRNs(list[BGFProduction] ps) = {s | p <- ps, /nonterminal(str s) := p.rhs, s != p.lhs};
+public set[str] usedNRNs(BGFGrammar g) = usedNRNs(g.prods);
 
 @doc{All nonterminals defined in a grammar}
 public set[str] definedNs(list[BGFProduction] ps) = {s | production(_,str s,_) <- ps};

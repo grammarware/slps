@@ -10,8 +10,13 @@ import List; // size
 BGFGrammar performRenameN(str x, str y, grammar(rs, ps))
 {
 	list[BGFProduction] ps1,ps2,ps3,ps4;
-	<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
-	ps4 = ps1 + [production(l,y,e) | p <- ps2, production(str l,x,BGFExpression e) := p] + ps3;
+	if (x in definedNs(ps))
+	{
+		<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
+		ps4 = ps1 + [production(l,y,e) | p <- ps2, production(str l,x,BGFExpression e) := p] + ps3;
+	}
+	else
+		ps4 = ps; 
 	if (x in usedNs(ps4))
 		return grammar(rs,performReplace(nonterminal(x),nonterminal(y),ps4));
 	else
