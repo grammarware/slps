@@ -21,7 +21,7 @@ XBGFCommand forward(clone_equate(str x, str y, XBGFScope w)) = clone(x,y,w);
 XBGFCommand forward(concatT_splitT(str y, list[str] xs, XBGFScope w)) = concatT(xs,y,w);
 XBGFCommand forward(concretize_abstractize(BGFProduction p)) = concretize(p);
 XBGFCommand forward(deanonymize_anonymize(BGFProduction p)) = deanonymize(p);
-XBGFCommand forward(define_undefine(list[BGFProduction] ps)) = define(p);
+XBGFCommand forward(define_undefine(list[BGFProduction] ps)) = define(ps);
 XBGFCommand forward(designate_unlabel(BGFProduction p)) = designate(p);
 XBGFCommand forward(detour_abridge(BGFProduction p)) = detour(p);
 XBGFCommand forward(deyaccify_yaccify(list[BGFProduction] ps))

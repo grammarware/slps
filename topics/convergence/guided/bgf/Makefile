@@ -15,6 +15,15 @@ build:
 	../../../../shared/tools/txl2bgf ../../../fl/txl/FL.Txl txl.bgf
 
 test:
+	make sdf.test
+	bgf2bnf sdf.res2.bgf
+
+%.test:
+	cbgf2xbgf $*.cbgf $*.xbgf /dev/null
+	xbgf $*.xbgf $*.bgf $*.res2.bgf
+	gdts $*.res.bgf $*.res2.bgf
+
+test2:
 	cbgf2xbgf antlr.cbgf antlr.xbgf /dev/null
 	xbgf antlr.xbgf antlr.bgf antlr.res.bgf
 	cbgf2xbgf rascal-c.cbgf rascal-c.xbgf /dev/null

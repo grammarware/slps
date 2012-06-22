@@ -147,18 +147,18 @@ list[rel[str,str]] matchSigs(map[str,str] sig1, map[str,str] sig2)
 	list[rel[str,str]] versions = [];
 	rel[str,str] version = {};
 	bool fs;
-	println(" Matching <sig1> with <sig2>...");
+	//println(" Matching <sig1> with <sig2>...");
 	//for (x:s <- sig1)
 	for (x <- sig1)
 	{
 		str s = sig1[x];
-		println("Matching of <x> : <s>...");
+		//println("Matching of <x> : <s>...");
 		for (y <- sig2, sig2[y]==s)
 		{
 			<fs,nv> = mergeVersions({<x,y>},matchSigs(sig1-(x:s),sig2-(y:s)));
 			if (fs)
 				versions = nv;
-			println("Versions: <versions>");
+			//println("Versions: <versions>");
 		}
 	}
 	// unused in matches
@@ -244,24 +244,91 @@ map[str,list[str]] allCandidates(BGFExpression e1, BGFExpression e2)
 	return cands;
 }
 
-//list[rel[BGFProduction,BGFProduction]] matchProds(list[BGFProduction] ps1, list[BGFProduction] ps2)
-rel[BGFProduction,BGFProduction] matchProds(list[BGFProduction] ps1, list[BGFProduction] ps2)
+list[BGFProduction] assumeRenamings(list[BGFProduction] where, rel[str,str] naming)
 {
-	rel[BGFProduction,BGFProduction] m = {};
+	list[BGFProduction] ps = where;
+	for (<n1,n2> <- naming)
+		if (n1 != n2 && /nonterminal(n2) := ps)
+		{
+			<g,_> = makeStep(grammar([],ps),[],renameN_renameN(n2,n1));
+			ps = g.prods;
+		}
+	return ps;
+}
+
+//list[rel[BGFProduction,BGFProduction]] matchProds(list[BGFProduction] ps1, list[BGFProduction] ps2)
+//tuple[bool,rel[str,str],CBGFSequence] tryHypothesis(rel[str,str] approved, rel[str,str] version, BGFGrammar master, BGFGrammar servant, CBGFSequence c)
+tuple[rel[BGFProduction,BGFProduction],rel[str,str]] matchProds(list[BGFProduction] ps1, list[BGFProduction] ps2)
+{
+	rel[BGFProduction,BGFProduction] approved = {};
+	rel[str,str] new = {};
 	if (isEmpty(ps1))
 	{
 		if (!isEmpty(ps2))
 			println("Unable to match anything with <ps2>.");
-		return {};
+		return <{},{}>;
 	}
-	println("    * Production signatures:");
-	for (p <- ps1)
-		println("     * <makeSig(p)>");
-	println("    * vs");
-	for (p <- ps2)
-		println("     * <makeSig(p)>");
-	
-	
+	//println("    * Production signatures:");
+	//for (p <- ps1)
+	//	println("     * <makeSig(p)>");
+	//println("    * vs");
+	//for (p <- ps2)
+	//	println("     * <makeSig(p)>");
+	map[BGFProduction,list[BGFProduction]] pmatches = ();
+	for (p1 <- ps1)
+	{
+		pmatches[p1] = [];
+		for (p2 <- ps2)
+			// TODO: allow liberation
+			if (range(makeSig(p1)) == range(makeSig(p2)))
+				//return <p1,p2> + matchProds(ps1 - p1, ps2 - p2);
+				pmatches[p1] = pmatches[p1] + p2;
+	}
+	list[BGFProduction] unmatched1 = [], unmatched2 = ps2, unmatched3, unmatched4, lastmatched = [];
+	for (m <- pmatches)
+		if (size(pmatches[m])==1)
+		{
+			approved += <m,pmatches[m][0]>;
+			unmatched2 -= pmatches[m][0];
+		}
+		else
+			unmatched1 += m;
+	// disregarding a reflexive chain production
+	for (p:production(_,s,nonterminal(s)) <- unmatched2)
+		unmatched2 -= p;
+	for (<p1,p2> <- approved)
+	{
+		// TODO pretty-print
+		println("    * Productions <p1> and <p2> match.");
+		list[rel[str,str]] versions = reduceSearchSpace(matchSigs(makeSig(p1),makeSig(p2)));
+		if (size(versions)==1)
+			new += versions[0];
+		else
+			println("      * too many versions: <versions>");
+		//println("      * ergo <versions>");
+	}
+	println("We know <new>");
+	unmatched3 = assumeRenamings(unmatched2, new);
+	// last try
+	// TODO: should be prodsig-aware just for the sake of completeness
+	for (p1 <- unmatched1, p1 in unmatched3)
+	{
+		println("    * Production <p1> matches barely.");
+		approved += <p1,unmatched2[indexOf(unmatched3,p1)]>;
+		unmatched1 -= p1;
+		lastmatched += unmatched2[indexOf(unmatched3,p1)];
+	}
+	unmatched2 -= lastmatched;
+	if (isEmpty(unmatched1) && isEmpty(unmatched2))
+		;
+	elseif (size(unmatched1)==1 && size(unmatched2)==1)
+		approved += <unmatched1[0],unmatched2[0]>;
+	else
+		throw "Utterly unable to match <unmatched1> with <unmatched2>.";
+	return <approved,new>;
+	iprintln(unmatched1);
+	iprintln(unmatched2);
+	return;
 	p1 = getOneFrom(ps1);
 	for (p2 <- ps2)
 	{
@@ -310,12 +377,29 @@ tuple[bool,rel[str,str],CBGFSequence] tryHypothesis(rel[str,str] approved, rel[s
 	return <true,approved,cbgf>;
 }
 
-tuple[bool,rel[str,str],CBGFSequence] tryHypothesis(rel[str,str] approved, rel[str,str] version, BGFGrammar master, BGFGrammar servant, CBGFSequence c)
+tuple[bool,rel[str,str],CBGFSequence] tryHypothesis(rel[str,str] known, rel[str,str] version, BGFGrammar master, BGFGrammar servant, CBGFSequence c)
 {
+	rel[str,str] approved = known;
 	CBGFSequence cbgf = c;
+	// checking
+	for (<n1,n2> <- version)
+	{
+		if (<n1,n3> <- approved)
+			if (n1 == n2)
+			{
+				// trivial self-bindings
+				version -= {<n1,n2>};
+			}
+			elseif (n3 != n2)
+			{
+				println("Hey, <n1> is already bound to <n3>, no need for <n2>!");
+				return;
+			}
+	}
 	if (isEmpty(version))
 		return <true,approved,cbgf>;
-	println(version);
+	println("Approved: <approved>, version: <version>");
+	// trying
 	for (<n1,n2> <- version)
 	{
 		if (n1=="") continue;
@@ -324,42 +408,44 @@ tuple[bool,rel[str,str],CBGFSequence] tryHypothesis(rel[str,str] approved, rel[s
 		println(" * Checking <n1> as <n2>...");
 		println("    * Production rules:");
 		for (p <- prodsOfN(n1,master.prods))
-			println("     * <p>");
+			println("     * <p> <makeSig(p)>");
 		println("    * vs");
 		for (p <- prodsOfN(n1,servant.prods))
-			println("     * <p>");
+			println("     * <p> <makeSig(p)>");
 		// TODO: many productions
 		//ps1 = prodsOfN(n1,master.prods);
 		//ps2 = prodsOfN(n1,servant.prods);
-		for (prodversion <- matchProds(prodsOfN(n1,master.prods),prodsOfN(n1,servant.prods)))
-		{
-			println("Prodversion: <prodversion>");
-			<r, res, cbgf> = tryHypothesis(approved, version, prodversion, master, servant, cbgf);
-			if (r)
+		//for (prodversion <- matchProds(prodsOfN(n1,master.prods),prodsOfN(n1,servant.prods)))
+		//{
+		//	println("Prodversion: <prodversion>");
+		//	<r, res, cbgf> = tryHypothesis(approved, version, prodversion, master, servant, cbgf);
+		//	if (r)
+		//	{
+		//		println("Prodversion approved.");
+		//		approved += res;
+		//	}
+		//} 
+		<prodmatch,namematch> = matchProds(prodsOfN(n1,master.prods),prodsOfN(n1,servant.prods));
+		approved += namematch; // premature?
+			for (<p1,p2> <- prodmatch)
 			{
-				println("Prodversion approved.");
-				approved += res;
+				list[rel[str,str]] versions = reduceSearchSpace(matchSigs(makeSig(p1),makeSig(p2)));
+				if (isEmpty(versions))
+				{
+					println("Reached a fixed point?");
+					//return <true,approved,cbgf>; // or false?
+				}
+				else
+				{
+					for (v <- versions)
+					{
+						<r, res, cbgf> = tryHypothesis(approved + version, v, master, servant, cbgf);
+						if (r)
+							approved += res;
+					}
+					//return <true,approved,cbgf>; // or false?
+				}
 			}
-		} 
-			//for (<p1,p2> <- prodversion)
-			//{
-			//	list[rel[str,str]] versions = reduceSearchSpace(matchSigs(makeSig(p1),makeSig(p2)));
-			//	if (isEmpty(versions))
-			//	{
-			//		println("Reached a fixed point?");
-			//		//return <true,approved,cbgf>; // or false?
-			//	}
-			//	else
-			//	{
-			//		for (v <- versions)
-			//		{
-			//			<r, res, cbgf> = tryHypothesis(approved + version, v, master, servant, cbgf);
-			//			if (r)
-			//				approved += res;
-			//		}
-			//		//return <true,approved,cbgf>; // or false?
-			//	}
-			//}
 	}
 	//res = checkMatch(masternt,prodsOfN(masternt,master.prods)[0],candidates[masternt],servant.prods);
 	return <true,approved,cbgf>;
@@ -406,15 +492,17 @@ tuple[bool,rel[str,str],CBGFSequence] tryHypothesis(rel[str,str] approved, rel[s
 		}
 }
 
-BGFGrammar loadSimpleGrammar(loc l)
+tuple[BGFGrammar,BGFGrammar] loadSimpleGrammar(loc l)
 {
-	BGFGrammar g = readBGF(l);
+	BGFGrammar g = readBGF(l), q;
 	// we simplify our life by converting built-in types ("values") to regular nonterminals
 	if (/val(string()) := g)
-		g = transform([replace(val(string()),nonterminal("STRING"),globally())],g);
-	if (/val(integer()) := g)
-		g = transform([replace(val(integer()),nonterminal("INTEGER"),globally())],g);
-	return g;
+		q = transform([replace(val(string()),nonterminal("STRING"),globally())],g);
+	else
+		q = g;
+	if (/val(integer()) := q)
+		q = transform([replace(val(integer()),nonterminal("INTEGER"),globally())],q);
+	return <g,q>;
 }
 
 public void main()
@@ -423,16 +511,18 @@ public void main()
 	//map[str,CBGFSequence] cbgfs = ();
 	//map[str,map[str,str]] namebind = ();
 	map[str,str] namebind = ();
-	rel[str,str] naming;
-	BGFGrammar servant, master = loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/expr/master.bgf|);
-	CBGFSequence cbgf;
+	rel[str,str] naming, finbind;
+	BGFGrammar original, servant, master;
+	<_,master> = loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
+	CBGFSequence cbgf, ncbgf;
 	for (src <- sources)
 	{
 		println("Reading the <src> grammar...");
-		servant = loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/expr/<src>.bgf|);
+		<original,servant> = loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);
 		//println("Parsing the grammarbase with <size(bgfs)> grammars is done.");
 		println("Normalising the grammar...");
-		cbgf = normal::ANF::normalise(servant);
+		ncbgf = normal::ANF::normalise(servant);
+		cbgf = ncbgf;
 		//namebind = ( "" : "" ); // ???
 		//println("Normalising <src> with");
 		//iprintln(cbgf); 
@@ -443,17 +533,34 @@ public void main()
 		for (naming <- [{<rm,rs>} | rm <- master.roots, rs <- servant.roots])
 		{
 			//println("Is <rm> the same as <rs>?");
-			<r,res,cbgf> = tryHypothesis({}, naming, master, servant, []);
+			<r,finbind,cbgf> = tryHypothesis({}, naming, master, servant, cbgf);
 			if (r)
-				println("Hypothesis resulted in <res> and <cbgf>");
+				println("Hypothesis resulted in <finbind> and <cbgf>");
 		}
-
-	//iprintln(namebind);
-	println("Writing CBGF...");
-	//for (src <- sources)
-	writeCBGF(cbgf,|home:///projects/slps/topics/convergence/guided/bgf/expr/<src>.cbgf|);
-	println("Writing BGF...");
-	writeBGF(servant,|home:///projects/slps/topics/convergence/guided/bgf/expr/<src>.res.bgf|);
+		// TODO: remove scraps of CBGF from above
+		// Naming mismatches are all resolved now, let's construct a good CBGF
+		CBGFSequence rcbgf = [];
+		for (<n1,n2> <- finbind)
+		{
+			println(" * Binding <n2> to <n1>.");
+			if (n1 == "" )
+				rcbgf += [define_undefine([production("",n2,epsilon())]),inline_extract(production("",n2,epsilon()),globally())];
+			elseif (n1 != "STRING" && n2 == "STRING")
+				rcbgf += inline_extract(production("",n1,val(string())),globally());
+			elseif (n1 == "STRING" && n2 == "STRING")
+				;
+			elseif (n1 == "STRING" && n2 != "STRING")
+				rcbgf += define_undefine([production("",n2,val(string()))]);
+			elseif (n1 != "STRING" && n2 != "STRING" && n1!=n2)
+				rcbgf += renameN_renameN(n2,n1);
+		}
+		println("Writing CBGF...");
+		//for (src <- sources)
+		iprintln(rcbgf);
+		cbgf = ncbgf+rcbgf;
+		writeCBGF(cbgf,|home:///projects/slps/topics/convergence/guided/bgf/<src>.cbgf|);
+		println("Writing BGF...");
+		writeBGF(transform(forward(cbgf),original),|home:///projects/slps/topics/convergence/guided/bgf/<src>.res.bgf|);
 	}
 	println("Done.");
 }

@@ -10,6 +10,9 @@ import List; // size
 BGFGrammar performRenameN(str x, str y, grammar(rs, ps))
 {
 	list[BGFProduction] ps1,ps2,ps3,ps4;
+	list[str] rs2;
+	if ([*L1, x, *L2] := rs) rs2 = L1 + y + L2;
+	else rs2 = rs;
 	if (x in definedNs(ps))
 	{
 		<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
@@ -18,9 +21,9 @@ BGFGrammar performRenameN(str x, str y, grammar(rs, ps))
 	else
 		ps4 = ps; 
 	if (x in usedNs(ps4))
-		return grammar(rs,performReplace(nonterminal(x),nonterminal(y),ps4));
+		return grammar(rs2,performReplace(nonterminal(x),nonterminal(y),ps4));
 	else
-		return grammar(rs,ps4);
+		return grammar(rs2,ps4);
 }
 
 list[BGFProduction] performReplace(BGFExpression e1, BGFExpression e2, list[BGFProduction] ps)

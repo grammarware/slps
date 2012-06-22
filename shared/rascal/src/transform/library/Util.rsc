@@ -30,7 +30,7 @@ public BGFProduction demark (BGFProduction p1)
 	{
 		case sequence([*L1,marked(BGFExpression e),*L2]) => sequence(L1 + L2)
 		case choice([*L1,marked(BGFExpression e),*L2]) => choice(L1 + L2)
-		//case marked(_) => epsilon()
+		case production(l,n,marked(_)) => production(l,n,epsilon())
 	}
 	return p2;
 }
