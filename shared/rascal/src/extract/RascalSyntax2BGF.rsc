@@ -57,6 +57,7 @@ default BGFProduction prod2prod(Production def) = production("", "?", syntax::BG
 BGFExpression rhs2expr([Symbol s]) = symbol2expr(s);
 BGFExpression rhs2expr(list[Symbol] seq) = syntax::BGF::sequence([symbol2expr(s) | s <- seq, layouts(_) !:= s]);
 
+BGFExpression symbol2expr(label(str x, Symbol s)) = syntax::BGF::selectable(x,symbol2expr(s));
 BGFExpression symbol2expr(\sort(str x)) = syntax::BGF::nonterminal(x);
 BGFExpression symbol2expr(conditional(\sort(str x),{except(_)})) = syntax::BGF::nonterminal(x); // cannot represent better in BGF
 BGFExpression symbol2expr(\lex(str x)) = syntax::BGF::nonterminal(x);

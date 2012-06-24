@@ -1,15 +1,15 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module Concrete
 
-start syntax Program = prg: {Function "\n"}+;
-syntax Function = fun: Name Name+ "=" Expr ;
+start syntax Program = prg: {Function "\n"}+ functions;
+syntax Function = fun: Name f Name+ args "=" Expr body;
 syntax Expr
-	= binary: Expr Ops Expr
-	| apply: Name Expr!apply+
-	| ifThenElse: "if" Expr "then" Expr "else" Expr
-	| bracket "(" Expr ")"
-	| argument: Name
-	| literal: Int
+	= binary: Expr lexpr Ops op Expr rexpr
+	| apply: Name f Expr!apply+ vargs
+	| ifThenElse: "if" Expr cond "then" Expr thenbranch "else" Expr elsebranch
+	| bracket "(" Expr e ")"
+	| argument: Name a
+	| literal: Int i
 	;
 
 syntax Ops
