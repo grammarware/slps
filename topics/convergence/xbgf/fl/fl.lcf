@@ -67,8 +67,10 @@
 	<source>
 		<name>python</name>
 		<grammar>
-			<extraction><expand>tools</expand>/py2bgf <expand>fl</expand>/python/parser2.py
-      </extraction>
+			<extraction>cp /Users/zaytsev/projects/slps/topics/convergence/xbgf/fl/snapshot/python.bgf
+	</extraction>
+			<!-- <extraction><expand>tools</expand>/py2bgf <expand>fl</expand>/python/parser2.py
+      </extraction> -->
 		</grammar>
 	</source>
 	<source>
@@ -106,10 +108,12 @@
 		</testing>
 	</source>
 	<source>
-		<name>rascal</name>
+		<name>rascal-c</name>
 		<grammar>
-			<extraction><expand>tools</expand>/rsc2bgf <expand>fl</expand>/rascal/FL.rsc
-      </extraction>
+			<!-- <extraction><expand>tools</expand>/rscs2bgf <expand>fl</expand>/rascal/src/Concrete.rsc
+      </extraction> -->
+		<extraction>cp /Users/zaytsev/projects/slps/topics/convergence/xbgf/fl/snapshot/rascal-c.bgf
+</extraction>
 		</grammar>
 	</source>
 	<source>
@@ -127,7 +131,7 @@
 		</grammar>
 	</source>
 	<source>
-		<name>ecore2</name>
+		<name>emf</name>
 		<derived>
 			<from>xsd</from>
 			<using>xsd2ecore</using>
@@ -171,6 +175,15 @@
 		<grammar>
 			<extraction><expand>tools</expand>/java2bgf <expand>fl</expand>/java1 types
       </extraction>
+		</grammar>
+	</source>
+	<source>
+		<name>rascal-a</name>
+		<grammar>
+			<extraction>cp /Users/zaytsev/projects/slps/topics/convergence/xbgf/fl/snapshot/rascal-a.bgf
+	</extraction>
+			<!-- <extraction><expand>tools</expand>/rscd2bgf <expand>fl</expand>/rascal/src/Abstract.rsc
+      </extraction> -->
 		</grammar>
 	</source>
 	
@@ -219,8 +232,14 @@
 	<target>
 		<name>scannerless</name>
 		<branch>
-			<input>rascal</input>
+			<input>rascal-c</input>
 			<structural-matching>
+				<perform>refactor-seplist</perform>
+				<automated>
+					<method>strips</method>
+					<result>stripSelectors</result>
+				</automated>
+				<perform>refactor-function</perform>
 				<perform>multipleNewlines-rascal</perform>
 			</structural-matching>
 		</branch>
@@ -289,7 +308,7 @@
 			</relaxation>
 		</branch>
 		<branch>
-			<input>ecore2</input>
+			<input>emf</input>
 			<nominal-matching>
 				<perform>rename-emf</perform>
 				<automated>
@@ -330,9 +349,18 @@
 		</branch>
 	</target>
 	<target>
-		<name>abstract</name>
+		<name>adt</name>
 		<branch>
 			<input>java</input>
+		</branch>
+		<branch>
+			<input>rascal-a</input>
+		</branch>
+	</target>
+	<target>
+		<name>abstract</name>
+		<branch>
+			<input>adt</input>
 			<structural-matching>
 				<perform>unerase</perform>
 				<automated>

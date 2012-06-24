@@ -1,2 +1,5 @@
 *.res.bgf
+*.normal.*
 *.xbgf
+*.bnf
+TMP-res

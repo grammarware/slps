@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
+	<xbgf:extract>
+		<bgf:production>
+			<nonterminal>Newline</nonterminal>
+			<bgf:expression>
+				<terminal>\n</terminal>
+			</bgf:expression>
+		</bgf:production>
+	</xbgf:extract>
+	<xbgf:undefine>
+		<nonterminal>Newline</nonterminal>
+	</xbgf:undefine>
 	<xbgf:widen>
 		<bgf:expression>
 			<nonterminal>Newline</nonterminal>
