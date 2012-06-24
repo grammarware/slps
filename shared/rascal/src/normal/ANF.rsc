@@ -11,6 +11,8 @@ import analyse::Metrics;
 import Set;
 import List;
 import IO; //debug
+import io::WriteBGF; // batch
+import io::ReadBGF; // batch
 
 CBGFSequence normalise(BGFGrammar g)
 	= (topNs(g) - leafNs(g) == toSet(g.roots)
@@ -70,8 +72,12 @@ BGFProduction markAllTerminals(BGFProduction p) = visit(p)
 	case selectable(s,e) => e
 };
 
-//void main()
-//{
-//	BGFProduction p = production("","function",sequence([selectable("n",nonterminal("ID")),plus(selectable("a",nonterminal("ID"))),terminal("="),selectable("e",nonterminal("expr")),plus(nonterminal("NEWLINE"))]));
-//	iprintln(markAllTerminals
-//}
+public void main()
+{
+	for (src <- ["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"])
+	{
+		BGFGrammar g = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);
+		g = transform(forward(normalise(g)),g);
+		writeBGF(g,|home:///projects/slps/topics/convergence/guided/bgf/<src>.normal.bgf|);
+	}
+}

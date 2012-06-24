@@ -14,6 +14,9 @@ build:
 	../../../../shared/tools/rscd2bgf ../../../fl/rascal/src/Abstract.rsc rascal-a.bgf
 	../../../../shared/tools/txl2bgf ../../../fl/txl/FL.Txl txl.bgf
 
+bnf:
+	ls -1 *.bgf | xargs -n1 -I _ ../../../../shared/tools/bgf2bnf _ `basename _ .bgf`.bnf
+
 test:
 	make sdf.test
 	bgf2bnf sdf.res2.bgf
