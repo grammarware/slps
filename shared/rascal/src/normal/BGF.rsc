@@ -8,6 +8,7 @@ public BGFGrammar normalise(BGFGrammar g) = grammar (g.roots, normalise(g.prods)
 public list[BGFProduction] normalise(list[BGFProduction] prods)
 						= [normalise(p) | p <- prods]; 
 
+// the following is kinda useful, but breaks some code if normalisations are not done after each step
 public BGFProduction normalise(production ("", str lhs, selectable(str label,BGFExpression rhs)))
 							 = production (label, lhs, normalise(rhs));
 

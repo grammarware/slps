@@ -19,65 +19,54 @@ CBGFSequence normalise(BGFGrammar g)
 	= (topNs(g) - leafNs(g) == toSet(g.roots)
 	? []
 	: [reroot_reroot(g.roots,toList(topNs(g) - leafNs(g)))])
-	+ normStage2(normStage1(g.prods),g);
+	+ normAllStages(g);
 
-CBGFSequence normStage1(list[BGFProduction] ps) = [*normStage1(p) | p <- ps];
-
-CBGFSequence normStage2(CBGFSequence cbgf, BGFGrammar g)
+CBGFSequence normAllStages(BGFGrammar gr)
 {
-	list[BGFProduction] afterps = transform(forward(cbgf),g).prods;
-	set[str] used = usedNs(afterps);
-	set[str] defined = definedOnceNs(afterps);
-	set[str] epsilons = {};
-	//iprintln(afterps);
-	for(q <- afterps)
-		switch(q.rhs)
-		{
-			case choice(_) :
-				cbgf += vertical_horizontal(innt(q.lhs));
-			case epsilon() :
-				epsilons += q.lhs;
-			case nonterminal(str n) :
-				if (n in defined && n notin usedNs(afterps - q))
-					cbgf += (n == q.lhs)? abridge_detour(q) : unchain_chain(q);
-			// default?
-		}
-	//println(epsilons);
-	for (n <- epsilons)
-		if (n in used)
-			cbgf += undefine_define([production("",n,epsilon())]);
+	CBGFSequence c = [], c2;
+	BGFGrammar g = gr;
+	for (f <- [dropAllLabels,dropAllSelectors,dropAllTerminals,dropAllHorizontals,dropAllUnknowns,dropAllChains,dropAllLabels])
+	{
+		c2 = f(g);
+		//println("Stage <f>:");
+		//iprintln(c2);
+		g = transform(forward(c2),g);
+		c += c2;
+	}
+	return c;
+}
+
+CBGFSequence dropAllLabels(BGFGrammar g) = [unlabel_designate(p) | p <- g.prods, p.label != ""];
+CBGFSequence dropAllSelectors(BGFGrammar g) = [anonymize_deanonymize(markAllSelectors(p)) | p <- {q | q <- g.prods, /selectable(_,_) := q}];
+//CBGFSequence dropAllSelectors(BGFGrammar g) = [anonymize_deanonymize(markAllSelectors(p)) | p <- g.prods, /selectable(_,_) := p];
+//CBGFSequence dropAllTerminals(BGFGrammar g) = [abstractize_concretize(markAllTerminals(p)) | p <- g.prods, /terminal(_) := p];
+CBGFSequence dropAllTerminals(BGFGrammar g) = [abstractize_concretize(markAllTerminals(p)) | p <- {q | q <- g.prods, /terminal(_) := q}];
+// TODO: distribute
+CBGFSequence dropAllHorizontals(BGFGrammar g) = [vertical_horizontal(innt(p.lhs)) | p <- g.prods, choice(_) := p.rhs];
+CBGFSequence dropAllUnknowns(BGFGrammar g)
+{
+	CBGFSequence cbgf = [];
+	set[str] used = usedNs(g.prods);
+	for (p <- {q | q <- g.prods, epsilon() := q.rhs})
+		if (p.lhs in used)
+			cbgf += undefine_define([p]);
 		else
-			cbgf += eliminate_introduce([production("",n,epsilon())]);
+			cbgf += eliminate_introduce([p]);
+	return cbgf;
+}
+CBGFSequence dropAllChains(BGFGrammar g)
+{
+	CBGFSequence cbgf = [];
+	set[str] defined = definedOnceNs(g.prods);
+	for(p <- g.prods, nonterminal(str n) := p.rhs)
+		if (n in defined && n notin usedNs(g.prods - p))
+			cbgf += (n == p.lhs)? abridge_detour(p) : unchain_chain(p);
 	return cbgf;
 }
 
-CBGFSequence normStage1(BGFProduction p)
-{
-	CBGFSequence cbgf = [];
-	if (p.label != "")
-		cbgf += unlabel_designate(p);
-	if (/selectable(_,_) := p)
-		cbgf += anonymize_deanonymize(markAllSelectors(p));
-	if (/terminal(_) := p)
-		cbgf += abstractize_concretize(markAllTerminals(p));
-	// TODO: distribute
-	return visit(cbgf)
-	{
-		case anonymize_deanonymize(production(_,n,rhs)) => anonymize_deanonymize(production("",n,rhs))
-		case abstractize_concretize(production(_,n,rhs)) => abstractize_concretize(production("",n,rhs))
-	};
-}
 
-BGFProduction markAllSelectors(BGFProduction p) = visit(p)
-{
-	case selectable(s,e) => marked(selectable(s,e))
-};
-
-BGFProduction markAllTerminals(BGFProduction p) = visit(p)
-{
-	case terminal(t) => marked(terminal(t))
-	case selectable(s,e) => e
-};
+BGFProduction markAllSelectors(BGFProduction p) = visit(p) {case selectable(s,e) => marked(selectable(s,e)) };
+BGFProduction markAllTerminals(BGFProduction p) = visit(p) {case terminal(t) => marked(terminal(t))};
 
 public void main()
 {

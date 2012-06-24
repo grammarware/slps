@@ -82,8 +82,9 @@ public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 			case strip(str a): g1 = runStrip(a,g1);
 			default: throw "Unknown XBGF command <step>";
 		}
+		g1 = normalise(g1);
 	}
-	return normalise(g1);
+	return g1;
 }
 
 BGFGrammar runAbridge(BGFProduction prod, grammar(rs, ps))
