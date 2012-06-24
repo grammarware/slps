@@ -50,10 +50,10 @@ BGFGrammar process(loc src)
 	return normalise(syntax::BGF::grammar([],ps));
 }
 
-list[BGFProduction] def2prod((DataDef)`<Name n> = <DataExpr d> ;`)
-	= [production("","<n>",expr2expr(d))];
-default list[BGFProduction] def2prod((DataDef)`<Name n> = <{DataExpr "|"}+ ds> ;`)
-	= [production("","<n>",expr2expr(d)) | d <- ds];
+BGFProduction def2prod((DataDef)`<Name n> = <DataExpr d> ;`)
+	= production("","<n>",expr2expr(d));
+default BGFProduction def2prod((DataDef)`<Name n> = <{DataExpr "|"}+ ds> ;`)
+	= production("","<n>",choice([expr2expr(d) | d <- ds]));
 
 BGFExpression type2expr((Name)`str`) = val(string());
 BGFExpression type2expr((Name)`int`) = val(integer());
