@@ -31,6 +31,11 @@ public BGFProduction demark (BGFProduction p1)
 		case sequence([*L1,marked(BGFExpression e),*L2]) => sequence(L1 + L2)
 		case choice([*L1,marked(BGFExpression e),*L2]) => choice(L1 + L2)
 		case production(l,n,marked(_)) => production(l,n,epsilon())
+		case selectable(s,marked(_)) => selectable(s,epsilon())
+		case seplistplus(marked(_),s) => star(s)
+		case seplistplus(e,marked(_)) => plus(e) 
+		case sepliststar(marked(_),s) => star(s)
+		case sepliststar(e,marked(_)) => star(e) 
 	}
 	return p2;
 }

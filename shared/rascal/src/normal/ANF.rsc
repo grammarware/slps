@@ -12,6 +12,7 @@ import Set;
 import List;
 import IO; //debug
 import io::WriteBGF; // batch
+import io::WriteCBGF; // batch
 import io::ReadBGF; // batch
 
 CBGFSequence normalise(BGFGrammar g)
@@ -26,15 +27,21 @@ CBGFSequence normStage2(CBGFSequence cbgf, BGFGrammar g)
 {
 	list[BGFProduction] afterps = transform(forward(cbgf),g).prods;
 	set[str] used = usedNs(afterps);
+	set[str] defined = definedOnceNs(afterps);
 	set[str] epsilons = {};
 	//iprintln(afterps);
 	for(q <- afterps)
-	{
-		if (choice(_) := q.rhs)
-			cbgf += vertical_horizontal(innt(q.lhs));
-		if (epsilon() := q.rhs)
-			epsilons += q.lhs;
-	}
+		switch(q.rhs)
+		{
+			case choice(_) :
+				cbgf += vertical_horizontal(innt(q.lhs));
+			case epsilon() :
+				epsilons += q.lhs;
+			case nonterminal(str n) :
+				if (n in defined && n notin usedNs(afterps - q))
+					cbgf += (n == q.lhs)? abridge_detour(q) : unchain_chain(q);
+			// default?
+		}
 	//println(epsilons);
 	for (n <- epsilons)
 		if (n in used)
@@ -76,8 +83,14 @@ public void main()
 {
 	for (src <- ["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"])
 	{
+		println("Reading <src>...");
 		BGFGrammar g = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);
-		g = transform(forward(normalise(g)),g);
+		CBGFSequence c = normalise(g);
+		println("Writing the normalising trafo <src>...");
+		writeCBGF(c,|home:///projects/slps/topics/convergence/guided/bgf/<src>.normalise.cbgf|);
+		println("Transforming <src>...");
+		g = transform(forward(c),g);
+		println("Writing output to <src>...");
 		writeBGF(g,|home:///projects/slps/topics/convergence/guided/bgf/<src>.normal.bgf|);
 	}
 }

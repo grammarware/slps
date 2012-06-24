@@ -44,6 +44,7 @@ Node cbgf2xml(CBGFCommand step)
 		case fold_unfold(str s, XBGFScope w): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"fold-unfold",[element(none(),"nonterminal",[charData(s)]),element(none(),"in",[context2xml(w)])]);
 		case horizontal_vertical(XBGFScope w): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"horizontal-vertical",[context2xml(w)]);
 		case inject_project(BGFProduction p): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"inject-project",[prod2xml(p)]);
+		case inline_extract(BGFProduction p, globally()): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"inline-extract",[prod2xml(p)]);
 		case inline_extract(BGFProduction p, XBGFScope w): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"inline-extract",[prod2xml(p),element(none(),"in",[context2xml(w)])]);
 		case introduce_eliminate(list[BGFProduction] ps): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"introduce-eliminate",[prod2xml(p) | p <- ps]);
 		case iterate_assoc(BGFProduction p): return element(namespace("cbgf","http://planet-sl.org/cbgf"),"iterate-assoc",[prod2xml(p)]);

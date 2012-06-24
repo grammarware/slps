@@ -2,6 +2,7 @@
 module analyse::Metrics
 
 import syntax::BGF;
+import List;
 
 @doc{All nonterminals in a grammar: defined or used}
 public set[str] allNs(list[BGFProduction] ps) = definedNs(ps) + usedNs(ps);
@@ -36,6 +37,10 @@ public set[str] usedNRNs(BGFGrammar g) = usedNRNs(g.prods);
 @doc{All nonterminals defined in a grammar}
 public set[str] definedNs(list[BGFProduction] ps) = {s | production(_,str s,_) <- ps};
 public set[str] definedNs(BGFGrammar g) = definedNs(g.prods);
+
+@doc{All nonterminals defined in a grammar by one production rule each}
+public set[str] definedOnceNs(list[BGFProduction] ps) = {x | str x <- definedNs(ps), size(prodsOfN(x,ps))==1 };
+public set[str] definedOnceNs(BGFGrammar g) = definedOnceNs(g.prods);
 
 public rel[str,str] calls(list[BGFProduction] ps) = {<n1,n2> | production(_,n1,rhs) <- ps, /nonterminal(n2) := rhs};
 public set[str] calls(str x, list[BGFProduction] ps) = {n2 | production(_,x,rhs) <- ps, /nonterminal(n2) := rhs};
