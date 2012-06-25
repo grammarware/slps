@@ -110,7 +110,7 @@ BGFGrammar runAbstractize(BGFProduction p1, grammar(roots, ps))
 BGFGrammar runAddH(BGFProduction p1, grammar(rs, ps))
 {
 	p2 = unmark(p1);
-	p3 = demark(p1);
+	p3 = demarkH(p1);
 	if (!inProds(p3,ps))
 		throw "Production rule <p3> not found.";
 	return grammar(rs, replaceP(ps,p3,p2));
@@ -456,7 +456,7 @@ BGFGrammar runRemoveH(BGFProduction p1, grammar(roots, ps))
 	p2 = unmark(p1);
 	if (!inProds(p2,ps))
 		throw "Production rule <p2> not found.";
-	return grammar(roots, replaceP(ps,p2,demark(p1)));
+	return grammar(roots, replaceP(ps,p2,demarkH(p1)));
 }
 
 BGFGrammar runRemoveV(BGFProduction p1, grammar(roots, ps))

@@ -5,6 +5,10 @@ import syntax::BGF;
 
 public BGFGrammar normalise(BGFGrammar g) = grammar (g.roots, normalise(g.prods));
 
+// remove duplicate production rules
+public list[BGFProduction] normalise([L1*,BGFProduction X1,L2*,X1,L3*])
+						= normalise([*L1,X1,*L2,*L3]);
+
 public list[BGFProduction] normalise(list[BGFProduction] prods)
 						= [normalise(p) | p <- prods]; 
 

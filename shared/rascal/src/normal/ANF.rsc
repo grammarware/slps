@@ -23,16 +23,21 @@ CBGFSequence normalise(BGFGrammar g)
 
 CBGFSequence normAllStages(BGFGrammar gr)
 {
-	CBGFSequence c = [], c2;
+	CBGFSequence c = [], c2 = [], c1 = [];
 	BGFGrammar g = gr;
-	for (f <- [dropAllLabels,dropAllSelectors,dropAllTerminals,dropAllHorizontals,dropAllUnknowns,dropAllChains,dropAllLabels])
+	do
 	{
-		c2 = f(g);
-		//println("Stage <f>:");
-		//iprintln(c2);
-		g = transform(forward(c2),g);
-		c += c2;
-	}
+		c1 = [];
+		for (f <- [dropAllLabels,dropAllSelectors,dropAllTerminals,dropAllHorizontals,dropAllUnknowns,dropAllChains,dropAllLabels])
+		{
+			c2 = f(g);
+			//println("Stage <f>:");
+			//iprintln(c2);
+			g = transform(forward(c2),g);
+			c1 += c2;
+		}
+		c += c1;
+	} while (!isEmpty(c1));
 	return c;
 }
 
@@ -71,6 +76,7 @@ BGFProduction markAllTerminals(BGFProduction p) = visit(p) {case terminal(t) => 
 public void main()
 {
 	for (src <- ["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"])
+	//for (src <- ["python"])
 	{
 		println("Reading <src>...");
 		BGFGrammar g = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);

@@ -119,6 +119,9 @@ map[str,str] makeSig(nonterminal(str X)) = (X:"1");
 map[str,str] makeSig(plus(nonterminal(str X))) = (X:"+");
 map[str,str] makeSig(star(nonterminal(str X))) = (X:"*");
 map[str,str] makeSig(sequence(L)) = makeSig(L);
+map[str,str] makeSig(val(string())) = ("STRING": "1");
+map[str,str] makeSig(val(integer())) = ("INTEGER": "1");
+map[str,str] makeSig(empty()) = ("": "?");
 default map[str,str] makeSig(BGFExpression e) = println("Unhandled case in makeSig: <e>");
 
 map[str,str] makeSig(list[BGFExpression] L1)

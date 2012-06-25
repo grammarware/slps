@@ -26,16 +26,21 @@ public BGFProduction demark (BGFProduction p1)
 {
 	if (/marked(_) !:= p1)
 		throw "<p1> must contain markers.";
-	p2 = innermost visit(p1)
+	p2 = visit(p1)
 	{
 		case sequence([*L1,marked(BGFExpression e),*L2]) => sequence(L1 + L2)
+		case marked(_) => epsilon()
+	}
+	return p2;
+}
+
+public BGFProduction demarkH (BGFProduction p1) 
+{
+	if (/marked(_) !:= p1)
+		throw "<p1> must contain markers.";
+	p2 = innermost visit(p1)
+	{
 		case choice([*L1,marked(BGFExpression e),*L2]) => choice(L1 + L2)
-		case production(l,n,marked(_)) => production(l,n,epsilon())
-		case selectable(s,marked(_)) => selectable(s,epsilon())
-		case seplistplus(marked(_),s) => star(s)
-		case seplistplus(e,marked(_)) => plus(e) 
-		case sepliststar(marked(_),s) => star(s)
-		case sepliststar(e,marked(_)) => star(e) 
 	}
 	return p2;
 }
