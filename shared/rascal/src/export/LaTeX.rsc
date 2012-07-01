@@ -80,6 +80,6 @@ default str pp(BGFExpression e) = "?<e>?";
 public void main()
 {
 	//<_,g> = converge::Guided::loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
-	<_,g> = converge::Guided::loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/jaxb.normal.bgf|);
+	<_,g> = converge::Guided::loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/xsd.normal.bgf|);
 	println(pp(g));
 }

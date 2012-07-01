@@ -5,6 +5,7 @@ ldfns  = 'http://planet-sl.org/ldf'
 xldfns = 'http://planet-sl.org/xldf'
 bgfns  = 'http://planet-sl.org/bgf'
 xbgfns = 'http://planet-sl.org/xbgf'
+exbgfns= 'http://planet-sl.org/exbgf'
 cbgfns = 'http://planet-sl.org/cbgf'
 mbgfns = 'http://planet-sl.org/mbgf'
 eddns  = 'http://planet-sl.org/edd'
@@ -19,6 +20,7 @@ def init(ET):
 	ET._namespace_map[xldfns] = 'xldf'
 	ET._namespace_map[bgfns]  =  'bgf'
 	ET._namespace_map[xbgfns] = 'xbgf'
+	ET._namespace_map[exbgfns]='exbgf'
 	ET._namespace_map[cbgfns] = 'cbgf'
 	ET._namespace_map[mbgfns] = 'mbgf'
 	ET._namespace_map[eddns]  =  'edd'
@@ -32,6 +34,7 @@ def ldf_(x):  return '{'+ldfns+'}' +x
 def xldf_(x): return '{'+xldfns+'}'+x
 def bgf_(x):  return '{'+bgfns+'}' +x
 def xbgf_(x): return '{'+xbgfns+'}'+x
+def exbgf_(x):return '{'+exbgfns+'}'+x
 def cbgf_(x): return '{'+cbgfns+'}'+x
 def mbgf_(x): return '{'+mbgfns+'}'+x
 def xsd_(x):  return '{'+xsdns+'}' +x
