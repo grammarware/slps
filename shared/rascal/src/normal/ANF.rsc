@@ -28,7 +28,14 @@ CBGFSequence normAllStages(BGFGrammar gr)
 	do
 	{
 		c1 = [];
-		for (f <- [dropAllLabels,dropAllSelectors,dropAllTerminals,dropAllHorizontals,dropAllUnknowns,dropAllChains,dropAllLabels])
+		for (f <- [
+					dropAllLabels,
+					dropAllSelectors,
+					dropAllTerminals,
+					dropAllHorizontals,
+					dropAllUnknowns,
+					dropAllChains
+			])
 		{
 			c2 = f(g);
 			//println("Stage <f>:");
@@ -64,8 +71,10 @@ CBGFSequence dropAllChains(BGFGrammar g)
 	CBGFSequence cbgf = [];
 	set[str] defined = definedOnceNs(g.prods);
 	for(p <- g.prods, nonterminal(str n) := p.rhs)
-		if (n in defined && n notin usedNs(g.prods - p))
-			cbgf += (n == p.lhs)? abridge_detour(p) : unchain_chain(p);
+		if (n == p.lhs)
+			cbgf += abridge_detour(p);
+		elseif (n in defined && n notin usedNs(g.prods - p))
+			cbgf += unchain_chain(p);
 	return cbgf;
 }
 

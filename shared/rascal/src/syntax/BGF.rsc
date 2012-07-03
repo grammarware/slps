@@ -1,8 +1,10 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module \syntax::BGF
 
+alias BGFProdList = list[BGFProduction];
+alias BGFExprList = list[BGFExpression];
 data BGFGrammar =
-	grammar (list[str] roots, list[BGFProduction] prods)
+	grammar (list[str] roots, BGFProdList prods)
 ;
 
 data BGFProduction =
@@ -17,8 +19,8 @@ data BGFExpression =
 	| terminal(str t)
 	| nonterminal(str t)
 	| selectable(str selector, BGFExpression expr)
-	| sequence(list[BGFExpression] exprs)
-	| choice(list[BGFExpression] exprs)
+	| sequence(BGFExprList exprs)
+	| choice(BGFExprList exprs)
 	| marked(BGFExpression expr)
 	| optional(BGFExpression expr)
 	| plus(BGFExpression expr)
