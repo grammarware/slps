@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-program ::= function+ trailing??
-function ::= name argument+ expression (separator+)??
-expression ::= aexpr | argument | bexpr | cexpr | lexpr
-bexpr ::= expr expr
-aexpr ::= name expression+
-cexpr ::= expr expr expr
-expression ::= expression
+program ::= function+
+function ::= name argument+ expression
+expression ::= apply | argument | binary | conditional | lexpr
+binary ::= expression operator expression
+apply ::= name expression+
+conditional ::= expression expression expression
 argument ::= name
 lexpr ::= number
 -->
@@ -57,6 +56,24 @@ lexpr ::= number
 	<bgf:production>
 		<nonterminal>expression</nonterminal>
 		<bgf:expression>
+			<nonterminal>apply</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>expression</nonterminal>
+		<bgf:expression>
+			<nonterminal>binary</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>expression</nonterminal>
+		<bgf:expression>
+			<nonterminal>conditional</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>apply</nonterminal>
+		<bgf:expression>
 			<sequence>
 				<bgf:expression>
 					<value>string</value>
@@ -72,7 +89,7 @@ lexpr ::= number
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
-		<nonterminal>expression</nonterminal>
+		<nonterminal>binary</nonterminal>
 		<bgf:expression>
 			<sequence>
 				<bgf:expression>
@@ -88,7 +105,7 @@ lexpr ::= number
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
-		<nonterminal>expression</nonterminal>
+		<nonterminal>conditional</nonterminal>
 		<bgf:expression>
 			<sequence>
 				<bgf:expression>

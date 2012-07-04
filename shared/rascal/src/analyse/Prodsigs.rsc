@@ -37,6 +37,7 @@ Footprint makefp(n, sequence(L))
 default Footprint makefp(str n, BGFExpression x) = fpempty();
 
 Signature makesig(BGFProduction p) = {<n,makefp(n,p.rhs)> | n <- usedNs(p.rhs)};
+Signature makesig(BGFExpression e) = {<n,makefp(n,e    )> | n <- usedNs(e    )};
 
 bool eqfp(fpnt(), fpnt()) = true;
 bool eqfp(fpopt(), fpopt()) = true;
@@ -63,10 +64,12 @@ default bool equivfp(Footprint pi, Footprint xi) = eqfp(pi,xi);
 // strong equivalence relies on natural equality of footprints
 // (i.e., == of rels)
 bool eqps(BGFProduction p1, BGFProduction p2) = eqps(makesig(p1),makesig(p2));
-default bool eqps(Signature p, Signature q) = geqps(p,q,eqfp,true);
+bool eqps(BGFExpression e1, BGFExpression e2) = eqps(makesig(e1),makesig(e2));
+bool eqps(Signature p, Signature q) = geqps(p,q,eqfp,true);
 
 // weak equivalence relies on equivalence of footprints
 bool weqps(BGFProduction p1, BGFProduction p2) = weqps(makesig(p1),makesig(p2));
+bool weqps(BGFExpression e1, BGFExpression e2) = weqps(makesig(e1),makesig(e2));
 default bool weqps(Signature p, Signature q) = geqps(p,q,equivfp,false);
 
 // footprint-comparator-parametrised equivalence
@@ -92,6 +95,7 @@ bool geqps(Signature p, Signature q, bool(Footprint,Footprint) cmp, bool strong)
 	return true;
 }
 
+NameMatch makenamematch(BGFExpression e1, BGFExpression e2) = makenamematch(makesig(e1),makesig(e2));
 NameMatch makenamematch(BGFProduction p1, BGFProduction p2) = makenamematch(makesig(p1),makesig(p2)); 
 NameMatch makenamematch(Signature p, Signature q)
 {

@@ -24,17 +24,71 @@ bool conflicted(NameMatch a, NameMatch b)
 	return !isEmpty(a o b);
 }
 
+BGFProduction getSingleProd(set[str] ns, BGFProdList ps)
+{
+	BGFProdList ps1 = [*prodsOfN(n,ps) | n <- ns];
+	if (len(ps1)!=1)
+		throw "Grammar not in ANF with <ps1>";
+	else
+		return ps1[0];
+}
+
 tuple[NameMatch,BGFProdList,BGFProdList]
 	matchProds(NameMatch known, BGFProdList mps, BGFProdList sps)
 {
-	BGFProdList ps1 = [*prodsOfN(n,mps) | <n,_> <- known];
-	BGFProdList ps2 = [*prodsOfN(n,sps) | <n,_> <- known];
+	 // TODO double-check
+	BGFProduction p1 = getSingleProd({n | <n,_> <- known},mps);
+	BGFProduction p2 = getSingleProd({n | <n,_> <- known},sps);
+	
 	println("Trying to match production rules:");
-	for (p <- ps1) println(" <pp(p)>\t <pp(analyse::Prodsigs::makesig(p))>");
+	println(" <pp(p1)>\t <pp(analyse::Prodsigs::makesig(p1))>");
 	println("   vs");
-	for (p <- ps2) println(" <pp(p)>\t <pp(analyse::Prodsigs::makesig(p))>");
+	println(" <pp(p2)>\t <pp(analyse::Prodsigs::makesig(p2))>");
 	// check for strong prodsig-equivalence first
 	println("Looking for strong equivalence.");
+	if (production(_,_,choice(_)) !:= p1 && production(_,_,choice(_)) !:= p2)
+	{
+		// match p1.rhs vs p2.rhs
+		if (analyse::Prodsigs::eqps(p1,p2))
+		{
+			nm = analyse::Prodsigs::makenamematch(p1,p2);
+			println("Found prodsig-equivalent production rules: <pp(nm)>");
+			if (!isEmpty(nm-known))
+				println("Will assume that <pp(nm)> after <pp(known)>");
+			return <nm, mps - p1, sps - p2>;
+		}
+	}
+	elseif (production(_,_,choice(L1)) := p1 && production(_,_,choice(L2)) := p2)
+	{
+		// match L1 vs L2
+		for (e1 <- L1, e2 <- L2, nonterminal(n1) := e1, nonterminal(n2) := e2)
+		{
+			pps1 = prodsOfN(n1,mps);
+			switch(len(pps1))
+			{
+				case 0: ep1 = e1;
+				case 1: ep1 = pps1[0].rhs;
+				default: throw "Grammar not in ANF with <pps1>";
+			}
+			pps2 = prodsOfN(n2,sps);
+			switch(len(pps2))
+			{
+				case 0: ep2 = e2;
+				case 1: ep2 = pps2[0].rhs;
+				default: throw "Grammar not in ANF with <pps2>";
+			}
+			if (analyse::Prodsigs::eqps(e1,e2))
+			{
+				nm = analyse::Prodsigs::makenamematch(e1,e2);
+				println("Found prodsig-equivalent production rules: <pp(nm)>");
+				if (!isEmpty(nm-known))
+					println("Will assume that <pp(nm)> after <pp(known)>");
+				return <nm, mps - p1, sps - p2>;
+			}
+		}
+	}
+	else
+		throw "Choice vs no choice";
 	//println("<pp(analyse::Prodsigs::makesig(p1))> vs <pp(analyse::Prodsigs::makesig(p2))>");
 	//println("Equality: <analyse::Prodsigs::eqps(p1,p2)>; equivalence: <analyse::Prodsigs::weqps(p1,p2)>");
 	for (p1 <- ps1, p2 <- ps2, analyse::Prodsigs::eqps(p1,p2))
