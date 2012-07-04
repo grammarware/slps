@@ -9,14 +9,20 @@ import analyse::Metrics;
 import normal::ANF;
 import export::BNF;
 import io::ReadBGF;
+import io::WriteBGF;
 import transform::XBGF;
 import transform::CBGF;
 import lib::Rascalware;
-//import IO;
+import IO;
 
 list[str] sources =
 	//["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"];
-	["sdf"];
+	["xsd"];
+	// atom/expr: antlr, dcg
+	// arg/string: ecore, rascal-a
+	// good: emf, jaxb, om, rascal-c, sdf, xsd
+	// multiroot: python
+	// unknown: txl
 
 bool conflicted(NameMatch a, NameMatch b)
 {
@@ -24,74 +30,39 @@ bool conflicted(NameMatch a, NameMatch b)
 	return !isEmpty(a o b);
 }
 
-BGFProduction getSingleProd(set[str] ns, BGFProdList ps)
+BGFProduction getSingleProd(str n, BGFProdList ps)
 {
-	BGFProdList ps1 = [*prodsOfN(n,ps) | n <- ns];
+	//BGFProdList ps1 = [*prodsOfN(n,ps) | n <- ns]; // Y SO complicated?
+	BGFProdList ps1 = prodsOfN(n,ps);
 	if (len(ps1)!=1)
 		throw "Grammar not in ANF with <ps1>";
 	else
 		return ps1[0];
 }
 
+BGFProduction unwind(BGFProduction p1, BGFProdList ps1)
+	= (production(_,_,nonterminal(n)) := p1 && n in definedNs(ps1))? getSingleProd(n,ps1) : p1;
+
+bool strongEq(BGFProduction p1, BGFProdList ps1, BGFProduction p2, BGFProdList ps2)
+	= analyse::Prodsigs::eqps(unwind(p1,ps1),unwind(p2,ps2));
+
+bool weakEq(BGFProduction p1, BGFProdList ps1, BGFProduction p2, BGFProdList ps2)
+	= analyse::Prodsigs::weqps(unwind(p1,ps1),unwind(p2,ps2));
+
 tuple[NameMatch,BGFProdList,BGFProdList]
 	matchProds(NameMatch known, BGFProdList mps, BGFProdList sps)
 {
-	 // TODO double-check
-	BGFProduction p1 = getSingleProd({n | <n,_> <- known},mps);
-	BGFProduction p2 = getSingleProd({n | <n,_> <- known},sps);
-	
+	BGFProdList ps1 = [*prodsOfN(n,mps) | <n,_> <- known];
+	BGFProdList ps2 = [*prodsOfN(n,sps) | <n,_> <- known];
 	println("Trying to match production rules:");
-	println(" <pp(p1)>\t <pp(analyse::Prodsigs::makesig(p1))>");
+	for (p <- ps1) println(" <pp(p)>\t <pp(analyse::Prodsigs::makesig(p))>");
 	println("   vs");
-	println(" <pp(p2)>\t <pp(analyse::Prodsigs::makesig(p2))>");
+	for (p <- ps2) println(" <pp(p)>\t <pp(analyse::Prodsigs::makesig(p))>");
 	// check for strong prodsig-equivalence first
 	println("Looking for strong equivalence.");
-	if (production(_,_,choice(_)) !:= p1 && production(_,_,choice(_)) !:= p2)
-	{
-		// match p1.rhs vs p2.rhs
-		if (analyse::Prodsigs::eqps(p1,p2))
-		{
-			nm = analyse::Prodsigs::makenamematch(p1,p2);
-			println("Found prodsig-equivalent production rules: <pp(nm)>");
-			if (!isEmpty(nm-known))
-				println("Will assume that <pp(nm)> after <pp(known)>");
-			return <nm, mps - p1, sps - p2>;
-		}
-	}
-	elseif (production(_,_,choice(L1)) := p1 && production(_,_,choice(L2)) := p2)
-	{
-		// match L1 vs L2
-		for (e1 <- L1, e2 <- L2, nonterminal(n1) := e1, nonterminal(n2) := e2)
-		{
-			pps1 = prodsOfN(n1,mps);
-			switch(len(pps1))
-			{
-				case 0: ep1 = e1;
-				case 1: ep1 = pps1[0].rhs;
-				default: throw "Grammar not in ANF with <pps1>";
-			}
-			pps2 = prodsOfN(n2,sps);
-			switch(len(pps2))
-			{
-				case 0: ep2 = e2;
-				case 1: ep2 = pps2[0].rhs;
-				default: throw "Grammar not in ANF with <pps2>";
-			}
-			if (analyse::Prodsigs::eqps(e1,e2))
-			{
-				nm = analyse::Prodsigs::makenamematch(e1,e2);
-				println("Found prodsig-equivalent production rules: <pp(nm)>");
-				if (!isEmpty(nm-known))
-					println("Will assume that <pp(nm)> after <pp(known)>");
-				return <nm, mps - p1, sps - p2>;
-			}
-		}
-	}
-	else
-		throw "Choice vs no choice";
 	//println("<pp(analyse::Prodsigs::makesig(p1))> vs <pp(analyse::Prodsigs::makesig(p2))>");
 	//println("Equality: <analyse::Prodsigs::eqps(p1,p2)>; equivalence: <analyse::Prodsigs::weqps(p1,p2)>");
-	for (p1 <- ps1, p2 <- ps2, analyse::Prodsigs::eqps(p1,p2))
+	for (p1 <- ps1, p2 <- ps2, strongEq(p1,mps,p2,sps))
 	{
 		nm = analyse::Prodsigs::makenamematch(p1,p2);
 		//println("Found prodsig-equivalent production rules:\n <pp(p1)>   &\n <pp(p2)>");
@@ -102,7 +73,7 @@ tuple[NameMatch,BGFProdList,BGFProdList]
 	}
 	// check for weak prodsig-equivalence now
 	println("Looking for weak equivalence.");
-	for (p1 <- ps1, p2 <- ps2, analyse::Prodsigs::weqps(p1,p2))
+	for (p1 <- ps1, p2 <- ps2, weakEq(p1,mps,p2,sps))
 	{
 		nm = analyse::Prodsigs::makenamematch(p1,p2);
 		//println("Found weakly prodsig-equivalent production rules:\n <pp(p1)>   &\n <pp(p2)>");
@@ -129,7 +100,8 @@ BGFProdList assumeRenamings(BGFProdList where, NameMatch naming)
 	return ps;
 }
 
-void converge(BGFGrammar master, BGFGrammar servant)
+//BGFGrammar
+NameMatch converge(BGFGrammar master, BGFGrammar servant)
 {
 	println("Master grammar:\n<pp(master)>");
 	CBGFSequence acbgf = []; // normalisation
@@ -137,8 +109,8 @@ void converge(BGFGrammar master, BGFGrammar servant)
 	CBGFSequence scbgf = []; // structural matching
 	//println("Input: <src>");
 	println("Normalising the grammar...");
-	ncbgf = normal::ANF::normalise(servant);
-	servant = transform(forward(ncbgf),servant);
+	acbgf = normal::ANF::normalise(servant);
+	servant = transform(forward(acbgf),servant);
 	//iprintln(ncbgf);
 	println("Servant grammar:\n<pp(servant)>");
 	println("Starting with the root: <master.roots>, <servant.roots>.");
@@ -161,14 +133,28 @@ void converge(BGFGrammar master, BGFGrammar servant)
 	}
 	println("Done with the grammar.");
 	println("Nominal matching: <pp(known)>");
+	for (<a,b> <- known)
+		if (a==b)
+			;
+		else
+			ncbgf += renameN_renameN(b,a);
+	// Assume nominal matching!
+	//servant = transform(forward(ncbgf),servant);
 	println("<pp(servant)>");
+	//return servant;
+	return known;
 }
 
 public void main()
 {
 	master = loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
 	for (src <- sources)
-		converge(master,loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|));
+	{
+		//BGFGrammar res = 
+		NameMatch res = converge(master,loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|));
+		//writeBGF(res,|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bgf|);
+		writeFile(|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bnf|,pp(res));
+	}
 	println("Done.");
 }
 
