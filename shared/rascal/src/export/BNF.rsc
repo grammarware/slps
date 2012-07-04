@@ -21,7 +21,7 @@ public str pp(BGFProdList ps)
 
 public str pp(BGFProduction p)
 	= (p.label!="" ? "[<p.label>] " : "")
-	+ "<p.lhs> ::= <pp(p.rhs)>";
+	+ "<p.lhs> ::= <pp(p.rhs)> ;";
 
 public str pp(BGFExprList es)
 {

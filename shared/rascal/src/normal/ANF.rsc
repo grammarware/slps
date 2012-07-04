@@ -8,12 +8,12 @@ import syntax::CBGF;
 import transform::CBGF;
 import transform::XBGF;
 import analyse::Metrics;
-import Set;
-import List;
-import IO; //debug
+import lib::Rascalware;
 import io::WriteBGF; // batch
 import io::WriteCBGF; // batch
 import io::ReadBGF; // batch
+import export::BNF;
+import IO;
 
 CBGFSequence normalise(BGFGrammar g)
 	= (topNs(g) - leafNs(g) == toSet(g.roots)
@@ -32,7 +32,7 @@ CBGFSequence normAllStages(BGFGrammar gr)
 					dropAllLabels,
 					dropAllSelectors,
 					dropAllTerminals,
-					dropAllHorizontals,
+					//dropAllHorizontals,
 					dropAllUnknowns,
 					dropAllChains
 			])
@@ -45,7 +45,58 @@ CBGFSequence normAllStages(BGFGrammar gr)
 		}
 		c += c1;
 	} while (!isEmpty(c1));
-	return c;
+	// TODO check for horizontal/vertical issue
+	// now g is normalised, but with possibly multiple productions per nonterminal
+	for (n <- definedNs(g))
+	{
+		ps = prodsOfN(n,g.prods);
+		//println("<len(ps)>");
+		if (len(ps)>1)
+		{
+			// go over all vertical production rules
+			for (p <- ps)
+				if (nonterminal(_) !:= p.rhs)
+				{
+					c2 = [extract_inline(production("",uniqueName(n,allNs(g)),p.rhs),innt(n))];
+					// global extract can introduce conflicts with subsequent extracts,
+					// that's why we need to transform immediately
+					g = transform(forward(c2),g);
+					c1 += c2;
+				}
+			c1 += horizontal_vertical(innt(n));
+		}
+		elseif (production(_,n,choice(L)) := ps[0])
+		{
+			//println("Horizontal!");
+			// go over all horizontal production rules
+			for (e <- L)
+				if (nonterminal(_) !:= e)
+				{
+					c2 = [extract_inline(production("",uniqueName(n,allNs(g)),e),innt(n))];
+					// global extract can introduce conflicts with subsequent extracts,
+					// that's why we need to transform immediately
+					g = transform(forward(c2),g);
+					c1 += c2;
+				}
+		}
+		//else
+		//	iprintln(ps);
+	}
+	//iprintln(c1);
+	// now we can have constuctions like this:
+	//   expression ::= (expression1 | expression2 | expression3 | expression | id | number) ;
+	// with cleverly hidden reflexive chain rules
+	for (p <- g.prods, production(str l,str n,choice(L)) := p, [*L1,nonterminal(n),*L2] := L)
+		// the last expression is a traceable variant of "nonterminal(n) in L"
+		c1 += removeH_addH(production(l,n,choice([*L1, marked(nonterminal(n)), *L2])));
+	return c+c1;
+}
+
+str uniqueName(str n, set[str] nts)
+{
+	int cx = 1;
+	while ("<n><cx>" in nts) cx += 1;
+	return "<n><cx>";
 }
 
 CBGFSequence dropAllLabels(BGFGrammar g) = [unlabel_designate(p) | p <- g.prods, p.label != ""];
@@ -59,7 +110,7 @@ CBGFSequence dropAllUnknowns(BGFGrammar g)
 {
 	CBGFSequence cbgf = [];
 	set[str] used = usedNs(g.prods);
-	for (p <- {q | q <- g.prods, epsilon() := q.rhs})
+	for (p <- {q | q <- g.prods, (epsilon() := q.rhs || empty() := q.rhs)})
 		if (p.lhs in used)
 			cbgf += undefine_define([p]);
 		else
@@ -85,7 +136,7 @@ BGFProduction markAllTerminals(BGFProduction p) = visit(p) {case terminal(t) => 
 public void main()
 {
 	for (src <- ["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"])
-	//for (src <- ["python"])
+	//for (src <- ["txl"])
 	{
 		println("Reading <src>...");
 		BGFGrammar g = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);
@@ -96,5 +147,7 @@ public void main()
 		g = transform(forward(c),g);
 		println("Writing output to <src>...");
 		writeBGF(g,|home:///projects/slps/topics/convergence/guided/bgf/<src>.normal.bgf|);
+		writeFile(|home:///projects/slps/topics/convergence/guided/bgf/<src>.normal.bnf|,pp(g));
+		//println(pp(g));
 	}
 }
