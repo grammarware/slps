@@ -92,7 +92,7 @@ tuple[NameMatch,BGFProdList,BGFProdList]
 		}
 		truenm = {};
 		for (<a,b> <- nm-known)
-			if (a==b)
+			if ((a==b) && a in domain(known))
 				println("Reconfirmed <a>");
 			else
 			{
@@ -121,7 +121,7 @@ tuple[NameMatch,BGFProdList,BGFProdList]
 		}
 		truenm = {};
 		for (<a,b> <- nm-known)
-			if (a==b)
+			if ((a==b) && a in domain(known))
 				println("Reconfirmed <a>");
 			else
 			{
