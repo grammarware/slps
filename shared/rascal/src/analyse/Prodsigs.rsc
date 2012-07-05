@@ -42,21 +42,21 @@ Signature makesig(BGFExpression e) = {<n,makefp(n,e    )> | n <- usedNs(e    )};
 bool eqfp(fpnt(), fpnt()) = true;
 bool eqfp(fpopt(), fpopt()) = true;
 bool eqfp(fpplus(), fpplus()) = true;
-bool eqfp(fpplus(), fpstar()) = true;
-bool eqfp(fpstar(), fpplus()) = true;
 bool eqfp(fpstar(), fpstar()) = true;
 bool eqfp(fpempty(), fpempty()) = true;
 bool eqfp(fpmany(L1), fpmany(L2)) = multiseteq(L1,L2);
 default bool eqfp(Footprint pi, Footprint xi) = false;
 
+bool equivfp(fpplus(), fpstar()) = true;
+bool equivfp(fpstar(), fpplus()) = true;
 bool equivfp(fpmany(L1), fpmany(L2))
 {
 	//tuple[Footprint,set[Footprint]]
 	if (isEmpty(L1)) return isEmpty(L2);
 	<car,cdr> = List::takeOneFrom(L1);
 	for (e <- L2)
-		if (eqfp(car,e))
-			return eqfp(fpmany(cdr), fpmany(L2 - e));
+		if (equivfp(car,e))
+			return equivfp(fpmany(cdr), fpmany(L2 - e));
 	return false;
 }
 default bool equivfp(Footprint pi, Footprint xi) = eqfp(pi,xi);
@@ -101,7 +101,7 @@ NameMatch makenamematch(Signature p, Signature q)
 {
 	NameMatch nm = {};
 	set[str] unmatched = domain(q);
-	for (<a,pi> <- p, <b,xi> <- q, eqfp(pi,xi))
+	for (<a,pi> <- p, <b,xi> <- q, equivfp(pi,xi))
 	{
 		//println("Checking <a>:<pi> vs <b>:<xi>...<eqfp(pi,xi)>");
 		nm += <a,b>;

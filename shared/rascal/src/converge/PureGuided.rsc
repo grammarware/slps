@@ -14,9 +14,12 @@ import transform::XBGF;
 import transform::CBGF;
 import lib::Rascalware;
 import IO;
+import String;
+import Relation;
 
 list[str] sources =
 	//["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"];
+	//["emf","jaxb","om","rascal-c","sdf","xsd"];
 	["xsd"];
 	// atom/expr: antlr, dcg
 	// arg/string: ecore, rascal-a
@@ -26,8 +29,10 @@ list[str] sources =
 
 bool conflicted(NameMatch a, NameMatch b)
 {
-	println("a o b = <a o b>");
-	return !isEmpty(a o b);
+	//println("a = <a>");
+	//println("b = <b>");
+	//println("a o b = <invert(a) o b>");
+	return !isEmpty(invert(a) o b);
 }
 
 BGFProduction getSingleProd(str n, BGFProdList ps)
@@ -45,6 +50,16 @@ BGFProduction unwind(BGFProduction p1, BGFProdList ps1)
 
 bool strongEq(BGFProduction p1, BGFProdList ps1, BGFProduction p2, BGFProdList ps2)
 	= analyse::Prodsigs::eqps(unwind(p1,ps1),unwind(p2,ps2));
+
+//bool strongEq(BGFProduction p1, BGFProdList ps1, BGFProduction p2, BGFProdList ps2)
+//{
+//	println("<unwind(p1,ps1)> vs <unwind(p2,ps2)>");
+//	s1 = analyse::Prodsigs::makesig(unwind(p1,ps1));
+//	s2 = analyse::Prodsigs::makesig(unwind(p2,ps2));
+//	println("<s1> vs <s2>");
+//	println("EQ: <analyse::Prodsigs::eqps(s1,s2)>; EQUIV: <analyse::Prodsigs::weqps(s1,s2)>");
+//	return analyse::Prodsigs::eqps(unwind(p1,ps1),unwind(p2,ps2));
+//}
 
 bool weakEq(BGFProduction p1, BGFProdList ps1, BGFProduction p2, BGFProdList ps2)
 	= analyse::Prodsigs::weqps(unwind(p1,ps1),unwind(p2,ps2));
@@ -67,9 +82,27 @@ tuple[NameMatch,BGFProdList,BGFProdList]
 		nm = analyse::Prodsigs::makenamematch(p1,p2);
 		//println("Found prodsig-equivalent production rules:\n <pp(p1)>   &\n <pp(p2)>");
 		println("Found prodsig-equivalent production rules: <pp(nm)>");
-		if (!isEmpty(nm-known))
-			println("Will assume that <pp(nm)> after <pp(known)>");
-		return <nm, mps - p1, sps - p2>; 
+		p1a = unwind(p1,mps);
+		p2a = unwind(p2,sps);
+		if (p1 != p1a && p1 != p2a)
+		{
+			nm2 = analyse::Prodsigs::makenamematch(p1a,p2a);
+			println("More prodsig-equivalent production rules: <pp(nm2)>");
+			nm += nm2;
+		}
+		truenm = {};
+		for (<a,b> <- nm-known)
+			if (a==b)
+				println("Reconfirmed <a>");
+			else
+			{
+				println("Will assume that <a> == <b>");
+				truenm += <a,b>;
+			}
+		if (conflicted(truenm,known))
+			println("Naming conflict, reconsider.");
+		else
+			return <truenm, mps - p1, sps - p2>; 
 	}
 	// check for weak prodsig-equivalence now
 	println("Looking for weak equivalence.");
@@ -78,13 +111,32 @@ tuple[NameMatch,BGFProdList,BGFProdList]
 		nm = analyse::Prodsigs::makenamematch(p1,p2);
 		//println("Found weakly prodsig-equivalent production rules:\n <pp(p1)>   &\n <pp(p2)>");
 		println("Found weakly prodsig-equivalent production rules: <pp(nm)>");
-		if (conflicted(nm,known))
+		p1a = unwind(p1,mps);
+		p2a = unwind(p2,sps);
+		if (p1 != p1a && p1 != p2a)
+		{
+			nm2 = analyse::Prodsigs::makenamematch(p1a,p2a);
+			println("More prodsig-equivalent production rules: <pp(nm2)>");
+			nm += nm2;
+		}
+		truenm = {};
+		for (<a,b> <- nm-known)
+			if (a==b)
+				println("Reconfirmed <a>");
+			else
+			{
+				println("Will assume that <a> == <b>");
+				truenm += <a,b>;
+			}
+		if (conflicted(truenm,known))
 			println("Naming conflict, reconsider.");
 		else
 		{
-			if (!isEmpty(nm-known))
-				println("Will assume that <pp(nm)> after <pp(known)>");
-			return <nm, mps - p1, sps - p2>;
+			//if (!isEmpty(nm-known))
+			//	println("Will assume that <pp(nm)> after <pp(known)>");
+			//return <nm, mps - p1, sps - p2>;
+			
+			return <truenm, mps - p1, sps - p2>; 
 		} 
 	}
 	//println(assumeRenamings(servant,known));
@@ -136,10 +188,12 @@ NameMatch converge(BGFGrammar master, BGFGrammar servant)
 	for (<a,b> <- known)
 		if (a==b)
 			;
+		elseif (a=="")
+			;
 		else
 			ncbgf += renameN_renameN(b,a);
 	// Assume nominal matching!
-	//servant = transform(forward(ncbgf),servant);
+	servant = transform(forward(ncbgf),servant);
 	println("<pp(servant)>");
 	//return servant;
 	return known;
@@ -153,7 +207,7 @@ public void main()
 		//BGFGrammar res = 
 		NameMatch res = converge(master,loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|));
 		//writeBGF(res,|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bgf|);
-		writeFile(|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bnf|,pp(res));
+		writeFile(|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bnf|,replaceAll(pp(res),", ",",\n"));
 	}
 	println("Done.");
 }
