@@ -30,3 +30,5 @@ public bool multiseteq(list[&T] xs, list[&T] ys) = sort(xs) == sort(ys);
 
 public set[&T] toSet(list[&T] x) = List::toSet(x);
 public list[&T] toList(set[&T] x) = Set::toList(x);
+
+public &T getOneFrom(set[&T] x) = Set::getOneFrom(x);

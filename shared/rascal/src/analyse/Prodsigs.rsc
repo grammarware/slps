@@ -122,16 +122,26 @@ set[NameMatch] makenamematches(BGFExpression e1, BGFExpression e2) = makenamemat
 set[NameMatch] makenamematches(BGFProduction p1, BGFProduction p2) = makenamematches(makesig(p1),makesig(p2));
 set[NameMatch] makenamematches({}, {}) = {};
 set[NameMatch] makenamematches(Signature p, {}) = {{<c,""> | <c,_> <- p}};
-set[NameMatch] makenamematches({}, Signature q) = {{<"",c> | <c,_> <- q}}; 
-set[NameMatch] makenamematches(Signature p, Signature q) =
+set[NameMatch] makenamematches({}, Signature q) = {{<"",c> | <c,_> <- q}};
+set[NameMatch] makenamematches({<a,pi>}, {<b,xi>}) = equivfp(pi,xi) ? {{<a,b>}} : {{<a,"">,<"",b>}}; 
+//default set[NameMatch] makenamematches(Signature p, Signature q)
+// {
+// 	set[NameMatch] nms = {};
+// 	 for(<a,pi> <- p, <b,xi> <- q, equivfp(pi,xi))
+// 	 {
+// 	 	println("makenamematches <domainX(p,{a})> , <domainX(q,{b})>");
+// 	 	for (m <- makenamematches(domainX(p,{a}), domainX(q,{b})))
+// 			nms += {m + {<a,b>}};
+// 	}
+// 	return nms;
+// }
+default set[NameMatch] makenamematches(Signature p, Signature q) =
  {
- 	*{m + {<a,b>} | m <- makenamematches(domainX(p,{a}), domainX(q,{b}))}
+ 	m + {<a,b>}
  	|
- 	<a,pi> <- p, <b,xi> <- q, equivfp(pi,xi)
+ 	<a,pi> <- p, <b,xi> <- q, equivfp(pi,xi),
+ 	m <- makenamematches(domainX(p,{a}), domainX(q,{b}))
  };
- 
-
-rel[&T,&T] relmult (rel[&T,&T] xs, rel[&T,&T] ys) = {<x,y> | x <- xs, y <- ys};
 
 public str pp(Signature sig) = "\<"+joinStrings(["<n>: <pp(f)>" | <n,f> <- sig],", ")+"\>";
 public str pp(fpnt()) = "1";
