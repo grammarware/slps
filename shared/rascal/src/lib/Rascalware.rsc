@@ -21,6 +21,7 @@ public void print(str s)   = IO::print(s);
 public void println(str s) = IO::println(s);
 
 // joins a list of strings with a separator
+public str joinStrings([], _) = "";
 public str joinStrings(list[str] ss, str w) = (ss[0] | it + w + s | s <- tail(ss));
 
 //public bool multiseteq(list[&T] xs, list[&T] ys) = sort(xs) == sort(ys);

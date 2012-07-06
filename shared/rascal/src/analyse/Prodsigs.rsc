@@ -75,19 +75,23 @@ default bool weqps(Signature p, Signature q) = geqps(p,q,equivfp,false);
 // footprint-comparator-parametrised equivalence
 bool geqps(Signature p, Signature q, bool(Footprint,Footprint) cmp, bool strong)// = p == q;
 {
+	println("[?] Checking <pp(p)> and <pp(q)> for <strong?"strong":"weak"> equivalence.");
 	if (strong && len(p) != len(q)) return false;
 	for (<n,pi> <- p)
 	{
 		bool match = false;
-		//for(<m,xi> <- q, cmp(pi,xi))
 		for(<m,xi> <- q, cmp(pi,xi))
-			if (match)
-				return false; // multiple matches!
-			else
+		{
+			// TODO: make recursive
+			println(" [?] <n> == <m> as <pp(pi)>?");
+			//if (match)
+			//	return false; // multiple matches!
+			//else
 			{
 				match = true;
 				q -= {<m,xi>};
 			}
+		}
 		if (strong && !match)
 			return false;
 	}
@@ -113,6 +117,21 @@ NameMatch makenamematch(Signature p, Signature q)
 	nm += {<"",c> | c <- unmatched};
 	return nm;
 }
+
+set[NameMatch] makenamematches(BGFExpression e1, BGFExpression e2) = makenamematches(makesig(e1),makesig(e2));
+set[NameMatch] makenamematches(BGFProduction p1, BGFProduction p2) = makenamematches(makesig(p1),makesig(p2));
+set[NameMatch] makenamematches({}, {}) = {};
+set[NameMatch] makenamematches(Signature p, {}) = {{<c,""> | <c,_> <- p}};
+set[NameMatch] makenamematches({}, Signature q) = {{<"",c> | <c,_> <- q}}; 
+set[NameMatch] makenamematches(Signature p, Signature q) =
+ {
+ 	*{m + {<a,b>} | m <- makenamematches(domainX(p,{a}), domainX(q,{b}))}
+ 	|
+ 	<a,pi> <- p, <b,xi> <- q, equivfp(pi,xi)
+ };
+ 
+
+rel[&T,&T] relmult (rel[&T,&T] xs, rel[&T,&T] ys) = {<x,y> | x <- xs, y <- ys};
 
 public str pp(Signature sig) = "\<"+joinStrings(["<n>: <pp(f)>" | <n,f> <- sig],", ")+"\>";
 public str pp(fpnt()) = "1";

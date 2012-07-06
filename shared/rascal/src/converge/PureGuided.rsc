@@ -20,7 +20,7 @@ import Relation;
 list[str] sources =
 	//["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"];
 	//["emf","jaxb","om","rascal-c","sdf","xsd"];
-	["xsd"];
+	["txl"];
 	// atom/expr: antlr, dcg
 	// arg/string: ecore, rascal-a
 	// good: emf, jaxb, om, rascal-c, sdf, xsd
@@ -92,7 +92,7 @@ tuple[NameMatch,BGFProdList,BGFProdList]
 		}
 		truenm = {};
 		for (<a,b> <- nm-known)
-			if ((a==b) && a in domain(known))
+			if ((a==b) && a in known<0>)
 				println("Reconfirmed <a>");
 			else
 			{
@@ -121,7 +121,7 @@ tuple[NameMatch,BGFProdList,BGFProdList]
 		}
 		truenm = {};
 		for (<a,b> <- nm-known)
-			if ((a==b) && a in domain(known))
+			if ((a==b) && a in known<0>)
 				println("Reconfirmed <a>");
 			else
 			{
@@ -201,6 +201,11 @@ NameMatch converge(BGFGrammar master, BGFGrammar servant)
 
 public void main()
 {
+	//Signature s1 = {<"a",fpnt()>,<"b",fpnt()>,<"c",fpmany([fpnt(),fpplus()])>,<"z",fpmany([fpnt(),fpplus()])>};
+	//Signature s2 = {<"x",fpnt()>,<"y",fpmany([fpnt(),fpplus()])>};
+	//println("\t<pp(s1)>\nvs\n\t<pp(s2)>");
+	//println("<analyse::Prodsigs::makenamematches(s1,s2)>");
+	//return;
 	master = loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
 	for (src <- sources)
 	{
