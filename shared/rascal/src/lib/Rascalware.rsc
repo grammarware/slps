@@ -32,3 +32,5 @@ public set[&T] toSet(list[&T] x) = List::toSet(x);
 public list[&T] toList(set[&T] x) = Set::toList(x);
 
 public &T getOneFrom(set[&T] x) = Set::getOneFrom(x);
+
+public list[&T] slice(list[&T] lst, int begin, int l) = List::slice(lst,begin,l);

@@ -1,9 +1,7 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module transform::XBGF
 
-import IO;
-import List;
-import Set; // isEmpty
+import lib::Rascalware;
 import syntax::BGF;
 import syntax::XBGF;
 import normal::BGF;
@@ -15,6 +13,7 @@ import transform::library::Util;
 import transform::library::Core;
 import transform::library::Width;
 import transform::library::Yacc;
+import export::BNF;
 
 public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 {
@@ -136,7 +135,7 @@ bool inProds(BGFProduction p, []) = false;
 bool inProds(BGFProduction p, list[BGFProduction] ps)
 {
 	if (eqP(normalise(p),normalise(ps[0]))) return true;
-	else return inProds(p,slice(ps,1,size(ps)-1));
+	else return inProds(p,slice(ps,1,len(ps)-1));
 }
 
 BGFGrammar runAnonymize(BGFProduction p1, grammar(rs, ps))
@@ -250,8 +249,8 @@ BGFGrammar runDeyaccify(str n, grammar(rs,ps))
 {
 	if (n notin definedNs(ps)) throw "Nonterminal <n> is not defined.";
 	<ps1,ps2,ps3> = splitPbyW(ps,innt(n));
-	if (size(ps2) == 1) throw "Nonterminal <n> must be defined vertically for deyaccification to work.";
-	if (size(ps2) > 2) throw "No deyaccification patterns for <size(ps2)> production rules known.";
+	if (len(ps2) == 1) throw "Nonterminal <n> must be defined vertically for deyaccification to work.";
+	if (len(ps2) > 2) throw "No deyaccification patterns for <len(ps2)> production rules known.";
 	return grammar(rs, ps1 + transform::library::Yacc::deyaccify(toSet(ps2)) + ps3);
 }
 
@@ -478,9 +477,9 @@ BGFGrammar runRenameL(str x, str y, grammar(rs, ps))
 {
 	if (x == "") throw "Source label must not be empty for renaming, use designate.";
 	if (y == "") throw "Target label must not be empty for renaming, use unlabel.";
-	if (size([p | p <- ps, production(x, _, _) := p]) != 1)
+	if (len([p | p <- ps, production(x, _, _) := p]) != 1)
 		throw "Source name <x> for renaming must be fresh and unique.";
-	if (size([p | p <- ps, production(y, _, _) := p]) != 0)
+	if (len([p | p <- ps, production(y, _, _) := p]) != 0)
 		throw "Target name <y> for renaming must be fresh.";
 	<ps1,ps2,ps3> = splitPbyW(ps,inlabel(x));
 	if ([production(x, str n, BGFExpression e)] := ps2)
@@ -572,7 +571,7 @@ BGFGrammar runUnchain(BGFProduction p, grammar(roots, ps))
 			//if (n2 in allNs(ps)) throw "Nonterminal <n2> must be fresh.";
 			list[BGFProduction] ps1,ps2,ps3;
 			<ps1,ps2,ps3> = splitPbyW(ps - p,innt(n2));
-			if (size(ps2) != 1) throw "Nonterminal <n2> must occur exactly once.";
+			if (len(ps2) != 1) throw "Nonterminal <n2> must occur exactly once.";
 			if (l == "") l = n2;
 			if ([production(_,n2,e)] := ps2) return grammar(roots, ps1 + production(l,n1,e) + ps3);
 			else throw "Production rule <ps2> has unexpected form.";

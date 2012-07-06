@@ -11,6 +11,7 @@ import export::BNF;
 import io::ReadBGF;
 import io::WriteBGF;
 import transform::XBGF;
+import transform::library::Core;
 import transform::CBGF;
 import lib::Rascalware;
 import IO;
@@ -19,13 +20,12 @@ import Relation;
 
 list[str] sources =
 	//["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"];
-	//["emf","jaxb","om","rascal-c","sdf","xsd"];
-	["txl"];
+	//["emf","jaxb","om","rascal-c","sdf","xsd","txl"];
+	["python"];
 	// atom/expr: antlr, dcg
 	// arg/string: ecore, rascal-a
-	// good: emf, jaxb, om, rascal-c, sdf, xsd
+	// good: emf, jaxb, om, rascal-c, sdf, xsd, txl
 	// multiroot: python
-	// unknown: txl
 
 BGFProduction getSingleProd(str n, BGFProdList ps)
 {
@@ -43,116 +43,8 @@ BGFProduction unwind(BGFProduction p1, BGFProdList ps1)
 bool strong(BGFProduction p1, BGFProdList ps1, BGFProduction p2, BGFProdList ps2)
 	= analyse::Prodsigs::eqps(unwind(p1,ps1),unwind(p2,ps2));
 
-//bool strong(BGFProduction p1, BGFProdList ps1, BGFProduction p2, BGFProdList ps2)
-//{
-//	println("<unwind(p1,ps1)> vs <unwind(p2,ps2)>");
-//	s1 = analyse::Prodsigs::makesig(unwind(p1,ps1));
-//	s2 = analyse::Prodsigs::makesig(unwind(p2,ps2));
-//	println("<s1> vs <s2>");
-//	println("EQ: <analyse::Prodsigs::eqps(s1,s2)>; EQUIV: <analyse::Prodsigs::weqps(s1,s2)>");
-//	return analyse::Prodsigs::eqps(unwind(p1,ps1),unwind(p2,ps2));
-//}
-
 bool weak(BGFProduction p1, BGFProdList ps1, BGFProduction p2, BGFProdList ps2)
 	= analyse::Prodsigs::weqps(unwind(p1,ps1),unwind(p2,ps2));
-
-NameMatch tryHypothesis(NameMatch known, BGFProdList mps, BGFProdList sps, int cx)
-{
-	NameMatch nnm;
-	BGFProdList ps1, ps2, ps1a, ps2a;
-	while(!isEmpty(mps))
-	{
-		print("...<cx>...");
-		cx -= 1;
-		//<nnm,ps1a,ps2a> = matchProds(known, mps, sps);
-		// BEGIN
-		BGFProdList ps1 = [*prodsOfN(n,mps) | <n,_> <- known];
-		BGFProdList ps2 = [*prodsOfN(n,sps) | <n,_> <- known];
-		println("Trying to match production rules:");
-		for (p <- ps1) println(" <pp(p)>\t <pp(analyse::Prodsigs::makesig(p))>");
-		println("   vs");
-		for (p <- ps2) println(" <pp(p)>\t <pp(analyse::Prodsigs::makesig(p))>");
-	
-		// check for strong prodsig-equivalence first, then for the weak one
-		megabreak = false;
-		for (bool(BGFProduction,BGFProdList,BGFProduction,BGFProdList) eq <- [strong,weak])
-		{
-			println("Looking for <eq> equivalence.");
-			for (p1 <- ps1, p2 <- ps2, eq(p1,mps,p2,sps))
-			{
-				for (nm <- analyse::Prodsigs::makenamematches(p1,p2))
-				{
-					println("Trying <nm>...");
-					truenm = tryMatch(nm,known,p1,mps,p2,sps);
-					println("Got <truenm>...");
-					if (!isEmpty(invert(truenm) o known))
-						println("Naming conflict, reconsider.");
-					else
-					{
-						nnm = truenm;
-						ps1a = mps - p1;
-						ps2a = sps - p2;
-						megabreak = true;
-						break;
-					} 
-				}
-				if (megabreak) break;
-			}
-			if (megabreak) break;
-		}
-		println("No match found.");
-		// END
-		mps = ps1a;
-		sps = assumeRenamings(ps2a,nnm);
-		known = known + nnm;
-		if (cx==0)
-			break;
-	}
-	return known;
-}
-
-tuple[NameMatch,BGFProdList,BGFProdList]
-	matchProds(NameMatch known, BGFProdList mps, BGFProdList sps)
-{
-
-	BGFProdList ps1 = [*prodsOfN(n,mps) | <n,_> <- known];
-	BGFProdList ps2 = [*prodsOfN(n,sps) | <n,_> <- known];
-	println("Trying to match production rules:");
-	for (p <- ps1) println(" <pp(p)>\t <pp(analyse::Prodsigs::makesig(p))>");
-	println("   vs");
-	for (p <- ps2) println(" <pp(p)>\t <pp(analyse::Prodsigs::makesig(p))>");
-
-	//println("<pp(analyse::Prodsigs::makesig(p1))> vs <pp(analyse::Prodsigs::makesig(p2))>");
-	//println("Equality: <analyse::Prodsigs::eqps(p1,p2)>; equivalence: <analyse::Prodsigs::weqps(p1,p2)>");
-	
-	// check for strong prodsig-equivalence first, then for the weak one
-	for (bool(BGFProduction,BGFProdList,BGFProduction,BGFProdList) eq <- [strong,weak])
-	{
-		println("Looking for <eq> equivalence.");
-		for (p1 <- ps1, p2 <- ps2, eq(p1,mps,p2,sps))
-		{
-			//nm = analyse::Prodsigs::makenamematch(p1,p2);
-			//nms = analyse::Prodsigs::makenamematches(p1,p2);
-			//if (len(nms)==1)
-			//	nm = getOneFrom(nms);
-			//else
-			//	println("----multiple versions!");
-			//println("!!!nm  = <nm>");
-			//println("!!!nms = <nms>");
-			//
-			for (nm <- analyse::Prodsigs::makenamematches(p1,p2))
-			{
-				truenm = tryMatch(nm,known,p1,mps,p2,sps);
-				
-				if (!isEmpty(invert(truenm) o known))
-					println("Naming conflict, reconsider.");
-				else
-					return <truenm, mps - p1, sps - p2>; 
-			}
-		}
-	}
-	println("No match found.");
-}
 
 NameMatch tryMatch(	NameMatch nm, NameMatch known,
 					BGFProduction p1, BGFProdList mps,
@@ -176,19 +68,85 @@ NameMatch tryMatch(	NameMatch nm, NameMatch known,
 			println("Will assume that <a> == <b>");
 			truenm += <a,b>;
 		}
-	//if (isEmpty(invert(truenm) o known))
-		return truenm;
- //	println("Naming conflict, reconsider.");
-	//return {};
+	return truenm;
 }
 
 BGFProdList assumeRenamings(BGFProdList where, NameMatch naming)
 {
-	BGFProdList ps = where;
+	BGFProdList ps = [p | p <- where, <"",p.lhs> notin naming];
 	for (<n1,n2> <- naming)
-		if (n1 != n2 && n2 in allNs(ps) && n1 != "")
-			ps = transform(forward([renameN_renameN(n2,n1)]),grammar([],ps)).prods;
+		if (n1 != n2 && n2 in allNs(ps) && n1 notin [""])
+			// dirty
+			ps = transform::library::Core::performRenameN(n2,n1,grammar([],ps)).prods;
+			//if (n1 in ["STRING","INTEGER"])
+			//	ps = transform(forward([replace_replace(nonterminal(n2),nonterminal(n1),globally())]),grammar([],ps)).prods;
+			//else
+			//	ps = transform(forward([renameN_renameN(n2,n1)]),grammar([],ps)).prods;
 	return ps;
+}
+
+set[NameMatch] nominalMatch(NameMatch known, BGFProdList mps, BGFProdList sps)
+{
+	if (isEmpty(mps))
+	{
+		if (!isEmpty(sps))
+			println("Disregarded servant production rules: <sps>");
+		return {known};
+	}
+	NameMatch nnm;
+	//BGFProdList ps1, ps2, ps1a, ps2a;
+	
+	BGFProdList ps1 = [*prodsOfN(n,mps) | <n,_> <- known];
+	BGFProdList ps2 = [*prodsOfN(n,sps) | <n,_> <- known];
+	println("Trying to match production rules:");
+	for (p <- ps1) println(" <pp(p)>\t <pp(analyse::Prodsigs::makesig(p))>");
+	println("   vs");
+	for (p <- ps2) println(" <pp(p)>\t <pp(analyse::Prodsigs::makesig(p))>");
+	
+	// check for strong prodsig-equivalence first, then for the weak one
+	megabreak = false;
+	for (bool(BGFProduction,BGFProdList,BGFProduction,BGFProdList) eq <- [strong,weak])
+	{
+		println("Looking for <split(" ",split("(","<eq>")[0])[1]> equivalence.");
+		for (p1 <- ps1, p2 <- ps2, eq(p1,mps,p2,sps))
+		{
+			matches = analyse::Prodsigs::makenamematches(p1,p2);
+			if (isEmpty(matches))
+				return {}; //rollback?
+			nms = {};
+			for (nm <- matches)
+			{
+				//println("Trying <pp(nm)>...");
+				truenm = tryMatch(nm,known,p1,mps,p2,sps);
+				//println("Got <pp(truenm)> with <pp(known)>...");
+				if (!isEmpty(invert(truenm) o known) || !isEmpty(truenm o invert(known)))
+					println("Naming conflict, reconsider.");
+				else
+				{
+					newmatch = nominalMatch(known + truenm, mps - p1, assumeRenamings(sps - p2, truenm));
+					if (!isEmpty(newmatch))
+						nms += newmatch;
+					//nnm = truenm;
+					//ps1a = mps - p1;
+					//ps2a = sps - p2;
+					//megabreak = true;
+					//break;
+				} 
+			}
+			if (!isEmpty(nms))
+				return nms;
+			//if (megabreak) break;
+		}
+		//if (megabreak) break;
+	}
+	println("No match found.");
+	// END
+	//mps = ps1a;
+	//sps = assumeRenamings(ps2a,nnm);
+	//known = known + nnm;
+	
+	return {};
+	
 }
 
 //BGFGrammar
@@ -202,18 +160,27 @@ NameMatch converge(BGFGrammar master, BGFGrammar servant)
 	println("Normalising the grammar...");
 	acbgf = normal::ANF::normalise(servant);
 	servant = transform(forward(acbgf),servant);
+	println("<pp(servant)>");
 	//iprintln(ncbgf);
 	println("Servant grammar:\n<pp(servant)>");
 	println("Starting with the root: <master.roots>, <servant.roots>.");
+	println("------------------------------");
 	// TODO: multiple roots
-	NameMatch known = {<master.roots[0],servant.roots[0]>};
-	ps1 = master.prods;
-	ps2 = assumeRenamings(servant.prods, known);
+	NameMatch known;
+	 //= {<master.roots[0],servant.roots[0]>};
+	set[NameMatch] nknown = {};
+	//ps1 = master.prods;
+	//ps2 = assumeRenamings(servant.prods, known);
 
-	known = tryHypothesis(known,ps1,ps2,2);
+	for (rootmatch <- {<r1,r2> | r1 <- master.roots, r2 <- servant.roots})
+		nknown += nominalMatch({rootmatch}, master.prods, assumeRenamings(servant.prods, {rootmatch}));
+	
+	if (len(nknown)==1)
+		known = getOneFrom(nknown);
+	elsefor (k <- nknown)
+		println("Got version: <pp(k)>");
 
-	println("Done with the grammar.");
-	println("Nominal matching: <pp(known)>");
+	println("[!] Nominal matching: <pp(known)>");
 	for (<a,b> <- known)
 		if (a==b)
 			;
@@ -221,9 +188,10 @@ NameMatch converge(BGFGrammar master, BGFGrammar servant)
 			;
 		else
 			ncbgf += renameN_renameN(b,a);
+	println("Done with the grammar.");
 	// Assume nominal matching!
 	servant = transform(forward(ncbgf),servant);
-	println("<pp(servant)>");
+	//println("<pp(servant)>");
 	//return servant;
 	return known;
 }

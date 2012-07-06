@@ -34,7 +34,8 @@ CBGFSequence normAllStages(BGFGrammar gr)
 					dropAllTerminals,
 					dropAllHorizontals,
 					dropAllUnknowns,
-					dropAllChains
+					dropAllChains,
+					dropAllChainsToValues
 			])
 		{
 			c2 = f(g);
@@ -65,22 +66,6 @@ CBGFSequence normAllStages(BGFGrammar gr)
 				}
 			//c1 += horizontal_vertical(innt(n));
 		}
-		//elseif (production(_,n,choice(L)) := ps[0])
-		//{
-		//	//println("Horizontal!");
-		//	// go over all horizontal production rules
-		//	for (e <- L)
-		//		if (nonterminal(_) !:= e)
-		//		{
-		//			c2 = [extract_inline(production("",uniqueName(n,allNs(g)),e),innt(n))];
-		//			// global extract can introduce conflicts with subsequent extracts,
-		//			// that's why we need to transform immediately
-		//			g = transform(forward(c2),g);
-		//			c1 += c2;
-		//		}
-		//}
-		//else
-		//	iprintln(ps);
 	}
 	//iprintln(c1);
 	// now we can have constuctions like this:
@@ -124,11 +109,26 @@ CBGFSequence dropAllChains(BGFGrammar g)
 {
 	CBGFSequence cbgf = [];
 	set[str] defined = definedOnceNs(g.prods);
-	for(p <- g.prods, nonterminal(str n) := p.rhs)
-		if (n == p.lhs)
-			cbgf += abridge_detour(p);
-		elseif (n in defined && n notin usedNs(g.prods - p))
-			cbgf += unchain_chain(p);
+	for(p <- g.prods)
+		if (nonterminal(str n) := p.rhs)
+		{
+			if (n == p.lhs)
+				cbgf += abridge_detour(p);
+			elseif (n in defined && n notin usedNs(g.prods - p))
+				cbgf += unchain_chain(p);
+		}
+		//elseif (val(_) := p.rhs)
+		//	cbgf += unfold_fold(p.lhs,globally());
+	return cbgf;
+}
+
+CBGFSequence dropAllChainsToValues(BGFGrammar g)
+{
+	CBGFSequence cbgf = [];
+	set[str] defined = definedOnceNs(g.prods);
+	set[str] used = usedNs(g.prods);
+	for(p <- g.prods, val(_) := p.rhs, p.lhs in defined, p.lhs in used)
+		cbgf += inline_extract(p,globally());
 	return cbgf;
 }
 

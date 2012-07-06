@@ -75,7 +75,7 @@ default bool weqps(Signature p, Signature q) = geqps(p,q,equivfp,false);
 // footprint-comparator-parametrised equivalence
 bool geqps(Signature p, Signature q, bool(Footprint,Footprint) cmp, bool strong)// = p == q;
 {
-	println("[?] Checking <pp(p)> and <pp(q)> for <strong?"strong":"weak"> equivalence.");
+	//println("[?] Checking <pp(p)> and <pp(q)> for <strong?"strong":"weak"> equivalence.");
 	if (strong && len(p) != len(q)) return false;
 	for (<n,pi> <- p)
 	{
@@ -83,7 +83,7 @@ bool geqps(Signature p, Signature q, bool(Footprint,Footprint) cmp, bool strong)
 		for(<m,xi> <- q, cmp(pi,xi))
 		{
 			// TODO: make recursive
-			println(" [?] <n> == <m> as <pp(pi)>?");
+			//println(" [?] <n> == <m> as <pp(pi)>?");
 			//if (match)
 			//	return false; // multiple matches!
 			//else
