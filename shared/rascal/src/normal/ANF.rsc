@@ -34,6 +34,7 @@ CBGFSequence normAllStages(BGFGrammar gr)
 					dropAllTerminals,
 					dropAllHorizontals,
 					dropAllUnknowns,
+					dropAllValues,
 					dropAllChains,
 					dropAllChainsToValues
 			])
@@ -88,13 +89,13 @@ str uniqueName(str n, set[str] nts)
 }
 
 CBGFSequence dropAllLabels(BGFGrammar g) = [unlabel_designate(p) | p <- g.prods, p.label != ""];
-CBGFSequence dropAllSelectors(BGFGrammar g) = [anonymize_deanonymize(markAllSelectors(p)) | p <- {q | q <- g.prods, /selectable(_,_) := q}];
-//CBGFSequence dropAllSelectors(BGFGrammar g) = [anonymize_deanonymize(markAllSelectors(p)) | p <- g.prods, /selectable(_,_) := p];
-//CBGFSequence dropAllTerminals(BGFGrammar g) = [abstractize_concretize(markAllTerminals(p)) | p <- g.prods, /terminal(_) := p];
-CBGFSequence dropAllTerminals(BGFGrammar g) = [abstractize_concretize(markAllTerminals(p)) | p <- {q | q <- g.prods, /terminal(_) := q}];
+
 // TODO: distribute
+
 CBGFSequence dropAllHorizontals(BGFGrammar g) = [vertical_horizontal(innt(p.lhs)) | p <- g.prods, choice(_) := p.rhs];
+
 CBGFSequence dropAllUnknowns(BGFGrammar g)
+
 {
 	CBGFSequence cbgf = [];
 	set[str] used = usedNs(g.prods);
@@ -105,49 +106,61 @@ CBGFSequence dropAllUnknowns(BGFGrammar g)
 			cbgf += eliminate_introduce([p]);
 	return cbgf;
 }
+
+CBGFSequence dropAllValues(BGFGrammar g)
+{
+	CBGFSequence cbgf = [];
+	set[str] used = usedNs(g.prods);
+	if (/val(string()) := g)
+		cbgf += replace_replace(val(string()),nonterminal("STRING"),globally());
+	if (/val(integer()) := g)
+		cbgf += replace_replace(val(integer()),nonterminal("INTEGER"),globally());
+	return cbgf;
+}
+
 CBGFSequence dropAllChains(BGFGrammar g)
 {
 	CBGFSequence cbgf = [];
 	set[str] defined = definedOnceNs(g.prods);
-	for(p <- g.prods)
-		if (nonterminal(str n) := p.rhs)
-		{
-			if (n == p.lhs)
-				cbgf += abridge_detour(p);
-			elseif (n in defined && n notin usedNs(g.prods - p))
+	for(p <- g.prods, nonterminal(str n) := p.rhs)
+	{
+		if (n == p.lhs)
+			cbgf += abridge_detour(p);
+		elseif (n notin usedNs(g.prods - p) && n in defined)
 				cbgf += unchain_chain(p);
-		}
-		//elseif (val(_) := p.rhs)
-		//	cbgf += unfold_fold(p.lhs,globally());
+	}
 	return cbgf;
 }
 
 CBGFSequence dropAllChainsToValues(BGFGrammar g)
 {
 	CBGFSequence cbgf = [];
-	set[str] defined = definedOnceNs(g.prods);
-	set[str] used = usedNs(g.prods);
-	for(p <- g.prods, val(_) := p.rhs, p.lhs in defined, p.lhs in used)
-		cbgf += inline_extract(p,globally());
+	for(p <- g.prods, nonterminal(str n) := p.rhs)
+		if (n notin usedNs(g.prods - p) && p.lhs in usedNs(g.prods - p) && len(prodsOfN(p.lhs,g.prods))<2)
+			cbgf += inline_extract(p,globally());
 	return cbgf;
 }
 
-
+CBGFSequence dropAllSelectors(BGFGrammar g) = [anonymize_deanonymize(markAllSelectors(p)) | p <- {q | q <- g.prods, /selectable(_,_) := q}];
 BGFProduction markAllSelectors(BGFProduction p) = visit(p) {case selectable(s,e) => marked(selectable(s,e)) };
+
+CBGFSequence dropAllTerminals(BGFGrammar g) = [abstractize_concretize(markAllTerminals(p)) | p <- {q | q <- g.prods, /terminal(_) := q}];
 BGFProduction markAllTerminals(BGFProduction p) = visit(p) {case terminal(t) => marked(terminal(t))};
 
 public void main()
 {
 	for (src <- ["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"])
-	//for (src <- ["xsd"])
+	//for (src <- ["python"])
 	{
 		println("Reading <src>...");
 		BGFGrammar g = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);
 		CBGFSequence c = normalise(g);
 		println("Writing the normalising trafo <src>...");
 		writeCBGF(c,|home:///projects/slps/topics/convergence/guided/bgf/<src>.normalise.cbgf|);
+		//iprintln(c);
 		println("Transforming <src>...");
 		g = transform(forward(c),g);
+		//println(pp(g));
 		println("Writing output to <src>...");
 		writeBGF(g,|home:///projects/slps/topics/convergence/guided/bgf/<src>.normal.bgf|);
 		writeFile(|home:///projects/slps/topics/convergence/guided/bgf/<src>.normal.bnf|,pp(g));

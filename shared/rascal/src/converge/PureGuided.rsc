@@ -77,11 +77,11 @@ BGFProdList assumeRenamings(BGFProdList where, NameMatch naming)
 	for (<n1,n2> <- naming)
 		if (n1 != n2 && n2 in allNs(ps) && n1 notin [""])
 			// dirty
-			ps = transform::library::Core::performRenameN(n2,n1,grammar([],ps)).prods;
+			//ps = transform::library::Core::performRenameN(n2,n1,grammar([],ps)).prods;
 			//if (n1 in ["STRING","INTEGER"])
 			//	ps = transform(forward([replace_replace(nonterminal(n2),nonterminal(n1),globally())]),grammar([],ps)).prods;
 			//else
-			//	ps = transform(forward([renameN_renameN(n2,n1)]),grammar([],ps)).prods;
+				ps = transform(forward([renameN_renameN(n2,n1)]),grammar([],ps)).prods;
 	return ps;
 }
 
