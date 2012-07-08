@@ -21,11 +21,11 @@ import Relation;
 list[str] sources =
 	//["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"];
 	//["emf","jaxb","om","rascal-c","sdf","xsd","txl"];
-	["python"];
+	["antlr"];
 	// atom/expr: antlr, dcg
 	// arg/string: ecore, rascal-a
 	// good: emf, jaxb, om, rascal-c, sdf, xsd, txl
-	// multiroot: python
+	// multiroot & atom/expr: python
 
 BGFProduction getSingleProd(str n, BGFProdList ps)
 {
@@ -120,7 +120,7 @@ set[NameMatch] nominalMatch(NameMatch known, BGFProdList mps, BGFProdList sps)
 				truenm = tryMatch(nm,known,p1,mps,p2,sps);
 				//println("Got <pp(truenm)> with <pp(known)>...");
 				if (!isEmpty(invert(truenm) o known) || !isEmpty(truenm o invert(known)))
-					println("Naming conflict, reconsider.");
+					println("Naming conflict: <pp(truenm)> vs <pp(known)>, reconsider.");
 				else
 				{
 					newmatch = nominalMatch(known + truenm, mps - p1, assumeRenamings(sps - p2, truenm));

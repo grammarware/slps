@@ -68,7 +68,7 @@ XBGFCommand forward(unite_splitN(str x, list[BGFProduction] ps, XBGFScope w))
 	{
 		// TODO: w
 		// TODO: check that x != y
-		if ({str y} := analyse::Metrics::definedNs(ps)) return unite(x,y);
+		if ({str y} := analyse::Metrics::definedNs(ps)) return unite(y,x);
 		else throw "<ps> must concern one nonterminal";
 	}
 XBGFCommand forward(unlabel_designate(production(str l,_,_))) = unlabel(l);
@@ -130,7 +130,7 @@ XBGFCommand reverse(splitN_unite(str x, list[BGFProduction] ps, XBGFScope w))
 	{
 		// TODO: w
 		// TODO: check that x != y
-		if ({str y} := analyse::Metrics::definedNs(ps)) return unite(x,y);
+		if ({str y} := analyse::Metrics::definedNs(ps)) return unite(y,x);
 		else throw "<ps> must concern one nonterminal";
 	}
 XBGFCommand reverse(splitT_concatT(str x, list[str] ys, XBGFScope w)) = splitT(x,ys,w);

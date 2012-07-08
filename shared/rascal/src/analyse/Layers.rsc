@@ -3,13 +3,19 @@ module analyse::Layers
 
 import syntax::BGF;
 import syntax::XBGF;
+import syntax::CBGF;
 import io::ReadBGF;
 import lib::Rascalware;
 import analyse::Metrics;
 import normal::BGF;
 import transform::XBGF;
+import transform::CBGF;
 import export::BNF;
 import Relation;
+import IO;
+
+CBGFSequence removeLayers(rel[str,str] layers, BGFGrammar g)
+	= [unite_splitN(l<0>, prodsOfN( l<1>, g.prods), globally()) | l <- layers];
 
 rel[str,str] detectLayers(BGFGrammar g)
 {
@@ -56,6 +62,10 @@ public void main()
 		println("Analysing <src>...");
 		rel[str,str] layers = detectLayers(g);
 		if(!isEmpty(layers))
+		{
 			println("Found <layers>");
+			iprintln(removeLayers(layers,g));
+			println(pp(transform(forward(removeLayers(layers,g)),g)));
+		}
 	}
 }
