@@ -8,19 +8,17 @@ import io::ReadBGF;
 import lib::Rascalware;
 import analyse::Metrics;
 import normal::BGF;
-import transform::XBGF;
-import transform::CBGF;
 import export::BNF;
-import Relation;
 import IO;
 
-CBGFSequence removeLayers(rel[str,str] layers, BGFGrammar g)
+public CBGFSequence removeLayers(rel[str,str] layers, BGFGrammar g)
 	= [unite_splitN(l<0>, prodsOfN( l<1>, g.prods), globally()) | l <- layers];
 
-rel[str,str] detectLayers(BGFGrammar g)
+public rel[str,str] detectLayers(BGFGrammar g)
 {
 	rel[str,str] res = {};
 	rel[str,str] dres = {};
+	g = normalise4(g);
 	for (n1 <- definedNs(g), n2 <- definedNs(g))
 	{
 		BGFProdList ps1 = prodsOfN(n1,g.prods);
@@ -47,25 +45,16 @@ rel[str,str] detectLayers(BGFGrammar g)
 public void main()
 {
 	for (src <- ["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"])
-	//for (src <- ["python"])
 	{
 		println("Reading <src>...");
 		BGFGrammar g = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);
-		println("Normalising <src>...");
-		g = visit(g)
-		{
-			case selectable(s,e) => e
-			case terminal(_) => epsilon()
-		}
-		for (n <- [n | n <- usedNs(g), len(prodsOfN(n,g.prods))==1, len([n | /nonterminal(n) := g])==1])
-			g = transform([inline(n)],g);
 		println("Analysing <src>...");
 		rel[str,str] layers = detectLayers(g);
 		if(!isEmpty(layers))
 		{
 			println("Found <layers>");
-			iprintln(removeLayers(layers,g));
-			println(pp(transform(forward(removeLayers(layers,g)),g)));
+			println(removeLayers(layers,g));
+			//println(pp(transform(forward(removeLayers(layers,g)),g)));
 		}
 	}
 }

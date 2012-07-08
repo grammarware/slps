@@ -17,11 +17,13 @@ import lib::Rascalware;
 import IO;
 import String;
 import Relation;
+import analyse::Layers;
+import analyse::Associativity;
 
 list[str] sources =
 	//["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"];
 	//["emf","jaxb","om","rascal-c","sdf","xsd","txl"];
-	["antlr"];
+	["rascal-a"];
 	// atom/expr: antlr, dcg
 	// arg/string: ecore, rascal-a
 	// good: emf, jaxb, om, rascal-c, sdf, xsd, txl
@@ -153,10 +155,30 @@ set[NameMatch] nominalMatch(NameMatch known, BGFProdList mps, BGFProdList sps)
 NameMatch converge(BGFGrammar master, BGFGrammar servant)
 {
 	println("Master grammar:\n<pp(master)>");
+	CBGFSequence mcbgf = []; // mutation
 	CBGFSequence acbgf = []; // normalisation
 	CBGFSequence ncbgf = []; // nominal matching
 	CBGFSequence scbgf = []; // structural matching
 	//println("Input: <src>");
+		println("Servant grammar:\n<pp(servant)>");
+	println("Mutating the grammar...");
+	NameMatch res = detectLayers(servant);
+	if (!isEmpty(res))
+	{
+		mcbgf += removeLayers(res, servant);
+		servant = transform(forward(mcbgf), servant);
+		println("Delayering successful.");
+	}
+	res = detectAssociativity(servant);
+	if (!isEmpty(res))
+	{
+		mcbgf += removeAssociativity(res, servant);
+		servant = transform(forward(removeAssociativity(res, servant)), servant);
+		println("Associativity detection successful.");
+	}
+	
+	if(isEmpty(mcbgf))
+		println("No mutation necessary.");
 	println("Normalising the grammar...");
 	acbgf = normal::ANF::normalise(servant);
 	servant = transform(forward(acbgf),servant);

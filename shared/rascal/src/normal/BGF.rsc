@@ -2,6 +2,11 @@
 module normal::BGF
 
 import syntax::BGF;
+// needed for levels 2+
+import lib::Rascalware;
+import analyse::Metrics;
+import syntax::XBGF;
+import transform::XBGF;
 
 public BGFGrammar normalise(BGFGrammar g) = grammar (g.roots, normalise(g.prods));
 
@@ -71,4 +76,29 @@ test bool n13(){return normalise(tw(choice([terminal("1"),terminal("2"),terminal
 test bool n14(){return normalise(production("","N",sequence([epsilon(),nonterminal("a"),nonterminal("b")])))
 							  == production("","N",sequence([nonterminal("a"),nonterminal("b")]));}
 
-							  
+// everything below is highly experimental, use at your own risk! --VVZ
+
+// no named subexpressions
+public BGFGrammar normalise2(BGFGrammar g) = visit(g) { case selectable(s,e) => e } ;
+
+// no named subexpressions, no chain production rules
+public BGFGrammar normalise3(BGFGrammar g)
+{
+	g = normalise2(g);
+	for (n <- [n | n <- usedNs(g), len(prodsOfN(n,g.prods))==1, len([n | /nonterminal(n) := g])==1])
+		g = transform([inline(n)],g);
+	return g;
+}
+
+// no named subexpressions, no chain production rules, no terminals
+public BGFGrammar normalise4(BGFGrammar g)
+{
+	g = visit(g)
+		{
+			case selectable(s,e) => e
+			case terminal(_) => epsilon()
+		}
+	for (n <- [n | n <- usedNs(g), len(prodsOfN(n,g.prods))==1, len([n | /nonterminal(n) := g])==1])
+		g = transform([inline(n)],g);
+	return g;
+}
