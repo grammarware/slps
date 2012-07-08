@@ -33,8 +33,8 @@ public CBGFSequence removeAssociativity(rel[str,str] ass, BGFGrammar g)
 			if (l=="")
 				c += unlabel_designate(production("tmplabel",n,newrhs));
 		}
-		else
-			println("<pp(ps)>");
+		//else
+		//	println("<pp(ps)>");
 		// horizontal production rules
 		for (production(str l,n,choice(L)) <- ps,
 			e <- L,

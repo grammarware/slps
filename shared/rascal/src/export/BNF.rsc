@@ -1,44 +1,23 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module export::BNF
 
-import IO;
+import lib::Rascalware;
 import syntax::BGF;
-import lang::xml::DOM;
-import List;
-import String;
 
 public str pp(BGFGrammar bgf)
 	= (isEmpty(bgf.roots) ? "" : "Roots: <bgf.roots>\n")
 	+ pp(bgf.prods);
 
-public str pp(BGFProdList ps)
-{
-	str s = "";
-	for(p <- ps)
-		s += "<pp(p)>\n";
-	return trim(s); 
-}
+public str pp(BGFProdList ps) = joinStrings([pp(p) | p <- ps], "\n");
+public str pp(set[BGFProduction] ps) = joinStrings([pp(p) | p <- ps], "\n");
 
 public str pp(BGFProduction p)
 	= (p.label!="" ? "[<p.label>] " : "")
 	+ "<p.lhs> ::= <pp(p.rhs)> ;";
 
-public str pp(BGFExprList es)
-{
-	str s = "";
-	for(e <- es)
-		s += "<pp(e)> ";
-	return s; 
-}
+public str pp(BGFExprList es) = joinStrings([pp(e) | e <- es], " ");
 
-public str ppc(BGFExprList es)
-{
-	str s = "<pp(es[0])>";
-	for(e <- tail(es))
-		s += " | <pp(e)>";
-	return s; 
-}
-
+public str ppc(BGFExprList es) = joinStrings([pp(e) | e <- es], " | ");
 
 public str pp(epsilon()) = "EPSILON";
 public str pp(empty()) = "EMPTY";

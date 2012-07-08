@@ -1,4 +1,5 @@
 *.res.bgf
+*.converging.bgf
 *.normal.*
 *.xbgf
 *.bnf

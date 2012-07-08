@@ -136,7 +136,8 @@ CBGFSequence dropAllChainsToValues(BGFGrammar g)
 {
 	CBGFSequence cbgf = [];
 	for(p <- g.prods, nonterminal(str n) := p.rhs)
-		if (n notin usedNs(g.prods - p) && p.lhs in usedNs(g.prods - p) && len(prodsOfN(p.lhs,g.prods))<2)
+		// TODO: shouldn't we also check for (n notin usedNs(g.prods - p)) ?
+		if (p.lhs in usedNs(g.prods - p) && len(prodsOfN(p.lhs,g.prods))<2)
 			cbgf += inline_extract(p,globally());
 	return cbgf;
 }
@@ -150,7 +151,7 @@ BGFProduction markAllTerminals(BGFProduction p) = visit(p) {case terminal(t) => 
 public void main()
 {
 	for (src <- ["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"])
-	//for (src <- ["python"])
+	//for (src <- ["ecore"])
 	{
 		println("Reading <src>...");
 		BGFGrammar g = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|);
