@@ -21,10 +21,10 @@ import analyse::Layers;
 import analyse::Associativity;
 
 list[str] sources =
-	//["rascal-a"]; list[str] other =
+	["ecore"]; list[str] other =
 	["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"]
 	-
-	["xsd","ecore","python"];
+	["ecore"];
 	// atom/expr: antlr, dcg
 	// arg/string: ecore, rascal-a
 	// good: emf, jaxb, om, rascal-c, sdf, xsd, txl
@@ -35,9 +35,8 @@ BGFProduction getSingleProd(str n, BGFProdList ps)
 	//BGFProdList ps1 = [*prodsOfN(n,ps) | n <- ns]; // Y SO complicated?
 	BGFProdList ps1 = prodsOfN(n,ps);
 	if (len(ps1)!=1)
-		throw "Grammar not in ANF with <ps1>";
-	else
-		return ps1[0];
+		println("Unexpectedly many production rules of <n>! Grammar not in ANF?");
+	return ps1[0];
 }
 
 BGFProduction unwind(BGFProduction p1, BGFProdList ps1)
@@ -122,18 +121,13 @@ set[NameMatch] nominalMatch(NameMatch known, BGFProdList mps, BGFProdList sps)
 				//println("Trying <pp(nm)>...");
 				truenm = tryMatch(nm,known,p1,mps,p2,sps);
 				//println("Got <pp(truenm)> with <pp(known)>...");
-				if (!isEmpty(invert(truenm) o known) || !isEmpty(truenm o invert(known)))
+				if (conflicted(truenm,known))
 					println("Naming conflict: <pp(truenm)> vs <pp(known)>, reconsider.");
 				else
 				{
 					newmatch = nominalMatch(known + truenm, mps - p1, assumeRenamings(sps - p2, truenm));
 					if (!isEmpty(newmatch))
 						nms += newmatch;
-					//nnm = truenm;
-					//ps1a = mps - p1;
-					//ps2a = sps - p2;
-					//megabreak = true;
-					//break;
 				} 
 			}
 			if (!isEmpty(nms))
@@ -144,12 +138,16 @@ set[NameMatch] nominalMatch(NameMatch known, BGFProdList mps, BGFProdList sps)
 	}
 	println("No match found.");
 	// END
-	//mps = ps1a;
-	//sps = assumeRenamings(ps2a,nnm);
-	//known = known + nnm;
 	
 	return {};
 	
+}
+
+bool conflicted(NameMatch n, NameMatch m)
+{
+	n1 = carrierX(n,{""});
+	m1 = carrierX(m,{""});
+	return !isEmpty(invert(n1) o m1) || !isEmpty(n1 o invert(m1));
 }
 
 //BGFGrammar
@@ -187,12 +185,9 @@ NameMatch converge(BGFGrammar master, BGFGrammar servant, str src)
 	println("Servant grammar:\n<pp(servant)>");
 	println("Starting with the root: <master.roots>, <servant.roots>.");
 	println("------------------------------");
-	// TODO: multiple roots
 	NameMatch known;
 	 //= {<master.roots[0],servant.roots[0]>};
 	set[NameMatch] nknown = {};
-	//ps1 = master.prods;
-	//ps2 = assumeRenamings(servant.prods, known);
 
 	for (rootmatch <- {<r1,r2> | r1 <- master.roots, r2 <- servant.roots})
 		nknown += nominalMatch({rootmatch}, master.prods, assumeRenamings(servant.prods, {rootmatch}));
@@ -220,19 +215,11 @@ NameMatch converge(BGFGrammar master, BGFGrammar servant, str src)
 
 public void main()
 {
-	//Signature s1 = {<"a",fpplus()>,<"b",fpopt()>};
-	//Signature s2 = {<"x",fpplus()>,<"y",fpopt()>};
-	//Signature s1 = {<"a",fpplus()>,<"b",fpplus()>,<"c",fpmany([fpnt(),fpplus()])>,<"z",fpmany([fpnt(),fpplus()])>};
-	//Signature s2 = {<"x",fpplus()>,<"y",fpmany([fpnt(),fpplus()])>};
-	//println("\t<pp(s1)>\nvs\n\t<pp(s2)>");
-	//println("<analyse::Prodsigs::makenamematches(s1,s2)>");
-	//return;
 	master = loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
 	for (src <- sources)
 	{
 		//BGFGrammar res = 
 		NameMatch res = converge(master,loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|),src);
-		//writeBGF(res,|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bgf|);
 		writeFile(|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bnf|,replaceAll(pp(res),", ",",\n"));
 	}
 	println("Done.");
