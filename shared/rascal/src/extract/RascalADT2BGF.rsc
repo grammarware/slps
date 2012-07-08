@@ -7,6 +7,7 @@ import String;
 import syntax::BGF;
 import normal::BGF;
 import io::WriteBGF;
+import export::BNF;
 
 layout LAYOUTLIST = LAYOUT* !>> [\ \t\n\r/];
 lexical LAYOUT
@@ -32,7 +33,7 @@ public void main(list[str] args)
 
 public void main()
 {
-	iprintln(process(|project://fl/src/Abstract.rsc|));
+	println(pp(process(|project://fl/src/Abstract.rsc|)));
 }
 
 BGFGrammar process(loc src)
@@ -59,7 +60,7 @@ BGFExpression type2expr((Name)`str`) = val(string());
 BGFExpression type2expr((Name)`int`) = val(integer());
 default BGFExpression type2expr(Name n) = nonterminal("<n>");
 
-BGFExpression expr2expr((DataExpr)`<Name t>`) = nonterminal("<t>");
+BGFExpression expr2expr((DataExpr)`<Name t>`) = type2expr(t);
 BGFExpression expr2expr((DataExpr)`<Name t><Name n>`) = selectable("<n>",type2expr(t));
 BGFExpression expr2expr((DataExpr)`<Name n>()`) = selectable("<n>",epsilon());
 BGFExpression expr2expr((DataExpr)`<Name n>(<DataExpr e>)`) = selectable("<n>",expr2expr(e));
