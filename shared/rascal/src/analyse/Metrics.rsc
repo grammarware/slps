@@ -19,7 +19,7 @@ public set[str] bottomNs(BGFGrammar g) = bottomNs(g.prods);
 
 @doc{Leaf nonterminals in a grammar: not using any others}
 //public set[str] leafNs(BGFProdList ps) = {n | n <- definedNs(ps), production(_,n,rhs) <- ps, /nonterminal(n2) := rhs, n2 != n};
-public set[str] leafNs(BGFProdList ps) = {n | n <- definedNs(ps), (calls(n,ps)-n)=={} };
+public set[str] leafNs(BGFProdList ps) = {n | n <- definedNs(ps), bs := bottomNs(ps), (calls(n,ps)-n-bs)=={} };
 public set[str] leafNs(BGFGrammar g) = leafNs(g.prods);
 
 @doc{All terminals used in a grammar}

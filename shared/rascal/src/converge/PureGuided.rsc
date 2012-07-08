@@ -21,9 +21,10 @@ import analyse::Layers;
 import analyse::Associativity;
 
 list[str] sources =
-	//["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"];
-	//["emf","jaxb","om","rascal-c","sdf","xsd","txl"];
-	["rascal-a"];
+	//["rascal-a"]; list[str] other =
+	["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"]
+	-
+	["xsd","ecore","python"];
 	// atom/expr: antlr, dcg
 	// arg/string: ecore, rascal-a
 	// good: emf, jaxb, om, rascal-c, sdf, xsd, txl
@@ -152,15 +153,14 @@ set[NameMatch] nominalMatch(NameMatch known, BGFProdList mps, BGFProdList sps)
 }
 
 //BGFGrammar
-NameMatch converge(BGFGrammar master, BGFGrammar servant)
+NameMatch converge(BGFGrammar master, BGFGrammar servant, str src)
 {
 	println("Master grammar:\n<pp(master)>");
 	CBGFSequence mcbgf = []; // mutation
 	CBGFSequence acbgf = []; // normalisation
 	CBGFSequence ncbgf = []; // nominal matching
 	CBGFSequence scbgf = []; // structural matching
-	//println("Input: <src>");
-		println("Servant grammar:\n<pp(servant)>");
+	println("Input: <src>");
 	println("Mutating the grammar...");
 	NameMatch res = detectLayers(servant);
 	if (!isEmpty(res))
@@ -231,7 +231,7 @@ public void main()
 	for (src <- sources)
 	{
 		//BGFGrammar res = 
-		NameMatch res = converge(master,loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|));
+		NameMatch res = converge(master,loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|),src);
 		//writeBGF(res,|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bgf|);
 		writeFile(|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bnf|,replaceAll(pp(res),", ",",\n"));
 	}
