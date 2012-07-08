@@ -11,7 +11,10 @@ public CBGFSequence carveOutN(str n, BGFGrammar g)
 	CBGFSequence c = [];
 	ps = prodsOfN(n,g.prods);
 	if(!isEmpty(ps))
-		c += undefine_define(ps);
+		if (n in usedNs(g))
+			c += undefine_define(ps);
+		else
+			c += eliminate_introduce(ps);
 	for (p <- g.prods, p.lhs != n)
 		if (/nonterminal(n) := p.rhs)
 			c += project_inject(marknt(n,p));

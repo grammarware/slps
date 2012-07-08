@@ -28,6 +28,8 @@ public str joinStrings(list[str] ss, str w) = (ss[0] | it + w + s | s <- tail(ss
 public bool multiseteq(list[&T] xs, list[&T] ys) = sort(xs) == sort(ys);
 //}
 
+public bool seteq(list[&T] xs, list[&T] ys) = toSet(xs) == toSet(ys);
+
 public set[&T] toSet(list[&T] x) = List::toSet(x);
 public list[&T] toList(set[&T] x) = Set::toList(x);
 

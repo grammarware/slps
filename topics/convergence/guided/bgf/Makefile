@@ -17,6 +17,12 @@ build:
 bnf:
 	ls -1 *.bgf | xargs -n1 -I _ ../../../../shared/tools/bgf2bnf _ `basename _ .bgf`.bnf
 
+cmp:
+	ls -1 *.converging.bgf | xargs -n1 -I _ make `basename _ .converging.bgf`.cmp
+
+%.cmp:
+	gdtm master.bgf $*
+
 test:
 	make sdf.test
 	bgf2bnf sdf.res2.bgf

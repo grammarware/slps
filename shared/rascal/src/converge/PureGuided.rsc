@@ -29,14 +29,11 @@ void report(int level, str s)
 }
 
 list[str] sources =
-	//["ecore"]; list[str] other =
+	//["python"]; list[str] other =
 	["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"]
 	-
 	["ecore"];
-	// atom/expr: antlr, dcg
-	// arg/string: ecore, rascal-a
-	// good: emf, jaxb, om, rascal-c, sdf, xsd, txl
-	// multiroot & atom/expr: python
+	// ecore is fundamentally different
 
 BGFProduction getSingleProd(str n, BGFProdList ps)
 {
@@ -229,8 +226,91 @@ tuple[NameMatch,BGFGrammar] converge(BGFGrammar master, BGFGrammar servant, str 
 	servant = transform(forward(ncbgf),servant);
 	report(3,"<pp(servant)>");
 
+	report(0,"Resolving structural mismatches in the grammar...");
+	
+	scbgf = resolveStructures(known, master, servant);
+	servant = transform(forward(scbgf), servant);
+	
 	report(0,"Done with the grammar.");
 	return <known,servant>;
+}
+
+CBGFSequence resolveStructures(NameMatch known, BGFGrammar m, BGFGrammar s)
+{
+	CBGFSequence c = [];
+	// resolving differences in roots (starting nonterminals)
+	if (m.roots != s.roots)
+	{
+		report(3,"M: <m.roots>\nS: <s.roots>");
+		roots2go = s.roots - m.roots;
+		c += reroot_reroot(s.roots,m.roots);
+		s = transform(forward(c),s);
+		for (r <- roots2go)
+			if (r in known<1>)
+				throw "Do something about nonterminal <r> first!";
+			//else
+			//	c += carveOutN(r,s);
+			// ^^^^^^^^^^^^^^^^^^^^ this will happen naturally below when we sift through the production rules
+	}
+	// going through the production rules
+	//ps1 = m.prods;
+	//ps2 = s.prods;
+	//for (p1 <- ps1, p2 <- ps2, strong(p1,p2))
+	//{
+	//	ps1 -= 
+	//}
+	ps = s.prods - m.prods;
+	for (p <- ps)
+	{
+		report(0,"Not yet matching production <pp(p)>");
+		if (p.lhs notin usedNs(s) && p.lhs notin definedNs(m))
+		{
+			c += eliminate_introduce([p]);
+			ps -= p; //needed?
+			continue;
+		} 
+		pms = prodsOfN(p.lhs,m.prods);
+		report(0,"Candidates: <pp(pms)>");
+		// option 1: permutations:
+		if (sequence(L1) := p.rhs && [production(_,_,sequence(L2))] := pms)
+		{
+			if (seteq(L1,L2))
+				c += permute_permute(p,pms[0]);
+			else
+			{
+				es1 = L1-L2;
+				es2 = L2-L1;
+				report(0,"<pp(es1)> vs <pp(es2)>");
+				for (e1 <- es1)
+					if (star(e1a) := e1 && plus(e1a) in es2)
+					{
+						c += narrow_widen(star(e1a),plus(e1a),innt(p.lhs));
+						es1 -= e1;
+						es2 -= plus(e1a);
+					}
+					else
+						throw "Given up";
+				if (!isEmpty(es1) || !isEmpty(es2))
+					throw "<pp(es1)> and <pp(es2)> remained unmatched!";
+			}
+		}
+		elseif (star(e1a) := p.rhs && [production(_,_,plus(e1a))] := pms)
+		{
+			c += narrow_widen(star(e1a),plus(e1a),innt(p.lhs));
+		}
+		else
+		{
+			report(0,pp(p));
+			throw "Dunno :(";
+		}
+	}
+	//if (!isEmpty(ps))
+	//{
+	//	report(0,pp(ps));
+	//	throw "";
+	//}
+	iprintln(c);
+	return c;
 }
 
 public void main()
@@ -238,27 +318,32 @@ public void main()
 	master = loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
 	for (src <- sources)
 	{
-		//BGFGrammar res = 
 		NameMatch res;
 		BGFGrammar g;
 		<res,g> = converge(master,loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|),src);
 		writeFile(|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bnf|,replaceAll(pp(res),", ",",\n"));
-		writeBGF(g,|home:///projects/slps/topics/convergence/guided/bgf/<src>.converging.bgf|);
+		writeSimpleGrammar(g,|home:///projects/slps/topics/convergence/guided/bgf/<src>.converging.bgf|);
 	}
 	report(2,"Done.");
 }
 
 BGFGrammar loadSimpleGrammar(loc l)
 {
-	BGFGrammar g = readBGF(l), q;
-	//return g;
+	BGFGrammar g = readBGF(l);
 	 //we simplify our life by converting built-in types ("values") to regular nonterminals
 	if (/val(string()) := g)
-		q = transform([replace(val(string()),nonterminal("STRING"),globally())],g);
-	else
-		q = g;
-	if (/val(integer()) := q)
-		q = transform([replace(val(integer()),nonterminal("INTEGER"),globally())],q);
-	//return <g,q>;
-	return q;
+		g = transform([replace(val(string()),nonterminal("STRING"),globally())],g);
+	if (/val(integer()) := g)
+		g = transform([replace(val(integer()),nonterminal("INTEGER"),globally())],g);
+	return g;
+}
+
+void writeSimpleGrammar(BGFGrammar g, loc l)
+{
+	 // putting built-in types ("values") back before serialisation
+	if (/nonterminal("STRING") := g)
+		g = transform([replace(nonterminal("STRING"),val(string()),globally())],g);
+	if (/nonterminal("INTEGER") := g)
+		g = transform([replace(nonterminal("INTEGER"),val(integer()),globally())],g);
+	writeBGF(g,l);
 }
