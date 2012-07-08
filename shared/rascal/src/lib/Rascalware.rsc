@@ -2,6 +2,7 @@
 @doc{grammarware's own version of Rascal library structure}
 module lib::Rascalware
 
+import String;
 import Set;
 import Relation;
 import List;
@@ -36,3 +37,10 @@ public list[&T] toList(set[&T] x) = Set::toList(x);
 public &T getOneFrom(set[&T] x) = Set::getOneFrom(x);
 
 public list[&T] slice(list[&T] lst, int begin, int l) = List::slice(lst,begin,l);
+
+public str replace(str w, map[str,str] m)
+{
+	for (k <- m)
+		w = String::replaceAll(w,k,m[k]);
+	return w;
+}

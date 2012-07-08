@@ -20,6 +20,7 @@ import String;
 import Relation;
 import analyse::Layers;
 import analyse::Associativity;
+import export::LaTeX;
 
 int verbose = 0;
 
@@ -27,6 +28,36 @@ void report(int level, str s)
 {
 	if (level<=verbose) println(s);
 }
+
+map[str,str] srcNames = (
+"antlr": "ANTLR", 
+"dcg": "Definite Clause Grammar", 
+"ecore": "Ecore", 
+"emf": "Eclipse Modeling Framework", 
+"jaxb": "JAXB Data Binding Framework", 
+"om": "Java Object Model", 
+"python": "PyParsing in Python", 
+"rascal-a": "Rascal Algebraic Data Type", 
+"rascal-c": "Rascal Concrete Syntax Definition", 
+"sdf": "SDF", 
+"txl": "TXL", 
+"xsd": "XML Schema" 
+);
+
+map[str,list[str]] srcFiles = (
+"antlr": ["topics/fl/java1/FL.g","topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g"], 
+"dcg": ["topics/fl/prolog1/Parser.pro","shared/prolog/cli/dcg2bgf.pro"], 
+"ecore": ["topics/fl/emf1/fl.ecore","topics/extraction/ecore/ecore2bgf.xslt"], 
+"emf": ["topics/fl/emf2/model/fl.ecore","topics/extraction/ecore/ecore2bgf.xslt"], 
+"jaxb": ["topics/fl/java3/fl","topics/extraction/java2bgf/slps/java2bgf/Tool.java"], 
+"om": ["topics/fl/java1/types","topics/extraction/java2bgf/slps/java2bgf/Tool.java"], 
+"python": ["topics/fl/python/parser.py","shared/rascal/src/extract/Python2BGF.rsc"], 
+"rascal-a": ["topics/fl/rascal/Abstract.rsc","shared/rascal/src/extract/RascalADT2BGF.rsc"], 
+"rascal-c": ["topics/fl/rascal/Concrete.rsc","shared/rascal/src/extract/RascalSyntax2BGF.rsc"], 
+"sdf": ["topics/fl/asfsdf/Syntax.sdf","topics/extraction/sdf"], 
+"txl": ["topics/fl/txl/FL.Txl","topics/extraction/txl/txl2bgf.xslt"], 
+"xsd": ["topics/fl/xsd/fl.xsd","shared/prolog/xsd2bgf.pro"] 
+);
 
 list[str] sources =
 	//["python"]; list[str] other =
@@ -165,7 +196,7 @@ bool conflicted(NameMatch n, NameMatch m)
 }
 
 //BGFGrammar
-tuple[NameMatch,BGFGrammar] converge(BGFGrammar master, BGFGrammar servant, str src)
+tuple[NameMatch,BGFGrammar,str] converge(BGFGrammar master, BGFGrammar servant, str src)
 {
 	report(3,"Master grammar:\n<pp(master)>");
 	CBGFSequence mcbgf = []; // mutation
@@ -199,7 +230,6 @@ tuple[NameMatch,BGFGrammar] converge(BGFGrammar master, BGFGrammar servant, str 
 	report(2,"------------------------------");
 	report(0,"Resolving names in the grammar...");
 	NameMatch known;
-	 //= {<master.roots[0],servant.roots[0]>};
 	set[NameMatch] nknown = {};
 
 	for (rootmatch <- {<r1,r2> | r1 <- master.roots, r2 <- servant.roots})
@@ -219,20 +249,61 @@ tuple[NameMatch,BGFGrammar] converge(BGFGrammar master, BGFGrammar servant, str 
 		else
 			ncbgf += renameN_renameN(b,a);
 	// Assume nominal matching!
-	for (<"",b> <- known)
-		ncbgf += carveOutN(b,transform(forward(ncbgf),servant));
-	//servant = transform(forward(ncbgf),servant);
-	// Assume nominal matching!
 	servant = transform(forward(ncbgf),servant);
 	report(3,"<pp(servant)>");
 
 	report(0,"Resolving structural mismatches in the grammar...");
+	for (<"",b> <- known)
+		scbgf += carveOutN(b,transform(forward(scbgf),servant));
+	servant = transform(forward(scbgf),servant);
+	nscbgf = resolveStructures(known, master, servant);
+	servant = transform(forward(nscbgf), servant);
+	scbgf += nscbgf;
 	
-	scbgf = resolveStructures(known, master, servant);
-	servant = transform(forward(scbgf), servant);
-	
-	report(0,"Done with the grammar.");
-	return <known,servant>;
+	report(0,"Done with the grammar: <len(mcbgf)> <len(acbgf)> <len(ncbgf)> <len(scbgf)>");
+	return <known,servant,makeReport(src,mcbgf,acbgf,ncbgf,scbgf)>;
+}
+
+str makeReport(str name,CBGFSequence m, CBGFSequence a, CBGFSequence n, CBGFSequence s)
+{
+	BGFGrammar g1 = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<name>.bgf|);
+	BGFGrammar g2 = transform(forward(m+a),loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<name>.bgf|));
+	str res =
+	"\\chapter{<srcNames[name]>}
+	'
+	'\\section{Details}
+	'
+	'\\begin{itemize}
+	'\\item Source name: \\textbf{<name>}
+	'\\item Source artifact: \\href{http://github.com/grammarware/slps/blob/master/<srcFiles[name][0]>}{<srcFiles[name][0]>}
+	'\\item Grammar extractor: \\href{http://github.com/grammarware/slps/blob/master/<srcFiles[name][1]>}{<srcFiles[name][1]>}
+	'\\end{itemize}
+	'
+	'\\section{Source grammar}
+	'
+	'<ppl(g1)>
+	'
+	'\\section{Mutations}
+	'
+	'<ppl(m)>
+	'
+	'\\section{Normalizations}
+	'
+	'<ppl(a)>
+	'
+	'\\section{Grammar in ANF}
+	'
+	'<ppls(g2)>
+	'
+	'\\section{Nominal resolution}
+	'
+	'<ppl(n)>
+	'
+	'\\section{Structural resolution}
+	'
+	'<ppl(s)>
+	'";
+	return res;
 }
 
 CBGFSequence resolveStructures(NameMatch known, BGFGrammar m, BGFGrammar s)
@@ -253,16 +324,10 @@ CBGFSequence resolveStructures(NameMatch known, BGFGrammar m, BGFGrammar s)
 			// ^^^^^^^^^^^^^^^^^^^^ this will happen naturally below when we sift through the production rules
 	}
 	// going through the production rules
-	//ps1 = m.prods;
-	//ps2 = s.prods;
-	//for (p1 <- ps1, p2 <- ps2, strong(p1,p2))
-	//{
-	//	ps1 -= 
-	//}
 	ps = s.prods - m.prods;
 	for (p <- ps)
 	{
-		report(0,"Not yet matching production <pp(p)>");
+		report(2,"Not yet matching production <pp(p)>");
 		if (p.lhs notin usedNs(s) && p.lhs notin definedNs(m))
 		{
 			c += eliminate_introduce([p]);
@@ -270,7 +335,7 @@ CBGFSequence resolveStructures(NameMatch known, BGFGrammar m, BGFGrammar s)
 			continue;
 		} 
 		pms = prodsOfN(p.lhs,m.prods);
-		report(0,"Candidates: <pp(pms)>");
+		report(2,"Candidates: <pp(pms)>");
 		// option 1: permutations:
 		if (sequence(L1) := p.rhs && [production(_,_,sequence(L2))] := pms)
 		{
@@ -280,7 +345,7 @@ CBGFSequence resolveStructures(NameMatch known, BGFGrammar m, BGFGrammar s)
 			{
 				es1 = L1-L2;
 				es2 = L2-L1;
-				report(0,"<pp(es1)> vs <pp(es2)>");
+				report(3,"<pp(es1)> vs <pp(es2)>");
 				for (e1 <- es1)
 					if (star(e1a) := e1 && plus(e1a) in es2)
 					{
@@ -295,21 +360,13 @@ CBGFSequence resolveStructures(NameMatch known, BGFGrammar m, BGFGrammar s)
 			}
 		}
 		elseif (star(e1a) := p.rhs && [production(_,_,plus(e1a))] := pms)
-		{
 			c += narrow_widen(star(e1a),plus(e1a),innt(p.lhs));
-		}
 		else
 		{
 			report(0,pp(p));
 			throw "Dunno :(";
 		}
 	}
-	//if (!isEmpty(ps))
-	//{
-	//	report(0,pp(ps));
-	//	throw "";
-	//}
-	iprintln(c);
 	return c;
 }
 
@@ -320,9 +377,10 @@ public void main()
 	{
 		NameMatch res;
 		BGFGrammar g;
-		<res,g> = converge(master,loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|),src);
+		<res,g,s> = converge(master,loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<src>.bgf|),src);
 		writeFile(|home:///projects/slps/topics/convergence/guided/bgf/<src>.almost.bnf|,replaceAll(pp(res),", ",",\n"));
 		writeSimpleGrammar(g,|home:///projects/slps/topics/convergence/guided/bgf/<src>.converging.bgf|);
+		writeFile(|home:///projects/slps/topics/convergence/guided/bgf/<src>.tex|,s);
 	}
 	report(2,"Done.");
 }

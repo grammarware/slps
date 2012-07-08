@@ -7,6 +7,8 @@ import lib::Rascalware;
 import Relation; //domain
 import List;
 import Set;
+import String;
+import export::LaTeX;
 
 data Footprint
 	= fpnt()
@@ -153,3 +155,16 @@ public str pp(fpempty()) = "0";
 public default str pp(Footprint sig) = "XXX";
 
 public str pp(NameMatch nm) = "\<"+joinStrings(["<(n=="")?"OMEGA":n> = <m>" | <n,m> <- nm],", ")+"\>";
+//str ppnt(str n) = "\\mathit{<replaceAll(n,"_","\\_ ")>}";
+
+public str ppl({}) = "\\varnothing";
+public str ppl(Signature sig) = "\\{ <joinStrings(["\\langle<export::LaTeX::ppnt(n)>, <ppl(f)>\\rangle" | <n,f> <- sig],", ")>\\}";
+public str ppl(fpnt()) = "1";
+public str ppl(fpopt()) = "{?}";
+public str ppl(fpplus()) = "{+}";
+public str ppl(fpstar()) = "{*}";
+public str ppl(fpmany(L)) = joinStrings([ppl(f) | f <- L],"");
+public str ppl(fpempty()) = "\\varnothing";
+public default str ppl(Footprint sig) = "XXX";
+
+public str ppl(NameMatch nm) = "\\langle "+joinStrings(["<(n=="")?"\\omega":export::LaTeX::ppnt(n)>, <m>" | <n,m> <- nm],", ")+"\\rangle";
