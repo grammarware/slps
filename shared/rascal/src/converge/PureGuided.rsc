@@ -40,24 +40,48 @@ map[str,str] srcNames = (
 "python": "PyParsing in Python", 
 "rascal-a": "Rascal Algebraic Data Type", 
 "rascal-c": "Rascal Concrete Syntax Definition", 
-"sdf": "SDF", 
+"sdf": "Syntax Definition Formalism", 
 "txl": "TXL", 
 "xsd": "XML Schema" 
 );
 
-map[str,list[str]] srcFiles = (
-"antlr": ["topics/fl/java1/FL.g","topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g"], 
-"dcg": ["topics/fl/prolog1/Parser.pro","shared/prolog/cli/dcg2bgf.pro"], 
-"ecore": ["topics/fl/emf1/fl.ecore","topics/extraction/ecore/ecore2bgf.xslt"], 
-"emf": ["topics/fl/emf2/model/fl.ecore","topics/extraction/ecore/ecore2bgf.xslt"], 
-"jaxb": ["topics/fl/java3/fl","topics/extraction/java2bgf/slps/java2bgf/Tool.java"], 
-"om": ["topics/fl/java1/types","topics/extraction/java2bgf/slps/java2bgf/Tool.java"], 
-"python": ["topics/fl/python/parser.py","shared/rascal/src/extract/Python2BGF.rsc"], 
-"rascal-a": ["topics/fl/rascal/Abstract.rsc","shared/rascal/src/extract/RascalADT2BGF.rsc"], 
-"rascal-c": ["topics/fl/rascal/Concrete.rsc","shared/rascal/src/extract/RascalSyntax2BGF.rsc"], 
-"sdf": ["topics/fl/asfsdf/Syntax.sdf","topics/extraction/sdf"], 
-"txl": ["topics/fl/txl/FL.Txl","topics/extraction/txl/txl2bgf.xslt"], 
-"xsd": ["topics/fl/xsd/fl.xsd","shared/prolog/xsd2bgf.pro"] 
+map[str,list[list[str]]] srcFiles = (
+"antlr":
+	[["topics/fl/java1/FL.g"],
+	["topics/extraction/antlr/antlrstrip.py","topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g"]], 
+"dcg":
+	[["topics/fl/prolog1/Parser.pro"],
+	["shared/prolog/cli/dcg2bgf.pro"]], 
+"ecore":
+	[["topics/fl/emf1/fl.ecore"],
+	["topics/extraction/ecore/ecore2bgf.xslt"]],
+"emf":
+	[["topics/fl/emf2/model/fl.ecore"],
+	["topics/extraction/ecore/ecore2bgf.xslt"]],
+"jaxb":
+	[["topics/fl/java3/fl/Apply.java","topics/fl/java3/fl/Argument.java","topics/fl/java3/fl/Binary.java","topics/fl/java3/fl/Expr.java","topics/fl/java3/fl/Function.java","topics/fl/java3/fl/IfThenElse.java","topics/fl/java3/fl/Literal.java","topics/fl/java3/fl/ObjectFactory.java","topics/fl/java3/fl/Ops.java","topics/fl/java3/fl/Program.java","topics/fl/java3/fl/package-info.java"],
+	["topics/extraction/java2bgf/slps/java2bgf/Tool.java"]],
+"om":
+	[["topics/fl/java1/types/Apply.java","topics/fl/java1/types/Argument.java","topics/fl/java1/types/Binary.java","topics/fl/java1/types/Expr.java","topics/fl/java1/types/Function.java","topics/fl/java1/types/IfThenElse.java","topics/fl/java1/types/Literal.java","topics/fl/java1/types/Ops.java","topics/fl/java1/types/Program.java","topics/fl/java1/types/Visitor.java"],
+	["topics/extraction/java2bgf/slps/java2bgf/Tool.java"]],
+"python":
+	[["topics/fl/python/parser.py"],
+	["shared/rascal/src/extract/Python2BGF.rsc"]],
+"rascal-a":
+	[["topics/fl/rascal/Abstract.rsc"],
+	["shared/rascal/src/extract/RascalADT2BGF.rsc"]],
+"rascal-c":
+	[["topics/fl/rascal/Concrete.rsc"],
+	["shared/rascal/src/extract/RascalSyntax2BGF.rsc"]],
+"sdf":
+	[["topics/fl/asfsdf/Syntax.sdf"],
+	["topics/extraction/sdf/Main.sdf","topics/extraction/sdf/Main.asf","topics/extraction/sdf/Tokens.sdf","topics/extraction/sdf/Tokens.asf"]],
+"txl":
+	[["topics/fl/txl/FL.Txl"],
+	["topics/extraction/txl/txl2bgf.xslt"]],
+"xsd":
+	[["topics/fl/xsd/fl.xsd"],
+	["shared/prolog/xsd2bgf.pro"]]
 );
 
 list[str] sources =
@@ -312,8 +336,8 @@ str ppeq(str name, NameMatch nm, BGFProdList ps1, BGFProdList ps2)
 		res += "\\varnothing & & <ppl(p4)> \\\\\n";
 	res += "\\end{eqnarray*}
 	'This yields the following nominal mapping:
-	'\\begin{align*}\\mathit{<name>} \\:\\diamond\\: \\mathit{master} =& \\{"+
-	joinStrings(["\\langle <(a=="")?"\\omega":export::LaTeX::ppnt(a)>,<export::LaTeX::ppnt(b)>\\rangle" | <a,b,_> <- nm],",\\\\\n & ")+
+	'\\begin{align*}\\mathit{<name>} \\:\\diamond\\: \\mathit{master} =\\:& \\{"+
+	joinStrings(["\\langle <export::LaTeX::ppnt(a)>,<export::LaTeX::ppnt(b)>\\rangle" | <b,a,_> <- nm],",\\\\\n & ")+
 	"\\}\\end{align*}\n Which is exercised with these grammar transformation steps:";
 	return res;
 }
@@ -330,10 +354,12 @@ str makeReport(str name, NameMatch nm, CBGFSequence m, CBGFSequence a, CBGFSeque
 	'
 	'\\section{Source grammar}
 	'
-	'\\begin{itemize}
-	'\\item Source artifact: \\href{http://github.com/grammarware/slps/blob/master/<srcFiles[name][0]>}{<srcFiles[name][0]>}
-	'\\item Grammar extractor: \\href{http://github.com/grammarware/slps/blob/master/<srcFiles[name][1]>}{<srcFiles[name][1]>}
-	'\\end{itemize}
+	'\\begin{itemize}";
+	for (x <- srcFiles[name][0])
+		res += "\\item Source artifact: \\href{http://github.com/grammarware/slps/blob/master/<x>}{<x>}";
+	for (x <- srcFiles[name][1])
+		res += "\\item Grammar extractor: \\href{http://github.com/grammarware/slps/blob/master/<x>}{<x>}";
+	res += "\\end{itemize}
 	'
 	'<ppl(g1)>
 	'

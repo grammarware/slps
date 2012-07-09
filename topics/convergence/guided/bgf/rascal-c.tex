@@ -4,10 +4,7 @@
 
 \section{Source grammar}
 
-\begin{itemize}
-\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/rascal/Concrete.rsc}{topics/fl/rascal/Concrete.rsc}
-\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/shared/rascal/src/extract/RascalSyntax2BGF.rsc}{shared/rascal/src/extract/RascalSyntax2BGF.rsc}
-\end{itemize}
+\begin{itemize}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/rascal/Concrete.rsc}{topics/fl/rascal/Concrete.rsc}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/shared/rascal/src/extract/RascalSyntax2BGF.rsc}{shared/rascal/src/extract/RascalSyntax2BGF.rsc}\end{itemize}
 
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
@@ -96,15 +93,15 @@ Production rules are matched as follows (ANF on the left, master grammar on the 
 \mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Name}, \plus \left(\mathit{Expr}\right)\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[str, \plus \left(\mathit{expression}\right)\right]\right)\right) \\
 \end{eqnarray*}
 This yields the following nominal mapping:
-\begin{align*}\mathit{rascal-c} \:\diamond\: \mathit{master} =& \{\langle \mathit{binary},\mathit{Expr_2}\rangle,\\
- & \langle int,\mathit{Int}\rangle,\\
- & \langle \mathit{conditional},\mathit{Expr_1}\rangle,\\
- & \langle \mathit{function},\mathit{Function}\rangle,\\
- & \langle \mathit{program},\mathit{Program}\rangle,\\
- & \langle str,\mathit{Name}\rangle,\\
- & \langle \mathit{apply},\mathit{Expr_3}\rangle,\\
- & \langle \mathit{expression},\mathit{Expr}\rangle,\\
- & \langle \mathit{operator},\mathit{Ops}\rangle\}\end{align*}
+\begin{align*}\mathit{rascal-c} \:\diamond\: \mathit{master} =\:& \{\langle \mathit{Expr_2},\mathit{binary}\rangle,\\
+ & \langle \mathit{Int},int\rangle,\\
+ & \langle \mathit{Expr_1},\mathit{conditional}\rangle,\\
+ & \langle \mathit{Function},\mathit{function}\rangle,\\
+ & \langle \mathit{Program},\mathit{program}\rangle,\\
+ & \langle \mathit{Name},str\rangle,\\
+ & \langle \mathit{Expr_3},\mathit{apply}\rangle,\\
+ & \langle \mathit{Expr},\mathit{expression}\rangle,\\
+ & \langle \mathit{Ops},\mathit{operator}\rangle\}\end{align*}
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}

@@ -94,6 +94,7 @@ str ppl(inlabel(str s)) = " in $`<s>\'$";
 str ppl(innt(str s)) = " in $<ppnt(s)>$";
 str ppl(globally()) = "";
 
+str ppnt("") = "\\omega";
 str ppnt("STRING") = "str";
 str ppnt("INTEGER") = "int";
 default str ppnt(str n) = "\\mathit{<replace(n,("_":"\\_ ","1":"_1","2":"_2","3":"_3","4":"_4","5":"_5"))>}";
@@ -183,7 +184,7 @@ str ppl(sequence(L)) = "\\mathrm{seq}\\left(\\left[<joinStrings([ppl(e) | e <- L
 str ppl(choice(L)) = "\\mathrm{choice}\\left(\\left[<joinStrings([ppl(e) | e <- L],", ")>\\right]\\right)";
 
 str pplv(BGFProduction p) = "\\mathrm{p}(\\text{`<p.label>\'},<ppnt(p.lhs)>,<pplv(p.rhs)>)";
-str pplv(choice(L)) = "\\mathrm{choice}([<joinStrings([pplv(e) | e <- L],"$\\\\$\\qquad\\qquad")>])";
+str pplv(choice(L)) = "\\mathrm{choice}([<joinStrings([pplv(e) | e <- L],",$\\\\$\\qquad\\qquad")>])";
 default str pplv(BGFExpression e) = ppl(e);
 
 str ppl(optional(e)) = "\\opt \\left(<ppl(e)>\\right)";

@@ -4,10 +4,7 @@
 
 \section{Source grammar}
 
-\begin{itemize}
-\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/python/parser.py}{topics/fl/python/parser.py}
-\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/shared/rascal/src/extract/Python2BGF.rsc}{shared/rascal/src/extract/Python2BGF.rsc}
-\end{itemize}
+\begin{itemize}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/python/parser.py}{topics/fl/python/parser.py}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/shared/rascal/src/extract/Python2BGF.rsc}{shared/rascal/src/extract/Python2BGF.rsc}\end{itemize}
 
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
@@ -18,12 +15,12 @@ $\mathrm{p}(\text{`'},\mathit{\_ THEN},\text{`then'})$	\\
 $\mathrm{p}(\text{`'},\mathit{\_ ELSE},\text{`else'})$	\\
 $\mathrm{p}(\text{`'},\mathit{name},str)$	\\
 $\mathrm{p}(\text{`'},\mathit{literal},\mathrm{seq}\left(\left[\opt \left(\text{`-'}\right), int\right]\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{atom},\mathrm{choice}([\mathit{name}$\\$\qquad\qquad\mathit{literal}$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`('}, \mathit{expr}, \text{`)'}\right]\right)]))$	\\
+$\mathrm{p}(\text{`'},\mathit{atom},\mathrm{choice}([\mathit{name},$\\$\qquad\qquad\mathit{literal},$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`('}, \mathit{expr}, \text{`)'}\right]\right)]))$	\\
 $\mathrm{p}(\text{`'},\mathit{ifThenElse},\mathrm{seq}\left(\left[\mathit{\_ IF}, \mathit{expr}, \mathit{\_ THEN}, \mathit{expr}, \mathit{\_ ELSE}, \mathit{expr}\right]\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{operators},\mathrm{choice}([\text{`=='}$\\$\qquad\qquad\text{`+'}$\\$\qquad\qquad\text{`-'}]))$	\\
+$\mathrm{p}(\text{`'},\mathit{operators},\mathrm{choice}([\text{`=='},$\\$\qquad\qquad\text{`+'},$\\$\qquad\qquad\text{`-'}]))$	\\
 $\mathrm{p}(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{atom}, \star \left(\mathrm{seq}\left(\left[\mathit{operators}, \mathit{atom}\right]\right)\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[\mathit{name}, \plus \left(\mathit{atom}\right)\right]\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{expr},\mathrm{choice}([\mathit{binary}$\\$\qquad\qquad\mathit{apply}$\\$\qquad\qquad\mathit{ifThenElse}]))$	\\
+$\mathrm{p}(\text{`'},\mathit{expr},\mathrm{choice}([\mathit{binary},$\\$\qquad\qquad\mathit{apply},$\\$\qquad\qquad\mathit{ifThenElse}]))$	\\
 $\mathrm{p}(\text{`'},\mathit{function},\mathrm{seq}\left(\left[\mathit{name}, \plus \left(\mathit{name}\right), \text{`='}, \mathit{expr}\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{program},\mathrm{seq}\left(\left[\plus \left(\mathit{function}\right), \mathit{StringEnd}\right]\right))$	\\
 \hline\end{tabular}\end{center}
@@ -102,19 +99,19 @@ Production rules are matched as follows (ANF on the left, master grammar on the 
 \mathrm{p}\left(\text{`'},\mathit{expr_3},\mathrm{seq}\left(\left[str, \plus \left(\mathit{expr}\right)\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[str, \plus \left(\mathit{expression}\right)\right]\right)\right) \\
 \end{eqnarray*}
 This yields the following nominal mapping:
-\begin{align*}\mathit{python} \:\diamond\: \mathit{master} =& \{\langle \mathit{binary},\mathit{expr_2}\rangle,\\
+\begin{align*}\mathit{python} \:\diamond\: \mathit{master} =\:& \{\langle \mathit{expr_2},\mathit{binary}\rangle,\\
  & \langle \mathit{program},\mathit{program}\rangle,\\
  & \langle \mathit{function},\mathit{function}\rangle,\\
- & \langle \mathit{conditional},\mathit{expr_1}\rangle,\\
- & \langle \mathit{expression},\mathit{expr}\rangle,\\
+ & \langle \mathit{expr_1},\mathit{conditional}\rangle,\\
+ & \langle \mathit{expr},\mathit{expression}\rangle,\\
  & \langle str,str\rangle,\\
  & \langle int,int\rangle,\\
- & \langle \omega,\mathit{StringEnd}\rangle,\\
- & \langle \omega,\mathit{\_ ELSE}\rangle,\\
- & \langle \omega,\mathit{\_ IF}\rangle,\\
- & \langle \mathit{apply},\mathit{expr_3}\rangle,\\
- & \langle \omega,\mathit{\_ THEN}\rangle,\\
- & \langle \mathit{operator},\mathit{operators}\rangle\}\end{align*}
+ & \langle \mathit{StringEnd},\omega\rangle,\\
+ & \langle \mathit{\_ ELSE},\omega\rangle,\\
+ & \langle \mathit{\_ IF},\omega\rangle,\\
+ & \langle \mathit{expr_3},\mathit{apply}\rangle,\\
+ & \langle \mathit{\_ THEN},\omega\rangle,\\
+ & \langle \mathit{operators},\mathit{operator}\rangle\}\end{align*}
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}

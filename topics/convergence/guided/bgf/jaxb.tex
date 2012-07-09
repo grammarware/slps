@@ -4,10 +4,7 @@
 
 \section{Source grammar}
 
-\begin{itemize}
-\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl}{topics/fl/java3/fl}
-\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/java2bgf/slps/java2bgf/Tool.java}{topics/extraction/java2bgf/slps/java2bgf/Tool.java}
-\end{itemize}
+\begin{itemize}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/Apply.java}{topics/fl/java3/fl/Apply.java}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/Argument.java}{topics/fl/java3/fl/Argument.java}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/Binary.java}{topics/fl/java3/fl/Binary.java}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/Expr.java}{topics/fl/java3/fl/Expr.java}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/Function.java}{topics/fl/java3/fl/Function.java}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/IfThenElse.java}{topics/fl/java3/fl/IfThenElse.java}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/Literal.java}{topics/fl/java3/fl/Literal.java}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/ObjectFactory.java}{topics/fl/java3/fl/ObjectFactory.java}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/Ops.java}{topics/fl/java3/fl/Ops.java}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/Program.java}{topics/fl/java3/fl/Program.java}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java3/fl/package-info.java}{topics/fl/java3/fl/package-info.java}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/java2bgf/slps/java2bgf/Tool.java}{topics/extraction/java2bgf/slps/java2bgf/Tool.java}\end{itemize}
 
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
@@ -15,12 +12,12 @@
 $\mathrm{p}(\text{`'},\mathit{Apply},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`Name'},str\right), \mathrm{sel}\left(\text{`Arg'},\star \left(\mathit{Expr}\right)\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Argument},\mathrm{sel}\left(\text{`Name'},str\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Binary},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`Ops'},\mathit{Ops}\right), \mathrm{sel}\left(\text{`Left'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`Right'},\mathit{Expr}\right)\right]\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{Expr},\mathrm{choice}([\mathit{Apply}$\\$\qquad\qquad\mathit{Argument}$\\$\qquad\qquad\mathit{Binary}$\\$\qquad\qquad\mathit{IfThenElse}$\\$\qquad\qquad\mathit{Literal}]))$	\\
+$\mathrm{p}(\text{`'},\mathit{Expr},\mathrm{choice}([\mathit{Apply},$\\$\qquad\qquad\mathit{Argument},$\\$\qquad\qquad\mathit{Binary},$\\$\qquad\qquad\mathit{IfThenElse},$\\$\qquad\qquad\mathit{Literal}]))$	\\
 $\mathrm{p}(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`Name'},str\right), \mathrm{sel}\left(\text{`Arg'},\star \left(str\right)\right), \mathrm{sel}\left(\text{`Rhs'},\mathit{Expr}\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{IfThenElse},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`IfExpr'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`ThenExpr'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`ElseExpr'},\mathit{Expr}\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Literal},\mathrm{sel}\left(\text{`Info'},int\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{ObjectFactory},\varepsilon)$	\\
-$\mathrm{p}(\text{`'},\mathit{Ops},\mathrm{choice}([\mathrm{sel}\left(\text{`EQUAL'},\varepsilon\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`PLUS'},\varepsilon\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`MINUS'},\varepsilon\right)]))$	\\
+$\mathrm{p}(\text{`'},\mathit{Ops},\mathrm{choice}([\mathrm{sel}\left(\text{`EQUAL'},\varepsilon\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`PLUS'},\varepsilon\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`MINUS'},\varepsilon\right)]))$	\\
 $\mathrm{p}(\text{`'},\mathit{package-info},\varphi)$	\\
 $\mathrm{p}(\text{`'},\mathit{Program},\mathrm{sel}\left(\text{`Function'},\star \left(\mathit{Function}\right)\right))$	\\
 \hline\end{tabular}\end{center}
@@ -91,15 +88,15 @@ Production rules are matched as follows (ANF on the left, master grammar on the 
 \mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
 \end{eqnarray*}
 This yields the following nominal mapping:
-\begin{align*}\mathit{jaxb} \:\diamond\: \mathit{master} =& \{\langle \mathit{binary},\mathit{Expr_2}\rangle,\\
- & \langle \mathit{conditional},\mathit{Expr_3}\rangle,\\
+\begin{align*}\mathit{jaxb} \:\diamond\: \mathit{master} =\:& \{\langle \mathit{Expr_2},\mathit{binary}\rangle,\\
+ & \langle \mathit{Expr_3},\mathit{conditional}\rangle,\\
  & \langle int,int\rangle,\\
- & \langle \mathit{function},\mathit{Function}\rangle,\\
+ & \langle \mathit{Function},\mathit{function}\rangle,\\
  & \langle str,str\rangle,\\
- & \langle \mathit{program},\mathit{Program}\rangle,\\
- & \langle \mathit{expression},\mathit{Expr}\rangle,\\
- & \langle \mathit{apply},\mathit{Expr_1}\rangle,\\
- & \langle \mathit{operator},\mathit{Ops}\rangle\}\end{align*}
+ & \langle \mathit{Program},\mathit{program}\rangle,\\
+ & \langle \mathit{Expr},\mathit{expression}\rangle,\\
+ & \langle \mathit{Expr_1},\mathit{apply}\rangle,\\
+ & \langle \mathit{Ops},\mathit{operator}\rangle\}\end{align*}
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}

@@ -4,22 +4,19 @@
 
 \section{Source grammar}
 
-\begin{itemize}
-\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java1/FL.g}{topics/fl/java1/FL.g}
-\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g}{topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g}
-\end{itemize}
+\begin{itemize}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/java1/FL.g}{topics/fl/java1/FL.g}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/antlr/antlrstrip.py}{topics/extraction/antlr/antlrstrip.py}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g}{topics/extraction/antlr/slps/antlr2bgf/StrippedANTLR.g}\end{itemize}
 
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
 \\\hline
 $\mathrm{p}(\text{`'},\mathit{program},\plus \left(\mathrm{sel}\left(\text{`f'},\mathit{function}\right)\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{function},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`n'},\mathit{ID}\right), \plus \left(\mathrm{sel}\left(\text{`a'},\mathit{ID}\right)\right), \text{`='}, \mathrm{sel}\left(\text{`e'},\mathit{expr}\right), \plus \left(\mathit{NEWLINE}\right)\right]\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{expr},\mathrm{choice}([\mathrm{sel}\left(\text{`b'},\mathit{binary}\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`a'},\mathit{apply}\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`i'},\mathit{ifThenElse}\right)]))$	\\
+$\mathrm{p}(\text{`'},\mathit{expr},\mathrm{choice}([\mathrm{sel}\left(\text{`b'},\mathit{binary}\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`a'},\mathit{apply}\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`i'},\mathit{ifThenElse}\right)]))$	\\
 $\mathrm{p}(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`l'},\mathit{atom}\right), \star \left(\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`o'},\mathit{ops}\right), \mathrm{sel}\left(\text{`r'},\mathit{atom}\right)\right]\right)\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`i'},\mathit{ID}\right), \plus \left(\mathrm{sel}\left(\text{`a'},\mathit{atom}\right)\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{ifThenElse},\mathrm{seq}\left(\left[\text{`if'}, \mathrm{sel}\left(\text{`c'},\mathit{expr}\right), \text{`then'}, \mathrm{sel}\left(\text{`e1'},\mathit{expr}\right), \text{`else'}, \mathrm{sel}\left(\text{`e2'},\mathit{expr}\right)\right]\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{atom},\mathrm{choice}([\mathit{ID}$\\$\qquad\qquad\mathit{INT}$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`('}, \mathrm{sel}\left(\text{`e'},\mathit{expr}\right), \text{`)'}\right]\right)]))$	\\
-$\mathrm{p}(\text{`'},\mathit{ops},\mathrm{choice}([\text{`=='}$\\$\qquad\qquad\text{`+'}$\\$\qquad\qquad\text{`-'}]))$	\\
+$\mathrm{p}(\text{`'},\mathit{atom},\mathrm{choice}([\mathit{ID},$\\$\qquad\qquad\mathit{INT},$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`('}, \mathrm{sel}\left(\text{`e'},\mathit{expr}\right), \text{`)'}\right]\right)]))$	\\
+$\mathrm{p}(\text{`'},\mathit{ops},\mathrm{choice}([\text{`=='},$\\$\qquad\qquad\text{`+'},$\\$\qquad\qquad\text{`-'}]))$	\\
 \hline\end{tabular}\end{center}
 
 \section{Mutations}
@@ -94,16 +91,16 @@ Production rules are matched as follows (ANF on the left, master grammar on the 
 \mathrm{p}\left(\text{`'},\mathit{expr_3},\mathrm{seq}\left(\left[\mathit{expr}, \mathit{expr}, \mathit{expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
 \end{eqnarray*}
 This yields the following nominal mapping:
-\begin{align*}\mathit{antlr} \:\diamond\: \mathit{master} =& \{\langle \mathit{program},\mathit{program}\rangle,\\
- & \langle \mathit{conditional},\mathit{expr_3}\rangle,\\
- & \langle \mathit{binary},\mathit{expr_1}\rangle,\\
+\begin{align*}\mathit{antlr} \:\diamond\: \mathit{master} =\:& \{\langle \mathit{program},\mathit{program}\rangle,\\
+ & \langle \mathit{expr_3},\mathit{conditional}\rangle,\\
+ & \langle \mathit{expr_1},\mathit{binary}\rangle,\\
  & \langle \mathit{function},\mathit{function}\rangle,\\
- & \langle str,\mathit{ID}\rangle,\\
- & \langle \mathit{expression},\mathit{expr}\rangle,\\
- & \langle int,\mathit{INT}\rangle,\\
- & \langle \mathit{operator},\mathit{ops}\rangle,\\
- & \langle \omega,\mathit{NEWLINE}\rangle,\\
- & \langle \mathit{apply},\mathit{expr_2}\rangle\}\end{align*}
+ & \langle \mathit{ID},str\rangle,\\
+ & \langle \mathit{expr},\mathit{expression}\rangle,\\
+ & \langle \mathit{INT},int\rangle,\\
+ & \langle \mathit{ops},\mathit{operator}\rangle,\\
+ & \langle \mathit{NEWLINE},\omega\rangle,\\
+ & \langle \mathit{expr_2},\mathit{apply}\rangle\}\end{align*}
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}

@@ -4,18 +4,15 @@
 
 \section{Source grammar}
 
-\begin{itemize}
-\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/rascal/Abstract.rsc}{topics/fl/rascal/Abstract.rsc}
-\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/shared/rascal/src/extract/RascalADT2BGF.rsc}{shared/rascal/src/extract/RascalADT2BGF.rsc}
-\end{itemize}
+\begin{itemize}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/rascal/Abstract.rsc}{topics/fl/rascal/Abstract.rsc}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/shared/rascal/src/extract/RascalADT2BGF.rsc}{shared/rascal/src/extract/RascalADT2BGF.rsc}\end{itemize}
 
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
 \\\hline
 $\mathrm{p}(\text{`prg'},\mathit{FLPrg},\mathrm{sel}\left(\text{`fs'},\star \left(\mathit{FLFun}\right)\right))$	\\
 $\mathrm{p}(\text{`fun'},\mathit{FLFun},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},str\right), \mathrm{sel}\left(\text{`args'},\star \left(str\right)\right), \mathrm{sel}\left(\text{`body'},\mathit{FLExpr}\right)\right]\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{FLExpr},\mathrm{choice}([\mathrm{sel}\left(\text{`binary'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`e1'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`op'},\mathit{FLOp}\right), \mathrm{sel}\left(\text{`e2'},\mathit{FLExpr}\right)\right]\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`apply'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},str\right), \mathrm{sel}\left(\text{`vargs'},\star \left(\mathit{FLExpr}\right)\right)\right]\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`ifThenElse'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`c'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`t'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`e'},\mathit{FLExpr}\right)\right]\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`argument'},\mathrm{sel}\left(\text{`a'},str\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`literal'},\mathrm{sel}\left(\text{`i'},int\right)\right)]))$	\\
-$\mathrm{p}(\text{`'},\mathit{FLOp},\mathrm{choice}([\mathrm{sel}\left(\text{`minus'},\varepsilon\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`plus'},\varepsilon\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`equal'},\varepsilon\right)]))$	\\
+$\mathrm{p}(\text{`'},\mathit{FLExpr},\mathrm{choice}([\mathrm{sel}\left(\text{`binary'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`e1'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`op'},\mathit{FLOp}\right), \mathrm{sel}\left(\text{`e2'},\mathit{FLExpr}\right)\right]\right)\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`apply'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},str\right), \mathrm{sel}\left(\text{`vargs'},\star \left(\mathit{FLExpr}\right)\right)\right]\right)\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`ifThenElse'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`c'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`t'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`e'},\mathit{FLExpr}\right)\right]\right)\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`argument'},\mathrm{sel}\left(\text{`a'},str\right)\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`literal'},\mathrm{sel}\left(\text{`i'},int\right)\right)]))$	\\
+$\mathrm{p}(\text{`'},\mathit{FLOp},\mathrm{choice}([\mathrm{sel}\left(\text{`minus'},\varepsilon\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`plus'},\varepsilon\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`equal'},\varepsilon\right)]))$	\\
 \hline\end{tabular}\end{center}
 
 
@@ -70,15 +67,15 @@ Production rules are matched as follows (ANF on the left, master grammar on the 
 \mathrm{p}\left(\text{`'},\mathit{FLExpr_3},\mathrm{seq}\left(\left[\mathit{FLExpr}, \mathit{FLExpr}, \mathit{FLExpr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
 \end{eqnarray*}
 This yields the following nominal mapping:
-\begin{align*}\mathit{rascal-a} \:\diamond\: \mathit{master} =& \{\langle \mathit{function},\mathit{FLFun}\rangle,\\
- & \langle \mathit{apply},\mathit{FLExpr_2}\rangle,\\
- & \langle \mathit{program},\mathit{FLPrg}\rangle,\\
- & \langle \mathit{expression},\mathit{FLExpr}\rangle,\\
+\begin{align*}\mathit{rascal-a} \:\diamond\: \mathit{master} =\:& \{\langle \mathit{FLFun},\mathit{function}\rangle,\\
+ & \langle \mathit{FLExpr_2},\mathit{apply}\rangle,\\
+ & \langle \mathit{FLPrg},\mathit{program}\rangle,\\
+ & \langle \mathit{FLExpr},\mathit{expression}\rangle,\\
  & \langle int,int\rangle,\\
  & \langle str,str\rangle,\\
- & \langle \mathit{conditional},\mathit{FLExpr_3}\rangle,\\
- & \langle \mathit{operator},\mathit{FLOp}\rangle,\\
- & \langle \mathit{binary},\mathit{FLExpr_1}\rangle\}\end{align*}
+ & \langle \mathit{FLExpr_3},\mathit{conditional}\rangle,\\
+ & \langle \mathit{FLOp},\mathit{operator}\rangle,\\
+ & \langle \mathit{FLExpr_1},\mathit{binary}\rangle\}\end{align*}
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}

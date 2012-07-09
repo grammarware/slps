@@ -4,10 +4,7 @@
 
 \section{Source grammar}
 
-\begin{itemize}
-\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/prolog1/Parser.pro}{topics/fl/prolog1/Parser.pro}
-\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/shared/prolog/cli/dcg2bgf.pro}{shared/prolog/cli/dcg2bgf.pro}
-\end{itemize}
+\begin{itemize}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/prolog1/Parser.pro}{topics/fl/prolog1/Parser.pro}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/shared/prolog/cli/dcg2bgf.pro}{shared/prolog/cli/dcg2bgf.pro}\end{itemize}
 
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
@@ -89,16 +86,16 @@ Production rules are matched as follows (ANF on the left, master grammar on the 
 \mathrm{p}\left(\text{`'},\mathit{expr_3},\mathrm{seq}\left(\left[\mathit{expr}, \mathit{expr}, \mathit{expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
 \end{eqnarray*}
 This yields the following nominal mapping:
-\begin{align*}\mathit{dcg} \:\diamond\: \mathit{master} =& \{\langle \mathit{program},\mathit{program}\rangle,\\
- & \langle \mathit{conditional},\mathit{expr_3}\rangle,\\
- & \langle \mathit{binary},\mathit{expr_1}\rangle,\\
+\begin{align*}\mathit{dcg} \:\diamond\: \mathit{master} =\:& \{\langle \mathit{program},\mathit{program}\rangle,\\
+ & \langle \mathit{expr_3},\mathit{conditional}\rangle,\\
+ & \langle \mathit{expr_1},\mathit{binary}\rangle,\\
  & \langle \mathit{function},\mathit{function}\rangle,\\
- & \langle \mathit{expression},\mathit{expr}\rangle,\\
- & \langle str,\mathit{name}\rangle,\\
- & \langle \mathit{operator},\mathit{ops}\rangle,\\
- & \langle int,\mathit{int}\rangle,\\
- & \langle \omega,\mathit{newline}\rangle,\\
- & \langle \mathit{apply},\mathit{expr_2}\rangle\}\end{align*}
+ & \langle \mathit{expr},\mathit{expression}\rangle,\\
+ & \langle \mathit{name},str\rangle,\\
+ & \langle \mathit{ops},\mathit{operator}\rangle,\\
+ & \langle \mathit{int},int\rangle,\\
+ & \langle \mathit{newline},\omega\rangle,\\
+ & \langle \mathit{expr_2},\mathit{apply}\rangle\}\end{align*}
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}

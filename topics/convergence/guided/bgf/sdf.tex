@@ -1,13 +1,10 @@
-\chapter{SDF}
+\chapter{Syntax Definition Formalism}
 
  Source name: \textbf{sdf}
 
 \section{Source grammar}
 
-\begin{itemize}
-\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/asfsdf/Syntax.sdf}{topics/fl/asfsdf/Syntax.sdf}
-\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/sdf}{topics/extraction/sdf}
-\end{itemize}
+\begin{itemize}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/asfsdf/Syntax.sdf}{topics/fl/asfsdf/Syntax.sdf}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/sdf/Main.sdf}{topics/extraction/sdf/Main.sdf}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/sdf/Main.asf}{topics/extraction/sdf/Main.asf}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/sdf/Tokens.sdf}{topics/extraction/sdf/Tokens.sdf}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/sdf/Tokens.asf}{topics/extraction/sdf/Tokens.asf}\end{itemize}
 
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
@@ -85,16 +82,16 @@ Production rules are matched as follows (ANF on the left, master grammar on the 
 \mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
 \end{eqnarray*}
 This yields the following nominal mapping:
-\begin{align*}\mathit{sdf} \:\diamond\: \mathit{master} =& \{\langle \mathit{conditional},\mathit{Expr_3}\rangle,\\
- & \langle int,\mathit{Int}\rangle,\\
- & \langle \mathit{binary},\mathit{Expr_1}\rangle,\\
- & \langle \omega,\mathit{Newline}\rangle,\\
- & \langle \mathit{function},\mathit{Function}\rangle,\\
- & \langle \mathit{program},\mathit{Program}\rangle,\\
- & \langle str,\mathit{Name}\rangle,\\
- & \langle \mathit{expression},\mathit{Expr}\rangle,\\
- & \langle \mathit{operator},\mathit{Ops}\rangle,\\
- & \langle \mathit{apply},\mathit{Expr_2}\rangle\}\end{align*}
+\begin{align*}\mathit{sdf} \:\diamond\: \mathit{master} =\:& \{\langle \mathit{Expr_3},\mathit{conditional}\rangle,\\
+ & \langle \mathit{Int},int\rangle,\\
+ & \langle \mathit{Expr_1},\mathit{binary}\rangle,\\
+ & \langle \mathit{Newline},\omega\rangle,\\
+ & \langle \mathit{Function},\mathit{function}\rangle,\\
+ & \langle \mathit{Program},\mathit{program}\rangle,\\
+ & \langle \mathit{Name},str\rangle,\\
+ & \langle \mathit{Expr},\mathit{expression}\rangle,\\
+ & \langle \mathit{Ops},\mathit{operator}\rangle,\\
+ & \langle \mathit{Expr_2},\mathit{apply}\rangle\}\end{align*}
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}

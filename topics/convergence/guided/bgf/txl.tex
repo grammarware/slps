@@ -4,18 +4,15 @@
 
 \section{Source grammar}
 
-\begin{itemize}
-\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/txl/FL.Txl}{topics/fl/txl/FL.Txl}
-\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/txl/txl2bgf.xslt}{topics/extraction/txl/txl2bgf.xslt}
-\end{itemize}
+\begin{itemize}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/txl/FL.Txl}{topics/fl/txl/FL.Txl}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/txl/txl2bgf.xslt}{topics/extraction/txl/txl2bgf.xslt}\end{itemize}
 
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
 \\\hline
 $\mathrm{p}(\text{`'},\mathit{program},\plus \left(\mathit{fun}\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{fun},\mathrm{seq}\left(\left[\mathit{id}, \plus \left(\mathit{id}\right), \text{`='}, \mathit{expression}, \mathit{newline}\right]\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{expression},\mathrm{choice}([\mathrm{seq}\left(\left[\mathit{expression}, \mathit{op}, \mathit{expression}\right]\right)$\\$\qquad\qquad\mathrm{seq}\left(\left[\mathit{id}, \plus \left(\mathit{expression}\right)\right]\right)$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`if'}, \mathit{expression}, \text{`then'}, \mathit{expression}, \text{`else'}, \mathit{expression}\right]\right)$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`('}, \mathit{expression}, \text{`)'}\right]\right)$\\$\qquad\qquad\mathit{id}$\\$\qquad\qquad\mathit{number}]))$	\\
-$\mathrm{p}(\text{`'},\mathit{op},\mathrm{choice}([\text{`+'}$\\$\qquad\qquad\text{`-'}$\\$\qquad\qquad\text{`=='}]))$	\\
+$\mathrm{p}(\text{`'},\mathit{expression},\mathrm{choice}([\mathrm{seq}\left(\left[\mathit{expression}, \mathit{op}, \mathit{expression}\right]\right),$\\$\qquad\qquad\mathrm{seq}\left(\left[\mathit{id}, \plus \left(\mathit{expression}\right)\right]\right),$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`if'}, \mathit{expression}, \text{`then'}, \mathit{expression}, \text{`else'}, \mathit{expression}\right]\right),$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`('}, \mathit{expression}, \text{`)'}\right]\right),$\\$\qquad\qquad\mathit{id},$\\$\qquad\qquad\mathit{number}]))$	\\
+$\mathrm{p}(\text{`'},\mathit{op},\mathrm{choice}([\text{`+'},$\\$\qquad\qquad\text{`-'},$\\$\qquad\qquad\text{`=='}]))$	\\
 \hline\end{tabular}\end{center}
 
 
@@ -67,16 +64,16 @@ Production rules are matched as follows (ANF on the left, master grammar on the 
 \mathrm{p}\left(\text{`'},\mathit{expression_3},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
 \end{eqnarray*}
 This yields the following nominal mapping:
-\begin{align*}\mathit{txl} \:\diamond\: \mathit{master} =& \{\langle \mathit{program},\mathit{program}\rangle,\\
- & \langle \mathit{apply},\mathit{expression_2}\rangle,\\
- & \langle \mathit{function},\mathit{fun}\rangle,\\
+\begin{align*}\mathit{txl} \:\diamond\: \mathit{master} =\:& \{\langle \mathit{program},\mathit{program}\rangle,\\
+ & \langle \mathit{expression_2},\mathit{apply}\rangle,\\
+ & \langle \mathit{fun},\mathit{function}\rangle,\\
  & \langle \mathit{expression},\mathit{expression}\rangle,\\
- & \langle str,\mathit{id}\rangle,\\
- & \langle \mathit{binary},\mathit{expression_1}\rangle,\\
- & \langle \mathit{operator},\mathit{op}\rangle,\\
- & \langle int,\mathit{number}\rangle,\\
- & \langle \omega,\mathit{newline}\rangle,\\
- & \langle \mathit{conditional},\mathit{expression_3}\rangle\}\end{align*}
+ & \langle \mathit{id},str\rangle,\\
+ & \langle \mathit{expression_1},\mathit{binary}\rangle,\\
+ & \langle \mathit{op},\mathit{operator}\rangle,\\
+ & \langle \mathit{number},int\rangle,\\
+ & \langle \mathit{newline},\omega\rangle,\\
+ & \langle \mathit{expression_3},\mathit{conditional}\rangle\}\end{align*}
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}

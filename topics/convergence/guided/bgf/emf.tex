@@ -4,10 +4,7 @@
 
 \section{Source grammar}
 
-\begin{itemize}
-\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/emf2/model/fl.ecore}{topics/fl/emf2/model/fl.ecore}
-\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/ecore/ecore2bgf.xslt}{topics/extraction/ecore/ecore2bgf.xslt}
-\end{itemize}
+\begin{itemize}\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/emf2/model/fl.ecore}{topics/fl/emf2/model/fl.ecore}\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/ecore/ecore2bgf.xslt}{topics/extraction/ecore/ecore2bgf.xslt}\end{itemize}
 
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
@@ -15,11 +12,11 @@
 $\mathrm{p}(\text{`'},\mathit{Apply},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`name'},str\right), \plus \left(\mathrm{sel}\left(\text{`arg'},\mathit{Expr}\right)\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Argument},\mathrm{sel}\left(\text{`name'},str\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Binary},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`ops'},\mathit{Ops}\right), \mathrm{sel}\left(\text{`left'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`right'},\mathit{Expr}\right)\right]\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{Expr},\mathrm{choice}([\mathit{Apply}$\\$\qquad\qquad\mathit{Argument}$\\$\qquad\qquad\mathit{Binary}$\\$\qquad\qquad\mathit{IfThenElse}$\\$\qquad\qquad\mathit{Literal}]))$	\\
+$\mathrm{p}(\text{`'},\mathit{Expr},\mathrm{choice}([\mathit{Apply},$\\$\qquad\qquad\mathit{Argument},$\\$\qquad\qquad\mathit{Binary},$\\$\qquad\qquad\mathit{IfThenElse},$\\$\qquad\qquad\mathit{Literal}]))$	\\
 $\mathrm{p}(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`name'},str\right), \plus \left(\mathrm{sel}\left(\text{`arg'},str\right)\right), \mathrm{sel}\left(\text{`rhs'},\mathit{Expr}\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{IfThenElse},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`ifExpr'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`thenExpr'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`elseExpr'},\mathit{Expr}\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Literal},\mathrm{sel}\left(\text{`info'},int\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{Ops},\mathrm{choice}([\mathrm{sel}\left(\text{`Equal'},\varepsilon\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`Plus'},\varepsilon\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`Minus'},\varepsilon\right)]))$	\\
+$\mathrm{p}(\text{`'},\mathit{Ops},\mathrm{choice}([\mathrm{sel}\left(\text{`Equal'},\varepsilon\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`Plus'},\varepsilon\right),$\\$\qquad\qquad\mathrm{sel}\left(\text{`Minus'},\varepsilon\right)]))$	\\
 $\mathrm{p}(\text{`'},\mathit{ProgramType},\plus \left(\mathrm{sel}\left(\text{`function'},\mathit{Function}\right)\right))$	\\
 \hline\end{tabular}\end{center}
 
@@ -87,15 +84,15 @@ Production rules are matched as follows (ANF on the left, master grammar on the 
 \mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
 \end{eqnarray*}
 This yields the following nominal mapping:
-\begin{align*}\mathit{emf} \:\diamond\: \mathit{master} =& \{\langle \mathit{binary},\mathit{Expr_2}\rangle,\\
- & \langle \mathit{program},\mathit{ProgramType}\rangle,\\
- & \langle \mathit{conditional},\mathit{Expr_3}\rangle,\\
+\begin{align*}\mathit{emf} \:\diamond\: \mathit{master} =\:& \{\langle \mathit{Expr_2},\mathit{binary}\rangle,\\
+ & \langle \mathit{ProgramType},\mathit{program}\rangle,\\
+ & \langle \mathit{Expr_3},\mathit{conditional}\rangle,\\
  & \langle str,str\rangle,\\
  & \langle int,int\rangle,\\
- & \langle \mathit{function},\mathit{Function}\rangle,\\
- & \langle \mathit{expression},\mathit{Expr}\rangle,\\
- & \langle \mathit{apply},\mathit{Expr_1}\rangle,\\
- & \langle \mathit{operator},\mathit{Ops}\rangle\}\end{align*}
+ & \langle \mathit{Function},\mathit{function}\rangle,\\
+ & \langle \mathit{Expr},\mathit{expression}\rangle,\\
+ & \langle \mathit{Expr_1},\mathit{apply}\rangle,\\
+ & \langle \mathit{Ops},\mathit{operator}\rangle\}\end{align*}
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}
