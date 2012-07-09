@@ -1,0 +1,135 @@
+\chapter{PyParsing in Python}
+
+ Source name: \textbf{python}
+
+\section{Source grammar}
+
+\begin{itemize}
+\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/python/parser.py}{topics/fl/python/parser.py}
+\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/shared/rascal/src/extract/Python2BGF.rsc}{shared/rascal/src/extract/Python2BGF.rsc}
+\end{itemize}
+
+\footnotesize\begin{center}\begin{tabular}{|l|}\hline
+\multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
+\\\hline
+$\mathrm{p}(\text{`'},\mathit{\_ Literal},\mathit{Literal})$	\\
+$\mathrm{p}(\text{`'},\mathit{\_ IF},\text{`if'})$	\\
+$\mathrm{p}(\text{`'},\mathit{\_ THEN},\text{`then'})$	\\
+$\mathrm{p}(\text{`'},\mathit{\_ ELSE},\text{`else'})$	\\
+$\mathrm{p}(\text{`'},\mathit{name},str)$	\\
+$\mathrm{p}(\text{`'},\mathit{literal},\mathrm{seq}\left(\left[{?}\left(\text{`-'}\right), int\right]\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{atom},\mathrm{choice}([\mathit{name}$\\$\qquad\qquad\mathit{literal}$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`('}, \mathit{expr}, \text{`)'}\right]\right)]))$	\\
+$\mathrm{p}(\text{`'},\mathit{ifThenElse},\mathrm{seq}\left(\left[\mathit{\_ IF}, \mathit{expr}, \mathit{\_ THEN}, \mathit{expr}, \mathit{\_ ELSE}, \mathit{expr}\right]\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{operators},\mathrm{choice}([\text{`=='}$\\$\qquad\qquad\text{`+'}$\\$\qquad\qquad\text{`-'}]))$	\\
+$\mathrm{p}(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{atom}, {*}\left(\mathrm{seq}\left(\left[\mathit{operators}, \mathit{atom}\right]\right)\right)\right]\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[\mathit{name}, {+}\left(\mathit{atom}\right)\right]\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{expr},\mathrm{choice}([\mathit{binary}$\\$\qquad\qquad\mathit{apply}$\\$\qquad\qquad\mathit{ifThenElse}]))$	\\
+$\mathrm{p}(\text{`'},\mathit{function},\mathrm{seq}\left(\left[\mathit{name}, {+}\left(\mathit{name}\right), \text{`='}, \mathit{expr}\right]\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{program},\mathrm{seq}\left(\left[{+}\left(\mathit{function}\right), \mathit{StringEnd}\right]\right))$	\\
+\hline\end{tabular}\end{center}
+
+\section{Mutations}
+{\footnotesize\begin{itemize}
+\item $\mathbf{unite\text{-}splitN}\left(\mathit{expr},\\\mathrm{p}\left(\text{`'},\mathit{atom},\mathrm{choice}\left(\left[\mathit{name}, \mathit{literal}, \mathrm{seq}\left(\left[\text{`('}, \mathit{expr}, \text{`)'}\right]\right)\right]\right)\right)\right)$
+\item $\mathbf{designate\text{-}unlabel}\\\left(\mathrm{p}\left(\fbox{\text{`tmplabel'}},\mathit{binary},\mathrm{seq}\left(\left[\mathit{expr}, {*}\left(\mathrm{seq}\left(\left[\mathit{operators}, \mathit{expr}\right]\right)\right)\right]\right)\right)\right)$
+\item $\mathbf{assoc\text{-}iterate}\\\left(\mathrm{p}\left(\text{`tmplabel'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{expr}, \mathit{operators}, \mathit{expr}\right]\right)\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`tmplabel'}},\mathit{binary},\mathrm{seq}\left(\left[\mathit{expr}, \mathit{operators}, \mathit{expr}\right]\right)\right)\right)$
+\end{itemize}}
+
+\section{Normalizations}
+{\footnotesize\begin{itemize}
+\item $\mathbf{reroot\text{-}reroot}\left([],[\mathit{program}]\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{literal},\mathrm{seq}\left(\left[{?}\left(\fbox{$\text{`-'}$}\right), int\right]\right)\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{operators},\mathrm{choice}\left(\left[\fbox{$\text{`=='}$}, \fbox{$\text{`+'}$}, \fbox{$\text{`-'}$}\right]\right)\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{\_ IF},\fbox{$\text{`if'}$}\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{expr},\mathrm{choice}\left(\left[\mathit{name}, \mathit{literal}, \mathrm{seq}\left(\left[\fbox{$\text{`('}$}, \mathit{expr}, \fbox{$\text{`)'}$}\right]\right)\right]\right)\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{\_ ELSE},\fbox{$\text{`else'}$}\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{\_ THEN},\fbox{$\text{`then'}$}\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[\mathit{name}, {+}\left(\mathit{name}\right), \fbox{$\text{`='}$}, \mathit{expr}\right]\right)\right)\right)$
+\item $\mathbf{vertical\text{-}horizontal}\left(\mathrm{in}(expr)\right)$
+\item $\mathbf{undefine\text{-}define}\\\left(\mathrm{p}\left(\text{`'},\mathit{\_ IF},\varepsilon\right)\right)$
+\item $\mathbf{undefine\text{-}define}\\\left(\mathrm{p}\left(\text{`'},\mathit{\_ THEN},\varepsilon\right)\right)$
+\item $\mathbf{undefine\text{-}define}\\\left(\mathrm{p}\left(\text{`'},\mathit{\_ ELSE},\varepsilon\right)\right)$
+\item $\mathbf{undefine\text{-}define}\\\left(\mathrm{p}\left(\text{`'},\mathit{operators},\varepsilon\right)\right)$
+\item $\mathbf{unchain\text{-}chain}\\\left(\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{literal}\right)\right)$
+\item $\mathbf{abridge\text{-}detour}\\\left(\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{expr}\right)\right)$
+\item $\mathbf{unchain\text{-}chain}\\\left(\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{binary}\right)\right)$
+\item $\mathbf{unchain\text{-}chain}\\\left(\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{apply}\right)\right)$
+\item $\mathbf{unchain\text{-}chain}\\\left(\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{ifThenElse}\right)\right)$
+\item $\mathbf{inline\text{-}extract}\\\left(\mathrm{p}\left(\text{`'},\mathit{name},str\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`literal'}},\mathit{expr},int\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`ifThenElse'}},\mathit{expr},\mathrm{seq}\left(\left[\mathit{\_ IF}, \mathit{expr}, \mathit{\_ THEN}, \mathit{expr}, \mathit{\_ ELSE}, \mathit{expr}\right]\right)\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`binary'}},\mathit{expr},\mathrm{seq}\left(\left[\mathit{expr}, \mathit{operators}, \mathit{expr}\right]\right)\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`apply'}},\mathit{expr},\mathrm{seq}\left(\left[str, {+}\left(\mathit{expr}\right)\right]\right)\right)\right)$
+\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(expr),\\\mathrm{p}\left(\text{`'},\mathit{expr_1},\mathrm{seq}\left(\left[\mathit{\_ IF}, \mathit{expr}, \mathit{\_ THEN}, \mathit{expr}, \mathit{\_ ELSE}, \mathit{expr}\right]\right)\right)\right)$
+\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(expr),\\\mathrm{p}\left(\text{`'},\mathit{expr_2},\mathrm{seq}\left(\left[\mathit{expr}, \mathit{operators}, \mathit{expr}\right]\right)\right)\right)$
+\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(expr),\\\mathrm{p}\left(\text{`'},\mathit{expr_3},\mathrm{seq}\left(\left[str, {+}\left(\mathit{expr}\right)\right]\right)\right)\right)$
+\end{itemize}}
+
+\section{Grammar in ANF}
+
+\footnotesize\begin{center}\begin{tabular}{|l|c|}\hline
+\multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rule}} &
+\multicolumn{1}{>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production signature}}
+\\\hline
+$\mathrm{p}\left(\text{`'},\mathit{\_ Literal},\mathit{Literal}\right)$	&	$\{ \langle \mathit{Literal}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expr},int\right)$	&	$\{ \langle int, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expr},str\right)$	&	$\{ \langle str, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{expr_1}\right)$	&	$\{ \langle \mathit{expr_1}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{expr_2}\right)$	&	$\{ \langle \mathit{expr_2}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{expr_3}\right)$	&	$\{ \langle \mathit{expr_3}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[str, {+}\left(str\right), \mathit{expr}\right]\right)\right)$	&	$\{ \langle str, 1{+}\rangle, \langle \mathit{expr}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{program},\mathrm{seq}\left(\left[{+}\left(\mathit{function}\right), \mathit{StringEnd}\right]\right)\right)$	&	$\{ \langle \mathit{function}, {+}\rangle, \langle \mathit{StringEnd}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expr_1},\mathrm{seq}\left(\left[\mathit{\_ IF}, \mathit{expr}, \mathit{\_ THEN}, \mathit{expr}, \mathit{\_ ELSE}, \mathit{expr}\right]\right)\right)$	&	$\{ \langle \mathit{\_ IF}, 1\rangle, \langle \mathit{\_ THEN}, 1\rangle, \langle \mathit{expr}, 111\rangle, \langle \mathit{\_ ELSE}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expr_2},\mathrm{seq}\left(\left[\mathit{expr}, \mathit{operators}, \mathit{expr}\right]\right)\right)$	&	$\{ \langle \mathit{expr}, 11\rangle, \langle \mathit{operators}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expr_3},\mathrm{seq}\left(\left[str, {+}\left(\mathit{expr}\right)\right]\right)\right)$	&	$\{ \langle str, 1\rangle, \langle \mathit{expr}, {+}\rangle\}$\\
+\hline\end{tabular}\end{center}
+
+\section{Nominal resolution}
+
+Production rules are matched as follows (ANF on the left, master grammar on the right):
+\begin{eqnarray*}
+\mathrm{p}\left(\text{`'},\mathit{\_ Literal},\mathit{Literal}\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{program},{+}\left(\mathit{function}\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expr},int\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},int\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expr},str\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},str\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{expr_1}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{conditional}\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{expr_2}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{binary}\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expr},\mathit{expr_3}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{apply}\right) \\
+\mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[str, {+}\left(str\right), \mathit{expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[str, {+}\left(str\right), \mathit{expression}\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{program},\mathrm{seq}\left(\left[{+}\left(\mathit{function}\right), \mathit{StringEnd}\right]\right)\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[str, {+}\left(\mathit{expression}\right)\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expr_1},\mathrm{seq}\left(\left[\mathit{\_ IF}, \mathit{expr}, \mathit{\_ THEN}, \mathit{expr}, \mathit{\_ ELSE}, \mathit{expr}\right]\right)\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expr_2},\mathrm{seq}\left(\left[\mathit{expr}, \mathit{operators}, \mathit{expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{operator}, \mathit{expression}\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expr_3},\mathrm{seq}\left(\left[str, {+}\left(\mathit{expr}\right)\right]\right)\right) &  & \varnothing \\
+\end{eqnarray*}
+This yields the following nominal mapping:
+\begin{align*}\mathit{python} \:\diamond\: \mathit{master} =& \{\langle \mathit{binary},\mathit{expr_2}\rangle,\\
+ & \langle \mathit{program},\mathit{program}\rangle,\\
+ & \langle \mathit{function},\mathit{function}\rangle,\\
+ & \langle \mathit{conditional},\mathit{expr_1}\rangle,\\
+ & \langle \mathit{expression},\mathit{expr}\rangle,\\
+ & \langle str,str\rangle,\\
+ & \langle int,int\rangle,\\
+ & \langle \omega,\mathit{StringEnd}\rangle,\\
+ & \langle \omega,\mathit{\_ ELSE}\rangle,\\
+ & \langle \omega,\mathit{\_ IF}\rangle,\\
+ & \langle \mathit{apply},\mathit{expr_3}\rangle,\\
+ & \langle \omega,\mathit{\_ THEN}\rangle,\\
+ & \langle \mathit{operator},\mathit{operators}\rangle\}\end{align*}
+ Which is exercised with these grammar transformation steps:
+
+{\footnotesize\begin{itemize}
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{expr_2},\mathit{binary}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{expr_1},\mathit{conditional}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{expr},\mathit{expression}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{expr_3},\mathit{apply}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{operators},\mathit{operator}\right)$
+\end{itemize}}
+
+\section{Structural resolution}
+{\footnotesize\begin{itemize}
+\item $\mathbf{project\text{-}inject}\\\left(\mathrm{p}\left(\text{`'},\mathit{program},\mathrm{seq}\left(\left[{+}\left(\mathit{function}\right), \fbox{$\mathit{StringEnd}$}\right]\right)\right)\right)$
+\item $\mathbf{project\text{-}inject}\\\left(\mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{\_ IF}, \mathit{expression}, \mathit{\_ THEN}, \mathit{expression}, \fbox{$\mathit{\_ ELSE}$}, \mathit{expression}\right]\right)\right)\right)$
+\item $\mathbf{project\text{-}inject}\\\left(\mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\fbox{$\mathit{\_ IF}$}, \mathit{expression}, \mathit{\_ THEN}, \mathit{expression}, \mathit{expression}\right]\right)\right)\right)$
+\item $\mathbf{project\text{-}inject}\\\left(\mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \fbox{$\mathit{\_ THEN}$}, \mathit{expression}, \mathit{expression}\right]\right)\right)\right)$
+\item $\mathbf{eliminate\text{-}introduce}\\\left(\mathrm{p}\left(\text{`'},\mathit{\_ Literal},\mathit{Literal}\right)\right)$
+\end{itemize}}

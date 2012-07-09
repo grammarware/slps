@@ -20,7 +20,7 @@ data Footprint
 	;
 
 alias Signature = rel[str,Footprint];
-alias NameMatch = rel[str,str];
+alias NameMatch = rel[str,str,bool];
 
 Footprint makefp(n, nonterminal(n)) = fpnt();
 Footprint makefp(n, optional(nonterminal(n))) = fpopt();
@@ -110,36 +110,26 @@ NameMatch makenamematch(Signature p, Signature q)
 	for (<a,pi> <- p, <b,xi> <- q, equivfp(pi,xi))
 	{
 		//println("Checking <a>:<pi> vs <b>:<xi>...<eqfp(pi,xi)>");
-		nm += <a,b>;
+		nm += <a,b,eqfp(pi,xi)>;
 		// TODO: should exit if we want to work with non-equivalent signatures.
 		// But do we, really?
 		unmatched -= b;
 	}
 	// the omega's:
-	nm += {<"",c> | c <- unmatched};
+	nm += {<"",c,false> | c <- unmatched};
 	return nm;
 }
 
 set[NameMatch] makenamematches(BGFExpression e1, BGFExpression e2) = makenamematches(makesig(e1),makesig(e2));
 set[NameMatch] makenamematches(BGFProduction p1, BGFProduction p2) = makenamematches(makesig(p1),makesig(p2));
 set[NameMatch] makenamematches({}, {}) = {};
-set[NameMatch] makenamematches(Signature p, {}) = {{<c,""> | <c,_> <- p}};
-set[NameMatch] makenamematches({}, Signature q) = {{<"",c> | <c,_> <- q}};
-set[NameMatch] makenamematches({<a,pi>}, {<b,xi>}) = equivfp(pi,xi) ? {{<a,b>}} : {{<a,"">,<"",b>}}; 
-//default set[NameMatch] makenamematches(Signature p, Signature q)
-// {
-// 	set[NameMatch] nms = {};
-// 	 for(<a,pi> <- p, <b,xi> <- q, equivfp(pi,xi))
-// 	 {
-// 	 	println("makenamematches <domainX(p,{a})> , <domainX(q,{b})>");
-// 	 	for (m <- makenamematches(domainX(p,{a}), domainX(q,{b})))
-// 			nms += {m + {<a,b>}};
-// 	}
-// 	return nms;
-// }
+set[NameMatch] makenamematches(Signature p, {}) = {{<c,"",false> | <c,_> <- p}};
+set[NameMatch] makenamematches({}, Signature q) = {{<"",c,false> | <c,_> <- q}};
+set[NameMatch] makenamematches({<a,pi>}, {<b,xi>}) = equivfp(pi,xi) ? {{<a,b,eqfp(pi,xi)>}} : {{<a,"",false>,<"",b,false>}}; 
+
 default set[NameMatch] makenamematches(Signature p, Signature q) =
  {
- 	m + {<a,b>}
+ 	m + {<a,b,eqfp(pi,xi)>}
  	|
  	<a,pi> <- p, <b,xi> <- q, equivfp(pi,xi),
  	m <- makenamematches(domainX(p,{a}), domainX(q,{b}))
@@ -154,11 +144,10 @@ public str pp(fpmany(L)) = joinStrings([pp(f) | f <- L],"");
 public str pp(fpempty()) = "0";
 public default str pp(Footprint sig) = "XXX";
 
-public str pp(NameMatch nm) = "\<"+joinStrings(["<(n=="")?"OMEGA":n> = <m>" | <n,m> <- nm],", ")+"\>";
-//str ppnt(str n) = "\\mathit{<replaceAll(n,"_","\\_ ")>}";
+public str pp(NameMatch nm) = "\<"+joinStrings(["<(n=="")?"OMEGA":n> <t?"=":"~"> <m>" | <n,m,t> <- nm],", ")+"\>";
 
 public str ppl({}) = "\\varnothing";
-public str ppl(Signature sig) = "\\{ <joinStrings(["\\langle<export::LaTeX::ppnt(n)>, <ppl(f)>\\rangle" | <n,f> <- sig],", ")>\\}";
+public str ppl(Signature sig) = "\\{ <joinStrings(["\\langle <export::LaTeX::ppnt(n)>, <ppl(f)>\\rangle" | <n,f> <- sig],", ")>\\}";
 public str ppl(fpnt()) = "1";
 public str ppl(fpopt()) = "{?}";
 public str ppl(fpplus()) = "{+}";
@@ -167,4 +156,4 @@ public str ppl(fpmany(L)) = joinStrings([ppl(f) | f <- L],"");
 public str ppl(fpempty()) = "\\varnothing";
 public default str ppl(Footprint sig) = "XXX";
 
-public str ppl(NameMatch nm) = "\\langle "+joinStrings(["<(n=="")?"\\omega":export::LaTeX::ppnt(n)>, <m>" | <n,m> <- nm],", ")+"\\rangle";
+public str ppl(NameMatch nm) = "\\langle <joinStrings(["<(n=="")?"\\omega":export::LaTeX::ppnt(n)>, <m>" | <n,m,_> <- nm],", ")>\\rangle";

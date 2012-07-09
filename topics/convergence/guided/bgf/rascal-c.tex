@@ -1,0 +1,122 @@
+\chapter{Rascal Concrete Syntax Definition}
+
+ Source name: \textbf{rascal-c}
+
+\section{Source grammar}
+
+\begin{itemize}
+\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/rascal/Concrete.rsc}{topics/fl/rascal/Concrete.rsc}
+\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/shared/rascal/src/extract/RascalSyntax2BGF.rsc}{shared/rascal/src/extract/RascalSyntax2BGF.rsc}
+\end{itemize}
+
+\footnotesize\begin{center}\begin{tabular}{|l|}\hline
+\multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
+\\\hline
+$\mathrm{p}(\text{`prg'},\mathit{Program},\mathrm{sel}\left(\text{`functions'},\mathrm{s}{+}\left(\mathit{Function},{\swarrow}\right)\right))$	\\
+$\mathrm{p}(\text{`ifThenElse'},\mathit{Expr},\mathrm{seq}\left(\left[\text{`if'}, \mathrm{sel}\left(\text{`cond'},\mathit{Expr}\right), \text{`then'}, \mathrm{sel}\left(\text{`thenbranch'},\mathit{Expr}\right), \text{`else'}, \mathrm{sel}\left(\text{`elsebranch'},\mathit{Expr}\right)\right]\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{Expr},\mathrm{seq}\left(\left[\text{`('}, \mathrm{sel}\left(\text{`e'},\mathit{Expr}\right), \text{`)'}\right]\right))$	\\
+$\mathrm{p}(\text{`literal'},\mathit{Expr},\mathrm{sel}\left(\text{`i'},\mathit{Int}\right))$	\\
+$\mathrm{p}(\text{`argument'},\mathit{Expr},\mathrm{sel}\left(\text{`a'},\mathit{Name}\right))$	\\
+$\mathrm{p}(\text{`binary'},\mathit{Expr},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`lexpr'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`op'},\mathit{Ops}\right), \mathrm{sel}\left(\text{`rexpr'},\mathit{Expr}\right)\right]\right))$	\\
+$\mathrm{p}(\text{`apply'},\mathit{Expr},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},\mathit{Name}\right), \mathrm{sel}\left(\text{`vargs'},{+}\left(\mathit{Expr}\right)\right)\right]\right))$	\\
+$\mathrm{p}(\text{`plus'},\mathit{Ops},\text{`+'})$	\\
+$\mathrm{p}(\text{`equal'},\mathit{Ops},\text{`=='})$	\\
+$\mathrm{p}(\text{`minus'},\mathit{Ops},\text{`-'})$	\\
+$\mathrm{p}(\text{`fun'},\mathit{Function},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},\mathit{Name}\right), \mathrm{sel}\left(\text{`args'},{+}\left(\mathit{Name}\right)\right), \text{`='}, \mathrm{sel}\left(\text{`body'},\mathit{Expr}\right)\right]\right))$	\\
+\hline\end{tabular}\end{center}
+
+
+
+\section{Normalizations}
+{\footnotesize\begin{itemize}
+\item $\mathbf{reroot\text{-}reroot}\left([],[\mathit{Program}]\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`prg'}},\mathit{Program},\mathrm{sel}\left(\text{`functions'},\mathrm{s}{+}\left(\mathit{Function},{\swarrow}\right)\right)\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`ifThenElse'}},\mathit{Expr},\mathrm{seq}\left(\left[\text{`if'}, \mathrm{sel}\left(\text{`cond'},\mathit{Expr}\right), \text{`then'}, \mathrm{sel}\left(\text{`thenbranch'},\mathit{Expr}\right), \text{`else'}, \mathrm{sel}\left(\text{`elsebranch'},\mathit{Expr}\right)\right]\right)\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`literal'}},\mathit{Expr},\mathrm{sel}\left(\text{`i'},\mathit{Int}\right)\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`argument'}},\mathit{Expr},\mathrm{sel}\left(\text{`a'},\mathit{Name}\right)\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`binary'}},\mathit{Expr},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`lexpr'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`op'},\mathit{Ops}\right), \mathrm{sel}\left(\text{`rexpr'},\mathit{Expr}\right)\right]\right)\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`apply'}},\mathit{Expr},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},\mathit{Name}\right), \mathrm{sel}\left(\text{`vargs'},{+}\left(\mathit{Expr}\right)\right)\right]\right)\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`plus'}},\mathit{Ops},\text{`+'}\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`equal'}},\mathit{Ops},\text{`=='}\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`minus'}},\mathit{Ops},\text{`-'}\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`fun'}},\mathit{Function},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},\mathit{Name}\right), \mathrm{sel}\left(\text{`args'},{+}\left(\mathit{Name}\right)\right), \text{`='}, \mathrm{sel}\left(\text{`body'},\mathit{Expr}\right)\right]\right)\right)\right)$
+\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`f'},\mathit{Name}\right)$}, \fbox{$\mathrm{sel}\left(\text{`vargs'},{+}\left(\mathit{Expr}\right)\right)$}\right]\right)\right)\right)$
+\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`f'},\mathit{Name}\right)$}, \fbox{$\mathrm{sel}\left(\text{`args'},{+}\left(\mathit{Name}\right)\right)$}, \text{`='}, \fbox{$\mathrm{sel}\left(\text{`body'},\mathit{Expr}\right)$}\right]\right)\right)\right)$
+\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathrm{seq}\left(\left[\text{`if'}, \fbox{$\mathrm{sel}\left(\text{`cond'},\mathit{Expr}\right)$}, \text{`then'}, \fbox{$\mathrm{sel}\left(\text{`thenbranch'},\mathit{Expr}\right)$}, \text{`else'}, \fbox{$\mathrm{sel}\left(\text{`elsebranch'},\mathit{Expr}\right)$}\right]\right)\right)\right)$
+\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`lexpr'},\mathit{Expr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`op'},\mathit{Ops}\right)$}, \fbox{$\mathrm{sel}\left(\text{`rexpr'},\mathit{Expr}\right)$}\right]\right)\right)\right)$
+\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathrm{seq}\left(\left[\text{`('}, \fbox{$\mathrm{sel}\left(\text{`e'},\mathit{Expr}\right)$}, \text{`)'}\right]\right)\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathrm{seq}\left(\left[\fbox{$\text{`('}$}, \mathit{Expr}, \fbox{$\text{`)'}$}\right]\right)\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[\mathit{Name}, {+}\left(\mathit{Name}\right), \fbox{$\text{`='}$}, \mathit{Expr}\right]\right)\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Ops},\fbox{$\text{`-'}$}\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Ops},\fbox{$\text{`+'}$}\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Ops},\fbox{$\text{`=='}$}\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`functions'},\mathit{Program},\mathrm{s}{+}\left(\mathit{Function},\fbox{${\swarrow}$}\right)\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathrm{seq}\left(\left[\fbox{$\text{`if'}$}, \mathit{Expr}, \fbox{$\text{`then'}$}, \mathit{Expr}, \fbox{$\text{`else'}$}, \mathit{Expr}\right]\right)\right)\right)$
+\item $\mathbf{undefine\text{-}define}\\\left(\mathrm{p}\left(\text{`'},\mathit{Ops},\varepsilon\right)\right)$
+\item $\mathbf{abridge\text{-}detour}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr}\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`functions'}},\mathit{Program},{+}\left(\mathit{Function}\right)\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`i'}},\mathit{Expr},\mathit{Int}\right)\right)$
+\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`a'}},\mathit{Expr},\mathit{Name}\right)\right)$
+\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(Expr),\\\mathrm{p}\left(\text{`'},\mathit{Expr_1},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)\right)$
+\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(Expr),\\\mathrm{p}\left(\text{`'},\mathit{Expr_2},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Ops}, \mathit{Expr}\right]\right)\right)\right)$
+\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(Expr),\\\mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Name}, {+}\left(\mathit{Expr}\right)\right]\right)\right)\right)$
+\end{itemize}}
+
+\section{Grammar in ANF}
+
+\footnotesize\begin{center}\begin{tabular}{|l|c|}\hline
+\multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rule}} &
+\multicolumn{1}{>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production signature}}
+\\\hline
+$\mathrm{p}\left(\text{`'},\mathit{Program},{+}\left(\mathit{Function}\right)\right)$	&	$\{ \langle \mathit{Function}, {+}\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr_1}\right)$	&	$\{ \langle \mathit{Expr_1}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Int}\right)$	&	$\{ \langle \mathit{Int}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Name}\right)$	&	$\{ \langle \mathit{Name}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr_2}\right)$	&	$\{ \langle \mathit{Expr_2}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr_3}\right)$	&	$\{ \langle \mathit{Expr_3}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[\mathit{Name}, {+}\left(\mathit{Name}\right), \mathit{Expr}\right]\right)\right)$	&	$\{ \langle \mathit{Expr}, 1\rangle, \langle \mathit{Name}, 1{+}\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Expr_1},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)$	&	$\{ \langle \mathit{Expr}, 111\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Expr_2},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Ops}, \mathit{Expr}\right]\right)\right)$	&	$\{ \langle \mathit{Ops}, 1\rangle, \langle \mathit{Expr}, 11\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Name}, {+}\left(\mathit{Expr}\right)\right]\right)\right)$	&	$\{ \langle \mathit{Expr}, {+}\rangle, \langle \mathit{Name}, 1\rangle\}$\\
+\hline\end{tabular}\end{center}
+
+\section{Nominal resolution}
+
+Production rules are matched as follows (ANF on the left, master grammar on the right):
+\begin{eqnarray*}
+\mathrm{p}\left(\text{`'},\mathit{Program},{+}\left(\mathit{Function}\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{program},{+}\left(\mathit{function}\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr_1}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{conditional}\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Int}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},int\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Name}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},str\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr_2}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{binary}\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr_3}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{apply}\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[\mathit{Name}, {+}\left(\mathit{Name}\right), \mathit{Expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[str, {+}\left(str\right), \mathit{expression}\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Expr_1},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Expr_2},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Ops}, \mathit{Expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{operator}, \mathit{expression}\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Name}, {+}\left(\mathit{Expr}\right)\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[str, {+}\left(\mathit{expression}\right)\right]\right)\right) \\
+\end{eqnarray*}
+This yields the following nominal mapping:
+\begin{align*}\mathit{rascal-c} \:\diamond\: \mathit{master} =& \{\langle \mathit{binary},\mathit{Expr_2}\rangle,\\
+ & \langle int,\mathit{Int}\rangle,\\
+ & \langle \mathit{conditional},\mathit{Expr_1}\rangle,\\
+ & \langle \mathit{function},\mathit{Function}\rangle,\\
+ & \langle \mathit{program},\mathit{Program}\rangle,\\
+ & \langle str,\mathit{Name}\rangle,\\
+ & \langle \mathit{apply},\mathit{Expr_3}\rangle,\\
+ & \langle \mathit{expression},\mathit{Expr}\rangle,\\
+ & \langle \mathit{operator},\mathit{Ops}\rangle\}\end{align*}
+ Which is exercised with these grammar transformation steps:
+
+{\footnotesize\begin{itemize}
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Expr_2},\mathit{binary}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Int},int\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Expr_1},\mathit{conditional}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Function},\mathit{function}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Program},\mathit{program}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Name},str\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Expr_3},\mathit{apply}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Expr},\mathit{expression}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Ops},\mathit{operator}\right)$
+\end{itemize}}
+
+

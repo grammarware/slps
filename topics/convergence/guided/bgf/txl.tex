@@ -1,0 +1,95 @@
+\chapter{TXL}
+
+ Source name: \textbf{txl}
+
+\section{Source grammar}
+
+\begin{itemize}
+\item Source artifact: \href{http://github.com/grammarware/slps/blob/master/topics/fl/txl/FL.Txl}{topics/fl/txl/FL.Txl}
+\item Grammar extractor: \href{http://github.com/grammarware/slps/blob/master/topics/extraction/txl/txl2bgf.xslt}{topics/extraction/txl/txl2bgf.xslt}
+\end{itemize}
+
+\footnotesize\begin{center}\begin{tabular}{|l|}\hline
+\multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
+\\\hline
+$\mathrm{p}(\text{`'},\mathit{program},{+}\left(\mathit{fun}\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{fun},\mathrm{seq}\left(\left[\mathit{id}, {+}\left(\mathit{id}\right), \text{`='}, \mathit{expression}, \mathit{newline}\right]\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{expression},\mathrm{choice}([\mathrm{seq}\left(\left[\mathit{expression}, \mathit{op}, \mathit{expression}\right]\right)$\\$\qquad\qquad\mathrm{seq}\left(\left[\mathit{id}, {+}\left(\mathit{expression}\right)\right]\right)$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`if'}, \mathit{expression}, \text{`then'}, \mathit{expression}, \text{`else'}, \mathit{expression}\right]\right)$\\$\qquad\qquad\mathrm{seq}\left(\left[\text{`('}, \mathit{expression}, \text{`)'}\right]\right)$\\$\qquad\qquad\mathit{id}$\\$\qquad\qquad\mathit{number}]))$	\\
+$\mathrm{p}(\text{`'},\mathit{op},\mathrm{choice}([\text{`+'}$\\$\qquad\qquad\text{`-'}$\\$\qquad\qquad\text{`=='}]))$	\\
+\hline\end{tabular}\end{center}
+
+
+
+\section{Normalizations}
+{\footnotesize\begin{itemize}
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{fun},\mathrm{seq}\left(\left[\mathit{id}, {+}\left(\mathit{id}\right), \fbox{$\text{`='}$}, \mathit{expression}, \mathit{newline}\right]\right)\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{op},\mathrm{choice}\left(\left[\fbox{$\text{`+'}$}, \fbox{$\text{`-'}$}, \fbox{$\text{`=='}$}\right]\right)\right)\right)$
+\item $\mathbf{abstractize\text{-}concretize}\\\left(\mathrm{p}\left(\text{`'},\mathit{expression},\mathrm{choice}\left(\left[\mathrm{seq}\left(\left[\mathit{expression}, \mathit{op}, \mathit{expression}\right]\right), \mathrm{seq}\left(\left[\mathit{id}, {+}\left(\mathit{expression}\right)\right]\right), \mathrm{seq}\left(\left[\fbox{$\text{`if'}$}, \mathit{expression}, \fbox{$\text{`then'}$}, \mathit{expression}, \fbox{$\text{`else'}$}, \mathit{expression}\right]\right), \mathrm{seq}\left(\left[\fbox{$\text{`('}$}, \mathit{expression}, \fbox{$\text{`)'}$}\right]\right), \mathit{id}, \mathit{number}\right]\right)\right)\right)$
+\item $\mathbf{vertical\text{-}horizontal}\left(\mathrm{in}(expression)\right)$
+\item $\mathbf{undefine\text{-}define}\\\left(\mathrm{p}\left(\text{`'},\mathit{op},\varepsilon\right)\right)$
+\item $\mathbf{abridge\text{-}detour}\\\left(\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{expression}\right)\right)$
+\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(expression),\\\mathrm{p}\left(\text{`'},\mathit{expression_1},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{op}, \mathit{expression}\right]\right)\right)\right)$
+\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(expression),\\\mathrm{p}\left(\text{`'},\mathit{expression_2},\mathrm{seq}\left(\left[\mathit{id}, {+}\left(\mathit{expression}\right)\right]\right)\right)\right)$
+\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(expression),\\\mathrm{p}\left(\text{`'},\mathit{expression_3},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right)\right)$
+\end{itemize}}
+
+\section{Grammar in ANF}
+
+\footnotesize\begin{center}\begin{tabular}{|l|c|}\hline
+\multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rule}} &
+\multicolumn{1}{>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production signature}}
+\\\hline
+$\mathrm{p}\left(\text{`'},\mathit{program},{+}\left(\mathit{fun}\right)\right)$	&	$\{ \langle \mathit{fun}, {+}\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{fun},\mathrm{seq}\left(\left[\mathit{id}, {+}\left(\mathit{id}\right), \mathit{expression}, \mathit{newline}\right]\right)\right)$	&	$\{ \langle \mathit{newline}, 1\rangle, \langle \mathit{id}, 1{+}\rangle, \langle \mathit{expression}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{expression_1}\right)$	&	$\{ \langle \mathit{expression_1}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{expression_2}\right)$	&	$\{ \langle \mathit{expression_2}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{expression_3}\right)$	&	$\{ \langle \mathit{expression_3}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{id}\right)$	&	$\{ \langle \mathit{id}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{number}\right)$	&	$\{ \langle \mathit{number}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expression_1},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{op}, \mathit{expression}\right]\right)\right)$	&	$\{ \langle \mathit{op}, 1\rangle, \langle \mathit{expression}, 11\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expression_2},\mathrm{seq}\left(\left[\mathit{id}, {+}\left(\mathit{expression}\right)\right]\right)\right)$	&	$\{ \langle \mathit{expression}, {+}\rangle, \langle \mathit{id}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{expression_3},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right)$	&	$\{ \langle \mathit{expression}, 111\rangle\}$\\
+\hline\end{tabular}\end{center}
+
+\section{Nominal resolution}
+
+Production rules are matched as follows (ANF on the left, master grammar on the right):
+\begin{eqnarray*}
+\mathrm{p}\left(\text{`'},\mathit{program},{+}\left(\mathit{fun}\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{program},{+}\left(\mathit{function}\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{fun},\mathrm{seq}\left(\left[\mathit{id}, {+}\left(\mathit{id}\right), \mathit{expression}, \mathit{newline}\right]\right)\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[str, {+}\left(str\right), \mathit{expression}\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{expression_1}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{binary}\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{expression_2}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{apply}\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{expression_3}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{conditional}\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{id}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},str\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expression},\mathit{number}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},int\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expression_1},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{op}, \mathit{expression}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{operator}, \mathit{expression}\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expression_2},\mathrm{seq}\left(\left[\mathit{id}, {+}\left(\mathit{expression}\right)\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[str, {+}\left(\mathit{expression}\right)\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{expression_3},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
+\end{eqnarray*}
+This yields the following nominal mapping:
+\begin{align*}\mathit{txl} \:\diamond\: \mathit{master} =& \{\langle \mathit{program},\mathit{program}\rangle,\\
+ & \langle \mathit{apply},\mathit{expression_2}\rangle,\\
+ & \langle \mathit{function},\mathit{fun}\rangle,\\
+ & \langle \mathit{expression},\mathit{expression}\rangle,\\
+ & \langle str,\mathit{id}\rangle,\\
+ & \langle \mathit{binary},\mathit{expression_1}\rangle,\\
+ & \langle \mathit{operator},\mathit{op}\rangle,\\
+ & \langle int,\mathit{number}\rangle,\\
+ & \langle \omega,\mathit{newline}\rangle,\\
+ & \langle \mathit{conditional},\mathit{expression_3}\rangle\}\end{align*}
+ Which is exercised with these grammar transformation steps:
+
+{\footnotesize\begin{itemize}
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{expression_2},\mathit{apply}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{fun},\mathit{function}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{id},str\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{expression_1},\mathit{binary}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{op},\mathit{operator}\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{number},int\right)$
+\item $\mathbf{renameN\text{-}renameN}\left(\mathit{expression_3},\mathit{conditional}\right)$
+\end{itemize}}
+
+\section{Structural resolution}
+{\footnotesize\begin{itemize}
+\item $\mathbf{project\text{-}inject}\\\left(\mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[str, {+}\left(str\right), \mathit{expression}, \fbox{$\mathit{newline}$}\right]\right)\right)\right)$
+\end{itemize}}

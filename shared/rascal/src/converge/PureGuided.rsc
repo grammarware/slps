@@ -21,6 +21,7 @@ import Relation;
 import analyse::Layers;
 import analyse::Associativity;
 import export::LaTeX;
+import diff::GDT;
 
 int verbose = 0;
 
@@ -60,7 +61,7 @@ map[str,list[str]] srcFiles = (
 );
 
 list[str] sources =
-	//["python"]; list[str] other =
+	//["jaxb"]; list[str] other =
 	["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"]
 	-
 	["ecore"];
@@ -98,22 +99,22 @@ NameMatch tryMatch(	NameMatch nm, NameMatch known,
 		nm += nm2;
 	}
 	truenm = {};
-	for (<a,b> <- nm-known)
+	for (<a,b,t> <- nm-known)
 		if ((a==b) && a in known<0>)
 			report(2,"Reconfirmed <a>");
 		else
 		{
 			report(2,"Will assume that <a> == <b>");
-			truenm += <a,b>;
+			truenm += <a,b,t>;
 		}
 	return truenm;
 }
 
 BGFProdList assumeRenamings(BGFProdList where, NameMatch naming)
 {
-	BGFProdList ps = [p | p <- where, <"",p.lhs> notin naming];
-	for (<n1,n2> <- naming)
-		if (n1 != n2 && n2 in allNs(ps) && n1 notin [""])
+	BGFProdList ps = [p | p <- where, <"",p.lhs,false> notin naming];
+	for (<n1,n2,_> <- naming)
+		if (n1 != n2 && n2 in allNs(ps) && n1 != "")
 			// dirty
 			//ps = transform::library::Core::performRenameN(n2,n1,grammar([],ps)).prods;
 			//if (n1 in ["STRING","INTEGER"])
@@ -132,8 +133,8 @@ set[NameMatch] resolveNames(NameMatch known, BGFProdList mps, BGFProdList sps)
 	NameMatch nnm;
 	//BGFProdList ps1, ps2, ps1a, ps2a;
 	
-	set[BGFProduction] ps1 = {*prodsOfN(n,mps) | <n,_> <- known};
-	set[BGFProduction] ps2 = {*prodsOfN(n,sps) | <n,_> <- known};
+	set[BGFProduction] ps1 = {*prodsOfN(n,mps) | <n,_,_> <- known};
+	set[BGFProduction] ps2 = {*prodsOfN(n,sps) | <n,_,_> <- known};
 	if (isEmpty(ps1))
 	{
 		if (!isEmpty(ps2))
@@ -176,6 +177,8 @@ set[NameMatch] resolveNames(NameMatch known, BGFProdList mps, BGFProdList sps)
 			if (!isEmpty(nms))
 			{
 				cx += 1;
+				//for (nm <- nms)
+				//	mem[nm] = eq==strong;
 				return nms;
 			}
 		}
@@ -190,8 +193,10 @@ set[NameMatch] resolveNames(NameMatch known, BGFProdList mps, BGFProdList sps)
 
 bool conflicted(NameMatch n, NameMatch m)
 {
-	n1 = carrierX(n,{""});
-	m1 = carrierX(m,{""});
+	//n1 = carrierX(n,{""});
+	n1 = {<a,b> | <a,b,_> <- n, b != "", a!= ""};
+	//m1 = carrierX(m,{""});
+	m1 = {<a,b> | <a,b,_> <- m, b != "", a!= ""};
 	return !isEmpty(invert(n1) o m1) || !isEmpty(n1 o invert(m1));
 }
 
@@ -205,7 +210,7 @@ tuple[NameMatch,BGFGrammar,str] converge(BGFGrammar master, BGFGrammar servant, 
 	CBGFSequence scbgf = []; // structural resolution
 	report(0,"Input: <src>");
 	report(0,"Mutating the grammar...");
-	NameMatch res = detectLayers(servant);
+	rel[str,str] res = detectLayers(servant);
 	if (!isEmpty(res))
 	{
 		mcbgf += removeLayers(res, servant);
@@ -232,7 +237,7 @@ tuple[NameMatch,BGFGrammar,str] converge(BGFGrammar master, BGFGrammar servant, 
 	NameMatch known;
 	set[NameMatch] nknown = {};
 
-	for (rootmatch <- {<r1,r2> | r1 <- master.roots, r2 <- servant.roots})
+	for (rootmatch <- {<r1,r2,true> | r1 <- master.roots, r2 <- servant.roots})
 		nknown += resolveNames({rootmatch}, master.prods, assumeRenamings(servant.prods, {rootmatch}));
 	
 	if (len(nknown)==1)
@@ -241,10 +246,13 @@ tuple[NameMatch,BGFGrammar,str] converge(BGFGrammar master, BGFGrammar servant, 
 		report(2,"Got version: <pp(k)>");
 
 	report(0,"[!] Nominal resolution: <pp(known)>");
-	for (<a,b> <- known)
+	
+	for (<a,b,t> <- known)
 		if (a==b)
 			;
 		elseif (a=="")
+			;
+		elseif (b=="") // when?
 			;
 		else
 			ncbgf += renameN_renameN(b,a);
@@ -253,7 +261,7 @@ tuple[NameMatch,BGFGrammar,str] converge(BGFGrammar master, BGFGrammar servant, 
 	report(3,"<pp(servant)>");
 
 	report(0,"Resolving structural mismatches in the grammar...");
-	for (<"",b> <- known)
+	for (<"",b,_> <- known)
 		scbgf += carveOutN(b,transform(forward(scbgf),servant));
 	servant = transform(forward(scbgf),servant);
 	nscbgf = resolveStructures(known, master, servant);
@@ -261,35 +269,78 @@ tuple[NameMatch,BGFGrammar,str] converge(BGFGrammar master, BGFGrammar servant, 
 	scbgf += nscbgf;
 	
 	report(0,"Done with the grammar: <len(mcbgf)> <len(acbgf)> <len(ncbgf)> <len(scbgf)>");
-	return <known,servant,makeReport(src,mcbgf,acbgf,ncbgf,scbgf)>;
+	return <known,servant,makeReport(src,known,mcbgf,acbgf,ncbgf,scbgf)>;
 }
 
-str makeReport(str name,CBGFSequence m, CBGFSequence a, CBGFSequence n, CBGFSequence s)
+str ppeq(str name, NameMatch nm, BGFProdList ps1, BGFProdList ps2)
 {
+	str res = "Production rules are matched as follows (ANF on the left, master grammar on the right):
+	'\\begin{eqnarray*}\n";
+	ups1 = ps1;
+	for (p1 <- ps1)
+	{
+		p2 = assumeRenamings([p1],nm)[0];
+		report(3,"<pp(p1)> vs <pp(p2)>? (<p2 in ps2>)");
+		// try to find a perfect match: actually an elaborate "p2 in ps2"
+		report(3,"Trying <pp(p2)>...");
+		for (p3 <- ps2)
+			if (eqP(p3,p2))
+			{
+				report(3,"Matched with <p3>!");
+				res += "<ppl(p1)> & \\bumpeq & <ppl(p3)> \\\\\n";
+				ups1 -= p1;
+				ps2 -= p3;
+				break;
+			}
+		if (p1 in ups1)
+			for(p3 <- ps2)
+				if (analyse::Prodsigs::weqps(p1,p3))
+				{
+					nms = analyse::Prodsigs::makenamematches(p2,p3);
+					if (isEmpty(nms)) continue;
+					for (nnm <- nms)
+						if (conflicted(nnm,nm)) continue;
+					report(3,"Weakly matched with <p3>!");
+					res += "<ppl(p1)> & \\Bumpeq & <ppl(p3)> \\\\\n";
+					ups1 -= p1;
+					ps2 -= p3;
+					break;
+				}
+		if (p1 in ups1)
+			res += "<ppl(p1)> &  & \\varnothing \\\\\n";
+	}
+	for (p4 <- ps2)
+		res += "\\varnothing & & <ppl(p4)> \\\\\n";
+	res += "\\end{eqnarray*}
+	'This yields the following nominal mapping:
+	'\\begin{align*}\\mathit{<name>} \\:\\diamond\\: \\mathit{master} =& \\{"+
+	joinStrings(["\\langle <(a=="")?"\\omega":export::LaTeX::ppnt(a)>,<export::LaTeX::ppnt(b)>\\rangle" | <a,b,_> <- nm],",\\\\\n & ")+
+	"\\}\\end{align*}\n Which is exercised with these grammar transformation steps:";
+	return res;
+}
+
+str makeReport(str name, NameMatch nm, CBGFSequence m, CBGFSequence a, CBGFSequence n, CBGFSequence s)
+{
+	BGFGrammar mg = loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/master.bgf|);
 	BGFGrammar g1 = readBGF(|home:///projects/slps/topics/convergence/guided/bgf/<name>.bgf|);
 	BGFGrammar g2 = transform(forward(m+a),loadSimpleGrammar(|home:///projects/slps/topics/convergence/guided/bgf/<name>.bgf|));
 	str res =
 	"\\chapter{<srcNames[name]>}
 	'
-	'\\section{Details}
+	' Source name: \\textbf{<name>}
+	'
+	'\\section{Source grammar}
 	'
 	'\\begin{itemize}
-	'\\item Source name: \\textbf{<name>}
 	'\\item Source artifact: \\href{http://github.com/grammarware/slps/blob/master/<srcFiles[name][0]>}{<srcFiles[name][0]>}
 	'\\item Grammar extractor: \\href{http://github.com/grammarware/slps/blob/master/<srcFiles[name][1]>}{<srcFiles[name][1]>}
 	'\\end{itemize}
 	'
-	'\\section{Source grammar}
-	'
 	'<ppl(g1)>
 	'
-	'\\section{Mutations}
+	'<ppl("Mutations",m)>
 	'
-	'<ppl(m)>
-	'
-	'\\section{Normalizations}
-	'
-	'<ppl(a)>
+	'<ppl("Normalizations",a)>
 	'
 	'\\section{Grammar in ANF}
 	'
@@ -297,11 +348,11 @@ str makeReport(str name,CBGFSequence m, CBGFSequence a, CBGFSequence n, CBGFSequ
 	'
 	'\\section{Nominal resolution}
 	'
+	'<ppeq(name,nm,g2.prods,mg.prods)>
+	'
 	'<ppl(n)>
 	'
-	'\\section{Structural resolution}
-	'
-	'<ppl(s)>
+	'<ppl("Structural resolution", s)>
 	'";
 	return res;
 }

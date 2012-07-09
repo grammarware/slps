@@ -92,7 +92,7 @@ CBGFSequence dropAllLabels(BGFGrammar g) = [unlabel_designate(p) | p <- g.prods,
 
 // TODO: distribute
 
-CBGFSequence dropAllHorizontals(BGFGrammar g) = [vertical_horizontal(innt(p.lhs)) | p <- g.prods, choice(_) := p.rhs];
+CBGFSequence dropAllHorizontals(BGFGrammar g) = toList({vertical_horizontal(innt(p.lhs)) | p <- g.prods, choice(_) := p.rhs});
 
 CBGFSequence dropAllUnknowns(BGFGrammar g)
 
