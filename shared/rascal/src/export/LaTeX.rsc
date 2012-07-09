@@ -25,64 +25,73 @@ public str ppl(CBGFSequence c)
 	if (isEmpty(c)) return "(no transformation steps)";
 	str s = "{\\footnotesize\\begin{itemize}\n";
 	for (CBGFCommand step <- c)
-		s += "\\item $<ppl(step)>$\n";
+		s += "\\item <ppl(step)>\n";
 	return s+"\\end{itemize}}";
 }
 
+// simple instruments to streamline pretty-printing of CBGF
+str ppl_namebare(str c) = "\\textbf{<replaceAll(split("(",c)[0],"_","-")>}";
+str ppl_name(str c) = ppl_namebare(c)+"\\\\";
+str ppl_namescopebare(str c, XBGFScope w) = "\\textbf{<replaceAll(split("(",c)[0],"_","-")>} <ppl(w)>";
+str ppl_namescope(str c, XBGFScope w) = ppl_namescopebare(c,w)+"\\\\";
+str ppl_namentscope(str c, str s, XBGFScope w) = "\\textbf{<replaceAll(split("(",c)[0],"_","-")>} $<s>$ <ppl(w)>\\\\";
+str ppl_prod(BGFProduction p) = "$<ppl(p)>$";
+str ppl_prodL(BGFProduction p) = "$\\mathrm{p}\\left(\\fbox{\\text{`<p.label>\'}},<ppnt(p.lhs)>,<ppl(p.rhs)>\\right)$";
+str ppl_prods(BGFProdList ps) = joinStrings(["$<ppl(p)>$" | p <- ps],"\\\\");
+str ppl_exprs(BGFExpression e1, BGFExpression e2) = "$<ppl(e1)>$\\\\$<ppl(e2)>$";
+
 // CBGF
-str ppl(abridge_detour(BGFProduction p)) = "\\mathbf{abridge\\text{-}detour}\\\\\\left(<ppl(p)>\\right)";
-str ppl(abstractize_concretize(BGFProduction p)) = "\\mathbf{abstractize\\text{-}concretize}\\\\\\left(<ppl(p)>\\right)";
-str ppl(addH_removeH(BGFProduction p)) = "\\mathbf{addH\\text{-}removeH}\\\\\\left(<ppl(p)>\\right)";
-str ppl(addV_removeV(BGFProduction p)) = "\\mathbf{addV\\text{-}removeV}\\\\\\left(<ppl(p)>\\right)";
-str ppl(anonymize_deanonymize(BGFProduction p)) = "\\mathbf{anonymize\\text{-}deanonymize}\\\\\\left(<ppl(p)>\\right)";
-str ppl(appear_disapper(BGFProduction p)) = "\\mathbf{appear\\text{-}disapper}\\\\\\left(<ppl(p)>\\right)";
-str ppl(chain_unchain(BGFProduction p)) = "\\mathbf{chain\\text{-}unchain}\\\\\\left(<ppl(p)>\\right)";
-str ppl(concretize_abstractize(BGFProduction p)) = "\\mathbf{concretize\\text{-}abstractize}\\\\\\left(<ppl(p)>\\right)";
-str ppl(deanonymize_anonymize(BGFProduction p)) = "\\mathbf{deanonymize\\text{-}anonymize}\\\\\\left(<ppl(p)>\\right)";
-str ppl(define_undefine(list[BGFProduction] ps)) = "\\mathbf{define\\text{-}undefine}\\\\\\left(<ppl(ps)>\\right)";
-str ppl(designate_unlabel(BGFProduction p)) = "\\mathbf{designate\\text{-}unlabel}\\\\\\left(\\mathrm{p}\\left(\\fbox{\\text{`<p.label>\'}},<ppnt(p.lhs)>,<ppl(p.rhs)>\\right)\\right)";
-str ppl(detour_abridge(BGFProduction p)) = "\\mathbf{detour\\text{-}abridge}\\\\\\left(<ppl(p)>\\right)";
-str ppl(deyaccify_yaccify(list[BGFProduction] ps)) = "\\mathbf{deyaccify\\text{-}yaccify}\\\\\\left(<ppl(ps)>\\right)";
-str ppl(disappear_appear(BGFProduction p)) = "\\mathbf{disappear\\text{-}appear}\\\\\\left(<ppl(p)>\\right)";
-str ppl(downgrade_upgrade(BGFProduction p1,BGFProduction p2)) = "\\mathbf{downgrade\\text{-}upgrade}\\\\\\left(<ppl(p1)>,<ppl(p2)>\\right)";
-str ppl(eliminate_introduce(list[BGFProduction] ps)) = "\\mathbf{eliminate\\text{-}introduce}\\\\\\left(<ppl(ps)>\\right)";
-str ppl(extract_inline(BGFProduction p, XBGFScope w)) = "\\mathbf{extract\\text{-}inline}\\left(<ppl(w)>,\\\\<ppl(p)>\\right)";
-str ppl(factor_factor(BGFExpression e1, BGFExpression e2, XBGFScope w)) = "\\mathbf{factor\\text{-}factor}\\left(<ppl(w)>,\\\\<ppl(e1)>,\\\\<ppl(e2)>\\right)";
-str ppl(fold_unfold(str s, globally())) = "\\mathbf{fold\\text{-}unfold}\\left(<ppnt(s)>\\right)";
-str ppl(fold_unfold(str s, XBGFScope w)) = "\\mathbf{fold\\text{-}unfold}\\left(<ppnt(s)>,<ppl(w)>\\right)";
-str ppl(horizontal_vertical(XBGFScope w)) = "\\mathbf{horizontal\\text{-}vertical}\\left(<ppl(w)>\\right)";
-str ppl(inject_project(BGFProduction p)) = "\\mathbf{inject\\text{-}project}\\\\\\left(<ppl(p)>\\right)";
-str ppl(inline_extract(BGFProduction p, globally())) = "\\mathbf{inline\\text{-}extract}\\\\\\left(<ppl(p)>\\right)";
-str ppl(inline_extract(BGFProduction p, XBGFScope w)) = "\\mathbf{inline\\text{-}extract}\\left(<ppl(w)>,\\\\<ppl(p)>\\right)";
-str ppl(introduce_eliminate(list[BGFProduction] ps)) = "\\mathbf{introduce\\text{-}eliminate}\\\\\\left(<ppl(ps)>\\right)";
-str ppl(iterate_assoc(BGFProduction p)) = "\\mathbf{iterate\\text{-}assoc}\\\\\\left(<ppl(p)>\\right)";
-str ppl(assoc_iterate(BGFProduction p)) = "\\mathbf{assoc\\text{-}iterate}\\\\\\left(<ppl(p)>\\right)";
-str ppl(massage_massage(BGFExpression e1, BGFExpression e2, XBGFScope w)) = "\\mathbf{massage\\text{-}massage}\\left(<ppl(w)>,\\\\<ppl(e1)>,\\\\<ppl(e2)>\\right)";
-str ppl(narrow_widen(BGFExpression e1, BGFExpression e2, XBGFScope w)) = "\\mathbf{narrow\\text{-}widen}\\left(<ppl(w)>,\\\\<ppl(e1)>,\\\\<ppl(e2)>\\right)";
-str ppl(permute_permute(BGFProduction p1, BGFProduction p2)) = "\\mathbf{permute\\text{-}permute}\\\\\\left(<ppl(p1)>,\\\\<ppl(p2)>\\right)";
-str ppl(project_inject(BGFProduction p)) = "\\mathbf{project\\text{-}inject}\\\\\\left(<ppl(p)>\\right)";
-str ppl(removeH_addH(BGFProduction p)) = "\\mathbf{removeH\\text{-}addH}\\\\\\left(<ppl(p)>\\right)";
-str ppl(removeV_addV(BGFProduction p)) = "\\mathbf{removeV\\text{-}addV}\\\\\\left(<ppl(p)>\\right)";
-str ppl(renameN_renameN(str s1, str s2)) = "\\mathbf{renameN\\text{-}renameN}\\left(<ppnt(s1)>,<ppnt(s2)>\\right)";
-str ppl(replace_replace(BGFExpression e1, BGFExpression e2, XBGFScope w)) = "\\mathbf{replace\\text{-}replace}\\left(<ppl(w)>,\\\\<ppl(e1)>,\\\\<ppl(e2)>\\right)";
-str ppl(reroot_reroot(list[str] xs1, list[str] xs2)) = "\\mathbf{reroot\\text{-}reroot}\\left(<ppls(xs1)>,<ppls(xs2)>\\right)";
-str ppl(unchain_chain(BGFProduction p)) = "\\mathbf{unchain\\text{-}chain}\\\\\\left(<ppl(p)>\\right)";
-str ppl(undefine_define(list[BGFProduction] ps)) = "\\mathbf{undefine\\text{-}define}\\\\\\left(<ppl(ps)>\\right)";
-str ppl(unite_splitN(str x, list[BGFProduction] ps, XBGFScope w)) = "\\mathbf{unite\\text{-}splitN}\\left(<ppnt(x)>,\\\\<joinStrings([ppl(p)|p<-ps],"\\\\")>\\right)";
-str ppl(unfold_fold(str s, globally())) = "\\mathbf{unfold\\text{-}fold}\\left(<ppnt(s)>\\right)";
-str ppl(unfold_fold(str s, XBGFScope w)) = "\\mathbf{unfold\\text{-}fold}\\left(<ppnt(s)>,<ppl(w)>\\right)";
-str ppl(unlabel_designate(BGFProduction p)) = "\\mathbf{unlabel\\text{-}designate}\\\\\\left(\\mathrm{p}\\left(\\fbox{\\text{`<p.label>\'}},<ppnt(p.lhs)>,<ppl(p.rhs)>\\right)\\right)";
-str ppl(upgrade_downgrade(BGFProduction p1, BGFProduction p2)) = "\\mathbf{upgrade\\text{-}downgrade}\\\\\\left(<ppl(p1)>,<ppl(p2)>\\right)";
-str ppl(vertical_horizontal(XBGFScope w)) = "\\mathbf{vertical\\text{-}horizontal}\\left(<ppl(w)>\\right)";
-str ppl(widen_narrow(BGFExpression e1, BGFExpression e2, XBGFScope w)) = "\\mathbf{widen\\text{-}narrow}\\left(<ppl(w)>,\\\\<ppl(e1)>,\\\\<ppl(e2)>\\right)";
-str ppl(yaccify_deyaccify(list[BGFProduction] ps)) = "\\mathbf{yaccify\\text{-}deyaccify}\\\\\\left(<ppl(ps)>\\right)";
+str ppl(c:abridge_detour(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:abstractize_concretize(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:addH_removeH(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:addV_removeV(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:anonymize_deanonymize(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:appear_disapper(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:assoc_iterate(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:chain_unchain(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:concretize_abstractize(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:deanonymize_anonymize(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:define_undefine(BGFProdList ps)) = ppl_name("<c>")+ppl_prods(ps);
+str ppl(c:designate_unlabel(BGFProduction p)) = ppl_name("<c>")+ppl_prodL(p);
+str ppl(c:detour_abridge(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:deyaccify_yaccify(BGFProdList ps)) = ppl_name("<c>")+ppl_prods(ps);
+str ppl(c:disappear_appear(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:downgrade_upgrade(BGFProduction p1, BGFProduction p2)) = ppl_name("<c>")+ppl_prods([p1,p2]);
+str ppl(c:eliminate_introduce(BGFProdList ps)) = ppl_name("<c>")+ppl_prods(ps);
+str ppl(c:extract_inline(BGFProduction p, XBGFScope w)) = ppl_namescope("<c>",w)+ppl_prod(p);
+str ppl(c:factor_factor(BGFExpression e1, BGFExpression e2, XBGFScope w)) = ppl_namescope("<c>",w)+ppl_exprs(e1,e2);
+str ppl(c:fold_unfold(str s, XBGFScope w)) = ppl_namentscope("<c>",s,w);
+str ppl(c:horizontal_vertical(XBGFScope w)) = ppl_namescopebare("<c>",w);
+str ppl(c:inject_project(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:inline_extract(BGFProduction p, globally())) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:inline_extract(BGFProduction p, XBGFScope w)) = ppl_namescope("<c>",w)+ppl_prod(p);
+str ppl(c:introduce_eliminate(BGFProdList ps)) = ppl_name("<c>")+ppl_prods(ps);
+str ppl(c:iterate_assoc(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:massage_massage(BGFExpression e1, BGFExpression e2, XBGFScope w)) = ppl_namescope("<c>",w)+ppl_exprs(e1,e2);
+str ppl(c:narrow_widen(BGFExpression e1, BGFExpression e2, XBGFScope w)) = ppl_namescope("<c>",w)+ppl_exprs(e1,e2);
+str ppl(c:permute_permute(BGFProduction p1, BGFProduction p2)) = ppl_name("<c>")+ppl_prods([p1,p2]);
+str ppl(c:project_inject(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:removeH_addH(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:removeV_addV(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:renameN_renameN(str s1, str s2)) = ppl_namebare("<c>")+" $<ppnt(s1)>$ to $<ppnt(s2)>$";
+str ppl(c:replace_replace(BGFExpression e1, BGFExpression e2, XBGFScope w)) = ppl_namescope("<c>",w)+ppl_exprs(e1,e2);
+str ppl(c:reroot_reroot(list[str] xs1, list[str] xs2)) = ppl_namebare("<c>")+" $<ppls(xs1)>$ to $<ppls(xs2)>$";
+str ppl(c:unchain_chain(BGFProduction p)) = ppl_name("<c>")+ppl_prod(p);
+str ppl(c:undefine_define(BGFProdList ps)) = ppl_name("<c>")+ppl_prods(ps);
+str ppl(c:unite_splitN(str x, BGFProdList ps, XBGFScope w)) = ppl_namentscope("<c>",x,w)+ppl_prods(ps); 
+str ppl(c:unfold_fold(str s, XBGFScope w)) = ppl_namentscope("<c>",s,w);
+str ppl(c:unlabel_designate(BGFProduction p)) = ppl_name("<c>")+ppl_prodL(p);
+str ppl(c:upgrade_downgrade(BGFProduction p1, BGFProduction p2)) = ppl_name("<c>")+ppl_prods([p1,p2]);
+str ppl(c:vertical_horizontal(XBGFScope w)) = ppl_namescopebare("<c>",w);
+str ppl(c:widen_narrow(BGFExpression e1, BGFExpression e2, XBGFScope w)) = ppl_namescope("<c>",w)+ppl_exprs(e1,e2);
+str ppl(c:yaccify_deyaccify(BGFProdList ps)) = ppl_name("<c>")+ppl_prods(ps);
 default str ppl(CBGFCommand step) = "?<step>?";
 
 str ppl(BGFProdList ps) = joinStrings([ppl(p) | p <- ps],"\n");
 
-str ppls(list[str] ss) = "[<joinStrings([ppnt(s) | s <-ss],", ")>]";
-str ppl(inlabel(str s)) = "\\mathrm{in}(`<s>\')";
-str ppl(innt(str s)) = "\\mathrm{in}(<s>)";
+str ppls(list[str] ss) = "\\left[<joinStrings([ppnt(s) | s <-ss],", ")>\\right]";
+str ppl(inlabel(str s)) = " in $`<s>\'$";
+str ppl(innt(str s)) = " in $<ppnt(s)>$";
 str ppl(globally()) = "";
 
 str ppnt("STRING") = "str";
@@ -177,9 +186,9 @@ str pplv(BGFProduction p) = "\\mathrm{p}(\\text{`<p.label>\'},<ppnt(p.lhs)>,<ppl
 str pplv(choice(L)) = "\\mathrm{choice}([<joinStrings([pplv(e) | e <- L],"$\\\\$\\qquad\\qquad")>])";
 default str pplv(BGFExpression e) = ppl(e);
 
-str ppl(optional(e)) = "{?}\\left(<ppl(e)>\\right)";
-str ppl(star(e)) = "{*}\\left(<ppl(e)>\\right)";
-str ppl(plus(e)) = "{+}\\left(<ppl(e)>\\right)";
+str ppl(optional(e)) = "\\opt \\left(<ppl(e)>\\right)";
+str ppl(star(e)) = "\\star \\left(<ppl(e)>\\right)";
+str ppl(plus(e)) = "\\plus \\left(<ppl(e)>\\right)";
 default str ppl(BGFExpression e) = "?<e>?";
 
 str ppl(selectable(s,e)) = "\\mathrm{sel}\\left(\\text{`<s>\'},<ppl(e)>\\right)";

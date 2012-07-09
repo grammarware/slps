@@ -12,45 +12,45 @@
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
 \\\hline
-$\mathrm{p}(\text{`'},\mathit{Apply},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`name'},str\right), {+}\left(\mathrm{sel}\left(\text{`arg'},\mathit{Expr}\right)\right)\right]\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{Apply},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`name'},str\right), \plus \left(\mathrm{sel}\left(\text{`arg'},\mathit{Expr}\right)\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Argument},\mathrm{sel}\left(\text{`name'},str\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Binary},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`ops'},\mathit{Ops}\right), \mathrm{sel}\left(\text{`left'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`right'},\mathit{Expr}\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Expr},\mathrm{choice}([\mathit{Apply}$\\$\qquad\qquad\mathit{Argument}$\\$\qquad\qquad\mathit{Binary}$\\$\qquad\qquad\mathit{IfThenElse}$\\$\qquad\qquad\mathit{Literal}]))$	\\
-$\mathrm{p}(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`name'},str\right), {+}\left(\mathrm{sel}\left(\text{`arg'},str\right)\right), \mathrm{sel}\left(\text{`rhs'},\mathit{Expr}\right)\right]\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`name'},str\right), \plus \left(\mathrm{sel}\left(\text{`arg'},str\right)\right), \mathrm{sel}\left(\text{`rhs'},\mathit{Expr}\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{IfThenElse},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`ifExpr'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`thenExpr'},\mathit{Expr}\right), \mathrm{sel}\left(\text{`elseExpr'},\mathit{Expr}\right)\right]\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Literal},\mathrm{sel}\left(\text{`info'},int\right))$	\\
 $\mathrm{p}(\text{`'},\mathit{Ops},\mathrm{choice}([\mathrm{sel}\left(\text{`Equal'},\varepsilon\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`Plus'},\varepsilon\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`Minus'},\varepsilon\right)]))$	\\
-$\mathrm{p}(\text{`'},\mathit{ProgramType},{+}\left(\mathrm{sel}\left(\text{`function'},\mathit{Function}\right)\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{ProgramType},\plus \left(\mathrm{sel}\left(\text{`function'},\mathit{Function}\right)\right))$	\\
 \hline\end{tabular}\end{center}
 
 
 
 \section{Normalizations}
 {\footnotesize\begin{itemize}
-\item $\mathbf{reroot\text{-}reroot}\left([],[\mathit{ProgramType}]\right)$
-\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`name'}},\mathit{Argument},str\right)\right)$
-\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`info'}},\mathit{Literal},int\right)\right)$
-\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`name'},str\right)$}, {+}\left(\fbox{$\mathrm{sel}\left(\text{`arg'},str\right)$}\right), \fbox{$\mathrm{sel}\left(\text{`rhs'},\mathit{Expr}\right)$}\right]\right)\right)\right)$
-\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Apply},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`name'},str\right)$}, {+}\left(\fbox{$\mathrm{sel}\left(\text{`arg'},\mathit{Expr}\right)$}\right)\right]\right)\right)\right)$
-\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{IfThenElse},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`ifExpr'},\mathit{Expr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`thenExpr'},\mathit{Expr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`elseExpr'},\mathit{Expr}\right)$}\right]\right)\right)\right)$
-\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Ops},\mathrm{choice}\left(\left[\fbox{$\mathrm{sel}\left(\text{`Equal'},\varepsilon\right)$}, \fbox{$\mathrm{sel}\left(\text{`Plus'},\varepsilon\right)$}, \fbox{$\mathrm{sel}\left(\text{`Minus'},\varepsilon\right)$}\right]\right)\right)\right)$
-\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{ProgramType},{+}\left(\fbox{$\mathrm{sel}\left(\text{`function'},\mathit{Function}\right)$}\right)\right)\right)$
-\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{Binary},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`ops'},\mathit{Ops}\right)$}, \fbox{$\mathrm{sel}\left(\text{`left'},\mathit{Expr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`right'},\mathit{Expr}\right)$}\right]\right)\right)\right)$
-\item $\mathbf{vertical\text{-}horizontal}\left(\mathrm{in}(Expr)\right)$
-\item $\mathbf{undefine\text{-}define}\\\left(\mathrm{p}\left(\text{`'},\mathit{Ops},\varepsilon\right)\right)$
-\item $\mathbf{unchain\text{-}chain}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Apply}\right)\right)$
-\item $\mathbf{unchain\text{-}chain}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Argument}\right)\right)$
-\item $\mathbf{unchain\text{-}chain}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Binary}\right)\right)$
-\item $\mathbf{unchain\text{-}chain}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{IfThenElse}\right)\right)$
-\item $\mathbf{unchain\text{-}chain}\\\left(\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Literal}\right)\right)$
-\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`Apply'}},\mathit{Expr},\mathrm{seq}\left(\left[str, {+}\left(\mathit{Expr}\right)\right]\right)\right)\right)$
-\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`Argument'}},\mathit{Expr},str\right)\right)$
-\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`Binary'}},\mathit{Expr},\mathrm{seq}\left(\left[\mathit{Ops}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)\right)$
-\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`IfThenElse'}},\mathit{Expr},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)\right)$
-\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`Literal'}},\mathit{Expr},int\right)\right)$
-\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(Expr),\\\mathrm{p}\left(\text{`'},\mathit{Expr_1},\mathrm{seq}\left(\left[str, {+}\left(\mathit{Expr}\right)\right]\right)\right)\right)$
-\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(Expr),\\\mathrm{p}\left(\text{`'},\mathit{Expr_2},\mathrm{seq}\left(\left[\mathit{Ops}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)\right)$
-\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(Expr),\\\mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)\right)$
+\item \textbf{reroot-reroot} $\left[\right]$ to $\left[\mathit{ProgramType}\right]$
+\item \textbf{unlabel-designate}\\$\mathrm{p}\left(\fbox{\text{`name'}},\mathit{Argument},str\right)$
+\item \textbf{unlabel-designate}\\$\mathrm{p}\left(\fbox{\text{`info'}},\mathit{Literal},int\right)$
+\item \textbf{anonymize-deanonymize}\\$\mathrm{p}\left(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`name'},str\right)$}, \plus \left(\fbox{$\mathrm{sel}\left(\text{`arg'},str\right)$}\right), \fbox{$\mathrm{sel}\left(\text{`rhs'},\mathit{Expr}\right)$}\right]\right)\right)$
+\item \textbf{anonymize-deanonymize}\\$\mathrm{p}\left(\text{`'},\mathit{Apply},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`name'},str\right)$}, \plus \left(\fbox{$\mathrm{sel}\left(\text{`arg'},\mathit{Expr}\right)$}\right)\right]\right)\right)$
+\item \textbf{anonymize-deanonymize}\\$\mathrm{p}\left(\text{`'},\mathit{IfThenElse},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`ifExpr'},\mathit{Expr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`thenExpr'},\mathit{Expr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`elseExpr'},\mathit{Expr}\right)$}\right]\right)\right)$
+\item \textbf{anonymize-deanonymize}\\$\mathrm{p}\left(\text{`'},\mathit{Ops},\mathrm{choice}\left(\left[\fbox{$\mathrm{sel}\left(\text{`Equal'},\varepsilon\right)$}, \fbox{$\mathrm{sel}\left(\text{`Plus'},\varepsilon\right)$}, \fbox{$\mathrm{sel}\left(\text{`Minus'},\varepsilon\right)$}\right]\right)\right)$
+\item \textbf{anonymize-deanonymize}\\$\mathrm{p}\left(\text{`'},\mathit{ProgramType},\plus \left(\fbox{$\mathrm{sel}\left(\text{`function'},\mathit{Function}\right)$}\right)\right)$
+\item \textbf{anonymize-deanonymize}\\$\mathrm{p}\left(\text{`'},\mathit{Binary},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`ops'},\mathit{Ops}\right)$}, \fbox{$\mathrm{sel}\left(\text{`left'},\mathit{Expr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`right'},\mathit{Expr}\right)$}\right]\right)\right)$
+\item \textbf{vertical-horizontal}  in $\mathit{Expr}$
+\item \textbf{undefine-define}\\$\mathrm{p}\left(\text{`'},\mathit{Ops},\varepsilon\right)$
+\item \textbf{unchain-chain}\\$\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Apply}\right)$
+\item \textbf{unchain-chain}\\$\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Argument}\right)$
+\item \textbf{unchain-chain}\\$\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Binary}\right)$
+\item \textbf{unchain-chain}\\$\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{IfThenElse}\right)$
+\item \textbf{unchain-chain}\\$\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Literal}\right)$
+\item \textbf{unlabel-designate}\\$\mathrm{p}\left(\fbox{\text{`Apply'}},\mathit{Expr},\mathrm{seq}\left(\left[str, \plus \left(\mathit{Expr}\right)\right]\right)\right)$
+\item \textbf{unlabel-designate}\\$\mathrm{p}\left(\fbox{\text{`Argument'}},\mathit{Expr},str\right)$
+\item \textbf{unlabel-designate}\\$\mathrm{p}\left(\fbox{\text{`Binary'}},\mathit{Expr},\mathrm{seq}\left(\left[\mathit{Ops}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)$
+\item \textbf{unlabel-designate}\\$\mathrm{p}\left(\fbox{\text{`IfThenElse'}},\mathit{Expr},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)$
+\item \textbf{unlabel-designate}\\$\mathrm{p}\left(\fbox{\text{`Literal'}},\mathit{Expr},int\right)$
+\item \textbf{extract-inline}  in $\mathit{Expr}$\\$\mathrm{p}\left(\text{`'},\mathit{Expr_1},\mathrm{seq}\left(\left[str, \plus \left(\mathit{Expr}\right)\right]\right)\right)$
+\item \textbf{extract-inline}  in $\mathit{Expr}$\\$\mathrm{p}\left(\text{`'},\mathit{Expr_2},\mathrm{seq}\left(\left[\mathit{Ops}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)$
+\item \textbf{extract-inline}  in $\mathit{Expr}$\\$\mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)$
 \end{itemize}}
 
 \section{Grammar in ANF}
@@ -64,9 +64,9 @@ $\mathrm{p}\left(\text{`'},\mathit{Expr},str\right)$	&	$\{ \langle str, 1\rangle
 $\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr_2}\right)$	&	$\{ \langle \mathit{Expr_2}, 1\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr_3}\right)$	&	$\{ \langle \mathit{Expr_3}, 1\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{Expr},int\right)$	&	$\{ \langle int, 1\rangle\}$\\
-$\mathrm{p}\left(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[str, {+}\left(str\right), \mathit{Expr}\right]\right)\right)$	&	$\{ \langle str, 1{+}\rangle, \langle \mathit{Expr}, 1\rangle\}$\\
-$\mathrm{p}\left(\text{`'},\mathit{ProgramType},{+}\left(\mathit{Function}\right)\right)$	&	$\{ \langle \mathit{Function}, {+}\rangle\}$\\
-$\mathrm{p}\left(\text{`'},\mathit{Expr_1},\mathrm{seq}\left(\left[str, {+}\left(\mathit{Expr}\right)\right]\right)\right)$	&	$\{ \langle str, 1\rangle, \langle \mathit{Expr}, {+}\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[str, \plus \left(str\right), \mathit{Expr}\right]\right)\right)$	&	$\{ \langle str, 1{+}\rangle, \langle \mathit{Expr}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{ProgramType},\plus \left(\mathit{Function}\right)\right)$	&	$\{ \langle \mathit{Function}, {+}\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{Expr_1},\mathrm{seq}\left(\left[str, \plus \left(\mathit{Expr}\right)\right]\right)\right)$	&	$\{ \langle str, 1\rangle, \langle \mathit{Expr}, {+}\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{Expr_2},\mathrm{seq}\left(\left[\mathit{Ops}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)$	&	$\{ \langle \mathit{Ops}, 1\rangle, \langle \mathit{Expr}, 11\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right)$	&	$\{ \langle \mathit{Expr}, 111\rangle\}$\\
 \hline\end{tabular}\end{center}
@@ -80,9 +80,9 @@ Production rules are matched as follows (ANF on the left, master grammar on the 
 \mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr_2}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{binary}\right) \\
 \mathrm{p}\left(\text{`'},\mathit{Expr},\mathit{Expr_3}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{conditional}\right) \\
 \mathrm{p}\left(\text{`'},\mathit{Expr},int\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},int\right) \\
-\mathrm{p}\left(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[str, {+}\left(str\right), \mathit{Expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[str, {+}\left(str\right), \mathit{expression}\right]\right)\right) \\
-\mathrm{p}\left(\text{`'},\mathit{ProgramType},{+}\left(\mathit{Function}\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{program},{+}\left(\mathit{function}\right)\right) \\
-\mathrm{p}\left(\text{`'},\mathit{Expr_1},\mathrm{seq}\left(\left[str, {+}\left(\mathit{Expr}\right)\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[str, {+}\left(\mathit{expression}\right)\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Function},\mathrm{seq}\left(\left[str, \plus \left(str\right), \mathit{Expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[str, \plus \left(str\right), \mathit{expression}\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{ProgramType},\plus \left(\mathit{Function}\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{program},\plus \left(\mathit{function}\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{Expr_1},\mathrm{seq}\left(\left[str, \plus \left(\mathit{Expr}\right)\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[str, \plus \left(\mathit{expression}\right)\right]\right)\right) \\
 \mathrm{p}\left(\text{`'},\mathit{Expr_2},\mathrm{seq}\left(\left[\mathit{Ops}, \mathit{Expr}, \mathit{Expr}\right]\right)\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{operator}, \mathit{expression}\right]\right)\right) \\
 \mathrm{p}\left(\text{`'},\mathit{Expr_3},\mathrm{seq}\left(\left[\mathit{Expr}, \mathit{Expr}, \mathit{Expr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
 \end{eqnarray*}
@@ -99,16 +99,16 @@ This yields the following nominal mapping:
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Expr_2},\mathit{binary}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{ProgramType},\mathit{program}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Expr_3},\mathit{conditional}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Function},\mathit{function}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Expr},\mathit{expression}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Expr_1},\mathit{apply}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{Ops},\mathit{operator}\right)$
+\item \textbf{renameN-renameN} $\mathit{Expr_2}$ to $\mathit{binary}$
+\item \textbf{renameN-renameN} $\mathit{ProgramType}$ to $\mathit{program}$
+\item \textbf{renameN-renameN} $\mathit{Expr_3}$ to $\mathit{conditional}$
+\item \textbf{renameN-renameN} $\mathit{Function}$ to $\mathit{function}$
+\item \textbf{renameN-renameN} $\mathit{Expr}$ to $\mathit{expression}$
+\item \textbf{renameN-renameN} $\mathit{Expr_1}$ to $\mathit{apply}$
+\item \textbf{renameN-renameN} $\mathit{Ops}$ to $\mathit{operator}$
 \end{itemize}}
 
 \section{Structural resolution}
 {\footnotesize\begin{itemize}
-\item $\mathbf{permute\text{-}permute}\\\left(\mathrm{p}\left(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{operator}, \mathit{expression}, \mathit{expression}\right]\right)\right),\\\mathrm{p}\left(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{operator}, \mathit{expression}\right]\right)\right)\right)$
+\item \textbf{permute-permute}\\$\mathrm{p}\left(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{operator}, \mathit{expression}, \mathit{expression}\right]\right)\right)$\\$\mathrm{p}\left(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{operator}, \mathit{expression}\right]\right)\right)$
 \end{itemize}}

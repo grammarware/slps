@@ -12,9 +12,9 @@
 \footnotesize\begin{center}\begin{tabular}{|l|}\hline
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rules}}
 \\\hline
-$\mathrm{p}(\text{`prg'},\mathit{FLPrg},\mathrm{sel}\left(\text{`fs'},{*}\left(\mathit{FLFun}\right)\right))$	\\
-$\mathrm{p}(\text{`fun'},\mathit{FLFun},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},str\right), \mathrm{sel}\left(\text{`args'},{*}\left(str\right)\right), \mathrm{sel}\left(\text{`body'},\mathit{FLExpr}\right)\right]\right))$	\\
-$\mathrm{p}(\text{`'},\mathit{FLExpr},\mathrm{choice}([\mathrm{sel}\left(\text{`binary'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`e1'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`op'},\mathit{FLOp}\right), \mathrm{sel}\left(\text{`e2'},\mathit{FLExpr}\right)\right]\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`apply'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},str\right), \mathrm{sel}\left(\text{`vargs'},{*}\left(\mathit{FLExpr}\right)\right)\right]\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`ifThenElse'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`c'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`t'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`e'},\mathit{FLExpr}\right)\right]\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`argument'},\mathrm{sel}\left(\text{`a'},str\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`literal'},\mathrm{sel}\left(\text{`i'},int\right)\right)]))$	\\
+$\mathrm{p}(\text{`prg'},\mathit{FLPrg},\mathrm{sel}\left(\text{`fs'},\star \left(\mathit{FLFun}\right)\right))$	\\
+$\mathrm{p}(\text{`fun'},\mathit{FLFun},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},str\right), \mathrm{sel}\left(\text{`args'},\star \left(str\right)\right), \mathrm{sel}\left(\text{`body'},\mathit{FLExpr}\right)\right]\right))$	\\
+$\mathrm{p}(\text{`'},\mathit{FLExpr},\mathrm{choice}([\mathrm{sel}\left(\text{`binary'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`e1'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`op'},\mathit{FLOp}\right), \mathrm{sel}\left(\text{`e2'},\mathit{FLExpr}\right)\right]\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`apply'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},str\right), \mathrm{sel}\left(\text{`vargs'},\star \left(\mathit{FLExpr}\right)\right)\right]\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`ifThenElse'},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`c'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`t'},\mathit{FLExpr}\right), \mathrm{sel}\left(\text{`e'},\mathit{FLExpr}\right)\right]\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`argument'},\mathrm{sel}\left(\text{`a'},str\right)\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`literal'},\mathrm{sel}\left(\text{`i'},int\right)\right)]))$	\\
 $\mathrm{p}(\text{`'},\mathit{FLOp},\mathrm{choice}([\mathrm{sel}\left(\text{`minus'},\varepsilon\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`plus'},\varepsilon\right)$\\$\qquad\qquad\mathrm{sel}\left(\text{`equal'},\varepsilon\right)]))$	\\
 \hline\end{tabular}\end{center}
 
@@ -22,18 +22,18 @@ $\mathrm{p}(\text{`'},\mathit{FLOp},\mathrm{choice}([\mathrm{sel}\left(\text{`mi
 
 \section{Normalizations}
 {\footnotesize\begin{itemize}
-\item $\mathbf{reroot\text{-}reroot}\left([],[\mathit{FLPrg}]\right)$
-\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`prg'}},\mathit{FLPrg},\mathrm{sel}\left(\text{`fs'},{*}\left(\mathit{FLFun}\right)\right)\right)\right)$
-\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`fun'}},\mathit{FLFun},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},str\right), \mathrm{sel}\left(\text{`args'},{*}\left(str\right)\right), \mathrm{sel}\left(\text{`body'},\mathit{FLExpr}\right)\right]\right)\right)\right)$
-\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{FLOp},\mathrm{choice}\left(\left[\fbox{$\mathrm{sel}\left(\text{`minus'},\varepsilon\right)$}, \fbox{$\mathrm{sel}\left(\text{`plus'},\varepsilon\right)$}, \fbox{$\mathrm{sel}\left(\text{`equal'},\varepsilon\right)$}\right]\right)\right)\right)$
-\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{FLExpr},\mathrm{choice}\left(\left[\fbox{$\mathrm{sel}\left(\text{`binary'},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`e1'},\mathit{FLExpr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`op'},\mathit{FLOp}\right)$}, \fbox{$\mathrm{sel}\left(\text{`e2'},\mathit{FLExpr}\right)$}\right]\right)\right)$}, \fbox{$\mathrm{sel}\left(\text{`apply'},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`f'},str\right)$}, \fbox{$\mathrm{sel}\left(\text{`vargs'},{*}\left(\mathit{FLExpr}\right)\right)$}\right]\right)\right)$}, \fbox{$\mathrm{sel}\left(\text{`ifThenElse'},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`c'},\mathit{FLExpr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`t'},\mathit{FLExpr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`e'},\mathit{FLExpr}\right)$}\right]\right)\right)$}, \fbox{$\mathrm{sel}\left(\text{`argument'},\fbox{$\mathrm{sel}\left(\text{`a'},str\right)$}\right)$}, \fbox{$\mathrm{sel}\left(\text{`literal'},\fbox{$\mathrm{sel}\left(\text{`i'},int\right)$}\right)$}\right]\right)\right)\right)$
-\item $\mathbf{anonymize\text{-}deanonymize}\\\left(\mathrm{p}\left(\text{`'},\mathit{FLFun},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`f'},str\right)$}, \fbox{$\mathrm{sel}\left(\text{`args'},{*}\left(str\right)\right)$}, \fbox{$\mathrm{sel}\left(\text{`body'},\mathit{FLExpr}\right)$}\right]\right)\right)\right)$
-\item $\mathbf{vertical\text{-}horizontal}\left(\mathrm{in}(FLExpr)\right)$
-\item $\mathbf{undefine\text{-}define}\\\left(\mathrm{p}\left(\text{`'},\mathit{FLOp},\varepsilon\right)\right)$
-\item $\mathbf{unlabel\text{-}designate}\\\left(\mathrm{p}\left(\fbox{\text{`fs'}},\mathit{FLPrg},{*}\left(\mathit{FLFun}\right)\right)\right)$
-\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(FLExpr),\\\mathrm{p}\left(\text{`'},\mathit{FLExpr_1},\mathrm{seq}\left(\left[\mathit{FLExpr}, \mathit{FLOp}, \mathit{FLExpr}\right]\right)\right)\right)$
-\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(FLExpr),\\\mathrm{p}\left(\text{`'},\mathit{FLExpr_2},\mathrm{seq}\left(\left[str, {*}\left(\mathit{FLExpr}\right)\right]\right)\right)\right)$
-\item $\mathbf{extract\text{-}inline}\left(\mathrm{in}(FLExpr),\\\mathrm{p}\left(\text{`'},\mathit{FLExpr_3},\mathrm{seq}\left(\left[\mathit{FLExpr}, \mathit{FLExpr}, \mathit{FLExpr}\right]\right)\right)\right)$
+\item \textbf{reroot-reroot} $\left[\right]$ to $\left[\mathit{FLPrg}\right]$
+\item \textbf{unlabel-designate}\\$\mathrm{p}\left(\fbox{\text{`prg'}},\mathit{FLPrg},\mathrm{sel}\left(\text{`fs'},\star \left(\mathit{FLFun}\right)\right)\right)$
+\item \textbf{unlabel-designate}\\$\mathrm{p}\left(\fbox{\text{`fun'}},\mathit{FLFun},\mathrm{seq}\left(\left[\mathrm{sel}\left(\text{`f'},str\right), \mathrm{sel}\left(\text{`args'},\star \left(str\right)\right), \mathrm{sel}\left(\text{`body'},\mathit{FLExpr}\right)\right]\right)\right)$
+\item \textbf{anonymize-deanonymize}\\$\mathrm{p}\left(\text{`'},\mathit{FLOp},\mathrm{choice}\left(\left[\fbox{$\mathrm{sel}\left(\text{`minus'},\varepsilon\right)$}, \fbox{$\mathrm{sel}\left(\text{`plus'},\varepsilon\right)$}, \fbox{$\mathrm{sel}\left(\text{`equal'},\varepsilon\right)$}\right]\right)\right)$
+\item \textbf{anonymize-deanonymize}\\$\mathrm{p}\left(\text{`'},\mathit{FLExpr},\mathrm{choice}\left(\left[\fbox{$\mathrm{sel}\left(\text{`binary'},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`e1'},\mathit{FLExpr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`op'},\mathit{FLOp}\right)$}, \fbox{$\mathrm{sel}\left(\text{`e2'},\mathit{FLExpr}\right)$}\right]\right)\right)$}, \fbox{$\mathrm{sel}\left(\text{`apply'},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`f'},str\right)$}, \fbox{$\mathrm{sel}\left(\text{`vargs'},\star \left(\mathit{FLExpr}\right)\right)$}\right]\right)\right)$}, \fbox{$\mathrm{sel}\left(\text{`ifThenElse'},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`c'},\mathit{FLExpr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`t'},\mathit{FLExpr}\right)$}, \fbox{$\mathrm{sel}\left(\text{`e'},\mathit{FLExpr}\right)$}\right]\right)\right)$}, \fbox{$\mathrm{sel}\left(\text{`argument'},\fbox{$\mathrm{sel}\left(\text{`a'},str\right)$}\right)$}, \fbox{$\mathrm{sel}\left(\text{`literal'},\fbox{$\mathrm{sel}\left(\text{`i'},int\right)$}\right)$}\right]\right)\right)$
+\item \textbf{anonymize-deanonymize}\\$\mathrm{p}\left(\text{`'},\mathit{FLFun},\mathrm{seq}\left(\left[\fbox{$\mathrm{sel}\left(\text{`f'},str\right)$}, \fbox{$\mathrm{sel}\left(\text{`args'},\star \left(str\right)\right)$}, \fbox{$\mathrm{sel}\left(\text{`body'},\mathit{FLExpr}\right)$}\right]\right)\right)$
+\item \textbf{vertical-horizontal}  in $\mathit{FLExpr}$
+\item \textbf{undefine-define}\\$\mathrm{p}\left(\text{`'},\mathit{FLOp},\varepsilon\right)$
+\item \textbf{unlabel-designate}\\$\mathrm{p}\left(\fbox{\text{`fs'}},\mathit{FLPrg},\star \left(\mathit{FLFun}\right)\right)$
+\item \textbf{extract-inline}  in $\mathit{FLExpr}$\\$\mathrm{p}\left(\text{`'},\mathit{FLExpr_1},\mathrm{seq}\left(\left[\mathit{FLExpr}, \mathit{FLOp}, \mathit{FLExpr}\right]\right)\right)$
+\item \textbf{extract-inline}  in $\mathit{FLExpr}$\\$\mathrm{p}\left(\text{`'},\mathit{FLExpr_2},\mathrm{seq}\left(\left[str, \star \left(\mathit{FLExpr}\right)\right]\right)\right)$
+\item \textbf{extract-inline}  in $\mathit{FLExpr}$\\$\mathrm{p}\left(\text{`'},\mathit{FLExpr_3},\mathrm{seq}\left(\left[\mathit{FLExpr}, \mathit{FLExpr}, \mathit{FLExpr}\right]\right)\right)$
 \end{itemize}}
 
 \section{Grammar in ANF}
@@ -42,15 +42,15 @@ $\mathrm{p}(\text{`'},\mathit{FLOp},\mathrm{choice}([\mathrm{sel}\left(\text{`mi
 \multicolumn{1}{|>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production rule}} &
 \multicolumn{1}{>{\columncolor[gray]{.9}}c|}{\footnotesize \textbf{Production signature}}
 \\\hline
-$\mathrm{p}\left(\text{`'},\mathit{FLPrg},{*}\left(\mathit{FLFun}\right)\right)$	&	$\{ \langle \mathit{FLFun}, {*}\rangle\}$\\
-$\mathrm{p}\left(\text{`'},\mathit{FLFun},\mathrm{seq}\left(\left[str, {*}\left(str\right), \mathit{FLExpr}\right]\right)\right)$	&	$\{ \langle str, 1{*}\rangle, \langle \mathit{FLExpr}, 1\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{FLPrg},\star \left(\mathit{FLFun}\right)\right)$	&	$\{ \langle \mathit{FLFun}, {*}\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{FLFun},\mathrm{seq}\left(\left[str, \star \left(str\right), \mathit{FLExpr}\right]\right)\right)$	&	$\{ \langle str, 1{*}\rangle, \langle \mathit{FLExpr}, 1\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{FLExpr},\mathit{FLExpr_1}\right)$	&	$\{ \langle \mathit{FLExpr_1}, 1\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{FLExpr},\mathit{FLExpr_2}\right)$	&	$\{ \langle \mathit{FLExpr_2}, 1\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{FLExpr},\mathit{FLExpr_3}\right)$	&	$\{ \langle \mathit{FLExpr_3}, 1\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{FLExpr},str\right)$	&	$\{ \langle str, 1\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{FLExpr},int\right)$	&	$\{ \langle int, 1\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{FLExpr_1},\mathrm{seq}\left(\left[\mathit{FLExpr}, \mathit{FLOp}, \mathit{FLExpr}\right]\right)\right)$	&	$\{ \langle \mathit{FLOp}, 1\rangle, \langle \mathit{FLExpr}, 11\rangle\}$\\
-$\mathrm{p}\left(\text{`'},\mathit{FLExpr_2},\mathrm{seq}\left(\left[str, {*}\left(\mathit{FLExpr}\right)\right]\right)\right)$	&	$\{ \langle str, 1\rangle, \langle \mathit{FLExpr}, {*}\rangle\}$\\
+$\mathrm{p}\left(\text{`'},\mathit{FLExpr_2},\mathrm{seq}\left(\left[str, \star \left(\mathit{FLExpr}\right)\right]\right)\right)$	&	$\{ \langle str, 1\rangle, \langle \mathit{FLExpr}, {*}\rangle\}$\\
 $\mathrm{p}\left(\text{`'},\mathit{FLExpr_3},\mathrm{seq}\left(\left[\mathit{FLExpr}, \mathit{FLExpr}, \mathit{FLExpr}\right]\right)\right)$	&	$\{ \langle \mathit{FLExpr}, 111\rangle\}$\\
 \hline\end{tabular}\end{center}
 
@@ -58,15 +58,15 @@ $\mathrm{p}\left(\text{`'},\mathit{FLExpr_3},\mathrm{seq}\left(\left[\mathit{FLE
 
 Production rules are matched as follows (ANF on the left, master grammar on the right):
 \begin{eqnarray*}
-\mathrm{p}\left(\text{`'},\mathit{FLPrg},{*}\left(\mathit{FLFun}\right)\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{program},{+}\left(\mathit{function}\right)\right) \\
-\mathrm{p}\left(\text{`'},\mathit{FLFun},\mathrm{seq}\left(\left[str, {*}\left(str\right), \mathit{FLExpr}\right]\right)\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[str, {+}\left(str\right), \mathit{expression}\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{FLPrg},\star \left(\mathit{FLFun}\right)\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{program},\plus \left(\mathit{function}\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{FLFun},\mathrm{seq}\left(\left[str, \star \left(str\right), \mathit{FLExpr}\right]\right)\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{function},\mathrm{seq}\left(\left[str, \plus \left(str\right), \mathit{expression}\right]\right)\right) \\
 \mathrm{p}\left(\text{`'},\mathit{FLExpr},\mathit{FLExpr_1}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{binary}\right) \\
 \mathrm{p}\left(\text{`'},\mathit{FLExpr},\mathit{FLExpr_2}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{apply}\right) \\
 \mathrm{p}\left(\text{`'},\mathit{FLExpr},\mathit{FLExpr_3}\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},\mathit{conditional}\right) \\
 \mathrm{p}\left(\text{`'},\mathit{FLExpr},str\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},str\right) \\
 \mathrm{p}\left(\text{`'},\mathit{FLExpr},int\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{expression},int\right) \\
 \mathrm{p}\left(\text{`'},\mathit{FLExpr_1},\mathrm{seq}\left(\left[\mathit{FLExpr}, \mathit{FLOp}, \mathit{FLExpr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{binary},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{operator}, \mathit{expression}\right]\right)\right) \\
-\mathrm{p}\left(\text{`'},\mathit{FLExpr_2},\mathrm{seq}\left(\left[str, {*}\left(\mathit{FLExpr}\right)\right]\right)\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[str, {+}\left(\mathit{expression}\right)\right]\right)\right) \\
+\mathrm{p}\left(\text{`'},\mathit{FLExpr_2},\mathrm{seq}\left(\left[str, \star \left(\mathit{FLExpr}\right)\right]\right)\right) & \Bumpeq & \mathrm{p}\left(\text{`'},\mathit{apply},\mathrm{seq}\left(\left[str, \plus \left(\mathit{expression}\right)\right]\right)\right) \\
 \mathrm{p}\left(\text{`'},\mathit{FLExpr_3},\mathrm{seq}\left(\left[\mathit{FLExpr}, \mathit{FLExpr}, \mathit{FLExpr}\right]\right)\right) & \bumpeq & \mathrm{p}\left(\text{`'},\mathit{conditional},\mathrm{seq}\left(\left[\mathit{expression}, \mathit{expression}, \mathit{expression}\right]\right)\right) \\
 \end{eqnarray*}
 This yields the following nominal mapping:
@@ -82,18 +82,18 @@ This yields the following nominal mapping:
  Which is exercised with these grammar transformation steps:
 
 {\footnotesize\begin{itemize}
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{FLFun},\mathit{function}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{FLExpr_2},\mathit{apply}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{FLPrg},\mathit{program}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{FLExpr},\mathit{expression}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{FLExpr_3},\mathit{conditional}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{FLOp},\mathit{operator}\right)$
-\item $\mathbf{renameN\text{-}renameN}\left(\mathit{FLExpr_1},\mathit{binary}\right)$
+\item \textbf{renameN-renameN} $\mathit{FLFun}$ to $\mathit{function}$
+\item \textbf{renameN-renameN} $\mathit{FLExpr_2}$ to $\mathit{apply}$
+\item \textbf{renameN-renameN} $\mathit{FLPrg}$ to $\mathit{program}$
+\item \textbf{renameN-renameN} $\mathit{FLExpr}$ to $\mathit{expression}$
+\item \textbf{renameN-renameN} $\mathit{FLExpr_3}$ to $\mathit{conditional}$
+\item \textbf{renameN-renameN} $\mathit{FLOp}$ to $\mathit{operator}$
+\item \textbf{renameN-renameN} $\mathit{FLExpr_1}$ to $\mathit{binary}$
 \end{itemize}}
 
 \section{Structural resolution}
 {\footnotesize\begin{itemize}
-\item $\mathbf{narrow\text{-}widen}\left(\mathrm{in}(program),\\{*}\left(\mathit{function}\right),\\{+}\left(\mathit{function}\right)\right)$
-\item $\mathbf{narrow\text{-}widen}\left(\mathrm{in}(function),\\{*}\left(str\right),\\{+}\left(str\right)\right)$
-\item $\mathbf{narrow\text{-}widen}\left(\mathrm{in}(apply),\\{*}\left(\mathit{expression}\right),\\{+}\left(\mathit{expression}\right)\right)$
+\item \textbf{narrow-widen}  in $\mathit{program}$\\$\star \left(\mathit{function}\right)$\\$\plus \left(\mathit{function}\right)$
+\item \textbf{narrow-widen}  in $\mathit{function}$\\$\star \left(str\right)$\\$\plus \left(str\right)$
+\item \textbf{narrow-widen}  in $\mathit{apply}$\\$\star \left(\mathit{expression}\right)$\\$\plus \left(\mathit{expression}\right)$
 \end{itemize}}

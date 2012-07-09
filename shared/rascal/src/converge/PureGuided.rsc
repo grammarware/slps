@@ -61,7 +61,7 @@ map[str,list[str]] srcFiles = (
 );
 
 list[str] sources =
-	//["jaxb"]; list[str] other =
+	//["xsd"]; list[str] other =
 	["antlr","dcg","ecore","emf","jaxb","om","python","rascal-a","rascal-c","sdf","txl","xsd"]
 	-
 	["ecore"];
@@ -276,7 +276,6 @@ str ppeq(str name, NameMatch nm, BGFProdList ps1, BGFProdList ps2)
 {
 	str res = "Production rules are matched as follows (ANF on the left, master grammar on the right):
 	'\\begin{eqnarray*}\n";
-	ups1 = ps1;
 	for (p1 <- ps1)
 	{
 		p2 = assumeRenamings([p1],nm)[0];
@@ -288,12 +287,12 @@ str ppeq(str name, NameMatch nm, BGFProdList ps1, BGFProdList ps2)
 			{
 				report(3,"Matched with <p3>!");
 				res += "<ppl(p1)> & \\bumpeq & <ppl(p3)> \\\\\n";
-				ups1 -= p1;
+				ps1 -= p1;
 				ps2 -= p3;
 				break;
 			}
-		if (p1 in ups1)
-			for(p3 <- ps2)
+		if (p1 in ps1)
+			for(p3 <- ps2, production(_,n,_) := p3, n == p2.lhs)
 				if (analyse::Prodsigs::weqps(p1,p3))
 				{
 					nms = analyse::Prodsigs::makenamematches(p2,p3);
@@ -302,11 +301,11 @@ str ppeq(str name, NameMatch nm, BGFProdList ps1, BGFProdList ps2)
 						if (conflicted(nnm,nm)) continue;
 					report(3,"Weakly matched with <p3>!");
 					res += "<ppl(p1)> & \\Bumpeq & <ppl(p3)> \\\\\n";
-					ups1 -= p1;
+					ps1 -= p1;
 					ps2 -= p3;
 					break;
 				}
-		if (p1 in ups1)
+		if (p1 in ps1)
 			res += "<ppl(p1)> &  & \\varnothing \\\\\n";
 	}
 	for (p4 <- ps2)
