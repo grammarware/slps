@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module converge::Guided
+module converge::GuidedOld
 
 import IO;
 import Set;
