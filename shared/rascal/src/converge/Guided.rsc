@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module converge::PureGuided
+module converge::Guided
 
 import syntax::BGF;
 import syntax::XBGF;
