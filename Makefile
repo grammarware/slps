@@ -8,7 +8,7 @@ rebuild-xbgf:
 	cd topics/transformation/xbgf; make rebuild
 
 test:
-	make build
+	cd topics/transformation/xbgf/tests && make testfull
 
 clean:
 	rm -f *~

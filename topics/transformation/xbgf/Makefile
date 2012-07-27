@@ -1,7 +1,7 @@
 build:
 	cd tests && make build
 	cd apps && make build
-	cd ../../convergence/fl && make build
+	cd ../../convergence/xbgf/fl && make build
 
 rebuild:
 	make clean
@@ -10,11 +10,11 @@ rebuild:
 test:
 	cd apps && make test
 	cd tests && make test
-	cd ../../convergence/fl && make test
+	cd ../../convergence/xbgf/fl && make test
 
 clean:
 	rm -f *~
 	cd tests && make clean
 	cd apps && make clean
-	cd ../../convergence/fl && make clean
+	cd ../../convergence/xbgf/fl && make clean
 

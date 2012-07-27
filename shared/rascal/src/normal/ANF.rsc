@@ -69,7 +69,7 @@ CBGFSequence normAllStages(BGFGrammar gr)
 		}
 	}
 	//iprintln(c1);
-	// now we can have constuctions like this:
+	// now we can have constructions like this:
 	//   expression ::= (expression1 | expression2 | expression3 | expression | id | number) ;
 	// with cleverly hidden reflexive chain rules
 	//for (p <- g.prods, production(str l,str n,choice(L)) := p, [*L1,nonterminal(n),*L2] := L)

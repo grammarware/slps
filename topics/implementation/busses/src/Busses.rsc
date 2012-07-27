@@ -10,7 +10,7 @@ import ParseTree;
 start syntax System = Line+;
 syntax Line = Num ":" {Id ","}+ "." ;
 layout WS = [\ \t\n\r]* !>> [\ \t\n\r];
-lexical Id = [A-Za-z][A-Za-zŸŠš\-\ ]+[A-Za-z] !>> [A-Za-z];
+lexical Id = [A-Za-z][A-Za-zŸŠš§\-\ ]+[A-Za-z] !>> [A-Za-z];
 lexical Num = [0-9]+ !>> [0-9];
 
 rel[Id,Id] extractGraph(loc source) = 
@@ -32,7 +32,6 @@ void synthesizeDotGraph(loc source, loc target)
 
 public void main()
 {
-	//parse(#start[System],|home:///projects/slps/topics/implementation/busses/Koblenz.bus|);
 	synthesizeDotGraph(	|home:///projects/slps/topics/implementation/busses/Koblenz.bus|,
 						|home:///projects/slps/topics/implementation/busses/Koblenz.dot|);
 }
