@@ -1,7 +1,0 @@
-script: "make test"
-notifications:
-  email:
-    recipients:
-      - vadim@grammarware.net
-    on_success: never
-    on_failure: always
