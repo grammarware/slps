@@ -28,14 +28,14 @@ syntax MegaRel
 	| ID "(" ID ")" "|-\>" ID
 	;
 syntax MegaBin
-    = ( "\<"  | "subsetOf" )
-    | ( ":"  | "elementOf" )
-    | ( "@"  | "partOf" )
-    | ( "="  | "correspondsTo" )
-    | ( "~\>" | "dependsOn" | "refersTo" )
-    | ( "-|" | "conformsTo" )
-    | ( "=\>" | "realizationOf" | "descriptionOf" | "definitionOf" )
-    ;
+	= ( "\<"  | "subsetOf" )
+	| ( ":"  | "elementOf" )
+	| ( "@"  | "partOf" )
+	| ( "="  | "correspondsTo" )
+	| ( "~\>" | "dependsOn" | "refersTo" )
+	| ( "-|" | "conformsTo" )
+	| ( "=\>" | "realizationOf" | "descriptionOf" | "definitionOf" )
+	;
 syntax MegaFun = ":" ID "-\>" ID;
 lexical ID = @category="Variable"
  ([a-zA-z] [a-zA-Z0-9_]* !>> [a-zA-Z0-9_]) \ Keywords ;
@@ -46,7 +46,6 @@ keyword Keywords
 syntax STRING = [\"] ![\"]* [\"]; //"
 lexical MegaDesc = @category="Comment" "{-" MegaDescEl* s "-}";
 lexical MegaDescEl = ![\-] | [\-] !>> [}];
-
 layout L = LAYOUT* !>> [\ \t\n\r]; // !>> "--";
 lexical LAYOUT = [\ \t\n\r];
 syntax MegaDot = "." MegaComment? ;
