@@ -1,13 +1,13 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module MegaGrammar
 
-start syntax MegaModel = MegaDesc? MegaHeader MegaInclude* MegaDecl+ L;
-syntax MegaHeader = "megamodel" MegaURI ".";
+start syntax MegaModel = MegaDesc? MegaHeader MegaInclude* MegaDecl+;
+syntax MegaHeader = "megamodel" MegaURI name MegaDot;
 syntax MegaURI = {ID "/"}+;
-syntax MegaInclude = "include" MegaURI ".";
+syntax MegaInclude = "include" MegaURI name MegaDot;
 syntax MegaDecl
-	= MegaModifier? MegaEntity "."
-	| MegaRel "."
+	= MegaModifier? MegaEntity MegaDot
+	| MegaRel MegaDot
 	;
 syntax MegaModifier = "local" | "variable" ;
 syntax MegaEntity
@@ -39,11 +39,10 @@ keyword Keywords
 	| "subsetOf" | "elementOf" | "partOf" | "correspondsTo" | "dependsOn" | "refersTo" | "conformsTo" | "realizationOf" | "descriptionOf" | "definitionOf"
 	;
 syntax STRING = [\"] ![\"]* [\"]; //"
-lexical MegaDesc = "{-" MegaDescEl* "-}";
+lexical MegaDesc = "{-" MegaDescEl* s "-}";
 lexical MegaDescEl = ![\-] | [\-] !>> [}];
 
-layout L = LAYOUT* !>> [\ \t\n\r] !>> "--";
-lexical LAYOUT
-	= [\ \t\n\r]
-	| @category="Comment" "--" ![\n]* $
-	;
+layout L = LAYOUT* !>> [\ \t\n\r]; // !>> "--";
+lexical LAYOUT = [\ \t\n\r];
+syntax MegaDot = "." MegaComment? ;
+lexical MegaComment = @category="Comment" "--" ![\n]* $ ;
