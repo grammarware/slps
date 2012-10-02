@@ -23,7 +23,7 @@ syntax MegaEntity
 	;
 syntax MegaArtifact = "Artifact" | "File" | "Language" | "Technology" | "Fragment" | "ObjectGraph" | "Program" | "Library";
 syntax MegaRel
-	= ID MegaBin ID 
+	= ID MegaBin ID
 	| ID MegaFun
 	| ID "(" ID ")" "|-\>" ID
 	;
@@ -37,14 +37,14 @@ syntax MegaBin
     | ( "=\>" | "realizationOf" | "descriptionOf" | "definitionOf" )
     ;
 syntax MegaFun = ":" ID "-\>" ID;
-lexical ID = //@category="Constant"
+lexical ID = @category="Variable"
  ([a-zA-z] [a-zA-Z0-9_]* !>> [a-zA-Z0-9_]) \ Keywords ;
 keyword Keywords 
 	= "megamodel" | "include" | "local" | "variable" | "Artifact" | "File" | "Language" | "Technology" | "Fragment" | "ObjectGraph" | "Program" | "Library"
 	| "subsetOf" | "elementOf" | "partOf" | "correspondsTo" | "dependsOn" | "refersTo" | "conformsTo" | "realizationOf" | "descriptionOf" | "definitionOf"
 	;
 syntax STRING = [\"] ![\"]* [\"]; //"
-lexical MegaDesc = "{-" MegaDescEl* s "-}";
+lexical MegaDesc = @category="Comment" "{-" MegaDescEl* s "-}";
 lexical MegaDescEl = ![\-] | [\-] !>> [}];
 
 layout L = LAYOUT* !>> [\ \t\n\r]; // !>> "--";

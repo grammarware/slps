@@ -26,4 +26,8 @@ data MegaRelation
 	| descriptionOf(str x, str y)
 	| definitionOf(str x, str y)
 	| mapsTo(str f, str x, str y)
+	| inputOf(str x, str y)
+	| hasOutput(str x, str y)
+	| domainOf(str x, str y)
+	| hasRange(str x, str y)
 	;
