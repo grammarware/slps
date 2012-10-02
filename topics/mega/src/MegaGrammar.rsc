@@ -10,12 +10,17 @@ syntax MegaDecl
 	| MegaRel MegaDot
 	;
 syntax MegaModifier = "local" | "variable" ;
+//// VVZ: The original MegaL definition used comma-separation lists
+// syntax MegaEntity
+// 	= MegaArtifact MaybePlus {MegaIdsBin ","}+
+// 	| "Function" MaybePlus {MegaIdsFun ","}+
+// 	;
+// syntax MegaIdsBin = ID (MegaBin ID)?;
+// syntax MegaIdsFun = ID MegaFun?;
 syntax MegaEntity
-	= MegaArtifact "+"? {MegaIdsBin ","}+
-	| "Function" "+"? {MegaIdsFun ","}+
+	= MegaArtifact MaybePlus ID id (MegaBin ID)?
+	| "Function" MaybePlus ID id MegaFun?
 	;
-syntax MegaIdsBin = ID (MegaBin ID)?;
-syntax MegaIdsFun = ID MegaFun?;
 syntax MegaArtifact = "Artifact" | "File" | "Language" | "Technology" | "Fragment" | "ObjectGraph" | "Program" | "Library";
 syntax MegaRel
 	= ID MegaBin ID 
@@ -46,3 +51,4 @@ layout L = LAYOUT* !>> [\ \t\n\r]; // !>> "--";
 lexical LAYOUT = [\ \t\n\r];
 syntax MegaDot = "." MegaComment? ;
 lexical MegaComment = @category="Comment" "--" ![\n]* $ ;
+syntax MaybePlus = "+"?;

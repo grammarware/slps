@@ -8,7 +8,7 @@ data MegaDeclaration
 	| language(MegaMod m, str id, bool plus)
 	| technology(MegaMod m, str id, bool plus)
 	| fragment(MegaMod m, str id, bool plus)
-	| objectgraph(MegaMod m, str id, bool plus)
+	| objectGraph(MegaMod m, str id, bool plus)
 	| program(MegaMod m, str id, bool plus)
 	| library(MegaMod m, str id, bool plus)
 	| function(MegaMod m, str id, bool plus)
