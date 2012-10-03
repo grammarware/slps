@@ -18,9 +18,10 @@ def isnotalpha(x):
 def term(g):
 	ts = []
 	for p in g.prods:
-		for n in p.expr.wrapped.getXml().findall('.//terminal'):
-			if n.text not in ts:
-				ts.append(n.text)
+		if p.expr.wrapped:
+			for n in p.expr.wrapped.getXml().findall('.//terminal'):
+				if n.text not in ts:
+					ts.append(n.text)
 	return ts
 def defd(g):
 	nts = []
@@ -38,9 +39,10 @@ def nrused(g):
 	# non-recursively used
 	nts = []
 	for p in g.prods:
-		for n in p.expr.wrapped.getXml().findall('.//nonterminal'):
-			if (n.text not in nts) and (n.text != p.nt):
-				nts.append(n.text)
+		if p.expr.wrapped:
+			for n in p.expr.wrapped.getXml().findall('.//nonterminal'):
+				if (n.text not in nts) and (n.text != p.nt):
+					nts.append(n.text)
 	return nts
 
 if __name__ == "__main__":
