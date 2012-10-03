@@ -3,7 +3,7 @@ module MegaParser
 
 import structure::MegaGrammar;
 import structure::MegaADT;
-import io::ReadMegaL;
+import io::MegaL;
 import Ambiguity;
 import ParseTree;
 import String;
@@ -17,6 +17,8 @@ public void main(list[str] args)
 		println("Getting a parse tree of <f>...");
 		readPT(base+f);
 		println("Getting an abstract syntax tree of <f>...");
-		readAST(base+f);
+		AMegaModel ast = readAST(base+f);
+		println("Serialising an abstract syntax tree of <f>...");
+		writeAST(base+(f+".back"),ast);
 	}
 }
