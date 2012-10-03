@@ -48,6 +48,6 @@ lexical MegaDesc = @category="Comment" "{-" MegaDescEl* s "-}";
 lexical MegaDescEl = ![\-] | [\-] !>> [}];
 layout L = LAYOUT* !>> [\ \t\n\r]; // !>> "--";
 lexical LAYOUT = [\ \t\n\r];
-syntax MegaDot = "." MegaComment? ;
+syntax MegaDot = "." MegaComment? c ;
 lexical MegaComment = @category="Comment" "--" ![\n]* $ ;
 syntax MaybePlus = "+"?;

@@ -14,82 +14,89 @@ str exportmega(megamodel(str name, str desc, list[str] incs, list[MegaDeclaratio
 	'
 	'<for(str i <- incs){>include <i> .
 	'<}>
-	'<for(MegaDeclaration d <- decls){><exportdeclR(d,rels)> .
+	'<for(MegaDeclaration d <- decls){><exportdeclR(d,rels)>
 	'<}>
-	'<for(MegaRelation r <- rels, r notin processed){><exportrelR(r,rels)> .
+	'<for(MegaRelation r <- rels, r notin processed){><exportrelR(r,rels)>
 	'<}>";
 
-str exportdecl(artifact(MegaMod m, str id, bool plus)) = "<exportmod(m)>Artifact<if(plus){>+<}> <id>";
-str exportdecl(file(MegaMod m, str id, bool plus)) = "<exportmod(m)>File<if(plus){>+<}> <id>";
-str exportdecl(language(MegaMod m, str id, bool plus)) = "<exportmod(m)>Language<if(plus){>+<}> <id>";
-str exportdecl(technology(MegaMod m, str id, bool plus)) = "<exportmod(m)>Technology<if(plus){>+<}> <id>";
-str exportdecl(fragment(MegaMod m, str id, bool plus)) = "<exportmod(m)>Fragment<if(plus){>+<}> <id>";
-str exportdecl(objectGraph(MegaMod m, str id, bool plus)) = "<exportmod(m)>ObjectGraph<if(plus){>+<}> <id>";
-str exportdecl(program(MegaMod m, str id, bool plus)) = "<exportmod(m)>Program<if(plus){>+<}> <id>";
-str exportdecl(library(MegaMod m, str id, bool plus)) = "<exportmod(m)>Library<if(plus){>+<}> <id>";
-str exportdecl(function(MegaMod m, str id, bool plus)) = "<exportmod(m)>Function<if(plus){>+<}> <id>";
+str exportdecl(artifact(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Artifact<if(plus){>+<}> <id><displayDot(comment)>";
+str exportdecl(file(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>File<if(plus){>+<}> <id><displayDot(comment)>";
+str exportdecl(language(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Language<if(plus){>+<}> <id><displayDot(comment)>";
+str exportdecl(technology(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Technology<if(plus){>+<}> <id><displayDot(comment)>";
+str exportdecl(fragment(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Fragment<if(plus){>+<}> <id><displayDot(comment)>";
+str exportdecl(objectGraph(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>ObjectGraph<if(plus){>+<}> <id><displayDot(comment)>";
+str exportdecl(program(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Program<if(plus){>+<}> <id><displayDot(comment)>";
+str exportdecl(library(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Library<if(plus){>+<}> <id><displayDot(comment)>";
+str exportdecl(function(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Function<if(plus){>+<}> <id><displayDot(comment)>";
 default str exportdecl(MegaDeclaration d) = "UNKNOWN DECL";
+
+str displayDot("") = " .";
+default str displayDot(str c) = " . -- <c>";
 
 str exportmod(local()) = "local ";
 str exportmod(variable()) = "variable "; 
 str exportmod(MegaMod m) = "";
 
-str exportrel(subsetOf(str x, str y)) = "<x> subsetOf <y>";
-str exportrel(elementOf(str x, str y)) = "<x> elementOf <y>";
-str exportrel(partOf(str x, str y)) = "<x> partOf <y>";
-str exportrel(correspondsTo(str x, str y)) = "<x> correspondsTo <y>";
-str exportrel(dependsOn(str x, str y)) = "<x> dependsOn <y>";
-str exportrel(refersTo(str x, str y)) = "<x> refersTo <y>";
-str exportrel(conformsTo(str x, str y)) = "<x> conformsTo <y>";
-str exportrel(realizationOf(str x, str y)) = "<x> realizationOf <y>";
-str exportrel(descriptionOf(str x, str y)) = "<x> descriptionOf <y>";
-str exportrel(definitionOf(str x, str y)) = "<x> definitionOf <y>";
-str exportrel(inputOf(str x, str y)) = "<x> inputOf <y>";
-str exportrel(hasOutput(str x, str y)) = "<x> hasOutput <y>";
-str exportrel(domainOf(str x, str y)) = "<x> domainOf <y>";
-str exportrel(hasRange(str x, str y)) = "<x> hasRange <y>";
+str exportrel(subsetOf(str x, str y, str comment)) = "<x> subsetOf <y><displayDot(comment)>";
+str exportrel(elementOf(str x, str y, str comment)) = "<x> elementOf <y><displayDot(comment)>";
+str exportrel(partOf(str x, str y, str comment)) = "<x> partOf <y><displayDot(comment)>";
+str exportrel(correspondsTo(str x, str y, str comment)) = "<x> correspondsTo <y><displayDot(comment)>";
+str exportrel(dependsOn(str x, str y, str comment)) = "<x> dependsOn <y><displayDot(comment)>";
+str exportrel(refersTo(str x, str y, str comment)) = "<x> refersTo <y><displayDot(comment)>";
+str exportrel(conformsTo(str x, str y, str comment)) = "<x> conformsTo <y><displayDot(comment)>";
+str exportrel(realizationOf(str x, str y, str comment)) = "<x> realizationOf <y><displayDot(comment)>";
+str exportrel(descriptionOf(str x, str y, str comment)) = "<x> descriptionOf <y><displayDot(comment)>";
+str exportrel(definitionOf(str x, str y, str comment)) = "<x> definitionOf <y><displayDot(comment)>";
+str exportrel(inputOf(str x, str y, str comment)) = "<x> inputOf <y><displayDot(comment)>";
+str exportrel(hasOutput(str x, str y, str comment)) = "<x> hasOutput <y><displayDot(comment)>";
+str exportrel(domainOf(str x, str y, str comment)) = "<x> domainOf <y><displayDot(comment)>";
+str exportrel(hasRange(str x, str y, str comment)) = "<x> hasRange <y><displayDot(comment)>";
 default str exportrel(MegaRelation r) = "UNKNOWN REL";
 
 str exportdeclR(MegaDeclaration d, list[MegaRelation] rels)
 {
 	str s = "";
+	if (d.comment != "") return exportdecl(d); // if there is a comment, we need to stand on our own
 	for (r <- rels, r.x == d.id)
-		if (domainOf(a,b) := r, /hasRange(b,str c) := rels)
+		if (domainOf(a,b,_) := r, /hasRange(b,str c,dot) := rels)
 		{
-			s = " : <a> -\> <c>";
+			s = " : <a> -\> <c><displayDot(dot)>";
 			processed += r;
-			processed += hasRange(b,c);
+			processed += hasRange(b,c,dot);
 			break;
 		}
-		elseif (hasRange(a,b) := r, /domainOf(c,a) := rels)
+		elseif (hasRange(a,b,_) := r, /domainOf(c,a,dot) := rels)
 		{
-			s = " : <c> -\> <b>";
+			s = " : <c> -\> <b><displayDot(dot)>";
 			processed += r;
-			processed += domainOf(c,a);
+			processed += domainOf(c,a,dot);
 			break;
 		}
 		else
 		{
-			s = replaceFirst(exportrel(r),"<r.x> "," ");
+			s = exportrel(r);
 			processed += r;
 			break;
 		}
-	return exportdecl(d)+s;
+	if (s=="")
+		return exportdecl(d);
+	else
+		return replaceFirst(exportdecl(d)," .","")+replaceFirst(s,"<d.id>","");
 }
 
 str exportrelR(MegaRelation r, list[MegaRelation] rels)
 {
-	if (inputOf(str a, str b) := r, /hasOutput(b,str c) := rels)
+	if (inputOf(str a, str b,_) := r, /hasOutput(b,str c, str d) := rels)
 	{
 		processed += r;
-		processed += hasOutput(b,c);
-		return "<b>(<a>) |-\> <c>";
+		processed += hasOutput(b,c,d);
+		return "<b>(<a>) |-\> <c><displayDot(d)>";
 	}
-	elseif (hasOutput(a,b) := r, /inputOf(c,a) := rels)
+	elseif (hasOutput(a,b,_) := r, /inputOf(c,a,d) := rels)
 	{
 		processed += r;
-		processed += inputOf(c,a);
-		return "<a>(<c>) |-\> <b>";
+		processed += inputOf(c,a,d);
+		return "<a>(<c>) |-\> <b><displayDot(d)>";
 	}
 	else
 		return exportrel(r);
