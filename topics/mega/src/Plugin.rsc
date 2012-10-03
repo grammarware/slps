@@ -1,7 +1,7 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module Plugin
 
-import MegaGrammar;
+import structure::MegaGrammar;
 
 import util::IDE;
 import ParseTree;

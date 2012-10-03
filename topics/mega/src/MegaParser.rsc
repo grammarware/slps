@@ -1,7 +1,7 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module MegaParser
 
-import MegaGrammar;
+import structure::MegaGrammar;
 import Ambiguity;
 import ParseTree;
 import String;

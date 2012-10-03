@@ -1,8 +1,8 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module MegaImplode
 
-import MegaADT;
-import MegaGrammar;
+import structure::MegaADT;
+import structure::MegaGrammar;
 import IO;
 import ParseTree;
 import String;

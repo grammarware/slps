@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module MegaGrammar
+module structure::MegaGrammar
 
 start syntax MegaModel = MegaDesc? MegaHeader MegaInclude* MegaDecl+;
 syntax MegaHeader = "megamodel" MegaURI name MegaDot;
