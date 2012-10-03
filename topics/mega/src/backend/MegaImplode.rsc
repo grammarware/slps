@@ -1,20 +1,9 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module MegaImplode
+module backend::MegaImplode
 
 import structure::MegaADT;
 import structure::MegaGrammar;
-import IO;
-import ParseTree;
 import String;
-
-public void main() = main([]);
-
-public void main(list[str] argv)
-{
-	// iprintln(mapmegal(parse(#MegaModel,trim(readFile(|cwd:///../tests/technology.megal|)))));
-	//iprintln(mapmegal(parse(#MegaModel,trim(readFile(|cwd:///../tests/read.megal|)))));
-	iprintln(mapmegal(parse(#MegaModel,trim(readFile(|project://megal/tests/deserialization.megal|)))));
-}
 
 AMegaModel mapmegal((MegaModel)`<MegaHeader h><MegaInclude* ins><MegaDecl+ ds>`) = makemegal("<h.name>","",ins,ds);
 AMegaModel mapmegal((MegaModel)`<MegaDesc d><MegaHeader h><MegaInclude* ins><MegaDecl+ ds>`) = makemegal("<h.name>",trim("<d.s>"),ins,ds);
