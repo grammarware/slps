@@ -62,10 +62,10 @@
 					<xsl:text>,	see </xsl:text>
 					<xsl:choose>
 						<xsl:when test="substring-after($zoo,'_dev/')='tank.xml'">
-							<a href="http://slps.sourceforge.net/tank/">Grammar Tank</a>
+							<a href="http://grammarware.github.com/tank/">Grammar Tank</a>
 						</xsl:when>
 						<xsl:otherwise>
-							<a href="http://slps.sourceforge.net/zoo/">Grammar Zoo</a>
+							<a href="http://grammarware.github.com/zoo/">Grammar Zoo</a>
 						</xsl:otherwise>
 					</xsl:choose>
 					<xsl:text> for details. </xsl:text>

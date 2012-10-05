@@ -1,16 +1,16 @@
-#!/usr/local/bin/python
+#!/Library/Frameworks/Python.framework/Versions/3.1/bin/python3
 # -*- coding: utf-8 -*-
 import os,sys
 sys.path.append(os.getcwd().split('projects')[0]+'projects/slps/shared/python')
-import BGF
+import BGF3
 
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
-		print 'This tool generates an XBGF script to horizontalize all vertical nonterminals present in the grammar.'
-		print 'Usage:'
-		print '      '+sys.argv[0]+' <bgf-input> <xbgf-output'
+		print('This tool generates an XBGF script to horizontalize all vertical nonterminals present in the grammar.')
+		print('Usage:')
+		print('      '+sys.argv[0]+' <bgf-input> <xbgf-output')
 		sys.exit(1)
-	bgf = BGF.Grammar()
+	bgf = BGF3.Grammar()
 	bgf.parse(sys.argv[1])
 	single = []
 	multiple = []

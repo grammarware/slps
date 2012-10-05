@@ -126,6 +126,10 @@ class Expression:
 			self.wrapped = Plus()
 		elif expr.tag == 'star':
 			self.wrapped = Star()
+		elif expr.tag == 'seplistplus':
+			self.wrapped = SepListPlus()
+		elif expr.tag == 'sepliststar':
+			self.wrapped = SepListStar()
 		else:
 			print("Don't know how to parse",expr.tag)
 			return
