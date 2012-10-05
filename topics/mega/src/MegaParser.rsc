@@ -20,5 +20,7 @@ public void main(list[str] args)
 		AMegaModel ast = readAST(base+f);
 		println("Serialising an abstract syntax tree of <f>...");
 		writeAST(base+(f+".back"),ast);
+		println("Generating a Graphviz digraph for <f>...");
+		writeDot(base+(f+".dot"),ast);
 	}
 }

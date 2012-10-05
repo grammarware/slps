@@ -1,6 +1,7 @@
 all:
 	make build
 	make test
+	cd tests && make all
 
 build:
 	cp ../../../101repo/capabilities/Object_XML_mapping/MegaL/*.megal tests
