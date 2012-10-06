@@ -5,6 +5,15 @@ import structure::MegaADT;
 import structure::MegaGrammar;
 import String;
 
+import io::MegaL;
+import IO;
+
+public void main()
+{
+	ast = readAST(|project://megal/examples/guided.megal|);
+	writeFile(|project://megal/examples/guided.dot|,exportmega(ast));
+}
+
 str exportmega(megamodel(str name, str desc, list[str] incs, list[MegaDeclaration] decls, list[MegaRelation] rels))
 	="digraph G {
 	'<for(MegaDeclaration d <- decls){><exportdecl(d)>
@@ -22,13 +31,18 @@ str exportdecl(objectGraph(MegaMod m, str id, bool plus, str comment)) = "<expor
 str exportdecl(program(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m,id,"blue")>";
 str exportdecl(library(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m,id,"blue")>";
 str exportdecl(function(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m,id,"green")>";
-default str exportdecl(MegaDeclaration d) = "UNKNOWN DECL";
+str exportdecl(functionapp(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m,id,"darkgreen")>";
+default str exportdecl(MegaDeclaration d) = "UNKNOWN DECL <d>";
 
 str exportmod(local(),str id, str col) = makenode(id,col,"dashed");
 str exportmod(variable(),str id, str col) = makenode(id,col,"dotted");
 str exportmod(nomod(),str id,str col) = makenode(id,col,"solid");
 
-str makenode(str id, str col, str style) = "\"<id>\" [label=\"<id>\",shape=box,style=\"filled,<style>\",fillcolor=\"<col>\"];";
+str makenode(str id, str col, str style) = "\"<id>\" [label=\"<id>\",shape=box,style=\"filled,<style>\",fillcolor=\"<col>\"<fliptextcolor(col)>];";
+
+str fliptextcolor("blue") = ",fontcolor=\"white\"";
+str fliptextcolor("darkgreen") = ",fontcolor=\"white\"";
+default str fliptextcolor(str c) = "";
 
 str exportrel(subsetOf(str x, str y, str comment)) = makeedge(x,"subsetOf",y);
 str exportrel(elementOf(str x, str y, str comment)) = makeedge(x,"elementOf",y);

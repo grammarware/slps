@@ -63,6 +63,10 @@ MegaRelation map1rel("=\>", str x, str y, str comment) = definitionOf(x,y,commen
 MegaRelation map1rel("realizationOf", str x, str y, str comment) = realizationOf(x,y,comment);
 MegaRelation map1rel("descriptionOf", str x, str y, str comment) = descriptionOf(x,y,comment);
 MegaRelation map1rel("definitionOf", str x, str y, str comment) = definitionOf(x,y,comment);
+MegaRelation map1rel("inputOf", str x, str y, str comment) = inputOf(x,y,comment);
+MegaRelation map1rel("hasOutput", str x, str y, str comment) = hasOutput(x,y,comment);
+MegaRelation map1rel("domainOf", str x, str y, str comment) = domainOf(x,y,comment);
+MegaRelation map1rel("hasRange", str x, str y, str comment) = hasRange(x,y,comment);
 default MegaRelation map1rel(str b, str x, str y, str comment) = subsetOf(x,y,comment); // no error report
 
 MegaDeclaration map1decl((MegaEntity)`<MegaArtifact a><MaybePlus plus><ID x><MegaBin _><ID _>`,MegaMod m, str id, str comment)
@@ -77,6 +81,7 @@ MegaDeclaration map1decl((MegaEntity)`<MegaArtifact a><MaybePlus plus><ID _>`,Me
 		case "Language": return language(m,id,isplus(plus),comment);
 		case "Technology": return technology(m,id,isplus(plus),comment);
 		case "Fragment": return fragment(m,id,isplus(plus),comment);
+		case "FunctionApp": return functionapp(m,id,isplus(plus),comment);
 		case "ObjectGraph": return objectGraph(m,id,isplus(plus),comment);
 		case "Program": return program(m,id,isplus(plus),comment);
 		case "Library": return library(m,id,isplus(plus),comment);

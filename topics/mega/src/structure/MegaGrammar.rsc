@@ -21,7 +21,7 @@ syntax MegaEntity
 	= MegaArtifact MaybePlus ID id (MegaBin ID)?
 	| "Function" MaybePlus ID id MegaFun?
 	;
-syntax MegaArtifact = "Artifact" | "File" | "Language" | "Technology" | "Fragment" | "ObjectGraph" | "Program" | "Library";
+syntax MegaArtifact = "Artifact" | "File" | "Language" | "Technology" | "Fragment" | "ObjectGraph" | "Program" | "Library" | "FunctionApp";
 syntax MegaRel
 	= ID MegaBin ID
 	| ID MegaFun
@@ -35,6 +35,7 @@ syntax MegaBin
 	| ( "~\>" | "dependsOn" | "refersTo" )
 	| ( "-|" | "conformsTo" )
 	| ( "=\>" | "realizationOf" | "descriptionOf" | "definitionOf" )
+	| ( "inputOf" | "hasOutput" | "domainOf" | "hasRange" )
 	;
 syntax MegaFun = ":" ID "-\>" ID;
 lexical ID = @category="Variable"

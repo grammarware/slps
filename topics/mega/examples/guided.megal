@@ -1,0 +1,50 @@
+{- The baseline megamodel of the MPM 2012 paper -}
+
+megamodel guided .
+
+variable FunctionApp Xformation1a .
+variable Function Xformation1 .
+variable Artifact XformScript1 .
+variable Artifact Grammar1 .
+variable Language Language1 .
+variable Artifact Program1 .
+variable FunctionApp Xformation2a .
+variable Function Xformation2 .
+variable Artifact XformScript2 .
+FunctionApp GGC1 .
+FunctionApp GGC2 .
+variable Artifact Grammar2 .
+variable Language Language2 .
+variable Artifact Program2 .
+Language XeeBGF .
+Artifact Master .
+Language Intended .
+Function GGC .
+
+Xformation1a elementOf Xformation1 .
+Xformation1a(Grammar1) |-> Master .
+XformScript1 elementOf XeeBGF .
+XformScript1 realizationOf Xformation1 .
+GGC1 elementOf GGC .
+GGC1(Grammar1) |-> XformScript1 .
+Grammar1 definitionOf Language1 .
+Program1 elementOf Language1 .
+Master inputOf GGC1 .
+Grammar1 correspondsTo Master .
+Language1 correspondsTo Intended .
+Program1 correspondsTo Program2 .
+
+Xformation2a elementOf Xformation2 .
+Xformation2a(Grammar2) |-> Master .
+XformScript2 elementOf XeeBGF .
+XformScript2 realizationOf Xformation2 .
+GGC2 elementOf GGC .
+GGC2(Grammar2) |-> XformScript2 .
+Grammar2 definitionOf Language2 .
+Program2 elementOf Language2 .
+Master inputOf GGC2 .
+Grammar2 correspondsTo Master .
+Language2 correspondsTo Intended .
+Program2 correspondsTo Program1 .
+
+Master definitionOf Intended .

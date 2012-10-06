@@ -12,6 +12,7 @@ data MegaDeclaration
 	| program(MegaMod m, str id, bool plus, str comment)
 	| library(MegaMod m, str id, bool plus, str comment)
 	| function(MegaMod m, str id, bool plus, str comment)
+	| functionapp(MegaMod m, str id, bool plus, str comment)
 	;
 data MegaMod = local() | variable() | nomod();
 data MegaRelation
