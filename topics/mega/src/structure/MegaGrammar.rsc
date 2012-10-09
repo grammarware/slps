@@ -9,7 +9,7 @@ syntax MegaDecl
 	= MegaModifier? MegaEntity MegaDot
 	| MegaRel MegaDot
 	;
-syntax MegaModifier = "local" | "variable" ;
+syntax MegaModifier = @category="Constant" "local" | @category="Constant" "variable" ;
 //// VVZ: The original MegaL definition used comma-separation lists
 // syntax MegaEntity
 // 	= MegaArtifact MaybePlus {MegaIdsBin ","}+
