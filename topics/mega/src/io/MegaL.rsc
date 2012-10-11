@@ -3,9 +3,12 @@ module io::MegaL
 
 import structure::MegaGrammar;
 import structure::MegaADT;
+
+import backend::GraphML2MegaL;
 import backend::MegaImplode;
 import backend::MegaExport;
 import backend::MegaDot;
+
 import ParseTree;
 import String;
 import List;
@@ -22,6 +25,8 @@ public void writeAST(loc f, AMegaModel ast) = writeFile(f,backend::MegaExport::e
 
 public void writeDot(loc f, AMegaModel ast) = writeFile(f,backend::MegaDot::exportmega(ast));
 public void writeDot(loc f, AMegaModel ast, list[MegaDeclaration] ds, list[MegaRelation] rs) = writeFile(f,backend::MegaDot::exportmega(ast,ds,rs));
+
+public AMegaModel readYEd(loc f) = backend::GraphML2MegaL::readGraphML(f);
 
 public AMegaModel readFlat(loc f)
 {
