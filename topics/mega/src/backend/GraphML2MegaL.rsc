@@ -3,7 +3,7 @@ module backend::GraphML2MegaL
 
 import structure::MegaADT;
 import lang::xml::DOM;
-//import IO;
+import IO;
 import String;
 
 map[str,str] nodes = ();

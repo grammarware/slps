@@ -43,6 +43,7 @@ lexical ID = @category="Variable"
 keyword Keywords 
 	= "megamodel" | "include" | "local" | "variable" | "Artifact" | "File" | "Language" | "Technology" | "Fragment" | "ObjectGraph" | "Program" | "Library"
 	| "subsetOf" | "elementOf" | "partOf" | "correspondsTo" | "dependsOn" | "refersTo" | "conformsTo" | "realizationOf" | "descriptionOf" | "definitionOf"
+	| "inputOf" | "hasOutput" | "domainOf" | "hasRange"
 	;
 syntax STRING = [\"] ![\"]* [\"]; //"
 lexical MegaDesc = @category="Comment" "{-" MegaDescEl* s "-}";

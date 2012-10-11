@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-@contributor{Ralf LÃ¤mmel - SLT}
+@contributor{Ralf LŠmmel - SLT}
 module TestRalf
 
 import io::MegaL;

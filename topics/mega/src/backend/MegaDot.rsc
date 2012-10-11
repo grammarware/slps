@@ -52,20 +52,6 @@ str fliptextcolor("darkgreen") = ",fontcolor=\"white\"";
 str fliptextcolor("darkslateblue") = ",fontcolor=\"white\"";
 default str fliptextcolor(str c) = "";
 
-str exportrel(subsetOf(str x, str y, _), str line) = makeedge(x,"subsetOf",y,line);
-str exportrel(elementOf(str x, str y, _), str line) = makeedge(x,"elementOf",y,line);
-str exportrel(partOf(str x, str y, _), str line) = makeedge(x,"partOf",y,line);
-str exportrel(correspondsTo(str x, str y, _), str line) = makeedge(x,"correspondsTo",y,line);
-str exportrel(dependsOn(str x, str y, _), str line) = makeedge(x,"dependsOn",y,line);
-str exportrel(refersTo(str x, str y, _), str line) = makeedge(x,"refersTo",y,line);
-str exportrel(conformsTo(str x, str y, _), str line) = makeedge(x,"conformsTo",y,line);
-str exportrel(realizationOf(str x, str y, _), str line) = makeedge(x,"realizationOf",y,line);
-str exportrel(descriptionOf(str x, str y, _), str line) = makeedge(x,"descriptionOf",y,line);
-str exportrel(definitionOf(str x, str y, _), str line) = makeedge(x,"definitionOf",y,line);
-str exportrel(inputOf(str x, str y, _), str line) = makeedge(x,"inputOf",y,line);
-str exportrel(hasOutput(str x, str y, _), str line) = makeedge(x,"hasOutput",y,line);
-str exportrel(domainOf(str x, str y, _), str line) = makeedge(x,"domainOf",y,line);
-str exportrel(hasRange(str x, str y, _), str line) = makeedge(x,"hasRange",y,line);
-default str exportrel(MegaRelation r) = "UNKNOWN REL";
+str exportrel(MegaRelation r, str line) = makeedge(r.x,backend::MegaHack::nameOf(r),r.y,line);
 
 str makeedge(str x, str f, str y, str line) = "<x> -\> <y> [label=\"<f>\",style=\"<line>\"];";

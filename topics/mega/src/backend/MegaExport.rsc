@@ -19,16 +19,7 @@ str exportmega(megamodel(str name, str desc, list[str] incs, list[MegaDeclaratio
 	'<for(MegaRelation r <- rels, r notin processed){><exportrelR(r,rels)>
 	'<}>";
 
-str exportdecl(artifact(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Artifact<if(plus){>+<}> <id><displayDot(comment)>";
-str exportdecl(file(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>File<if(plus){>+<}> <id><displayDot(comment)>";
-str exportdecl(language(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Language<if(plus){>+<}> <id><displayDot(comment)>";
-str exportdecl(technology(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Technology<if(plus){>+<}> <id><displayDot(comment)>";
-str exportdecl(fragment(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Fragment<if(plus){>+<}> <id><displayDot(comment)>";
-str exportdecl(objectGraph(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>ObjectGraph<if(plus){>+<}> <id><displayDot(comment)>";
-str exportdecl(program(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Program<if(plus){>+<}> <id><displayDot(comment)>";
-str exportdecl(library(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Library<if(plus){>+<}> <id><displayDot(comment)>";
-str exportdecl(function(MegaMod m, str id, bool plus, str comment)) = "<exportmod(m)>Function<if(plus){>+<}> <id><displayDot(comment)>";
-default str exportdecl(MegaDeclaration d) = "UNKNOWN DECL";
+str exportdecl(MegaDeclaration d) = "<exportmod(d.m)><backend::MegaHack::nameOf(d)><if(d.plus){>+<}> <d.id><displayDot(d.comment)>";
 
 str displayDot("") = " .";
 default str displayDot(str c) = " . -- <c>";
@@ -37,21 +28,7 @@ str exportmod(local()) = "local ";
 str exportmod(variable()) = "variable "; 
 str exportmod(MegaMod m) = "";
 
-str exportrel(subsetOf(str x, str y, str comment)) = "<x> subsetOf <y><displayDot(comment)>";
-str exportrel(elementOf(str x, str y, str comment)) = "<x> elementOf <y><displayDot(comment)>";
-str exportrel(partOf(str x, str y, str comment)) = "<x> partOf <y><displayDot(comment)>";
-str exportrel(correspondsTo(str x, str y, str comment)) = "<x> correspondsTo <y><displayDot(comment)>";
-str exportrel(dependsOn(str x, str y, str comment)) = "<x> dependsOn <y><displayDot(comment)>";
-str exportrel(refersTo(str x, str y, str comment)) = "<x> refersTo <y><displayDot(comment)>";
-str exportrel(conformsTo(str x, str y, str comment)) = "<x> conformsTo <y><displayDot(comment)>";
-str exportrel(realizationOf(str x, str y, str comment)) = "<x> realizationOf <y><displayDot(comment)>";
-str exportrel(descriptionOf(str x, str y, str comment)) = "<x> descriptionOf <y><displayDot(comment)>";
-str exportrel(definitionOf(str x, str y, str comment)) = "<x> definitionOf <y><displayDot(comment)>";
-str exportrel(inputOf(str x, str y, str comment)) = "<x> inputOf <y><displayDot(comment)>";
-str exportrel(hasOutput(str x, str y, str comment)) = "<x> hasOutput <y><displayDot(comment)>";
-str exportrel(domainOf(str x, str y, str comment)) = "<x> domainOf <y><displayDot(comment)>";
-str exportrel(hasRange(str x, str y, str comment)) = "<x> hasRange <y><displayDot(comment)>";
-default str exportrel(MegaRelation r) = "UNKNOWN REL";
+str exportrel(MegaRelation r) = "<r.x> <backend::MegaHack::nameOf(r)> <r.y><displayDot(r.comment)>";
 
 str exportdeclR(MegaDeclaration d, list[MegaRelation] rels)
 {
