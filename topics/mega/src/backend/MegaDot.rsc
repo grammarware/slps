@@ -17,14 +17,14 @@ public void main()
 str exportmega(AMegaModel a) = exportmega(a,[],[]);
 
 str exportmega(megamodel(str name, str desc, list[str] incs, list[MegaDeclaration] decls, list[MegaRelation] rels), list[MegaDeclaration] ddecls, list[MegaRelation] drels)
-	="digraph G {
+	= "digraph G {
 	'<for(MegaDeclaration d <- decls, d notin ddecls){><exportdecl(d,"solid")>
 	'<}>
-	'<for(MegaDeclaration d <- decls, d in ddecls){><exportdecl(d,"dashed")>
+	'<for(MegaDeclaration d <- ddecls){><exportdecl(d,"dashed")>
 	'<}>
 	'<for(MegaRelation r <- rels, r notin drels){><exportrel(r,"solid")>
 	'<}>
-	'<for(MegaRelation r <- rels, r in drels){><exportrel(r,"dashed")>
+	'<for(MegaRelation r <- drels){><exportrel(r,"dashed")>
 	'<}>
 	'}";
 

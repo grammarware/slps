@@ -21,6 +21,7 @@ public void writePT(loc f, MegaModel pt) = writeFile(f,"<pt>");
 public void writeAST(loc f, AMegaModel ast) = writeFile(f,backend::MegaExport::exportmega(ast));
 
 public void writeDot(loc f, AMegaModel ast) = writeFile(f,backend::MegaDot::exportmega(ast));
+public void writeDot(loc f, AMegaModel ast, list[MegaDeclaration] ds, list[MegaRelation] rs) = writeFile(f,backend::MegaDot::exportmega(ast,ds,rs));
 
 public AMegaModel readFlat(loc f)
 {

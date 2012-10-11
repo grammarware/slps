@@ -11,8 +11,7 @@ import IO;
 
 public void main(list[str] args)
 {
-	loc base = |cwd:///../lib/ox|;
-	for (f <- listEntries(base), endsWith(f,".megal"))
+	for(loc base <- [|cwd:///../lib/ox|,|cwd:///../lib/slps|], f <- listEntries(base), endsWith(f,".megal"))
 	{
 		println("Getting a parse tree of <f>...");
 		readPT(base+f);
