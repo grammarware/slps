@@ -1,6 +1,7 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module backend::MegaDot
 
+import backend::MegaHack;
 import structure::MegaADT;
 import structure::MegaGrammar;
 import String;
