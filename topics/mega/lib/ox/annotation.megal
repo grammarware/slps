@@ -1,0 +1,14 @@
+{- Object/XML mapping may be customized by some annotation mechanism such that schema-derived or authored OO types and their members are annotated with hints regarding de-/serialization. -}
+
+megamodel capabilities/Object_XML_mapping/annotation .
+
+include capabilities/Object_XML_mapping/serialization .
+include capabilities/Object_XML_mapping/deserialization .
+
+variable Language Annotation partOf OoLanguage .
+variable Language OxAnnotation subsetOf Annotation .
+variable Fragment+ anno partOf ooTypes .
+
+OxAnnotation partOf OxMapper .
+deserialize dependsOn anno .
+serialize dependsOn anno .

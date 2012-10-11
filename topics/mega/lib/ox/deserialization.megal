@@ -1,0 +1,16 @@
+{- This module describes the value-level aspect of specifically de-serialization. (There is a related module for specifically serialization. At the heart of this description is a function deserialize, which is somehow derived by the mapper from the XML types (or the corresponding OO types) such that deserialization may map an XML document to an object graph with the suitable correspondence and conformance relationships. -}
+
+megamodel capabilities/Object_XML_mapping/deserialization .
+
+include capabilities/Object_XML_mapping/values .
+
+local Function deserialize : XML -> ObjectGraphs .
+variable File xmlInputDoc elementOf XML .
+variable ObjectGraph intialObj elementOf ObjectGraphs .
+
+deserialize dependsOn OxMapper .
+deserialize dependsOn xmlTypes .
+xmlInputDoc conformsTo xmlTypes .
+finalObj conformsTo ooTypes .
+finalObj correspondsTo xmlInputDoc .
+deserialize(xmlInputDoc) |-> intialObj .

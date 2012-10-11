@@ -11,7 +11,7 @@ import IO;
 
 public void main(list[str] args)
 {
-	loc base = |cwd:///../tests|;
+	loc base = |cwd:///../lib/ox|;
 	for (f <- listEntries(base), endsWith(f,".megal"))
 	{
 		println("Getting a parse tree of <f>...");

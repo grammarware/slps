@@ -1,0 +1,12 @@
+{- De-serialization was already discussed in a designated module, but the derivation of the corresponding function for de-serialization was not yet explained. To this end, we need to assume actual program code which makes use of appropriate library functionality to issue de-serialization. (There is a similar module for serialization.) -}
+
+megamodel capabilities/Object_XML_mapping/read .
+
+include capabilities/Object_XML_mapping/deserialization .
+
+variable File problemProgram elementOf OoLanguage .
+variable Fragment deserialization partOf problemProgram .
+
+problemProgram dependsOn ooTypes .
+deserialization realizationOf deserialize .
+deserialization dependsOn OxLibrary .

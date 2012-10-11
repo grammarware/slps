@@ -1,0 +1,19 @@
+{- This is the basic module explaining the component structure and inter-language and technology dependencies for an Object/XML mapping technology. -}
+
+megamodel capabilities/Object_XML_mapping/technology .
+
+variable Technology OxMapper . -- the name for the technology
+variable Library OxLibrary . -- the assumed support library
+variable Language XmlSchemas . -- the targeted XML type system, e.g., XSD 
+variable Language OoLanguage . -- the targeted OO language
+variable Language MappableOo . -- the OO subset used in mapping
+Language XML . -- XML as serialization format
+variable Language ObjectGraphs . -- object graphs in memory
+
+OxLibrary partOf OxMapper .
+OxMapper dependsOn XmlSchemas .
+OxMapper dependsOn OoLanguage .
+MappableOo subsetOf OoLanguage .
+MappableOo partOf OxMapper .
+OxMapper dependsOn XML .
+OxMapper dependsOn ObjectGraphs .

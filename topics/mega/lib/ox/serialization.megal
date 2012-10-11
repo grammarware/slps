@@ -1,0 +1,16 @@
+{- This module describes the value-level aspect of specifically serialization. (There is a related module for specifically de-serialization. At the heart of this description is a function serialize, which is somehow derived by the mapper from the XML types (or the corresponding OO types) such that serialization may map an object graph to an XML document with the suitable correspondence and conformance relationships. -}
+
+megamodel capabilities/Object_XML_mapping/serialization .
+
+include capabilities/Object_XML_mapping/values .
+
+local Function serialize : ObjectGraphs -> XML .
+variable File xmlOutputDoc elementOf XML .
+variable ObjectGraph finalObj elementOf ObjectGraphs .
+
+serialize dependsOn OxMapper .
+serialize dependsOn xmlTypes .
+xmlOutputDoc conformsTo xmlTypes .
+finalObj conformsTo ooTypes .
+finalObj correspondsTo xmlOutputDoc .
+serialize(finalObj) |-> xmlOutputDoc .

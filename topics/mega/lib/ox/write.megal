@@ -1,0 +1,12 @@
+{- Serialization was already discussed in a designated module, but the derivation of the corresponding function for serialization was not yet explained. To this end, we need to assume actual program code which makes use of appropriate library functionality to issue serialization. (There is a similar module for de-serialization.) -}
+
+megamodel capabilities/Object_XML_mapping/write .
+
+include capabilities/Object_XML_mapping/serialization .
+
+variable File problemProgram elementOf OoLanguage .
+variable Fragment serialization partOf problemProgram .
+
+problemProgram dependsOn ooTypes .
+serialization realizationOf serialize .
+serialization dependsOn OxLibrary .

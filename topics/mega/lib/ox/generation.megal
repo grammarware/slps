@@ -1,0 +1,10 @@
+{- Arguably, the typical Object/XML mapping technology comes with a code generation component to derive OO types from XML types. Conceptually, though, this component is optional, which is why it is only introduced now. -}
+
+megamodel capabilities/Object_XML_mapping/generation .
+
+include capabilities/Object_XML_mapping/types .
+
+local Function generator : XmlSchemas -> MappableOo .
+
+generator partOf OxMapper.
+generator(xmlTypes) |-> ooTypes .

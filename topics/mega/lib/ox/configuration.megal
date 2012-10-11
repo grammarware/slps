@@ -1,0 +1,12 @@
+{- Configuration of Object/XML mapping may be achieved by designated configuration files. An additional or alternative form of configuration may be achieved by annotations, as discussed elsewhere. -}
+
+megamodel capabilities/Object_XML_mapping/configuration .
+
+include capabilities/Object_XML_mapping/values .
+
+variable Language OxConfiguration .
+variable File config elementOf OxConfiguration .
+
+OxConfiguration partOf OxMapper .
+deserialize dependsOn config .
+serialize dependsOn config .

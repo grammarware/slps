@@ -1,0 +1,13 @@
+{- This module covers the essential type-level aspects of Object/XML mapping. In particular, the types in the spaces XMLware and the objectware are pointed as they correspond to each other. We also make explicit the existence of a problem-specific language underlying the involved type-level artifacts. We think of this language as being abstract in the sense of not fixing it here as being a set of XML trees or object graphs. -}
+
+megamodel capabilities/Object_XML_mapping/types .
+
+include capabilities/Object_XML_mapping/technology .
+
+variable File+ xmlTypes elementOf XmlSchemas .
+variable File+ ooTypes elementOf MappableOo .
+local Language problemLanguage .
+
+xmlTypes correspondsTo ooTypes .
+xmlTypes definitionOf problemLanguage .
+ooTypes definitionOf problemLanguage .
