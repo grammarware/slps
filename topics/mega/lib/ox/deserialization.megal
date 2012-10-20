@@ -2,8 +2,6 @@
 
 megamodel capabilities/Object_XML_mapping/deserialization .
 
-include capabilities/Object_XML_mapping/values .
-
 local Function deserialize : XML -> ObjectGraphs .
 variable File xmlInputDoc elementOf XML .
 variable ObjectGraph intialObj elementOf ObjectGraphs .

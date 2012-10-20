@@ -8,10 +8,12 @@ import backend::GraphML2MegaL;
 import backend::MegaImplode;
 import backend::MegaExport;
 import backend::MegaDot;
+import backend::MegaManipulate;
 
 import ParseTree;
 import String;
 import List;
+import Set;
 import IO;
 import Exception;
 
@@ -30,17 +32,26 @@ public AMegaModel readYEd(loc f) = backend::GraphML2MegaL::readGraphML(f);
 
 public AMegaModel readFlat(loc f)
 {
-	AMegaModel a = readAST(f);
-	list[str] includes = a.incs;
+	AMegaModel a = readAST(f), b;
+	list[str] includes = a.incs, done = [];
 	a.incs = [];
-	while(!isEmpty(includes))
+	while(!isEmpty(includes - done))
 	for (i <- includes)
 	{
-		//try
-			b = readAST(f.parent+(substring(i,findLast(i,"/")+1)+".megal"));
-		//catch:
-		//	continue;
-		a = megamodel(a.name,a.desc,[],a.decls + b.decls, a.rels + b.rels);
+		name = f.parent+(substring(i,findLast(i,"/")+1)+".megal");
+		if (name in done) continue;
+		try
+		{
+			b = readAST(name);
+			done += i;
+		}
+		catch IO:
+		{
+			println("Cannot find <name>");
+			done += i;
+			continue;
+		}
+		a = megamodel(a.name,a.desc,[],mergeLists(a.decls,b.decls), mergeLists(a.rels, b.rels));
 		includes += b.incs;
 	}
 	//println(includes);

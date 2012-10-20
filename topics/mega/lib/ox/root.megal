@@ -1,0 +1,9 @@
+{- include ALL the megamodels! -}
+
+megamodel capabilities/Object_XML_mapping/root .
+
+include capabilities/Object_XML_mapping/annotation .
+include capabilities/Object_XML_mapping/configuration .
+include capabilities/Object_XML_mapping/generation .
+include capabilities/Object_XML_mapping/read .
+include capabilities/Object_XML_mapping/write .

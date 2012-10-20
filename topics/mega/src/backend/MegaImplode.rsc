@@ -5,16 +5,16 @@ import structure::MegaADT;
 import structure::MegaGrammar;
 import String;
 
-AMegaModel mapmegal((MegaModel)`<MegaHeader h><MegaInclude* ins><MegaDecl+ ds>`) = makemegal("<h.name>","",ins,ds);
-AMegaModel mapmegal((MegaModel)`<MegaDesc d><MegaHeader h><MegaInclude* ins><MegaDecl+ ds>`) = makemegal("<h.name>",trim("<d.s>"),ins,ds);
+AMegaModel mapmegal((MegaModel)`<MegaHeader h><MegaInclude* ins><MegaDecl* ds>`) = makemegal("<h.name>","",ins,ds);
+AMegaModel mapmegal((MegaModel)`<MegaDesc d><MegaHeader h><MegaInclude* ins><MegaDecl* ds>`) = makemegal("<h.name>",trim("<d.s>"),ins,ds);
 default AMegaModel mapmegal(MegaModel m) = megamodel("","",[],[],[]);
 
-AMegaModel makemegal(str name, str desc, MegaInclude* ins, MegaDecl+ ds)
+AMegaModel makemegal(str name, str desc, MegaInclude* ins, MegaDecl* ds)
 	= megamodel(name,desc,collectIncludes(ins),collectDecls(ds),collectRels(ds));
 
 list[str] collectIncludes(MegaInclude* ins) = ["<i.name>" | MegaInclude i <- ins];
-list[MegaDeclaration] collectDecls(MegaDecl+ ds) = [*mapdecl(d) | MegaDecl d <- ds];
-list[MegaRelation] collectRels(MegaDecl+ ds) = [*maprel(d) | MegaDecl d <- ds];
+list[MegaDeclaration] collectDecls(MegaDecl* ds) = [*mapdecl(d) | MegaDecl d <- ds];
+list[MegaRelation] collectRels(MegaDecl* ds) = [*maprel(d) | MegaDecl d <- ds];
 
 list[MegaDeclaration] mapdecl((MegaDecl)`<MegaModifier? mm><MegaEntity e><MegaDot d>`) = [map1decl(e,mapmod(mm),"<e.id>",getComment(d))];
 //list[MegaDeclaration] mapdecl((MegaDecl)`<MegaModifier? mm><MegaEntity e><MegaDot d>`) = [map2decl(mapmod(mm),"<e.id>")];

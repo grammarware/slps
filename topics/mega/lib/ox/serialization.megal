@@ -2,8 +2,6 @@
 
 megamodel capabilities/Object_XML_mapping/serialization .
 
-include capabilities/Object_XML_mapping/values .
-
 local Function serialize : ObjectGraphs -> XML .
 variable File xmlOutputDoc elementOf XML .
 variable ObjectGraph finalObj elementOf ObjectGraphs .

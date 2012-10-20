@@ -2,8 +2,6 @@
 
 megamodel capabilities/Object_XML_mapping/configuration .
 
-include capabilities/Object_XML_mapping/values .
-
 variable Language OxConfiguration .
 variable File config elementOf OxConfiguration .
 
