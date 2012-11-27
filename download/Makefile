@@ -19,7 +19,8 @@ install-jastadd:
 	curl -k http://builds.jastadd.org/JastAdd/2009-06-10/jastadd2.jar > jastadd2.jar
 
 install-antlr:
-	curl -k http://www.antlr.org/download/antlrworks-1.1.7.jar > antlrworks-1.1.7.jar
+	curl -k http://www.antlr.org/download/antlr-3.0.1.jar > antlr.jar
+	curl -k http://www.antlr.org/download/antlrworks-1.2.2.jar > antlrworks.jar
 
 install-et:
 	curl -k http://effbot.org/media/downloads/elementtree-1.2.7-20070827-preview.zip > elementtree.zip
