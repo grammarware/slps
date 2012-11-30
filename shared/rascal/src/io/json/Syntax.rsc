@@ -4,29 +4,29 @@ module io::json::Syntax
 layout L = WS;
 lexical WS = [\ \n\r\t]* !>> [\ \n\r\t];
 
-start syntax Data = BasicType;
+start syntax JSONData = JSONBasicType;
 
-syntax BasicType
-	= Number
-	| String
-	| Boolean
-	| Array
-	| Object
-	| Null
+syntax JSONBasicType
+	= JSONNumber
+	| JSONString
+	| JSONBoolean
+	| JSONArray
+	| JSONObject
+	| JSONNull
 	;
 
-syntax Number = "-"? Digits ("." Digits)?;
+syntax JSONNumber = "-"? Digits ("." Digits)?;
 lexical Digits = [0-9]+ !>> [0-9];
 
-syntax String = DoubleQuotedString;
+syntax JSONString = DoubleQuotedString;
 lexical DoubleQuotedString = [\"] DQSElement* [\"]; //"
 lexical DQSElement = ![\"] | [\\][\"] ; //"
 
-syntax Boolean = "false" | "true" ;
+syntax JSONBoolean = "false" | "true" ;
 
-syntax Array = "[" {BasicType ","}* "]";
+syntax JSONArray = "[" {JSONBasicType ","}* "]";
 
-syntax Object = "{" {KeyValue ","}* "}";
-syntax KeyValue = BasicType key ":" BasicType val;
+syntax JSONObject = "{" {JSONKeyValue ","}* "}";
+syntax JSONKeyValue = JSONBasicType key ":" JSONBasicType val;
 
-syntax Null = "null" ;
+syntax JSONNull = "null" ;

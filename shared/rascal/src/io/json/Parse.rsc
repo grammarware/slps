@@ -18,22 +18,26 @@ data JSO
 
 JSO str2jso(str s)
 {
-	PT = parse(#BasicType,trim(s));
+	PT = parse(#JSONBasicType,trim(s));
 	return basic2jso(PT);
 }
 	
-JSO basic2jso(BasicType t)
+JSO basic2jso(JSONBasicType t)
 {
 	//if ((BasicType)`Number v` := PT)
 	//println("numberr!");
 	switch(t)
 	{
-		case (BasicType)`<Number v>`: return str2num("<v>");
-		case (BasicType)`<String v>`: return str2str("<v>");
-		case (BasicType)`<Boolean v>`: return str2bool("<v>");
-		case (BasicType)`<Array v>`: return arr2array(v);
-		case (BasicType)`<Object v>`: return obj2object(v);
-		case (BasicType)`<Null v>`: return jsnull();
+		case (JSONBasicType)`<JSONNumber v>`: return str2num("<v>");
+		case (JSONBasicType)`<JSONString v>`: return str2str("<v>");
+		case (JSONBasicType)`<JSONBoolean v>`: return str2bool("<v>");
+		case (JSONBasicType)`<JSONArray v>`:
+			return jsarray(arr2array(v));
+			//return jsnull();
+		case (JSONBasicType)`<JSONObject v>`:
+			return jsobject(obj2object(v));
+			//return jsnull();
+		case (JSONBasicType)`<JSONNull v>`: return jsnull();
 		default:
 			println("dunno");
 	}
@@ -45,8 +49,8 @@ JSO str2str(str s) = jsstring(s);
 JSO str2bool("true") = jsboolean(true);
 default JSO str2bool(str s) = jsboolean(false);
 
-list[JSO] arr2array((Array)`[<{BasicType ","}* vs>]`) = [basic2jso(v) | BasicType v <- vs];
-map[JSO,JSO] obj2object((Object)`{<{KeyValue ","}* kvs>}`) = (basic2jso(kv.key):basic2jso(kv.val) | KeyValue kv <- kvs);
+list[JSO] arr2array((JSONArray)`[<{JSONBasicType ","}* vs>]`) = [basic2jso(v) | JSONBasicType v <- vs];
+map[JSO,JSO] obj2object((JSONObject)`{<{JSONKeyValue ","}* kvs>}`) = (basic2jso(kv.key):basic2jso(kv.val) | JSONKeyValue kv <- kvs);
 
 //| jsarray(list[JSO] xs)
 //	| jsobject(map[JSO,JSO] kvs)
