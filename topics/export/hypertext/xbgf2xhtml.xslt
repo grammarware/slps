@@ -9,32 +9,32 @@
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 			<head>
 				<title>Browsable Grammar Transformation</title>
-				<style type="text/css">
-			          h1, h2 { text-align: center; }
-			          .label, .sel { color: green; }
-			          .marked { background-color: #FFE5B4;}
-			          .nt { color: blue; font-weight: bold; }
-			          .t { color: red;  font-family: monospace; }
-			          .meta, .cmd { color: green; font-style:italic; font-family: serif; }
-			          .b { text-align: right; font-style:italic;}
-			        </style>
-					<script type="text/javascript">
-					  var _gaq = _gaq || [];
-					  _gaq.push(['_setAccount', 'UA-3743366-5']);
-					  _gaq.push(['_trackPageview']);
+				<link href="/slps.css" rel="stylesheet" type="text/css"/>
+				<script type="text/javascript">
+					<xsl:text>
 
-					  (function() {
-					    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-					    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-					    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-					  })();
-					</script>
+				  var _gaq = _gaq || [];
+				  _gaq.push(['_setAccount', 'UA-3743366-7']);
+				  _gaq.push(['_setDomainName', 'github.com']);
+				  _gaq.push(['_trackPageview']);
+
+				  (function() {
+				    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				  })();
+
+				</xsl:text>
+				</script>
 			</head>
 			<body>
 				<h1>
 					<xsl:value-of select="$fname"/>
 				</h1>
-				<h2>Source: <a href="http://slps.svn.sourceforge.net/viewvc/slps/{substring-after($fullpath,'/slps/')}?view=markup">SLPS/<xsl:value-of select="substring-after($fullpath,'/slps/')"/></a></h2>
+				<h2 class="src">
+					<xsl:text>Source: </xsl:text>
+					<a href="http://github.com/grammarware/slps/blob/master/{substring-after($fullpath,'/slps/')}">SLPS/<xsl:value-of select="substring-after($fullpath,'/slps/')"/></a>
+				</h2>
 				<ul>
 					<xsl:for-each select="./xbgf:*">
 						<li>
@@ -44,8 +44,13 @@
 				</ul>
 				<hr/>
 				<div class="b">
-					Maintained by Dr. <a href="http://grammarware.net/">Vadim Zaytsev</a> a.k.a. @<a href="http://twitter.com/grammarware">grammarware</a>.
-					Last updated: <xsl:value-of select="$date"/>.
+					<xsl:text>Maintained by Dr. </xsl:text>
+					<a href="http://grammarware.net/">Vadim Zaytsev</a>
+					<xsl:text> a.k.a. @</xsl:text>
+					<a href="http://github.com/grammarware">grammarware</a>
+					<xsl:text>. Last updated: </xsl:text>
+					<xsl:value-of select="$date"/>
+					<xsl:text>.</xsl:text>
 				</div>
 			</body>
 		</html>
@@ -356,7 +361,7 @@
 	</xsl:template>
 	<xsl:template name="linkcmd">
 		<xsl:param name="cmd"/>
-		<a xmlns="http://www.w3.org/1999/xhtml" class="cmd" href="http://slps.sourceforge.net/xbgf/#{$cmd}">
+		<a xmlns="http://www.w3.org/1999/xhtml" class="cmd" href="http://slps.github.com/xbgf/#{$cmd}">
 			<xsl:value-of select="$cmd"/>
 		</a>
 		<xsl:text> (</xsl:text>

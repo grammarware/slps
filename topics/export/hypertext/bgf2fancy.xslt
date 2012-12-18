@@ -17,25 +17,13 @@
 					<xsl:value-of select="concat($mysrc/../../name,$mysrcs/../../name)"/>
 					<xsl:text> Grammar</xsl:text>
 				</title>
-				<style type="text/css">
-		          .label, .sel { color: green; }
-		          .marked { background-color: #FFE5B4;}
-		          .nt { color: blue; font-weight: bold; }
-		          .t { color: red;  font-style:italic; }
-		          .meta { color: green; font-style:italic; font-family: Roman, "Times New Roman", serif; }
-		          .b { text-align: right; font-style:italic;}
-		          .date { font-size: small; }
-		          pre
-		          {
-		          border: 1px solid black;
-		          border-spacing: 2px;
-		          border-collapse: collapse;
-		          background-color: #ECECEC;
-		          }
-		        </style>
+				<link href="/slps.css" rel="stylesheet" type="text/css"/>
 				<script type="text/javascript">
+					<xsl:text>
+
 				  var _gaq = _gaq || [];
-				  _gaq.push(['_setAccount', 'UA-3743366-5']);
+				  _gaq.push(['_setAccount', 'UA-3743366-7']);
+				  _gaq.push(['_setDomainName', 'github.com']);
 				  _gaq.push(['_trackPageview']);
 
 				  (function() {
@@ -43,10 +31,12 @@
 				    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 				    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 				  })();
+
+				</xsl:text>
 				</script>
 			</head>
 			<body>
-				<h1>
+				<h1 class="l">
 					<xsl:text>Browsable </xsl:text>
 					<xsl:value-of select="concat($mysrc/../../name,$mysrcs/../../name)"/>
 					<xsl:text> Grammar</xsl:text>
@@ -62,17 +52,27 @@
 					<xsl:text>,	see </xsl:text>
 					<xsl:choose>
 						<xsl:when test="substring-after($zoo,'_dev/')='tank.xml'">
-							<a href="http://grammarware.github.com/tank/">Grammar Tank</a>
+							<a href="http://slps.github.com/tank/">Grammar Tank</a>
 						</xsl:when>
 						<xsl:otherwise>
-							<a href="http://grammarware.github.com/zoo/">Grammar Zoo</a>
+							<a href="http://slps.github.com/zoo/">Grammar Zoo</a>
 						</xsl:otherwise>
 					</xsl:choose>
 					<xsl:text> for details. </xsl:text>
 					<xsl:if test="$mysrc and count($mysrc)=1">
 						<br/>
 						<xsl:text>Source used for this grammar: </xsl:text>
-						<xsl:copy-of select="$mysrc/title/node()"/>
+						<xsl:for-each select="$mysrc/author">
+							<xsl:value-of select="."/>
+							<xsl:text>, </xsl:text>
+						</xsl:for-each>
+						<em>
+							<xsl:value-of select="$mysrc/title"/>
+						</em>
+						<xsl:if test="$mysrc/subtitle">
+							<xsl:text>, </xsl:text>
+							<xsl:value-of select="$mysrc/subtitle"/>
+						</xsl:if>
 						<xsl:text> (</xsl:text>
 						<xsl:value-of select="$mysrc/date"/>
 						<xsl:text>) </xsl:text>
@@ -88,7 +88,6 @@
 							<xsl:text>); </xsl:text>
 						</xsl:for-each>
 					</xsl:if>
-					
 					<xsl:if test="$mysrcs">
 						<br/>
 						<xsl:text>Source used for this grammar: </xsl:text>
@@ -99,7 +98,7 @@
 						<xsl:value-of select="$mysrcs/specific"/>
 					</xsl:if>
 				</p>
-				<h2>Summary</h2>
+				<h2 class="l">Summary</h2>
 				<ul>
 					<li>
 						<xsl:text>Number of production rules: </xsl:text>
@@ -234,7 +233,7 @@
 						</li>
 					</xsl:if>
 				</ul>
-				<h2>Syntax</h2>
+				<h2 class="l">Syntax</h2>
 				<xsl:for-each select="./bgf:*">
 					<pre>
 						<xsl:apply-templates select="."/>
@@ -242,8 +241,13 @@
 				</xsl:for-each>
 				<hr/>
 				<div class="b">
-					Maintained by Dr. <a href="http://grammarware.net/">Vadim Zaytsev</a> a.k.a. @<a href="http://twitter.com/grammarware">grammarware</a>.
-					Last updated: <xsl:value-of select="$date"/>.
+					<xsl:text>Maintained by Dr. </xsl:text>
+					<a href="http://grammarware.net/">Vadim Zaytsev</a>
+					<xsl:text> a.k.a. @</xsl:text>
+					<a href="http://github.com/grammarware">grammarware</a>
+					<xsl:text>. Last updated: </xsl:text>
+					<xsl:value-of select="$date"/>
+					<xsl:text>.</xsl:text>
 				</div>
 			</body>
 		</html>
