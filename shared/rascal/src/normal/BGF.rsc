@@ -30,28 +30,29 @@ public BGFExpression normalise(BGFExpression e)
 	return innermost visit(e)
 	{
 		case sequence([]) => epsilon()
-		case sequence([BGFExpression e]) => e
+		case sequence([BGFExpression e1]) => e1
 		case choice([]) => empty()
-		case choice([BGFExpression e]) => e
+		case choice([BGFExpression e2]) => e2
 		case optional(epsilon()) => epsilon()
 		case optional(empty()) => epsilon()                             // not present in Prolog
 		case plus(epsilon()) => epsilon()
 		case star(epsilon()) => epsilon()
-		case sepliststar(X,epsilon()) => star(X)
-		case seplistplus(X,epsilon()) => plus(X)
-		case sepliststar(epsilon(),X) => star(X)
-		case seplistplus(epsilon(),X) => star(X)
-		case sequence([L1*,sequence(L),L2*]) => sequence(L1+L+L2)
-		case sequence([L1*,epsilon(),L2*]) => sequence(L1+L2)
-		case sequence([L1*,empty(),L2*]) => empty()
-		case choice([L1*,choice(L),L2*]) => choice(L1+L+L2)
-		case choice([L1*,empty(),L2*]) => choice(L1+L2)
-		case choice([L1*,X1,L2*,X1,L3*]) => choice([*L1,X1,*L2,*L3])
-		// normalisations on Boolean grammars
-		case all([L1*,all(L),L2*]) => all(L1+L+L2)
-		case all([L1*,anything(),L2*]) => all(L1+L2)
-		case all([L1*,X1,L2*,X1,L3*]) => all([*L1,X1,*L2,*L3])
-		case all([L1*,empty(),L2*]) => empty()
+		case sepliststar(X1,epsilon()) => star(X1)
+		case seplistplus(X2,epsilon()) => plus(X2)
+		case sepliststar(epsilon(),X3) => star(X3)
+		case seplistplus(epsilon(),X4) => star(X4)
+		case sequence([L1*,sequence(L0),L2*]) => sequence(L1+L0+L2)
+		case sequence([L3*,epsilon(),L4*]) => sequence(L3+L4)
+		case sequence([_*,empty(),_*]) => empty()
+		case choice([L5*,choice(L),L6*]) => choice(L5+L+L6)
+		case choice([L7*,empty(),L8*]) => choice(L7+L8)
+		case choice([*L9,X5,*L10,X5,*L11]) => choice([*L9,X5,*L10,*L11])
+		// normalisations on Boolean grammars!
+		case allof([K1*,allof(K0),K2*]) => allof(K1+K0+K2)
+		case allof([K3*,anything(),L2*]) => allof(K3+K4)
+		case allof([K5*,X6,K6*,X6,K7*]) => allof([*K5,X6,*K6,*K7])
+		case allof([_*,empty(),_*]) => empty()
+		case allof([_*,X7,_*,not(X7),_*]) => empty()
 	};
 }
 
@@ -81,6 +82,10 @@ test bool n13(){return normalise(tw(choice([terminal("1"),terminal("2"),terminal
                                ==tw(choice([terminal("1"),terminal("2"),terminal("3")]));}
 test bool n14(){return normalise(production("","N",sequence([epsilon(),nonterminal("a"),nonterminal("b")])))
 							  == production("","N",sequence([nonterminal("a"),nonterminal("b")]));}
+test bool n15(){return normalise(production("","N",sequence([empty(),nonterminal("a"),nonterminal("b")])))
+							  == production("","N",empty());}
+test bool n16(){return normalise(production("","N",allof([epsilon(),nonterminal("a"),not(nonterminal("a"))])))
+							  == production("","N",empty());}
 
 // everything below is highly experimental, use at your own risk! --VVZ
 

@@ -21,7 +21,7 @@ data BGFExpression =
 	| selectable(str selector, BGFExpression expr)
 	| sequence(BGFExprList exprs)
 	| choice(BGFExprList exprs)
-	| all(BGFExprList exprs)                                // to cover conjunctive grammars
+	| allof(BGFExprList exprs)                              // to cover conjunctive grammars
 	| marked(BGFExpression expr)
 	| optional(BGFExpression expr)
 	| not(BGFExpression expr)                               // to cover Boolean grammars
