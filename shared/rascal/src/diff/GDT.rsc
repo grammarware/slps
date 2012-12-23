@@ -37,6 +37,15 @@ public bool eqE(choice(L1), choice(L2))
 			return eqE(choice(L1 - x), choice(L2 - y));
 	return false;
 }
+public bool eqE(allof([BGFExpression e1]), allof([BGFExpression e2])) = eqE(e1,e2);
+public bool eqE(allof(L1), allof(L2))
+{
+	for (x <- L1, y <- L2)
+		if (eqE(x,y))
+			return eqE(allof(L1 - x), allof(L2 - y));
+	return false;
+}
+
 public bool eqE(sequence(L1), sequence(L2))
 {
 	if (size(L1) != size(L2)) return false;

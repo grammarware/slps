@@ -44,9 +44,13 @@ bool massage_eq({optional(seplistplus(x,y)),sepliststar(x,y)}) = true;
 bool massage_eq({not(not(x)),x}) = true;
 bool massage_eq({not(selectable(s,x)),selectable(s,not(x))}) = true;
 bool massage_eq({not(allof([x,y])),choice([not(x),not(y)])}) = true;
+bool massage_eq({not(allof([x,y])),choice([not(y),not(x)])}) = true;
 bool massage_eq({not(allof([not(x),not(y)])),choice([x,y])}) = true;
+bool massage_eq({not(allof([not(x),not(y)])),choice([y,x])}) = true;
 bool massage_eq({not(choice([x,y])),allof([not(x),not(y)])}) = true;
+bool massage_eq({not(choice([x,y])),allof([not(y),not(x)])}) = true;
 bool massage_eq({not(choice([not(x),not(y)])),allof([x,y])}) = true;
+bool massage_eq({not(choice([not(x),not(y)])),allof([y,x])}) = true;
 
 default bool massage_eq(set[BGFExpression] s)
 {

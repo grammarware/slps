@@ -86,6 +86,21 @@
     <xsl:text>?</xsl:text>
   </xsl:template>
 
+  <!-- Boolean grammars support -->
+  <xsl:template match="not">
+    <xsl:text>!</xsl:text>
+    <xsl:choose>
+      <xsl:when test="bgf:expression/optional or bgf:expression/not">
+        <xsl:text>(</xsl:text>
+        <xsl:apply-templates select="./*"/>
+        <xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="./*"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="terminal">
     <xsl:text>"</xsl:text>
     <xsl:value-of select="."/>
@@ -152,6 +167,17 @@
     <xsl:apply-templates select="./bgf:expression[1]/*"/>
     <xsl:for-each select="./bgf:expression[position()>1]">
       <xsl:text> | </xsl:text>
+      <xsl:apply-templates select="./*"/>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- conjunctive grammars support -->
+  <xsl:template match="allof">
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="./bgf:expression[1]/*"/>
+    <xsl:for-each select="./bgf:expression[position()>1]">
+      <xsl:text> &amp; </xsl:text>
       <xsl:apply-templates select="./*"/>
     </xsl:for-each>
     <xsl:text>)</xsl:text>

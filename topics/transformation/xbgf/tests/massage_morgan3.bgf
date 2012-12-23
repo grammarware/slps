@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bgf:grammar xmlns:bgf="http://planet-sl.org/bgf">
+  <bgf:production>
+    <nonterminal>foo</nonterminal>
+    <bgf:expression>
+      <not>
+        <bgf:expression>
+          <choice>
+            <bgf:expression>
+              <nonterminal>foo</nonterminal>
+            </bgf:expression>
+            <bgf:expression>
+              <nonterminal>bar</nonterminal>
+            </bgf:expression>
+          </choice>
+        </bgf:expression>
+      </not>
+    </bgf:expression>
+  </bgf:production>
+</bgf:grammar>
