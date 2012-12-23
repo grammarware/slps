@@ -17,7 +17,7 @@ public list[BGFProduction] normalise([L1*,BGFProduction X1,L2*,X1,L3*])
 public list[BGFProduction] normalise(list[BGFProduction] prods)
 						= [normalise(p) | p <- prods]; 
 
-// the following is kinda useful, but breaks some code if normalisations are not done after each step
+// the following is very useful, but breaks some code if normalisations are not done after each step
 public BGFProduction normalise(production ("", str lhs, selectable(str label,BGFExpression rhs)))
 							 = production (label, lhs, normalise(rhs));
 
@@ -34,6 +34,7 @@ public BGFExpression normalise(BGFExpression e)
 		case choice([]) => empty()
 		case choice([BGFExpression e]) => e
 		case optional(epsilon()) => epsilon()
+		case optional(empty()) => epsilon()                             // not present in Prolog
 		case plus(epsilon()) => epsilon()
 		case star(epsilon()) => epsilon()
 		case sepliststar(X,epsilon()) => star(X)
@@ -46,6 +47,11 @@ public BGFExpression normalise(BGFExpression e)
 		case choice([L1*,choice(L),L2*]) => choice(L1+L+L2)
 		case choice([L1*,empty(),L2*]) => choice(L1+L2)
 		case choice([L1*,X1,L2*,X1,L3*]) => choice([*L1,X1,*L2,*L3])
+		// normalisations on Boolean grammars
+		case all([L1*,all(L),L2*]) => all(L1+L+L2)
+		case all([L1*,anything(),L2*]) => all(L1+L2)
+		case all([L1*,X1,L2*,X1,L3*]) => all([*L1,X1,*L2,*L3])
+		case all([L1*,empty(),L2*]) => empty()
 	};
 }
 
