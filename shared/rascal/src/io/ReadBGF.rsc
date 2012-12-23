@@ -51,8 +51,10 @@ public BGFExpression mapexpr(Node n)
 		case element(none(),"selectable",[element(none(),"selector",[charData(str s)]),expr]): return selectable(s,mapexpr(expr));
 		case element(none(),"sequence",kids): return sequence([mapexpr(k) | k <- kids]);
 		case element(none(),"choice",kids): return choice([mapexpr(k) | k <- kids]);
+		case element(none(),"allof",kids): return allof([mapexpr(k) | k <- kids]);
 		case element(none(),"marked",[expr]): return marked(mapexpr(expr));
 		case element(none(),"optional",[expr]): return optional(mapexpr(expr));
+		case element(none(),"not",[expr]): return not(mapexpr(expr));
 		case element(none(),"plus",[expr]): return plus(mapexpr(expr));
 		case element(none(),"star",[expr]): return star(mapexpr(expr));
 		case element(none(),"seplistplus",[e1,e2]): return seplistplus(mapexpr(e1),mapexpr(e2));

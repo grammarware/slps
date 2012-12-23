@@ -71,13 +71,6 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
-        <xsd:element name="sequence">
-          <xsd:complexType>
-            <xsd:sequence>
-              <xsd:element ref="bgf:expression" minOccurs="1" maxOccurs="unbounded"/>
-            </xsd:sequence>
-          </xsd:complexType>
-        </xsd:element>
         <xsd:element name="marked">
           <xsd:complexType>
             <xsd:sequence>
@@ -85,10 +78,31 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
+        <xsd:element name="sequence">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="bgf:expression" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
         <xsd:element name="choice">
           <xsd:complexType>
             <xsd:sequence>
               <xsd:element ref="bgf:expression" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="allof">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="bgf:expression" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="not">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="bgf:expression"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>

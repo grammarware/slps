@@ -48,11 +48,16 @@ public BGFExpression normalise(BGFExpression e)
 		case choice([L7*,empty(),L8*]) => choice(L7+L8)
 		case choice([*L9,X5,*L10,X5,*L11]) => choice([*L9,X5,*L10,*L11])
 		// normalisations on Boolean grammars!
+		case allof([]) => empty()
+		case allof([BGFExpression e3]) => e3
 		case allof([K1*,allof(K0),K2*]) => allof(K1+K0+K2)
 		case allof([K3*,anything(),L2*]) => allof(K3+K4)
 		case allof([K5*,X6,K6*,X6,K7*]) => allof([*K5,X6,*K6,*K7])
 		case allof([_*,empty(),_*]) => empty()
 		case allof([_*,X7,_*,not(X7),_*]) => empty()
+		case choice([_*,X7,_*,not(X7),_*]) => anything()
+		case not(empty()) => anything()
+		case not(anything()) => empty()
 	};
 }
 

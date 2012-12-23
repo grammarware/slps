@@ -36,8 +36,10 @@ public Node expr2xml(BGFExpression ex)
 		case selectable(s,expr): e = element(none(),"selectable",[element(none(),"selector",[charData(s)]),expr2xml(expr)]);
 		case sequence(L): e = element(none(),"sequence",[expr2xml(expr) | expr <- L]);
 		case choice(L): e = element(none(),"choice",[expr2xml(expr) | expr <- L]);
+		case allof(L): e = element(none(),"allof",[expr2xml(expr) | expr <- L]);
 		case marked(expr): e = element(none(),"marked",[expr2xml(expr)]);
 		case optional(expr): e = element(none(),"optional",[expr2xml(expr)]);
+		case not(expr): e = element(none(),"not",[expr2xml(expr)]);
 		case plus(expr): e = element(none(),"plus",[expr2xml(expr)]);
 		case star(expr): e = element(none(),"star",[expr2xml(expr)]);
 		case seplistplus(e1,e2): e = element(none(),"seplistplus",[expr2xml(e1),expr2xml(e2)]);
