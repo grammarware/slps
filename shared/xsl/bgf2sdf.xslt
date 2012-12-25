@@ -50,19 +50,19 @@ exports
   </xsl:template>
 
   <xsl:template match="bgf:production">
+	<xsl:variable name="nt" select="./nonterminal"></xsl:variable>
     <xsl:choose>
       <xsl:when test="./bgf:expression/choice">
+        <xsl:for-each select="./bgf:expression/choice/bgf:expression">
           <xsl:text>
         </xsl:text>
           <xsl:call-template name="no-parenthesis">
-            <xsl:with-param name="expr" select="./bgf:expression/choice/bgf:expression[1]"/>
-          </xsl:call-template>
-        <xsl:for-each select="./bgf:expression/choice/bgf:expression[position()>1]">
-          <xsl:text>
-		| </xsl:text>
-          <xsl:call-template name="no-parenthesis">
             <xsl:with-param name="expr" select="."/>
           </xsl:call-template>
+	    <xsl:text><![CDATA[ -> ]]></xsl:text>
+	    <xsl:call-template name="display-nonterminal">
+	      <xsl:with-param name="nt" select="$nt"/>
+	    </xsl:call-template>
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
@@ -71,12 +71,12 @@ exports
         <xsl:call-template name="no-parenthesis">
           <xsl:with-param name="expr" select="./bgf:expression"/>
         </xsl:call-template>
+	    <xsl:text><![CDATA[ -> ]]></xsl:text>
+	    <xsl:call-template name="display-nonterminal">
+	      <xsl:with-param name="nt" select="$nt"/>
+	    </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:text><![CDATA[ -> ]]></xsl:text>
-    <xsl:call-template name="display-nonterminal">
-      <xsl:with-param name="nt" select="./nonterminal"/>
-    </xsl:call-template>
     <xsl:if test="./label">
       <xsl:text> {cons(</xsl:text>
       <xsl:value-of select="./label"/>
