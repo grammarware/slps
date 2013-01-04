@@ -131,13 +131,6 @@ BGFGrammar runAddV(BGFProduction p1, grammar(rs, ps))
 	}
 }
 
-bool inProds(BGFProduction p, []) = false;
-bool inProds(BGFProduction p, list[BGFProduction] ps)
-{
-	if (eqP(normalise(p),normalise(ps[0]))) return true;
-	else return inProds(p,slice(ps,1,len(ps)-1));
-}
-
 BGFGrammar runAnonymize(BGFProduction p1, grammar(rs, ps))
 {
 	p2 = unmark(p1);

@@ -97,6 +97,26 @@ public tuple[Problem,Advice,BGFGrammar] attemptTransform(XBGFSequence xbgf, BGFG
 	return <noproblem(),noadvice(),normalise(g1)>;
 }
 
+tuple[Problem,Advice,BGFGrammar] runAbridge(BGFProduction prod, grammar(rs, ps))
+{
+	if (production(_,x,nonterminal(x)) !:= prod)
+		return
+		<
+			error("Production <prod> cannot be abridged."),
+			adviseDetouredProd(prod,ps), // NOT IMPLEMENTED YET
+			grammar(rs,ps)
+		>;
+	if (!inProds(prod,ps))
+		return
+		<
+			error("Production <prod> not found."),
+			setadvice("Consider the nonterminal <prod.lhs> already abridged.",[]),
+			grammar(rs,ps)
+		>;
+	return <noproblem(),noadvice(),grammar(rs, ps - prod)>;
+}
+
+
 tuple[Problem,Advice,BGFGrammar] runRenameN(str x, str y, grammar(rs, ps))
 {
 	ns = allNs(ps);

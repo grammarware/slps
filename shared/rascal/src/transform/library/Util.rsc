@@ -143,3 +143,6 @@ public int levenshtein(str x, str y)
 	} 
 	return prow[size(prow)-1];
 }
+
+public bool inProds(BGFProduction p, []) = false;
+public bool inProds(BGFProduction p, list[BGFProduction] ps) = eqP(normalise(p),normalise(ps[0])) || inProds(p,tail(ps));
