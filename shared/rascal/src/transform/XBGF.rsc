@@ -79,7 +79,7 @@ public XBGFResult transform(XBGFCommand x, BGFGrammar g)
 		case atomic(list[XBGFCommand] steps): return transform(steps,g);
 		case strip(str a): return runStrip(a,g);
 		
-		default: throw "Unknown XBGF command <x>";
+		default: return <problemXBGF("Unknown XBGF command",x),g>;
 	}
 }
 
@@ -103,7 +103,7 @@ XBGFResult runAbridge(BGFProduction p1, BGFGrammar g)
 	if (production(_,x,nonterminal(x)) !:= p1)
 		r = add(r,problemProd("Production cannot be abridged.",p1));
 	if (!inProds(p1,g.prods))
-		r = add(r,problemProd("Production not found.",p1));
+		r = notFoundP(r,p1);
 	return <r,grammar(g.roots, g.prods - p1)>;
 }
 
@@ -112,10 +112,10 @@ XBGFResult runAbstractize(BGFProduction p1, BGFGrammar g)
 	XBGFOutcome r = ok();
 	p2 = unmark(p1);
 	if (!inProds(p2,g.prods))
-		throw "Production rule <p2> not found.";
+		r = notFoundP(r,p2);
 	for (/marked(e) := p1)
 		if (terminal(_) !:= e)
-			throw "Abstractize only works with marked terminals, use project instead.";
+			r = add(r, problem("Abstractize only works with marked terminals, use project instead."));
 	return add(r,runProject(p1,grammar(g.roots, g.prods)));
 }
 
@@ -125,7 +125,7 @@ XBGFResult runAddH(BGFProduction p1, BGFGrammar g)
 	p2 = unmark(p1);
 	p3 = demarkH(p1);
 	if (!inProds(p3,g.prods))
-		throw "Production rule <p3> not found.";
+		r = notFoundP(r,p3);
 	return <r,grammar(g.roots, replaceP(g.prods,p3,p2))>;
 }
 
@@ -136,12 +136,12 @@ XBGFResult runAddV(BGFProduction p1, BGFGrammar g)
 	{
 		<ps1,ps2,ps3> = splitPbyW(g.prods,innt(x));
 		if (isEmpty(ps2))
-			throw "Nonterminal <x> must be defined.";
+			r = add(r,problemStr("Nonterminal must be defined",x));
 		if (p1 in ps2)
-			throw "Production rule <p1> is already present.";
+			r = add(r,problemProd("Production rule is already present",p1));
 		if (production(str l,_,_) := p1 && l != "")
 			if (production(str l,_,_) <- ps)
-				throw "Another production rule with label <l> is already present.";
+				r = add(r,problemStr("Another production rule with the same label is already present",l));
 		return <r,grammar(g.roots, ps1 + ps2 + p1 + ps3)>;
 	}
 }
@@ -152,20 +152,20 @@ XBGFResult runAnonymize(BGFProduction p1, BGFGrammar g)
 	p2 = unmark(p1);
 	p3 = demarkS(p1);
 	if (!inProds(p2,g.prods))
-		throw "Production rule <p1> not found.";
+		r = notFoundP(r,p1);
 	return <r,grammar(g.roots, replaceP(g.prods,p2,p3))>;
 }
 
-XBGFResult runAppear(BGFProduction p1, grammar(roots, ps))
+XBGFResult runAppear(BGFProduction p1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	p2 = demark(p1);
-	if (!inProds(p2,ps))
-		throw "Production rule <p2> not found.";
+	if (!inProds(p2,g.prods))
+		r = notFoundP(r,p2);
 	for (/marked(e) := p1)
 		if (optional(_) !:= e && star(_) !:= e)
-			throw "<p1> does not have an optional part marked.";
-	return <r,grammar(roots, replaceP(ps,p2,unmark(p1)))>;
+			r = add(r,problemProd("Production rule does not have an optional part marked",p1));
+	return <r,grammar(g.roots, replaceP(g.prods,p2,unmark(p1)))>;
 }
 
 XBGFResult runAssoc(production(str l, str x, BGFExpression e1), BGFGrammar g)
@@ -175,8 +175,10 @@ XBGFResult runAssoc(production(str l, str x, BGFExpression e1), BGFGrammar g)
 	if ([production(l, x, BGFExpression e2)] := ps2)
 		if (transform::library::Associativity::admit(e1,e2))
 			return <r,grammar(g.roots,ps1 + production(l, x, e1) + ps3)>;
-		else throw "<production(l,x,e1)> must admit associativity transformation.";
-	else throw "Cannot find the right production rule to match <production(l,x,e1)> in <ps2>.";
+		else
+			return <problemProd("Production rule must admit associativity transformation",production(l,x,e1)),g>;
+	else
+		return <problemPinProds("Cannot find the right production rule to match",production(l,x,e1),ps2),g>;
 }
 
 XBGFResult runChain(BGFProduction p, grammar(rs, ps))
@@ -184,15 +186,20 @@ XBGFResult runChain(BGFProduction p, grammar(rs, ps))
 	XBGFOutcome r = ok();
 	if (production(str l,str n1,nonterminal(str n2)) := p)
 		{
-			if (n1 == n2) throw "Do not introduce reflexive chain productions with chain, use detour instead.";
-			if (n2 in allNs(ps)) throw "Nonterminal <n2> must be fresh.";
+			if (n1 == n2)
+				r = add(r,problem("Do not introduce reflexive chain productions with chain, use detour instead"));
+			if (n2 in allNs(ps))
+				r = add(r,problemStr("Nonterminal must be fresh",n2));
 			list[BGFProduction] ps1,ps2,ps3;
 			if (l != "") <ps1,ps2,ps3> = splitPbyW(ps,inlabel(l));
 			else <ps1,ps2,ps3> = splitPbyW(ps,innt(n1));
-			if ([production(l,n1,e)] := ps2) return <r,grammar(rs, ps1 + p + production("",n2,e) + ps3)>;
-			else throw "Production rule <ps2> has unexpected form.";
+			if ([production(l,n1,e)] := ps2)
+				return <r,grammar(rs, ps1 + p + production("",n2,e) + ps3)>;
+			else
+				return <add(r,problemProds("Production rule has unexpected form",ps2)),g>;
 		}
-	else throw "Production <p> must be a chain production.";
+	else
+		return <problemProd("Not a chain production rule.",p),g>;
 }
 
 XBGFResult runClone(str x, str y, XBGFScope w, BGFGrammar g)
@@ -209,89 +216,102 @@ XBGFResult runConcatT(list[str] xs, str y, XBGFScope w, BGFGrammar g)
 	return <r,g>;
 }
 
-XBGFResult runConcretize(BGFProduction p1, grammar(rs, ps))
+XBGFResult runConcretize(BGFProduction p1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	p2 = demark(p1);
-	if (!inProds(p2,ps))
-		throw "Production rule <p2> not found.";
+	if (!inProds(p2,g.prods))
+		r = notFoundP(r,p2);
 	for (/marked(e) := p1)
 		if (terminal(_) !:= e)
-			throw "Concretize only works with marked terminals, use inject instead.";
-	return add(r,runInject(p1,grammar(rs, ps)));
+			r = add(r,problem("Concretize only works with marked terminals, use inject instead."));
+	return add(r,runInject(p1,g));
 }
 
-XBGFResult runDeanonymize(BGFProduction p1, grammar(rs, ps))
+XBGFResult runDeanonymize(BGFProduction p1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	p2 = unmark(p1);
 	p3 = demarkS(p1);
-	if (!inProds(p3,ps))
-		throw "Production rule <p1> not found.";
-	return <r,grammar(rs, replaceP(ps,p3,p2))>;
+	if (!inProds(p3,g.prods))
+		r = notFoundP(r,p1);
+	return <r,grammar(g.roots, replaceP(g.prods,p3,p2))>;
 }
 
-XBGFResult runDefine(list[BGFProduction] ps1, grammar(rs, ps2))
+XBGFResult runDefine(list[BGFProduction] ps1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	if ({str n} := definedNs(ps1))
 	{
-		if (n notin usedNs(ps2)) throw "Nonterminal <n> must not be fresh, use introduce instead.";
-		return <r,grammar(rs, ps2 + ps1)>;
+		if (n notin usedNs(g.prods))
+			r = add(r,problemStr("Nonterminal must not be fresh, use introduce instead",n));
+		return <r,grammar(g.roots, g.prods + ps1)>;
 	}
-	else throw "Multiple defined nonterminals found.";
+	else
+		return <problem("Multiple defined nonterminals found"),g>;
 }
 
-XBGFResult runDesignate(production(str l,str n,BGFExpression e), grammar(rs,ps))
+XBGFResult runDesignate(production(str l,str n,BGFExpression e), BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	if (l == "") throw "Production <production(l,n,e)> must be labeled.";
-	if (production("",n,e) notin ps) throw "Production rule defining <n> as <e> not found.";
-	return <r,grammar(rs,replaceP(ps,production("",n,e),production(l,n,e)))>;
+	if (l == "")
+		r = add(r,problemProd("Production rule must me labelled, use unlabel instead",production(l,n,e)));
+	if (production("",n,e) notin g.prods)
+		// throw "Production rule defining <n> as <e> not found.";
+		r = add(r,problemProd("Production rule not found, use renameL instead",production("",n,e)));
+	return <r,grammar(g.roots,replaceP(g.prods,production("",n,e),production(l,n,e)))>;
 }
 
-XBGFResult runDetour(BGFProduction p, grammar(rs, ps))
+XBGFResult runDetour(BGFProduction p, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	if (production(_,x,nonterminal(x)) := p)
 	{
 		// xbgf1.pro only aksed for x to be used, not necessarily defined; we're more strict here
-		if (x notin definedNs(ps)) throw "Nonterminal <x> must already be defined.";
-		<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
-		return <r,grammar(rs, ps1 + ps2 + p + ps3)>;
+		if (x notin definedNs(g.prods))
+			r = freshN(r,x);
+		<ps1,ps2,ps3> = splitPbyW(g.prods,innt(x));
+		return <r,grammar(g.roots, ps1 + ps2 + p + ps3)>;
 	}
 	else
-		throw "Production <p> is not a reflexive chain production.";
+		return <problemProd("Not a reflexive chain production rule",p),g>;
 }
 
-XBGFResult runDeyaccify(str n, grammar(rs,ps))
+XBGFResult runDeyaccify(str n, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	if (n notin definedNs(ps)) throw "Nonterminal <n> is not defined.";
-	<ps1,ps2,ps3> = splitPbyW(ps,innt(n));
-	if (len(ps2) == 1) throw "Nonterminal <n> must be defined vertically for deyaccification to work.";
-	if (len(ps2) > 2) throw "No deyaccification patterns for <len(ps2)> production rules known.";
-	return <r,grammar(rs, ps1 + transform::library::Yacc::deyaccify(toSet(ps2)) + ps3)>;
+	if (n notin definedNs(g.prods))
+		r = add(r,problemStr("Nonterminal is not defined",n));
+	<ps1,ps2,ps3> = splitPbyW(g.prods,innt(n));
+	if (len(ps2) < 2)
+		r = add(r,problemStr("Nonterminal must be defined vertically for deyaccification to work",n));
+	if (len(ps2) > 2)
+		r = add(r,problemProds("No deyaccification patterns for <len(ps2)> production rules known",ps2));
+	if (ok() := r)
+		return <r,grammar(g.roots, ps1 + transform::library::Yacc::deyaccify(toSet(ps2)) + ps3)>;
+	else
+		return <r,g>;
 }
 
-XBGFResult runDisappear(BGFProduction p1, grammar(rs, ps))
+XBGFResult runDisappear(BGFProduction p1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	p2 = unmark(p1);
-	if (!inProds(p2,ps))
-		throw "Production rule <p2> not found.";
+	if (!inProds(p2,g.prods))
+		r = notFoundP(r,p2);
 	for (/marked(e) := p1)
 		if (optional(_) !:= e && star(_) !:= e)
-			throw "<p1> does not have an optional part marked.";
-	return <r,grammar(rs, replaceP(ps,p2,demark(p1)))>;
+			r = add(r,problemProd("Production rule does not have an optional part marked",p2));
+	return <r,grammar(g.roots, replaceP(g.prods,p2,demark(p1)))>;
 }
 
-XBGFResult runDistribute(XBGFScope w, grammar(rs, ps))
+XBGFResult runDistribute(XBGFScope w, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	<ps1,ps2,ps3> = splitPbyW(ps,w);
-	if (/choice(_) !:= ps2) throw "No choices found in the context <w>, nothing to distribute";
-	return <r,grammar(rs,ps1 + normalise([transform::library::Factoring::makeDistributed(p) | p <- ps2]) + ps3)>;
+	<ps1,ps2,ps3> = splitPbyW(g.prods,w);
+	if (/choice(_) !:= ps2)
+		r = add(r,problemScope("No choices found, nothing to distribute",w));
+	return <r,grammar(g.roots,ps1 + normalise([transform::library::Factoring::makeDistributed(p) | p <- ps2]) + ps3)>;
 }
 
 XBGFResult runDowngrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
@@ -303,26 +323,31 @@ XBGFResult runDowngrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
 			p3 = visit(p1){case marked(_) => e};
 			return <r,grammar(rs,replaceP(ps,unmark(p1),normalise(p3)))>;
 		}
-		else throw "<p1> and <p2> do not agree on nonterminal.";
-	else throw "<p1> does not have a single nonterminal marked.";
+		else
+			return <problemProd2("Production rules do not agree on nonterminal",p1,p2),g>;
+	else
+		return <problemProd("Production rule does not have a single nonterminal marked",p1),g>;
 }
 
-XBGFResult runEliminate(str x, grammar(rs, ps))
+XBGFResult runEliminate(str x, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	// TODO: can we eliminate root?
-	if (x in rs) throw "Cannot eliminate root nonterminal <x>";
-	if (x notin definedNs(ps)) throw "Nonterminal <x> must be defined.";
-	<ps1,_,ps3> = splitPbyW(ps,innt(x));
-	if (x in usedNs(ps1+ps3)) throw "Nonterminal <x> must not be used.";
-	return <r,grammar(rs, ps1 + ps3)>;
+	if (x in g.roots)
+		r = add(r,problemStr("Cannot eliminate root nonterminal",x));
+	if (x notin definedNs(g.prods))
+		r = add(r,problemStr("Nonterminal must be defined",x));
+	<ps1,_,ps3> = splitPbyW(g.prods,innt(x));
+	if (x in usedNs(ps1+ps3))
+		r = add(r,problemStr("Nonterminal must not be used",x));
+	return <r,grammar(g.roots, ps1 + ps3)>;
 }
 
 XBGFResult runEquate(str x, str y, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	if (x == y)
-		r = problemNT("Nonterminal is already equated with itself.",x);
+		r = problemStr("Nonterminal is already equated with itself.",x);
 	<ps1x,ps2x,ps3x> = splitPbyW(g.prods,innt(x));
 	<_,ps2y,_> = splitPbyW(g.prods,innt(y));
 	XBGFResult rep = runRenameN(x,y,grammar([],ps2x));
@@ -330,7 +355,7 @@ XBGFResult runEquate(str x, str y, BGFGrammar g)
 	gxy = rep.g;
 	gyy = grammar([],ps2y);
 	if (!gdts(gxy,gyy))
-		r = add(r,problemNT2("Definitions of nonterminals must be equal.",x,y));
+		r = add(r,problemStr2("Definitions of nonterminals must be equal.",x,y));
 	if (x in usedNs(ps1x + ps3x))
 		return add(r,runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots - x,ps1x + ps3x)));
 	else
@@ -341,7 +366,7 @@ XBGFResult runExtract(production(str l, str x, BGFExpression rhs), XBGFScope w, 
 {
 	XBGFOutcome r = ok();
 	if (x in definedNs(ps))
-		r = problemNT("Nonterminal already defined.",x);
+		r = notFreshN(r,x);
 	// TODO hard to check if rhs occurs in the grammar; it was somehow done in xbgf1.pro 
 	XBGFResult rep = runReplace(rhs,nonterminal(x),w,grammar(rs,ps));
 	return <add(r,rep.r),grammar(rep.g.roots,rep.g.prods + production(l,x,rhs))>;
@@ -363,14 +388,14 @@ XBGFResult runFold(str x, XBGFScope w, BGFGrammar g)
 	if (<_,[production(_, x, BGFExpression rhs)],_> := splitPbyW(g.prods,innt(x)))
 		return add(r,runReplace(rhs,nonterminal(x),comboscope(notinnt(x),w),g));
 	else 
-		return <problemNT("Nonterminal must be defined horizontally prior to folding.",x),g>;
+		return <problemStr("Nonterminal must be defined horizontally prior to folding.",x),g>;
 }
 
-XBGFResult runHorizontal(XBGFScope w, grammar(rs,ps))
+XBGFResult runHorizontal(XBGFScope w, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	// For xbgf1.pro, the context must be strictly vertical. Here we are more relaxed. 
-	<ps1,ps2,ps3> = splitPbyW(ps,w);
+	<ps1,ps2,ps3> = splitPbyW(g.prods,w);
 	list[BGFExpression] es4 = [];
 	for (production(str l, str x, BGFExpression e) <- ps2)
 		if (choice(L) := e)
@@ -380,28 +405,31 @@ XBGFResult runHorizontal(XBGFScope w, grammar(rs,ps))
 		else
 			es4 += selectable(l,e);
 	if (innt(str x) := w)
-		return <r,grammar(rs,ps1 + production("",x,choice(es4)) + ps3)>;
-	else throw "Scope for horizontal must be a nonterminal.";
+		return <r,grammar(g.roots,ps1 + production("",x,choice(es4)) + ps3)>;
+	else
+		return <problemScope("Scope for horizontal must be a nonterminal",w),g>;
 }
 
-XBGFResult runImportG(list[BGFProduction] ps1, grammar(rs, ps2))
+XBGFResult runImportG(list[BGFProduction] ps1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	defs1 = definedNs(ps1);
-	defs12 = defs1 & definedNs(ps2);
-	du12 = defs1 & usedNs(ps2);
-	if (!isEmpty(defs12)) throw "Import clashes with existing definitions <defs12>.";
-	if (!isEmpty(du12)) throw "Import clashes with existing definitions <du12>.";
-	return <r,grammar(rs, ps1 + ps2)>;
+	defs12 = defs1 & definedNs(g.prods);
+	du12 = defs1 & usedNs(g.prods);
+	if (!isEmpty(defs12))
+		r = add(r,problemProds("Import clashes with existing definitions", defs12));
+	if (!isEmpty(du12))
+		r = add(r,problemProds("Import clashes with existing definitions", du12));
+	return <r,grammar(g.roots, ps1 + g.prods)>;
 }
 
-XBGFResult runInject(BGFProduction p1, grammar(rs, ps))
+XBGFResult runInject(BGFProduction p1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	p2 = demark(p1);
-	if (!inProds(p2,ps))
-		throw "Production rule <p2> not found.";
-	return <r,grammar(rs, replaceP(ps,p2,unmark(p1)))>;
+	if (!inProds(p2,g.prods))
+		r = notFoundP(r,p2);
+	return <r,grammar(g.roots, replaceP(g.prods,p2,unmark(p1)))>;
 }
 
 XBGFResult runInline(str x, BGFGrammar g)
@@ -410,30 +438,35 @@ XBGFResult runInline(str x, BGFGrammar g)
 	if (<ps1,[production(_, x, BGFExpression rhs)],ps2> := splitPbyW(g.prods,innt(x)))
 		return add(r,runReplace(nonterminal(x),rhs,globally(),grammar(g.roots,ps1+ps2)));
 	else 
-		return <problemNT("Nonterminal must be defined horizontally prior to inlining.",x),g>;
+		return <problemStr("Nonterminal must be defined horizontally prior to inlining.",x),g>;
 }
 
-XBGFResult runIntroduce(list[BGFProduction] ps1, grammar(roots, ps2))
+XBGFResult runIntroduce(list[BGFProduction] ps, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	if ({str n} := definedNs(ps1))
+	if ({str n} := definedNs(ps))
 	{
-		if (n in usedNs(ps2)) throw "Nonterminal <n> must be fresh, use define instead.";
-		if (n in definedNs(ps2)) throw "Definition for <n> clashes with existing definition.";
-		return <r,grammar(roots, ps2 + ps1)>;
+		if (n in usedNs(g.prods))
+			r = notFreshN(r,n);
+		if (n in definedNs(g.prods))
+			r = add(r,problemStr("Definition for nonterminal clashes with existing definition",n));
+		return <r,grammar(g.roots, g.prods + ps)>;
 	}
-	else throw "Multiple defined nonterminals found.";
+	else
+		return <problem("Multiple defined nonterminals found"),g>;
 }
 
-XBGFResult runIterate(production(str l, str x, BGFExpression e1), grammar(rs, ps))
+XBGFResult runIterate(production(str l, str x, BGFExpression e1), BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	<ps1,ps2,ps3> = splitPbyW(ps,comboscope(inlabel(l),innt(x)));
+	<ps1,ps2,ps3> = splitPbyW(g.prods,comboscope(inlabel(l),innt(x)));
 	if ([production(l, x, BGFExpression e2)] := ps2)
 		if (transform::library::Associativity::admit(e2,e1))
-			return <r,grammar(rs,ps1 + production(l, x, e1) + ps3)>;
-		else throw "<production(l,x,e1)> must admit associativity transformation.";
-	else throw "Cannot find the right production rule to match <production(l,x,e1)> in <ps2>.";
+			return <r,grammar(g.roots,ps1 + production(l, x, e1) + ps3)>;
+		else
+			return <problemProd("Production rule must admit associativity transformation",production(l,x,e1)),g>;
+	else
+		return <problemPinProds("Cannot find the right production rule to match",production(l,x,e1),ps2),g>;
 }
 
 XBGFResult runMassage(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
@@ -454,35 +487,37 @@ XBGFResult runNarrow(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
 		return add(r,runReplace(e1,e2,w,g)); 
 }
 
-XBGFResult runPermute(BGFProduction p, grammar(rs, ps))
+XBGFResult runPermute(BGFProduction p, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	if (production(str l, str n, sequence(L1)) := p)
 	{
-		<ps1,ps2,ps3> = splitPbyW(ps,innt(n));
+		<ps1,ps2,ps3> = splitPbyW(g.prods,innt(n));
 		if ([production(_, n, sequence(L2))] := ps2)
 		{
 			if (toSet(L1) == toSet(L2))
-				return <r,grammar(rs, ps1 + p + ps3)>;
+				return <r,grammar(g.roots, ps1 + p + ps3)>;
 			else
-				throw "Phrases <L1> and <L2> must be permutations of each other.";
+				r = add(r,problemExpr2("Phrases must be permutations of each other",sequence(L1),sequence(L2)));
 		}
-		else throw "Permutation requires a single sequence instead of <ps2>.";
+		else
+			r = add(r,problemProds("Permutation requires a single sequence instead of",ps2));
 	}
-	else throw "Permutation parameter requires a sequence instead of <p>.";
+	else
+		r = add(r,problemProd("Permutation parameter requires a sequence instead of",p));
 	return <r,g>;
 }
 
-XBGFResult runProject(BGFProduction p1, grammar(rs, ps))
+XBGFResult runProject(BGFProduction p1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	p2 = unmark(p1);
-	if (!inProds(p2,ps))
-		throw "Production rule <p2> not found.";
-	return <r,grammar(rs, replaceP(ps,p2,demark(p1)))>;
+	if (!inProds(p2,g.prods))
+		r = notFoundP(r,p2);
+	return <r, grammar(g.roots, replaceP(g.prods, p2, demark(p1)))>;
 }
 
-XBGFResult runRedefine(list[BGFProduction] ps1, grammar(list[str] rs, ps2))
+XBGFResult runRedefine(list[BGFProduction] ps1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	// inlined superposition of undefine and define, with two exceptional details:
@@ -490,52 +525,53 @@ XBGFResult runRedefine(list[BGFProduction] ps1, grammar(list[str] rs, ps2))
 	// (2) redefine preserves original order of production rules
 	if ({str x} := definedNs(ps1))
 	{
-		if (x notin definedNs(ps2)) throw "Nonterminal <x> must be defined.";
-		if (x notin usedNs(ps2)) throw "Nonterminal <x> must be used.";
-		<ps3,_,ps4> = splitPbyW(ps2,innt(x));
-		return <r,grammar(rs,ps3 + ps1 + ps4)>; 
+		if (x notin definedNs(g.prods))
+			r = add(r,problemStr("Nonterminal must be defined",x));
+		if (x notin usedNs(g.prods))
+			r = add(r,problemStr("Nonterminal must be used",x));
+		<ps3,_,ps4> = splitPbyW(g.prods,innt(x));
+		return <r,grammar(g.roots, ps3 + ps1 + ps4)>; 
 	}
 }
 
-XBGFResult runRemoveH(BGFProduction p1, grammar(roots, ps))
+XBGFResult runRemoveH(BGFProduction p1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	p2 = unmark(p1);
-	if (!inProds(p2,ps))
-		throw "Production rule <p2> not found.";
-	return <r,grammar(roots, replaceP(ps,p2,demarkH(p1)))>;
+	if (!inProds(p2, g.prods))
+		r = notFoundP(r,p2);
+	return <r,grammar(g.roots, replaceP(g.prods,p2,demarkH(p1)))>;
 }
 
-XBGFResult runRemoveV(BGFProduction p1, grammar(roots, ps))
+XBGFResult runRemoveV(BGFProduction p, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	if (production(_,str x,_) := p1)
-	{
-		<_,ps2,_> = splitPbyW(ps,innt(x));
-		if (isEmpty(ps2))
-			throw "Nonterminal <x> must be defined.";
-		if (!inProds(p1,ps2))
-			throw "Production rule <p1> is not in the grammar.";
-		if ([p1] == ps2)
-			throw "Cannot remove the last production rule of <x> with removeV, use undefine or eliminate.";
-		return <r,grammar(roots, ps - p1)>;
-	}
+	<_,ps2,_> = splitPbyW(g.prods, innt(p.lhs));
+	if (isEmpty(ps2))
+		r = freshN(r, p.lhs);
+	if (!inProds(p,ps2))
+		r = notFoundP(r,p);
+	if ([p] == ps2)
+		r = add(r,problemStr("Cannot remove the last production rule with removeV, use undefine or eliminate",p.lhs));
+	return <r,grammar(g.roots, g.prods - p)>;
 }
 
-XBGFResult runRenameL(str x, str y, grammar(rs, ps))
+XBGFResult runRenameL(str x, str y, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	if (x == "") throw "Source label must not be empty for renaming, use designate.";
-	if (y == "") throw "Target label must not be empty for renaming, use unlabel.";
-	if (len([p | p <- ps, production(x, _, _) := p]) != 1)
-		throw "Source name <x> for renaming must be fresh and unique.";
-	if (len([p | p <- ps, production(y, _, _) := p]) != 0)
-		throw "Target name <y> for renaming must be fresh.";
-	<ps1,ps2,ps3> = splitPbyW(ps,inlabel(x));
+	if (x == "")
+		r = add(r, problem("Source label must not be empty for renaming, use designate"));
+	if (y == "")
+		r = add(r, problem("Target label must not be empty for renaming, use unlabel"));
+	if (len([p | p <- g.prods, production(x, _, _) := p]) != 1)
+		r = add(r, problemStr("Source name for renaming must be uniquely used",x));
+	if (len([p | p <- g.prods, production(y, _, _) := p]) != 0)
+		r = add(r, problemStr("Target name for renaming must be fresh",y));
+	<ps1,ps2,ps3> = splitPbyW(g.prods, inlabel(x));
 	if ([production(x, str n, BGFExpression e)] := ps2)
-		return <r,grammar(rs, ps1 + production(y, n, e) + ps3)>;
+		return <r,grammar(g.roots, ps1 + production(y, n, e) + ps3)>;
 	else
-		throw "Label <x> is not found or not unique"; // the latter should never happen
+		return <add(r,problemStr("Label not found or not unique",x)),g>; // the latter should never happen
 }
 
 XBGFResult runRenameN(str x, str y, BGFGrammar g)
@@ -543,39 +579,41 @@ XBGFResult runRenameN(str x, str y, BGFGrammar g)
 	XBGFOutcome r = ok();
 	ns = allNs(g.prods);
 	if (x notin ns)
-		throw "Source name <x> for renaming must not be fresh.";
+		r = freshN(r,x);
 	if (y in ns)
-		throw "Target name <y> for renaming must be fresh.";
+		r = notFreshN(r,y);
 	return
 		<r,transform::library::Core::performRenameN(x,y,g)>;
 }
 
-XBGFResult runRenameS(str x, str y, XBGFScope w, grammar(rs, ps))
+XBGFResult runRenameS(str x, str y, XBGFScope w, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	<ps1,ps2,ps3> = splitPbyW(ps,w);
-	if (/selectable(x,_) !:= ps2) throw "Source name <x> for renaming must not be fresh.";
-	if (/selectable(y,_) := ps2) throw "Target name <y> for renaming must be fresh.";
+	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
+	if (/selectable(x,_) !:= ps2)
+		r = freshName("Source name",r,x);
+	if (/selectable(y,_) := ps2)
+		r = notFreshName("Target name",r,y);
 	ps4 = visit(ps2){case selectable(x,BGFExpression e) => selectable(y,e)}
-	return <r,grammar(rs, ps1 + ps4 + ps3)>;
+	return <r,grammar(g.roots, ps1 + ps4 + ps3)>;
 }
 
-XBGFResult runRenameT(str x, str y, grammar(rs, ps))
+XBGFResult runRenameT(str x, str y, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	ts = allTs(ps);
+	ts = allTs(g.prods);
 	if (x notin ts)
-		r = add(r, problemNT("Source name for renaming must not be fresh.",x));
+		r = freshName("Source name",r,x);
 	if (y in ts)
-		r = add(r, problemNT("Target name for renaming must be fresh.",y));
-	return add(r,runReplace(terminal(x),terminal(y),globally(),grammar(rs,ps)));
+	r = notFreshName("Target name",r,y);
+	return add(r,runReplace(terminal(x),terminal(y),globally(),g));
 }
 
-XBGFResult runReplace(BGFExpression e1, BGFExpression e2, XBGFScope w, grammar(rs, ps))
+XBGFResult runReplace(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	list[BGFProduction] ps1,ps2,ps3,ps4;
-	<ps1,ps2,ps3> = splitPbyW(ps,w);
+	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
 	ps4 = transform::library::Core::performReplace(e1,e2,ps2);
 	if (ps2 == ps4)
 		{
@@ -583,35 +621,42 @@ XBGFResult runReplace(BGFExpression e1, BGFExpression e2, XBGFScope w, grammar(r
 			if (ps2 == ps4)
 				r = add(r,problemExpr2("Vacuous replace",e1,e2));
 		}
-	return <r,grammar(rs, ps1 + normalise(ps4) + ps3)>;
+	return <r,grammar(g.roots, ps1 + normalise(ps4) + ps3)>;
 }
 
-XBGFResult runReroot(list[str] xs, grammar(rs, ps))
+XBGFResult runReroot(list[str] xs, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	if (toSet(xs) == toSet(rs)) throw "Vacuous reroot of <xs>.";
+	if (toSet(xs) == toSet(g.roots))
+		r = add(r,problemStrs("Vacuous reroot",xs));
 	// xbgf1.pro only asked for it to be a subset of allNs, not definedNs; we're more strict here
-	if (toSet(xs) <= definedNs(ps)) return <r,grammar(xs,ps)>;
-	else throw "Not all nonterminals in <xs> are defined.";
+	if (toSet(xs) <= definedNs(g.prods))
+		return <r,grammar(xs, g.prods)>;
+	else
+		return <add(r,problemStrs("Not all nonterminals are defined",xs)),g>;
 }
 
-XBGFResult runSplitN(str x, list[BGFProduction] ps0, XBGFScope w, grammar(rs1, ps1))
+XBGFResult runSplitN(str x, list[BGFProduction] ps0, XBGFScope w, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	if ({str y} := definedNs(ps0))
 	{
-		if (x notin definedNs(ps1)) throw "Source name <x> for splitting must not be undefined.";
-		if (y in allNs(ps1)) throw "Target name <y> for splitting must be fresh.";
-		<ps2,ps3,ps4> = splitPbyW(ps1,innt(x));
+		if (x notin definedNs(g.prods))
+			r = freshN(r,x);
+		if (y in allNs(g.prods))
+			r = notFreshN(r,y);
+		<ps2,ps3,ps4> = splitPbyW(g.prods,innt(x));
 		list[BGFProduction] ps5 = [production(l,x,e) | p <- ps0, production(str l,y,BGFExpression e) := p];
-		if (x in rs1) rs2 = rs1 + y; else rs2 = rs1;
+		if (x in g.roots) rs2 = g.roots + y; else rs2 = g.roots;
 		g = grammar(rs2,ps2 + (ps3 - ps5) + ps0 + ps4);
 		if (nowhere() := w)
 			return <r,g>;
 		else
 			return add(r,runReplace(nonterminal(x),nonterminal(y),w,g));
 	}
-	else throw "Splitting into more than two nonterminals not supported.";
+	else
+		return <problem("Splitting into more than two nonterminals not supported"),g>;
+		// TODO OR NOT TODO
 }
 
 XBGFResult runSplitT(str x, list[str] ys, XBGFScope w, BGFGrammar g)
@@ -625,23 +670,31 @@ XBGFResult runSplitT(str x, list[str] ys, XBGFScope w, BGFGrammar g)
 		return <r,grammar(g.roots,ps1 + normalise(ps2) + ps3)>;
 }
 
-XBGFResult runUnchain(BGFProduction p, grammar(roots, ps))
+XBGFResult runUnchain(BGFProduction p, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	if (production(str l,str n1,nonterminal(str n2)) := p)
 		{
-			if (n1 == n2) throw "Do not remove reflexive chain productions with chain, use abridge instead.";
-			if (n2 in roots) throw "Nonterminal <n2> must not be root.";
-			if (!inProds(p,ps)) throw "<p> not found.";
-			//if (n2 in allNs(ps)) throw "Nonterminal <n2> must be fresh.";
+			if (n1 == n2)
+				r = add(r,problem("Do not remove reflexive chain productions with chain, use abridge instead"));
+			if (n2 in g.roots)
+				r = add(r,problemStr("Nonterminal must not be root",n2));
+			if (!inProds(p,g.prods))
+				r = notFoundP(r,p);
+			//if (n2 in allNs(ps)) r = notFreshN(r,n2);
 			list[BGFProduction] ps1,ps2,ps3;
-			<ps1,ps2,ps3> = splitPbyW(ps - p,innt(n2));
-			if (len(ps2) != 1) throw "Nonterminal <n2> must occur exactly once.";
-			if (l == "") l = n2;
-			if ([production(_,n2,e)] := ps2) return <r,grammar(roots, ps1 + production(l,n1,e) + ps3)>;
-			else throw "Production rule <ps2> has unexpected form.";
+			<ps1,ps2,ps3> = splitPbyW(g.prods - p,innt(n2));
+			if (len(ps2) != 1)
+				r = add(r,problemStr("Nonterminal must occur exactly once",n2));
+			if (l == "")
+				l = n2;
+			if ([production(_,n2,e)] := ps2)
+				return <r,grammar(g.roots, ps1 + production(l,n1,e) + ps3)>;
+			else
+				return <add(r,problemProds("Production rules have unexpected form",ps2)),g>;
 		}
-	else throw "Production <p> must be a chain production.";
+	else
+		return <add(r,problemProd("Not a chain production rule",p)),g>;
 }
 
 //TODO: undefine only one nonterminal per transformation
@@ -670,35 +723,40 @@ XBGFResult runUnfold(str x, XBGFScope w, BGFGrammar g)
 	if (<_,[production(_, x, BGFExpression rhs)],_> := splitPbyW(g.prods,innt(x)))
 		return add(r,runReplace(nonterminal(x),rhs,comboscope(notinnt(x),w),g));
 	else
-		return <problemNT("Nonterminal must be defined horizontally prior to unfolding.",x),g>;
+		return <problemStr("Nonterminal must be defined horizontally prior to unfolding.",x),g>;
 }
 
-XBGFResult runUnite(str x, str y, grammar(rs,ps))
+XBGFResult runUnite(str x, str y, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	if (x == y) throw "Nonterminal <x> is already united with itself.";
-	used = allNs(ps);
-	if (x notin used || y notin used) throw "Both nonterminals <x> and <y> must not be fresh.";
-	<ps1x,ps2x,ps3x> = splitPbyW(ps,innt(x));
+	if (x == y)
+		r = add(r,problemStr("Nonterminal is already united with itself",x));
+	used = allNs(g.prods);
+	if (x notin used)
+		r = freshN(r,x);
+	if (y notin used)
+		r = freshN(r,y);
+	<ps1x,ps2x,ps3x> = splitPbyW(g.prods, innt(x));
 	list[BGFProduction] ps4x = ps1x + [production(l,y,e) | p <- ps2x, production(str l,x,BGFExpression e) := p] + ps3x;
 	if (x in usedNs(ps4x))
-		return <r,runReplace(nonterminal(x),nonterminal(y),globally(),grammar(rs,ps4x))>;
+		return <r,runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots,ps4x))>;
 	else
-		return <r,grammar(rs,ps4x)>;
+		return <r,grammar(g.roots,ps4x)>;
 }
 
-XBGFResult runUnlabel(str x, grammar(rs,ps))
+XBGFResult runUnlabel(str x, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	if (x == "") throw "Please specify which label to unlabel.";
-	<ps1,ps2,ps3> = splitPbyW(ps,inlabel(x));
+	if (x == "")
+		r = add(r,problem("Please specify which label to unlabel"));
+	<ps1,ps2,ps3> = splitPbyW(g.prods, inlabel(x));
 	if ([production(str l, str x, BGFExpression e)] := ps2)
-		return <r,grammar(rs, ps1 + production("", x, e) + ps3)>;
+		return <r,grammar(g.roots, ps1 + production("", x, e) + ps3)>;
 	else
-		throw "Label <x> is not found or not unique"; // the latter should never happen
+		return <add(r,problemStr("Label not found or not unique",x)),g>; // the latter should never happen
 }
 
-XBGFResult runUpgrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
+XBGFResult runUpgrade(BGFProduction p1, BGFProduction p2, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	if (/marked(nonterminal(str x)) := p1)
@@ -706,31 +764,33 @@ XBGFResult runUpgrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
 		{
 			p3 = visit(p1){case marked(_) => e};
 			p3 = normalise(p3);
-			return <r,grammar(rs,replaceP(ps,p3,unmark(p1)))>;
+			return <r,grammar(g.roots,replaceP(g.prods,p3,unmark(p1)))>;
 		}
-		else throw "<p1> and <p2> do not agree on nonterminal.";
-	else throw "<p1> does not have a single nonterminal marked.";
+		else
+			return <problemProd2("Production rules do not agree on nonterminal",p1,p2),g>;
+	else
+		return <problemProd("Production rule must have one single nonterminal marked",p1),g>;
 }
 
-XBGFResult runVertical(XBGFScope w, grammar(rs,ps))
+XBGFResult runVertical(XBGFScope w, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
-	<ps1,ps2,ps3> = splitPbyW(ps,w);
+	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
 	ps4 = [];
 	for (production(str l, str x, BGFExpression e) <- ps2)
 		if (choice(L) := e)
 			for (se <- L)
 				if (selectable(str s, BGFExpression e2) := se)
-					if (/production(s,_,_) := ps)
-						throw "Outermost selector <s> clashes with an existing label.";
+					if (/production(s,_,_) := g.prods)
+						r = add(r,problemStr("Outermost selector clashes with an existing label",s));
 					elseif (/production(s,_,_) := ps4)
-						throw "Outermost selectors ambiguous at <s>.";
+						r = add(r,problemStr("Outermost selectors ambiguous",s));
 					else
 						ps4 += production(s,x,e2);
 				else
 					ps4 += production("",x,se);
 		else ps4 += production(l,x,e);
-	return <r,grammar(rs,ps1 + ps4 + ps3)>;
+	return <r,grammar(g.roots, ps1 + ps4 + ps3)>;
 }
 
 XBGFResult runWiden(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
@@ -741,35 +801,36 @@ XBGFResult runWiden(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar 
 	return add(r,runReplace(e1,e2,w,g)); 
 }
 
-XBGFResult runYaccify(list[BGFProduction] ps1, grammar(rs,ps2))
+XBGFResult runYaccify(list[BGFProduction] ps1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	if ({str x} := definedNs(ps1))
 	{
-		<ps3,ps4,ps5> = splitPbyW(ps2,innt(x));
+		<ps3,ps4,ps5> = splitPbyW(g.prods,innt(x));
 		if ([dyp1] := ps4 && [yp1,yp2] := ps1 && transform::library::Yacc::yaccification(dyp1,{yp1,yp2}))
-			return <r,grammar(rs,ps3 + ps1 + ps5)>;
+			return <r,grammar(g.roots, ps3 + ps1 + ps5)>;
 		else
-			throw "<ps1> are not suitable as yaccification of <ps4>.";
+			return <problemProds2("Unsuitable yaccification",ps1,ps4),g>;
 	}
-	else throw "Production rules must define just one nonterminal.";
+	else 
+		return <problem("Production rules must define just one nonterminal."),g>;
 }
 
-XBGFResult runStrip(str a, grammar(rs,ps))
+XBGFResult runStrip(str a, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	// TODO: semi-deprecated
 	list[BGFProduction] ps2;
 	if (a=="allLabels")
-		ps2 = visit(ps){case production(_,str x,BGFExpression e) => production("",x,e)}
+		ps2 = visit(g.prods){case production(_,str x,BGFExpression e) => production("",x,e)}
 	elseif (a=="allSelectors")
-		ps2 = visit(ps){case selectable(_,BGFExpression e) => e}
+		ps2 = visit(g.prods){case selectable(_,BGFExpression e) => e}
 	elseif (a=="allTerminals")
 		{ // deprecated, please use a mutation that generates abstractize commands
-			ps2 = visit(ps){case terminal(_) => epsilon()};
+			ps2 = visit(g.prods){case terminal(_) => epsilon()};
 			ps2 = normalise(ps2);
 		}
 	else
-		throw "Unknown strip <a> parameter.";
-	return <r,grammar(rs,ps2)>;
+		return <problemStr("Unknown strip parameter",a),g>;
+	return <r,grammar(g.roots,ps2)>;
 }

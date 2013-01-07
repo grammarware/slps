@@ -9,6 +9,13 @@ import List;
 import Set; // toList
 import String; //size
 import IO; //debugging only
+import transform::Results;
+
+public XBGFOutcome notFoundP(XBGFOutcome r, BGFProduction p) = add(r,problemProd("Production rule not found",p));
+public XBGFOutcome notFreshN(XBGFOutcome r, str n) = notFreshName("Nonterminal",r,n);
+public XBGFOutcome freshN(XBGFOutcome r, str n) = freshName("Nonterminal",r,n);
+public XBGFOutcome notFreshName(str name, XBGFOutcome r, str n) = add(r,problemStr("<name> must be fresh",n));
+public XBGFOutcome freshName(str name, XBGFOutcome r, str n) = add(r,problemStr("<name> must not be fresh",n));
 
 public BGFProduction unmark (BGFProduction p1)
 {
