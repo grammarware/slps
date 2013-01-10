@@ -20,23 +20,9 @@ data XBGFOutcome
 	| problemStr2(str msg, str x, str y)
 	| problemStrs(str msg, list[str] xs)
 	| problemScope(str msg, XBGFScope w)
-	//| manyProblems(list[XBGFOutcome] lst)
 	;
 
 alias XBGFResult = tuple[XBGFOutcome r,BGFGrammar g];
-
-// rules for addition
-public XBGFOutcome add(ok(), XBGFOutcome y) = y;
-public XBGFOutcome add(XBGFOutcome x, ok()) = x;
-public XBGFOutcome add(manyProblems(list[XBGFOutcome] xs),manyProblems(list[XBGFOutcome] ys)) = manyProblems(xs+ys);
-public XBGFOutcome add(XBGFOutcome x,manyProblems(list[XBGFOutcome] ys)) = manyProblems([x]+ys);
-//public XBGFOutcome add(manyProblems(list[XBGFOutcome] xs),XBGFOutcome y) = manyProblems(xs+y);
-public default XBGFOutcome add(XBGFOutcome x, XBGFOutcome y) = manyProblems([x,y]);
-
-// adding two results will give both error sets and the last grammar
-public XBGFResult add(XBGFResult x, XBGFResult y) = <add(x.r,y.r),y.g>;
-
-public XBGFResult add(XBGFOutcome x, XBGFResult y) = <add(x,y.r),y.g>;
 
 public void thw(ok()) {}
 public default void thw(XBGFOutcome x) {throw outcome2str(x);}
@@ -58,5 +44,4 @@ public str outcome2str(problemStrs(str msg, list[str] xs)) = "<msg>:\n\t<xs>";
 public str outcome2str(problemExpr(str msg, BGFExpression e)) = "<msg>:\n\t<e>";
 public str outcome2str(problemExpr2(str msg, BGFExpression e1, BGFExpression e2)) = "<msg>:\n<e1> and <e2>";
 public str outcome2str(problemScope(str msg, XBGFScope w)) = "<msg> in <w>";
-//public str outcome2str(manyProblems(list[XBGFOutcome] lst)) = joinStrings([outcome2str(x) | x <- lst],";\n");
 public default str outcome2str(XBGFOutcome x) = "Outcome not implemented: <x>";
