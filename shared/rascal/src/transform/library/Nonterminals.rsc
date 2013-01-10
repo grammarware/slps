@@ -101,3 +101,21 @@ XBGFResult runSplitN(str x, list[BGFProduction] ps0, XBGFScope w, BGFGrammar g)
 		// TODO OR NOT TODO
 }
 
+XBGFResult runUnite(str x, str y, BGFGrammar g)
+{
+	XBGFOutcome r = ok();
+	if (x == y)
+		r = add(r,problemStr("Nonterminal is already united with itself",x));
+	used = allNs(g.prods);
+	if (x notin used)
+		r = freshN(r,x);
+	if (y notin used)
+		r = freshN(r,y);
+	<ps1x,ps2x,ps3x> = splitPbyW(g.prods, innt(x));
+	list[BGFProduction] ps4x = ps1x + [production(l,y,e) | p <- ps2x, production(str l,x,BGFExpression e) := p] + ps3x;
+	if (x in usedNs(ps4x))
+		return <r,transform::library::Brutal::runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots,ps4x))>;
+	else
+		return <r,grammar(g.roots,ps4x)>;
+}
+

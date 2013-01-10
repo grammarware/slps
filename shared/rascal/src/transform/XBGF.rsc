@@ -13,8 +13,9 @@ import transform::library::Folding; // fold, unfold, extract, inline
 import transform::library::Chaining; // abridge, detour, chain, unchain
 import transform::library::Massage; // massage
 import transform::library::Util;
-import transform::library::Nonterminals; // renameN, equate, splitN, clone, reroot
+import transform::library::Nonterminals; // renameN, equate, splitN, clone, reroot, unite
 import transform::library::Sequential; // appear, disappear, inject, permute, project
+import transform::library::Intermittent; // addH, removeH, vertical, horizontal
 import transform::library::Terminals; // renameT, splitT, concatT, abstractize, concretize
 import transform::library::Labels; // renameL, unlabel, designate; renameS, anonymize, deanonimize
 import transform::library::Width; // narrow, widen
@@ -27,7 +28,7 @@ public XBGFResult transform(abridge(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(abstractize(BGFProduction p), BGFGrammar g)
 	= transform::library::Terminals::runAbstractize(p,g);
 public XBGFResult transform(addH(BGFProduction p), BGFGrammar g)
-	= runAddH(p,g);
+	= transform::library::Intermittent::runAddH(p,g);
 public XBGFResult transform(addV(BGFProduction p), BGFGrammar g)
 	= runAddV(p,g);
 public XBGFResult transform(anonymize(BGFProduction p), BGFGrammar g)
@@ -69,7 +70,7 @@ public XBGFResult transform(factor(BGFExpression e1, BGFExpression e2, XBGFScope
 public XBGFResult transform(fold(str x, XBGFScope w), BGFGrammar g)
 	= transform::library::Folding::runFold(x,w,g);
 public XBGFResult transform(horizontal(XBGFScope w), BGFGrammar g)
-	= runHorizontal(w,g);
+	= transform::library::Intermittent::runHorizontal(w,g);
 public XBGFResult transform(importG(list[BGFProduction] ps), BGFGrammar g)
 	= runImportG(ps,g);
 public XBGFResult transform(inject(BGFProduction p), BGFGrammar g)
@@ -95,7 +96,7 @@ public XBGFResult transform(rassoc(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(redefine(list[BGFProduction] ps), BGFGrammar g)
 	= runRedefine(ps,g);
 public XBGFResult transform(removeH(BGFProduction p), BGFGrammar g)
-	= runRemoveH(p,g);
+	= transform::library::Intermittent::runRemoveH(p,g);
 public XBGFResult transform(removeV(BGFProduction p), BGFGrammar g)
 	= runRemoveV(p,g);
 public XBGFResult transform(renameL(str x, str y), BGFGrammar g)
@@ -121,13 +122,13 @@ public XBGFResult transform(undefine(list[str] xs), BGFGrammar g)
 public XBGFResult transform(unfold(str x, XBGFScope w), BGFGrammar g)
 	= transform::library::Folding::runUnfold(x,w,g);
 public XBGFResult transform(unite(str x, str y), BGFGrammar g)
-	= runUnite(x,y,g);
+	= transform::library::Nonterminals::runUnite(x,y,g);
 public XBGFResult transform(unlabel(str x), BGFGrammar g)
 	= transform::library::Labels::runUnlabel(x,g);
 public XBGFResult transform(upgrade(BGFProduction p1, BGFProduction p2), BGFGrammar g)
 	= runUpgrade(p1,p2,g);
 public XBGFResult transform(vertical(XBGFScope w), BGFGrammar g)
-	= runVertical(w,g);
+	= transform::library::Intermittent::runVertical(w,g);
 public XBGFResult transform(widen(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
 	= transform::library::Width::runWiden(e1,e2,w,g);
 public XBGFResult transform(yaccify(list[BGFProduction] ps), BGFGrammar g)
@@ -150,16 +151,6 @@ public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 	return out.g;
 }
 
-
-XBGFResult runAddH(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	p2 = unmark(p1);
-	p3 = demarkH(p1);
-	if (!inProds(p3,g.prods))
-		r = notFoundP(r,p3);
-	return <r,grammar(g.roots, replaceP(g.prods,p3,p2))>;
-}
 
 XBGFResult runAddV(BGFProduction p1, BGFGrammar g)
 {
@@ -220,25 +211,6 @@ XBGFResult runEliminate(str x, BGFGrammar g)
 	return <r,grammar(g.roots, ps1 + ps3)>;
 }
 
-XBGFResult runHorizontal(XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	// For xbgf1.pro, the context must be strictly vertical. Here we are more relaxed. 
-	<ps1,ps2,ps3> = splitPbyW(g.prods,w);
-	list[BGFExpression] es4 = [];
-	for (production(str l, str x, BGFExpression e) <- ps2)
-		if (choice(L) := e)
-			es4 += L;
-		elseif (l == "")
-			es4 += e;
-		else
-			es4 += selectable(l,e);
-	if (innt(str x) := w)
-		return <r,grammar(g.roots,ps1 + production("",x,choice(es4)) + ps3)>;
-	else
-		return <problemScope("Scope for horizontal must be a nonterminal",w),g>;
-}
-
 XBGFResult runImportG(list[BGFProduction] ps1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -284,15 +256,6 @@ XBGFResult runRedefine(list[BGFProduction] ps1, BGFGrammar g)
 	}
 }
 
-XBGFResult runRemoveH(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	p2 = unmark(p1);
-	if (!inProds(p2, g.prods))
-		r = notFoundP(r,p2);
-	return <r,grammar(g.roots, replaceP(g.prods,p2,demarkH(p1)))>;
-}
-
 XBGFResult runRemoveV(BGFProduction p, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -326,24 +289,6 @@ XBGFResult runUndefine(list[str] xs, BGFGrammar g)
 	return <r,grammar(g.roots,myps)>;
 }
 
-XBGFResult runUnite(str x, str y, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (x == y)
-		r = add(r,problemStr("Nonterminal is already united with itself",x));
-	used = allNs(g.prods);
-	if (x notin used)
-		r = freshN(r,x);
-	if (y notin used)
-		r = freshN(r,y);
-	<ps1x,ps2x,ps3x> = splitPbyW(g.prods, innt(x));
-	list[BGFProduction] ps4x = ps1x + [production(l,y,e) | p <- ps2x, production(str l,x,BGFExpression e) := p] + ps3x;
-	if (x in usedNs(ps4x))
-		return <r,transform::library::Brutal::runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots,ps4x))>;
-	else
-		return <r,grammar(g.roots,ps4x)>;
-}
-
 XBGFResult runUpgrade(BGFProduction p1, BGFProduction p2, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -358,27 +303,6 @@ XBGFResult runUpgrade(BGFProduction p1, BGFProduction p2, BGFGrammar g)
 			return <problemProd2("Production rules do not agree on nonterminal",p1,p2),g>;
 	else
 		return <problemProd("Production rule must have one single nonterminal marked",p1),g>;
-}
-
-XBGFResult runVertical(XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
-	ps4 = [];
-	for (production(str l, str x, BGFExpression e) <- ps2)
-		if (choice(L) := e)
-			for (se <- L)
-				if (selectable(str s, BGFExpression e2) := se)
-					if (/production(s,_,_) := g.prods)
-						r = add(r,problemStr("Outermost selector clashes with an existing label",s));
-					elseif (/production(s,_,_) := ps4)
-						r = add(r,problemStr("Outermost selectors ambiguous",s));
-					else
-						ps4 += production(s,x,e2);
-				else
-					ps4 += production("",x,se);
-		else ps4 += production(l,x,e);
-	return <r,grammar(g.roots, ps1 + ps4 + ps3)>;
 }
 
 XBGFResult runStrip(str a, BGFGrammar g)
