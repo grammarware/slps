@@ -160,7 +160,6 @@ public XBGFResult vtransform(XBGFCommand x, BGFGrammar g)
 // legacy code
 XBGFResult runStrip(str a, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	// TODO: semi-deprecated
 	list[BGFProduction] ps2;
 	if (a=="allLabels")
@@ -174,5 +173,5 @@ XBGFResult runStrip(str a, BGFGrammar g)
 		}
 	else
 		return <problemStr("Unknown strip parameter",a),g>;
-	return <r,grammar(g.roots,ps2)>;
+	return <ok(),grammar(g.roots,ps2)>;
 }

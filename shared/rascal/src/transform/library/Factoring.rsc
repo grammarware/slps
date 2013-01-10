@@ -11,21 +11,19 @@ import transform::library::Brutal;
 
 XBGFResult runFactor(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
 {
-	XBGFOutcome r = ok();
 	e3 = normalise(transform::library::Factoring::makeDistributed(e1));
 	e4 = normalise(transform::library::Factoring::makeDistributed(e2));
 	if (!eqE(e3, e4))
-		r = problemExpr2("Expressions must be related by distribution.",e1,e2);
-	return add(r,transform::library::Brutal::runReplace(e1,e2,w,g));
+		return <problemExpr2("Expressions must be related by distribution.",e1,e2),g>;
+	return transform::library::Brutal::runReplace(e1,e2,w,g);
 }
 
 XBGFResult runDistribute(XBGFScope w, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	<ps1,ps2,ps3> = splitPbyW(g.prods,w);
 	if (/choice(_) !:= ps2)
-		r = add(r,problemScope("No choices found, nothing to distribute",w));
-	return <r,grammar(g.roots, ps1 + normalise([makeDistributed(p) | p <- ps2]) + ps3)>;
+		return <problemScope("No choices found, nothing to distribute",w),g>;
+	return <ok(),grammar(g.roots, ps1 + normalise([makeDistributed(p) | p <- ps2]) + ps3)>;
 }
 
 BGFProduction makeDistributed(production(str l, str x, BGFExpression e)) = production(l, x, makeDistributed(e));

@@ -11,40 +11,37 @@ import diff::GDT;
 
 XBGFResult runClone(str x, str y, XBGFScope w, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	// TODO
-	return <r,g>;
+	return <ok(),g>;
 }
 
 XBGFResult runEquate(str x, str y, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	if (x == y)
-		r = problemStr("Nonterminal is already equated with itself.",x);
+		return <problemStr("Nonterminal is already equated with itself.",x),g>;
 	<ps1x,ps2x,ps3x> = splitPbyW(g.prods,innt(x));
 	<_,ps2y,_> = splitPbyW(g.prods,innt(y));
 	XBGFResult rep = runRenameN(x,y,grammar([],ps2x));
-	r = add(r,rep.r);
+	if (ok() !:= rep.r) return rep;
 	gxy = rep.g;
 	gyy = grammar([],ps2y);
 	if (!gdts(gxy,gyy))
-		r = add(r,problemStr2("Definitions of nonterminals must be equal.",x,y));
+		return <problemStr2("Definitions of nonterminals must be equal.",x,y),g>;
 	if (x in usedNs(ps1x + ps3x))
-		return add(r,transform::library::Brutal::runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots - x,ps1x + ps3x)));
+		return transform::library::Brutal::runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots - x,ps1x + ps3x));
 	else
-		return <r,grammar(g.roots - x,ps1x + ps3x)>;
+		return <ok(),grammar(g.roots - x,ps1x + ps3x)>;
 }
 
 XBGFResult runRenameN(str x, str y, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	ns = allNs(g.prods);
 	if (x notin ns)
-		r = freshN(r,x);
+		return <freshN(x),g>;
 	if (y in ns)
-		r = notFreshN(r,y);
+		return <notFreshN(y),g>;
 	return
-		<r,performRenameN(x,y,g)>;
+		<ok(),performRenameN(x,y,g)>;
 }
 
 BGFGrammar performRenameN(str x, str y, BGFGrammar g)
@@ -68,33 +65,31 @@ BGFGrammar performRenameN(str x, str y, BGFGrammar g)
 
 XBGFResult runReroot(list[str] xs, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	if (seteq(xs, g.roots))
-		r = add(r,problemStrs("Vacuous reroot",xs));
+		return <problemStrs("Vacuous reroot",xs),g>;
 	// xbgf1.pro only asked for it to be a subset of allNs, not definedNs; we're more strict here
 	if (subset(xs,definedNs(g.prods)))
-		return <r,grammar(xs, g.prods)>;
+		return <ok(),grammar(xs, g.prods)>;
 	else
-		return <add(r,problemStrs("Not all nonterminals are defined",xs)),g>;
+		return <problemStrs("Not all nonterminals are defined",xs),g>;
 }
 
 XBGFResult runSplitN(str x, list[BGFProduction] ps0, XBGFScope w, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	if ({str y} := definedNs(ps0))
 	{
 		if (x notin definedNs(g.prods))
-			r = freshN(r,x);
+			return <freshN(x),g>;
 		if (y in allNs(g.prods))
-			r = notFreshN(r,y);
+			return <notFreshN(y),g>;
 		<ps2,ps3,ps4> = splitPbyW(g.prods,innt(x));
 		list[BGFProduction] ps5 = [production(l,x,e) | p <- ps0, production(str l,y,BGFExpression e) := p];
 		if (x in g.roots) rs2 = g.roots + y; else rs2 = g.roots;
 		g = grammar(rs2,ps2 + (ps3 - ps5) + ps0 + ps4);
 		if (nowhere() := w)
-			return <r,g>;
+			return <ok(),g>;
 		else
-			return add(r,transform::library::Brutal::runReplace(nonterminal(x),nonterminal(y),w,g));
+			return transform::library::Brutal::runReplace(nonterminal(x),nonterminal(y),w,g);
 	}
 	else
 		return <problem("Splitting into more than two nonterminals not supported"),g>;
@@ -103,19 +98,18 @@ XBGFResult runSplitN(str x, list[BGFProduction] ps0, XBGFScope w, BGFGrammar g)
 
 XBGFResult runUnite(str x, str y, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	if (x == y)
-		r = add(r,problemStr("Nonterminal is already united with itself",x));
+		return <problemStr("Nonterminal is already united with itself",x),g>;
 	used = allNs(g.prods);
 	if (x notin used)
-		r = freshN(r,x);
+		return <freshN(x),g>;
 	if (y notin used)
-		r = freshN(r,y);
+		return <freshN(y),g>;
 	<ps1x,ps2x,ps3x> = splitPbyW(g.prods, innt(x));
 	list[BGFProduction] ps4x = ps1x + [production(l,y,e) | p <- ps2x, production(str l,x,BGFExpression e) := p] + ps3x;
 	if (x in usedNs(ps4x))
-		return <r,transform::library::Brutal::runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots,ps4x))>;
+		return transform::library::Brutal::runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots,ps4x));
 	else
-		return <r,grammar(g.roots,ps4x)>;
+		return <ok(),grammar(g.roots,ps4x)>;
 }
 

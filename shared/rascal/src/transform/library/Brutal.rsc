@@ -11,7 +11,6 @@ import diff::GDT;
 
 XBGFResult runReplace(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	list[BGFProduction] ps1,ps2,ps3,ps4;
 	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
 	ps4 = performReplace(e1,e2,ps2);
@@ -19,9 +18,9 @@ XBGFResult runReplace(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGramma
 		{
 			ps4 = performReplace(normalise(e1),normalise(e2),ps2); // TODO check if needed
 			if (ps2 == ps4)
-				r = add(r,problemExpr2("Vacuous replace",e1,e2));
+				return <problemExpr2("Vacuous replace",e1,e2),g>;
 		}
-	return <r,grammar(g.roots, ps1 + normalise(ps4) + ps3)>;
+	return <ok(),grammar(g.roots, ps1 + normalise(ps4) + ps3)>;
 }
 
 list[BGFProduction] performReplace(BGFExpression e1, BGFExpression e2, list[BGFProduction] ps)

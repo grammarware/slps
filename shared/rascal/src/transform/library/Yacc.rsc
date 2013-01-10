@@ -59,28 +59,23 @@ BGFProduction performDeYacc(set[BGFProduction] pset)
 
 XBGFResult runDeyaccify(str n, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	if (n notin definedNs(g.prods))
-		r = add(r,problemStr("Nonterminal is not defined",n));
+		return <freshName(n),g>;
 	<ps1,ps2,ps3> = splitPbyW(g.prods,innt(n));
 	if (len(ps2) < 2)
-		r = add(r,problemStr("Nonterminal must be defined vertically for deyaccification to work",n));
+		return <problemStr("Nonterminal must be defined vertically for deyaccification to work",n),g>;
 	if (len(ps2) > 2)
-		r = add(r,problemProds("No deyaccification patterns for <len(ps2)> production rules known",ps2));
-	if (ok() := r)
-		return <r,grammar(g.roots, ps1 + performDeYacc(toSet(ps2)) + ps3)>;
-	else
-		return <r,g>;
+		return <problemProds("No deyaccification patterns for <len(ps2)> production rules known",ps2),g>;
+	return <ok(),grammar(g.roots, ps1 + performDeYacc(toSet(ps2)) + ps3)>;
 }
 
 XBGFResult runYaccify(list[BGFProduction] ps1, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	if ({str x} := definedNs(ps1))
 	{
 		<ps3,ps4,ps5> = splitPbyW(g.prods,innt(x));
 		if ([dyp1] := ps4 && [yp1,yp2] := ps1 && transform::library::Yacc::yaccification(dyp1,{yp1,yp2}))
-			return <r,grammar(g.roots, ps3 + ps1 + ps5)>;
+			return <ok(),grammar(g.roots, ps3 + ps1 + ps5)>;
 		else
 			return <problemProds2("Unsuitable yaccification",ps1,ps4),g>;
 	}

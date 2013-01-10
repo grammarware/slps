@@ -9,11 +9,11 @@ import diff::GDT;
 import transform::Results;
 import List; // tail
 
-public XBGFOutcome notFoundP(XBGFOutcome r, BGFProduction p) = add(r,problemProd("Production rule not found",p));
-public XBGFOutcome notFreshN(XBGFOutcome r, str n) = notFreshName("Nonterminal",r,n);
-public XBGFOutcome freshN(XBGFOutcome r, str n) = freshName("Nonterminal",r,n);
-public XBGFOutcome notFreshName(str name, XBGFOutcome r, str n) = add(r,problemStr("<name> must be fresh",n));
-public XBGFOutcome freshName(str name, XBGFOutcome r, str n) = add(r,problemStr("<name> must not be fresh",n));
+public XBGFOutcome notFoundP(BGFProduction p) = problemProd("Production rule not found",p);
+public XBGFOutcome notFreshN(str n) = notFreshName("Nonterminal",n);
+public XBGFOutcome freshN(str n) = freshName("Nonterminal",n);
+public XBGFOutcome notFreshName(str name, str n) = problemStr("<name> must be fresh",n);
+public XBGFOutcome freshName(str name, str n) = problemStr("<name> must not be fresh",n);
 
 public BGFProduction unmark (BGFProduction p1)
 {

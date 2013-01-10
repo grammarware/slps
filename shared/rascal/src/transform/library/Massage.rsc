@@ -84,9 +84,8 @@ default bool massage_eq(set[BGFExpression] s)
 
 XBGFResult runMassage(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	if (massage_eq({e1,e2}))
-		return add(r,transform::library::Brutal::runReplace(e1,e2,w,g));
+		return transform::library::Brutal::runReplace(e1,e2,w,g);
 	else
 		return <problemExpr2("Expressions are not massage-equivalent.",e1,e2),g>;
 }

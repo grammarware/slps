@@ -17,17 +17,14 @@ default bool narrowing(_,_) = false;
 
 XBGFResult runNarrow(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
 {
-	XBGFOutcome r = ok();
 	if (!narrowing(e1,e2))
 		return <problemExpr2("Expressions are not in narrowing relation.",e1,e2),g>;
-	else
-		return add(r,transform::library::Brutal::runReplace(e1,e2,w,g)); 
+	return transform::library::Brutal::runReplace(e1,e2,w,g);
 }
 
 XBGFResult runWiden(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
-	XBGFOutcome r = ok();
 	if (!narrowing(e2,e1))
-		r = problemExpr2("Expressions are not in widening relation",e2,e1);
-	return add(r,transform::library::Brutal::runReplace(e1,e2,w,g)); 
+		return <problemExpr2("Expressions are not in widening relation",e2,e1),g>;
+	return transform::library::Brutal::runReplace(e1,e2,w,g); 
 }
