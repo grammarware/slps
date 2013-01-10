@@ -15,9 +15,9 @@ import transform::library::Util;
 import transform::library::Nonterminals; // renameN, equate, splitN, clone
 import transform::library::Sequential; // appear, disappear, inject, permute, project
 import transform::library::Terminals; // renameT, splitT, concatT, abstractize, concretize
-import transform::library::Labels; // renameL, unlabel, designate, renameS
+import transform::library::Labels; // renameL, unlabel, designate; renameS, anonymize, deanonimize
 import transform::library::Width; // narrow, widen
-import transform::library::Yacc;
+import transform::library::Yacc; // yaccify, deyaccify
 import export::BNF;
 import transform::Results;
 
@@ -30,7 +30,7 @@ public XBGFResult transform(addH(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(addV(BGFProduction p), BGFGrammar g)
 	= runAddV(p,g);
 public XBGFResult transform(anonymize(BGFProduction p), BGFGrammar g)
-	= runAnonymize(p,g);
+	= transform::library::Labels::runAnonymize(p,g);
 public XBGFResult transform(appear(BGFProduction p), BGFGrammar g)
 	= transform::library::Sequential::runAppear(p,g);
 public XBGFResult transform(chain(BGFProduction p), BGFGrammar g)
@@ -42,7 +42,7 @@ public XBGFResult transform(concatT(list[str] xs, str y, XBGFScope w), BGFGramma
 public XBGFResult transform(concretize(BGFProduction p), BGFGrammar g)
 	= transform::library::Terminals::runConcretize(p,g);
 public XBGFResult transform(deanonymize(BGFProduction p), BGFGrammar g)
-	= runDeanonymize(p,g);
+	= transform::library::Labels::runDeanonymize(p,g);
 public XBGFResult transform(define(list[BGFProduction] ps), BGFGrammar g)
 	= runDefine(ps,g);
 public XBGFResult transform(designate(BGFProduction p), BGFGrammar g)
@@ -50,7 +50,7 @@ public XBGFResult transform(designate(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(detour(BGFProduction p), BGFGrammar g)
 	= runDetour(p,g);
 public XBGFResult transform(deyaccify(str x), BGFGrammar g)
-	= runDeyaccify(x,g);
+	= transform::library::Yacc::runDeyaccify(x,g);
 public XBGFResult transform(disappear(BGFProduction p), BGFGrammar g)
 	= transform::library::Sequential::runDisappear(p,g);
 public XBGFResult transform(distribute(XBGFScope w), BGFGrammar g)
@@ -130,7 +130,7 @@ public XBGFResult transform(vertical(XBGFScope w), BGFGrammar g)
 public XBGFResult transform(widen(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
 	= transform::library::Width::runWiden(e1,e2,w,g);
 public XBGFResult transform(yaccify(list[BGFProduction] ps), BGFGrammar g)
-	= runYaccify(ps,g);
+	= transform::library::Yacc::runYaccify(ps,g);
 public XBGFResult transform(atomic(list[XBGFCommand] steps), BGFGrammar g)
 	= transform(steps,g); // NB: different from the rest
 public XBGFResult transform(strip(str a), BGFGrammar g)
@@ -187,16 +187,6 @@ XBGFResult runAddV(BGFProduction p1, BGFGrammar g)
 	}
 }
 
-XBGFResult runAnonymize(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	p2 = unmark(p1);
-	p3 = demarkS(p1);
-	if (!inProds(p2,g.prods))
-		r = notFoundP(r,p1);
-	return <r,grammar(g.roots, replaceP(g.prods,p2,p3))>;
-}
-
 XBGFResult runChain(BGFProduction p, grammar(rs, ps))
 {
 	XBGFOutcome r = ok();
@@ -216,16 +206,6 @@ XBGFResult runChain(BGFProduction p, grammar(rs, ps))
 		}
 	else
 		return <problemProd("Not a chain production rule.",p),g>;
-}
-
-XBGFResult runDeanonymize(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	p2 = unmark(p1);
-	p3 = demarkS(p1);
-	if (!inProds(p3,g.prods))
-		r = notFoundP(r,p1);
-	return <r,grammar(g.roots, replaceP(g.prods,p3,p2))>;
 }
 
 XBGFResult runDefine(list[BGFProduction] ps1, BGFGrammar g)
@@ -254,22 +234,6 @@ XBGFResult runDetour(BGFProduction p, BGFGrammar g)
 	}
 	else
 		return <problemProd("Not a reflexive chain production rule",p),g>;
-}
-
-XBGFResult runDeyaccify(str n, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (n notin definedNs(g.prods))
-		r = add(r,problemStr("Nonterminal is not defined",n));
-	<ps1,ps2,ps3> = splitPbyW(g.prods,innt(n));
-	if (len(ps2) < 2)
-		r = add(r,problemStr("Nonterminal must be defined vertically for deyaccification to work",n));
-	if (len(ps2) > 2)
-		r = add(r,problemProds("No deyaccification patterns for <len(ps2)> production rules known",ps2));
-	if (ok() := r)
-		return <r,grammar(g.roots, ps1 + transform::library::Yacc::deyaccify(toSet(ps2)) + ps3)>;
-	else
-		return <r,g>;
 }
 
 XBGFResult runDowngrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
@@ -499,21 +463,6 @@ XBGFResult runVertical(XBGFScope w, BGFGrammar g)
 					ps4 += production("",x,se);
 		else ps4 += production(l,x,e);
 	return <r,grammar(g.roots, ps1 + ps4 + ps3)>;
-}
-
-XBGFResult runYaccify(list[BGFProduction] ps1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if ({str x} := definedNs(ps1))
-	{
-		<ps3,ps4,ps5> = splitPbyW(g.prods,innt(x));
-		if ([dyp1] := ps4 && [yp1,yp2] := ps1 && transform::library::Yacc::yaccification(dyp1,{yp1,yp2}))
-			return <r,grammar(g.roots, ps3 + ps1 + ps5)>;
-		else
-			return <problemProds2("Unsuitable yaccification",ps1,ps4),g>;
-	}
-	else 
-		return <problem("Production rules must define just one nonterminal."),g>;
 }
 
 XBGFResult runStrip(str a, BGFGrammar g)
