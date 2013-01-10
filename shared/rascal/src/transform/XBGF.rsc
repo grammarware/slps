@@ -13,6 +13,7 @@ import transform::library::Folding; // fold, unfold, extract, inline
 import transform::library::Massage; // massage
 import transform::library::Util;
 import transform::library::Nonterminals; // renameN, equate, splitN
+import transform::library::Labels; // renameL, unlabel, designate
 import transform::library::Width; // narrow, widen
 import transform::library::Yacc;
 import export::BNF;
@@ -43,7 +44,7 @@ public XBGFResult transform(deanonymize(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(define(list[BGFProduction] ps), BGFGrammar g)
 	= runDefine(ps,g);
 public XBGFResult transform(designate(BGFProduction p), BGFGrammar g)
-	= runDesignate(p,g);
+	= transform::library::Labels::runDesignate(p,g);
 public XBGFResult transform(detour(BGFProduction p), BGFGrammar g)
 	= runDetour(p,g);
 public XBGFResult transform(deyaccify(str x), BGFGrammar g)
@@ -95,7 +96,7 @@ public XBGFResult transform(removeH(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(removeV(BGFProduction p), BGFGrammar g)
 	= runRemoveV(p,g);
 public XBGFResult transform(renameL(str x, str y), BGFGrammar g)
-	= runRenameL(x,y,g);
+	= transform::library::Labels::runRenameL(x,y,g);
 public XBGFResult transform(renameN(str x, str y), BGFGrammar g)
 	= transform::library::Nonterminals::runRenameN(x,y,g);
 public XBGFResult transform(renameS(str x, str y, XBGFScope w), BGFGrammar g)
@@ -119,7 +120,7 @@ public XBGFResult transform(unfold(str x, XBGFScope w), BGFGrammar g)
 public XBGFResult transform(unite(str x, str y), BGFGrammar g)
 	= runUnite(x,y,g);
 public XBGFResult transform(unlabel(str x), BGFGrammar g)
-	= runUnlabel(x,g);
+	= transform::library::Labels::runUnlabel(x,g);
 public XBGFResult transform(upgrade(BGFProduction p1, BGFProduction p2), BGFGrammar g)
 	= runUpgrade(p1,p2,g);
 public XBGFResult transform(vertical(XBGFScope w), BGFGrammar g)
@@ -286,17 +287,6 @@ XBGFResult runDefine(list[BGFProduction] ps1, BGFGrammar g)
 	}
 	else
 		return <problem("Multiple defined nonterminals found"),g>;
-}
-
-XBGFResult runDesignate(production(str l,str n,BGFExpression e), BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (l == "")
-		r = add(r,problemProd("Production rule must me labelled, use unlabel instead",production(l,n,e)));
-	if (production("",n,e) notin g.prods)
-		// throw "Production rule defining <n> as <e> not found.";
-		r = add(r,problemProd("Production rule not found, use renameL instead",production("",n,e)));
-	return <r,grammar(g.roots,replaceP(g.prods,production("",n,e),production(l,n,e)))>;
 }
 
 XBGFResult runDetour(BGFProduction p, BGFGrammar g)
@@ -496,24 +486,6 @@ XBGFResult runRemoveV(BGFProduction p, BGFGrammar g)
 	return <r,grammar(g.roots, g.prods - p)>;
 }
 
-XBGFResult runRenameL(str x, str y, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (x == "")
-		r = add(r, problem("Source label must not be empty for renaming, use designate"));
-	if (y == "")
-		r = add(r, problem("Target label must not be empty for renaming, use unlabel"));
-	if (len([p | p <- g.prods, production(x, _, _) := p]) != 1)
-		r = add(r, problemStr("Source name for renaming must be uniquely used",x));
-	if (len([p | p <- g.prods, production(y, _, _) := p]) != 0)
-		r = add(r, problemStr("Target name for renaming must be fresh",y));
-	<ps1,ps2,ps3> = splitPbyW(g.prods, inlabel(x));
-	if ([production(x, str n, BGFExpression e)] := ps2)
-		return <r,grammar(g.roots, ps1 + production(y, n, e) + ps3)>;
-	else
-		return <add(r,problemStr("Label not found or not unique",x)),g>; // the latter should never happen
-}
-
 XBGFResult runRenameS(str x, str y, XBGFScope w, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -623,18 +595,6 @@ XBGFResult runUnite(str x, str y, BGFGrammar g)
 		return <r,transform::library::Brutal::runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots,ps4x))>;
 	else
 		return <r,grammar(g.roots,ps4x)>;
-}
-
-XBGFResult runUnlabel(str x, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (x == "")
-		r = add(r,problem("Please specify which label to unlabel"));
-	<ps1,ps2,ps3> = splitPbyW(g.prods, inlabel(x));
-	if ([production(str l, str x, BGFExpression e)] := ps2)
-		return <r,grammar(g.roots, ps1 + production("", x, e) + ps3)>;
-	else
-		return <add(r,problemStr("Label not found or not unique",x)),g>; // the latter should never happen
 }
 
 XBGFResult runUpgrade(BGFProduction p1, BGFProduction p2, BGFGrammar g)

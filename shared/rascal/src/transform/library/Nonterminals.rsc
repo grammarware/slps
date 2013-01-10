@@ -7,7 +7,6 @@ import transform::Results;
 import transform::library::Util;
 import transform::library::Brutal;
 import diff::GDT;
-import List; // size
 
 XBGFResult runEquate(str x, str y, BGFGrammar g)
 {

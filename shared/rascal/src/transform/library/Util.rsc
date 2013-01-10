@@ -1,15 +1,13 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module transform::library::Util
 
+import lib::Rascalware;
 import syntax::BGF;
 import syntax::XBGF;
 import normal::BGF;
 import diff::GDT;
-import List;
-import Set; // toList
-import String; //size
-import IO; //debugging only
 import transform::Results;
+import List; // tail
 
 public XBGFOutcome notFoundP(XBGFOutcome r, BGFProduction p) = add(r,problemProd("Production rule not found",p));
 public XBGFOutcome notFreshN(XBGFOutcome r, str n) = notFreshName("Nonterminal",r,n);
@@ -96,7 +94,7 @@ public tuple[list[BGFProduction],list[BGFProduction],list[BGFProduction]] splitP
 		return <[],ps,[]>;
 	if (nowhere() := w)
 		throw "Splitting by empty scope!";
-	if (inlabel(str x) := w && x == "")
+	if (inlabel(str x) := w && isEmpty(x))
 		throw "Empty label is not a proper scope.";
 	bool hit = false;
 	list[BGFProduction] ps1 = [], ps2 = [], ps3 = [];
@@ -134,21 +132,21 @@ public list[BGFProduction] replaceP(list[BGFProduction] ps, p1, p2)
 
 public int levenshtein(str x, str y)
 {
-	if (size(x) < size(y)) return levenshtein(y,x);
-	if (x=="") return size(y);
+	if (len(x) < len(y)) return levenshtein(y,x);
+	if (isEmpty(x)) return len(y);
 	
-	prow = [0..size(y)];
-	for (i <- [0..size(x)-1])
+	prow = [0..len(y)];
+	for (i <- [0..len(x)-1])
 	{
 		crow = [i+1];
-		for (j <- [0..size(y)-1])
+		for (j <- [0..len(y)-1])
 			if (charAt(x,i) == charAt(y,j))
 				crow += min([ prow[j+1]+1, crow[j]+1, prow[j]   ]);
 			else
 				crow += min([ prow[j+1]+1, crow[j]+1, prow[j]+1 ]);
 		prow = crow;
 	} 
-	return prow[size(prow)-1];
+	return prow[len(prow)-1];
 }
 
 public bool inProds(BGFProduction p, []) = false;

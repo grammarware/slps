@@ -12,11 +12,13 @@ import IO;
 public int len(list[&T] x)   = List::size(x);
 public int len(set[&T] x)    = Set::size(x);
 public int len(rel[&T,&T] x) = Relation::size(x);
+public int len(str x)        = String::size(x);
 
 // one isempty to rule them all
 public bool isEmpty(list[&T] x)   = List::isEmpty(x);
 public bool isEmpty(set[&T] x)    = Set::isEmpty(x);
 public bool isEmpty(rel[&T,&T] x) = Relation::isEmpty(x);
+public bool isEmpty(str x)        = (x=="");
 
 public void print(str s)   = IO::print(s);
 public void println(str s) = IO::println(s);
@@ -27,7 +29,6 @@ public str joinStrings(list[str] ss, str w) = (ss[0] | it + w + s | s <- tail(ss
 
 //public bool multiseteq(list[&T] xs, list[&T] ys) = sort(xs) == sort(ys);
 public bool multiseteq(list[&T] xs, list[&T] ys) = sort(xs) == sort(ys);
-//}
 
 public bool seteq(list[&T] xs, list[&T] ys) = toSet(xs) == toSet(ys);
 

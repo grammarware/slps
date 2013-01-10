@@ -8,7 +8,6 @@ import transform::Results;
 import transform::library::Util;
 import normal::BGF;
 import diff::GDT;
-import List; //size
 
 XBGFResult runReplace(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
@@ -48,11 +47,11 @@ list[BGFProduction] performReplace(BGFExpression e1, BGFExpression e2, list[BGFP
 list[BGFExpression] replaceSubsequence(list[BGFExpression] where, list[BGFExpression] what, list[BGFExpression] with)
 {
 	if (eqE(sequence(where),sequence(what))) return with;
-	int i = 0, len = size(what);
-	while (i+len<=size(where))
+	int i = 0, sz = len(what);
+	while (i+sz <= len(where))
 	{
-		if (eqE(sequence(slice(where,i,len)),sequence(what)))
-			return slice(where,0,i) + with + slice(where,i+len,size(where)-i-len);
+		if (eqE(sequence(slice(where,i,sz)),sequence(what)))
+			return slice(where,0,i) + with + slice(where, i+sz, len(where)-i-sz);
 		i+=1;
 	}
 	return where;
