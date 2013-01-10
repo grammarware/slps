@@ -1,15 +1,11 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module transform::NegotiatedXBGF
 
+import lib::Rascalware;
 import IO;
 import syntax::BGF;
 import syntax::XBGF;
-//import diff::GDT;
-import List;
-import String;
-import Integer;
 import normal::BGF;
-import transform::library::Core;
 import transform::library::Util;
 import transform::XBGF;
 
@@ -142,7 +138,7 @@ Advice adviseUsedNonterminal(str x, set[str] nts)
 	int minl = 9000;
 	str mins = "";
 	good = {z | z <- nts, levenshtein(z,x) == min([levenshtein(s,x) | s <- nts])};
-	if (good == {})
+	if (isEmpty(good))
 		return noadvice();
 	else
 		return setadvice("Did you mean",good);
@@ -164,11 +160,11 @@ Advice adviseFreshNonterminal(str x, set[str] nts)
 	adv += s;
 	// expr -> shjk
 	s = "";
-	for (c <- [stringChar(charAt(x,i)) | i <- [0..size(x)-1]])
+	for (c <- [stringChar(charAt(x,i)) | i <- [0..len(x)-1]])
 		if (c in low)
-			s += low[arbInt(size(low))];
+			s += low[arbInt(len(low))];
 		elseif (c in upp)
-			s += upp[arbInt(size(upp))];
+			s += upp[arbInt(len(upp))];
 		else
 			s += stringChar(c);
 	adv += s;
