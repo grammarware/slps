@@ -2,6 +2,22 @@
 module transform::library::Factoring
 
 import syntax::BGF;
+import syntax::XBGF;
+import normal::BGF;
+import diff::GDT;
+import transform::Results;
+import transform::library::Util;
+import transform::library::Brutal;
+
+XBGFResult runFactor(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
+{
+	XBGFOutcome r = ok();
+	e3 = normalise(transform::library::Factoring::makeDistributed(e1));
+	e4 = normalise(transform::library::Factoring::makeDistributed(e2));
+	if (!eqE(e3, e4))
+		r = problemExpr2("Expressions must be related by distribution.",e1,e2);
+	return add(r,transform::library::Brutal::runReplace(e1,e2,w,g));
+}
 
 BGFProduction makeDistributed(production(str l, str x, BGFExpression e)) = production(l, x, makeDistributed(e));
 

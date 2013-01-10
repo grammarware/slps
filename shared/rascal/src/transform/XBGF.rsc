@@ -6,9 +6,9 @@ import syntax::BGF;
 import syntax::XBGF;
 import normal::BGF;
 import diff::GDT;
-import transform::library::Associativity;
+import transform::library::Associativity; // assoc, iterate
 import transform::library::Brutal; // replace
-import transform::library::Factoring;
+import transform::library::Factoring; // factor
 import transform::library::Folding; // fold, unfold, extract, inline
 import transform::library::Massage;
 import transform::library::Util;
@@ -61,7 +61,7 @@ public XBGFResult transform(equate(str x, str y), BGFGrammar g)
 public XBGFResult transform(extract(BGFProduction p, XBGFScope w), BGFGrammar g)
 	= transform::library::Folding::runExtract(p,w,g);
 public XBGFResult transform(factor(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
-	= runFactor(e1,e2,w,g);
+	= transform::library::Factoring::runFactor(e1,e2,w,g);
 public XBGFResult transform(fold(str x, XBGFScope w), BGFGrammar g)
 	= transform::library::Folding::runFold(x,w,g);
 public XBGFResult transform(horizontal(XBGFScope w), BGFGrammar g)
@@ -75,9 +75,9 @@ public XBGFResult transform(inline(str x), BGFGrammar g)
 public XBGFResult transform(introduce(list[BGFProduction] ps), BGFGrammar g)
 	= runIntroduce(ps,g);
 public XBGFResult transform(iterate(BGFProduction p), BGFGrammar g)
-	= runIterate(p,g);
+	= transform::library::Associativity::runIterate(p,g);
 public XBGFResult transform(lassoc(BGFProduction p), BGFGrammar g)
-	= runAssoc(p,g);
+	= transform::library::Associativity::runAssoc(p,g); // NB: same as rassoc on the grammar level
 public XBGFResult transform(massage(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
 	= runMassage(e1,e2,w,g);
 public XBGFResult transform(narrow(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
@@ -87,7 +87,7 @@ public XBGFResult transform(permute(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(project(BGFProduction p), BGFGrammar g)
 	= runProject(p,g);
 public XBGFResult transform(rassoc(BGFProduction p), BGFGrammar g)
-	= runAssoc(p,g);
+	= transform::library::Associativity::runAssoc(p,g); // NB: same as lassoc on the grammar level
 public XBGFResult transform(redefine(list[BGFProduction] ps), BGFGrammar g)
 	= runRedefine(ps,g);
 public XBGFResult transform(removeH(BGFProduction p), BGFGrammar g)
@@ -216,19 +216,6 @@ XBGFResult runAppear(BGFProduction p1, BGFGrammar g)
 		if (optional(_) !:= e && star(_) !:= e)
 			r = add(r,problemProd("Production rule does not have an optional part marked",p1));
 	return <r,grammar(g.roots, replaceP(g.prods,p2,unmark(p1)))>;
-}
-
-XBGFResult runAssoc(production(str l, str x, BGFExpression e1), BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	<ps1,ps2,ps3> = splitPbyW(g.prods,comboscope(inlabel(l),innt(x)));
-	if ([production(l, x, BGFExpression e2)] := ps2)
-		if (transform::library::Associativity::admit(e1,e2))
-			return <r,grammar(g.roots,ps1 + production(l, x, e1) + ps3)>;
-		else
-			return <problemProd("Production rule must admit associativity transformation",production(l,x,e1)),g>;
-	else
-		return <problemPinProds("Cannot find the right production rule to match",production(l,x,e1),ps2),g>;
 }
 
 XBGFResult runChain(BGFProduction p, grammar(rs, ps))
@@ -393,16 +380,6 @@ XBGFResult runEliminate(str x, BGFGrammar g)
 	return <r,grammar(g.roots, ps1 + ps3)>;
 }
 
-XBGFResult runFactor(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
-{
-	XBGFOutcome r = ok();
-	e3 = normalise(transform::library::Factoring::makeDistributed(e1));
-	e4 = normalise(transform::library::Factoring::makeDistributed(e2));
-	if (!eqE(e3, e4))
-		r = problemExpr2("Expressions must be related by distribution.",e1,e2);
-	return add(r,transform::library::Brutal::runReplace(e1,e2,w,g));
-}
-
 XBGFResult runHorizontal(XBGFScope w, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -457,19 +434,6 @@ XBGFResult runIntroduce(list[BGFProduction] ps, BGFGrammar g)
 	}
 	else
 		return <problem("Multiple defined nonterminals found"),g>;
-}
-
-XBGFResult runIterate(production(str l, str x, BGFExpression e1), BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	<ps1,ps2,ps3> = splitPbyW(g.prods,comboscope(inlabel(l),innt(x)));
-	if ([production(l, x, BGFExpression e2)] := ps2)
-		if (transform::library::Associativity::admit(e2,e1))
-			return <r,grammar(g.roots,ps1 + production(l, x, e1) + ps3)>;
-		else
-			return <problemProd("Production rule must admit associativity transformation",production(l,x,e1)),g>;
-	else
-		return <problemPinProds("Cannot find the right production rule to match",production(l,x,e1),ps2),g>;
 }
 
 XBGFResult runMassage(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
