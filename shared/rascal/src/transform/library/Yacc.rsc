@@ -1,7 +1,11 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module transform::library::Yacc
 
+import lib::Rascalware;
 import syntax::BGF;
+import syntax::XBGF;
+import transform::Results;
+import transform::library::Util;
 
 bool yaccification(production(_,n,sequence([y,star(x)])),
 				  {production(_,n,sequence([nonterminal(n),x])),
@@ -25,7 +29,7 @@ bool yaccification(production(_,n,star(x)),
 default bool yaccification(BGFProduction p,set[BGFProduction] ps) = false;
 //bool yaccification(_,_) = false;
 
-BGFProduction deyaccify(set[BGFProduction] pset)
+BGFProduction performDeYacc(set[BGFProduction] pset)
 {
 	// TODO figure out a way to do the same as with yaccify
 	switch(pset)
@@ -52,3 +56,35 @@ BGFProduction deyaccify(set[BGFProduction] pset)
 			throw "Nonterminal <x> is not deyaccifiable.";
 	};
 }
+
+XBGFResult runDeyaccify(str n, BGFGrammar g)
+{
+	XBGFOutcome r = ok();
+	if (n notin definedNs(g.prods))
+		r = add(r,problemStr("Nonterminal is not defined",n));
+	<ps1,ps2,ps3> = splitPbyW(g.prods,innt(n));
+	if (len(ps2) < 2)
+		r = add(r,problemStr("Nonterminal must be defined vertically for deyaccification to work",n));
+	if (len(ps2) > 2)
+		r = add(r,problemProds("No deyaccification patterns for <len(ps2)> production rules known",ps2));
+	if (ok() := r)
+		return <r,grammar(g.roots, ps1 + performDeYacc(toSet(ps2)) + ps3)>;
+	else
+		return <r,g>;
+}
+
+XBGFResult runYaccify(list[BGFProduction] ps1, BGFGrammar g)
+{
+	XBGFOutcome r = ok();
+	if ({str x} := definedNs(ps1))
+	{
+		<ps3,ps4,ps5> = splitPbyW(g.prods,innt(x));
+		if ([dyp1] := ps4 && [yp1,yp2] := ps1 && transform::library::Yacc::yaccification(dyp1,{yp1,yp2}))
+			return <r,grammar(g.roots, ps3 + ps1 + ps5)>;
+		else
+			return <problemProds2("Unsuitable yaccification",ps1,ps4),g>;
+	}
+	else 
+		return <problem("Production rules must define just one nonterminal."),g>;
+}
+
