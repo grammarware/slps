@@ -1,27 +1,24 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module transform::XBGF
 
-import lib::Rascalware;
 import syntax::BGF;
 import syntax::XBGF;
 import normal::BGF;
-import diff::GDT;
 import transform::library::Associativity; // assoc, iterate
 import transform::library::Brutal; // replace
-import transform::library::Factoring; // factor, distribute
-import transform::library::Folding; // fold, unfold, extract, inline
 import transform::library::Chaining; // abridge, detour, chain, unchain
-import transform::library::Massage; // massage
-import transform::library::Util;
-import transform::library::Nonterminals; // renameN, equate, splitN, clone, reroot, unite
-import transform::library::Sequential; // appear, disappear, inject, permute, project
+import transform::library::Factoring; // factor, distribute
+import transform::library::Folding; // fold, unfold, extract, inline, downgrade, upgrade
 import transform::library::Intermittent; // addH, removeH, vertical, horizontal
-import transform::library::Terminals; // renameT, splitT, concatT, abstractize, concretize
 import transform::library::Labels; // renameL, unlabel, designate; renameS, anonymize, deanonimize
+import transform::library::Massage; // massage
+import transform::library::Nonterminals; // renameN, equate, splitN, clone, reroot, unite
+import transform::library::Productions; // addV, removeV, define, undefine, redefine, eliminate, introduce, import
+import transform::library::Sequential; // appear, disappear, inject, permute, project
+import transform::library::Terminals; // renameT, splitT, concatT, abstractize, concretize
 import transform::library::Width; // narrow, widen
 import transform::library::Yacc; // yaccify, deyaccify
-import transform::library::Productions; // addV, removeV, define, undefine, redefine, eliminate, introduce, import
-import export::BNF;
+import transform::library::Util;
 import transform::Results;
 
 public XBGFResult transform(abridge(BGFProduction p), BGFGrammar g)
@@ -39,7 +36,7 @@ public XBGFResult transform(appear(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(chain(BGFProduction p), BGFGrammar g)
 	= transform::library::Chaining::runChain(p,g);
 public XBGFResult transform(clone(str x, str y, XBGFScope w), BGFGrammar g)
-	= runClone(x,y,w,g);
+	= transform::library::Nonterminals::runClone(x,y,w,g);
 public XBGFResult transform(concatT(list[str] xs, str y, XBGFScope w), BGFGrammar g)
 	= transform::library::Terminals::runConcatT(xs,y,w,g);
 public XBGFResult transform(concretize(BGFProduction p), BGFGrammar g)
@@ -59,7 +56,7 @@ public XBGFResult transform(disappear(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(distribute(XBGFScope w), BGFGrammar g)
 	= transform::library::Factoring::runDistribute(w,g);
 public XBGFResult transform(downgrade(BGFProduction p1,BGFProduction p2), BGFGrammar g)
-	= runDowngrade(p1,p2,g);
+	= transform::library::Folding::runDowngrade(p1,p2,g);
 public XBGFResult transform(eliminate(str x), BGFGrammar g)
 	= transform::library::Productions::runEliminate(x,g);
 public XBGFResult transform(equate(str x, str y), BGFGrammar g)
@@ -127,7 +124,7 @@ public XBGFResult transform(unite(str x, str y), BGFGrammar g)
 public XBGFResult transform(unlabel(str x), BGFGrammar g)
 	= transform::library::Labels::runUnlabel(x,g);
 public XBGFResult transform(upgrade(BGFProduction p1, BGFProduction p2), BGFGrammar g)
-	= runUpgrade(p1,p2,g);
+	= transform::library::Folding::runUpgrade(p1,p2,g);
 public XBGFResult transform(vertical(XBGFScope w), BGFGrammar g)
 	= transform::library::Intermittent::runVertical(w,g);
 public XBGFResult transform(widen(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
@@ -152,38 +149,7 @@ public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 	return out.g;
 }
 
-
-XBGFResult runDowngrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
-{
-	XBGFOutcome r = ok();
-	if (/marked(nonterminal(str x)) := p1)
-		if (production(str l,x,BGFExpression e) := p2)
-		{
-			p3 = visit(p1){case marked(_) => e};
-			return <r,grammar(rs,replaceP(ps,unmark(p1),normalise(p3)))>;
-		}
-		else
-			return <problemProd2("Production rules do not agree on nonterminal",p1,p2),g>;
-	else
-		return <problemProd("Production rule does not have a single nonterminal marked",p1),g>;
-}
-
-XBGFResult runUpgrade(BGFProduction p1, BGFProduction p2, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (/marked(nonterminal(str x)) := p1)
-		if (production(str l,x,BGFExpression e) := p2)
-		{
-			p3 = visit(p1){case marked(_) => e};
-			p3 = normalise(p3);
-			return <r,grammar(g.roots,replaceP(g.prods,p3,unmark(p1)))>;
-		}
-		else
-			return <problemProd2("Production rules do not agree on nonterminal",p1,p2),g>;
-	else
-		return <problemProd("Production rule must have one single nonterminal marked",p1),g>;
-}
-
+// legacy code
 XBGFResult runStrip(str a, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
