@@ -14,6 +14,11 @@ bool admit(sequence([nonterminal(n),nonterminal(n)]),
 		   plus(nonterminal(n))) = true;
 default bool admit(BGFExpression e1, BGFExpression e2) = false;
 
+// NB: rassoc and lassoc are the same when they work on the grammar level
+// the differences can only be observed on the instance level
+XBGFResult runRAssoc(BGFProduction p, BGFGrammar g) = runAssoc(p,g);
+XBGFResult runLAssoc(BGFProduction p, BGFGrammar g) = runAssoc(p,g);
+
 XBGFResult runAssoc(production(str l, str x, BGFExpression e1), BGFGrammar g)
 {
 	XBGFOutcome r = ok();

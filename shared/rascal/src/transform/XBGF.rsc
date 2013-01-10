@@ -8,12 +8,12 @@ import normal::BGF;
 import diff::GDT;
 import transform::library::Associativity; // assoc, iterate
 import transform::library::Brutal; // replace
-import transform::library::Factoring; // factor
+import transform::library::Factoring; // factor, distribute
 import transform::library::Folding; // fold, unfold, extract, inline
-import transform::library::Massage;
+import transform::library::Massage; // massage
 import transform::library::Util;
 import transform::library::Nonterminals; // renameN, equate, splitN
-import transform::library::Width;
+import transform::library::Width; // narrow, widen
 import transform::library::Yacc;
 import export::BNF;
 import transform::Results;
@@ -51,7 +51,7 @@ public XBGFResult transform(deyaccify(str x), BGFGrammar g)
 public XBGFResult transform(disappear(BGFProduction p), BGFGrammar g)
 	= runDisappear(p,g);
 public XBGFResult transform(distribute(XBGFScope w), BGFGrammar g)
-	= runDistribute(w,g);
+	= transform::library::Factoring::runDistribute(w,g);
 public XBGFResult transform(downgrade(BGFProduction p1,BGFProduction p2), BGFGrammar g)
 	= runDowngrade(p1,p2,g);
 public XBGFResult transform(eliminate(str x), BGFGrammar g)
@@ -77,17 +77,17 @@ public XBGFResult transform(introduce(list[BGFProduction] ps), BGFGrammar g)
 public XBGFResult transform(iterate(BGFProduction p), BGFGrammar g)
 	= transform::library::Associativity::runIterate(p,g);
 public XBGFResult transform(lassoc(BGFProduction p), BGFGrammar g)
-	= transform::library::Associativity::runAssoc(p,g); // NB: same as rassoc on the grammar level
+	= transform::library::Associativity::runLAssoc(p,g);
 public XBGFResult transform(massage(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
-	= runMassage(e1,e2,w,g);
+	= transform::library::Massage::runMassage(e1,e2,w,g);
 public XBGFResult transform(narrow(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
-	= runNarrow(e1,e2,w,g);
+	= transform::library::Width::runNarrow(e1,e2,w,g);
 public XBGFResult transform(permute(BGFProduction p), BGFGrammar g)
 	= runPermute(p,g);
 public XBGFResult transform(project(BGFProduction p), BGFGrammar g)
 	= runProject(p,g);
 public XBGFResult transform(rassoc(BGFProduction p), BGFGrammar g)
-	= transform::library::Associativity::runAssoc(p,g); // NB: same as lassoc on the grammar level
+	= transform::library::Associativity::runRAssoc(p,g);
 public XBGFResult transform(redefine(list[BGFProduction] ps), BGFGrammar g)
 	= runRedefine(ps,g);
 public XBGFResult transform(removeH(BGFProduction p), BGFGrammar g)
@@ -125,7 +125,7 @@ public XBGFResult transform(upgrade(BGFProduction p1, BGFProduction p2), BGFGram
 public XBGFResult transform(vertical(XBGFScope w), BGFGrammar g)
 	= runVertical(w,g);
 public XBGFResult transform(widen(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
-	= runWiden(e1,e2,w,g);
+	= transform::library::Width::runWiden(e1,e2,w,g);
 public XBGFResult transform(yaccify(list[BGFProduction] ps), BGFGrammar g)
 	= runYaccify(ps,g);
 public XBGFResult transform(atomic(list[XBGFCommand] steps), BGFGrammar g)
@@ -342,15 +342,6 @@ XBGFResult runDisappear(BGFProduction p1, BGFGrammar g)
 	return <r,grammar(g.roots, replaceP(g.prods,p2,demark(p1)))>;
 }
 
-XBGFResult runDistribute(XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	<ps1,ps2,ps3> = splitPbyW(g.prods,w);
-	if (/choice(_) !:= ps2)
-		r = add(r,problemScope("No choices found, nothing to distribute",w));
-	return <r,grammar(g.roots,ps1 + normalise([transform::library::Factoring::makeDistributed(p) | p <- ps2]) + ps3)>;
-}
-
 XBGFResult runDowngrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
 {
 	XBGFOutcome r = ok();
@@ -434,24 +425,6 @@ XBGFResult runIntroduce(list[BGFProduction] ps, BGFGrammar g)
 	}
 	else
 		return <problem("Multiple defined nonterminals found"),g>;
-}
-
-XBGFResult runMassage(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (transform::library::Massage::massage_eq({e1,e2}))
-		return add(r,transform::library::Brutal::runReplace(e1,e2,w,g));
-	else
-		return <problemExpr2("Expressions are not massage-equivalent.",e1,e2),g>;
-}
-
-XBGFResult runNarrow(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
-{
-	XBGFOutcome r = ok();
-	if (!transform::library::Width::narrowing(e1,e2))
-		return <problemExpr2("Expressions are not in narrowing relation.",e1,e2),g>;
-	else
-		return add(r,transform::library::Brutal::runReplace(e1,e2,w,g)); 
 }
 
 XBGFResult runPermute(BGFProduction p, BGFGrammar g)
@@ -699,14 +672,6 @@ XBGFResult runVertical(XBGFScope w, BGFGrammar g)
 					ps4 += production("",x,se);
 		else ps4 += production(l,x,e);
 	return <r,grammar(g.roots, ps1 + ps4 + ps3)>;
-}
-
-XBGFResult runWiden(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (!transform::library::Width::narrowing(e2,e1))
-		r = problemExpr2("Expressions are not in widening relation",e2,e1);
-	return add(r,transform::library::Brutal::runReplace(e1,e2,w,g)); 
 }
 
 XBGFResult runYaccify(list[BGFProduction] ps1, BGFGrammar g)

@@ -2,8 +2,11 @@
 module transform::library::Massage
 
 import syntax::BGF;
+import syntax::XBGF;
 import normal::BGF;
 import diff::GDT;
+import transform::Results;
+import transform::library::Brutal;
 import List;
 
 bool massage_eq({selectable(_,x),x}) = true; // deprecated, please use anonymize/deanonymize instead!
@@ -77,4 +80,13 @@ default bool massage_eq(set[BGFExpression] s)
 			if (eqE(normalise(choice(L1)),z)) return true;
 		}
 	return false;
+}
+
+XBGFResult runMassage(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
+{
+	XBGFOutcome r = ok();
+	if (massage_eq({e1,e2}))
+		return add(r,transform::library::Brutal::runReplace(e1,e2,w,g));
+	else
+		return <problemExpr2("Expressions are not massage-equivalent.",e1,e2),g>;
 }

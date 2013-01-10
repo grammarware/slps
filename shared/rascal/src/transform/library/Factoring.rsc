@@ -19,6 +19,15 @@ XBGFResult runFactor(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
 	return add(r,transform::library::Brutal::runReplace(e1,e2,w,g));
 }
 
+XBGFResult runDistribute(XBGFScope w, BGFGrammar g)
+{
+	XBGFOutcome r = ok();
+	<ps1,ps2,ps3> = splitPbyW(g.prods,w);
+	if (/choice(_) !:= ps2)
+		r = add(r,problemScope("No choices found, nothing to distribute",w));
+	return <r,grammar(g.roots, ps1 + normalise([makeDistributed(p) | p <- ps2]) + ps3)>;
+}
+
 BGFProduction makeDistributed(production(str l, str x, BGFExpression e)) = production(l, x, makeDistributed(e));
 
 BGFExpression makeDistributed(BGFExpression e1)
