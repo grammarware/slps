@@ -7,10 +7,12 @@ import syntax::XBGF;
 import normal::BGF;
 import diff::GDT;
 import transform::library::Associativity;
+import transform::library::Brutal; // replace
 import transform::library::Factoring;
+import transform::library::Folding; // fold, unfold, extract, inline
 import transform::library::Massage;
 import transform::library::Util;
-import transform::library::Core;
+import transform::library::Nonterminals; // renameN, equate, splitN
 import transform::library::Width;
 import transform::library::Yacc;
 import export::BNF;
@@ -55,13 +57,13 @@ public XBGFResult transform(downgrade(BGFProduction p1,BGFProduction p2), BGFGra
 public XBGFResult transform(eliminate(str x), BGFGrammar g)
 	= runEliminate(x,g);
 public XBGFResult transform(equate(str x, str y), BGFGrammar g)
-	= runEquate(x,y,g);
+	= transform::library::Nonterminals::runEquate(x,y,g);
 public XBGFResult transform(extract(BGFProduction p, XBGFScope w), BGFGrammar g)
-	= runExtract(p,w,g);
+	= transform::library::Folding::runExtract(p,w,g);
 public XBGFResult transform(factor(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
 	= runFactor(e1,e2,w,g);
 public XBGFResult transform(fold(str x, XBGFScope w), BGFGrammar g)
-	= runFold(x,w,g);
+	= transform::library::Folding::runFold(x,w,g);
 public XBGFResult transform(horizontal(XBGFScope w), BGFGrammar g)
 	= runHorizontal(w,g);
 public XBGFResult transform(importG(list[BGFProduction] ps), BGFGrammar g)
@@ -69,7 +71,7 @@ public XBGFResult transform(importG(list[BGFProduction] ps), BGFGrammar g)
 public XBGFResult transform(inject(BGFProduction p), BGFGrammar g)
 	= runInject(p,g);
 public XBGFResult transform(inline(str x), BGFGrammar g)
-	= runInline(x,g);
+	= transform::library::Folding::runInline(x,g);
 public XBGFResult transform(introduce(list[BGFProduction] ps), BGFGrammar g)
 	= runIntroduce(ps,g);
 public XBGFResult transform(iterate(BGFProduction p), BGFGrammar g)
@@ -95,17 +97,17 @@ public XBGFResult transform(removeV(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(renameL(str x, str y), BGFGrammar g)
 	= runRenameL(x,y,g);
 public XBGFResult transform(renameN(str x, str y), BGFGrammar g)
-	= runRenameN(x,y,g);
+	= transform::library::Nonterminals::runRenameN(x,y,g);
 public XBGFResult transform(renameS(str x, str y, XBGFScope w), BGFGrammar g)
 	= runRenameS(x,y,w,g);
 public XBGFResult transform(renameT(str x, str y), BGFGrammar g)
 	= runRenameT(x,y,g);
 public XBGFResult transform(XBGFCommand::replace(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
-	= runReplace(e1,e2,w,g);
+	= transform::library::Brutal::runReplace(e1,e2,w,g);
 public XBGFResult transform(reroot(list[str] xs), BGFGrammar g)
 	= runReroot(xs,g);
 public XBGFResult transform(splitN(str x, list[BGFProduction] ps, XBGFScope w), BGFGrammar g)
-	= runSplitN(x,ps,w,g);
+	= transform::library::Nonterminals::runSplitN(x,ps,w,g);
 public XBGFResult transform(splitT(str x, list[str] ys, XBGFScope w), BGFGrammar g)
 	= runSplitT(x,ys,w,g);
 public XBGFResult transform(unchain(BGFProduction p), BGFGrammar g)
@@ -113,7 +115,7 @@ public XBGFResult transform(unchain(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(undefine(list[str] xs), BGFGrammar g)
 	= runUndefine(xs,g);
 public XBGFResult transform(unfold(str x, XBGFScope w), BGFGrammar g)
-	= runUnfold(x,w,g);
+	= transform::library::Folding::runUnfold(x,w,g);
 public XBGFResult transform(unite(str x, str y), BGFGrammar g)
 	= runUnite(x,y,g);
 public XBGFResult transform(unlabel(str x), BGFGrammar g)
@@ -391,35 +393,6 @@ XBGFResult runEliminate(str x, BGFGrammar g)
 	return <r,grammar(g.roots, ps1 + ps3)>;
 }
 
-XBGFResult runEquate(str x, str y, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (x == y)
-		r = problemStr("Nonterminal is already equated with itself.",x);
-	<ps1x,ps2x,ps3x> = splitPbyW(g.prods,innt(x));
-	<_,ps2y,_> = splitPbyW(g.prods,innt(y));
-	XBGFResult rep = runRenameN(x,y,grammar([],ps2x));
-	r = add(r,rep.r);
-	gxy = rep.g;
-	gyy = grammar([],ps2y);
-	if (!gdts(gxy,gyy))
-		r = add(r,problemStr2("Definitions of nonterminals must be equal.",x,y));
-	if (x in usedNs(ps1x + ps3x))
-		return add(r,runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots - x,ps1x + ps3x)));
-	else
-		return <r,grammar(g.roots - x,ps1x + ps3x)>;
-}
-
-XBGFResult runExtract(production(str l, str x, BGFExpression rhs), XBGFScope w, grammar(rs,ps))
-{
-	XBGFOutcome r = ok();
-	if (x in definedNs(ps))
-		r = notFreshN(r,x);
-	// TODO hard to check if rhs occurs in the grammar; it was somehow done in xbgf1.pro 
-	XBGFResult rep = runReplace(rhs,nonterminal(x),w,grammar(rs,ps));
-	return <add(r,rep.r),grammar(rep.g.roots,rep.g.prods + production(l,x,rhs))>;
-}
-
 XBGFResult runFactor(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
 {
 	XBGFOutcome r = ok();
@@ -427,16 +400,7 @@ XBGFResult runFactor(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
 	e4 = normalise(transform::library::Factoring::makeDistributed(e2));
 	if (!eqE(e3, e4))
 		r = problemExpr2("Expressions must be related by distribution.",e1,e2);
-	return add(r,runReplace(e1,e2,w,g));
-}
-
-XBGFResult runFold(str x, XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (<_,[production(_, x, BGFExpression rhs)],_> := splitPbyW(g.prods,innt(x)))
-		return add(r,runReplace(rhs,nonterminal(x),comboscope(notinnt(x),w),g));
-	else 
-		return <problemStr("Nonterminal must be defined horizontally prior to folding.",x),g>;
+	return add(r,transform::library::Brutal::runReplace(e1,e2,w,g));
 }
 
 XBGFResult runHorizontal(XBGFScope w, BGFGrammar g)
@@ -480,15 +444,6 @@ XBGFResult runInject(BGFProduction p1, BGFGrammar g)
 	return <r,grammar(g.roots, replaceP(g.prods,p2,unmark(p1)))>;
 }
 
-XBGFResult runInline(str x, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (<ps1,[production(_, x, BGFExpression rhs)],ps2> := splitPbyW(g.prods,innt(x)))
-		return add(r,runReplace(nonterminal(x),rhs,globally(),grammar(g.roots,ps1+ps2)));
-	else 
-		return <problemStr("Nonterminal must be defined horizontally prior to inlining.",x),g>;
-}
-
 XBGFResult runIntroduce(list[BGFProduction] ps, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -521,7 +476,7 @@ XBGFResult runMassage(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGramma
 {
 	XBGFOutcome r = ok();
 	if (transform::library::Massage::massage_eq({e1,e2}))
-		return add(r,runReplace(e1,e2,w,g));
+		return add(r,transform::library::Brutal::runReplace(e1,e2,w,g));
 	else
 		return <problemExpr2("Expressions are not massage-equivalent.",e1,e2),g>;
 }
@@ -532,7 +487,7 @@ XBGFResult runNarrow(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
 	if (!transform::library::Width::narrowing(e1,e2))
 		return <problemExpr2("Expressions are not in narrowing relation.",e1,e2),g>;
 	else
-		return add(r,runReplace(e1,e2,w,g)); 
+		return add(r,transform::library::Brutal::runReplace(e1,e2,w,g)); 
 }
 
 XBGFResult runPermute(BGFProduction p, BGFGrammar g)
@@ -622,18 +577,6 @@ XBGFResult runRenameL(str x, str y, BGFGrammar g)
 		return <add(r,problemStr("Label not found or not unique",x)),g>; // the latter should never happen
 }
 
-XBGFResult runRenameN(str x, str y, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	ns = allNs(g.prods);
-	if (x notin ns)
-		r = freshN(r,x);
-	if (y in ns)
-		r = notFreshN(r,y);
-	return
-		<r,transform::library::Core::performRenameN(x,y,g)>;
-}
-
 XBGFResult runRenameS(str x, str y, XBGFScope w, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -654,22 +597,7 @@ XBGFResult runRenameT(str x, str y, BGFGrammar g)
 		r = freshName("Source name",r,x);
 	if (y in ts)
 	r = notFreshName("Target name",r,y);
-	return add(r,runReplace(terminal(x),terminal(y),globally(),g));
-}
-
-XBGFResult runReplace(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	list[BGFProduction] ps1,ps2,ps3,ps4;
-	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
-	ps4 = transform::library::Core::performReplace(e1,e2,ps2);
-	if (ps2 == ps4)
-		{
-			ps4 = transform::library::Core::performReplace(normalise(e1),normalise(e2),ps2); // TODO check if needed
-			if (ps2 == ps4)
-				r = add(r,problemExpr2("Vacuous replace",e1,e2));
-		}
-	return <r,grammar(g.roots, ps1 + normalise(ps4) + ps3)>;
+	return add(r,transform::library::Brutal::runReplace(terminal(x),terminal(y),globally(),g));
 }
 
 XBGFResult runReroot(list[str] xs, BGFGrammar g)
@@ -684,35 +612,12 @@ XBGFResult runReroot(list[str] xs, BGFGrammar g)
 		return <add(r,problemStrs("Not all nonterminals are defined",xs)),g>;
 }
 
-XBGFResult runSplitN(str x, list[BGFProduction] ps0, XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if ({str y} := definedNs(ps0))
-	{
-		if (x notin definedNs(g.prods))
-			r = freshN(r,x);
-		if (y in allNs(g.prods))
-			r = notFreshN(r,y);
-		<ps2,ps3,ps4> = splitPbyW(g.prods,innt(x));
-		list[BGFProduction] ps5 = [production(l,x,e) | p <- ps0, production(str l,y,BGFExpression e) := p];
-		if (x in g.roots) rs2 = g.roots + y; else rs2 = g.roots;
-		g = grammar(rs2,ps2 + (ps3 - ps5) + ps0 + ps4);
-		if (nowhere() := w)
-			return <r,g>;
-		else
-			return add(r,runReplace(nonterminal(x),nonterminal(y),w,g));
-	}
-	else
-		return <problem("Splitting into more than two nonterminals not supported"),g>;
-		// TODO OR NOT TODO
-}
-
 XBGFResult runSplitT(str x, list[str] ys, XBGFScope w, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
 	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
-	BGFGrammar g2 	= runReplace(terminal(x),sequence([terminal(y) | y <- ys]),grammar([],ps2));
-	XBGFResult repl = runReplace(terminal(x),sequence([terminal(y) | y <- ys]),grammar([],ps2));
+	BGFGrammar g2 	= transform::library::Brutal::runReplace(terminal(x),sequence([terminal(y) | y <- ys]),grammar([],ps2));
+	XBGFResult repl = transform::library::Brutal::runReplace(terminal(x),sequence([terminal(y) | y <- ys]),grammar([],ps2));
 	r = add(r,repl.r);
 	if (grammar(_, ps4) := repl.g)
 		return <r,grammar(g.roots,ps1 + normalise(ps2) + ps3)>;
@@ -765,15 +670,6 @@ XBGFResult runUndefine(list[str] xs, BGFGrammar g)
 	return <r,grammar(g.roots,myps)>;
 }
 
-XBGFResult runUnfold(str x, XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (<_,[production(_, x, BGFExpression rhs)],_> := splitPbyW(g.prods,innt(x)))
-		return add(r,runReplace(nonterminal(x),rhs,comboscope(notinnt(x),w),g));
-	else
-		return <problemStr("Nonterminal must be defined horizontally prior to unfolding.",x),g>;
-}
-
 XBGFResult runUnite(str x, str y, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -787,7 +683,7 @@ XBGFResult runUnite(str x, str y, BGFGrammar g)
 	<ps1x,ps2x,ps3x> = splitPbyW(g.prods, innt(x));
 	list[BGFProduction] ps4x = ps1x + [production(l,y,e) | p <- ps2x, production(str l,x,BGFExpression e) := p] + ps3x;
 	if (x in usedNs(ps4x))
-		return <r,runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots,ps4x))>;
+		return <r,transform::library::Brutal::runReplace(nonterminal(x),nonterminal(y),globally(),grammar(g.roots,ps4x))>;
 	else
 		return <r,grammar(g.roots,ps4x)>;
 }
@@ -846,7 +742,7 @@ XBGFResult runWiden(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar 
 	XBGFOutcome r = ok();
 	if (!transform::library::Width::narrowing(e2,e1))
 		r = problemExpr2("Expressions are not in widening relation",e2,e1);
-	return add(r,runReplace(e1,e2,w,g)); 
+	return add(r,transform::library::Brutal::runReplace(e1,e2,w,g)); 
 }
 
 XBGFResult runYaccify(list[BGFProduction] ps1, BGFGrammar g)

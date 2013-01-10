@@ -1,29 +1,28 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module transform::library::Core
+module transform::library::Brutal
 
+import lib::Rascalware;
 import syntax::BGF;
 import syntax::XBGF;
+import transform::Results;
 import transform::library::Util;
+import normal::BGF;
 import diff::GDT;
-import List; // size
+import List; //size
 
-BGFGrammar performRenameN(str x, str y, grammar(rs, ps))
+XBGFResult runReplace(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
+	XBGFOutcome r = ok();
 	list[BGFProduction] ps1,ps2,ps3,ps4;
-	list[str] rs2;
-	if ([*L1, x, *L2] := rs) rs2 = L1 + y + L2;
-	else rs2 = rs;
-	if (x in definedNs(ps))
-	{
-		<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
-		ps4 = ps1 + [production(l,y,e) | p <- ps2, production(str l,x,BGFExpression e) := p] + ps3;
-	}
-	else
-		ps4 = ps; 
-	if (x in usedNs(ps4))
-		return grammar(rs2,performReplace(nonterminal(x),nonterminal(y),ps4));
-	else
-		return grammar(rs2,ps4);
+	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
+	ps4 = performReplace(e1,e2,ps2);
+	if (ps2 == ps4)
+		{
+			ps4 = performReplace(normalise(e1),normalise(e2),ps2); // TODO check if needed
+			if (ps2 == ps4)
+				r = add(r,problemExpr2("Vacuous replace",e1,e2));
+		}
+	return <r,grammar(g.roots, ps1 + normalise(ps4) + ps3)>;
 }
 
 list[BGFProduction] performReplace(BGFExpression e1, BGFExpression e2, list[BGFProduction] ps)
