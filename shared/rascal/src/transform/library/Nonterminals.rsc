@@ -47,19 +47,19 @@ XBGFResult runRenameN(str x, str y, BGFGrammar g)
 		<r,performRenameN(x,y,g)>;
 }
 
-BGFGrammar performRenameN(str x, str y, grammar(rs, ps))
+BGFGrammar performRenameN(str x, str y, BGFGrammar g)
 {
 	list[BGFProduction] ps1,ps2,ps3,ps4;
 	list[str] rs2;
-	if ([*L1, x, *L2] := rs) rs2 = L1 + y + L2;
-	else rs2 = rs;
-	if (x in definedNs(ps))
+	if ([*L1, x, *L2] := g.roots) rs2 = L1 + y + L2;
+	else rs2 = g.roots;
+	if (x in definedNs(g.prods))
 	{
-		<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
+		<ps1,ps2,ps3> = splitPbyW(g.prods,innt(x));
 		ps4 = ps1 + [production(l,y,e) | p <- ps2, production(str l,x,BGFExpression e) := p] + ps3;
 	}
 	else
-		ps4 = ps; 
+		ps4 = g.prods;
 	if (x in usedNs(ps4))
 		return grammar(rs2,transform::library::Brutal::performReplace(nonterminal(x),nonterminal(y),ps4));
 	else

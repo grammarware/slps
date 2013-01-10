@@ -20,6 +20,7 @@ import transform::library::Width; // narrow, widen
 import transform::library::Yacc; // yaccify, deyaccify
 import transform::library::Util;
 import transform::Results;
+import IO;
 
 public XBGFResult transform(abridge(BGFProduction p), BGFGrammar g)
 	= transform::library::Chaining::runAbridge(p,g);
@@ -135,7 +136,7 @@ public XBGFResult transform(atomic(list[XBGFCommand] steps), BGFGrammar g)
 	= transform(steps,g); // NB: different from the rest
 public XBGFResult transform(strip(str a), BGFGrammar g)
 	= runStrip(a,g); // semi-deprecated
-public default BGFGrammar transform(XBGFCommand x, BGFGrammar g) {throw "Unknown XBGF command <x>";}
+public default XBGFResult transform(XBGFCommand x, BGFGrammar g) {throw "Unknown XBGF command <x>";}
 
 public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 {
@@ -147,6 +148,13 @@ public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 		out.g = normalise(out.g);
 	}
 	return out.g;
+}
+
+// TODO: later redo with keyword parameters?
+public XBGFResult vtransform(XBGFCommand x, BGFGrammar g)
+{
+	println("[XBGF] <x>.");
+	return transform(x,g);
 }
 
 // legacy code

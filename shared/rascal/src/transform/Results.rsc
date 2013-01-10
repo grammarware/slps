@@ -1,6 +1,7 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module transform::Results
 
+import lib::Rascalware;
 import syntax::BGF;
 import syntax::XBGF;
 
@@ -19,7 +20,7 @@ data XBGFOutcome
 	| problemStr2(str msg, str x, str y)
 	| problemStrs(str msg, list[str] xs)
 	| problemScope(str msg, XBGFScope w)
-	| manyProblems(list[XBGFOutcome] lst)
+	//| manyProblems(list[XBGFOutcome] lst)
 	;
 
 alias XBGFResult = tuple[XBGFOutcome r,BGFGrammar g];
@@ -29,7 +30,7 @@ public XBGFOutcome add(ok(), XBGFOutcome y) = y;
 public XBGFOutcome add(XBGFOutcome x, ok()) = x;
 public XBGFOutcome add(manyProblems(list[XBGFOutcome] xs),manyProblems(list[XBGFOutcome] ys)) = manyProblems(xs+ys);
 public XBGFOutcome add(XBGFOutcome x,manyProblems(list[XBGFOutcome] ys)) = manyProblems([x]+ys);
-public XBGFOutcome add(manyProblems(list[XBGFOutcome] xs),XBGFOutcome y) = manyProblems(xs+y);
+//public XBGFOutcome add(manyProblems(list[XBGFOutcome] xs),XBGFOutcome y) = manyProblems(xs+y);
 public default XBGFOutcome add(XBGFOutcome x, XBGFOutcome y) = manyProblems([x,y]);
 
 // adding two results will give both error sets and the last grammar
@@ -38,18 +39,24 @@ public XBGFResult add(XBGFResult x, XBGFResult y) = <add(x.r,y.r),y.g>;
 public XBGFResult add(XBGFOutcome x, XBGFResult y) = <add(x,y.r),y.g>;
 
 public void thw(ok()) {}
-public void thw(problem(str msg)) {throw msg;}
-public void thw(problemXBGF(str msg, XBGFCommand xbgf)) {throw msg+":\n<xbgf>";}
-public void thw(problemProd(str msg, BGFProduction p)) {throw msg+":\n<p>";}
-public void thw(problemProd2(str msg, BGFProduction p1, BGFProduction p2)) {throw msg+":\n\t<p1>\nand\n\t<p2>";}
-public void thw(problemPinProds(str msg, BGFProduction p, list[BGFProduction] ps)) {throw msg+"\n\t<p>\nin\n\t<ps>";}
-public void thw(problemProds(str msg, list[BGFProduction] ps)) {throw msg+":\n<ps>";}
-public void thw(problemProds2(str msg, list[BGFProduction] ps1, list[BGFProduction] ps2)) {throw msg+":\n<ps1>\nvs\n<ps2>";}
-public void thw(problemStr(str msg, str x)) {throw msg+": <x>";}
-public void thw(problemStr2(str msg, str x, str y)) {throw msg+": <x> and <y>";}
-public void thw(problemStrs(str msg, list[str] xs)) {throw msg+":\n\t<xs>";}
-public void thw(problemExpr(str msg, BGFExpression e)) {throw msg+":\n\t<e>";}
-public void thw(problemExpr2(str msg, BGFExpression e1, BGFExpression e2)) {throw msg+":\n<e1> and <e2>";}
-public void thw(problemScope(str msg, XBGFScope w)) {throw "<msg> in <w>";}
-public void thw(manyProblems(list[XBGFOutcome] lst)) {for (x <- lst) thw(x);} // will not work
-public default void thw(XBGFOutcome x) {}
+public default void thw(XBGFOutcome x) {throw outcome2str(x);}
+
+public void report(ok()) {println("No problems.");}
+public default void report(XBGFOutcome x) {println(outcome2str(x)+"!");}
+
+public str outcome2str(ok()) = "";
+public str outcome2str(problem(str msg)) = msg;
+public str outcome2str(problemXBGF(str msg, XBGFCommand xbgf)) = "<msg>:\n<xbgf>";
+public str outcome2str(problemProd(str msg, BGFProduction p)) = "<msg>:\n<p>";
+public str outcome2str(problemProd2(str msg, BGFProduction p1, BGFProduction p2)) = "<msg>:\n\t<p1>\nand\n\t<p2>";
+public str outcome2str(problemPinProds(str msg, BGFProduction p, list[BGFProduction] ps)) = "<msg>\n\t<p>\nin\n\t<ps>";
+public str outcome2str(problemProds(str msg, list[BGFProduction] ps)) = "<msg>:\n<ps>";
+public str outcome2str(problemProds2(str msg, list[BGFProduction] ps1, list[BGFProduction] ps2)) = "<msg>:\n<ps1>\nvs\n<ps2>";
+public str outcome2str(problemStr(str msg, str x)) = "<msg>: <x>";
+public str outcome2str(problemStr2(str msg, str x, str y)) = "<msg>: <x> and <y>";
+public str outcome2str(problemStrs(str msg, list[str] xs)) = "<msg>:\n\t<xs>";
+public str outcome2str(problemExpr(str msg, BGFExpression e)) = "<msg>:\n\t<e>";
+public str outcome2str(problemExpr2(str msg, BGFExpression e1, BGFExpression e2)) = "<msg>:\n<e1> and <e2>";
+public str outcome2str(problemScope(str msg, XBGFScope w)) = "<msg> in <w>";
+//public str outcome2str(manyProblems(list[XBGFOutcome] lst)) = joinStrings([outcome2str(x) | x <- lst],";\n");
+public default str outcome2str(XBGFOutcome x) = "Outcome not implemented: <x>";

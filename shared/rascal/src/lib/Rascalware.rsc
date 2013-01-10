@@ -47,7 +47,8 @@ public bool subset(list[&T] xs, list[&T] ys) = toSet(xs) <= toSet(ys);
 public set[&T] toSet(list[&T] x) = List::toSet(x);
 public list[&T] toList(set[&T] x) = Set::toList(x);
 
-public &T getOneFrom(set[&T] x) = Set::getOneFrom(x);
+public &T getOneFrom(set[&T] xs)  = Set::getOneFrom(xs);
+public &T getOneFrom(list[&T] xs) = List::getOneFrom(xs);
 
 public list[&T] slice(list[&T] lst, int begin, int l) = List::slice(lst,begin,l);
 
