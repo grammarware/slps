@@ -13,6 +13,7 @@ import transform::library::Folding; // fold, unfold, extract, inline
 import transform::library::Massage; // massage
 import transform::library::Util;
 import transform::library::Nonterminals; // renameN, equate, splitN, clone
+import transform::library::Sequential; // appear, disappear, inject, permute, project
 import transform::library::Terminals; // renameT, splitT, concatT, abstractize, concretize
 import transform::library::Labels; // renameL, unlabel, designate, renameS
 import transform::library::Width; // narrow, widen
@@ -31,7 +32,7 @@ public XBGFResult transform(addV(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(anonymize(BGFProduction p), BGFGrammar g)
 	= runAnonymize(p,g);
 public XBGFResult transform(appear(BGFProduction p), BGFGrammar g)
-	= runAppear(p,g);
+	= transform::library::Sequential::runAppear(p,g);
 public XBGFResult transform(chain(BGFProduction p), BGFGrammar g)
 	= runChain(p,g);
 public XBGFResult transform(clone(str x, str y, XBGFScope w), BGFGrammar g)
@@ -51,7 +52,7 @@ public XBGFResult transform(detour(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(deyaccify(str x), BGFGrammar g)
 	= runDeyaccify(x,g);
 public XBGFResult transform(disappear(BGFProduction p), BGFGrammar g)
-	= runDisappear(p,g);
+	= transform::library::Sequential::runDisappear(p,g);
 public XBGFResult transform(distribute(XBGFScope w), BGFGrammar g)
 	= transform::library::Factoring::runDistribute(w,g);
 public XBGFResult transform(downgrade(BGFProduction p1,BGFProduction p2), BGFGrammar g)
@@ -71,7 +72,7 @@ public XBGFResult transform(horizontal(XBGFScope w), BGFGrammar g)
 public XBGFResult transform(importG(list[BGFProduction] ps), BGFGrammar g)
 	= runImportG(ps,g);
 public XBGFResult transform(inject(BGFProduction p), BGFGrammar g)
-	= runInject(p,g);
+	= transform::library::Sequential::runInject(p,g);
 public XBGFResult transform(inline(str x), BGFGrammar g)
 	= transform::library::Folding::runInline(x,g);
 public XBGFResult transform(introduce(list[BGFProduction] ps), BGFGrammar g)
@@ -85,9 +86,9 @@ public XBGFResult transform(massage(BGFExpression e1, BGFExpression e2, XBGFScop
 public XBGFResult transform(narrow(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
 	= transform::library::Width::runNarrow(e1,e2,w,g);
 public XBGFResult transform(permute(BGFProduction p), BGFGrammar g)
-	= runPermute(p,g);
+	= transform::library::Sequential::runPermute(p,g);
 public XBGFResult transform(project(BGFProduction p), BGFGrammar g)
-	= runProject(p,g);
+	= transform::library::Sequential::runProject(p,g);
 public XBGFResult transform(rassoc(BGFProduction p), BGFGrammar g)
 	= transform::library::Associativity::runRAssoc(p,g);
 public XBGFResult transform(redefine(list[BGFProduction] ps), BGFGrammar g)
@@ -196,18 +197,6 @@ XBGFResult runAnonymize(BGFProduction p1, BGFGrammar g)
 	return <r,grammar(g.roots, replaceP(g.prods,p2,p3))>;
 }
 
-XBGFResult runAppear(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	p2 = demark(p1);
-	if (!inProds(p2,g.prods))
-		r = notFoundP(r,p2);
-	for (/marked(e) := p1)
-		if (optional(_) !:= e && star(_) !:= e)
-			r = add(r,problemProd("Production rule does not have an optional part marked",p1));
-	return <r,grammar(g.roots, replaceP(g.prods,p2,unmark(p1)))>;
-}
-
 XBGFResult runChain(BGFProduction p, grammar(rs, ps))
 {
 	XBGFOutcome r = ok();
@@ -283,18 +272,6 @@ XBGFResult runDeyaccify(str n, BGFGrammar g)
 		return <r,g>;
 }
 
-XBGFResult runDisappear(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	p2 = unmark(p1);
-	if (!inProds(p2,g.prods))
-		r = notFoundP(r,p2);
-	for (/marked(e) := p1)
-		if (optional(_) !:= e && star(_) !:= e)
-			r = add(r,problemProd("Production rule does not have an optional part marked",p2));
-	return <r,grammar(g.roots, replaceP(g.prods,p2,demark(p1)))>;
-}
-
 XBGFResult runDowngrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
 {
 	XBGFOutcome r = ok();
@@ -356,15 +333,6 @@ XBGFResult runImportG(list[BGFProduction] ps1, BGFGrammar g)
 	return <r,grammar(g.roots, ps1 + g.prods)>;
 }
 
-XBGFResult runInject(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	p2 = demark(p1);
-	if (!inProds(p2,g.prods))
-		r = notFoundP(r,p2);
-	return <r,grammar(g.roots, replaceP(g.prods,p2,unmark(p1)))>;
-}
-
 XBGFResult runIntroduce(list[BGFProduction] ps, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -378,36 +346,6 @@ XBGFResult runIntroduce(list[BGFProduction] ps, BGFGrammar g)
 	}
 	else
 		return <problem("Multiple defined nonterminals found"),g>;
-}
-
-XBGFResult runPermute(BGFProduction p, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (production(str l, str n, sequence(L1)) := p)
-	{
-		<ps1,ps2,ps3> = splitPbyW(g.prods,innt(n));
-		if ([production(_, n, sequence(L2))] := ps2)
-		{
-			if (toSet(L1) == toSet(L2))
-				return <r,grammar(g.roots, ps1 + p + ps3)>;
-			else
-				r = add(r,problemExpr2("Phrases must be permutations of each other",sequence(L1),sequence(L2)));
-		}
-		else
-			r = add(r,problemProds("Permutation requires a single sequence instead of",ps2));
-	}
-	else
-		r = add(r,problemProd("Permutation parameter requires a sequence instead of",p));
-	return <r,g>;
-}
-
-XBGFResult runProject(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	p2 = unmark(p1);
-	if (!inProds(p2,g.prods))
-		r = notFoundP(r,p2);
-	return <r, grammar(g.roots, replaceP(g.prods, p2, demark(p1)))>;
 }
 
 XBGFResult runRedefine(list[BGFProduction] ps1, BGFGrammar g)
