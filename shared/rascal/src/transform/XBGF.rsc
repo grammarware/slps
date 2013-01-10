@@ -10,9 +10,10 @@ import transform::library::Associativity; // assoc, iterate
 import transform::library::Brutal; // replace
 import transform::library::Factoring; // factor, distribute
 import transform::library::Folding; // fold, unfold, extract, inline
+import transform::library::Chaining; // abridge, detour, chain, unchain
 import transform::library::Massage; // massage
 import transform::library::Util;
-import transform::library::Nonterminals; // renameN, equate, splitN, clone
+import transform::library::Nonterminals; // renameN, equate, splitN, clone, reroot
 import transform::library::Sequential; // appear, disappear, inject, permute, project
 import transform::library::Terminals; // renameT, splitT, concatT, abstractize, concretize
 import transform::library::Labels; // renameL, unlabel, designate; renameS, anonymize, deanonimize
@@ -22,7 +23,7 @@ import export::BNF;
 import transform::Results;
 
 public XBGFResult transform(abridge(BGFProduction p), BGFGrammar g)
-	= runAbridge(p,g);
+	= transform::library::Chaining::runAbridge(p,g);
 public XBGFResult transform(abstractize(BGFProduction p), BGFGrammar g)
 	= transform::library::Terminals::runAbstractize(p,g);
 public XBGFResult transform(addH(BGFProduction p), BGFGrammar g)
@@ -34,7 +35,7 @@ public XBGFResult transform(anonymize(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(appear(BGFProduction p), BGFGrammar g)
 	= transform::library::Sequential::runAppear(p,g);
 public XBGFResult transform(chain(BGFProduction p), BGFGrammar g)
-	= runChain(p,g);
+	= transform::library::Chaining::runChain(p,g);
 public XBGFResult transform(clone(str x, str y, XBGFScope w), BGFGrammar g)
 	= runClone(x,y,w,g);
 public XBGFResult transform(concatT(list[str] xs, str y, XBGFScope w), BGFGrammar g)
@@ -48,7 +49,7 @@ public XBGFResult transform(define(list[BGFProduction] ps), BGFGrammar g)
 public XBGFResult transform(designate(BGFProduction p), BGFGrammar g)
 	= transform::library::Labels::runDesignate(p,g);
 public XBGFResult transform(detour(BGFProduction p), BGFGrammar g)
-	= runDetour(p,g);
+	= transform::library::Chaining::runDetour(p,g);
 public XBGFResult transform(deyaccify(str x), BGFGrammar g)
 	= transform::library::Yacc::runDeyaccify(x,g);
 public XBGFResult transform(disappear(BGFProduction p), BGFGrammar g)
@@ -108,13 +109,13 @@ public XBGFResult transform(renameT(str x, str y), BGFGrammar g)
 public XBGFResult transform(XBGFCommand::replace(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
 	= transform::library::Brutal::runReplace(e1,e2,w,g);
 public XBGFResult transform(reroot(list[str] xs), BGFGrammar g)
-	= runReroot(xs,g);
+	= transform::library::Nonterminals::runReroot(xs,g);
 public XBGFResult transform(splitN(str x, list[BGFProduction] ps, XBGFScope w), BGFGrammar g)
 	= transform::library::Nonterminals::runSplitN(x,ps,w,g);
 public XBGFResult transform(splitT(str x, list[str] ys, XBGFScope w), BGFGrammar g)
 	= transform::library::Terminals::runSplitT(x,ys,w,g);
 public XBGFResult transform(unchain(BGFProduction p), BGFGrammar g)
-	= runUnchain(p,g);
+	= transform::library::Chaining::runUnchain(p,g);
 public XBGFResult transform(undefine(list[str] xs), BGFGrammar g)
 	= runUndefine(xs,g);
 public XBGFResult transform(unfold(str x, XBGFScope w), BGFGrammar g)
@@ -150,16 +151,6 @@ public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 }
 
 
-XBGFResult runAbridge(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (production(_,x,nonterminal(x)) !:= p1)
-		r = add(r,problemProd("Production cannot be abridged.",p1));
-	if (!inProds(p1,g.prods))
-		r = notFoundP(r,p1);
-	return <r,grammar(g.roots, g.prods - p1)>;
-}
-
 XBGFResult runAddH(BGFProduction p1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -187,27 +178,6 @@ XBGFResult runAddV(BGFProduction p1, BGFGrammar g)
 	}
 }
 
-XBGFResult runChain(BGFProduction p, grammar(rs, ps))
-{
-	XBGFOutcome r = ok();
-	if (production(str l,str n1,nonterminal(str n2)) := p)
-		{
-			if (n1 == n2)
-				r = add(r,problem("Do not introduce reflexive chain productions with chain, use detour instead"));
-			if (n2 in allNs(ps))
-				r = add(r,problemStr("Nonterminal must be fresh",n2));
-			list[BGFProduction] ps1,ps2,ps3;
-			if (l != "") <ps1,ps2,ps3> = splitPbyW(ps,inlabel(l));
-			else <ps1,ps2,ps3> = splitPbyW(ps,innt(n1));
-			if ([production(l,n1,e)] := ps2)
-				return <r,grammar(rs, ps1 + p + production("",n2,e) + ps3)>;
-			else
-				return <add(r,problemProds("Production rule has unexpected form",ps2)),g>;
-		}
-	else
-		return <problemProd("Not a chain production rule.",p),g>;
-}
-
 XBGFResult runDefine(list[BGFProduction] ps1, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -219,21 +189,6 @@ XBGFResult runDefine(list[BGFProduction] ps1, BGFGrammar g)
 	}
 	else
 		return <problem("Multiple defined nonterminals found"),g>;
-}
-
-XBGFResult runDetour(BGFProduction p, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (production(_,x,nonterminal(x)) := p)
-	{
-		// xbgf1.pro only aksed for x to be used, not necessarily defined; we're more strict here
-		if (x notin definedNs(g.prods))
-			r = freshN(r,x);
-		<ps1,ps2,ps3> = splitPbyW(g.prods,innt(x));
-		return <r,grammar(g.roots, ps1 + ps2 + p + ps3)>;
-	}
-	else
-		return <problemProd("Not a reflexive chain production rule",p),g>;
 }
 
 XBGFResult runDowngrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
@@ -349,45 +304,6 @@ XBGFResult runRemoveV(BGFProduction p, BGFGrammar g)
 	if ([p] == ps2)
 		r = add(r,problemStr("Cannot remove the last production rule with removeV, use undefine or eliminate",p.lhs));
 	return <r,grammar(g.roots, g.prods - p)>;
-}
-
-XBGFResult runReroot(list[str] xs, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (toSet(xs) == toSet(g.roots))
-		r = add(r,problemStrs("Vacuous reroot",xs));
-	// xbgf1.pro only asked for it to be a subset of allNs, not definedNs; we're more strict here
-	if (toSet(xs) <= definedNs(g.prods))
-		return <r,grammar(xs, g.prods)>;
-	else
-		return <add(r,problemStrs("Not all nonterminals are defined",xs)),g>;
-}
-
-XBGFResult runUnchain(BGFProduction p, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	if (production(str l,str n1,nonterminal(str n2)) := p)
-		{
-			if (n1 == n2)
-				r = add(r,problem("Do not remove reflexive chain productions with chain, use abridge instead"));
-			if (n2 in g.roots)
-				r = add(r,problemStr("Nonterminal must not be root",n2));
-			if (!inProds(p,g.prods))
-				r = notFoundP(r,p);
-			//if (n2 in allNs(ps)) r = notFreshN(r,n2);
-			list[BGFProduction] ps1,ps2,ps3;
-			<ps1,ps2,ps3> = splitPbyW(g.prods - p,innt(n2));
-			if (len(ps2) != 1)
-				r = add(r,problemStr("Nonterminal must occur exactly once",n2));
-			if (l == "")
-				l = n2;
-			if ([production(_,n2,e)] := ps2)
-				return <r,grammar(g.roots, ps1 + production(l,n1,e) + ps3)>;
-			else
-				return <add(r,problemProds("Production rules have unexpected form",ps2)),g>;
-		}
-	else
-		return <add(r,problemProd("Not a chain production rule",p)),g>;
 }
 
 //TODO: undefine only one nonterminal per transformation

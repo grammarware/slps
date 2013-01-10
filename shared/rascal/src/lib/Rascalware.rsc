@@ -39,6 +39,11 @@ public bool multiseteq(list[&T] xs, list[&T] ys) = sort(xs) == sort(ys);
 
 public bool seteq(list[&T] xs, list[&T] ys) = toSet(xs) == toSet(ys);
 
+public bool subset(set[&T] xs, set[&T] ys) = xs <= ys;
+public bool subset(list[&T] xs, set[&T] ys) = toSet(xs) <= ys;
+public bool subset(set[&T] xs, list[&T] ys) = xs <= toSet(ys);
+public bool subset(list[&T] xs, list[&T] ys) = toSet(xs) <= toSet(ys);
+
 public set[&T] toSet(list[&T] x) = List::toSet(x);
 public list[&T] toList(set[&T] x) = Set::toList(x);
 

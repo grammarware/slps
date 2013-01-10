@@ -1,6 +1,7 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module transform::library::Nonterminals
 
+import lib::Rascalware;
 import syntax::BGF;
 import syntax::XBGF;
 import transform::Results;
@@ -63,6 +64,18 @@ BGFGrammar performRenameN(str x, str y, grammar(rs, ps))
 		return grammar(rs2,transform::library::Brutal::performReplace(nonterminal(x),nonterminal(y),ps4));
 	else
 		return grammar(rs2,ps4);
+}
+
+XBGFResult runReroot(list[str] xs, BGFGrammar g)
+{
+	XBGFOutcome r = ok();
+	if (seteq(xs, g.roots))
+		r = add(r,problemStrs("Vacuous reroot",xs));
+	// xbgf1.pro only asked for it to be a subset of allNs, not definedNs; we're more strict here
+	if (subset(xs,definedNs(g.prods)))
+		return <r,grammar(xs, g.prods)>;
+	else
+		return <add(r,problemStrs("Not all nonterminals are defined",xs)),g>;
 }
 
 XBGFResult runSplitN(str x, list[BGFProduction] ps0, XBGFScope w, BGFGrammar g)
