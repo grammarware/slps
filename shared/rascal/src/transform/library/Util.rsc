@@ -130,24 +130,5 @@ public list[BGFProduction] replaceP(list[BGFProduction] ps, p1, p2)
 	return ps2;
 }
 
-public int levenshtein(str x, str y)
-{
-	if (len(x) < len(y)) return levenshtein(y,x);
-	if (isEmpty(x)) return len(y);
-	
-	prow = [0..len(y)];
-	for (i <- [0..len(x)-1])
-	{
-		crow = [i+1];
-		for (j <- [0..len(y)-1])
-			if (charAt(x,i) == charAt(y,j))
-				crow += min([ prow[j+1]+1, crow[j]+1, prow[j]   ]);
-			else
-				crow += min([ prow[j+1]+1, crow[j]+1, prow[j]+1 ]);
-		prow = crow;
-	} 
-	return prow[len(prow)-1];
-}
-
 public bool inProds(BGFProduction p, []) = false;
 public bool inProds(BGFProduction p, list[BGFProduction] ps) = eqP(normalise(p),normalise(ps[0])) || inProds(p,tail(ps));

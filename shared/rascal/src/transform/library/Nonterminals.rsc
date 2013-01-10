@@ -8,6 +8,13 @@ import transform::library::Util;
 import transform::library::Brutal;
 import diff::GDT;
 
+XBGFResult runClone(str x, str y, XBGFScope w, BGFGrammar g)
+{
+	XBGFOutcome r = ok();
+	// TODO
+	return <r,g>;
+}
+
 XBGFResult runEquate(str x, str y, BGFGrammar g)
 {
 	XBGFOutcome r = ok();

@@ -48,3 +48,14 @@ XBGFResult runRenameL(str x, str y, BGFGrammar g)
 		return <add(r,problemStr("Label not found or not unique",x)),g>; // the latter should never happen
 }
 
+XBGFResult runRenameS(str x, str y, XBGFScope w, BGFGrammar g)
+{
+	XBGFOutcome r = ok();
+	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
+	if (/selectable(x,_) !:= ps2)
+		r = freshName("Source name",r,x);
+	if (/selectable(y,_) := ps2)
+		r = notFreshName("Target name",r,y);
+	ps4 = visit(ps2){case selectable(x,BGFExpression e) => selectable(y,e)}
+	return <r,grammar(g.roots, ps1 + ps4 + ps3)>;
+}

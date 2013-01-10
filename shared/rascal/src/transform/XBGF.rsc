@@ -12,8 +12,9 @@ import transform::library::Factoring; // factor, distribute
 import transform::library::Folding; // fold, unfold, extract, inline
 import transform::library::Massage; // massage
 import transform::library::Util;
-import transform::library::Nonterminals; // renameN, equate, splitN
-import transform::library::Labels; // renameL, unlabel, designate
+import transform::library::Nonterminals; // renameN, equate, splitN, clone
+import transform::library::Terminals; // renameT, splitT, concatT, abstractize, concretize
+import transform::library::Labels; // renameL, unlabel, designate, renameS
 import transform::library::Width; // narrow, widen
 import transform::library::Yacc;
 import export::BNF;
@@ -22,7 +23,7 @@ import transform::Results;
 public XBGFResult transform(abridge(BGFProduction p), BGFGrammar g)
 	= runAbridge(p,g);
 public XBGFResult transform(abstractize(BGFProduction p), BGFGrammar g)
-	= runAbstractize(p,g);
+	= transform::library::Terminals::runAbstractize(p,g);
 public XBGFResult transform(addH(BGFProduction p), BGFGrammar g)
 	= runAddH(p,g);
 public XBGFResult transform(addV(BGFProduction p), BGFGrammar g)
@@ -36,9 +37,9 @@ public XBGFResult transform(chain(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(clone(str x, str y, XBGFScope w), BGFGrammar g)
 	= runClone(x,y,w,g);
 public XBGFResult transform(concatT(list[str] xs, str y, XBGFScope w), BGFGrammar g)
-	= runConcatT(xs,y,w,g);
+	= transform::library::Terminals::runConcatT(xs,y,w,g);
 public XBGFResult transform(concretize(BGFProduction p), BGFGrammar g)
-	= runConcretize(p,g);
+	= transform::library::Terminals::runConcretize(p,g);
 public XBGFResult transform(deanonymize(BGFProduction p), BGFGrammar g)
 	= runDeanonymize(p,g);
 public XBGFResult transform(define(list[BGFProduction] ps), BGFGrammar g)
@@ -100,9 +101,9 @@ public XBGFResult transform(renameL(str x, str y), BGFGrammar g)
 public XBGFResult transform(renameN(str x, str y), BGFGrammar g)
 	= transform::library::Nonterminals::runRenameN(x,y,g);
 public XBGFResult transform(renameS(str x, str y, XBGFScope w), BGFGrammar g)
-	= runRenameS(x,y,w,g);
+	= transform::library::Labels::runRenameS(x,y,w,g);
 public XBGFResult transform(renameT(str x, str y), BGFGrammar g)
-	= runRenameT(x,y,g);
+	= transform::library::Terminals::runRenameT(x,y,g);
 public XBGFResult transform(XBGFCommand::replace(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
 	= transform::library::Brutal::runReplace(e1,e2,w,g);
 public XBGFResult transform(reroot(list[str] xs), BGFGrammar g)
@@ -110,7 +111,7 @@ public XBGFResult transform(reroot(list[str] xs), BGFGrammar g)
 public XBGFResult transform(splitN(str x, list[BGFProduction] ps, XBGFScope w), BGFGrammar g)
 	= transform::library::Nonterminals::runSplitN(x,ps,w,g);
 public XBGFResult transform(splitT(str x, list[str] ys, XBGFScope w), BGFGrammar g)
-	= runSplitT(x,ys,w,g);
+	= transform::library::Terminals::runSplitT(x,ys,w,g);
 public XBGFResult transform(unchain(BGFProduction p), BGFGrammar g)
 	= runUnchain(p,g);
 public XBGFResult transform(undefine(list[str] xs), BGFGrammar g)
@@ -156,18 +157,6 @@ XBGFResult runAbridge(BGFProduction p1, BGFGrammar g)
 	if (!inProds(p1,g.prods))
 		r = notFoundP(r,p1);
 	return <r,grammar(g.roots, g.prods - p1)>;
-}
-
-XBGFResult runAbstractize(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	p2 = unmark(p1);
-	if (!inProds(p2,g.prods))
-		r = notFoundP(r,p2);
-	for (/marked(e) := p1)
-		if (terminal(_) !:= e)
-			r = add(r, problem("Abstractize only works with marked terminals, use project instead."));
-	return add(r,runProject(p1,grammar(g.roots, g.prods)));
 }
 
 XBGFResult runAddH(BGFProduction p1, BGFGrammar g)
@@ -238,32 +227,6 @@ XBGFResult runChain(BGFProduction p, grammar(rs, ps))
 		}
 	else
 		return <problemProd("Not a chain production rule.",p),g>;
-}
-
-XBGFResult runClone(str x, str y, XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	// TODO
-	return <r,g>;
-}
-
-XBGFResult runConcatT(list[str] xs, str y, XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	// TODO
-	return <r,g>;
-}
-
-XBGFResult runConcretize(BGFProduction p1, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	p2 = demark(p1);
-	if (!inProds(p2,g.prods))
-		r = notFoundP(r,p2);
-	for (/marked(e) := p1)
-		if (terminal(_) !:= e)
-			r = add(r,problem("Concretize only works with marked terminals, use inject instead."));
-	return add(r,runInject(p1,g));
 }
 
 XBGFResult runDeanonymize(BGFProduction p1, BGFGrammar g)
@@ -486,29 +449,6 @@ XBGFResult runRemoveV(BGFProduction p, BGFGrammar g)
 	return <r,grammar(g.roots, g.prods - p)>;
 }
 
-XBGFResult runRenameS(str x, str y, XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
-	if (/selectable(x,_) !:= ps2)
-		r = freshName("Source name",r,x);
-	if (/selectable(y,_) := ps2)
-		r = notFreshName("Target name",r,y);
-	ps4 = visit(ps2){case selectable(x,BGFExpression e) => selectable(y,e)}
-	return <r,grammar(g.roots, ps1 + ps4 + ps3)>;
-}
-
-XBGFResult runRenameT(str x, str y, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	ts = allTs(g.prods);
-	if (x notin ts)
-		r = freshName("Source name",r,x);
-	if (y in ts)
-	r = notFreshName("Target name",r,y);
-	return add(r,transform::library::Brutal::runReplace(terminal(x),terminal(y),globally(),g));
-}
-
 XBGFResult runReroot(list[str] xs, BGFGrammar g)
 {
 	XBGFOutcome r = ok();
@@ -519,17 +459,6 @@ XBGFResult runReroot(list[str] xs, BGFGrammar g)
 		return <r,grammar(xs, g.prods)>;
 	else
 		return <add(r,problemStrs("Not all nonterminals are defined",xs)),g>;
-}
-
-XBGFResult runSplitT(str x, list[str] ys, XBGFScope w, BGFGrammar g)
-{
-	XBGFOutcome r = ok();
-	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
-	BGFGrammar g2 	= transform::library::Brutal::runReplace(terminal(x),sequence([terminal(y) | y <- ys]),grammar([],ps2));
-	XBGFResult repl = transform::library::Brutal::runReplace(terminal(x),sequence([terminal(y) | y <- ys]),grammar([],ps2));
-	r = add(r,repl.r);
-	if (grammar(_, ps4) := repl.g)
-		return <r,grammar(g.roots,ps1 + normalise(ps2) + ps3)>;
 }
 
 XBGFResult runUnchain(BGFProduction p, BGFGrammar g)
