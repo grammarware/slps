@@ -28,6 +28,7 @@ XBGFCommand mapxbgf(Node el)
 		 		case element(_,"add",[element(none(),"vertical",[prod])]): return addV(mapprod(prod));
 		 		case element(_,"anonymize",[prod]): return anonymize(mapprod(prod));
 		 		case element(_,"appear",[prod]): return appear(mapprod(prod));
+				case element(_,"bypass",_): return bypass();
 		 		case element(_,"chain",[prod]): return chain(mapprod(prod));
 		 		// clone(str x, str y, XBGFScope w)
 		 		// concatT(list[str] xs, str y, XBGFScope w)

@@ -49,6 +49,10 @@ xml2xbgf(T,appear(P2))
     child(name(bgf:production),T,P1),
     xmlToP(P1,P2).
 
+xml2xbgf(T,bypass)
+ :-
+    self(name(xbgf:bypass),T).
+
 xml2xbgf(T,disappear(P2))
  :-
     self(name(xbgf:disappear),T),

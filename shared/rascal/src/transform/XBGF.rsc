@@ -34,6 +34,8 @@ public XBGFResult transform(anonymize(BGFProduction p), BGFGrammar g)
 	= transform::library::Labels::runAnonymize(p,g);
 public XBGFResult transform(appear(BGFProduction p), BGFGrammar g)
 	= transform::library::Sequential::runAppear(p,g);
+public XBGFResult transform(bypass(), BGFGrammar g)
+	= <ok(),g>;
 public XBGFResult transform(chain(BGFProduction p), BGFGrammar g)
 	= transform::library::Chaining::runChain(p,g);
 public XBGFResult transform(clone(str x, str y, XBGFScope w), BGFGrammar g)

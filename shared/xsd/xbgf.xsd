@@ -81,6 +81,7 @@
       <xsd:element ref="xbgf:strip"/>
       <!-- debug -->
       <xsd:element ref="xbgf:dump"/>
+      <xsd:element ref="xbgf:bypass"/>
     </xsd:choice>
   </xsd:group>
 
@@ -307,6 +308,15 @@
         <xsd:element ref="bgf:production"/>
       </xsd:sequence>
     </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="bypass">
+    <xsd:annotation>
+      <xsd:documentation>
+		This is a special operator that does exactly nothing.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType/>
   </xsd:element>
 
   <xsd:element name="chain">

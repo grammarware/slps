@@ -24,6 +24,7 @@ Node xbgf2xml(XBGFCommand step)
 		case addV(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"add",[element(none(),"vertical",[prod2xml(prod)])]);
 		case anonymize(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"anonymize",[prod2xml(prod)]);
 		case appear(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"appear",[prod2xml(prod)]);
+		case bypass(): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"bypass",[]);
 		case chain(prod): return element(namespace("xbgf","http://planet-sl.org/xbgf"),"chain",[prod2xml(prod)]);
 		// clone(str x, str y, XBGFScope w)
 		// concatT(list[str] xs, str y, XBGFScope w)

@@ -12,6 +12,7 @@ data XBGFCommand =
 	| addV(BGFProduction p)
 	| anonymize(BGFProduction p)
 	| appear(BGFProduction p) // marked
+	| bypass()
 	| chain(BGFProduction p)
 	| clone(str x, str y, XBGFScope w)
 	| concatT(list[str] xs, str y, XBGFScope w)

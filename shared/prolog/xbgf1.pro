@@ -25,6 +25,7 @@ transformG(Xbgf1,G1,G4)
       []),
     !.
 
+bypass(G,G).
 
 %
 % p([l(addV)], f, n(p))
