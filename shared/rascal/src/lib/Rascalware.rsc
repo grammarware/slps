@@ -34,6 +34,9 @@ public void println(str s) = IO::println(s);
 public str joinStrings([], _) = "";
 public str joinStrings(list[str] ss, str w) = (ss[0] | it + w + s | s <- tail(ss));
 
+public str mapjoin(&T1(&T2) f, list[&T2] xs, str sep) = joinStrings(mapper(xs,f),sep);
+public str mapjoin(&T1(&T2) f, set[&T2] xs, str sep) = joinStrings(toList(mapper(xs,f)),sep);
+
 //public bool multiseteq(list[&T] xs, list[&T] ys) = sort(xs) == sort(ys);
 public bool multiseteq(list[&T] xs, list[&T] ys) = sort(xs) == sort(ys);
 

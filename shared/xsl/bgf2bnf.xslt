@@ -82,7 +82,16 @@
   </xsl:template>
 
   <xsl:template match="optional">
-    <xsl:apply-templates select="./*"/>
+    <xsl:choose>
+      <xsl:when test="bgf:expression/not or bgf:expression/selectable">
+        <xsl:text>(</xsl:text>
+        <xsl:apply-templates select="./*"/>
+        <xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="./*"/>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:text>?</xsl:text>
   </xsl:template>
 
@@ -90,7 +99,7 @@
   <xsl:template match="not">
     <xsl:text>!</xsl:text>
     <xsl:choose>
-      <xsl:when test="bgf:expression/optional or bgf:expression/not">
+      <xsl:when test="bgf:expression/optional or bgf:expression/plus or bgf:expression/star">
         <xsl:text>(</xsl:text>
         <xsl:apply-templates select="./*"/>
         <xsl:text>)</xsl:text>
@@ -138,9 +147,7 @@
     <xsl:value-of select="selector"/>
     <xsl:text>::</xsl:text>
     <xsl:choose>
-      <xsl:when test="local-name(bgf:expression/*) = 'star'
-                   or local-name(bgf:expression/*) = 'optional'
-                   or local-name(bgf:expression/*) = 'plus'">
+      <xsl:when test="bgf:expression/star or bgf:expression/optional or bgf:expression/plus">
         <xsl:text>(</xsl:text>
         <xsl:apply-templates select="bgf:expression"/>
         <xsl:text>)</xsl:text>
