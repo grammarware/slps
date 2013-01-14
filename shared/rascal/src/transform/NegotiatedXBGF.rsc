@@ -14,30 +14,45 @@ import util::Math;
 
 public BGFGrammar transformAnyway(XBGFSequence xbgf, BGFGrammar g)
 {
+	map[str,str] negacy = ();
 	for (XBGFCommand step <- xbgf)
-		g = keepTrying(step,g);
+		<negacy,g> = keepTrying(step,g,negacy);
 	return g;
 }
 
-BGFGrammar keepTrying(XBGFCommand step, BGFGrammar g)
+tuple[map[str,str],BGFGrammar] keepTrying(XBGFCommand step, BGFGrammar g, map[str,str] negacy)
 {
-	<g,out,adv> = attemptTransform(step,g);
+	//if (!isEmpty(negacy)) println("Negacy: <negacy>");
+	<g,out,adv> = attemptTransform(adjustNames(step,negacy),g);
 	if (ok() := out)
-		return normalise(g);
+		return <negacy,normalise(g)>;
 	else
 	{
 		report(out);
-		if (len(adv)>0)
-			return keepTrying(getOneFrom(adv),g);
-		else
+		if (len(adv)==0)
 			thw(out);
+		next = getOneFrom(adv);
+		return keepTrying(next,g,negacy+impact(step,next));
 	}
 }
+
+XBGFCommand adjustNames(XBGFCommand step, map[str,str] negacy)
+{
+	// TODO left hand sides
+	for (str k <- negacy)
+		step = visit(step){case nonterminal(k) => nonterminal(negacy[k])};
+	//println("Fixed fine: <step>");
+	return step;
+}
+
+map[str,str] impact(renameN(x,y),renameN(x,z)) = (y:z);
+map[str,str] impact(renameN(x,z),renameN(y,z)) = (x:y);
+default map[str,str] impact(XBGFCommand step1, XBGFCommand step2) = (); // impact unknown
 
 tuple[BGFGrammar,XBGFOutcome,set[XBGFCommand]] attemptTransform(XBGFCommand xbgf, BGFGrammar g)
 {
 	XBGFResult res = transform::XBGF::vtransform(xbgf, g);
-	iprintln(res.r);
+	//iprintln(res.r);
 	return <res.g,res.r,negotiate(res.g,xbgf,res.r)>;	
 }
 

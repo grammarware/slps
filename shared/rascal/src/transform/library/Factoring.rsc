@@ -26,7 +26,7 @@ XBGFResult runDistribute(XBGFScope w, BGFGrammar g)
 	return <ok(),grammar(g.roots, ps1 + normalise([makeDistributed(p) | p <- ps2]) + ps3)>;
 }
 
-BGFProduction makeDistributed(BGFProductuion p) = production(p.label, p.lhs, makeDistributed(p.rhs));
+BGFProduction makeDistributed(BGFProduction p) = production(p.label, p.lhs, makeDistributed(p.rhs));
 
 BGFExpression makeDistributed(BGFExpression e1)
 {
