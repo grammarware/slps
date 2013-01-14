@@ -17,11 +17,11 @@ elif [ ! -r $2 ]; then
 elif [ $1 == 'txl' ]; then
 	txl $2 ${SLPS}/topics/extraction/txl/TXLGrammar/Txl/txl.txl
 elif [ $1 == 'btf' ]; then
-    /usr/local/bin/xmllint --noout --schema ${SLPS}/shared/xsd/$1.xsd $2
+    xmllint --noout --schema ${SLPS}/shared/xsd/$1.xsd $2
     swipl -q -f ${SLPS}/shared/prolog/cli/checkbtf.pro -- $2
 elif [ ! -r ${SLPS}/shared/xsd/$1.xsd ]; then
     echo "Oops: schema for $1 not found or not readable."
     exit 1
 else
-    /usr/local/bin/xmllint --noout --schema ${SLPS}/shared/xsd/$1.xsd $2
+    xmllint --noout --schema ${SLPS}/shared/xsd/$1.xsd $2
 fi

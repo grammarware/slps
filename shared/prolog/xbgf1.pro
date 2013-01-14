@@ -3,7 +3,7 @@
 %
 % Convenience wrapper for transformations.
 % Make sure that transformations apply to normalized grammars.
-% Make sure that vacouous transformations are rejected.
+% Make sure that vacuous transformations except bypass are rejected.
 %
 
 transformG(sequence(Ts1),G1,G2)
@@ -11,6 +11,12 @@ transformG(sequence(Ts1),G1,G2)
     !,
     normalizeG(Ts1,Ts2),
     accum(xbgf1:transformG,Ts2,G1,G2).
+
+transformG(bypass,G1,G2)
+ :- 
+    !,
+    format('[XBGF] bypass~n',[]),
+    normalizeG(G1,G2).
 
 transformG(Xbgf1,G1,G4)
  :-
@@ -21,11 +27,9 @@ transformG(Xbgf1,G1,G4)
     normalizeG(G3,G4),
     require(
       ( \+ G2 == G4 ),
-      'Vacuous transformation detected.',
-      []),
+      'Vacuous transformation detected: ~q.',
+      [Xbgf2]),
     !.
-
-bypass(G,G).
 
 %
 % p([l(addV)], f, n(p))
