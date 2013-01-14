@@ -12,13 +12,6 @@ import transform::Results;
 import String;
 import util::Math;
 
-public tuple[BGFGrammar,XBGFOutcome,set[XBGFCommand]] attemptTransform(XBGFCommand xbgf, BGFGrammar g)
-{
-	XBGFResult res = transform::XBGF::vtransform(xbgf, g);
-	iprintln(res.r);
-	return <g,res.r,negotiate(res.g,xbgf,res.r)>;	
-}
-
 public BGFGrammar transformAnyway(XBGFSequence xbgf, BGFGrammar g)
 {
 	for (XBGFCommand step <- xbgf)
@@ -39,6 +32,13 @@ BGFGrammar keepTrying(XBGFCommand step, BGFGrammar g)
 		else
 			thw(out);
 	}
+}
+
+tuple[BGFGrammar,XBGFOutcome,set[XBGFCommand]] attemptTransform(XBGFCommand xbgf, BGFGrammar g)
+{
+	XBGFResult res = transform::XBGF::vtransform(xbgf, g);
+	iprintln(res.r);
+	return <res.g,res.r,negotiate(res.g,xbgf,res.r)>;	
 }
 
 set[XBGFCommand] negotiate(BGFGrammar g, XBGFCommand _, ok()) = {};
