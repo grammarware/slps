@@ -119,7 +119,7 @@ public set[str] allTs(list[BGFProduction] ps) = {s | /terminal(str s) := ps};
 public set[str] usedNs(list[BGFProduction] ps) = {s | /nonterminal(str s) := ps};
 public set[str] definedNs(list[BGFProduction] ps) = {s | production(_,str s,_) <- ps};
 
-public list[BGFProduction] replaceP(list[BGFProduction] ps, p1, p2)
+public list[BGFProduction] replaceP(list[BGFProduction] ps, BGFProduction p1, BGFProduction p2)
 {
 	list[BGFProduction] ps2 = [];
 	for (p <- ps)
@@ -131,4 +131,4 @@ public list[BGFProduction] replaceP(list[BGFProduction] ps, p1, p2)
 }
 
 public bool inProds(BGFProduction p, []) = false;
-public bool inProds(BGFProduction p, list[BGFProduction] ps) = eqP(normalise(p),normalise(ps[0])) || inProds(p,tail(ps));
+public default bool inProds(BGFProduction p, list[BGFProduction] ps) = eqP(normalise(p),normalise(ps[0])) || inProds(p,tail(ps));

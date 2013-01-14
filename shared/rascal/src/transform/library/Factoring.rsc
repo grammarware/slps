@@ -9,7 +9,7 @@ import transform::Results;
 import transform::library::Util;
 import transform::library::Brutal;
 
-XBGFResult runFactor(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
+XBGFResult runFactor(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
 	e3 = normalise(transform::library::Factoring::makeDistributed(e1));
 	e4 = normalise(transform::library::Factoring::makeDistributed(e2));
@@ -26,7 +26,7 @@ XBGFResult runDistribute(XBGFScope w, BGFGrammar g)
 	return <ok(),grammar(g.roots, ps1 + normalise([makeDistributed(p) | p <- ps2]) + ps3)>;
 }
 
-BGFProduction makeDistributed(production(str l, str x, BGFExpression e)) = production(l, x, makeDistributed(e));
+BGFProduction makeDistributed(BGFProductuion p) = production(p.label, p.lhs, makeDistributed(p.rhs));
 
 BGFExpression makeDistributed(BGFExpression e1)
 {

@@ -80,7 +80,6 @@ set[str] adviseFreshNonterminal(str x, set[str] nts)
 	// expr -> expr1
 	while ("<x><cx>" in nts) cx+=1;
 	adv += "<x><cx>";
-	cx = 0;
 	// expr -> expr_
 	while (s in nts) s += "_"; 
 	adv += s;

@@ -9,12 +9,12 @@ import transform::Results;
 import transform::library::Util;
 import transform::library::Brutal;
 
-XBGFResult runExtract(production(str l, str x, BGFExpression rhs), XBGFScope w, grammar(rs,ps))
+XBGFResult runExtract(production(str l, str x, BGFExpression rhs), XBGFScope w, BGFGrammar g)
 {
-	if (x in definedNs(ps))
+	if (x in definedNs(g.prods))
 		return <notFreshN(x),g>;
 	// TODO hard to check if rhs occurs in the grammar; it was somehow done in xbgf1.pro 
-	XBGFResult rep = transform::library::Brutal::runReplace(rhs,nonterminal(x),w,grammar(rs,ps));
+	XBGFResult rep = transform::library::Brutal::runReplace(rhs,nonterminal(x),w,g);
 	if (ok() !:= rep.r) return rep;
 	else return <ok(),grammar(rep.g.roots,rep.g.prods + production(l,x,rhs))>;
 }
@@ -44,13 +44,13 @@ XBGFResult runUnfold(str x, XBGFScope w, BGFGrammar g)
 }
 
 // Liberal forms of folding
-XBGFResult runDowngrade(BGFProduction p1, BGFProduction p2, grammar(rs, ps))
+XBGFResult runDowngrade(BGFProduction p1, BGFProduction p2, BGFGrammar g)
 {
 	if (/marked(nonterminal(str x)) := p1)
 		if (production(str l,x,BGFExpression e) := p2)
 		{
 			p3 = visit(p1){case marked(_) => e};
-			return <ok(),grammar(rs,replaceP(ps,unmark(p1),normalise(p3)))>;
+			return <ok(),grammar(g.roots,replaceP(g.prods,unmark(p1),normalise(p3)))>;
 		}
 		else
 			return <problemProd2("Production rules do not agree on nonterminal",p1,p2),g>;

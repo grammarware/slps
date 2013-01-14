@@ -15,7 +15,7 @@ bool narrowing(plus(e),e) = true;
 bool narrowing(optional(e),e) = true;
 default bool narrowing(_,_) = false;
 
-XBGFResult runNarrow(BGFExpression e1, BGFExpression e2, XBGFScope w, g)
+XBGFResult runNarrow(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
 	if (!narrowing(e1,e2))
 		return <problemExpr2("Expressions are not in narrowing relation.",e1,e2),g>;
