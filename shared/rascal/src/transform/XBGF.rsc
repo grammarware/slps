@@ -21,6 +21,7 @@ import transform::library::Yacc; // yaccify, deyaccify
 import transform::library::Util;
 import transform::Results;
 import IO;
+import export::XBNF;
 
 public XBGFResult transform(abridge(BGFProduction p), BGFGrammar g)
 	= transform::library::Chaining::runAbridge(p,g);
@@ -155,9 +156,23 @@ public BGFGrammar transform(XBGFSequence xbgf, BGFGrammar g)
 // TODO: later redo with keyword parameters?
 public XBGFResult vtransform(XBGFCommand x, BGFGrammar g)
 {
-	println("[XBGF] <x>.");
+	println("[XBGF] <ppx(x)>");
 	return transform(x,g);
 }
+
+public BGFGrammar vtransform(XBGFSequence xbgf, BGFGrammar g)
+{
+	XBGFResult out = <ok(),normalise(g)>;
+	for (XBGFCommand step <- xbgf)
+	{
+		out = vtransform(step,out.g);
+		thw(out.r);
+		out.g = normalise(out.g);
+	}
+	return out.g;
+}
+
+
 
 // legacy code
 XBGFResult runStrip(str a, BGFGrammar g)

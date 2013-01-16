@@ -65,6 +65,11 @@ public str replace(str w, map[str,str] m)
 	return w;
 }
 
+// fancy lines in output or debug messages
+public str pad("") = center("",50,"-")+"\n";
+public default str pad(str x) = center(" <x>: ",50,"-")+"\n";
+
+
 // classic Levenshtein distance: done for negotiated grammar transformations, but possibly of greater use
 public int levenshtein(str x, str y)
 {

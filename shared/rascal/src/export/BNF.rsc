@@ -4,8 +4,8 @@ module export::BNF
 import lib::Rascalware;
 import syntax::BGF;
 
-public str pp(grammar([],BGFProdList ps)) = pp(ps);
-public default str pp(BGFGrammar bgf) = "Roots: <bgf.roots>\n<pp(bgf.prods)>";
+public str pp(grammar([],BGFProdList ps)) = "<pp(ps)>\n";
+public default str pp(BGFGrammar bgf) = "Roots: <bgf.roots>\n<pp(bgf.prods)>\n";
 
 public str pp(BGFProdList ps) = mapjoin(pp,ps,"\n");
 
