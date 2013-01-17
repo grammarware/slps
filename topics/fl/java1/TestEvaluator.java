@@ -1,6 +1,5 @@
 import types.*;
 import org.antlr.runtime.*;
-import java.io.*;
 
 public class TestEvaluator {
     public static void main(String[] args) throws Exception {

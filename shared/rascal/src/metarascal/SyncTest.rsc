@@ -3,7 +3,7 @@
 and generates a Rascal file that contains identically behaving test functions which can be invoked with
 :test
 command.}
-module Sync
+module metarascal::SyncTest
 
 import String;
 import IO;
@@ -15,7 +15,7 @@ public void main()
 	loc base = |home:///projects/slps/topics/transformation/xbgf/tests|;
 	str buffer = "@contributor{Super Awesome Automated XBGF Test Suite Synchroniser}
 		'@contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-		'module transform::library::Test
+		'module transform::Test
 		'
 		'import IO;
 		'import syntax::BGF;
@@ -32,11 +32,10 @@ public void main()
 		xbgf = readXBGF(base+f);
 		bgf = readBGF(base+replaceLast(f,".xbgf",".bgf"));
 		bl = readBGF(base+replaceLast(f,".xbgf",".baseline"));
-		//buffer += "test bool test_<replaceLast(f,".xbgf","")>() { return gdt(transform(<xbgf>,<bgf>),<bl>); }\n";
 		buffer += "\"<replaceLast(f,".xbgf","")>\": \<<xbgf>,<bgf>,<bl>\>,\n";
 		buffer2 += "test bool test_<replaceLast(f,".xbgf","")>() { \<xbgf,bgf1,bgf2\> = test_data[\"<replaceLast(f,".xbgf","")>\"]; return gdts(transform(xbgf,bgf1),bgf2); }\n";
 		buffer3 += "void show_<replaceLast(f,".xbgf","")>() { \<xbgf,bgf1,bgf2\> = test_data[\"<replaceLast(f,".xbgf","")>\"]; println(\"Input \<bgf1\>\");println(\"Transformations: \<xbgf\>\");println(\"Expected output \<bgf2\>\");bgf3=transform(xbgf,bgf1);println(\"Actual output \<bgf3\>\"); gdtv(bgf3,bgf2); }\n";
 	}
-	writeFile(|project://slps/src/transform/library/Test.rsc|, replaceLast(buffer,",","")+");\n\n"+buffer3+"\n\n"+buffer2);
+	writeFile(|project://slps/src/transform/Test.rsc|, replaceLast(buffer,",","")+");\n\n"+buffer3+"\n\n"+buffer2);
 }
 
