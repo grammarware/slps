@@ -1,0 +1,3 @@
+[submodule "topics/documents/wiki/texts"]
+	path = topics/documents/wiki/texts
+	url = git@github.com:grammarware/slps.wiki.git
