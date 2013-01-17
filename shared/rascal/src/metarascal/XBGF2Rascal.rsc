@@ -20,9 +20,8 @@ public void main(loc x)
 	'import syntax::BGF;
 	'import syntax::XBGF;
 	'import transform::XBGF;
-	'import diff::GDT;
 	'
-	'BGFGrammar doTrafo(XBGFSequence x, BGFGrammar g)
+	'BGFGrammar doTrafo(BGFGrammar g)
 	'	= transform([<for(step <- xbgf){>
 	'		// <ppx(step)>
 	'		<step>,<}>
@@ -31,4 +30,4 @@ public void main(loc x)
 	'");
 }
 
-public void tst() = main(|home:///projects/slps/topics/island/csharp-ecma-334-1/adapt.using.xbgf|);
+public void tst() = main(|home:///projects/slps/topics/island/csharp-ecma-334-1/skeletonise.xbgf|);
