@@ -11,8 +11,9 @@ public str pp(BGFProdList ps) = mapjoin(pp,ps,"\n");
 
 public str pp(set[BGFProduction] ps) = mapjoin(pp,ps,"\n");
 
-public str pp(production("",str lhs, BGFExpression rhs)) = "<lhs> ::= <pptop(rhs)> ;";
-public default str pp(BGFProduction p) = "[<p.label>] <p.lhs> ::= <pptop(p.rhs)> ;";
+public str pp(BGFProduction p) = "<ppl(p.label)><p.lhs> ::= <pptop(p.rhs)> ;";
+
+str ppl(str s) = (s=="")?"":"[<s>] ";
 
 str pptop(sequence(BGFExprList es)) = pp(es);
 default str pptop(BGFExpression e) = pp(e);

@@ -78,3 +78,5 @@ str pp(XBGFScope::innt(str x)) = "innt(<x>)";
 str pp(XBGFScope::notinnt(str x)) = "notinnt(<x>)";
 str pp(XBGFScope::comboscope(XBGFScope w1, XBGFScope w2)) = "comboscope(<pp(w1)>,<pp(w2)>)";
 default str pp(XBGFScope smth) = "??<smth>??";
+
+str pp(list[str] ss) = joinStrings(ss,",");
