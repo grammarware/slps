@@ -1,4 +1,13 @@
 all:
+
+new:
+	subgrammar ../../grammars/csharp/ecma-334-1/grammar.bgf compilation-unit cs.prepared.bgf
+
+view:
+	bgf2html islandic.bgf islandic.html
+	open islandic.html
+
+old:
 	make cs.html
 
 cs.1.bgf:

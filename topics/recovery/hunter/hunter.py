@@ -7,7 +7,7 @@ import BGF3
 from functools import reduce
 
 debug = False
-#debug = True
+# debug = True
 
 defaults = {'definition-separator-symbol':'|||||'}
 config = {}
@@ -211,7 +211,9 @@ def readConfig(f):
 		else:
 			config[e.tag] = ''
 		if e.tag in ('nonterminal-if-camelcase','nonterminal-if-mixedcase','nonterminal-if-uppercase','nonterminal-if-lowercase','nonterminal-if-contains','nonterminal-if-defined','decompose-symbols'):
-			if e.text:
+			if e.findall('what'):
+				config[e.tag] = e.findtext('what')
+			elif e.text:
 				config[e.tag] = e.text
 			else:
 				config[e.tag] = ''
@@ -1219,7 +1221,7 @@ def convertNonalphanumerics2Terminals(p):
 		# none of the above
 		if x[0]==' ' or x[-1]==' ':
 			x = x.strip()
-		if x in ('_','-') or x.isdigit():
+		if x.startswith('_') or x.startswith('-') or x.isdigit():
 			print('STEP 5 warning:',repr(x),'is assumed to be an invalid nonterminal name, converted to a terminal symbol.')
 			q.append(config['start-terminal-symbol'] + x + config['end-terminal-symbol'])
 			continue
