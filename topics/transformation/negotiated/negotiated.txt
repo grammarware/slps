@@ -1,0 +1,37 @@
+rascal>import demo::Negotiated;
+ok
+
+rascal>runRenameExample3()
+------------------- Original: --------------------
+[one] num ::= INT ;
+[two] expression ::= num "+" num ;
+[six] assign ::= expression "=" expression "." ;
+---------------- TransformationE: ----------------
+renameN(expression,expr);
+renameN(num,e);
+------------------ Application: ------------------
+[XBGF] renameN(expression,expr);
+[XBGF] renameN(num,e);
+--------------- Evolved original: ----------------
+[one] e ::= INT ;
+[two] expr ::= e "+" e ;
+[six] assign ::= expr "=" expr "." ;
+--------------- Transformation12: ----------------
+renameN(expression,e);
+extract([ten] rhs ::= e "." ;);
+------------ Negotiated application: -------------
+[XBGF] renameN(expression,e);
+Nonterminal must not be fresh: expression!
+[XBGF] renameN(expr,e);
+Nonterminal must be fresh: e!
+[XBGF] renameN(expr,e1);
+[XBGF] extract([ten] rhs ::= e1 "." ;);
+----------------- Final result: ------------------
+[one] e ::= INT ;
+[two] e1 ::= e "+" e ;
+[six] assign ::= e1 "=" rhs ;
+[ten] rhs ::= e1 "." ;
+--------------------------------------------------
+ok
+
+rascal>

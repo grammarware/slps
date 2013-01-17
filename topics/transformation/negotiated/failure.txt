@@ -1,0 +1,31 @@
+rascal>import demo::Negotiated;
+ok
+
+rascal>runRenameExample2()
+------------------- Original: --------------------
+[one] num ::= INT ;
+[two] expression ::= num "+" num ;
+[six] assign ::= expression "=" expression "." ;
+---------------- TransformationE: ----------------
+renameN(expression,expr);
+renameN(num,e);
+------------------ Application: ------------------
+[XBGF] renameN(expression,expr);
+[XBGF] renameN(num,e);
+--------------- Evolved original: ----------------
+[one] e ::= INT ;
+[two] expr ::= e "+" e ;
+[six] assign ::= expr "=" expr "." ;
+--------------- Transformation12: ----------------
+renameN(expression,e);
+extract([ten] rhs ::= e "." ;);
+------------- Attempted application: -------------
+[XBGF] renameN(expression,e);
+|project://slps/src/transform/Results.rsc|(928,1,<28,58>,<28,59>): "Nonterminal must not be fresh: expression"
+	somewhere in: thw
+	somewhere in: vtransform
+	somewhere in: runRenameExample2
+	somewhere in: $shell$
+
+
+rascal>
