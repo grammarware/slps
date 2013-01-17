@@ -2,8 +2,6 @@
 module mutate::DeYaccify
 
 import syntax::BGF;
-import transform::library::Util;
-import transform::library::Yacc;
 
 // NB: the deyaccification mutation works on horizontal productions,
 // while the deyaccification transformation works on vertical ones!!!
