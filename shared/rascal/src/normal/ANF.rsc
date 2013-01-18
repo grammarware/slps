@@ -1,5 +1,6 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 @doc{Abstract Normal Form}
+@wiki{Abstract Normal Form}
 module normal::ANF
 
 import syntax::BGF;

@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{XBGF}
 module transform::XBGF
 
 import syntax::BGF;

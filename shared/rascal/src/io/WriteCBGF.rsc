@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{WriteΞBGF}
 module io::WriteCBGF
 
 import IO;

@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{BGF}
 module \syntax::BGF
 
 alias BGFProdList = list[BGFProduction];
