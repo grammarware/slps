@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-@wiki{designare,renameL,unlabel,anonymize,deanonymize,renameS}
+@wiki{designate,renameL,unlabel,anonymize,deanonymize,renameS}
 module transform::library::Labels
 
 import lib::Rascalware;

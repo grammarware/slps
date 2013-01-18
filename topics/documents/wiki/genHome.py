@@ -1,8 +1,6 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
-import sys
-
 h = [
 	'Concepts, languages, techniques',
 	'Tools, libraries, functions',
@@ -11,7 +9,7 @@ h = [
 
 c = [
 	['BGF','XBGF','ΞBGF','EXBGF','MegaL','LDF','XLDF','EDD',
-	'ANF','LCI','BTF','LCF','Rascal','Prolog','XML','XSD','Factorial Language']
+	'ANF','LCI','BTF','LCF','Rascal','Prolog','XML','XSD','Factorial Language','Java Language Specification']
 	,
 	['ANTLR2BGF', 'AppendXBGF', 'AsFix2BTF', 'BGF2BNF', 'BGF2DMS', 'BGF2dot', 'BGF2HTML', 'BGF2Rsc', 'BGF2SDF', 'BGF2TeX', 'BGF2TXL', 'BGFlc', 'BGFover', 'BGFpp', 'BGFreformat', 'BTF2BGF', 'BTF2src', 'BuildTestSetXml', 'CBGF', 'CBGF2', 'CBGF2CBNF', 'CBGF2XBGF', 'CheckBGF', 'CheckXBGF', 'DCG2BGF', 'Ecore2BGF', 'EDD2Rsc', 'EXBGF', 'EXBGF2XBGF', 'EXBGFover', 'ExtractOver', 'FindHoriz', 'GBTF', 'GDT', 'GDTM', 'GDTS', 'HTML2BGF', 'Java2BGF', 'LCI', 'LDF2BGF', 'LDF2HTML', 'LDF2PDF', 'LDF2SET', 'LDF2TEX', 'LDinc', 'LLL2BGF', 'MergeBGF', 'NIGDT', 'NormBGF', 'PDF2BGF', 'PlotBGF', 'Py2BGF', 'REPP', 'Rsc2BGF', 'RscD2BGF', 'RscS2BGF', 'SDF2BGF', 'ShowBGF', 'ShowG', 'ShowPNF', 'ShowRootProds', 'ShowT', 'ShowX', 'ShowXBGF', 'ShowXSD', 'Spec2BGF', 'SubGrammar', 'TDT', 'TnB', 'TokenOver', 'TXL2BGF', 'Validate', 'XBGF', 'XBGF2CBGF', 'XBGF2HTML', 'XBGF2TeX', 'XBGF2XBNF', 'XBGFI', 'XBGFlc', 'XBGFover', 'XBGFS', 'XBTF', 'XLLL', 'XML2BTF', 'XSD2BGF', 'XSD2LDF']
 	,
