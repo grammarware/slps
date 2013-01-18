@@ -18,7 +18,6 @@ for root, dirs, filenames in os.walk('/Users/zaytsev/projects/slps/shared/rascal
 					maps[g].append(os.path.join(root, f).split('projects/slps/')[1])
 				else:
 					maps[g] = [os.path.join(root, f).split('projects/slps/')[1]]
-				# print g,'-->',os.path.join(root, f).split('projects/slps/')[1]
 		rd.close()
 
 for aff in maps.keys():
@@ -45,12 +44,9 @@ for aff in maps.keys():
 		print 'No',aff
 		before = []
 		links = []
-		# REMOVE THIS LATER
-		continue
 	# process links
 	# * [`shared/xsd/xbgf.xsd`](../blob/master/shared/xsd/xbgf.xsd)
 	links = map(lambda x:x.split('`')[1],links)
-	# print aff,'has',links
 	for link in maps[aff]:
 		if link not in links:
 			links.append(link)

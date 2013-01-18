@@ -1,7 +1,7 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
-import os,sys
+import os
 
 fmt1 = '## Relevant files\n'
 fmt2 = '## Contributors\n'
@@ -11,7 +11,7 @@ def replaceSection(lines,hdr,newlines):
 	rlines = []
 	state = 0
 	if hdr not in lines:
-		return lines + [hdr] + newlines + ['\n']
+		return lines + ['\n',hdr] + newlines + ['\n']
 	for line in lines:
 		if state==0:
 			if line == hdr:
@@ -69,8 +69,6 @@ for root, dirs, filenames in os.walk('texts'):
 				else:
 					worked[f] = [who]
 		rd.close()
-# print maps
-# print worked
 
 for aff in maps.keys():
 	if aff not in worked.keys():
@@ -89,15 +87,14 @@ for aff in maps.keys():
 		f = open('texts/%s' % aff,'r')
 		lines = f.readlines()
 		rlines = replaceSection(lines,fmt1,['* [`%s`](../blob/master/%s)\n' % (link,link) for link in maps[aff]])
-		# * [Ralf Lämmel (@rlaemmel)](https://github.com/rlaemmel)
-		rlines = replaceSection(rlines,fmt2,['* [%s (@%s)](https://github.com/%s)\n' % (rname(pers),pers,pers) for pers in worked[aff]])
+		rlines = replaceSection(rlines,fmt2,sorted(['* [%s (@%s)](https://github.com/%s)\n' % (rname(pers),pers,pers) for pers in worked[aff]]))
 		if lines != rlines:
 			changed = True
 		f.close()
 		print 'Yes',aff
 	except IOError:
-		rlines = replaceSection([fmt1],fmt1,['* [`%s`](../blob/master/%s)\n' % (link,link) for link in maps[aff]])
-		rlines = replaceSection(rlines,fmt1,['* [`%s`](../blob/master/%s)\n' % (link,link) for link in maps[aff]])
+		rlines = replaceSection([],fmt1,['* [`%s`](../blob/master/%s)\n' % (link,link) for link in maps[aff]])
+		rlines = replaceSection(rlines,fmt2,sorted(['* [%s (@%s)](https://github.com/%s)\n' % (rname(pers),pers,pers) for pers in worked[aff]]))
 		changed = True 
 		print 'No',aff
 	if changed:
@@ -105,4 +102,3 @@ for aff in maps.keys():
 		for line in rlines:
 			f.write(line)
 		f.close()
-# print worked
