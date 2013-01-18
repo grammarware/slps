@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{abridge,chain,detour,unchain}
 module transform::library::Chaining
 
 import lib::Rascalware;

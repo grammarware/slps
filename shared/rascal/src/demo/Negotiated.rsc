@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{negotiated transformation}
 module demo::Negotiated
 
 import lib::Rascalware;

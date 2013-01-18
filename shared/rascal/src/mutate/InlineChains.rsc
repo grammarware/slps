@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{Inline chains}
 module mutate::InlineChains
 
 import IO;

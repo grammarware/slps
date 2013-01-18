@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{yaccify,deyaccify}
 module transform::library::Yacc
 
 import lib::Rascalware;

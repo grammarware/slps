@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{XBGF2Rascal}
 module metarascal::XBGF2Rascal
 
 import String;

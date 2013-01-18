@@ -2,6 +2,7 @@
 @doc{This tool takes an Abstract Data Type defined in Rascal, and generates a minimal
 pretty-printer for it, relying on pattern-driven dispatch and the presence of pp() functions
 for all inner types}
+@wiki{ADT2PP}
 module metarascal::ADT2PP
 
 import lib::Rascalware;

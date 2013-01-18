@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{factor,distribute}
 module transform::library::Factoring
 
 import syntax::BGF;

@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{abstractize,concatT,concretize,renameT,splitT}
 module transform::library::Terminals
 
 import syntax::BGF;

@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{replace}
 module transform::library::Brutal
 
 import lib::Rascalware;

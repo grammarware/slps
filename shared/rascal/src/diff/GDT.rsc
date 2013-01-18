@@ -1,5 +1,6 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 @doc{Grammar Diff Tool}
+@wiki{GDT}
 module diff::GDT
 
 import syntax::BGF;

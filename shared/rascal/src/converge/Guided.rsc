@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{guided grammar convergence}
 module converge::Guided
 
 import syntax::BGF;

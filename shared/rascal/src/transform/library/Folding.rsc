@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{extract,fold,inline,unfold,downgrade,upgrade}
 module transform::library::Folding
 
 import lib::Rascalware;
