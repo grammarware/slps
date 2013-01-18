@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{iterate,rassoc,lassoc}
 module transform::library::Associativity
 
 import syntax::BGF;

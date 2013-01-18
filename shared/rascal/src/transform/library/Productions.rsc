@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{addV,define,eliminate,importG,introduce,redefine,removeV,undefine}
 module transform::library::Productions
 
 import lib::Rascalware;

@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{addH,horizontal,removeH,vertical}
 module transform::library::Intermittent
 
 //import lib::Rascalware;

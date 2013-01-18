@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{deyaccify}
 module mutate::DeYaccify
 
 import syntax::BGF;

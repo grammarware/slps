@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{clone,equate,renameN,reroot,splitN,unite}
 module transform::library::Nonterminals
 
 import lib::Rascalware;

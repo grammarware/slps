@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{appear,disappear,inject,permute,project}
 module transform::library::Sequential
 
 import lib::Rascalware;

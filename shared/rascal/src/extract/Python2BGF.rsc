@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{Python2BGF}
 module extract::Python2BGF
 
 import ValueIO;

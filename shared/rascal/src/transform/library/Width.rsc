@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{narrow,widen}
 module transform::library::Width
 
 import syntax::BGF;

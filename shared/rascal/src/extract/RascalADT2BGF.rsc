@@ -1,4 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
+@wiki{RascalD2BGF}
 module extract::RascalADT2BGF
 
 import IO;
