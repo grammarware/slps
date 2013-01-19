@@ -22,20 +22,25 @@ for root, dirs, filenames in os.walk('/Users/zaytsev/projects/slps/shared/rascal
 					maps[g] = [good]
 		rd.close()
 
-# traversing command line tools, generators, wrappers and python repo
+# traversing command line tools, generators, wrappers, python and prolog sources
 for root, dirs, filenames in os.walk('/Users/zaytsev/projects/slps/shared/'):
 	for f in filenames:
 		rd = open(os.path.join(root,f),'r')
 		txt = ''.join(rd.readlines())
-		if txt.find('# wiki: ')>-1:
-			for where in txt.split('# wiki:')[1].split('\n')[0].split(','):
-				g = where[0].upper()+where[1:]
-				good = os.path.join(root, f).split('projects/slps/')[1]
-				if g in maps.keys():
-					maps[g].append(good)
-				else:
-					maps[g] = [good]
 		rd.close()
+		if txt.find(' wiki: ')>-1:
+			txt = map(lambda x:x.strip(),txt.split('wiki:')[1].split('\n')[0].split(','))
+			# print 'Found tags for',f
+		else:
+			txt = []
+			# print 'No tags for',f
+		for where in txt:
+			g = where[0].upper()+where[1:]
+			good = os.path.join(root, f).split('projects/slps/')[1]
+			if g in maps.keys():
+				maps[g].append(good)
+			else:
+				maps[g] = [good]
 
 for aff in maps.keys():
 	links = []
@@ -72,7 +77,7 @@ for aff in maps.keys():
 	for line in before:
 		f.write(line)
 	f.write(fmt)
-	for link in links:
+	for link in sorted(links):
 		f.write('* [`%s`](../blob/master/%s)\n' % (link,link))
 	f.write('\n')
 	for line in after:
