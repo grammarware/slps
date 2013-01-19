@@ -16,7 +16,7 @@ c = [
 	,
 	['abridge', 'abstractize', 'addH', 'addV', 'anonymize', 'appear', 'chain', 'concretize', 'deanonymize', 'define', 'designate', 'detour', 'deyaccify', 'disappear', 'distribute', 'downgrade', 'dump', 'eliminate', 'equate', 'extract', 'factor', 'fold', 'horizontal', 'importG', 'inject', 'inline', 'introduce', 'lassoc', 'massage', 'narrow', 'permute', 'project', 'rassoc', 'redefine', 'remove', 'removeH', 'removeV', 'renameT', 'renameL', 'renameN', 'renameS', 'replace', 'undefine', 'unfold', 'unite', 'unlabel', 'upgrade', 'vertical', 'widen', 'yaccify','bypass','concatT','splitT','splitN']
 	,
-	['RetireTs', 'RetireSs', 'RetireLs', 'Enforce naming', 'Reroot2top', 'Retire top', 'SubGrammar', 'AllV', 'AllH', 'AllD', 'AllDV', 'AllDeyacc', 'Retire lazy', 'ANF|Abstract Normal Form', 'FoldG', 'Retire seplists', 'Retire iterations', 'Inline chains']
+	['RetireTs', 'RetireSs', 'RetireLs', 'RenameAll', 'Reroot2top', 'Retire top', 'SubGrammar', 'VerticalAll', 'HorizontalAll', 'DistributeAll', 'VerticalDistributeAll', 'AllDeyacc', 'Retire lazy', 'ANF|Abstract Normal Form', 'FoldG', 'Retire seplists', 'Retire iterations', 'UnchainAll']
 	]
 
 l = len(h)

@@ -75,29 +75,21 @@ for aff in maps.keys():
 		worked[aff] = []
 	for rf in maps[aff]:
 		print 'Checking up',rf
-		f = os.popen('git log --follow --pretty=format:%%an -- ~/projects/slps/%s | sort | uniq' % rf)
+		# f = os.popen('git log --follow --pretty=format:%%an -- ~/projects/slps/%s | sort | uniq' % rf)
+		f = os.popen('git log --follow --pretty=format:%%an:%%s  -- ~/projects/slps/%s | grep -v tag | sed \'s/:.*//\' | sort | uniq' % rf)
 		for line in f.readlines():
 			if line.strip() not in worked[aff]:
 				worked[aff].append(line.strip())
 		f.close()
 	links = []
 	after = []
-	changed = False
-	try:
-		f = open('texts/%s' % aff,'r')
-		lines = f.readlines()
-		rlines = replaceSection(lines,fmt1,['* [`%s`](../blob/master/%s)\n' % (link,link) for link in maps[aff]])
-		rlines = replaceSection(rlines,fmt2,sorted(['* [%s (@%s)](https://github.com/%s)\n' % (rname(pers),pers,pers) for pers in worked[aff]]))
-		if lines != rlines:
-			changed = True
-		f.close()
-		print 'Yes',aff
-	except IOError:
-		rlines = replaceSection([],fmt1,['* [`%s`](../blob/master/%s)\n' % (link,link) for link in maps[aff]])
-		rlines = replaceSection(rlines,fmt2,sorted(['* [%s (@%s)](https://github.com/%s)\n' % (rname(pers),pers,pers) for pers in worked[aff]]))
-		changed = True 
-		print 'No',aff
-	if changed:
+	f = open('texts/%s' % aff,'r')
+	lines = f.readlines()
+	rlines = replaceSection(lines,fmt1,['* [`%s`](../blob/master/%s)\n' % (link,link) for link in maps[aff]])
+	rlines = replaceSection(rlines,fmt2,sorted(['* [%s (@%s)](https://github.com/%s)\n' % (rname(pers),pers,pers) for pers in worked[aff]]))
+	f.close()
+	# print 'Yes',aff
+	if lines != rlines:
 		f = open('texts/%s' % aff,'w')
 		for line in rlines:
 			f.write(line)
