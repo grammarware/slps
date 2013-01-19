@@ -1,4 +1,5 @@
 #!/bin/sh
+# wiki: BGF2Rascal
 
 LOCAL=${PWD}
 cd `dirname $0`

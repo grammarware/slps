@@ -7,12 +7,27 @@ fmt = '## Relevant files\n'
 
 maps = {}
 
+# traversing Rascal sources
 for root, dirs, filenames in os.walk('/Users/zaytsev/projects/slps/shared/rascal/src/'):
 	for f in filter(lambda x:x.endswith('.rsc'),filenames):
 		rd = open(os.path.join(root,f),'r')
 		txt = ''.join(rd.readlines())
 		if txt.find('@wiki')>-1:
 			for where in txt.split('@wiki{')[1].split('}')[0].split(','):
+				g = where[0].upper()+where[1:]
+				if g in maps.keys():
+					maps[g].append(os.path.join(root, f).split('projects/slps/')[1])
+				else:
+					maps[g] = [os.path.join(root, f).split('projects/slps/')[1]]
+		rd.close()
+
+# traversing command line tools
+for root, dirs, filenames in os.walk('/Users/zaytsev/projects/slps/shared/tools/'):
+	for f in filenames:
+		rd = open(os.path.join(root,f),'r')
+		txt = ''.join(rd.readlines())
+		if txt.find('# wiki: ')>-1:
+			for where in txt.split('# wiki: ')[1].split('\n')[0].split(','):
 				g = where[0].upper()+where[1:]
 				if g in maps.keys():
 					maps[g].append(os.path.join(root, f).split('projects/slps/')[1])

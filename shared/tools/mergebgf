@@ -1,5 +1,5 @@
 #! /bin/sh
-
+# wiki: MergeBGF
 # Get our hands on basedir
 LOCAL=${PWD}
 cd `dirname $0`

@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# wiki: RascalSyntax2BGF
 LOCAL=${PWD}
 cd `dirname $0`
 cd ../..

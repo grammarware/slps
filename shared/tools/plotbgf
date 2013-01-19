@@ -1,4 +1,6 @@
 #!/bin/sh
+# wiki: PlotBGF
+
 LOCAL=${PWD}
 cd `dirname $0`
 cd ../..

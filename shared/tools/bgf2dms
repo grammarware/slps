@@ -1,4 +1,5 @@
 #!/bin/sh
+# wiki: BGF2DMS
 
 LOCAL=${PWD}
 cd `dirname $0`

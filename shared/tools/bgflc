@@ -1,4 +1,5 @@
 #!/bin/sh
+# wiki: BGFlc
 
 # Get our hands on basedir
 LOCAL1=${PWD}

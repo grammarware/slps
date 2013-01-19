@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# wiki: XSD2LDF
 # Get our hands on the languedoc basedir
 LOCAL=${PWD}
 cd `dirname $0`

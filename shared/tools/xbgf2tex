@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# wiki: XBGF2TeX
 LOCAL=${PWD}
 cd `dirname $0`
 cd ../..

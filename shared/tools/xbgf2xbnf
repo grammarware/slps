@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# wiki: XBGF2XBNF
 LOCAL=${PWD}
 cd `dirname $0`
 cd ../..

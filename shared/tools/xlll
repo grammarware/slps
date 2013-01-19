@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# wiki: XLLL
 LOCAL=${PWD}
 cd `dirname $0`
 cd ../..

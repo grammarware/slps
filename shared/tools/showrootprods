@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# wiki: ShowRootProds
 LOCAL=${PWD}
 cd `dirname $0`
 cd ../..

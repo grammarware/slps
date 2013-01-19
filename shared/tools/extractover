@@ -1,4 +1,5 @@
 #!/bin/sh
+# wiki: ExtractOver
 
 # Get our hands on basedir
 LOCAL1=${PWD}

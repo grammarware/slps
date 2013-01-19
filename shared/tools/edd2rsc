@@ -1,4 +1,5 @@
 #!/bin/sh
+# wiki: EDD2Rascal
 
 LOCAL=${PWD}
 cd `dirname $0`
@@ -7,7 +8,7 @@ SLPS=${PWD}
 cd ${LOCAL}
 
 if [ $# -ne 2 ]; then
-    echo "This tool pretty-prints BGF, generating an SDF."
+    echo "This tool generates a Rascal file based on an EBNF Dialect Definition."
     echo "Usage: edd2rsc <input-edd> <output-name>"
     exit 1
 elif [ ! -r $1 ]; then

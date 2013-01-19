@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# wiki: XBGF2HTML
 if [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1

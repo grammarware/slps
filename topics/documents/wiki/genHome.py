@@ -4,20 +4,23 @@
 h = [
 	'Concepts, languages, techniques',
 	'Tools, libraries, functions',
-	'Transformation operators'
+	'Transformation operators',
+	'Grammar mutations'
 	]
 
 c = [
 	['BGF','XBGF','ΞBGF','EXBGF','MegaL','LDF','XLDF','EDD',
-	'ANF','LCI','BTF','LCF','Rascal','Prolog','XML','XSD','Factorial Language','Java Language Specification']
+	'ANF|Abstract Normal Form','LCI','BTF','LCF','Rascal','Prolog','XML','XSD','Factorial Language','Java Language Specification']
 	,
-	['ANTLR2BGF', 'AppendXBGF', 'AsFix2BTF', 'BGF2BNF', 'BGF2DMS', 'BGF2dot', 'BGF2HTML', 'BGF2Rsc', 'BGF2SDF', 'BGF2TeX', 'BGF2TXL', 'BGFlc', 'BGFover', 'BGFpp', 'BGFreformat', 'BTF2BGF', 'BTF2src', 'BuildTestSetXml', 'CBGF', 'CBGF2', 'CBGF2CBNF', 'CBGF2XBGF', 'CheckBGF', 'CheckXBGF', 'DCG2BGF', 'Ecore2BGF', 'EDD2Rsc', 'EXBGF', 'EXBGF2XBGF', 'EXBGFover', 'ExtractOver', 'FindHoriz', 'GBTF', 'GDT', 'GDTM', 'GDTS', 'HTML2BGF', 'Java2BGF', 'LCI', 'LDF2BGF', 'LDF2HTML', 'LDF2PDF', 'LDF2SET', 'LDF2TEX', 'LDinc', 'LLL2BGF', 'MergeBGF', 'NIGDT', 'NormBGF', 'PDF2BGF', 'PlotBGF', 'Py2BGF', 'REPP', 'Rsc2BGF', 'RscD2BGF', 'RscS2BGF', 'SDF2BGF', 'ShowBGF', 'ShowG', 'ShowPNF', 'ShowRootProds', 'ShowT', 'ShowX', 'ShowXBGF', 'ShowXSD', 'Spec2BGF', 'SubGrammar', 'TDT', 'TnB', 'TokenOver', 'TXL2BGF', 'Validate', 'XBGF', 'XBGF2CBGF', 'XBGF2HTML', 'XBGF2TeX', 'XBGF2XBNF', 'XBGFI', 'XBGFlc', 'XBGFover', 'XBGFS', 'XBTF', 'XLLL', 'XML2BTF', 'XSD2BGF', 'XSD2LDF']
+	['ANTLR2BGF', 'AppendXBGF', 'AsFix2BTF', 'BGF2BNF', 'BGF2DMS', 'BGF2dot', 'BGF2HTML', 'BGF2Rascal', 'BGF2SDF', 'BGF2TeX', 'BGF2TXL', 'BGFlc', 'BGFover', 'BGFpp', 'BGFreformat', 'BTF2BGF', 'BTF2src', 'BuildTestSetXml', 'CBGF', 'CBGF2', 'CBGF2CBNF', 'CBGF2XBGF', 'CheckBGF', 'CheckXBGF', 'DCG2BGF', 'Ecore2BGF', 'EDD2Rascal', 'EXBGF', 'EXBGF2XBGF', 'EXBGFover', 'ExtractOver', 'FindH', 'GBTF', 'GDT|Grammar Diff Tool', 'HTML2BGF', 'Java2BGF', 'LCI', 'LDF2BGF', 'LDF2HTML', 'LDF2PDF', 'LDF2SET', 'LDF2TEX', 'LDinc', 'LLL2BGF', 'MergeBGF', 'NIGDT', 'NormBGF', 'PDF2BGF', 'PlotBGF', 'Py2BGF', 'REPP', 'Rascal2BGF', 'RascalDataType2BGF', 'RascalSyntax2BGF', 'SDF2BGF', 'ShowBGF', 'ShowG', 'ShowPNF', 'ShowRootProds', 'ShowT', 'ShowX', 'ShowXBGF', 'ShowXSD', 'Spec2BGF', 'TDT', 'TnB', 'TokenOverview', 'TXL2BGF', 'Validate', 'XBGF', 'XBGF2CBGF', 'XBGF2HTML', 'XBGF2TeX', 'XBGF2XBNF', 'XBGFinfo', 'XBGFlc', 'XBGFover', 'XBGFsliced', 'XBTF', 'XLLL', 'XML2BTF', 'XSD2BGF', 'XSD2LDF']
 	,
-	['Abridge', 'Abstractize', 'AddH', 'AddV', 'Anonymize', 'Appear', 'Chain', 'Concretize', 'Deanonymize', 'Define', 'Designate', 'Detour', 'Deyaccify', 'Disappear', 'Distribute', 'Downgrade', 'Dump', 'Eliminate', 'Equate', 'Extract', 'Factor', 'Fold', 'Horizontal', 'Import', 'Inject', 'Inline', 'Introduce', 'LAssoc', 'Massage', 'Narrow', 'Permute', 'Project', 'RAssoc', 'Redefine', 'Remove', 'RemoveH', 'RemoveV', 'RenameT', 'RenameL', 'RenameN', 'RenameS', 'Replace', 'Undefine', 'Unfold', 'Unite', 'Unlabel', 'Upgrade', 'Vertical', 'Widen', 'Yaccify']
+	['abridge', 'abstractize', 'addH', 'addV', 'anonymize', 'appear', 'chain', 'concretize', 'deanonymize', 'define', 'designate', 'detour', 'deyaccify', 'disappear', 'distribute', 'downgrade', 'dump', 'eliminate', 'equate', 'extract', 'factor', 'fold', 'horizontal', 'importG', 'inject', 'inline', 'introduce', 'lassoc', 'massage', 'narrow', 'permute', 'project', 'rassoc', 'redefine', 'remove', 'removeH', 'removeV', 'renameT', 'renameL', 'renameN', 'renameS', 'replace', 'undefine', 'unfold', 'unite', 'unlabel', 'upgrade', 'vertical', 'widen', 'yaccify','bypass','concatT','splitT','splitN']
+	,
+	['RetireTs', 'RetireSs', 'RetireLs', 'Enforce naming', 'Reroot2top', 'Retire top', 'SubGrammar', 'AllV', 'AllH', 'AllD', 'AllDV', 'AllDeyacc', 'Retire lazy', 'ANF|Abstract Normal Form', 'FoldG', 'Retire seplists', 'Retire iterations', 'Inline chains']
 	]
 
 l = len(h)
-w = [max(len(h[i])+4,max(map(len,c[i]))) for i in range(0,l)]
+w = [4+max(len(h[i]),max(map(len,c[i]))) for i in range(0,l)]
 c = map(sorted,c)
 d = max(map(len,c))
 

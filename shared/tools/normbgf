@@ -1,4 +1,5 @@
 #!/bin/sh
+# wiki: NormBGF
 
 if [ $# -ne 2 ]; then
 	echo "This tool normalizes a BGF by performing an intentionally vacuous grammar transformation with normalization."

@@ -1,4 +1,5 @@
 #!/bin/sh
+# wiki: PDF2BGF
 
 # Get our hands on basedir
 LOCAL1=${PWD}

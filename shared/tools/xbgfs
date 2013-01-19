@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# wiki: XBGFsliced
 # Get our hands on basedir
 LOCAL1=${PWD}
 cd `dirname $0`

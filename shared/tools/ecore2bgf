@@ -1,4 +1,5 @@
 #!/bin/sh
+# wiki: Ecore2BGF
 
 LOCAL=${PWD}
 cd `dirname $0`
