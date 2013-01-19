@@ -1,4 +1,5 @@
 :- ensure_loaded('../slps.pro').
+% wiki: Grammar Diff Tool
 
 
 % Load a BGF file

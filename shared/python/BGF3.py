@@ -1,4 +1,5 @@
 #!/Library/Frameworks/Python.framework/Versions/3.1/bin/python3
+# wiki: BGF
 import os
 import sys
 sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')

@@ -1,4 +1,5 @@
 :- module(xbgf1,[transformG/3]).
+% wiki: XBGF, bypass, addV, addH, chain, define, redefine, designate, unlabel, deyaccify, distribute, dump, eliminate, extract, factor, fold, horizontal, inject, appear, inline, introduce, importG, iterate, LAssoc, RAssoc, massage, permute, anonymize, deanonymize, abstractize, concretize, disappear, project, removeV, removeH, renameL, renameN, renameS, renameT, replace, reroot, narrow, abridge, detour, splitN, RetireTs, RetireLs, RetireSs, unchain, undefine, unfold, unite, equate, vertical, widen, yaccify, downgrade, upgrade
 
 %
 % Convenience wrapper for transformations.

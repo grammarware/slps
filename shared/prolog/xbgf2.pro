@@ -1,5 +1,6 @@
 :- module(xbgf2,[transformT/3]).
 :- use_module('xbgf1.pro').
+% wiki: XBGF, define, designate, distribute, eliminate, inline, introduce, LAssoc, RAssoc, massage, permute, project, renameL, renameN, renameS, reroot, abridge, RetireLs, RetireSs, RetireTs, unchain, undefine, vertical
 
 transformT(sequence(Ts1),T1,T2)
  :-

@@ -2,6 +2,7 @@
 :- ensure_loaded('../gbtf.pro').
 :- nb_setval(btfno,1).
 :- dynamic t/1.
+% wiki: GBTF
 
 saveT(BgfFile,N,Q,G1,T1)
  :-

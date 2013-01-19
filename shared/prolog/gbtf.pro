@@ -10,6 +10,7 @@
 :- dynamic gbtf:mindepthFact/2.
 :- dynamic gbtf:distFact/3.
 
+% wiki: GBTF
 
 % ------------------------------------------------------------
 

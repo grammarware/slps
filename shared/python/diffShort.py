@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# wiki: Grammar Diff Tool
 import os
 import sys
 import string

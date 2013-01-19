@@ -1,4 +1,5 @@
 #!/usr/local/bin/python
+# wiki: BGF
 import os
 import sys
 import slpsns

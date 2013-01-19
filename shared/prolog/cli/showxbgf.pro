@@ -1,4 +1,5 @@
 :- ensure_loaded('../slps.pro').
+% wiki: ShowXBGF
 
 main :- 
    current_prolog_flag(argv,Argv),

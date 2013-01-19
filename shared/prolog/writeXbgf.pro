@@ -1,6 +1,7 @@
 %
 % Static namespace declarations
 %
+% wiki: WriteXBGF
 
 :- multifile sxmlns/2.
 

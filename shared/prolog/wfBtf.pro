@@ -2,6 +2,7 @@
 % This code is not invoked anywhere.
 % It only serves as type declaration / documentation.
 % Somewhat more idiosyncratic code to be found in btf2bgf.pro
+% wiki: BTF
 
 tree(true).
 tree(t(T)) :- atom(T).

@@ -1,4 +1,5 @@
 :- ensure_loaded('../slps.pro').
+% wiki: XSD2BGF
 
 main 
  :-

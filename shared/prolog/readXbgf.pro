@@ -1,6 +1,7 @@
 %
 % Static namespace declarations
 %
+% wiki: ReadXBGF
 
 :- multifile sxmlns/2.
 

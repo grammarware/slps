@@ -1,6 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Map BTF tree to BGF expression %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% wiki: BTF2BGF
 
 btf2x(n(P,_),n(N)) :- P = p(_,N,_).
 

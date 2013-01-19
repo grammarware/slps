@@ -1,4 +1,5 @@
 :- ensure_loaded('../slps.pro').
+% wiki: RetireTs
 
 stript(p(As,N,X1),[abstractize(p(As,N,X2))]) 
  :-

@@ -1,6 +1,7 @@
 %
 % Implode BTF trees
 %
+% wiki: ImplodeBTF
 
 implodeRoot(r(G,T),V)
  :-

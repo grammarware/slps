@@ -1,4 +1,5 @@
 :- ensure_loaded('../slps.pro').
+% wiki: RetireSs
 
 strips(p(As,N,X1),[anonymize(p(As,N,X2))]) 
  :-

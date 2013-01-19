@@ -1,6 +1,7 @@
 %
 % Static namespace declarations
 %
+% wiki: BGF
 
 :- multifile sxmlns/2.
 
