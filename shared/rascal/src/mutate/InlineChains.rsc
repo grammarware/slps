@@ -2,11 +2,9 @@
 @wiki{UnchainAll}
 module mutate::InlineChains
 
-import IO;
 import syntax::BGF;
-import export::BNF;
 
-public BGFGrammar unchain_m(BGFGrammar g)
+public BGFGrammar unchainAll(BGFGrammar g)
 {
 	ps = g.prods;
 	for (tp:production(_,_,nonterminal(chained)) <- [p | p:production(_,_,nonterminal(x)) <- g.prods])
