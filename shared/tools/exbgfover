@@ -1,5 +1,5 @@
 #!/bin/sh
-# wiki: EBGFover
+# wiki: EXBGFover
 
 # Get our hands on basedir
 LOCAL1=${PWD}
