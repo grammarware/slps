@@ -7,8 +7,138 @@ import syntax::XBGF;
 import transform::XBGF;
 //import diff::GDT;
 import io::ReadBGF;
+import io::WriteBGF;
 import export::BNF;
-import mutate::Subgrammar;
+import mutate::Mutations;
+import IO;
+
+public void go()
+{
+		//g1 = readBGF(|home:///projects/slps/topics/grammars/csharp/ecma-334-1/grammar.bgf|);
+		//gr = mutate([
+		//	deyaccifyAll,
+		//	unchainAll,
+		//	inlinePlus
+		//	,inlineLazy
+		//],subgrammar(g1,"compilation-unit"));
+		//writeBGF(gr,|home:///mutated.bgf|);
+	gr = readBGF(|home:///mutated.bgf|);
+	println(pp(gr));
+	for (p:production(_,"namespace-member-declaration",_) <- gr.prods)		iprintln(p);
+	g2 = vtransform(afterMutations,gr);
+	println(pp(g2));
+	iprintln(afterMutations);
+}
+
+XBGFSequence afterMutations = [
+	// adapt using
+	factor(
+		choice([
+			sequence([
+				terminal("using"),
+				nonterminal("identifier"),
+				terminal("="),
+				nonterminal("namespace-or-type-name"),
+				terminal(";")
+			]),
+			sequence([
+				terminal("using"),
+				choice([
+					nonterminal("identifier"),
+					sequence([
+						nonterminal("namespace-or-type-name"),
+						terminal("."),
+						nonterminal("identifier")
+					])
+				]),
+				terminal(";")
+			])
+		]),
+		sequence([
+			terminal("using"),
+			choice([
+				nonterminal("identifier"),
+				sequence([
+					nonterminal("namespace-or-type-name"),
+					terminal("."),
+					nonterminal("identifier")
+				]),
+				sequence([
+					nonterminal("identifier"),
+					terminal("="),
+					nonterminal("namespace-or-type-name")
+				])
+			]),
+			terminal(";")
+		]),
+		innt("using-directive")),
+	extract(
+		production(
+		"",
+		"using-directive-insides",
+		choice([
+			nonterminal("identifier"),
+			sequence([
+				nonterminal("namespace-or-type-name"),
+				terminal("."),
+				nonterminal("identifier")
+				]),
+			sequence([
+				nonterminal("identifier"),
+				terminal("="),
+				nonterminal("namespace-or-type-name")
+				])
+			])),
+		globally()),
+	inline("using-directive"),
+	// adapt global attribute
+	factor(
+		choice([
+			sequence([
+				terminal("["),
+				nonterminal("global-attribute-target-specifier"),
+				nonterminal("attribute-list"),
+				terminal("]")
+			]),
+			sequence([
+				terminal("["),
+				nonterminal("global-attribute-target-specifier"),
+				nonterminal("attribute-list"),
+				terminal(","),
+				terminal("]")
+			])
+		]),
+		sequence([
+			terminal("["),
+			nonterminal("global-attribute-target-specifier"),
+			choice([
+				nonterminal("attribute-list"),
+				sequence([
+					nonterminal("attribute-list"),
+					terminal(",")
+				])
+			]),
+			terminal("]")
+		]),
+		innt("compilation-unit")),
+	inline("global-attribute-target-specifier"),
+	extract(
+		production(
+		"",
+		"global-attribute-section-insides",
+		choice([
+			nonterminal("attribute-list"),
+			sequence([
+				nonterminal("attribute-list"),
+				terminal(",")
+				])
+			])),
+		globally()),
+	// adapt namespace
+	bypass()
+	];
+
+//XBGFSequence
 
 XBGFSequence AdaptUsing = [
 		// vertical(innt(using-directives))
@@ -23,7 +153,10 @@ XBGFSequence AdaptUsing = [
 		inline("using-namespace-directive"),
 		// massage(using-directive+?,using-directive*,globally())
 		massage(optional(plus(nonterminal("using-directive"))),star(nonterminal("using-directive")),globally()),
-		// factor((("using" (identifier "=" namespace-or-type-name) ";") | ("using" (namespace-name) ";")),("using" ((identifier "=" namespace-or-type-name) | (namespace-name)) ";"),globally())
+		// factor(
+		// 	(("using" (identifier "=" namespace-or-type-name) ";") | ("using" (namespace-name) ";")),
+		//	 ("using" ((identifier "=" namespace-or-type-name) | (namespace-name)) ";")
+		//,globally())
 		factor(choice([sequence([terminal("using"),sequence([nonterminal("identifier"),terminal("="),nonterminal("namespace-or-type-name")]),terminal(";")]),sequence([terminal("using"),sequence([nonterminal("namespace-name")]),terminal(";")])]),sequence([terminal("using"),choice([sequence([nonterminal("identifier"),terminal("="),nonterminal("namespace-or-type-name")]),sequence([nonterminal("namespace-name")])]),terminal(";")]),globally()),
 		// extract(using-directive-insides ::= ((identifier "=" namespace-or-type-name) | (namespace-name)) ;,globally())
 		extract(production("","using-directive-insides",choice([sequence([nonterminal("identifier"),terminal("="),nonterminal("namespace-or-type-name")]),sequence([nonterminal("namespace-name")])])),globally()),
@@ -236,4 +369,6 @@ public void run()
 	g1 = readBGF(|home:///projects/slps/topics/grammars/csharp/ecma-334-1/grammar.bgf|);
 	g2 = subgrammar(doTrafo(g1),"compilation-unit"); 
 	println(pp(g2));
+	writeBGF(g2,|home:///unmutated.bgf|);
 }
+
