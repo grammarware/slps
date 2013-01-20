@@ -21,5 +21,6 @@ public BGFGrammar mutate(MutationList script, BGFGrammar g)
 		println("[Mutation] <m>");
 		g = normalise(m(g));
 	}
+	println("[Mutation] Done.");
 	return g;
 }
