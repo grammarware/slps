@@ -1,6 +1,6 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 @wiki{SubGrammar}
-module mutate::Subgrammar
+module mutate::SubGrammar
 
 import lib::Rascalware;
 import syntax::BGF;

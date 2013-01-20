@@ -7,7 +7,7 @@ import syntax::BGF;
 // NB: the deyaccification mutation works on horizontal productions,
 // while the deyaccification transformation works on vertical ones!!!
 
-public BGFGrammar deyaccify_m(BGFGrammar g)
+public BGFGrammar deyaccifyAll(BGFGrammar g)
 	= visit(g)
 	{
 		// N = N X | X   =>   N = X+
