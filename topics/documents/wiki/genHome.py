@@ -10,8 +10,8 @@ h = [
 	]
 
 c = [
-	['BGF','XBGF','ΞBGF','EXBGF','MegaL','LDF','XLDF','EDD',
-	'ANF|Abstract Normal Form','LCI','BTF','LCF','Rascal','Prolog','XML','XSD','Factorial Language','Java Language Specification']
+	['BGF','XBGF','CBGF','EXBGF','MegaL','LDF','XLDF','EDD',
+	'ANF|Abstract Normal Form','LCI','BTF','LCF','Rascal','Prolog','XML','XSD','Factorial Language','Java Language Specification','Grammarware','grammar in a broad sense','Metaprogramming','Grammar programming']
 	,
 	['ANTLR2BGF', 'AsFix2BTF', 'BGF2BNF', 'BGF2DMS', 'BGF2dot', 'BGF2HTML', 'BGF2Rascal', 'BGF2SDF', 'BGF2TeX', 'BGF2TXL', 'BTF2BGF', 'BTF2src', 'CBGF2', 'CBGF2CBNF', 'CBGF2XBGF', 'DCG2BGF', 'Ecore2BGF', 'EDD2Rascal', 'EXBGF2XBGF', 'HTML2BGF', 'Java2BGF', 'LDF2BGF', 'LDF2HTML', 'LDF2PDF', 'LDF2SET', 'LDF2TEX', 'LLL2BGF', 'PDF2BGF', 'Py2BGF', 'Rascal2BGF', 'RascalADT2BGF', 'RascalSyntax2BGF', 'SDF2BGF', 'Spec2BGF', 'TXL2BGF', 'XBGF2CBGF', 'XBGF2HTML', 'XBGF2TeX', 'XBGF2XBNF', 'XML2BTF', 'XSD2BGF', 'XSD2LDF']
 	,
@@ -39,5 +39,5 @@ f.write('|**'+'**|**'.join(h)+'**|\n')
 f.write('|'+'|'.join(['-'*v for v in w])+'|\n')
 for i in range(0,l):
 	while(len(c[i])<d): c[i].append('')
-f.write('\n'.join(['|'+'|'.join([c[i][j] and ('[['+c[i][j]+']]').center(w[i]) or ''.center(w[i]) for i in range(0,l)])+'|' for j in range(0,d)]))
+f.write('\n'.join(['|'+'|'.join([c[i][j] and ('[['+c[i][j]+']]').center(w[i]) or ''.center(w[i]) for i in range(0,l)])+'|' for j in range(0,d)]).replace('CBGF','ΞBGF'))
 f.close()

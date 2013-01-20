@@ -1,5 +1,5 @@
 #!/bin/sh
-# wiki: ΞBGF
+# wiki: ΞBGF2
 LOCAL=${PWD}
 cd `dirname $0`
 cd ../..
