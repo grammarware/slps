@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-@wiki{RascalS2BGF}
+@wiki{RascalSyntax2BGF}
 module extract::RascalSyntax2BGF
 
 import lang::rascal::\syntax::RascalRascal;
