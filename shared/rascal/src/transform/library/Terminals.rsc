@@ -51,10 +51,8 @@ XBGFResult runRenameT(str x, str y, BGFGrammar g)
 
 XBGFResult runSplitT(str x, list[str] ys, XBGFScope w, BGFGrammar g)
 {
-	<ps1,ps2,ps3> = splitPbyW(g.prods, w);
-	BGFGrammar g2 	= transform::library::Brutal::runReplace(terminal(x),sequence([terminal(y) | y <- ys]),grammar([],ps2));
-	XBGFResult repl = transform::library::Brutal::runReplace(terminal(x),sequence([terminal(y) | y <- ys]),grammar([],ps2));
-	if (ok() !:= repl.r) return repl;
-	if (grammar(_, ps4) := repl.g) // TODO double check suspicious code!
-		return <ok(),grammar(g.roots,ps1 + normalise(ps2) + ps3)>;
+	// TODO: insert proper preconditions
+	//<ps1,ps2,ps3> = splitPbyW(g.prods, w);
+	//BGFGrammar g2 	= transform::library::Brutal::runReplace(terminal(x),sequence([terminal(y) | y <- ys]),w,grammar([],ps2));
+	return transform::library::Brutal::runReplace(terminal(x),sequence([terminal(y) | y <- ys]),w,g);
 }

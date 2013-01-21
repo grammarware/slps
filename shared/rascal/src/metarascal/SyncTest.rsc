@@ -22,6 +22,8 @@ public void main()
 		'import syntax::XBGF;
 		'import transform::XBGF;
 		'import diff::GDT;
+		'import export::BNF;
+		'import export::XBNF;
 		'
 		'map[str,tuple[XBGFSequence,BGFGrammar,BGFGrammar]] test_data = (
 		'",
@@ -34,7 +36,7 @@ public void main()
 		bl = readBGF(base+replaceLast(f,".xbgf",".baseline"));
 		buffer += "\"<replaceLast(f,".xbgf","")>\": \<<xbgf>,<bgf>,<bl>\>,\n";
 		buffer2 += "test bool test_<replaceLast(f,".xbgf","")>() { \<xbgf,bgf1,bgf2\> = test_data[\"<replaceLast(f,".xbgf","")>\"]; return gdts(transform(xbgf,bgf1),bgf2); }\n";
-		buffer3 += "void show_<replaceLast(f,".xbgf","")>() { \<xbgf,bgf1,bgf2\> = test_data[\"<replaceLast(f,".xbgf","")>\"]; println(\"Input \<bgf1\>\");println(\"Transformations: \<xbgf\>\");println(\"Expected output \<bgf2\>\");bgf3=transform(xbgf,bgf1);println(\"Actual output \<bgf3\>\"); gdtv(bgf3,bgf2); }\n";
+		buffer3 += "void show_<replaceLast(f,".xbgf","")>() { \<xbgf,bgf1,bgf2\> = test_data[\"<replaceLast(f,".xbgf","")>\"]; println(\"Input grammar: \<pp(bgf1)\>\");println(\"Transformations: \<ppxs(xbgf)\>\");println(\"Expected output grammar: \<pp(bgf2)\>\");bgf3=transform(xbgf,bgf1);println(\"Actual output grammar: \<pp(bgf3)\>\"); gdtv(bgf3,bgf2); }\n";
 	}
 	writeFile(|project://slps/src/transform/Test.rsc|, replaceLast(buffer,",","")+");\n\n"+buffer3+"\n\n"+buffer2);
 }

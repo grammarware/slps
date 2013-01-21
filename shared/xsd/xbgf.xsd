@@ -139,6 +139,8 @@
       <xsd:element ref="xbgf:rassoc"/>
       <xsd:element ref="xbgf:lassoc"/>
       <xsd:element ref="xbgf:iterate"/>
+
+      <xsd:element ref="xbgf:splitT"/>
     </xsd:choice>
   </xsd:group>
   <xsd:group name="increasing-transformation">
@@ -1184,6 +1186,31 @@
         <xsd:element name="nonterminal" type="bgf:nonterminal"/>
         <xsd:element ref="bgf:production" maxOccurs="unbounded"/>
         <xsd:group ref="xbgf:scope"  minOccurs="0"  maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="splitT">
+    <xsd:annotation>
+      <xsd:documentation>
+        The reverse of <ldf:keyword>concatT</ldf:keyword>.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="terminal" type="bgf:terminal"/>
+        <xsd:element name="into">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="terminal" type="bgf:terminal" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="in" minOccurs="0">
+          <xsd:complexType>
+            <xsd:group ref="xbgf:scope"/>
+          </xsd:complexType>
+        </xsd:element>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

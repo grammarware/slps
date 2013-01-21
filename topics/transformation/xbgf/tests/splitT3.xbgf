@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:xbgf="http://planet-sl.org/xbgf">
+	<xbgf:splitT>
+		<terminal>abc</terminal>
+		<into>
+			<terminal>a</terminal>
+			<terminal>bc</terminal>
+		</into>
+		<in>
+			<nonterminal>foo</nonterminal>
+		</in>
+	</xbgf:splitT>
+</xbgf:sequence>

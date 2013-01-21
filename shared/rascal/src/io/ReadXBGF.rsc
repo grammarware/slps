@@ -82,8 +82,9 @@ XBGFCommand mapxbgf(Node el)
 				// splitN(str x, list[BGFProduction] ps, XBGFScope w)
 				case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),p]): return splitN(s,[mapprod(p)],nowhere());
 				case element(_,"split",[element(none(),"nonterminal",[charData(str s)]),p,w]): return splitN(s,[mapprod(p)],mapcontext(w));
-				// TODO: not implemented anywhere
 				// splitT(str x, list[str] ys, XBGFScope w)
+				case element(_,"splitT",[element(none(),"terminal",[charData(str s)]),element(none(),"into",ts)]): return splitT(s,[mapt(t) | t <- ts],globally());
+				case element(_,"splitT",[element(none(),"terminal",[charData(str s)]),element(none(),"into",ts),w]): return splitT(s,[mapt(t) | t <- ts],mapcontext(w));
 				case element(_,"unchain",[prod]): return unchain(mapprod(prod));
 				case element(_,"undefine",xs): return undefine([s | element(none(),"nonterminal",[charData(s)]) <- xs]);
 				case element(_,"unfold",[element(none(),"nonterminal",[charData(str s)])]): return unfold(s,globally());
@@ -121,3 +122,5 @@ XBGFScope mapcontext(Node n)
 		default: throw "ERROR in context: <n>";
 	}
 }
+
+str mapt(element(_,"terminal",[charData(str s)])) = s;

@@ -47,7 +47,7 @@
 </xsl:text>
 	</xsl:template>
 	<xsl:template match="xbgf:split">
-		<xsl:value-of select="local-name()"/>
+		<xsl:value-of select="splitN"/>
 			<xsl:text>(</xsl:text>
 <xsl:value-of select="nonterminal"/>
 		<xsl:text>,
