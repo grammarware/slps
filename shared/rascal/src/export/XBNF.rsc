@@ -7,7 +7,6 @@ import syntax::XBGF;
 import syntax::BGF;
 import export::BNF;
 
-// TODO this is only a first sketchy setup, need to generate the whole thing!
 public str ppxs(XBGFSequence xs) = mapjoin(ppx,xs,"\n");
 
 public str ppx(XBGFCommand::abridge(BGFProduction p)) = "abridge(<pp(p)>)";

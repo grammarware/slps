@@ -40,54 +40,54 @@ public void go()
 XBGFSequence m3 = [
 	factor(
 		choice([
-	      sequence([
-	          terminal("["),
-	          optional(nonterminal("attribute-target-specifier")),
-	          nonterminal("attribute-list"),
-	          terminal("]")
-	        ]),
-	      sequence([
-	          terminal("["),
-	          optional(nonterminal("attribute-target-specifier")),
-	          nonterminal("attribute-list"),
-	          terminal(","),
-	          terminal("]")
-	        ])
-	    ]),
-	    sequence([
-	    terminal("["),
-	    choice([
-	      sequence([
-	          
-	          optional(nonterminal("attribute-target-specifier")),
-	          nonterminal("attribute-list")
-	          
-	        ]),
-	      sequence([
-	          
-	          optional(nonterminal("attribute-target-specifier")),
-	          nonterminal("attribute-list"),
-	          terminal(",")
-	        ])
-	    ]),
-	    terminal("]")
-	    ]),
-	    innt("attribute-section")
+			sequence([
+				terminal("["),
+				optional(nonterminal("attribute-target-specifier")),
+				nonterminal("attribute-list"),
+				terminal("]")
+				]),
+			sequence([
+				terminal("["),
+				optional(nonterminal("attribute-target-specifier")),
+				nonterminal("attribute-list"),
+				terminal(","),
+				terminal("]")
+				])
+		]),
+		sequence([
+			terminal("["),
+			choice([
+			sequence([
+				optional(nonterminal("attribute-target-specifier")),
+				nonterminal("attribute-list")
+				]),
+			sequence([
+				optional(nonterminal("attribute-target-specifier")),
+				nonterminal("attribute-list"),
+				terminal(",")
+				])
+			]),
+			terminal("]")
+		]),
+		innt("attribute-section")
 	),
 	extract(
 		production("","attribute-section-insides",choice([
-          sequence([
-              optional(nonterminal("attribute-target-specifier")),
-              nonterminal("attribute-list")
-            ]),
-          sequence([
-              optional(nonterminal("attribute-target-specifier")),
-              nonterminal("attribute-list"),
-              terminal(",")
-            ])
-        ])),
-        globally()
+			sequence([
+				optional(nonterminal("attribute-target-specifier")),
+				nonterminal("attribute-list")
+				]),
+			sequence([
+				optional(nonterminal("attribute-target-specifier")),
+				nonterminal("attribute-list"),
+				terminal(",")
+				])
+		])),
+		globally()
 	),
+	inline("namespace-declaration"),
+	inline("type-declaration"),
+	horizontal(innt("attribute-section-insides")),
 	bypass()
 ];
 
@@ -103,140 +103,140 @@ XBGFSequence m2 = [
 	unite("enum-modifier","modifier"),
 	unite("delegate-modifier","modifier"),
 	factor(
-	choice([
-      sequence([
-          star(nonterminal("attribute-section")),
-          star(nonterminal("modifier")),
-          terminal("class"),
-          nonterminal("identifier"),
-          optional(nonterminal("class-base")),
-          nonterminal("class-body"),
-          optional(terminal(";"))
-        ]),
-      sequence([
-          star(nonterminal("attribute-section")),
-          star(nonterminal("modifier")),
-          terminal("struct"),
-          nonterminal("identifier"),
-          optional(nonterminal("struct-interfaces")),
-          nonterminal("struct-body"),
-          optional(terminal(";"))
-        ]),
-      sequence([
-          star(nonterminal("attribute-section")),
-          star(nonterminal("modifier")),
-          terminal("interface"),
-          nonterminal("identifier"),
-          optional(nonterminal("interface-base")),
-          nonterminal("interface-body"),
-          optional(terminal(";"))
-        ]),
-      sequence([
-          star(nonterminal("attribute-section")),
-          star(nonterminal("modifier")),
-          terminal("enum"),
-          nonterminal("identifier"),
-          optional(nonterminal("enum-base")),
-          nonterminal("enum-body"),
-          optional(terminal(";"))
-        ]),
-      sequence([
-          star(nonterminal("attribute-section")),
-          star(nonterminal("modifier")),
-          terminal("delegate"),
-          nonterminal("type"),
-          nonterminal("identifier"),
-          terminal("("),
-          optional(nonterminal("formal-parameter-list")),
-          terminal(")"),
-          terminal(";")
-        ])
-    ]),
-    sequence([
-    	star(nonterminal("attribute-section")),
-	    star(nonterminal("modifier")),
-	    choice([
-	      sequence([
-	          terminal("class"),
-	          nonterminal("identifier"),
-	          optional(nonterminal("class-base")),
-	          nonterminal("class-body"),
-	          optional(terminal(";"))
-	        ]),
-	      sequence([
-	          terminal("struct"),
-	          nonterminal("identifier"),
-	          optional(nonterminal("struct-interfaces")),
-	          nonterminal("struct-body"),
-	          optional(terminal(";"))
-	        ]),
-	      sequence([
-	          terminal("interface"),
-	          nonterminal("identifier"),
-	          optional(nonterminal("interface-base")),
-	          nonterminal("interface-body"),
-	          optional(terminal(";"))
-	        ]),
-	      sequence([
-	          terminal("enum"),
-	          nonterminal("identifier"),
-	          optional(nonterminal("enum-base")),
-	          nonterminal("enum-body"),
-	          optional(terminal(";"))
-	        ]),
-	      sequence([
-	          terminal("delegate"),
-	          nonterminal("type"),
-	          nonterminal("identifier"),
-	          terminal("("),
-	          optional(nonterminal("formal-parameter-list")),
-	          terminal(")"),
-	          terminal(";")
-	        ])
-	    ])
-    ]),
-    innt("type-declaration")),
-    extract(
-    	production("","type-declaration-insides",choice([
-	      sequence([
-	          terminal("class"),
-	          nonterminal("identifier"),
-	          optional(nonterminal("class-base")),
-	          nonterminal("class-body"),
-	          optional(terminal(";"))
-	        ]),
-	      sequence([
-	          terminal("struct"),
-	          nonterminal("identifier"),
-	          optional(nonterminal("struct-interfaces")),
-	          nonterminal("struct-body"),
-	          optional(terminal(";"))
-	        ]),
-	      sequence([
-	          terminal("interface"),
-	          nonterminal("identifier"),
-	          optional(nonterminal("interface-base")),
-	          nonterminal("interface-body"),
-	          optional(terminal(";"))
-	        ]),
-	      sequence([
-	          terminal("enum"),
-	          nonterminal("identifier"),
-	          optional(nonterminal("enum-base")),
-	          nonterminal("enum-body"),
-	          optional(terminal(";"))
-	        ]),
-	      sequence([
-	          terminal("delegate"),
-	          nonterminal("type"),
-	          nonterminal("identifier"),
-	          terminal("("),
-	          optional(nonterminal("formal-parameter-list")),
-	          terminal(")"),
-	          terminal(";")
-	        ])
-	    ])),
-	    globally()),
+		choice([
+			sequence([
+				star(nonterminal("attribute-section")),
+				star(nonterminal("modifier")),
+				terminal("class"),
+				nonterminal("identifier"),
+				optional(nonterminal("class-base")),
+				nonterminal("class-body"),
+				optional(terminal(";"))
+				]),
+			sequence([
+				star(nonterminal("attribute-section")),
+				star(nonterminal("modifier")),
+				terminal("struct"),
+				nonterminal("identifier"),
+				optional(nonterminal("struct-interfaces")),
+				nonterminal("struct-body"),
+				optional(terminal(";"))
+				]),
+			sequence([
+				star(nonterminal("attribute-section")),
+				star(nonterminal("modifier")),
+				terminal("interface"),
+				nonterminal("identifier"),
+				optional(nonterminal("interface-base")),
+				nonterminal("interface-body"),
+				optional(terminal(";"))
+				]),
+			sequence([
+				star(nonterminal("attribute-section")),
+				star(nonterminal("modifier")),
+				terminal("enum"),
+				nonterminal("identifier"),
+				optional(nonterminal("enum-base")),
+				nonterminal("enum-body"),
+				optional(terminal(";"))
+				]),
+			sequence([
+				star(nonterminal("attribute-section")),
+				star(nonterminal("modifier")),
+				terminal("delegate"),
+				nonterminal("type"),
+				nonterminal("identifier"),
+				terminal("("),
+				optional(nonterminal("formal-parameter-list")),
+				terminal(")"),
+				terminal(";")
+				])
+		]),
+		sequence([
+			star(nonterminal("attribute-section")),
+			star(nonterminal("modifier")),
+			choice([
+				sequence([
+					terminal("class"),
+					nonterminal("identifier"),
+					optional(nonterminal("class-base")),
+					nonterminal("class-body"),
+					optional(terminal(";"))
+					]),
+				sequence([
+					terminal("struct"),
+					nonterminal("identifier"),
+					optional(nonterminal("struct-interfaces")),
+					nonterminal("struct-body"),
+					optional(terminal(";"))
+					]),
+				sequence([
+					terminal("interface"),
+					nonterminal("identifier"),
+					optional(nonterminal("interface-base")),
+					nonterminal("interface-body"),
+					optional(terminal(";"))
+					]),
+				sequence([
+					terminal("enum"),
+					nonterminal("identifier"),
+					optional(nonterminal("enum-base")),
+					nonterminal("enum-body"),
+					optional(terminal(";"))
+					]),
+				sequence([
+					terminal("delegate"),
+					nonterminal("type"),
+					nonterminal("identifier"),
+					terminal("("),
+					optional(nonterminal("formal-parameter-list")),
+					terminal(")"),
+					terminal(";")
+					])
+			])
+		]),
+		innt("type-declaration")),
+	extract(
+		production("","type-declaration-insides",choice([
+		sequence([
+			terminal("class"),
+			nonterminal("identifier"),
+			optional(nonterminal("class-base")),
+			nonterminal("class-body"),
+			optional(terminal(";"))
+			]),
+		sequence([
+			terminal("struct"),
+			nonterminal("identifier"),
+			optional(nonterminal("struct-interfaces")),
+			nonterminal("struct-body"),
+			optional(terminal(";"))
+			]),
+		sequence([
+			terminal("interface"),
+			nonterminal("identifier"),
+			optional(nonterminal("interface-base")),
+			nonterminal("interface-body"),
+			optional(terminal(";"))
+			]),
+		sequence([
+			terminal("enum"),
+			nonterminal("identifier"),
+			optional(nonterminal("enum-base")),
+			nonterminal("enum-body"),
+			optional(terminal(";"))
+			]),
+		sequence([
+			terminal("delegate"),
+			nonterminal("type"),
+			nonterminal("identifier"),
+			terminal("("),
+			optional(nonterminal("formal-parameter-list")),
+			terminal(")"),
+			terminal(";")
+			])
+		])),
+		globally()),
 	// TODO: maybe just make unite more advanced?
 	vertical(innt("modifier")),
 	horizontal(innt("modifier")),
@@ -338,39 +338,39 @@ XBGFSequence afterMutations = [
 	bypass()
 	];
 
-XBGFSequence Skeletonise = [
-		// redefine([] using-directive-insides ::= not-semicolon ;)
-		redefine([production("","using-directive-insides",nonterminal("not-semicolon"))]),
-		// redefine([] global-attribute-section-insides ::= not-right-square-bracket ;)
-		redefine([production("","global-attribute-section-insides",nonterminal("not-right-square-bracket"))]),
-		// redefine([] attribute-section-insides ::= not-right-square-bracket ;)
-		redefine([production("","attribute-section-insides",nonterminal("not-right-square-bracket"))]),
-		// redefine([] struct-interfaces ::= not-left-curly ;)
-		redefine([production("","struct-interfaces",nonterminal("not-left-curly"))]),
-		// redefine([] class-base ::= not-left-curly ;)
-		redefine([production("","class-base",nonterminal("not-left-curly"))]),
-		// redefine([] interface-base ::= not-left-curly ;)
-		redefine([production("","interface-base",nonterminal("not-left-curly"))]),
-		// redefine([] enum-base ::= not-left-curly ;)
-		redefine([production("","enum-base",nonterminal("not-left-curly"))]),
-		// redefine([] enum-body-insides ::= balanced-curlies ;)
-		redefine([production("","enum-body-insides",nonterminal("balanced-curlies"))]),
-		// redefine([] namespace-body-insides ::= balanced-curlies ;)
-		redefine([production("","namespace-body-insides",nonterminal("balanced-curlies"))]),
-		// redefine([] class-member-declarations ::= balanced-curlies ;)
-		redefine([production("","class-member-declarations",nonterminal("balanced-curlies"))]),
-		// redefine([] struct-member-declarations ::= balanced-curlies ;)
-		redefine([production("","struct-member-declarations",nonterminal("balanced-curlies"))]),
-		// redefine([] interface-member-declarations ::= balanced-curlies ;)
-		redefine([production("","interface-member-declarations",nonterminal("balanced-curlies"))]),
-		// redefine([] formal-parameter-list ::= not-right-parenthesis ;)
-		redefine([production("","formal-parameter-list",nonterminal("not-right-parenthesis"))]),
-		// redefine([] qualified-identifier ::= not-whitespace ;)
-		redefine([production("","qualified-identifier",nonterminal("not-whitespace"))]),
+XBGFSequence skeletonise = [
+		// addC([] using-directive-insides ::= not-semicolon ;)
+		addC([production("","using-directive-insides",nonterminal("not-semicolon"))]),
+		// addC([] global-attribute-section-insides ::= not-right-square-bracket ;)
+		addC([production("","global-attribute-section-insides",nonterminal("not-right-square-bracket"))]),
+		// addC([] attribute-section-insides ::= not-right-square-bracket ;)
+		addC([production("","attribute-section-insides",nonterminal("not-right-square-bracket"))]),
+		// addC([] struct-interfaces ::= not-left-curly ;)
+		addC([production("","struct-interfaces",nonterminal("not-left-curly"))]),
+		// addC([] class-base ::= not-left-curly ;)
+		addC([production("","class-base",nonterminal("not-left-curly"))]),
+		// addC([] interface-base ::= not-left-curly ;)
+		addC([production("","interface-base",nonterminal("not-left-curly"))]),
+		// addC([] enum-base ::= not-left-curly ;)
+		addC([production("","enum-base",nonterminal("not-left-curly"))]),
+		// addC([] enum-body-insides ::= balanced-curlies ;)
+		addC([production("","enum-body-insides",nonterminal("balanced-curlies"))]),
+		// addC([] namespace-body-insides ::= balanced-curlies ;)
+		addC([production("","namespace-body-insides",nonterminal("balanced-curlies"))]),
+		// addC([] class-member-declarations ::= balanced-curlies ;)
+		addC([production("","class-member-declarations",nonterminal("balanced-curlies"))]),
+		// addC([] struct-member-declarations ::= balanced-curlies ;)
+		addC([production("","struct-member-declarations",nonterminal("balanced-curlies"))]),
+		// addC([] interface-member-declarations ::= balanced-curlies ;)
+		addC([production("","interface-member-declarations",nonterminal("balanced-curlies"))]),
+		// addC([] formal-parameter-list ::= not-right-parenthesis ;)
+		addC([production("","formal-parameter-list",nonterminal("not-right-parenthesis"))]),
+		// addC([] qualified-identifier ::= not-whitespace ;)
+		addC([production("","qualified-identifier",nonterminal("not-whitespace"))]),
 		// define([] identifier ::= not-whitespace ;)
 		define([production("","identifier",nonterminal("not-whitespace"))]),
-		// redefine([] type ::= not-whitespace ;)
-		redefine([production("","type",nonterminal("not-whitespace"))])
+		// addC([] type ::= not-whitespace ;)
+		addC([production("","type",nonterminal("not-whitespace"))])
 	];
 
 BGFGrammar doTrafo(BGFGrammar g)
