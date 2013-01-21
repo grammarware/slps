@@ -5,22 +5,38 @@ import lib::Rascalware;
 import syntax::BGF;
 import syntax::XBGF;
 import transform::XBGF;
-//import diff::GDT;
+import diff::GDT;
 import io::ReadBGF;
 import io::WriteBGF;
 import export::BNF;
+import export::XPNF;
 import mutate::Mutations;
 import IO;
 
+public void ppAll()
+{
+	println(export::XPNF::ppxs(afterMutations+m2+m3));
+}
+
 public void go()
 {
-	g0 = readBGF(|home:///projects/slps/topics/grammars/csharp/ecma-334-1/grammar.bgf|);
+	g1 = readBGF(|home:///mutatedF1.bgf|);
+	g2 = vtransform(skeletonise,g1);
+	println(pp(subgrammar(g2,"compilation-unit")));
+}
+
+public void gold()
+{
+	//g0 = readBGF(|home:///projects/slps/topics/grammars/csharp/ecma-334-1/grammar.bgf|);
+	g0 = readBGF(|home:///projects/slps/topics/grammars/csharp/ecma-334-1/good.bgf|);
+	println(gdtv(grammar(["compilation-unit"],g0.prods),subgrammar(g0,"compilation-unit")));
 	g1 = mutate([
 		deyaccifyAll,
 		unchainAll,
 		inlinePlus
 		//,inlineLazy
-	],subgrammar(g0,"compilation-unit"));
+	//],subgrammar(g0,"compilation-unit"));
+	],g0);
 	//writeBGF(g1,|home:///mutated2.bgf|);
 	g2 = vtransform(afterMutations,g1);
 	//println(pp(transform([afterMutations[0],afterMutations[1],afterMutations[2],afterMutations[3],afterMutations[4]],g1)));
@@ -33,11 +49,12 @@ public void go()
 	//println(pp(g4));
 	//for (p:production(_,"attribute-section",_) <- g4.prods)		iprintln(p);
 	//println(pp(g3));
-	writeBGF(g4,|home:///mutatedF.bgf|);
+	writeBGF(g4,|home:///mutatedF2.bgf|);
 	//iprintln(afterMutations);
 }
 
 XBGFSequence m3 = [
+	splitT(",]",[",","]"],innt("attribute-section")),
 	factor(
 		choice([
 			sequence([
@@ -87,7 +104,6 @@ XBGFSequence m3 = [
 	),
 	inline("namespace-declaration"),
 	inline("type-declaration"),
-	horizontal(innt("attribute-section-insides")),
 	bypass()
 ];
 
@@ -291,6 +307,7 @@ XBGFSequence afterMutations = [
 		globally()),
 	inline("using-directive"),
 	// adapt global attribute
+	splitT(",]",[",","]"],innt("global-attribute-section")),
 	factor(
 		choice([
 			sequence([
@@ -340,37 +357,38 @@ XBGFSequence afterMutations = [
 
 XBGFSequence skeletonise = [
 		// addC([] using-directive-insides ::= not-semicolon ;)
-		addC([production("","using-directive-insides",nonterminal("not-semicolon"))]),
-		// addC([] global-attribute-section-insides ::= not-right-square-bracket ;)
-		addC([production("","global-attribute-section-insides",nonterminal("not-right-square-bracket"))]),
-		// addC([] attribute-section-insides ::= not-right-square-bracket ;)
-		addC([production("","attribute-section-insides",nonterminal("not-right-square-bracket"))]),
-		// addC([] struct-interfaces ::= not-left-curly ;)
-		addC([production("","struct-interfaces",nonterminal("not-left-curly"))]),
-		// addC([] class-base ::= not-left-curly ;)
-		addC([production("","class-base",nonterminal("not-left-curly"))]),
-		// addC([] interface-base ::= not-left-curly ;)
-		addC([production("","interface-base",nonterminal("not-left-curly"))]),
-		// addC([] enum-base ::= not-left-curly ;)
-		addC([production("","enum-base",nonterminal("not-left-curly"))]),
-		// addC([] enum-body-insides ::= balanced-curlies ;)
-		addC([production("","enum-body-insides",nonterminal("balanced-curlies"))]),
-		// addC([] namespace-body-insides ::= balanced-curlies ;)
-		addC([production("","namespace-body-insides",nonterminal("balanced-curlies"))]),
-		// addC([] class-member-declarations ::= balanced-curlies ;)
-		addC([production("","class-member-declarations",nonterminal("balanced-curlies"))]),
-		// addC([] struct-member-declarations ::= balanced-curlies ;)
-		addC([production("","struct-member-declarations",nonterminal("balanced-curlies"))]),
-		// addC([] interface-member-declarations ::= balanced-curlies ;)
-		addC([production("","interface-member-declarations",nonterminal("balanced-curlies"))]),
-		// addC([] formal-parameter-list ::= not-right-parenthesis ;)
-		addC([production("","formal-parameter-list",nonterminal("not-right-parenthesis"))]),
-		// addC([] qualified-identifier ::= not-whitespace ;)
-		addC([production("","qualified-identifier",nonterminal("not-whitespace"))]),
-		// define([] identifier ::= not-whitespace ;)
-		define([production("","identifier",nonterminal("not-whitespace"))]),
-		// addC([] type ::= not-whitespace ;)
-		addC([production("","type",nonterminal("not-whitespace"))])
+		addC(production("lex-UD","using-directive-insides",nonterminal("not-semicolon"))),
+		// addC( global-attribute-section-insides ::= not-right-square-bracket ;)
+		addC(production("lex-GAS","global-attribute-section-insides",nonterminal("not-right-square-bracket"))),
+		// addC( attribute-section-insides ::= not-right-square-bracket ;)
+		addC(production("lex-AS","attribute-section-insides",nonterminal("not-right-square-bracket"))),
+		// addC( struct-interfaces ::= not-left-curly ;)
+		addC(production("lex-SI","struct-interfaces",nonterminal("not-left-curly"))),
+		// addC( class-base ::= not-left-curly ;)
+		addC(production("lex-CB","class-base",nonterminal("not-left-curly"))),
+		// addC( interface-base ::= not-left-curly ;)
+		addC(production("lex-IB","interface-base",nonterminal("not-left-curly"))),
+		// addC( enum-base ::= not-left-curly ;)
+		addC(production("lex-EB","enum-base",nonterminal("not-left-curly"))),
+		// addC( enum-body-insides ::= balanced-curlies ;)
+		//addC(production("","enum-body-insides",nonterminal("balanced-curlies"))),
+		// addC( namespace-body-insides ::= balanced-curlies ;)
+		//addC(production("","namespace-body-insides",nonterminal("balanced-curlies"))),
+		// addC( class-member-declarations ::= balanced-curlies ;)
+		//addC(production("","class-member-declarations",nonterminal("balanced-curlies"))),
+		// addC( struct-member-declarations ::= balanced-curlies ;)
+		//addC(production("","struct-member-declarations",nonterminal("balanced-curlies"))),
+		// addC( interface-member-declarations ::= balanced-curlies ;)
+		//addC(production("","interface-member-declarations",nonterminal("balanced-curlies"))),
+		// addC( formal-parameter-list ::= not-right-parenthesis ;)
+		addC(production("lex-FPL","formal-parameter-list",nonterminal("not-right-parenthesis"))),
+		// addC( qualified-identifier ::= not-whitespace ;)
+		addC(production("lex-QI","qualified-identifier",nonterminal("not-whitespace"))),
+		// define( identifier ::= not-whitespace ;)
+		define([production("lex-I","identifier",nonterminal("not-whitespace"))]),
+		// addC( type ::= not-whitespace ;)
+		//addC(production("","type",nonterminal("not-whitespace")))
+		bypass()
 	];
 
 BGFGrammar doTrafo(BGFGrammar g)
@@ -389,4 +407,3 @@ public void run()
 	println(pp(g2));
 	writeBGF(g2,|home:///unmutated.bgf|);
 }
-

@@ -36,6 +36,7 @@ public BGFExpression normalise(BGFExpression e)
 		case choice([BGFExpression e2]) => e2
 		case optional(epsilon()) => epsilon()
 		case optional(empty()) => epsilon()                             // not present in Prolog
+		case selectable("",e4) => e4									// not present in Prolog
 		case plus(epsilon()) => epsilon()
 		case star(epsilon()) => epsilon()
 		case sepliststar(X1,epsilon()) => star(X1)

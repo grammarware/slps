@@ -11,6 +11,7 @@ data XBGFCommand =
 	| abstractize(BGFProduction p) // marked
 	| addH(BGFProduction p) // marked
 	| addV(BGFProduction p)
+	| addC(BGFProduction p) // conjunctive extension
 	| anonymize(BGFProduction p)
 	| appear(BGFProduction p) // marked
 	| bypass()

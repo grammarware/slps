@@ -10,7 +10,8 @@ import transform::library::Brutal; // replace
 import transform::library::Chaining; // abridge, detour, chain, unchain
 import transform::library::Factoring; // factor, distribute
 import transform::library::Folding; // fold, unfold, extract, inline, downgrade, upgrade
-import transform::library::Intermittent; // addH, removeH, vertical, horizontal
+import transform::library::Conjunction; // addC
+import transform::library::Disjunction; // addH, removeH, vertical, horizontal
 import transform::library::Labels; // renameL, unlabel, designate; renameS, anonymize, deanonimize
 import transform::library::Massage; // massage
 import transform::library::Nonterminals; // renameN, equate, splitN, clone, reroot, unite
@@ -28,8 +29,10 @@ public XBGFResult transform(abridge(BGFProduction p), BGFGrammar g)
 	= transform::library::Chaining::runAbridge(p,g);
 public XBGFResult transform(abstractize(BGFProduction p), BGFGrammar g)
 	= transform::library::Terminals::runAbstractize(p,g);
+public XBGFResult transform(addC(BGFProduction p), BGFGrammar g)
+	= transform::library::Conjunction::runAddC(p,g);
 public XBGFResult transform(addH(BGFProduction p), BGFGrammar g)
-	= transform::library::Intermittent::runAddH(p,g);
+	= transform::library::Disjunction::runAddH(p,g);
 public XBGFResult transform(addV(BGFProduction p), BGFGrammar g)
 	= transform::library::Productions::runAddV(p,g);
 public XBGFResult transform(anonymize(BGFProduction p), BGFGrammar g)
@@ -73,7 +76,7 @@ public XBGFResult transform(factor(BGFExpression e1, BGFExpression e2, XBGFScope
 public XBGFResult transform(fold(str x, XBGFScope w), BGFGrammar g)
 	= transform::library::Folding::runFold(x,w,g);
 public XBGFResult transform(horizontal(XBGFScope w), BGFGrammar g)
-	= transform::library::Intermittent::runHorizontal(w,g);
+	= transform::library::Disjunction::runHorizontal(w,g);
 public XBGFResult transform(importG(list[BGFProduction] ps), BGFGrammar g)
 	= transform::library::Productions::runImportG(ps,g);
 public XBGFResult transform(inject(BGFProduction p), BGFGrammar g)
@@ -99,7 +102,7 @@ public XBGFResult transform(rassoc(BGFProduction p), BGFGrammar g)
 public XBGFResult transform(redefine(list[BGFProduction] ps), BGFGrammar g)
 	= transform::library::Productions::runRedefine(ps,g);
 public XBGFResult transform(removeH(BGFProduction p), BGFGrammar g)
-	= transform::library::Intermittent::runRemoveH(p,g);
+	= transform::library::Disjunction::runRemoveH(p,g);
 public XBGFResult transform(removeV(BGFProduction p), BGFGrammar g)
 	= transform::library::Productions::runRemoveV(p,g);
 public XBGFResult transform(renameL(str x, str y), BGFGrammar g)
@@ -131,7 +134,7 @@ public XBGFResult transform(unlabel(str x), BGFGrammar g)
 public XBGFResult transform(upgrade(BGFProduction p1, BGFProduction p2), BGFGrammar g)
 	= transform::library::Folding::runUpgrade(p1,p2,g);
 public XBGFResult transform(vertical(XBGFScope w), BGFGrammar g)
-	= transform::library::Intermittent::runVertical(w,g);
+	= transform::library::Disjunction::runVertical(w,g);
 public XBGFResult transform(widen(BGFExpression e1, BGFExpression e2, XBGFScope w), BGFGrammar g)
 	= transform::library::Width::runWiden(e1,e2,w,g);
 public XBGFResult transform(yaccify(list[BGFProduction] ps), BGFGrammar g)

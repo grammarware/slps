@@ -11,6 +11,7 @@ public str ppxs(XBGFSequence xs) = mapjoin(ppx,xs,"\n");
 
 public str ppx(XBGFCommand::abridge(BGFProduction p)) = "abridge(<pp(p)>)";
 public str ppx(XBGFCommand::abstractize(BGFProduction p)) = "abstractize(<pp(p)>)";
+public str ppx(XBGFCommand::addC(BGFProduction p)) = "addC(<pp(p)>)";
 public str ppx(XBGFCommand::addH(BGFProduction p)) = "addH(<pp(p)>)";
 public str ppx(XBGFCommand::addV(BGFProduction p)) = "addV(<pp(p)>)";
 public str ppx(XBGFCommand::anonymize(BGFProduction p)) = "anonymize(<pp(p)>)";

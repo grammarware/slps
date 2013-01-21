@@ -1,6 +1,6 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 @wiki{addH,horizontal,removeH,vertical}
-module transform::library::Intermittent
+module transform::library::Disjunction
 
 //import lib::Rascalware;
 import syntax::BGF;
