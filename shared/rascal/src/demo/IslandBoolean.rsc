@@ -12,6 +12,7 @@ import export::BNF;
 import export::XPNF;
 import mutate::Mutations;
 import IO;
+import lib::Tolerant;
 
 public void ppAll()
 {
@@ -22,12 +23,13 @@ public void go()
 {
 	g1 = readBGF(|home:///mutatedF2.bgf|);
 	g1.roots = ["compilation-unit"];
-	g2 = vtransform(addlex,g1);
-	g3 = mutate([skeletonise],g2);
+	g2 = transform(importG(lib::Tolerant::library.prods),g1).g;
+	g3 = vtransform(addlex,g2);
+	g4 = mutate([skeletonise],g3);
 	//println(pp(subgrammar(g2,"compilation-unit")));
-	println(pp(g3));
-	for (p:production(_,"namespace-body",_)<- g3.prods)
-		iprintln(p);
+	println(pp(g4));
+	//for (p:production(_,"namespace-body",_)<- g3.prods)
+	//	iprintln(p);
 }
 
 public void gold()

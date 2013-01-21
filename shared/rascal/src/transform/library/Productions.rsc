@@ -57,9 +57,9 @@ XBGFResult runImportG(list[BGFProduction] ps1, BGFGrammar g)
 	defs12 = defs1 & definedNs(g.prods);
 	du12 = defs1 & usedNs(g.prods);
 	if (!isEmpty(defs12))
-		return <problemProds("Import clashes with existing definitions", defs12),g>;
+		return <problemStrs("Import clashes with existing definitions", toList(defs12)),g>;
 	if (!isEmpty(du12))
-		return <problemProds("Import clashes with existing definitions", du12),g>;
+		return <problemStrs("Import clashes with existing definitions", toList(du12)),g>;
 	return <ok(),grammar(g.roots, ps1 + g.prods)>;
 }
 

@@ -90,3 +90,4 @@ public int levenshtein(str x, str y)
 	return prow[size(prow)-1];
 }
 
+public list[&T] toList(set[&T] xs) = Set::toList(xs);
