@@ -5,17 +5,17 @@ import syntax::BGF;
 
 BGFGrammar library = grammar([],
 	[
-		production("","not-semicolon",star(not(terminal(";")))),
-		production("","not-right-square-bracket",star(not(terminal("]")))),
-		production("","not-left-curly",star(not(terminal("{")))),
-		production("","not-curly",star(not(choice([terminal("{"),terminal("}")])))),
-		production("","not-whitespace",star(not(choice([terminal(" "),terminal("\t")])))),
-		production("","balanced-curlies",
+		production("","lex-not-semicolon",star(not(terminal(";")))),
+		production("","lex-not-right-square-bracket",star(not(terminal("]")))),
+		production("","lex-not-left-curly",star(not(terminal("{")))),
+		production("","lex-not-curly",star(not(choice([terminal("{"),terminal("}")])))),
+		production("","lex-not-whitespace",star(not(choice([terminal(" "),terminal("\t")])))),
+		production("","lex-balanced-curlies",
 			sequence([
 				terminal("{"),
 				star(choice([
-					nonterminal("balanced-curlies"),
-					nonterminal("not-curly")
+					nonterminal("lex-balanced-curlies"),
+					nonterminal("lex-not-curly")
 				])),
 				terminal("}")
 			])

@@ -48,3 +48,8 @@ public void tst2() = main(
 	|project://slps/src/syntax/XBGF.rsc|,
 	|project://slps/src/export/XBNF2.rsc|
 );
+
+public void tst3() = main(
+	|project://slps/src/syntax/BGF.rsc|,
+	|project://slps/src/export/Rascal.rsc|
+);
