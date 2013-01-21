@@ -3,6 +3,7 @@
 module mutate::Mutations
 
 extend mutate::SubGrammar;
+extend mutate::Skeletonise;
 extend mutate::DeYaccify;
 extend mutate::InlineChains;
 extend mutate::InlineLazy;

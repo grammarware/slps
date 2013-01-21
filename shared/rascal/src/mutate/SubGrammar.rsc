@@ -6,6 +6,18 @@ import lib::Rascalware;
 import syntax::BGF;
 import transform::library::Util;
 
+public BGFGrammar subgrammar(BGFGrammar g, list[str] roots)
+{
+	gr = grammar([],[]);
+	for (root <- roots)
+	{
+		g2 = subgrammar(g,root);
+		gr.roots += g2.roots;
+		gr.prods += [p | p <- g2.prods, !inProds(p,gr.prods)];
+	}
+	return normalise(gr);
+}
+
 public BGFGrammar subgrammar(BGFGrammar g, str root)
 {
 	BGFProdList ps = [];
