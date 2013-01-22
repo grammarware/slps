@@ -30,16 +30,26 @@ XBGFResult runFold(str x, XBGFScope w, BGFGrammar g)
 
 XBGFResult runInline(str x, BGFGrammar g)
 {
-	if (<ps1,[production(_, x, BGFExpression rhs)],ps2> := splitPbyW(g.prods,innt(x)))
-		return transform::library::Brutal::runReplace(nonterminal(x),rhs,globally(),grammar(g.roots,ps1+ps2));
+	if (<ps1,[production(str l, x, BGFExpression rhs)],ps2> := splitPbyW(g.prods,innt(x)))
+	{
+		if (l=="")
+			return transform::library::Brutal::runReplace(nonterminal(x),rhs,globally(),grammar(g.roots,ps1+ps2));
+		else
+			return transform::library::Brutal::runReplace(nonterminal(x),selectable(l,rhs),globally(),grammar(g.roots,ps1+ps2));
+	}
 	else 
 		return <problemStr("Nonterminal must be defined horizontally prior to inlining.",x),g>;
 }
 
 XBGFResult runUnfold(str x, XBGFScope w, BGFGrammar g)
 {
-	if (<_,[production(_, x, BGFExpression rhs)],_> := splitPbyW(g.prods,innt(x)))
-		return transform::library::Brutal::runReplace(nonterminal(x),rhs,comboscope(notinnt(x),w),g);
+	if (<_,[production(str l, x, BGFExpression rhs)],_> := splitPbyW(g.prods,innt(x)))
+	{
+		if (l=="")
+			return transform::library::Brutal::runReplace(nonterminal(x),rhs,comboscope(notinnt(x),w),g);
+		else
+			return transform::library::Brutal::runReplace(nonterminal(x),selectable(l,rhs),comboscope(notinnt(x),w),g);
+	}
 	else
 		return <problemStr("Nonterminal must be defined horizontally prior to unfolding.",x),g>;
 }

@@ -26,6 +26,14 @@ public set[str] leafNs(BGFGrammar g) = leafNs(g.prods);
 public set[str] allTs(BGFProdList ps) = {s | /terminal(str s) := ps};
 public set[str] allTs(BGFGrammar g) = allTs(g.prods);
 
+@doc{All labels used in a grammar}
+public set[str] allLs(BGFProdList ps) = {s | production(s,_,_) <- ps};
+public set[str] allLs(BGFGrammar g) = allLs(g.prods);
+
+@doc{All selectors used in a grammar}
+public set[str] allSs(BGFProdList ps) = {s | /selectable(str s, _) := ps};
+public set[str] allSs(BGFGrammar g) = allSs(g.prods);
+
 @doc{All nonterminals used in a grammar}
 public set[str] usedNs(BGFExpression e) = {s | /nonterminal(str s) := e};
 public set[str] usedNs(BGFProdList ps) = {s | /nonterminal(str s) := ps};

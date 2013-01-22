@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-@wiki{RenameAll}
+@wiki{RenameAllN, RenameAllS}
 module mutate::Naming
 
 import lib::Rascalware;
@@ -68,18 +68,51 @@ str phrase2name(list[str] ws, str sep, camelcase())
 str phrase2name(list[str] ws, str sep, mixedcase())
 	= (toLowerCase(ws[0]) | it + sep + toCapitalised(w) | w <- tail(ws));
 
-public BGFGrammar changeConvention(BGFGrammar g, NamingConvention src, NamingConvention tgt)
+public BGFGrammar changeConventionN(BGFGrammar g, NamingConvention src, NamingConvention tgt)
 {
 	XBGFSequence x = [];
+	str nn;
 	for (n <- allNs(g))
 		if (doesNameConform(n,src))
-			x += [renameN(n,phrase2name(name2phrase(n,src),tgt))];
+		{
+			nn = phrase2name(name2phrase(n,src),tgt);
+			if (n != nn)
+				x += [renameN(n, nn)];
+		}
 	return transform(x,g);
 }
 
-public BGFGrammar changeDashedUpper2GluedCamel(BGFGrammar g)
-	= changeConvention(g, <uppercase(),"-">, <camelcase(),"">);
-public BGFGrammar changeDashedLower2GluedCamel(BGFGrammar g)
-	= changeConvention(g, <lowercase(),"-">, <camelcase(),"">);
+public BGFGrammar changeConventionS(BGFGrammar g, NamingConvention src, NamingConvention tgt)
+{
+	// works only on selectors with globally unique names
+	XBGFSequence x = [];
+	str nn;
+	for (n <- allSs(g))
+		if (doesNameConform(n,src))
+		{
+			nn = phrase2name(name2phrase(n,src),tgt);
+			if (n != nn)
+				x += [renameS(n, nn, globally())];
+		}
+	return transform(x,g);
+}
 
-	
+// predefined changes for nonterminals
+public BGFGrammar changeDashedUpper2GluedCamelN(BGFGrammar g)
+	= changeConventionN(g, <uppercase(),"-">, <camelcase(),"">);
+public BGFGrammar changeDashedLower2GluedCamelN(BGFGrammar g)
+	= changeConventionN(g, <lowercase(),"-">, <camelcase(),"">);
+public BGFGrammar changeDashedUpper2GluedMixedN(BGFGrammar g)
+	= changeConventionN(g, <uppercase(),"-">, <mixedcase(),"">);
+public BGFGrammar changeDashedLower2GluedMixedN(BGFGrammar g)
+	= changeConventionN(g, <lowercase(),"-">, <mixedcase(),"">);
+
+// predefined changes for selectors
+public BGFGrammar changeDashedUpper2GluedCamelS(BGFGrammar g)
+	= changeConventionS(g, <uppercase(),"-">, <camelcase(),"">);
+public BGFGrammar changeDashedLower2GluedCamelS(BGFGrammar g)
+	= changeConventionS(g, <lowercase(),"-">, <camelcase(),"">);
+public BGFGrammar changeDashedUpper2GluedMixedS(BGFGrammar g)
+	= changeConventionS(g, <uppercase(),"-">, <mixedcase(),"">);
+public BGFGrammar changeDashedLower2GluedMixedS(BGFGrammar g)
+	= changeConventionS(g, <lowercase(),"-">, <mixedcase(),"">);
