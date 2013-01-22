@@ -28,14 +28,14 @@ syntax MegaRel
 	| ID "(" ID ")" "|-\>" ID
 	;
 syntax MegaBin
-	= ( "\<"  | "subsetOf" )
-	| ( ":"  | "elementOf" )
-	| ( "@"  | "partOf" )
-	| ( "="  | "correspondsTo" )
-	| ( "~\>" | "dependsOn" | "refersTo" )
-	| ( "-|" | "conformsTo" )
-	| ( "=\>" | "realizationOf" | "descriptionOf" | "definitionOf" )
-	| ( "inputOf" | "hasOutput" | "domainOf" | "hasRange" )
+	=  "\<"  | "subsetOf"
+	|  ":"  | "elementOf" 
+	|  "@"  | "partOf" 
+	|  "="  | "correspondsTo" 
+	|  "~\>" | "dependsOn" | "refersTo" 
+	|  "-|" | "conformsTo" 
+	|  "=\>" | "realizationOf" | "descriptionOf" | "definitionOf" 
+	|  "inputOf" | "hasOutput" | "domainOf" | "hasRange" 
 	;
 syntax MegaFun = ":" ID "-\>" ID;
 lexical ID = @category="Variable"
