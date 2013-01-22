@@ -6,6 +6,8 @@ import lib::Rascalware;
 import syntax::BGF;
 import transform::library::Util;
 
+public BGFGrammar subgrammar(BGFGrammar g) = subgrammar(g,g.roots); 
+
 public BGFGrammar subgrammar(BGFGrammar g, list[str] roots)
 {
 	gr = grammar([],[]);

@@ -5,7 +5,8 @@ module export::Rascal
 
 import lib::Rascalware;
 import syntax::BGF;
-import String;
+import String; //startsWith
+import List; //getOneFrom
 
 public str pprsc(BGFGrammar g) =
 "@contributor{BGF2Rascal automated exporter - SLPS - http://github.com/grammarware/slps/wiki/BGF2Rascal}
@@ -13,14 +14,25 @@ public str pprsc(BGFGrammar g) =
 '
 'import ParseTree;
 'import util::IDE;
+'import IO;
 '
-'<for(p<-g.prods){><pprsc(p)><}>
+'layout WS = [\\t-\\n\\r\\ ]* !\>\> [\\t-\\n\\r\\ ];
+'
+'<for(p<-g.prods){><if(p.lhs in g.roots){><pprscroot(p)><} else {><pprsc(p)><}><}>
+'
+'public void main()
+'{
+'	registerLanguage(\"Name\", \"ext\", <getOneFrom(g.roots)>(str input, loc org) {return parse(#<getOneFrom(g.roots)>, input, org);});
+'	println(\"Language registered.\");
+'}
 ";
+
+public str pprscroot(BGFProduction p) = "start syntax <p.lhs> = <pprscstop(p.rhs)>;\n\n";
 
 public str pprsc(BGFProduction p)
 {
 	//if (/not(_) := p)
-	if (startsWith(p.lhs,"lex-"))
+	if (startsWith(p.lhs,"Lex"))
 		return "lexical <p.lhs> = <pprscl(p.rhs)>;\n\n";
 	else
 		return "syntax <p.lhs> = <pprscstop(p.rhs)>;\n\n";
@@ -77,6 +89,14 @@ public str pprscl(BGFExpression::terminal(str t)) = "[<pprsct(t)>]";
 
 public str pprscl(BGFExpression::choice(BGFExprList exprs)) = "[<mapjoin(pprsclin,exprs,"")>]";
 public str pprscl(BGFExpression::star(BGFExpression e)) = "<pprscl(e)>* !\>\> <pprscl(e)>";
+public str pprscl(BGFExpression::sequence(BGFExprList exprs)) = "<mapjoin(pprscl2,exprs," ")>";
+
+public str pprscl2(BGFExpression::not(e)) = "!<pprscl2(e)>";
+public str pprscl2(BGFExpression::terminal(str t)) = "[<pprsct(t)>]";
+public str pprscl2(BGFExpression::nonterminal(str t)) = "<t>";
+public str pprscl2(BGFExpression::star(BGFExpression e)) = "(<pprscl2(e)>)*";
+public str pprscl2(BGFExpression::choice(BGFExprList es)) = "<mapjoin(pprscl2,es,"| ")>";
+
 //public str pprscl(BGFExpression::star(e1:not(BGFExpression e2))) = "<pprscl(e1)>* !\>\> <pprscl(e2)>";
 //
 

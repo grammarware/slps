@@ -8,6 +8,7 @@ extend mutate::DeYaccify;
 extend mutate::InlineChains;
 extend mutate::InlineLazy;
 extend mutate::InlinePlus;
+extend mutate::Naming;
 
 import syntax::BGF;
 import normal::BGF;

@@ -27,11 +27,13 @@ public void go()
 	g2 = transform(importG(lib::Tolerant::library.prods),g1).g;
 	g3 = vtransform(addlex,g2);
 	g4 = mutate([skeletonise],g3);
+	println(pp(g4));
 	g5 = vtransform(lastInlines,g4);
-	writeBGF(g5,|home:///preRsc.bgf|);
+	writeBGF(g5,|home:///grammar_preRsc.bgf|);
 	//g4 = readBGF(|home:///preRsc.bgf|);
 	println(pp(g5));
-	println(pprsc(g5));
+	g6 = mutate([changeDashedLower2GluedCamel], g5);
+	println(pprsc(g6));
 	//for (p:production(_,"namespace-body",_)<- g3.prods)
 	//	iprintln(p);
 }
