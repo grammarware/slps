@@ -4,7 +4,6 @@ module mutate::Skeletonise
 
 import lib::Rascalware;
 import syntax::BGF;
-import transform::library::Util;
 import mutate::SubGrammar;
 
 // leaves only lexical conjunctive clauses in the grammar
@@ -12,7 +11,8 @@ public BGFGrammar skeletonise(BGFGrammar g)
 {
 	nps = visit(g.prods)
 	{
-		case production(str label, str lhs, allof([selectable("lex", e1),e2])) => production(label,lhs,e1)
+		case production(str label, str lhs, allof([selectable("lex", e1),e2]))
+			=> production(label,lhs,selectable(lhs,e1))
 	};
-	return subgrammar(grammar(g.roots,nps), g.roots);
+	return subgrammar(grammar(g.roots,nps));
 }

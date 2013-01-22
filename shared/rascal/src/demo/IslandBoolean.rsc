@@ -32,7 +32,7 @@ public void go()
 	writeBGF(g5,|home:///grammar_preRsc.bgf|);
 	//g4 = readBGF(|home:///preRsc.bgf|);
 	println(pp(g5));
-	g6 = mutate([changeDashedLower2GluedCamel], g5);
+	g6 = mutate([changeDashedLower2GluedCamelN,changeDashedLower2GluedMixedS], g5);
 	println(pprsc(g6));
 	//for (p:production(_,"namespace-body",_)<- g3.prods)
 	//	iprintln(p);
@@ -451,12 +451,21 @@ XBGFSequence addlex = [
 		// addC( type ::= not-whitespace ;)
 		//addC(production("","type",nonterminal("not-whitespace")))
 		// a bit more brutal than it could be
+		introduce([production("","namespace-member-name",
+			choice([
+				terminal("namespace"),
+				terminal("class"),
+				terminal("struct"),
+				terminal("interface"),
+				terminal("enum"),
+				terminal("delegate")
+			]))]),
 		addC(production("lex","namespace-member-declaration-insides",
 		sequence([
-			nonterminal("lex-not-whitespace"),
-			nonterminal("lex-not-whitespace"),
-			nonterminal("lex-not-left-curly"),
-			nonterminal("lex-balanced-curlies"),
+			selectable("namespace-member-name",nonterminal("namespace-member-name")),
+			selectable("identifier1",nonterminal("lex-not-whitespace")),
+			selectable("identifier2",optional(nonterminal("lex-not-left-curly"))),
+			selectable("namespace-member-insides",nonterminal("lex-balanced-curlies")),
 			optional(terminal(";"))
 		])
 		// TODO: delegates

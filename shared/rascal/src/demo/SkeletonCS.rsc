@@ -5,22 +5,19 @@ import ParseTree;
 import util::IDE;
 import IO;
 
-layout WS = [\t\n\ ]* !>> [\t\n\ ];
+layout WS = [\t-\n\r\ ]* !>> [\t-\n\r\ ];
 
-start syntax CompilationUnit =
-	("using" LexNotSemicolon ";")*
-	GlobalAttributeSection*
-	NamespaceMemberDeclaration*;
+start syntax CompilationUnit = UsingDirective* usingDirectives GlobalAttributeSection* NamespaceMemberDeclaration*;
 
-syntax GlobalAttributeSection = "[" "assembly" ":" LexNotRightSquareBracket "]";
+syntax UsingDirective = "using" LexNotSemicolon usingDirectiveInsides ";";
+
+syntax GlobalAttributeSection = "[" "assembly" ":" LexNotRightSquareBracket globalAttributeSectionInsides "]";
 
 syntax NamespaceMemberDeclaration = AttributeSection* Modifier* NamespaceMemberDeclarationInsides;
 
-//syntax LexNotSemicolon = LexNotSemicolonChunk+ () >> [;];
-//lexical LexNotSemicolonChunk = ![;\ \t\n]* >> ![;\ \t\n];
-lexical LexNotSemicolon =  ![;]* !>> ![;];
+lexical LexNotSemicolon = ![;]* !>> ![;];
 
-syntax Modifier = @category="Constant" "new"
+syntax Modifier = "new"
  | "public"
  | "protected"
  | "internal"
@@ -28,13 +25,18 @@ syntax Modifier = @category="Constant" "new"
  | "abstract"
  | "sealed";
 
-syntax AttributeSection = "[" LexNotRightSquareBracket "]";
+syntax AttributeSection = "[" LexNotRightSquareBracket attributeSectionInsides "]";
 
-syntax NamespaceMemberDeclarationInsides = MemberName LexNotWhitespace LexNotLeftCurly LexBalancedCurlies ";"?;
-
-syntax MemberName = "namespace" | "class" | "struct" | "interface" | "enum" | "delegate";
+syntax NamespaceMemberDeclarationInsides = NamespaceMemberName namespaceMemberName LexNotWhitespace identifier1 LexNotLeftCurly? identifier2 LexBalancedCurlies namespaceMemberInsides ";"?;
 
 lexical LexNotLeftCurly = ![{]* !>> ![{];
+
+syntax NamespaceMemberName = "namespace"
+ | "class"
+ | "struct"
+ | "interface"
+ | "enum"
+ | "delegate";
 
 lexical LexNotWhitespace = ![\ \t]* !>> ![\ \t];
 
@@ -47,12 +49,23 @@ lexical LexNotCurly = ![{}]* !>> ![{}];
 
 public void main()
 {
-	registerLanguage("Name", "cs", CompilationUnit(str input, loc org) {return parse(#CompilationUnit, input, org);});
+	registerLanguage("CSharp", "cs", CompilationUnit(str input, loc org) {return parse(#CompilationUnit, input, org);});
 	println("Language registered.");
+	registerContributions("CSharp",{popup(menu("CSharp",[edit("using2dot",using2dot)]))});
+	println("Menu item registered.");}
+
+public str using2dot(CompilationUnit cu, loc z)
+{
+	list[str] us = [];
+	for (UsingDirective ud <- cu.usingDirectives)
+		us += ["<ud.usingDirectiveInsides>"];
+	return "<us>";
 }
 
 public void tryit()
 {
-	println(parse(#CompilationUnit, |home:///projects/slps/shared/rascal/src/demo/Program.cs|));
+	r = parse(#CompilationUnit, |home:///projects/slps/shared/rascal/src/demo/Program.cs|);
+	println(r);
+	println(using2dot(r,|cwd:///|));
 	//println("Language registered.");
 }
