@@ -1,6 +1,6 @@
 #!/Library/Frameworks/Python.framework/Versions/3.1/bin/python3
 # -*- coding: utf-8 -*-
-# wiki: RenameAll
+# wiki: RenameAllN
 import os,sys
 sys.path.append(os.getcwd().split('slps')[0]+'slps/shared/python')
 import BGF3

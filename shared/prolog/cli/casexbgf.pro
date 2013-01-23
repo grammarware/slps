@@ -1,5 +1,5 @@
 :- ensure_loaded('../slps.pro').
-% wiki: RenameAll
+% wiki: RenameAllN
 
 casexbgf('1',all,down).
 casexbgf('2',all,up).

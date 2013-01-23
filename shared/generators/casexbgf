@@ -1,5 +1,5 @@
 #! /bin/sh
-# wiki: RenameAll
+# wiki: RenameAllN
 # Get our hands on basedir
 LOCAL1=${PWD}
 cd `dirname $0`

@@ -13,7 +13,7 @@ for root, dirs, filenames in os.walk('/Users/zaytsev/projects/slps/shared/rascal
 		rd = open(os.path.join(root,f),'r')
 		txt = ''.join(rd.readlines())
 		if txt.find('@wiki')>-1:
-			for where in txt.split('@wiki{')[1].split('}')[0].split(','):
+			for where in map(lambda x:x.strip(),txt.split('@wiki{')[1].split('}')[0].split(',')):
 				g = where[0].upper()+where[1:]
 				good = os.path.join(root, f).split('projects/slps/')[1]
 				if g in maps.keys():
