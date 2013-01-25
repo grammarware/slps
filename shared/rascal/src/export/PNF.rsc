@@ -10,22 +10,19 @@ public str ppnf(BGFProdList ps) = mapjoin(ppnf,ps,"\n");
 
 public str ppnf(set[BGFProduction] ps) = mapjoin(ppnf,ps,"\n");
 
-public str ppnf(BGFProduction p) = "\\textit{<p.lhs>} ::= <ppnftop(p.rhs)> ;";
+public str ppnf(BGFProduction p) = "\\p(\\textit{<p.lhs>}, <ppnf(p.rhs)> ) ;";
 
-str ppnftop(sequence(BGFExprList es)) = "(<ppnf(es)>)";
-default str ppnftop(BGFExpression e) = ppnf(e);
+// public str ppnf(BGFExprList es) = mapjoin(ppnf,es,", ");
 
-public str ppnf(BGFExprList es) = mapjoin(ppnf,es,", ");
-
-public str ppnf(epsilon()) = "\\true";
-public str ppnf(empty()) = "\\false";
+public str ppnf(epsilon()) = "\\varepsilon";
+public str ppnf(empty()) = "\\varphi";
 public str ppnf(val(string())) = "\\mathit{str}";
 public str ppnf(val(integer())) = "\\mathit{int}";
-public str ppnf(anything()) = "ANYTHING";
+public str ppnf(anything()) = "\\alpha";
 public str ppnf(terminal(str s)) = "\\te(\\textit{<s>})";
 public str ppnf(nonterminal(str s)) = "\\n(\\textit{<s>})";
-public str ppnf(selectable(s,e)) = "\\s(<s>,<ppnfost(e)>)";
-public str ppnf(sequence(L)) = "(<mapjoin(ppnf,L,", ")>)";
+public str ppnf(selectable(s,e)) = "\\s(<s>, <ppnfost(e)>)";
+public str ppnf(sequence(L)) = "<mapjoin(ppnf,L," \\cdot ")>";
 public str ppnf(choice(L)) = "\\dis([<mapjoin(ppnf,L,"; ")>])";
 public str ppnf(allof(L)) = "\\con([<mapjoin(ppnf,L,"; ")>])";
 public str ppnf(marked(e)) = "\\langle<ppnf(e)>\\rangle";
