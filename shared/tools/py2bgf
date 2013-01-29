@@ -1,5 +1,5 @@
 #!/bin/sh
-# wiki: Py2BGF
+# wiki: Python2BGF
 
 LOCAL=${PWD}
 cd `dirname $0`

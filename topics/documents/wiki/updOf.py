@@ -4,11 +4,15 @@
 import os
 
 parts = {}
+allpages = []
 
 # * Abridge is a part of [[XBGF]]
 
 for root, dirs, filenames in os.walk('texts'):
 	for f in filenames:
+		if not f.endswith('.md'):
+			continue
+		allpages.append(f.replace('.md',''))
 		rd = open(os.path.join(root,f),'r')
 		lines = rd.readlines()
 		changed = False
@@ -31,10 +35,12 @@ for root, dirs, filenames in os.walk('texts'):
 				rd.write(line)
 			rd.close()
 
+parts['Home'] = allpages
 for big in parts.keys():
 	f = open('texts/%s.md' % big, 'r')
-	links = [p.split(']]')[0].upper() for p in ''.join(f.readlines()).split('[[')[1:]]
+	links = [p.split(']]')[0].split('|')[-1].upper() for p in ''.join(f.readlines()).split('[[')[1:]]
+	# print big,'refers to',links
 	for small in parts[big]:
-		if small.upper() not in links:
+		if small.upper()!=big.upper() and small.upper() not in links:
 			print '%s does not refer to %s, but totally should.' % (big, small)
 	f.close()
