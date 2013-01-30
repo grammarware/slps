@@ -12,7 +12,7 @@ data XBGFCommand =
 	| addH(BGFProduction p) // marked
 	| addV(BGFProduction p)
 	| addC(BGFProduction p) // conjunctive extension
-	| anonymize(BGFProduction p)
+	| anonymize(BGFProduction p) // marked
 	| appear(BGFProduction p) // marked
 	| bypass()
 	| chain(BGFProduction p)

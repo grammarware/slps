@@ -11,11 +11,11 @@ h = [
 
 c = [
 	['BGF', 'XBGF', 'CBGF', 'EXBGF', 'MegaL', 'LDF', 'XLDF', 'EDD',
-	'ANF|Abstract Normal Form', 'LCI', 'BTF', 'LCF', 'Rascal', 'Prolog', 'XML', 'XSD', 'Factorial Language', 'Java Language Specification', 'Grammarware', 'grammar in a broad sense', 'Metaprogramming', 'Grammar programming', 'Grammar convergence', 'Guided grammar convergence', 'Negotiated transformation']
+	'ANF|Abstract Normal Form', 'LCI', 'BTF', 'LCF', 'Rascal', 'Prolog', 'XML', 'XSD', 'Factorial Language', 'Java Language Specification', 'Grammarware', 'Grammar in a broad sense', 'Metaprogramming', 'Grammar programming', 'Grammar convergence', 'Guided grammar convergence', 'Negotiated transformation']
 	,
 	['ANTLR2BGF', 'AsFix2BTF', 'BGF2BNF', 'BGF2DMS', 'BGF2dot', 'BGF2HTML', 'BGF2Rascal', 'BGF2SDF', 'BGF2TeX', 'BGF2TXL', 'BTF2BGF', 'BTF2source', 'CBGF2', 'CBGF2CBNF', 'CBGF2XBGF', 'DCG2BGF', 'Ecore2BGF', 'EDD2Rascal', 'EXBGF2XBGF', 'HTML2BGF', 'Java2BGF', 'LDF2BGF', 'LDF2HTML', 'LDF2PDF', 'LDF2SET', 'LDF2TEX', 'LLL2BGF', 'PDF2BGF', 'Python2BGF', 'Rascal2BGF', 'RascalADT2BGF', 'RascalSyntax2BGF', 'SDF2BGF', 'Spec2BGF', 'TXL2BGF', 'XBGF2CBGF', 'XBGF2HTML', 'XBGF2TeX', 'XBGF2XBNF', 'XML2BTF', 'XSD2BGF', 'XSD2LDF', 'ADT2PP', 'XBGF2Rascal']
 	,
-	['AppendXBGF', 'BGFlc', 'BGFover', 'BGFpp', 'BGFreformat', 'BuildTestSetXml', 'CBGF', 'CheckBGF', 'CheckXBGF', 'EXBGFover', 'ExtractOver', 'FindH', 'GBTF', 'GDT|Grammar Diff Tool', 'LCI', 'LDinclude', 'MergeBGF', 'NormBGF', 'PlotBGF', 'REPP', 'ShowBGF', 'ShowG', 'ShowPNF', 'ShowRootProds', 'ShowT', 'ShowX', 'ShowXBGF', 'ShowXSD', 'TDT', 'TnB', 'TokenOverview', 'Validate', 'XBGF', 'XBGFinfo', 'XBGFlc', 'XBGFover', 'XBGFsliced', 'XBTF', 'XLLL', 'CheckBTF', 'ImplodeBTF', 'ReadBGF', 'ReadBTF', 'ReadXBGF', 'WriteBGF', 'WriteBTF', 'WriteLDF', 'WriteXBGF', 'WriteΞBGF']
+	['AppendXBGF', 'BGFlc', 'BGFover', 'BGFpp', 'BGFreformat', 'BuildTestSetXML', 'CBGF', 'CheckBGF', 'CheckXBGF', 'EXBGFover', 'ExtractOver', 'FindH', 'GBTF', 'GDT|Grammar Diff Tool', 'LCI', 'LDinclude', 'MergeBGF', 'NormBGF', 'PlotBGF', 'REPP', 'ShowBGF', 'ShowG', 'ShowPNF', 'ShowRootProds', 'ShowT', 'ShowX', 'ShowXBGF', 'ShowXSD', 'TDT', 'TnB', 'TokenOverview', 'Validate', 'XBGF', 'XBGFinfo', 'XBGFlc', 'XBGFover', 'XBGFsliced', 'XBTF', 'XLLL', 'CheckBTF', 'ImplodeBTF', 'ReadBGF', 'ReadBTF', 'ReadXBGF', 'WriteBGF', 'WriteBTF', 'WriteLDF', 'WriteXBGF', 'WriteΞBGF']
 	,
 	['abridge', 'abstractize', 'addH', 'addV', 'anonymize', 'appear', 'chain', 'concretize', 'deanonymize', 'define', 'designate', 'detour', 'deyaccify', 'disappear', 'distribute', 'downgrade', 'dump', 'eliminate', 'equate', 'extract', 'factor', 'fold', 'horizontal', 'importG', 'inject', 'inline', 'introduce', 'lassoc', 'massage', 'narrow', 'permute', 'project', 'rassoc', 'redefine', 'removeH', 'removeV', 'renameT', 'renameL', 'renameN', 'renameS', 'replace', 'undefine', 'unfold', 'unite', 'unlabel', 'upgrade', 'vertical', 'widen', 'yaccify', 'bypass', 'concatT', 'splitT', 'splitN', 'reroot', 'unchain', 'addC', 'clone', 'iterate']
 	,
@@ -32,6 +32,7 @@ f.write('''<center>
 ![SLPS](http://grammarware.github.com/logos/slps.200.png)
 # [Software Language Processing Suite](http://slps.github.com)
 # Documentation Wiki
+# ([[Statistics]])
 </center>
 
 ''')

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+rm -rf files.*
+find ~/projects/slps -name "$1" | sed 's/ /\\ /g' > files.lst
+cat files.lst | xargs -n1 cat >> files.src
+wc -l files.*
