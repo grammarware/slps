@@ -41,6 +41,7 @@ default str showppd(BGFExpression e) = "<e>";
 str showtype(val(string())) = "str";
 str showtype(val(integer())) = "int";
 str showtype(star(e)) = "list[<showtype(e)>]";
+str showtype(plus(e)) = "list[<showtype(e)>]";
 str showtype(nonterminal(n)) = "<n>";
 default str showtype(e) = ""; // silence is gold
 
