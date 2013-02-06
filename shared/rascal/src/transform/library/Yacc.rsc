@@ -75,7 +75,7 @@ XBGFResult runYaccify(list[BGFProduction] ps1, BGFGrammar g)
 	if ({str x} := definedNs(ps1))
 	{
 		<ps3,ps4,ps5> = splitPbyW(g.prods,innt(x));
-		if ([dyp1] := ps4 && [yp1,yp2] := ps1 && transform::library::Yacc::yaccification(dyp1,{yp1,yp2}))
+		if ([dyp1] := ps4 && [yp1,yp2] := ps1 && yaccification(dyp1,{yp1,yp2}))
 			return <ok(),grammar(g.roots, ps3 + ps1 + ps5)>;
 		else
 			return <problemProds2("Unsuitable yaccification",ps1,ps4),g>;

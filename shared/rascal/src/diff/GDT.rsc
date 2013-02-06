@@ -8,11 +8,11 @@ import normal::BGF;
 import List;
 import IO;
 
-tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] L1, list[BGFExpression] L2) = tryMatchChoices([],L1,[],L2,false);
-tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] es1, [], list[BGFExpression] es2, list[BGFExpression] L2, false) = <false,[],[]>; 
-tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] es1, [], list[BGFExpression] es2, list[BGFExpression] L2, true) = <true,es1,es2+L2>;
-tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] es1, list[BGFExpression] L1, list[BGFExpression] es2, [], bool hit) = <false,[],[]>;
-tuple[bool,list[BGFExpression],list[BGFExpression]] tryMatchChoices(list[BGFExpression] es1, list[BGFExpression] L1, list[BGFExpression] es2, list[BGFExpression] L2, bool hit)
+tuple[bool,BGFExprList,BGFExprList] tryMatchChoices(BGFExprList L1, BGFExprList L2) = tryMatchChoices([],L1,[],L2,false);
+tuple[bool,BGFExprList,BGFExprList] tryMatchChoices(BGFExprList es1, [], BGFExprList es2, BGFExprList L2, false) = <false,[],[]>; 
+tuple[bool,BGFExprList,BGFExprList] tryMatchChoices(BGFExprList es1, [], BGFExprList es2, BGFExprList L2, true) = <true,es1,es2+L2>;
+tuple[bool,BGFExprList,BGFExprList] tryMatchChoices(BGFExprList es1, BGFExprList L1, BGFExprList es2, [], bool hit) = <false,[],[]>;
+tuple[bool,BGFExprList,BGFExprList] tryMatchChoices(BGFExprList es1, BGFExprList L1, BGFExprList es2, BGFExprList L2, bool hit)
 {
 	for (y <- L2)
 	{
@@ -62,7 +62,7 @@ public bool eqP(production(str l,str x, BGFExpression e1), production(l,x, BGFEx
 public bool eqP(BGFProduction p1, BGFProduction p2) = p1 == p2;
 
 // generic differ, returns unmatched production rules
-tuple[list[BGFProduction],list[BGFProduction]] gdt(list[BGFProduction] ps1, list[BGFProduction] ps2)
+tuple[BGFProdList,BGFProdList] gdt(BGFProdList ps1, BGFProdList ps2)
 {
 	ps3 = normalise(ps1);
 	ps4 = normalise(ps2);
@@ -102,7 +102,7 @@ public bool gdtv(grammar(rs1,ps1), grammar(rs2,ps2))
 	<unmatched1,unmatched2> = gdt(ps1,ps2);
 	if (isEmpty(unmatched1) && isEmpty(unmatched2)) return true;
 	println("Grammars differ!");
-	//public set[str] definedNs(list[BGFProduction] ps) = {s | production(_,str s,_) <- ps};
+	//public set[str] definedNs(BGFProdList ps) = {s | production(_,str s,_) <- ps};
 	for (nt <- {n | production(_, str n, _) <- unmatched1 + unmatched2})
 	{
 		println(" - Fail on <nt>:");
