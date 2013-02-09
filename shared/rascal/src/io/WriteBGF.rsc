@@ -3,7 +3,7 @@
 module io::WriteBGF
 
 import IO;
-import syntax::BGF;
+import language::BGF;
 import lang::xml::DOM;
 
 public void writeBGF(BGFGrammar bgf, loc f)

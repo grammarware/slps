@@ -7,7 +7,7 @@ module metarascal::ADT2PP
 
 import lib::Rascalware;
 import IO;
-import syntax::BGF;
+import language::BGF;
 import extract::RascalADT2BGF;
 
 public void main(list[str] args) = main(|cwd:///|+args[0], |cwd:///|+args[1]);
@@ -46,11 +46,11 @@ str showtype(nonterminal(n)) = "<n>";
 default str showtype(e) = ""; // silence is gold
 
 public void tst2() = main(
-	|project://slps/src/syntax/XBGF.rsc|,
+	|project://slps/src/language/XBGF.rsc|,
 	|project://slps/src/export/XBNF2.rsc|
 );
 
 public void tst3() = main(
-	|project://slps/src/syntax/BGF.rsc|,
+	|project://slps/src/language/BGF.rsc|,
 	|project://slps/src/export/Rascal.rsc|
 );

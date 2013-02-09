@@ -2,9 +2,9 @@
 @wiki{ΞBGF}
 module transform::CBGF // should be ΞBGF
 
-import syntax::BGF;
-import syntax::XBGF;
-import syntax::CBGF;
+import language::BGF;
+import language::XBGF;
+import language::CBGF;
 import analyse::Metrics;
 import Set;
 

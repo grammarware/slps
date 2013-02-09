@@ -2,7 +2,7 @@
 module export::PNF
 
 import lib::Rascalware;
-import syntax::BGF;
+import language::BGF;
 
 public str ppnf(BGFGrammar bgf) = "<ppnf(ps)>\n";
 

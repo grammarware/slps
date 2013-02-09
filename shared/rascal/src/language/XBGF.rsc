@@ -1,8 +1,9 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 @wiki{XBGF}
-module \syntax::XBGF
+module language::XBGF
 
-import \syntax::BGF;
+import language::BGF;
+import language::XScope;
 
 alias XBGFSequence = list[XBGFCommand];
 
@@ -70,12 +71,3 @@ data XBGFCommand =
 	| strip(str a)
 ;
 
-data XBGFScope =
-	globally()
-	| nowhere()
-	| inlabel(str l)
-	| notinlabel(str l)
-	| innt(str x)
-	| notinnt(str x)
-	| comboscope(XBGFScope w1, XBGFScope w2)
-;

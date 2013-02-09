@@ -3,8 +3,8 @@
 module export::XBNF
 
 import lib::Rascalware;
-import syntax::XBGF;
-import syntax::BGF;
+import language::XBGF;
+import language::BGF;
 import export::BNF;
 
 public str ppxs(XBGFSequence xs) = mapjoin(ppx,xs,"\n");

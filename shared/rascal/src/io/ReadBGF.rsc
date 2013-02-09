@@ -3,7 +3,7 @@
 module io::ReadBGF
 
 import IO;
-import syntax::BGF;
+import language::BGF;
 import lang::xml::DOM;
 
 public BGFGrammar readBGF(loc f)

@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-module io::json::Syntax
+module language::JSON
 
 layout L = WS;
 lexical WS = [\ \n\r\t]* !>> [\ \n\r\t];
@@ -30,3 +30,13 @@ syntax JSONObject = "{" {JSONKeyValue ","}* "}";
 syntax JSONKeyValue = JSONBasicType key ":" JSONBasicType val;
 
 syntax JSONNull = "null" ;
+
+data JSO
+	= jsnumber(real n)
+	| jsstring(str s)
+	| jsboolean(bool b)
+	| jsarray(list[JSO] xs)
+	| jsobject(map[JSO,JSO] kvs)
+	| jsnull()
+	;
+

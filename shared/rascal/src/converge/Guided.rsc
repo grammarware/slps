@@ -2,9 +2,9 @@
 @wiki{guided grammar convergence}
 module converge::Guided
 
-import syntax::BGF;
-import syntax::XBGF;
-import syntax::CBGF;
+import language::BGF;
+import language::XBGF;
+import language::CBGF;
 import analyse::Prodsigs;
 import analyse::Metrics;
 import analyse::CarveOut;

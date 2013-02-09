@@ -1,9 +1,9 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module analyse::Associativity
 
-import syntax::BGF;
-import syntax::XBGF;
-import syntax::CBGF;
+import language::BGF;
+import language::XBGF;
+import language::CBGF;
 import io::ReadBGF;
 import lib::Rascalware;
 import analyse::Metrics;

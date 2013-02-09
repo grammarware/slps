@@ -5,7 +5,7 @@ module extract::RascalADT2BGF
 import IO;
 import List;
 import String;
-import syntax::BGF;
+import language::BGF;
 import normal::BGF;
 import io::WriteBGF;
 import export::BNF;
@@ -49,7 +49,7 @@ BGFGrammar process(loc src)
 		//println(d);
 		ps += def2prod(parse(#DataDef,trim(d)));
 	}
-	return normalise(syntax::BGF::grammar([],ps));
+	return normalise(language::BGF::grammar([],ps));
 }
 
 BGFProduction def2prod((DataDef)`<Name n> = <DataExpr d> ;`)

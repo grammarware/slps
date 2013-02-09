@@ -1,7 +1,7 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module io::json::Main
 
-import io::json::Syntax;
+import language::JSON;
 import io::json::Parse;
 import IO;
 import ParseTree;

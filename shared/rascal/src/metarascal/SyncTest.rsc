@@ -18,8 +18,8 @@ public void main()
 		'module transform::Test
 		'
 		'import IO;
-		'import syntax::BGF;
-		'import syntax::XBGF;
+		'import language::BGF;
+		'import language::XBGF;
 		'import transform::XBGF;
 		'import diff::GDT;
 		'import export::BNF;

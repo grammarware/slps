@@ -2,8 +2,8 @@
 @wiki{XBGF}
 module transform::XBGF
 
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XBGF;
 import normal::BGF;
 import transform::library::Associativity; // assoc, iterate
 import transform::library::Brutal; // replace

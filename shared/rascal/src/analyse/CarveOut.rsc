@@ -1,8 +1,8 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module analyse::CarveOut
 
-import syntax::BGF;
-import syntax::CBGF;
+import language::BGF;
+import language::CBGF;
 import analyse::Metrics;
 import lib::Rascalware;
 

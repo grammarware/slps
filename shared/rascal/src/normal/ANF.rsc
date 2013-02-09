@@ -3,9 +3,9 @@
 @wiki{Abstract Normal Form}
 module normal::ANF
 
-import syntax::BGF;
-import syntax::XBGF;
-import syntax::CBGF;
+import language::BGF;
+import language::XBGF;
+import language::CBGF;
 import transform::CBGF;
 import transform::XBGF;
 import analyse::Metrics;

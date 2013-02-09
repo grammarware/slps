@@ -3,8 +3,8 @@
 module io::ReadXBGF
 
 import IO;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XBGF;
 import lang::xml::DOM;
 import io::ReadBGF;
 

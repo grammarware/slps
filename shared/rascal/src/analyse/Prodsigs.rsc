@@ -1,7 +1,8 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module analyse::Prodsigs
 
-import syntax::BGF;
+import language::BGF;
+import language::Prodsig;
 import analyse::Metrics;
 import lib::Rascalware;
 import Relation; //domain
@@ -9,18 +10,6 @@ import List;
 import Set;
 import String;
 import export::LaTeX;
-
-data Footprint
-	= fpnt()
-	| fpopt()
-	| fpplus()
-	| fpstar()
-	| fpmany(list[Footprint] fps)
-	| fpempty()
-	;
-
-alias Signature = rel[str,Footprint];
-alias NameMatch = rel[str,str,bool];
 
 Footprint makefp(n, nonterminal(n)) = fpnt();
 Footprint makefp(n, optional(nonterminal(n))) = fpopt();

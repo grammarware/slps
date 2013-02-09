@@ -1,6 +1,6 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 @wiki{BGF}
-module \syntax::BGF
+module language::BGF
 
 alias BGFProdList = list[BGFProduction];
 alias BGFExprList = list[BGFExpression];

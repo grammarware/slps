@@ -4,7 +4,7 @@
 module export::Rascal
 
 import lib::Rascalware;
-import syntax::BGF;
+import language::BGF;
 import String; //startsWith
 import List; //getOneFrom
 

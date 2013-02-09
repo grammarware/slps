@@ -18,8 +18,8 @@ public void main(loc x)
 	"@contributor{XBGF2Rascal}
 	'module Transformation // feel free to change that after moving the file
 	'
-	'import syntax::BGF;
-	'import syntax::XBGF;
+	'import language::BGF;
+	'import language::XBGF;
 	'import transform::XBGF;
 	'
 	'BGFGrammar doTrafo(BGFGrammar g)

@@ -4,8 +4,8 @@ module transform::NegotiatedXBGF
 
 import lib::Rascalware;
 import IO;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XBGF;
 import normal::BGF;
 import transform::library::Util;
 import transform::XBGF;

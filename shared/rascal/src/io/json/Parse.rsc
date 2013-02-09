@@ -1,20 +1,11 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module io::json::Parse
 
-import io::json::Syntax;
+import language::JSON;
 import IO;
 import String;
 import ParseTree;
 import util::Math;
-
-data JSO
-	= jsnumber(real n)
-	| jsstring(str s)
-	| jsboolean(bool b)
-	| jsarray(list[JSO] xs)
-	| jsobject(map[JSO,JSO] kvs)
-	| jsnull()
-	;
 
 JSO str2jso(str s)
 {

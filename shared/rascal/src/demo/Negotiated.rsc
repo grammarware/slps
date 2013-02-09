@@ -3,8 +3,8 @@
 module demo::Negotiated
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XBGF;
 import transform::NegotiatedXBGF;
 import transform::XBGF;
 import export::XBNF;

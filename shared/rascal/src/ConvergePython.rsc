@@ -1,8 +1,8 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module ConvergePython
 
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XBGF;
 import io::ReadBGF;
 import io::WriteXBGF;
 import transform::XBGF;

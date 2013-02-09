@@ -2,7 +2,7 @@
 module export::BNF
 
 import lib::Rascalware;
-import syntax::BGF;
+import language::BGF;
 
 public str pp(grammar([],BGFProdList ps)) = "<pp(ps)>\n";
 public default str pp(BGFGrammar bgf) = "Roots: <bgf.roots>\n<pp(bgf.prods)>\n";

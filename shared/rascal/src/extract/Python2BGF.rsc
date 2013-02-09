@@ -7,7 +7,7 @@ import IO;
 import List;
 import String;
 import ParseTree;
-import syntax::BGF;
+import language::BGF;
 import io::WriteBGF;
 import extract::PyParsing;
 import normal::BGF;

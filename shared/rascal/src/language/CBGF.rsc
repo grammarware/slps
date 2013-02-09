@@ -1,9 +1,9 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 @wiki{ΞBGF}
-module syntax::CBGF
+module language::CBGF
 
-import \syntax::BGF;
-import \syntax::XBGF;
+import language::BGF;
+import language::XBGF;
 
 alias CBGFSequence = list[CBGFCommand];
 

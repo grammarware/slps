@@ -4,9 +4,9 @@ module export::LaTeX
 import IO;
 import List;
 import String;
-import syntax::BGF;
-import syntax::XBGF;
-import syntax::CBGF;
+import language::BGF;
+import language::XBGF;
+import language::CBGF;
 //import io::ReadBGF;
 import converge::Guided;
 import lib::Rascalware;

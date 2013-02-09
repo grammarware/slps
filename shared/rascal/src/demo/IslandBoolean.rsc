@@ -2,8 +2,8 @@
 module demo::IslandBoolean
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XBGF;
 import transform::XBGF;
 import diff::GDT;
 import io::ReadBGF;

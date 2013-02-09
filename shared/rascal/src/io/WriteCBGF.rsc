@@ -3,9 +3,9 @@
 module io::WriteCBGF
 
 import IO;
-import syntax::BGF;
-import syntax::XBGF;
-import syntax::CBGF;
+import language::BGF;
+import language::XBGF;
+import language::CBGF;
 import lang::xml::DOM;
 import io::WriteBGF;
 

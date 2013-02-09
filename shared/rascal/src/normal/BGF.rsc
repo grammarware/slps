@@ -2,11 +2,11 @@
 @wiki{BGF}
 module normal::BGF
 
-import syntax::BGF;
+import language::BGF;
 // needed for levels 2+
 import lib::Rascalware;
 import analyse::Metrics;
-import syntax::XBGF;
+import language::XBGF;
 import transform::XBGF;
 
 public BGFGrammar normalise(BGFGrammar g) = grammar (g.roots, normalise(g.prods));

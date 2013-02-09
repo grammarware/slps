@@ -3,7 +3,7 @@
 @wiki{Grammar Diff Tool}
 module diff::GDT
 
-import syntax::BGF;
+import language::BGF;
 import normal::BGF;
 import List;
 import IO;

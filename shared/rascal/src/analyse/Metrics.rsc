@@ -1,7 +1,7 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
 module analyse::Metrics
 
-import syntax::BGF;
+import language::BGF;
 import List;
 
 @doc{All nonterminals in a grammar: defined or used}
