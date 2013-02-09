@@ -2,7 +2,7 @@
 @wiki{DeanonymizeAllN}
 module mutate::type2::DeanonymizeAllN
 
-import syntax::BGF;
+import language::BGF;
 import normal::BGF;
 
 BGFGrammar DeanonymizeAllN(BGFGrammar g) = grammar(g.roots,normalise([production(p.label,p.lhs,rewriteExpr(p.rhs)) | p<-g.prods]));

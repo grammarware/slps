@@ -2,6 +2,6 @@
 @wiki{AbridgeAll}
 module mutate::type1::AbridgeAll
 
-import syntax::BGF;
+import language::BGF;
 
 BGFGrammar AbridgeAll(BGFGrammar g) = grammar(g.roots, g.prods - [p | p:production(_,x,nonterminal(x)) <- g.prods]);

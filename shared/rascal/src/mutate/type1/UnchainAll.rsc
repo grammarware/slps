@@ -3,8 +3,8 @@
 module mutate::type1::UnchainAll
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
 import transform::library::Chaining;
 
 BGFGrammar UnchainAll(BGFGrammar g)

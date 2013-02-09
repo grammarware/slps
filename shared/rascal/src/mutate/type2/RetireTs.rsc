@@ -2,7 +2,7 @@
 @wiki{RetireTs}
 module mutate::type2::RetireTs
 
-import syntax::BGF;
+import language::BGF;
 import normal::BGF;
 
 BGFGrammar RetireTs(BGFGrammar g)

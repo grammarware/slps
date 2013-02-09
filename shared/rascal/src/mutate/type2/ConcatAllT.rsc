@@ -2,7 +2,7 @@
 @wiki{ConcatAllT}
 module mutate::type2::ConcatAllT
 
-import syntax::BGF;
+import language::BGF;
 
 BGFGrammar ConcatAllT(BGFGrammar g)
 {

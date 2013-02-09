@@ -3,8 +3,8 @@
 module mutate::type2::ChainMixed
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
 
 // TODO: since ChainMixed is now used only for ANF, it softly assumes the vertical grammar style.
 // If the style is not vertical, the result will be incomplete.

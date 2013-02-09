@@ -2,7 +2,7 @@
 @wiki{InsertLayout}
 module mutate::type2::InsertLayout
 
-import syntax::BGF;
+import language::BGF;
 import normal::BGF;
 
 // TODO: this mutation does exactly what it says on the tin, but quite a bit more than it says in its Type II spec

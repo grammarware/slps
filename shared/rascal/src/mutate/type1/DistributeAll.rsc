@@ -2,7 +2,7 @@
 @wiki{DistributeAll}
 module mutate::type1::DistributeAll
 
-import syntax::BGF;
+import language::BGF;
 import transform::library::Factoring;
 
 BGFGrammar DistributeAll(BGFGrammar g) = grammar(g.roots, [transform::library::Factoring::makeDistributed(p) | p <- g.prods]);

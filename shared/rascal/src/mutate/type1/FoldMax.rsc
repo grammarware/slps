@@ -3,8 +3,8 @@
 module mutate::type1::FoldMax
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
 import transform::Results;
 import transform::library::Folding;
 

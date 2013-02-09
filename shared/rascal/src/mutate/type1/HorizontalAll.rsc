@@ -3,8 +3,8 @@
 module mutate::type1::HorizontalAll
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
 
 BGFGrammar HorizontalAll(BGFGrammar g)
 {

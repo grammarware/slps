@@ -2,7 +2,7 @@
 @wiki{DesignateAll}
 module mutate::type2::DesignateAll
 
-import syntax::BGF;
+import language::BGF;
 import Map;
 
 BGFGrammar DesignateAll(BGFGrammar g)

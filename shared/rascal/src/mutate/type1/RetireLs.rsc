@@ -2,6 +2,6 @@
 @wiki{RetireLs}
 module mutate::type1::RetireLs
 
-import syntax::BGF;
+import language::BGF;
 
 BGFGrammar RetireLs(BGFGrammar g) = grammar(g.roots, [production("", p.lhs, p.rhs) | p <- g.prods]);

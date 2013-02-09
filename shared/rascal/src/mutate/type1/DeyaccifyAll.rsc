@@ -3,7 +3,7 @@
 module mutate::type1::DeyaccifyAll
 
 import lib::Rascalware;
-import syntax::BGF;
+import language::BGF;
 
 list[BGFProduction] tryDeYacc({production(_,n,sequence([nonterminal(n),x])),production(_,n,x)}) = [production("",n,plus(x))];
 list[BGFProduction] tryDeYacc({production(_,n,sequence([x,nonterminal(n)])),production(_,n,x)}) = [production("",n,plus(x))];

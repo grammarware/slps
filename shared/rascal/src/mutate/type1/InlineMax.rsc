@@ -3,8 +3,8 @@
 module mutate::type1::InlineMax
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
 import transform::library::Folding;
 
 BGFGrammar InlineMax(BGFGrammar g)
