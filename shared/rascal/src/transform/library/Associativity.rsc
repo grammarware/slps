@@ -2,9 +2,9 @@
 @wiki{iterate,rassoc,lassoc}
 module transform::library::Associativity
 
-import syntax::BGF;
-import syntax::XBGF;
-import transform::Results;
+import language::BGF;
+import language::XScope;
+import language::XOutcome;
 import transform::library::Util;
 
 bool admit(sequence([nonterminal(n),nonterminal(x),nonterminal(n)]),

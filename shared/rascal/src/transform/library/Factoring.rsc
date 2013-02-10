@@ -2,11 +2,11 @@
 @wiki{factor,distribute}
 module transform::library::Factoring
 
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
+import language::XOutcome;
 import normal::BGF;
 import diff::GDT;
-import transform::Results;
 import transform::library::Util;
 import transform::library::Brutal;
 

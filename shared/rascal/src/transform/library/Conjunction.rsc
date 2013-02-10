@@ -2,9 +2,9 @@
 @wiki{addC}
 module transform::library::Conjunction
 
-import syntax::BGF;
-import syntax::XBGF;
-import transform::Results;
+import language::BGF;
+import language::XScope;
+import language::XOutcome;
 import transform::library::Util;
 
 XBGFResult runAddC(BGFProduction p, BGFGrammar g)

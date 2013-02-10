@@ -3,9 +3,9 @@
 module transform::library::Labels
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
-import transform::Results;
+import language::BGF;
+import language::XScope;
+import language::XOutcome;
 import transform::library::Util;
 
  // true labels

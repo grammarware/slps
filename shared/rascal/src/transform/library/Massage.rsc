@@ -2,11 +2,11 @@
 @wiki{massage}
 module transform::library::Massage
 
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
+import language::XOutcome;
 import normal::BGF;
 import diff::GDT;
-import transform::Results;
 import transform::library::Brutal;
 import List;
 

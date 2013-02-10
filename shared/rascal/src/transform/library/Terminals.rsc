@@ -2,10 +2,10 @@
 @wiki{abstractize,concatT,concretize,renameT,splitT}
 module transform::library::Terminals
 
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
+import language::XOutcome;
 import normal::BGF;
-import transform::Results;
 import transform::library::Util;
 import transform::library::Brutal;
 import transform::library::Sequential;

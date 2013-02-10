@@ -2,11 +2,11 @@
 module transform::library::Util
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
+import language::XOutcome;
 import normal::BGF;
 import diff::GDT;
-import transform::Results;
 import List; // tail
 
 public XBGFOutcome notFoundP(BGFProduction p) = problemProd("Production rule not found",p);

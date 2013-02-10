@@ -3,10 +3,10 @@
 module transform::library::Folding
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
+import language::XOutcome;
 import normal::BGF;
-import transform::Results;
 import transform::library::Util;
 import transform::library::Brutal;
 

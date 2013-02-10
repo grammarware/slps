@@ -2,9 +2,9 @@
 @wiki{narrow,widen}
 module transform::library::Width
 
-import syntax::BGF;
-import syntax::XBGF;
-import transform::Results;
+import language::BGF;
+import language::XScope;
+import language::XOutcome;
 import transform::library::Brutal;
 
 // narrow-equivalence (the reverse, widen-equivalence, is hereby also implicitly defined)

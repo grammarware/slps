@@ -3,8 +3,8 @@
 module transform::library::Sequential
 
 import lib::Rascalware;
-import syntax::BGF;
-import syntax::XBGF;
+import language::BGF;
+import language::XScope;
 import transform::Results;
 import transform::library::Util;
 import transform::library::Brutal;
