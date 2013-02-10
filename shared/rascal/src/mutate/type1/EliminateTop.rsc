@@ -2,7 +2,7 @@
 @wiki{EliminateTop}
 module mutate::type1::EliminateTop
 
-import lib::Rascalware;
+import transform::library::Util;
 import language::BGF;
 import language::XScope;
 

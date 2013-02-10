@@ -7,9 +7,11 @@ import language::BGF;
 import language::XScope;
 import transform::library::Folding;
 
-BGFGrammar InlineMax(BGFGrammar g)
+BGFGrammar InlineMax(BGFGrammar g) = InlineNS(g,definedNs(g.prods));
+
+// TODO: move to Type IV?
+BGFGrammar InlineNS(BGFGrammar g, set[str] ns)
 {
-	ns = definedNs(g.prods);
 	bool done = False
 	while(True)
 	{
