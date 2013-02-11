@@ -5,6 +5,7 @@ module io::ReadXBGF
 import IO;
 import language::BGF;
 import language::XBGF;
+import language::XScope;
 import lang::xml::DOM;
 import io::ReadBGF;
 

@@ -7,6 +7,8 @@ import String;
 import language::BGF;
 import language::XBGF;
 import language::CBGF;
+import language::XScope;
+import language::Prodsig;
 //import io::ReadBGF;
 import converge::Guided;
 import lib::Rascalware;

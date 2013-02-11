@@ -5,6 +5,7 @@ module demo::Negotiated
 import lib::Rascalware;
 import language::BGF;
 import language::XBGF;
+import language::XScope;
 import transform::NegotiatedXBGF;
 import transform::XBGF;
 import export::XBNF;

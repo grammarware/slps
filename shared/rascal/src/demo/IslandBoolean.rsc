@@ -4,6 +4,7 @@ module demo::IslandBoolean
 import lib::Rascalware;
 import language::BGF;
 import language::XBGF;
+import language::XScope;
 import transform::XBGF;
 import diff::GDT;
 import io::ReadBGF;
