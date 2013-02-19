@@ -21,8 +21,4 @@ else
     OUTPUT=$2
 fi
 
-echo '\\begin{graybox}' > ${OUTPUT}
-echo '\\begin{lstlisting}[language=pp]' >> ${OUTPUT}
-xsltproc ${SLPS}/shared/xsl/bgf2bnf.xslt $1 >> ${OUTPUT}
-echo '\\end{lstlisting}' >> ${OUTPUT}
-echo '\\end{graybox}' >> ${OUTPUT}
+xsltproc ${SLPS}/shared/xsl/bgf2tex.xslt $1 >> ${OUTPUT}
