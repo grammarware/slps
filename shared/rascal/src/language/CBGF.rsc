@@ -4,6 +4,7 @@ module language::CBGF
 
 import language::BGF;
 import language::XBGF;
+import language::XScope;
 
 alias CBGFSequence = list[CBGFCommand];
 
