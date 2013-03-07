@@ -5,6 +5,7 @@ module io::WriteCBGF
 import IO;
 import language::BGF;
 import language::XBGF;
+import language::XScope;
 import language::CBGF;
 import lang::xml::DOM;
 import io::WriteBGF;
