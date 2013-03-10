@@ -12,6 +12,7 @@ import export::BNF;
 
 alias dict = map[BGFExpression,int];
 alias NPC = tuple[int,int,int,dict];
+alias SGrammar = tuple[set[str] roots, map[str,set[BGFProduction]] prods];
 
 public void main(list[str] as)
 {
@@ -30,16 +31,18 @@ public void main(list[str] as)
 NPC getZoo(loc zoo, NPC npc)
 {
 	dict patterns;
-	int n, p, cx;
-	<n,p,cx,patterns> = npc;
+	int n, pcx, cx;
+	<n,pcx,cx,patterns> = npc;
 	BGFGrammar g;
+	SGrammar s;
 	for (str lang <- listEntries(zoo), !endsWith(lang,".html"), str s <- listEntries(zoo+"/<lang>"), endsWith(s,".bgf"))
 	{
 		println(s);
 		cx += 1;
 		g = readBGF(zoo+"/<lang>/<s>");
+		s = splitGrammar(g);
 		n += len(allNs(g));
-		p += len(g.prods);
+		pcx += len(g.prods);
 		
 		g = abstractPattern(g);
 		for (BGFProduction p <- abstractPattern(g).prods)
@@ -48,7 +51,7 @@ NPC getZoo(loc zoo, NPC npc)
 			else
 				patterns[p.rhs] = 1;
 	}
-	return <n,p,cx,patterns>;
+	return <n,pcx,cx,patterns>;
 }
 
 BGFGrammar abstractPattern(BGFGrammar g)
@@ -58,3 +61,16 @@ BGFGrammar abstractPattern(BGFGrammar g)
 		case terminal(_) => terminal("T")
 		case selectable(_, BGFExpression expr) => expr
 	};
+
+SGrammar splitGrammar(BGFGrammar g)
+{
+	map[str,set[BGFProduction]] ps = ();
+	for (BGFProduction p <- g.prods)
+		if (p.lhs in domain(ps))
+			ps[p.lhs] += {p};
+		else
+			ps[p.lhs] = {p};
+	for (str n <- bottomNs(g))
+		ps[n] = {};
+	return <toSet(g.roots), ps>;
+}
