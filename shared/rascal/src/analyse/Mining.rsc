@@ -19,7 +19,7 @@ public void main(list[str] as)
 	loc zoo = |home:///projects/webslps/zoo|;
 	NPC npc = getZoo(|home:///projects/webslps/zoo|,<0,0,0,0,()>);
 	npc = getZoo(|home:///projects/webslps/tank|,npc);
-	println("Total: <npc.cx> grammars, <npc.ps> production rules, <npc.ns> nonterminals (<npc.clasns> thereof classified), <len(npc.patterns)> patterns.");
+	println("Total: <npc.cx> grammars, <npc.ps> production rules, <npc.ns> nonterminals (<npc.ns-npc.clasns> thereof classified), <len(npc.patterns)> patterns.");
 	// Just the Zoo:
 	//              Total: 42 grammars, 8927 production rules, 8277 nonterminals.
 	// Zoo + Tank:
@@ -31,7 +31,6 @@ public void main(list[str] as)
 
 NPC getZoo(loc zoo, NPC npc)
 {
-	// NPC res;
 	dict patterns = npc.patterns;
 	int n = npc.ns, pcx = npc.ps, cx = npc.cx, cns = npc.clasns;
 	BGFGrammar g;
@@ -42,16 +41,21 @@ NPC getZoo(loc zoo, NPC npc)
 		println(s);
 		cx += 1;
 		g = readBGF(zoo+"/<lang>/<s>");
-		n += len(allNs(g));
+		allNTs = allNs(g);
+		n += len(allNTs);
 		pcx += len(g.prods);
 
-		s = splitGrammar(g);
-		ts = tops(s);
+		sg = splitGrammar(g);
+		if (domain(sg.prods) != allNTs)
+			println("Nonterminal sets are not equal!\n<range(sg.prods)>\n<allNTs>");
 		
-		// TODO: generalise for all metrics
-		// allNTs = range(s.prods) - ts;
-		// cns += len(s.prods) - len(allNTs);
-		cns += len(ts);
+		for (metric <- {tops, bottoms, ifroots, multiroots})
+		{
+			res = metric(sg);
+			println("Classified as <metric>: <len(res)>.");
+			allNTs -= res;
+		}
+		cns += len(allNTs);
 		
 		g = abstractPattern(g);
 		for (BGFProduction p <- abstractPattern(g).prods)
@@ -60,8 +64,6 @@ NPC getZoo(loc zoo, NPC npc)
 			else
 				patterns[p.rhs] = 1;
 	}
-	// res.ns = n;
-	// res.
 	return <n,cns,pcx,cx,patterns>;
 }
 
@@ -86,10 +88,13 @@ SGrammar splitGrammar(BGFGrammar g)
 	return <toSet(g.roots), ps>;
 }
 
-set[str] tops(SGrammar g)
-// 	alias SGrammar = tuple[set[str] roots, map[str,set[BGFProduction]] prods];
-{
-	set[str] d = domain(g.prods);
-	set[set[BGFProduction]] r = range(g.prods);
-	return {t | str t <- d, /nonterminal(t) !:= r};
-}
+set[str] tops(SGrammar g)    = definedNs(g) - usedNs(g); // = {t | str t <- domain(g.prods), /nonterminal(t) !:= range(g.prods)};
+set[str] bottoms(SGrammar g) = usedNs(g) - definedNs(g);
+set[str] ifroots(SGrammar g) = g.roots & domain(g.prods);
+// TODO: not _, but in fact [*nonterminal(_)]
+// TODO: also account for vertical roots
+set[str] multiroots(SGrammar g) = {n | str n<-g.roots, {production(_,n,choice(_))} := g.prods[n]};
+
+// lower level functions
+set[str] definedNs(SGrammar g) = domain(g.prods);
+set[str] usedNs(SGrammar g) = {t | /nonterminal(t) := range(g.prods)};
