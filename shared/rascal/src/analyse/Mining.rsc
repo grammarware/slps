@@ -5,6 +5,7 @@ import analyse::Metrics;
 import language::BGF;
 import io::ReadBGF;
 import String;
+import List;
 import Map;
 import IO;
 import lib::Rascalware;
@@ -49,7 +50,7 @@ NPC getZoo(loc zoo, NPC npc)
 		if (domain(sg.prods) != allNTs)
 			println("Nonterminal sets are not equal!\n<range(sg.prods)>\n<allNTs>");
 		
-		for (metric <- {tops, bottoms, ifroots, multiroots})
+		for (metric <- {tops, bottoms, ifroots, multiroots, horizontals, verticals})
 		{
 			res = metric(sg);
 			println("Classified as <metric>: <len(res)>.");
@@ -93,8 +94,15 @@ set[str] bottoms(SGrammar g) = usedNs(g) - definedNs(g);
 set[str] ifroots(SGrammar g) = g.roots & domain(g.prods);
 // TODO: not _, but in fact [*nonterminal(_)]
 // TODO: also account for vertical roots
-set[str] multiroots(SGrammar g) = {n | str n<-g.roots, {production(_,n,choice(_))} := g.prods[n]};
+set[str] multiroots(SGrammar g) = {n | str n<-g.roots, {production(_,n,choice(L))} := g.prods[n], allnonterminals(L)};
+
+set[str] horizontals(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n] };
+set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1 };
 
 // lower level functions
 set[str] definedNs(SGrammar g) = domain(g.prods);
 set[str] usedNs(SGrammar g) = {t | /nonterminal(t) := range(g.prods)};
+
+bool allnonterminals([]) = true;
+// bool allnonterminals([x]) = nonterminal(_) := x;
+default bool allnonterminals(BGFExprList xs) = nonterminal(_) := xs[0] && allnonterminals(tail(xs));
