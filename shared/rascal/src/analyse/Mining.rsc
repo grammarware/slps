@@ -12,28 +12,14 @@ import lib::Rascalware;
 import export::BNF;
 
 alias dict = map[BGFExpression,int];
-alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns];
+alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts];
 alias SGrammar = tuple[set[str] roots, map[str,set[BGFProduction]] prods];
-
-public void main(list[str] as)
-{
-	loc zoo = |home:///projects/webslps/zoo|;
-	NPC npc = getZoo(|home:///projects/webslps/zoo|,<0,0,0,0,()>);
-	npc = getZoo(|home:///projects/webslps/tank|,npc);
-	println("Total: <npc.cx> grammars, <npc.ps> production rules, <npc.ns> nonterminals (<npc.ns-npc.clasns> thereof classified), <len(npc.patterns)> patterns.");
-	// Just the Zoo:
-	//              Total: 42 grammars, 8927 production rules, 8277 nonterminals.
-	// Zoo + Tank:
-	//              Total: 99 grammars, 11570 production rules, 10943 nonterminals.
-	// TODO: only report unclassified ones
-	// for (BGFExpression e <- domain(npc.patterns))
-	// 	println("<pp(e)>: <npc.patterns[e]>");
-}
 
 NPC getZoo(loc zoo, NPC npc)
 {
 	dict patterns = npc.patterns;
 	int n = npc.ns, pcx = npc.ps, cx = npc.cx, cns = npc.clasns;
+	map[str,int] counts = npc.counts;
 	BGFGrammar g;
 	SGrammar s;
 	set[str] allNTs = {};
@@ -50,10 +36,11 @@ NPC getZoo(loc zoo, NPC npc)
 		if (domain(sg.prods) != allNTs)
 			println("Nonterminal sets are not equal!\n<range(sg.prods)>\n<allNTs>");
 		
-		for (metric <- {tops, bottoms, ifroots, multiroots, horizontals, verticals})
+		for (metric <- AllMetrics)
 		{
 			res = metric(sg);
-			println("Classified as <metric>: <len(res)>.");
+			if ("<metric>" notin counts) counts["<metric>"] = 0;
+			counts["<metric>"] += len(res);
 			allNTs -= res;
 		}
 		cns += len(allNTs);
@@ -65,7 +52,7 @@ NPC getZoo(loc zoo, NPC npc)
 			else
 				patterns[p.rhs] = 1;
 	}
-	return <n,cns,pcx,cx,patterns>;
+	return <n,cns,pcx,cx,patterns,counts>;
 }
 
 BGFGrammar abstractPattern(BGFGrammar g)
@@ -100,9 +87,32 @@ set[str] horizontals(SGrammar g) = {n | str n <- domain(g.prods), {production(_,
 set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1 };
 
 // lower level functions
-set[str] definedNs(SGrammar g) = domain(g.prods);
-set[str] usedNs(SGrammar g) = {t | /nonterminal(t) := range(g.prods)};
+set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
+set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
 
 bool allnonterminals([]) = true;
 // bool allnonterminals([x]) = nonterminal(_) := x;
 default bool allnonterminals(BGFExprList xs) = nonterminal(_) := xs[0] && allnonterminals(tail(xs));
+
+set[set[str](SGrammar)] AllMetrics = {tops, bottoms, ifroots, multiroots, horizontals, verticals};
+
+// MAIN
+public void main(list[str] as)
+{
+	loc zoo = |home:///projects/webslps/zoo|;
+	NPC npc = getZoo(|home:///projects/webslps/zoo|,<0,0,0,0,(),()>);
+	npc = getZoo(|home:///projects/webslps/tank|,npc);
+	println("Total: <npc.cx> grammars, <npc.ps> production rules, <npc.ns> nonterminals (<npc.ns-npc.clasns> thereof classified), <len(npc.patterns)> patterns.");
+	for (metric <- AllMetrics)
+	{
+		println("Classified as <metric>: <npc.counts["<metric>"]>.");
+	}
+	// Just the Zoo:
+	//              Total: 42 grammars, 8927 production rules, 8277 nonterminals.
+	// Zoo + Tank:
+	//              Total: 99 grammars, 11570 production rules, 10943 nonterminals.
+	// TODO: only report unclassified ones
+	// for (BGFExpression e <- domain(npc.patterns))
+	// 	println("<pp(e)>: <npc.patterns[e]>");
+}
+
