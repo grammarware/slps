@@ -83,6 +83,8 @@ set[str] ifroots(SGrammar g) = g.roots & domain(g.prods);
 // TODO: also account for vertical roots
 set[str] multiroots(SGrammar g) = {n | str n<-g.roots, {production(_,n,choice(L))} := g.prods[n], allnonterminals(L)};
 
+set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), allterminals(g.prods[n])};
+
 set[str] horizontals(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n] };
 set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1 };
 
@@ -90,9 +92,9 @@ set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>
 set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
 set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
 
-bool allnonterminals([]) = true;
-// bool allnonterminals([x]) = nonterminal(_) := x;
-default bool allnonterminals(BGFExprList xs) = nonterminal(_) := xs[0] && allnonterminals(tail(xs));
+bool allnonterminals(BGFExprList xs) = ( true | it && nonterminal(_) := e | e <- xs );
+// TODO: does not traverse yet
+bool allterminals(set[BGFProduction] xs) = ( true | it && terminal(_) := e | e <- xs );
 
 set[set[str](SGrammar)] AllMetrics = {tops, bottoms, ifroots, multiroots, horizontals, verticals};
 
