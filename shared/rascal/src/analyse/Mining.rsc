@@ -93,10 +93,10 @@ set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empt
 set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
 
 bool allnonterminals(BGFExprList xs) = ( true | it && nonterminal(_) := e | e <- xs );
-// TODO: does not traverse yet
-bool allterminals(set[BGFProduction] xs) = ( true | it && terminal(_) := e | e <- xs );
+// TODO: too permissive?
+bool allterminals(set[BGFProduction] xs) = ( true | it && /nonterminal(_) !:= e && /val(_) !:= e | e <- xs );
 
-set[set[str](SGrammar)] AllMetrics = {tops, bottoms, ifroots, multiroots, horizontals, verticals};
+set[set[str](SGrammar)] AllMetrics = {tops, bottoms, ifroots, multiroots, horizontals, verticals, preterminals};
 
 // MAIN
 public void main(list[str] as)
