@@ -13,7 +13,7 @@ import export::BNF;
 
 alias dict = map[BGFExpression,int];
 alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts];
-alias SGrammar = tuple[set[str] roots, map[str,set[BGFProduction]] prods];
+alias SGrammar = tuple[set[str] roots, map[str,BGFProdSet] prods];
 
 NPC getZoo(loc zoo, NPC npc)
 {
@@ -65,7 +65,7 @@ BGFGrammar abstractPattern(BGFGrammar g)
 
 SGrammar splitGrammar(BGFGrammar g)
 {
-	map[str,set[BGFProduction]] ps = ();
+	map[str,BGFProdSet] ps = ();
 	for (BGFProduction p <- g.prods)
 		if (p.lhs in domain(ps))
 			ps[p.lhs] += {p};
@@ -85,6 +85,10 @@ set[str] multiroots(SGrammar g) = {n | str n<-g.roots, {production(_,n,choice(L)
 
 set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), allterminals(g.prods[n])};
 
+set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods), allconstructors(g.prods[n])};
+
+bool allconstructors(BGFProdSet ps) = ( true | it && selectable(_,epsilon()) := p | p <- ps );
+
 set[str] horizontals(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n] };
 set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1 };
 
@@ -94,9 +98,13 @@ set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
 
 bool allnonterminals(BGFExprList xs) = ( true | it && nonterminal(_) := e | e <- xs );
 // TODO: too permissive?
-bool allterminals(set[BGFProduction] xs) = ( true | it && /nonterminal(_) !:= e && /val(_) !:= e | e <- xs );
+bool allterminals(BGFProdSet xs) = ( true | it && (terminal(_) := e || (sequence(L) := e && allterminals(L))) | e <- xs );
+bool allterminals(BGFExprList xs) = ( true | it && terminal(_) := e | e <- xs );
 
-set[set[str](SGrammar)] AllMetrics = {tops, bottoms, ifroots, multiroots, horizontals, verticals, preterminals};
+// 
+//                ADD CLASSIFIERS HERE!
+// 
+set[set[str](SGrammar)] AllMetrics = {tops, bottoms, ifroots, multiroots, horizontals, verticals, preterminals, constructors};
 
 // MAIN
 public void main(list[str] as)
