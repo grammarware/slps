@@ -86,11 +86,20 @@ set[str] multiroots(SGrammar g) = {n | str n<-g.roots, {production(_,n,choice(L)
 set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), allterminals(g.prods[n])};
 
 set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods), allconstructors(g.prods[n])};
-
 bool allconstructors(BGFProdSet ps) = ( true | it && selectable(_,epsilon()) := p | p <- ps );
 
 set[str] horizontals(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n] };
 set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1 };
+
+set[str] pureseqs(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,rhs)} := g.prods[n], pureseq(rhs)};
+bool pureseq(epsilon()) = true;
+bool pureseq(empty()) = true;
+bool pureseq(anything()) = true; // arguable
+bool pureseq(val(_)) = true; // arguable
+bool pureseq(terminal(_)) = true;
+bool pureseq(nonterminal(_)) = true;
+bool pureseq(sequence(L)) = ( true | it && pureseq(e) | e <- L );
+default bool pureseq(BGFExpression rhs) = false;
 
 // lower level functions
 set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
@@ -104,7 +113,7 @@ bool allterminals(BGFExprList xs) = ( true | it && terminal(_) := e | e <- xs );
 // 
 //                ADD CLASSIFIERS HERE!
 // 
-set[set[str](SGrammar)] AllMetrics = {tops, bottoms, ifroots, multiroots, horizontals, verticals, preterminals, constructors};
+set[set[str](SGrammar)] AllMetrics = {tops, bottoms, ifroots, multiroots, horizontals, verticals, preterminals, constructors, pureseqs};
 
 // MAIN
 public void main(list[str] as)
