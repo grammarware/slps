@@ -11,6 +11,16 @@ import IO;
 import lib::Rascalware;
 import export::BNF;
 
+// TODO: just import mutate::type2::RetireSs ?
+// import normal::BGF;
+// 
+// SGrammar RetireSs(SGrammar g)
+// {
+// 	ps = visit(g.prods) {case selectable(_,BGFExpression e) => e};
+// 	return <g.roots, normalise(g.prods)>;
+// }
+BGFProduction RetireSs(BGFProduction p) = visit(p) {case selectable(_,BGFExpression e) => e};
+
 alias dict = map[BGFExpression,int];
 alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts];
 alias SGrammar = tuple[set[str] roots, map[str,BGFProdSet] prods];
@@ -101,6 +111,11 @@ bool pureseq(nonterminal(_)) = true;
 bool pureseq(sequence(L)) = ( true | it && pureseq(e) | e <- L );
 default bool pureseq(BGFExpression rhs) = false;
 
+// TODO: include other patterns?
+set[str] seplists(SGrammar g) = {n | str n <- domain(g.prods), {p} := g.prods[n], isseplist(RetireSs(p))};
+bool isseplist(production(_,_,sequence([BGFExpression a,star(sequence([BGFExpression b, a]))]) )) = true;
+default bool isseplist(BGFProduction p) = false;
+
 // lower level functions
 set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
 set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
@@ -113,7 +128,19 @@ bool allterminals(BGFExprList xs) = ( true | it && terminal(_) := e | e <- xs );
 // 
 //                ADD CLASSIFIERS HERE!
 // 
-set[set[str](SGrammar)] AllMetrics = {tops, bottoms, ifroots, multiroots, horizontals, verticals, preterminals, constructors, pureseqs};
+set[set[str](SGrammar)] AllMetrics =
+	{
+		tops,			// defined but not used
+		bottoms,		// used but not defined
+		ifroots,		// if it is a root
+		multiroots,		// a “fake” multiple root
+		preterminals,	// defined with terminals
+		constructors,	// defined with labelled epsilons
+		pureseqs,		// pure sequential composition
+		seplists,		// “fake” separator list
+		horizontals,	// top level choice
+		verticals		// multiple production rules per nonterminal
+	};
 
 // MAIN
 public void main(list[str] as)

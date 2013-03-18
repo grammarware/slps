@@ -12,11 +12,14 @@ import transform::XBGF;
 public BGFGrammar normalise(BGFGrammar g) = grammar (g.roots, normalise(g.prods));
 
 // remove duplicate production rules
-public list[BGFProduction] normalise([L1*,BGFProduction X1,L2*,X1,L3*])
-						= normalise([*L1,X1,*L2,*L3]);
+public BGFProdList normalise([L1*,BGFProduction X1,L2*,X1,L3*])
+	= normalise([*L1,X1,*L2,*L3]);
 
-public list[BGFProduction] normalise(list[BGFProduction] prods)
-						= [normalise(p) | p <- prods]; 
+public BGFProdList normalise(BGFProdList prods)
+	= [normalise(p) | p <- prods]; 
+
+public BGFProdSet normalise(BGFProdSet prods)
+	= {normalise(p) | p <- prods}; 
 
 // the following is very useful, but breaks some code if normalisations are not done after each step
 public BGFProduction normalise(production ("", str lhs, selectable(str label,BGFExpression rhs)))
