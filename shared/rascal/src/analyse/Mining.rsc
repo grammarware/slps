@@ -111,6 +111,13 @@ bool pureseq(nonterminal(_)) = true;
 bool pureseq(sequence(L)) = ( true | it && pureseq(e) | e <- L );
 default bool pureseq(BGFExpression rhs) = false;
 
+set[str] cnfs(SGrammar g) = {n | str n <- domain(g.prods), allCNFs(g.prods[n]) };
+bool allCNFs(BGFProdSet ps) = ( true | it && isCNF(p.rhs) | p <- ps );
+bool isCNF(epsilon()) = true;
+bool isCNF(terminal(_)) = true;
+bool isCNF(sequence([nonterminal(_),nonterminal(_)])) = true;
+default bool isCNF(BGFExpression e) = false;
+
 // TODO: include other patterns?
 set[str] seplists(SGrammar g) = {n | str n <- domain(g.prods), {p} := g.prods[n], isseplist(RetireSs(p))};
 bool isseplist(production(_,_,sequence([BGFExpression a,star(sequence([BGFExpression b, a]))]) )) = true;
@@ -138,6 +145,7 @@ set[set[str](SGrammar)] AllMetrics =
 		constructors,	// defined with labelled epsilons
 		pureseqs,		// pure sequential composition
 		seplists,		// “fake” separator list
+		cnfs,			// production rules in Chomsky normal form
 		horizontals,	// top level choice
 		verticals		// multiple production rules per nonterminal
 	};
