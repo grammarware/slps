@@ -20,6 +20,8 @@ else
 fi
 
 txl $1 ${SLPS}/topics/grammars/metasyntax/txl/TXLGrammar/Txl/txl.txl -xml > grammar.xml
+# an ugly fix for strange characters (namely, vertical form feed)
+perl -pi -w -e 's// /g;' grammar.xml
 #`dirname $0`/../internals/fixtxlxml grammar.xml grammar2.xml
 xsltproc ${SLPS}/topics/extraction/txl/txl2bgf.xslt grammar.xml > tmp.bgf
 xsltproc ${SLPS}/topics/transformation/normalization/subdefs/inline.xslt tmp.bgf > tmp.xbgf

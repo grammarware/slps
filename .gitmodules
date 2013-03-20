@@ -1,3 +1,6 @@
 [submodule "topics/documents/wiki/texts"]
 	path = topics/documents/wiki/texts
 	url = git@github.com:grammarware/slps.wiki.git
+[submodule "topics/grammars/ada/cordy-hyaric/source"]
+	path = topics/grammars/ada/cordy-hyaric/source
+	url = git://github.com/bu2/ada-2005-txl-grammar.git
