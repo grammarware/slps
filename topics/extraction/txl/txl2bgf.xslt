@@ -61,6 +61,9 @@
 		<xsl:choose>
 			<!-- we have no way of expressing this in BGF (yet) -->
 			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='not'"/>
+			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='see'"/>
+			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='push'"/>
+			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='pop'"/>
 			<xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater='+'">
 				<bgf:expression>
 					<plus>
@@ -72,7 +75,7 @@
 					</plus>
 				</bgf:expression>
 			</xsl:when>
-			<!-- we assumpe that [repeat x] means x* -->
+			<!-- we assume that [repeat x] means x* -->
 			<xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater='*' or type/typeSpec/opt_typeModifier/typeModifier='repeat'">
 				<bgf:expression>
 					<star>
@@ -82,6 +85,35 @@
 							</nonterminal>
 						</bgf:expression>
 					</star>
+				</bgf:expression>
+			</xsl:when>
+			<!-- comma-separated lists! -->
+			<xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater=',' or type/typeSpec/opt_typeModifier/typeModifier='list'">
+				<bgf:expression>
+					<sepliststar>
+						<bgf:expression>
+							<nonterminal>
+								<xsl:value-of select="type/typeSpec/typeid/id"/>
+							</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>,</terminal>
+						</bgf:expression>
+					</sepliststar>
+				</bgf:expression>
+			</xsl:when>
+			<xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater=',+'">
+				<bgf:expression>
+					<seplistplus>
+						<bgf:expression>
+							<nonterminal>
+								<xsl:value-of select="type/typeSpec/typeid/id"/>
+							</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<terminal>,</terminal>
+						</bgf:expression>
+					</seplistplus>
 				</bgf:expression>
 			</xsl:when>
 			<xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater='?' or type/typeSpec/opt_typeModifier/typeModifier='opt'">
@@ -103,6 +135,17 @@
 						</optional>
 					</bgf:expression>
 				</xsl:if>
+			</xsl:when>
+			<xsl:when test="type/typeSpec/typeid/literal and substring(type/typeSpec/typeid/literal/unquotedLiteral/special, string-length(type/typeSpec/typeid/literal/unquotedLiteral/special) )='?'">
+				<bgf:expression>
+					<optional>
+						<bgf:expression>
+							<terminal>
+								<xsl:value-of select="substring(type/typeSpec/typeid/literal/unquotedLiteral/special, 2, string-length(type/typeSpec/typeid/literal/unquotedLiteral/special)-2)"/>
+							</terminal>
+						</bgf:expression>
+					</optional>
+				</bgf:expression>
 			</xsl:when>
 			<xsl:when test="literal">
 				<xsl:apply-templates select="literal"/>
