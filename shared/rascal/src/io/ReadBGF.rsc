@@ -60,6 +60,7 @@ public BGFExpression mapexpr(Node n)
 		case element(none(),"star",[expr]): return star(mapexpr(expr));
 		case element(none(),"seplistplus",[e1,e2]): return seplistplus(mapexpr(e1),mapexpr(e2));
 		case element(none(),"sepliststar",[e1,e2]): return sepliststar(mapexpr(e1),mapexpr(e2));
+		case element(none(),"nonterminal",[]): throw "ERROR: empty nonterminal!";
 		default: throw "ERROR in mapexpr:\n<n>";
 	}
 }
