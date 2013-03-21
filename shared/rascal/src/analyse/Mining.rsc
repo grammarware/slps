@@ -83,6 +83,8 @@ SGrammar splitGrammar(BGFGrammar g)
 			ps[p.lhs] = {p};
 	for (str n <- bottomNs(g))
 		ps[n] = {};
+	for (str n <- g.roots, n notin ps)
+		ps[n] = {};
 	return <toSet(g.roots), ps>;
 }
 
@@ -123,6 +125,8 @@ set[str] seplists(SGrammar g) = {n | str n <- domain(g.prods), {p} := g.prods[n]
 bool isseplist(production(_,_,sequence([BGFExpression a,star(sequence([BGFExpression b, a]))]) )) = true;
 default bool isseplist(BGFProduction p) = false;
 
+set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
+
 // lower level functions
 set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
 set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
@@ -146,6 +150,7 @@ set[set[str](SGrammar)] AllMetrics =
 		pureseqs,		// pure sequential composition
 		seplists,		// “fake” separator list
 		cnfs,			// production rules in Chomsky normal form
+		abstracts,		// abstract syntax (no terminal symbols)
 		horizontals,	// top level choice
 		verticals		// multiple production rules per nonterminal
 	};
@@ -159,7 +164,7 @@ public void main(list[str] as)
 	println("Total: <npc.cx> grammars, <npc.ps> production rules, <npc.ns> nonterminals (<npc.ns-npc.clasns> thereof classified), <len(npc.patterns)> patterns.");
 	for (metric <- AllMetrics)
 	{
-		println("Classified as <metric>: <npc.counts["<metric>"]>.");
+		println("<100*npc.counts["<metric>"]/npc.ns>% classified as <metric>: <npc.counts["<metric>"]>.");
 	}
 	// Just the Zoo:
 	//              Total: 42 grammars, 8927 production rules, 8277 nonterminals.
