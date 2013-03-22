@@ -80,9 +80,16 @@
 				<bgf:expression>
 					<star>
 						<bgf:expression>
-							<nonterminal>
-								<xsl:value-of select="type/typeSpec/typeid/id"/>
-							</nonterminal>
+							<xsl:if test="type/typeSpec/typeid/id">
+								<nonterminal>
+									<xsl:value-of select="type/typeSpec/typeid/id"/>
+								</nonterminal>
+							</xsl:if>
+							<xsl:if test="type/typeSpec/typeid/literal">
+								<terminal>
+									<xsl:value-of select="substring(type/typeSpec/typeid/literal/unquotedLiteral/special,2)"/>
+								</terminal>
+							</xsl:if>
 						</bgf:expression>
 					</star>
 				</bgf:expression>
