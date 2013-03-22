@@ -127,6 +127,10 @@ default bool isseplist(BGFProduction p) = false;
 
 set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
 
+// TODO: simple chain as an all chain where $m$ is used only once in the whole grammar
+set[str] allchains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(m))} := g.prods[n]};
+set[str] reflchains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(n))} := g.prods[n]};
+
 // lower level functions
 set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
 set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
@@ -151,6 +155,8 @@ set[set[str](SGrammar)] AllMetrics =
 		seplists,		// “fake” separator list
 		cnfs,			// production rules in Chomsky normal form
 		abstracts,		// abstract syntax (no terminal symbols)
+		allchains,		// chain production rule: a nonterminal on the left hand side and a nonterminal on the right hand side
+		reflchains,		// reflexive chain production rule: right hand side equal to the left hand side
 		horizontals,	// top level choice
 		verticals		// multiple production rules per nonterminal
 	};
