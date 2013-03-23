@@ -60,10 +60,16 @@
 		<!--xsl:for-each select="repeat_literalOrType/literalOrType"-->
 		<xsl:choose>
 			<!-- we have no way of expressing this in BGF (yet) -->
-			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='not'"/>
+			<!-- limited backtracking -->
+			<xsl:when test="type/typeSpec/typeid/literal/unquotedLiteral/special='!'"/>
+			<!-- lookahead -->
 			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='see'"/>
+			<!-- context sensitivity -->
 			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='push'"/>
 			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='pop'"/>
+			<!-- TODO, but BEWARE: this is not negation! -->
+			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='not'"/>
+			<!-- repetitions -->
 			<xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater='+'">
 				<bgf:expression>
 					<plus>
