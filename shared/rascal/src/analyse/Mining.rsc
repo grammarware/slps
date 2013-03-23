@@ -35,7 +35,7 @@ NPC getZoo(loc zoo, NPC npc)
 	set[str] allNTs = {};
 	for (str lang <- listEntries(zoo), !endsWith(lang,".html"), str s <- listEntries(zoo+"/<lang>"), endsWith(s,".bgf"))
 	{
-		println(s);
+		println("<lang>::<s>");
 		cx += 1;
 		g = readBGF(zoo+"/<lang>/<s>");
 		allNTs = allNs(g);
@@ -127,6 +127,12 @@ default bool isseplist(BGFProduction p) = false;
 
 set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
 
+set[str] empties(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,epsilon())} := g.prods[n]};
+
+// does not tolerate folding
+set[str] names1(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(choice(L)))} := g.prods[n], allterminals(L)};
+set[str] names2(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([choice(L1),star(choice(L2))]))} := g.prods[n], allterminals(L1), allterminals(L2)};
+
 // TODO: simple chain as an all chain where $m$ is used only once in the whole grammar
 set[str] allchains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(m))} := g.prods[n]};
 set[str] reflchains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(n))} := g.prods[n]};
@@ -147,6 +153,8 @@ set[set[str](SGrammar)] AllMetrics =
 	{
 		tops,			// defined but not used
 		bottoms,		// used but not defined
+		names1,			// identifier names [a-z]+
+		names2,			// identifier names [a-z][a-zA-Z_]*
 		ifroots,		// if it is a root
 		multiroots,		// a “fake” multiple root
 		preterminals,	// defined with terminals
@@ -155,6 +163,7 @@ set[set[str](SGrammar)] AllMetrics =
 		seplists,		// “fake” separator list
 		cnfs,			// production rules in Chomsky normal form
 		abstracts,		// abstract syntax (no terminal symbols)
+		empties,		// nonterminal defines an empty language (epsilon)
 		allchains,		// chain production rule: a nonterminal on the left hand side and a nonterminal on the right hand side
 		reflchains,		// reflexive chain production rule: right hand side equal to the left hand side
 		horizontals,	// top level choice
