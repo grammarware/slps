@@ -60,10 +60,16 @@
 		<!--xsl:for-each select="repeat_literalOrType/literalOrType"-->
 		<xsl:choose>
 			<!-- we have no way of expressing this in BGF (yet) -->
-			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='not'"/>
+			<!-- limited backtracking -->
+			<xsl:when test="type/typeSpec/typeid/literal/unquotedLiteral/special='!'"/>
+			<!-- lookahead -->
 			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='see'"/>
+			<!-- context sensitivity -->
 			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='push'"/>
 			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='pop'"/>
+			<!-- TODO, but BEWARE: this is not negation! -->
+			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='not'"/>
+			<!-- repetitions -->
 			<xsl:when test="type/typeSpec/opt_typeRepeater/typeRepeater='+'">
 				<bgf:expression>
 					<plus>
@@ -80,9 +86,16 @@
 				<bgf:expression>
 					<star>
 						<bgf:expression>
-							<nonterminal>
-								<xsl:value-of select="type/typeSpec/typeid/id"/>
-							</nonterminal>
+							<xsl:if test="type/typeSpec/typeid/id">
+								<nonterminal>
+									<xsl:value-of select="type/typeSpec/typeid/id"/>
+								</nonterminal>
+							</xsl:if>
+							<xsl:if test="type/typeSpec/typeid/literal">
+								<terminal>
+									<xsl:value-of select="substring(type/typeSpec/typeid/literal/unquotedLiteral/special,2)"/>
+								</terminal>
+							</xsl:if>
 						</bgf:expression>
 					</star>
 				</bgf:expression>
