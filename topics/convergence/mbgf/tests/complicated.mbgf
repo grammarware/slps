@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mbgf:sequence xmlns:bgf="http://planet-sl.org/bgf" xmlns:mbgf="http://planet-sl.org/mbgf">
+	<sources>
+		<src name="a">complicated-1.bgf</src>
+		<src name="b">complicated-2.bgf</src>
+		<src name="c">complicated-3.bgf</src>
+	</sources>
+	<name-bind>
+		<name>c</name>
+		<state src="a">c</state>
+		<state src="b,c">E</state>
+	</name-bind>
+	<unification>
+		<name>a</name>
+		<state src="a">
+			<bgf:production>
+				<nonterminal>f</nonterminal>
+				<bgf:expression>
+					<nonterminal>g</nonterminal>
+				</bgf:expression>
+			</bgf:production>
+		</state>
+	</unification>
+	<top-choice>
+		<name>a</name>
+		<state src="a,c">vertical</state>
+		<state src="b">horizontal</state>
+	</top-choice>
+	<folding>
+		<state src="b">
+			<bgf:production>
+				<nonterminal>x</nonterminal>
+				<bgf:expression>
+					<choice>
+						<bgf:expression>
+							<nonterminal>E</nonterminal>
+						</bgf:expression>
+						<bgf:expression>
+							<nonterminal>d</nonterminal>
+						</bgf:expression>
+					</choice>
+				</bgf:expression>
+			</bgf:production>
+		</state>
+	</folding>
+</mbgf:sequence>

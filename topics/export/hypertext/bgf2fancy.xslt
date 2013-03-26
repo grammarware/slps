@@ -245,7 +245,8 @@
 					<a href="http://grammarware.net/">Vadim Zaytsev</a>
 					<xsl:text> a.k.a. @</xsl:text>
 					<a href="http://github.com/grammarware">grammarware</a>
-					<xsl:text>. Last updated: </xsl:text>
+					<xsl:text>.
+Last updated: </xsl:text>
 					<xsl:value-of select="$date"/>
 					<xsl:text>.</xsl:text>
 				</div>
