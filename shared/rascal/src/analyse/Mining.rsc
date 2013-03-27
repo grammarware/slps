@@ -129,6 +129,10 @@ set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:=
 
 set[str] empties(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,epsilon())} := g.prods[n]};
 
+set[str] justplusses(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(nonterminal(_)))} := g.prods[n]};
+set[str] juststars(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,star(nonterminal(_)))} := g.prods[n]};
+set[str] justopts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,optional(nonterminal(_)))} := g.prods[n]};
+
 // does not tolerate folding
 set[str] names1(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(choice(L)))} := g.prods[n], allterminals(L)};
 set[str] names2(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([choice(L1),star(choice(L2))]))} := g.prods[n], allterminals(L1), allterminals(L2)};
@@ -164,6 +168,9 @@ set[set[str](SGrammar)] AllMetrics =
 		cnfs,			// production rules in Chomsky normal form
 		abstracts,		// abstract syntax (no terminal symbols)
 		empties,		// nonterminal defines an empty language (epsilon)
+		justplusses,	// x defined as y+
+		juststars,		// x defined as y*
+		justopts,		// x defined as y?
 		allchains,		// chain production rule: a nonterminal on the left hand side and a nonterminal on the right hand side
 		reflchains,		// reflexive chain production rule: right hand side equal to the left hand side
 		horizontals,	// top level choice
