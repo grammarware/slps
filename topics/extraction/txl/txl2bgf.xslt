@@ -5,6 +5,7 @@
 		<bgf:grammar>
 			<xsl:apply-templates select="repeat_statement/statement/functionStatement[ruleid/id='main']"/>
 			<xsl:apply-templates select="repeat_statement/statement/defineStatement"/>
+			<xsl:apply-templates select="repeat_statement/statement/redefineStatement"/>
 		</bgf:grammar>
 	</xsl:template>
 	<xsl:template match="functionStatement">
@@ -12,7 +13,7 @@
 			<xsl:value-of select=".//typeid/id"/>
 		</root>
 	</xsl:template>
-	<xsl:template match="defineStatement">
+	<xsl:template match="defineStatement|redefineStatement">
 		<bgf:production>
 			<nonterminal>
 				<xsl:value-of select="typeid/id"/>
