@@ -65,9 +65,21 @@
 			<xsl:when test="type/typeSpec/typeid/literal/unquotedLiteral/special='!'"/>
 			<!-- lookahead -->
 			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='see'"/>
-			<!-- context sensitivity -->
-			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='push'"/>
-			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='pop'"/>
+			<!-- context sensitivity cannot be expressed, but we still perceive [push x] and [pop x] as [x] -->
+			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='push'">
+				<bgf:expression>
+					<nonterminal>
+						<xsl:value-of select="type/typeSpec/typeid/id"/>
+					</nonterminal>
+				</bgf:expression>
+			</xsl:when>
+			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='pop'">
+				<bgf:expression>
+					<nonterminal>
+						<xsl:value-of select="type/typeSpec/typeid/id"/>
+					</nonterminal>
+				</bgf:expression>
+			</xsl:when>
 			<!-- TODO, but BEWARE: this is not negation! -->
 			<xsl:when test="type/typeSpec/opt_typeModifier/typeModifier='not'"/>
 			<!-- repetitions -->

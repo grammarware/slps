@@ -58,6 +58,8 @@ class Production:
 			self.label = ''
 		self.nt = prodelem.findtext('nonterminal')
 		self.expr = Expression(None)
+		if len(prodelem.findall(slpsns.bgf_('expression')))!=1:
+			print('Production of %s has more than one right hand side!' % self.nt)
 		self.expr.parse(prodelem.findall(slpsns.bgf_('expression'))[0])
 	def setLabel(self,l):
 		self.label = l
