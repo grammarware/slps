@@ -66,17 +66,33 @@
 							<xsl:value-of select="."/>
 							<xsl:text>, </xsl:text>
 						</xsl:for-each>
-						<em>
-							<xsl:value-of select="$mysrc/title"/>
-						</em>
-						<xsl:if test="$mysrc/subtitle">
+						<xsl:for-each select="$mysrc/title|$mysrc/subtitle|$mysrc/file">
+							<xsl:if test="local-name()='title'">
+								<em>
+									<xsl:value-of select="."/>
+								</em>
+							</xsl:if>
+							<xsl:if test="local-name()='subtitle'">
+								<xsl:value-of select="."/>
+							</xsl:if>
+							<xsl:if test="local-name()='file'">
+								<code>
+									<xsl:value-of select="."/>
+								</code>
+							</xsl:if>
 							<xsl:text>, </xsl:text>
-							<xsl:value-of select="$mysrc/subtitle"/>
+						</xsl:for-each>
+						<xsl:if test="$mysrc/etc">
+							<xsl:text>…</xsl:text>
 						</xsl:if>
-						<xsl:text> (</xsl:text>
 						<xsl:value-of select="$mysrc/date"/>
-						<xsl:text>) </xsl:text>
-						<xsl:value-of select="$mysrc/specific"/>
+						<xsl:choose>
+							<xsl:when test="$mysrc/specific">
+								<xsl:text>, </xsl:text>
+								<xsl:value-of select="$mysrc/specific"/>
+							</xsl:when>
+							<xsl:otherwise>.</xsl:otherwise>
+						</xsl:choose>
 					</xsl:if>
 					<xsl:if test="$mysrc and count($mysrc)!=1">
 						<br/>
