@@ -12,8 +12,8 @@ import transform::library::Brutal;
 
 XBGFResult runFactor(BGFExpression e1, BGFExpression e2, XBGFScope w, BGFGrammar g)
 {
-	e3 = normalise(transform::library::Factoring::makeDistributed(e1));
-	e4 = normalise(transform::library::Factoring::makeDistributed(e2));
+	e3 = normalise(makeDistributed(e1));
+	e4 = normalise(makeDistributed(e2));
 	if (!eqE(e3, e4))
 		return <problemExpr2("Expressions must be related by distribution.",e1,e2),g>;
 	return transform::library::Brutal::runReplace(e1,e2,w,g);

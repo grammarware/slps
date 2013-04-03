@@ -3,6 +3,7 @@
 module export::XBNF
 
 import lib::Rascalware;
+import language::XScope;
 import language::XBGF;
 import language::BGF;
 import export::BNF;
