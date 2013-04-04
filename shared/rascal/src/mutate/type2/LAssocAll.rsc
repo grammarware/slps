@@ -12,10 +12,10 @@ BGFGrammar AssocAll(BGFGrammar g)
 	return visit(g)
 	{
 		case production(str label, str lhs, sequence([nonterminal(str n),star(sequence([nonterminal(str x),nonterminal(n)]))]))
-			=> production(label, lhs, sequence([nonterminal(n),nonterminal(x),nonterminal(n)]));
+			=> production(label, lhs, sequence([nonterminal(n),nonterminal(x),nonterminal(n)]))
 		case production(str label, str lhs, sequence([star(sequence([nonterminal(n),nonterminal(x)])),nonterminal(n)]))
-			=> production(label, lhs, sequence([nonterminal(n),nonterminal(x),nonterminal(n)]));
+			=> production(label, lhs, sequence([nonterminal(n),nonterminal(x),nonterminal(n)]))
 		case production(str label, str lhs, plus(nonterminal(str n)))
-			=> production(label, lhs, sequence([nonterminal(n),nonterminal(n)]));
+			=> production(label, lhs, sequence([nonterminal(n),nonterminal(n)]))
 	}
 }

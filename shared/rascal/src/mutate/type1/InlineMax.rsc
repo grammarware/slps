@@ -12,12 +12,12 @@ BGFGrammar InlineMax(BGFGrammar g) = InlineNS(g,definedNs(g.prods));
 // TODO: move to Type IV?
 BGFGrammar InlineNS(BGFGrammar g, set[str] ns)
 {
-	bool done = False
+	bool done = False;
 	while(True)
 	{
 		if (isEmpty(ns))
 			break;
-		x,ns = takeOneFrom(ns);
+		<x,ns> = takeOneFrom(ns);
 		if (<ps1,[production(str l, x, BGFExpression rhs)],ps2> := splitPbyW(g.prods,innt(x)) && /nonterminal(x) !:= rhs)
 		{
 			g = transform::library::Folding::runInline(x,g);

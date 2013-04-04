@@ -10,12 +10,12 @@ import transform::library::Folding;
 BGFGrammar UnfoldMax(BGFGrammar g)
 {
 	ns = definedNs(g.prods);
-	bool done = False
+	bool done = False;
 	while(True)
 	{
 		if (isEmpty(ns))
 			break;
-		x,ns = takeOneFrom(ns);
+		<x,ns> = takeOneFrom(ns);
 		if (<ps1,[production(str l, x, BGFExpression rhs)],ps2> := splitPbyW(g.prods,innt(x)) && /nonterminal(x) !:= rhs)
 		{
 			g = transform::library::Folding::runUnfold(x,globally(),g);
