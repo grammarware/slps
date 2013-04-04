@@ -128,6 +128,7 @@ default bool isseplist(BGFProduction p) = false;
 set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
 
 set[str] empties(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,epsilon())} := g.prods[n]};
+set[str] failures(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,empty())} := g.prods[n]};
 
 set[str] justplusses(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(nonterminal(_)))} := g.prods[n]};
 set[str] juststars(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,star(nonterminal(_)))} := g.prods[n]};
@@ -138,8 +139,15 @@ set[str] names1(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plu
 set[str] names2(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([choice(L1),star(choice(L2))]))} := g.prods[n], allterminals(L1), allterminals(L2)};
 
 // TODO: simple chain as an all chain where $m$ is used only once in the whole grammar
-set[str] allchains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(m))} := g.prods[n]};
-set[str] reflchains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(n))} := g.prods[n]};
+set[str] allchains(SGrammar g) = {n | str n <- domain(g.prods), areallchains(g.prods[n])};
+bool areallchains(BGFProdSet ps) = ( true | it && production(_,_,nonterminal(_)) := p  | p <- ps );
+set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,nonterminal(_)),*P2} := g.prods[n]};
+set[str] onechains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(_))} := g.prods[n]};
+set[str] reflchains(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,nonterminal(n)),*P2} := g.prods[n]};
+set[str] brackets(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,sequence([terminal(_),nonterminal(n),terminal(_)])),*P2} := g.prods[n]};
+
+// TODO: covers too much?
+set[str] singletons(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,BGFExpression e)} := g.prods[n], choice(_) !:= e};
 
 // lower level functions
 set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
@@ -168,11 +176,16 @@ set[set[str](SGrammar)] AllMetrics =
 		cnfs,			// production rules in Chomsky normal form
 		abstracts,		// abstract syntax (no terminal symbols)
 		empties,		// nonterminal defines an empty language (epsilon)
+		failures,		// nonterminal explicitly or implicitly undefined
 		justplusses,	// x defined as y+
 		juststars,		// x defined as y*
 		justopts,		// x defined as y?
-		allchains,		// chain production rule: a nonterminal on the left hand side and a nonterminal on the right hand side
-		reflchains,		// reflexive chain production rule: right hand side equal to the left hand side
+		allchains,		// nonterminal defined only with chain production rules (right hand sides are nonterminals)
+		somechains,		// one production rule is a chain production rule (right hand side == nonterminal)
+		onechains,		// nonterminal defined with a single chain production rule (right hand side == nonterminal)
+		reflchains,		// one production rule is a reflexive chain (left hand side == right hand side)
+		brackets,		// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
+		singletons,		// nonterminal is defined with one non-horizontal production rule
 		horizontals,	// top level choice
 		verticals		// multiple production rules per nonterminal
 	};
