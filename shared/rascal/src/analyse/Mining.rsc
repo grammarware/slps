@@ -51,7 +51,8 @@ NPC getZoo(loc zoo, NPC npc)
 			res = metric(sg);
 			if ("<metric>" notin counts) counts["<metric>"] = 0;
 			counts["<metric>"] += len(res);
-			allNTs -= res;
+			if ("<metric>" notin Exclude)
+				allNTs -= res;
 		}
 		cns += len(allNTs);
 		
@@ -189,6 +190,10 @@ set[set[str](SGrammar)] AllMetrics =
 		horizontals,	// top level choice
 		verticals		// multiple production rules per nonterminal
 	};
+// too popular or exhaustive
+// TODO: check that all nonterminals belong to one of these three classes
+set[str] Exclude = {"<singletons>","<horizontals>","<verticals>"};
+
 
 // MAIN
 public void main(list[str] as)
