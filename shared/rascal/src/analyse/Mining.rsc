@@ -22,13 +22,15 @@ import export::BNF;
 BGFProduction RetireSs(BGFProduction p) = visit(p) {case selectable(_,BGFExpression e) => e};
 
 alias dict = map[BGFExpression,int];
-alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts];
+alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts, set[str] weird];
+NPC Zero = <0,0,0,0,(),(),{}>;
 alias SGrammar = tuple[set[str] roots, map[str,BGFProdSet] prods];
 
 NPC getZoo(loc zoo, NPC npc)
 {
 	dict patterns = npc.patterns;
 	int n = npc.ns, pcx = npc.ps, cx = npc.cx, cns = npc.clasns;
+	set[str] weird = npc.weird, newweird = {};
 	map[str,int] counts = npc.counts;
 	BGFGrammar g;
 	SGrammar s;
@@ -39,22 +41,26 @@ NPC getZoo(loc zoo, NPC npc)
 		cx += 1;
 		g = readBGF(zoo+"/<lang>/<s>");
 		allNTs = allNs(g);
+		newweird = allNTs;
 		n += len(allNTs);
 		pcx += len(g.prods);
 
 		sg = splitGrammar(g);
 		if (domain(sg.prods) != allNTs)
-			println("Nonterminal sets are not equal!\n<range(sg.prods)>\n<allNTs>");
+			println("Nonterminal sets are not equal!\n<domain(sg.prods)>\n<allNTs>\n<domain(sg.prods)-allNTs>\n<allNTs-domain(sg.prods)>");
 		
 		for (metric <- AllMetrics)
 		{
 			res = metric(sg);
 			if ("<metric>" notin counts) counts["<metric>"] = 0;
 			counts["<metric>"] += len(res);
-			if ("<metric>" notin Exclude)
+			if ("<metric>" in Exclude)
+				newweird -= res;
+			else
 				allNTs -= res;
 		}
 		cns += len(allNTs);
+		weird += {"<lang>::<s>::<nt>" | nt <- newweird};
 		
 		g = abstractPattern(g);
 		for (BGFProduction p <- abstractPattern(g).prods)
@@ -63,7 +69,7 @@ NPC getZoo(loc zoo, NPC npc)
 			else
 				patterns[p.rhs] = 1;
 	}
-	return <n,cns,pcx,cx,patterns,counts>;
+	return <n,cns,pcx,cx,patterns,counts,weird>;
 }
 
 BGFGrammar abstractPattern(BGFGrammar g)
@@ -149,6 +155,8 @@ set[str] brackets(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_
 
 // TODO: covers too much?
 set[str] singletons(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,BGFExpression e)} := g.prods[n], choice(_) !:= e};
+// NB: the next is the same one as bottoms
+// set[str] undefineds(SGrammar g) = {n | str n <- domain(g.prods), isEmpty(g.prods[n])};
 
 // lower level functions
 set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
@@ -192,20 +200,22 @@ set[set[str](SGrammar)] AllMetrics =
 	};
 // too popular or exhaustive
 // TODO: check that all nonterminals belong to one of these three classes
-set[str] Exclude = {"<singletons>","<horizontals>","<verticals>"};
+set[str] Exclude = {"<singletons>","<horizontals>","<verticals>","<bottoms>"};
 
 
 // MAIN
 public void main(list[str] as)
 {
 	loc zoo = |home:///projects/webslps/zoo|;
-	NPC npc = getZoo(|home:///projects/webslps/zoo|,<0,0,0,0,(),()>);
+	NPC npc = getZoo(|home:///projects/webslps/zoo|,Zero);
 	npc = getZoo(|home:///projects/webslps/tank|,npc);
 	println("Total: <npc.cx> grammars, <npc.ps> production rules, <npc.ns> nonterminals (<npc.ns-npc.clasns> thereof classified), <len(npc.patterns)> patterns.");
 	for (metric <- AllMetrics)
 	{
 		println("<100*npc.counts["<metric>"]/npc.ns>% classified as <metric>: <npc.counts["<metric>"]>.");
 	}
+	for (w <- npc.weird)
+		println("Weird: <w>");
 	// Just the Zoo:
 	//              Total: 42 grammars, 8927 production rules, 8277 nonterminals.
 	// Zoo + Tank:
