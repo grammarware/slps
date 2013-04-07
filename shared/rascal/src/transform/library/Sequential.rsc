@@ -5,7 +5,7 @@ module transform::library::Sequential
 import lib::Rascalware;
 import language::BGF;
 import language::XScope;
-import transform::Results;
+import language::XOutcome;
 import transform::library::Util;
 import transform::library::Brutal;
 import diff::GDT;

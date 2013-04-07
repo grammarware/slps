@@ -12,7 +12,7 @@ BGFGrammar DesignateAll(BGFGrammar g)
 	for (p<-g.prods)
 	{
 		if (p.lhs notin domain(nums))
-			map[p.lhs] = 1;
+			nums[p.lhs] = 1;
 		if (p.label=="")
 		{
 			label = "<p.lhs><nums[p.lhs]>";
@@ -20,7 +20,7 @@ BGFGrammar DesignateAll(BGFGrammar g)
 		}
 		else
 			label = p.label;
-		ps.append(production(label,p.lhs,p.rhs));
+		ps += production(label,p.lhs,p.rhs);
 	}
 	return grammar(g.roots,ps);
 }

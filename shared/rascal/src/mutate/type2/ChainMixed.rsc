@@ -18,7 +18,7 @@ BGFGrammar ChainMixed(BGFGrammar g)
 		if (len(ps2)==1)
 			continue;
 		int cx = 1;
-		ps4 = []
+		ps4 = [];
 		for (p<-ps2)
 			if (production(_,_,nonterminal(_)) := p)
 				ps4 += [p];

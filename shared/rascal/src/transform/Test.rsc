@@ -5,6 +5,7 @@ module transform::Test
 import IO;
 import language::BGF;
 import language::XBGF;
+import language::XScope;
 import transform::XBGF;
 import diff::GDT;
 import export::BNF;

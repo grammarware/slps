@@ -17,7 +17,7 @@ BGFGrammar InlineLazy(BGFGrammar g)
 	{
 		if (x notin usedonce && x notin usedmore)
 			usedonce += {x};
-		elif (x in usedonce)
+		elseif (x in usedonce)
 		{
 			usedonce -= {x};
 			usedmore += {x};
