@@ -199,7 +199,6 @@ set[set[str](SGrammar)] AllMetrics =
 		verticals		// multiple production rules per nonterminal
 	};
 // too popular or exhaustive
-// TODO: check that all nonterminals belong to one of these three classes
 set[str] Exclude = {"<singletons>","<horizontals>","<verticals>","<bottoms>"};
 
 
