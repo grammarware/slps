@@ -64,23 +64,31 @@
 	<bgf:production>
 		<nonterminal>Exp</nonterminal>
 		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<nonterminal>LiteralExp</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>ArgumentExp</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>IfThenElseExp</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>ApplyExp</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>BinaryExp</nonterminal>
-				</bgf:expression>
-			</choice>
+			<nonterminal>LiteralExp</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>Exp</nonterminal>
+		<bgf:expression>
+			<nonterminal>ArgumentExp</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>Exp</nonterminal>
+		<bgf:expression>
+			<nonterminal>IfThenElseExp</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>Exp</nonterminal>
+		<bgf:expression>
+			<nonterminal>ApplyExp</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>Exp</nonterminal>
+		<bgf:expression>
+			<nonterminal>BinaryExp</nonterminal>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
@@ -166,17 +174,19 @@
 	<bgf:production>
 		<nonterminal>BinaryExp</nonterminal>
 		<bgf:expression>
-			<choice>
-				<bgf:expression>
-					<nonterminal>PlusExp</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>MinusExp</nonterminal>
-				</bgf:expression>
-				<bgf:expression>
-					<nonterminal>EqualExp</nonterminal>
-				</bgf:expression>
-			</choice>
+			<nonterminal>PlusExp</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>BinaryExp</nonterminal>
+		<bgf:expression>
+			<nonterminal>MinusExp</nonterminal>
+		</bgf:expression>
+	</bgf:production>
+	<bgf:production>
+		<nonterminal>BinaryExp</nonterminal>
+		<bgf:expression>
+			<nonterminal>EqualExp</nonterminal>
 		</bgf:expression>
 	</bgf:production>
 	<bgf:production>
