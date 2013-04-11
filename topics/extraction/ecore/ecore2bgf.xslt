@@ -15,18 +15,88 @@
 		<!-- <eClassifiers xsi:type="ecore:EClass" name="H1" eSuperTypes="/1/BODYElement"/> -->
 		<xsl:variable name="ourEType" select="concat('#//',./@name)"/>
 		<xsl:variable name="ourName" select="./@name"/>
-		<xsl:variable name="ourSuperType" select="substring-after(substring-after(@eSuperTypes,'/'),'/')"/>
+		<xsl:variable name="ourSuperType">
+			<xsl:choose>
+				<xsl:when test="substring-before(substring-after(substring-after(@eSuperTypes,'/'),'/'),' ')=''">
+					<xsl:value-of select="substring-after(substring-after(@eSuperTypes,'/'),'/')"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="substring-before(substring-after(substring-after(@eSuperTypes,'/'),'/'),' ')"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="ourSuperType2" select="substring-after(substring-after(substring-after(@eSuperTypes,' '),'/'),'/')"/>
 		<xsl:message>
 			<xsl:text>Processing </xsl:text>
 			<xsl:value-of select="$ourName"/>
 		</xsl:message>
 		<xsl:choose>
 			<xsl:when test="@name='DocumentRoot'"/>
-			<xsl:when test="@xsi:type='ecore:EDataType'"/>
+			<xsl:when test="@xsi:type='ecore:EDataType'">
+				<xsl:if test="@name='Integer'">
+					<bgf:production>
+						<nonterminal>Integer</nonterminal>
+						<bgf:expression>
+							<value>int</value>
+						</bgf:expression>
+					</bgf:production>
+				</xsl:if>
+				<xsl:if test="@name='String'">
+					<bgf:production>
+						<nonterminal>String</nonterminal>
+						<bgf:expression>
+							<value>string</value>
+						</bgf:expression>
+					</bgf:production>
+				</xsl:if>
+				<!-- TODO/TOCHECK: is this definition of boolean true -->
+				<xsl:if test="@name='Boolean'">
+					<bgf:production>
+						<nonterminal>Boolean</nonterminal>
+						<bgf:expression>
+							<choice>
+								<bgf:expression>
+									<terminal>true</terminal>
+								</bgf:expression>
+								<bgf:expression>
+									<terminal>false</terminal>
+								</bgf:expression>
+							</choice>
+						</bgf:expression>
+					</bgf:production>
+				</xsl:if>
+			</xsl:when>
 			<xsl:when test="@xsi:type='ecore:EClass'">
 				<!-- inheritance/containment? -->
 				<xsl:for-each select="//eClassifiers[substring-after(substring-after(@eSuperTypes,'/'),'/')=$ourName]">
-					<xsl:message> hidden option</xsl:message>
+					<xsl:message> hidden option for the only subtype</xsl:message>
+					<bgf:production>
+						<nonterminal>
+							<xsl:value-of select="$ourName"/>
+						</nonterminal>
+						<bgf:expression>
+							<nonterminal>
+								<xsl:value-of select="@name"/>
+							</nonterminal>
+						</bgf:expression>
+					</bgf:production>
+				</xsl:for-each>
+				<!-- a dirty hack to work with multiple (double) inheritance -->
+				<xsl:for-each select="//eClassifiers[substring-before(substring-after(substring-after(@eSuperTypes,'/'),'/'),' ')=$ourName]">
+					<xsl:message> hidden option for the first subtype</xsl:message>
+					<bgf:production>
+						<nonterminal>
+							<xsl:value-of select="$ourName"/>
+						</nonterminal>
+						<bgf:expression>
+							<nonterminal>
+								<xsl:value-of select="@name"/>
+							</nonterminal>
+						</bgf:expression>
+					</bgf:production>
+				</xsl:for-each>
+				<xsl:for-each select="//eClassifiers[substring-after(substring-after(substring-after(@eSuperTypes,' '),'/'),'/')=$ourName]">
+					<xsl:message> hidden option for the second subtype</xsl:message>
 					<bgf:production>
 						<nonterminal>
 							<xsl:value-of select="$ourName"/>
@@ -70,22 +140,34 @@
 											</choice>
 										</bgf:expression>
 									</xsl:when>
-									<xsl:when test="//eClassifiers[@name=$ourSuperType and @abstract='true']">
+									<!-- a dirty hack to work with multiple (double) inheritance -->
+									<!--  and @abstract='true' ? -->
+									<xsl:when test="//eClassifiers[@name=$ourSuperType] or //eClassifiers[@name=$ourSuperType2]">
 										<xsl:message> option 2.1.2</xsl:message>
 										<bgf:expression>
 											<sequence>
 												<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType]/eStructuralFeatures"/>
+												<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType2]/eStructuralFeatures"/>
 											</sequence>
 										</bgf:expression>
 									</xsl:when>
-									<xsl:when test="//eClassifiers[@name=$ourSuperType and @abstract!='true']">
+									<!-- <xsl:when test="//eClassifiers[@name=$ourSuperType] or //eClassifiers[@name=$ourSuperType2]">
+																		<xsl:message> option 2.1.2</xsl:message>
+																		<bgf:expression>
+																			<sequence>
+																				<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType]/eStructuralFeatures"/>
+																				<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType2]/eStructuralFeatures"/>
+																			</sequence>
+																		</bgf:expression>
+																	</xsl:when> -->
+									<!-- <xsl:when test="//eClassifiers[@name=$ourSuperType and @abstract!='true']">
 										<xsl:message> option 2.1.3</xsl:message>
 										<bgf:expression>
 											<sequence>
 												<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType]/eStructuralFeatures"/>
 											</sequence>
 										</bgf:expression>
-									</xsl:when>
+									</xsl:when> -->
 									<xsl:otherwise>
 										<xsl:message> option 2.1.4</xsl:message>
 										<bgf:expression>
