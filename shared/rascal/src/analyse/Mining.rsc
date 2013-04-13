@@ -51,6 +51,7 @@ NPC getZoo(loc zoo, NPC npc)
 		
 		for (metric <- AllMetrics)
 		{
+			println("  Calculating <metric>...");
 			res = metric(sg);
 			if ("<metric>" notin counts) counts["<metric>"] = 0;
 			counts["<metric>"] += len(res);
@@ -148,7 +149,8 @@ set[str] names2(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,seq
 // TODO: simple chain as an all chain where $m$ is used only once in the whole grammar
 set[str] allchains(SGrammar g) = {n | str n <- domain(g.prods), areallchains(g.prods[n])};
 bool areallchains(BGFProdSet ps) = ( true | it && production(_,_,nonterminal(_)) := p  | p <- ps );
-set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,nonterminal(_)),*P2} := g.prods[n]};
+// set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,nonterminal(_)),*P2} := g.prods[n]};
+set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods), /production(_,n,nonterminal(_)) := g.prods[n]};
 set[str] onechains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(_))} := g.prods[n]};
 set[str] reflchains(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,nonterminal(n)),*P2} := g.prods[n]};
 set[str] brackets(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,sequence([terminal(_),nonterminal(n),terminal(_)])),*P2} := g.prods[n]};

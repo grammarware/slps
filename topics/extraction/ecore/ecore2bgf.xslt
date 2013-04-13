@@ -26,10 +26,10 @@
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="ourSuperType2" select="substring-after(substring-after(substring-after(@eSuperTypes,' '),'/'),'/')"/>
-		<xsl:comment>
+		<xsl:message>
 			<xsl:text>Processing </xsl:text>
 			<xsl:value-of select="$ourName"/>
-		</xsl:comment>
+		</xsl:message>
 		<xsl:choose>
 			<xsl:when test="@name='DocumentRoot'"/>
 			<xsl:when test="@xsi:type='ecore:EDataType'">
@@ -69,7 +69,7 @@
 			<xsl:when test="@xsi:type='ecore:EClass'">
 				<!-- inheritance/containment? -->
 				<xsl:for-each select="//eClassifiers[substring-after(substring-after(@eSuperTypes,'/'),'/')=$ourName]">
-					<xsl:comment> hidden option for the only subtype</xsl:comment>
+					<xsl:message> hidden option for the only subtype</xsl:message>
 					<bgf:production>
 						<nonterminal>
 							<xsl:value-of select="$ourName"/>
@@ -83,7 +83,7 @@
 				</xsl:for-each>
 				<!-- a dirty hack to work with multiple (double) inheritance -->
 				<xsl:for-each select="//eClassifiers[substring-before(substring-after(substring-after(@eSuperTypes,'/'),'/'),' ')=$ourName]">
-					<xsl:comment> hidden option for the first subtype</xsl:comment>
+					<xsl:message> hidden option for the first subtype</xsl:message>
 					<bgf:production>
 						<nonterminal>
 							<xsl:value-of select="$ourName"/>
@@ -96,7 +96,7 @@
 					</bgf:production>
 				</xsl:for-each>
 				<xsl:for-each select="//eClassifiers[substring-after(substring-after(substring-after(@eSuperTypes,' '),'/'),'/')=$ourName]">
-					<xsl:comment> hidden option for the second subtype</xsl:comment>
+					<xsl:message> hidden option for the second subtype</xsl:message>
 					<bgf:production>
 						<nonterminal>
 							<xsl:value-of select="$ourName"/>
@@ -127,7 +127,7 @@
 							<xsl:when test="count(eStructuralFeatures)=0">
 								<xsl:choose>
 									<xsl:when test="//eClassifiers[substring-after(substring-after(@eSuperTypes,'/'),'/')=$ourName]">
-										<xsl:comment> option 2.1.1</xsl:comment>
+										<xsl:message> option 2.1.1</xsl:message>
 										<bgf:expression>
 											<choice>
 												<xsl:for-each select="//eClassifiers[substring-after(substring-after(@eSuperTypes,'/'),'/')=$ourName]">
@@ -143,7 +143,7 @@
 									<!-- a dirty hack to work with multiple (double) inheritance -->
 									<!--  and @abstract='true' ? -->
 									<xsl:when test="//eClassifiers[@name=$ourSuperType] or //eClassifiers[@name=$ourSuperType2]">
-										<xsl:comment> option 2.1.2</xsl:comment>
+										<xsl:message> option 2.1.2</xsl:message>
 										<bgf:expression>
 											<sequence>
 												<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType]/eStructuralFeatures"/>
@@ -152,7 +152,7 @@
 										</bgf:expression>
 									</xsl:when>
 									<!-- <xsl:when test="//eClassifiers[@name=$ourSuperType] or //eClassifiers[@name=$ourSuperType2]">
-																		<xsl:comment> option 2.1.2</xsl:comment>
+																		<xsl:message> option 2.1.2</xsl:message>
 																		<bgf:expression>
 																			<sequence>
 																				<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType]/eStructuralFeatures"/>
@@ -161,7 +161,7 @@
 																		</bgf:expression>
 																	</xsl:when> -->
 									<!-- <xsl:when test="//eClassifiers[@name=$ourSuperType and @abstract!='true']">
-										<xsl:comment> option 2.1.3</xsl:comment>
+										<xsl:message> option 2.1.3</xsl:message>
 										<bgf:expression>
 											<sequence>
 												<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType]/eStructuralFeatures"/>
@@ -169,7 +169,7 @@
 										</bgf:expression>
 									</xsl:when> -->
 									<xsl:otherwise>
-										<xsl:comment> option 2.1.4</xsl:comment>
+										<xsl:message> option 2.1.4</xsl:message>
 										<bgf:expression>
 											<epsilon/>
 										</bgf:expression>
@@ -177,11 +177,11 @@
 								</xsl:choose>
 							</xsl:when>
 							<xsl:when test="count(eStructuralFeatures)=1">
-								<xsl:comment> option 2.2</xsl:comment>
+								<xsl:message> option 2.2</xsl:message>
 								<xsl:apply-templates select="./eStructuralFeatures"/>
 							</xsl:when>
 							<xsl:otherwise>
-								<xsl:comment> option 2.3</xsl:comment>
+								<xsl:message> option 2.3</xsl:message>
 								<bgf:expression>
 									<sequence>
 										<xsl:apply-templates select="./eStructuralFeatures"/>
@@ -193,7 +193,7 @@
 				</xsl:if>
 			</xsl:when>
 			<xsl:when test="@xsi:type='ecore:EEnum'">
-				<xsl:comment> option 3</xsl:comment>
+				<xsl:message> option 3</xsl:message>
 				<bgf:production>
 					<nonterminal>
 						<xsl:value-of select="./@name"/>
@@ -210,7 +210,8 @@
 						<xsl:otherwise>
 							<bgf:expression>
 								<choice>
-									<xsl:apply-templates select="./eLiterals"/>
+									<!-- FIXED to account for something like (eLiterals value="1"/) (found in BPEL.ecore) -->
+									<xsl:apply-templates select="./eLiterals[@name]"/>
 								</choice>
 							</bgf:expression>
 						</xsl:otherwise>
@@ -218,7 +219,7 @@
 				</bgf:production>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:comment> option 4</xsl:comment>
+				<xsl:message> option 4</xsl:message>
 				<any/>
 			</xsl:otherwise>
 		</xsl:choose>
