@@ -22,8 +22,8 @@ import export::BNF;
 BGFProduction RetireSs(BGFProduction p) = visit(p) {case selectable(_,BGFExpression e) => e};
 
 alias dict = map[BGFExpression,int];
-alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts, set[str] weird];
-NPC Zero = <0,0,0,0,(),(),{}>;
+alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts, set[str] weird, map[str,set[str]] scores];
+NPC Zero = <0,0,0,0,(),(),{},()>;
 alias SGrammar = tuple[set[str] roots, map[str,BGFProdSet] prods];
 
 NPC getZoo(loc zoo, NPC npc)
@@ -32,6 +32,7 @@ NPC getZoo(loc zoo, NPC npc)
 	int n = npc.ns, pcx = npc.ps, cx = npc.cx, cns = npc.clasns;
 	set[str] weird = npc.weird, newweird = {};
 	map[str,int] counts = npc.counts;
+	map[str,set[str]] scores = npc.scores;
 	BGFGrammar g;
 	SGrammar s;
 	set[str] allNTs = {};
@@ -42,7 +43,8 @@ NPC getZoo(loc zoo, NPC npc)
 		g = readBGF(zoo+"/<lang>/<s>");
 		allNTs = allNs(g);
 		newweird = allNTs;
-		n += len(allNTs);
+		int VAR = len(allNTs);
+		n += VAR;
 		pcx += len(g.prods);
 
 		sg = splitGrammar(g);
@@ -54,7 +56,10 @@ NPC getZoo(loc zoo, NPC npc)
 			println("  Calculating <metric>...");
 			res = metric(sg);
 			if ("<metric>" notin counts) counts["<metric>"] = 0;
+			if ("<metric>" notin scores) scores["<metric>"] = {};
 			counts["<metric>"] += len(res);
+			if (len(res)==VAR)
+				scores["<metric>"] += {"<lang>::<s>"};
 			if ("<metric>" in Exclude)
 				newweird -= res;
 			else
@@ -70,7 +75,7 @@ NPC getZoo(loc zoo, NPC npc)
 			else
 				patterns[p.rhs] = 1;
 	}
-	return <n,cns,pcx,cx,patterns,counts,weird>;
+	return <n,cns,pcx,cx,patterns,counts,weird,scores>;
 }
 
 BGFGrammar abstractPattern(BGFGrammar g)
@@ -213,7 +218,9 @@ public void main(list[str] as)
 	println("Total: <npc.cx> grammars, <npc.ps> production rules, <npc.ns> nonterminals (<npc.ns-npc.clasns> thereof classified), <len(npc.patterns)> patterns.");
 	for (metric <- AllMetrics)
 	{
-		println("<100*npc.counts["<metric>"]/npc.ns>% classified as <metric>: <npc.counts["<metric>"]>.");
+		println("<100*npc.counts["<metric>"]/npc.ns>% classified as <metric>: <npc.counts["<metric>"]> (<len(npc.scores["<metric>"])> scores).");
+		if (len(npc.scores["<metric>"])>0 && len(npc.scores["<metric>"])<25)
+			println("  Scores: <joinStrings(npc.scores["<metric>"])>");
 	}
 	for (w <- npc.weird)
 		println("Weird: <w>");
