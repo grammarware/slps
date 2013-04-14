@@ -4,6 +4,7 @@
 	<xsl:template match="/ecore:EPackage">
 		<bgf:grammar>
 			<xsl:apply-templates select="eClassifiers"/>
+			<xsl:apply-templates select="eSubpackages/eClassifiers"/>
 		</bgf:grammar>
 	</xsl:template>
 	<xsl:template match="/xmi:XMI">
