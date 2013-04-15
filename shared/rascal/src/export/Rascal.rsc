@@ -1,16 +1,18 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-@contributor{ADT2PP}
+@contributor{BGF2Rascal}
 @wiki{BGF2Rascal}
 module export::Rascal
 
 import lib::Rascalware;
 import language::BGF;
-import String; //startsWith
+import String; //startsWith, replaceAll
 import List; //getOneFrom
 
-public str pprsc(BGFGrammar g) =
+public str pprsc(BGFGrammar g) = pprsc(g,"Name");
+
+public str pprsc(BGFGrammar g, str name) =
 "@contributor{BGF2Rascal automated exporter - SLPS - http://github.com/grammarware/slps/wiki/BGF2Rascal}
-'module Name
+'module <name>
 '
 'import ParseTree;
 'import util::IDE;
@@ -19,13 +21,12 @@ public str pprsc(BGFGrammar g) =
 'layout WS = [\\t-\\n\\r\\ ]* !\>\> [\\t-\\n\\r\\ ];
 '
 '<for(p<-g.prods){><if(p.lhs in g.roots){><pprscroot(p)><} else {><pprsc(p)><}><}>
-'
-'public void main()
+'" + ((!isEmpty(g.roots)) ? "public void main()
 '{
-'	registerLanguage(\"Name\", \"ext\", <getOneFrom(g.roots)>(str input, loc org) {return parse(#<getOneFrom(g.roots)>, input, org);});
+'	registerLanguage(\"<name>\", \"ext\", <getOneFrom(g.roots)>(str input, loc org) {return parse(#<getOneFrom(g.roots)>, input, org);});
 '	println(\"Language registered.\");
 '}
-";
+":"");
 
 public str pprscroot(BGFProduction p) = "start syntax <p.lhs> = <pprscstop(p.rhs)>;\n\n";
 
@@ -33,26 +34,27 @@ public str pprsc(BGFProduction p)
 {
 	//if (/not(_) := p)
 	if (startsWith(p.lhs,"Lex"))
-		return "lexical <p.lhs> = <pprscl(p.rhs)>;\n\n";
+		return "lexical <p.lhs>\n\t= <pprscl(p.rhs)>;\n\n";
 	else
-		return "syntax <p.lhs> = <pprscstop(p.rhs)>;\n\n";
+		return "syntax <p.lhs>\n\t= <pprscstop(p.rhs)>;\n\n";
  //= "syntax <p.lhs> = <pprsc(p.rhs)>;\n\n";
 }
 
-public str pprsc(BGFProduction p) = "syntax <p.lhs> = <pprsc(p.rhs)>;\n\n";
+// public str pprsc(BGFProduction p) = "syntax <p.lhs> = <pprsc(p.rhs)>;\n\n";
 
-str pprscstop(BGFExpression::choice(BGFExprList exprs)) = "<mapjoin(pprscsbr,exprs,"\n | ")>";
+str pprscstop(BGFExpression::choice(BGFExprList exprs)) = "<mapjoin(pprscsbr,exprs,"\n\t| ")>";
 default str pprscstop(BGFExpression e) = pprscs(e);
 
 str pprscsbr(e:choice(BGFExprList exprs)) = "(<pprscs(e)>)";
 str pprscsbr(e:sequence(BGFExprList exprs)) = "(<pprscs(e)>)";
 default str pprscsbr(BGFExpression e) = pprscs(e);
 
-public str pprscs(BGFExpression::epsilon()) = "epsilon()";
-public str pprscs(BGFExpression::empty()) = "empty()";
-public str pprscs(BGFExpression::val(BGFValue v)) = "val(<pprscs(v)>)";
-public str pprscs(BGFExpression::anything()) = "anything()";
-public str pprscs(BGFExpression::terminal(str t)) = "\"<t>\"";
+public str pprscs(BGFExpression::epsilon()) = "()";
+public str pprscs(BGFExpression::empty()) = "false"; // ???
+public str pprscs(BGFExpression::val(string())) = "str";
+public str pprscs(BGFExpression::val(integer())) = "int";
+public str pprscs(BGFExpression::anything()) = "Anything"; //???
+public str pprscs(BGFExpression::terminal(str t)) = "\"<replaceAll(replaceAll(t,"\<","\\\<"),"\>","\\\>")>\"";
 public str pprscs(BGFExpression::nonterminal(str t)) = t;
 public str pprscs(BGFExpression::selectable(str selector, BGFExpression expr)) = "<pprscs(expr)> <selector>";
 public str pprscs(BGFExpression::sequence(BGFExprList exprs)) = "<mapjoin(pprscs,exprs," ")>";
@@ -63,8 +65,8 @@ public str pprscs(BGFExpression::optional(BGFExpression expr)) = "<pprscsbr(expr
 public str pprscs(BGFExpression::not(BGFExpression expr)) = "!<pprscs(expr)>";
 public str pprscs(BGFExpression::plus(BGFExpression expr)) = "<pprscsbr(expr)>+";
 public str pprscs(BGFExpression::star(BGFExpression expr)) = "<pprscsbr(expr)>*";
-public str pprscs(BGFExpression::seplistplus(BGFExpression expr, BGFExpression sep)) = "seplistplus(<pprscs(expr)>,<pprscs(sep)>)";
-public str pprscs(BGFExpression::sepliststar(BGFExpression expr, BGFExpression sep)) = "sepliststar(<pprscs(expr)>,<pprscs(sep)>)";
+public str pprscs(BGFExpression::seplistplus(BGFExpression expr, BGFExpression sep)) = "{<pprscs(expr)> <pprscs(sep)>}+";
+public str pprscs(BGFExpression::sepliststar(BGFExpression expr, BGFExpression sep)) = "{<pprscs(expr)> <pprscs(sep)>}*";
 public default str pprscs(BGFExpression smth) = "??<smth>??";
 
 public str pprsct(str t)
@@ -123,4 +125,3 @@ public str pprsc(BGFExprList es) = mapjoin(pprsc,es," ");
 public str pprsc(BGFValue::string()) = "string()";
 public str pprsc(BGFValue::integer()) = "integer()";
 public default str pprsc(BGFValue smth) = "??<smth>??";
-

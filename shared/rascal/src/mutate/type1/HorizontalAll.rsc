@@ -5,6 +5,8 @@ module mutate::type1::HorizontalAll
 import lib::Rascalware;
 import language::BGF;
 import language::XScope;
+import analyse::Metrics;
+import transform::library::Util;
 
 BGFGrammar HorizontalAll(BGFGrammar g)
 {
@@ -13,7 +15,7 @@ BGFGrammar HorizontalAll(BGFGrammar g)
 	{
 		<ps1,ps2,ps3> = splitPbyW(ps,innt(x));
 		if (len(ps2)>1)
-			ps = ps1 + production("",x,choice([(l=="" && e) || selectable(l,e) | production(str l, str x, BGFExpression e) <- ps2])) + ps3;
+			ps = ps1 + production("",x,choice([(l=="" ? e : selectable(l,e)) | production(str l, str x, BGFExpression e) <- ps2])) + ps3;
 	}
 	return grammar(g.roots,ps);
 }

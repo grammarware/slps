@@ -8,7 +8,7 @@ cd ${LOCAL}
 
 if [ $# -ne 2 ]; then
     echo "This tool extracts a BGF grammar from a Rascal abstract data type."
-    echo "Usage: rscs2rsc <input-src> <output-bgf>"
+    echo "Usage: rscs2bgf <input-src> <output-bgf>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."

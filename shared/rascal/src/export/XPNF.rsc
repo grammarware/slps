@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-@contributor{ADT2PP}
+@contributor{XBGF2XPNF}
 module export::XPNF
 
 import lib::Rascalware;

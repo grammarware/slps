@@ -1,5 +1,5 @@
 @contributor{Vadim Zaytsev - vadim@grammarware.net - SWAT, CWI}
-@doc{grammarware's own version of Rascal library structure}
+@doc{grammarware’s own version of Rascal library structure}
 module lib::Rascalware
 
 import Relation;
@@ -67,6 +67,14 @@ public str replace(str w, map[str,str] m)
 	for (k <- m)
 		w = String::replaceAll(w,k,m[k]);
 	return w;
+}
+
+public str toCapital(str s)
+{
+	list[int] ns = chars(s);
+	if (ns[0]<=122 && ns[0]>=97)
+		ns[0] = chars(toUpperCase(stringChars([ns[0]])))[0];
+	return stringChars(ns);
 }
 
 // fancy lines in output or debug messages

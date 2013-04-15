@@ -1,0 +1,21 @@
+#!/bin/sh
+# wiki: BGF2Rascal
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -lt 1 ]; then
+    echo "This tool exports a BGF grammar to a Rascal grammar."
+    echo "Usage: bgf2rscs <input-grammar> [<output-rascal>]"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+cp $1 ${SLPS}/shared/rascal/src/src.bgf
+cd ${SLPS}/shared/rascal/src && java -Xmx1G -Xss32m -jar ${SLPS}/download/rascal.jar tools::BGF2Rascal src.bgf `basename $2` tgt.rsc
+mv ${SLPS}/shared/rascal/src/tgt.rsc ${LOCAL}/$2
+rm ${SLPS}/shared/rascal/src/src.bgf

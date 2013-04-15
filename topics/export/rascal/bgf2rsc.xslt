@@ -12,7 +12,14 @@ module </xsl:text>
 		</xsl:call-template>
 		<xsl:text>
 
+extend lang::std::Whitespace;
 </xsl:text>
+		<xsl:if test="root">
+			<xsl:text>import ParseTree;
+import util::IDE;
+import IO;
+</xsl:text>
+		</xsl:if>
 		<xsl:if test="$imports">
 			<xsl:text>import </xsl:text>
 			<xsl:value-of select="$imports"/>
@@ -20,7 +27,27 @@ module </xsl:text>
 
 </xsl:text>
 		</xsl:if>
+		<xsl:text>
+layout Standard = Whitespace* !&gt;&gt; [\u0009-\u000D \u0020 \u0085 \u00A0 \u1680 \u180E \u2000-\u200A \u2028 \u2029 \u202F \u205F \u3000];
+</xsl:text>
 		<xsl:apply-templates select="./bgf:*"/>
+		<xsl:if test="root">
+			<xsl:text>
+public void main()
+{
+	registerLanguage("</xsl:text>
+			<xsl:call-template name="capitalise">
+				<xsl:with-param name="n" select="$grammarname"/>
+			</xsl:call-template>
+			<xsl:text>", "ext", </xsl:text>
+			<xsl:value-of select="root[1]"/>
+			<xsl:text>(str input, loc org) {return parse(#</xsl:text>
+			<xsl:value-of select="root[1]"/>
+			<xsl:text>, input, org);});
+	println("Language registered.");
+}
+</xsl:text>
+		</xsl:if>
 	</xsl:template>
 	<xsl:template match="bgf:production">
 		<xsl:text>syntax </xsl:text>
