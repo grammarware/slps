@@ -1,0 +1,22 @@
+#!/bin/sh
+# wiki: RelaxNG2BGF
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+elif [ $# -eq 2 ]; then
+	OUTPUT=$2
+elif [ $# -eq 1 ]; then
+	OUTPUT=${LOCAL}/`basename $1 .rng`.bgf
+else
+    echo "This tool extracts a BGF grammar from a Relax NG grammar"
+    echo "Usage: rng2bgf <rng-grammar> [<output-grammar>]"
+    exit 2
+fi
+
+xsltproc ${SLPS}/topics/extraction/relax/rng2bgf.xslt $1 > ${OUTPUT}
