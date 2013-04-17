@@ -3,13 +3,15 @@
 	<xsl:output method="xml" encoding="UTF-8"/>
 	<xsl:template match="/rng:grammar">
 		<bgf:grammar>
-			<xsl:for-each select="rng:start/rng:ref">
-				<root>
-					<xsl:value-of select="@name"/>
-				</root>
-			</xsl:for-each>
 			<xsl:apply-templates select="rng:*"/>
 		</bgf:grammar>
+	</xsl:template>
+	<xsl:template match="rng:start">
+		<xsl:for-each select="rng:ref">
+			<root>
+				<xsl:value-of select="@name"/>
+			</root>
+		</xsl:for-each>
 	</xsl:template>
 	<xsl:template match="rng:include">
 		<xsl:message>
@@ -115,7 +117,7 @@
 			</terminal>
 		</bgf:expression>
 	</xsl:template>
-	<xsl:template match="rng:text|rng:data[@type='string' or @type='ID']">
+	<xsl:template match="rng:text|rng:data[@type='string' or @type='ID' or @type='QName']">
 		<bgf:expression>
 			<value>string</value>
 		</bgf:expression>
@@ -160,7 +162,7 @@
 				<xsl:when test="rng:anyName">
 					<any/>
 				</xsl:when>
-				<xsl:when test="rng:text or rng:data/@type='ID' or rng:data/@type='string'">
+				<xsl:when test="rng:text or rng:data/@type='string' or rng:data/@type='ID' or rng:data/@type='QName' or rng:data/@type='NCName'">
 					<selectable>
 						<selector>
 							<xsl:value-of select="@name"/>
@@ -262,13 +264,24 @@
 						</bgf:expression>
 					</selectable>
 				</xsl:when>
+				<xsl:when test="count(*)=0 and @name">
+					<!-- NB: the logic is simple: if no type is given, the attribute is a string! -->
+					<!-- (does not work for elements) -->
+					<selectable>
+						<selector>
+							<xsl:value-of select="@name"/>
+						</selector>
+						<bgf:expression>
+							<value>string</value>
+						</bgf:expression>
+					</selectable>
+				</xsl:when>
 				<xsl:otherwise>
-					<bgf:expression>
-						<terminal>
-							<xsl:text>ATTRUNKNOWN </xsl:text>
-							<xsl:value-of select="local-name(*)"/>
-						</terminal>
-					</bgf:expression>
+					<!-- NB: the following mapping is incorrect yet useful for debugging! -->
+					<terminal>
+						<xsl:text>ATTRUNKNOWN </xsl:text>
+						<xsl:value-of select="local-name(*)"/>
+					</terminal>
 				</xsl:otherwise>
 			</xsl:choose>
 		</bgf:expression>
