@@ -144,12 +144,20 @@
 									<!-- a dirty hack to work with multiple (double) inheritance -->
 									<!--  and @abstract='true' ? -->
 									<xsl:when test="//eClassifiers[@name=$ourSuperType] or //eClassifiers[@name=$ourSuperType2]">
-										<xsl:message> option 2.1.2</xsl:message>
 										<bgf:expression>
-											<sequence>
-												<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType]/eStructuralFeatures"/>
-												<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType2]/eStructuralFeatures"/>
-											</sequence>
+											<xsl:choose>
+												<xsl:when test="(//eClassifiers[@name=$ourSuperType]/eStructuralFeatures)|//eClassifiers[@name=$ourSuperType2]/eStructuralFeatures">
+													<xsl:message> option 2.1.2.1</xsl:message>
+													<sequence>
+														<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType]/eStructuralFeatures"/>
+														<xsl:apply-templates select="//eClassifiers[@name=$ourSuperType2]/eStructuralFeatures"/>
+													</sequence>
+												</xsl:when>
+												<xsl:otherwise>
+													<xsl:message> option 2.1.2.2</xsl:message>
+													<epsilon/>
+												</xsl:otherwise>
+											</xsl:choose>
 										</bgf:expression>
 									</xsl:when>
 									<!-- <xsl:when test="//eClassifiers[@name=$ourSuperType] or //eClassifiers[@name=$ourSuperType2]">
