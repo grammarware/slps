@@ -183,9 +183,9 @@
 			</xsd:sequence>
 		</xsd:choice>
 	</xsd:complexType>
-	<xsd:simpleType name="BorderType">
+	<!-- <xsd:simpleType name="BorderType">
 		<xsd:union memberTypes="xsd:nonNegativeInteger edd:unbounded"/>
-	</xsd:simpleType>
+	</xsd:simpleType> -->
 	<xsd:simpleType name="unbounded">
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="unbounded"/>
