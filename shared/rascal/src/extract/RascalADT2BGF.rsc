@@ -22,7 +22,7 @@ syntax DataDef =  Name "=" {DataExpr "|"}+ ";";
 lexical Name = [a-zA-Z_0-9]+ !>> [a-zA-Z_0-9] ; 
 syntax DataExpr
 	= Name "(" {DataExpr ","}* ")"
-	| Name "[" DataExpr "]" Name?
+	| Name "[" {DataExpr ","}+ "]" Name?
 	| Name Name?
 	;
 
@@ -37,6 +37,11 @@ public void main()
 	println(pp(process(|project://fl/src/Abstract.rsc|)));
 }
 
+public void do()
+{
+	println(pp(process(|project://slps/src/language/BGF.rsc|)));
+}
+
 BGFGrammar process(loc src)
 {
 	str gs = readFile(src);
@@ -46,7 +51,7 @@ BGFGrammar process(loc src)
 	{
 		str name = trim(split("=",d)[0]);
 		println("Parsing <name>...");
-		//println(d);
+		println(d);
 		ps += def2prod(parse(#DataDef,trim(d)));
 	}
 	return normalise(language::BGF::grammar([],ps));
@@ -70,4 +75,6 @@ BGFExpression expr2expr((DataExpr)`list[<DataExpr e>]`) = star(expr2expr(e));
 BGFExpression expr2expr((DataExpr)`list[<DataExpr e>] <Name n>`) = selectable("<n>",star(expr2expr(e)));
 BGFExpression expr2expr((DataExpr)`set[<DataExpr e>]`) = star(expr2expr(e));
 BGFExpression expr2expr((DataExpr)`set[<DataExpr e>] <Name n>`) = selectable("<n>",star(expr2expr(e)));
+BGFExpression expr2expr((DataExpr)`map[<DataExpr ke>,<DataExpr ve>]`) = star(sequence([expr2expr(ke),expr2expr(ve)]));
+BGFExpression expr2expr((DataExpr)`map[<DataExpr ke>,<DataExpr ve>] <Name n>`) = selectable("<n>",star(sequence([expr2expr(ke),expr2expr(ve)])));
 default BGFExpression expr2expr(DataExpr e) = terminal("UNK<e>");
