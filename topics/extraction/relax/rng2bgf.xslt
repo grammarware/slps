@@ -7,7 +7,7 @@
 		</bgf:grammar>
 	</xsl:template>
 	<xsl:template match="rng:start">
-		<xsl:for-each select="rng:ref">
+		<xsl:for-each select="rng:ref|rng:choice/rng:ref">
 			<root>
 				<xsl:value-of select="@name"/>
 			</root>
@@ -27,12 +27,12 @@
 			</nonterminal>
 			<xsl:choose>
 				<xsl:when test="count(rng:*)=1">
-					<xsl:apply-templates select="*"/>
+					<xsl:apply-templates select="rng:*"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<bgf:expression>
 						<sequence>
-							<xsl:apply-templates select="*"/>
+							<xsl:apply-templates select="rng:*"/>
 						</sequence>
 					</bgf:expression>
 				</xsl:otherwise>
@@ -48,13 +48,13 @@
 							<xsl:value-of select="@name"/>
 						</selector>
 						<xsl:choose>
-							<xsl:when test="count(*)=1">
-								<xsl:apply-templates select="*"/>
+							<xsl:when test="count(rng:*)=1">
+								<xsl:apply-templates select="rng:*"/>
 							</xsl:when>
 							<xsl:otherwise>
 								<bgf:expression>
 									<sequence>
-										<xsl:apply-templates select="*"/>
+										<xsl:apply-templates select="rng:*"/>
 									</sequence>
 								</bgf:expression>
 							</xsl:otherwise>
@@ -64,13 +64,13 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:choose>
-					<xsl:when test="count(*)=1">
-						<xsl:apply-templates select="*"/>
+					<xsl:when test="count(rng:*)=1">
+						<xsl:apply-templates select="rng:*"/>
 					</xsl:when>
 					<xsl:otherwise>
 						<bgf:expression>
 							<sequence>
-								<xsl:apply-templates select="*"/>
+								<xsl:apply-templates select="rng:*"/>
 							</sequence>
 						</bgf:expression>
 					</xsl:otherwise>
@@ -82,7 +82,7 @@
 		<!-- NB: not entirely correct, but good for mapping abstract syntaxes (see also xbgf:permute operator) -->
 		<bgf:expression>
 			<sequence>
-				<xsl:apply-templates select="*"/>
+				<xsl:apply-templates select="rng:*"/>
 			</sequence>
 		</bgf:expression>
 	</xsl:template>
@@ -90,7 +90,7 @@
 		<!-- NB: groups only make sense inside interleaved constructs -->
 		<bgf:expression>
 			<sequence>
-				<xsl:apply-templates select="*"/>
+				<xsl:apply-templates select="rng:*"/>
 			</sequence>
 		</bgf:expression>
 	</xsl:template>
@@ -101,6 +101,11 @@
 	<xsl:template match="rng:empty">
 		<bgf:expression>
 			<epsilon/>
+		</bgf:expression>
+	</xsl:template>
+	<xsl:template match="rng:notAllowed">
+		<bgf:expression>
+			<empty/>
 		</bgf:expression>
 	</xsl:template>
 	<xsl:template match="rng:ref">
@@ -117,7 +122,14 @@
 			</terminal>
 		</bgf:expression>
 	</xsl:template>
-	<xsl:template match="rng:text|rng:data[@type='string' or @type='ID' or @type='QName']">
+	<xsl:template match="rng:text|rng:data[@type='string' or @type='ID' or @type='IDREF' or @type='IDREFS' or @type='QName' or @type='NMTOKEN' or @type='NMTOKENS']">
+		<bgf:expression>
+			<value>string</value>
+		</bgf:expression>
+	</xsl:template>
+	<xsl:template match="rng:data[@type='language' or @type='anyURI']">
+		<!-- NB: BGF does not have these built-in, but they are [restricted] strings anyway -->
+		<!-- PS: this is not as horrible as it sounds: e.g., the RELAX NG grammar of XHTML models FPI, Content Types and Datetime as strings as well -->
 		<bgf:expression>
 			<value>string</value>
 		</bgf:expression>
@@ -131,21 +143,54 @@
 	<xsl:template match="rng:oneOrMore">
 		<bgf:expression>
 			<plus>
-				<xsl:apply-templates select="*"/>
+				<xsl:choose>
+					<xsl:when test="count(rng:*)=1">
+						<xsl:apply-templates select="*"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<bgf:expression>
+							<sequence>
+								<xsl:apply-templates select="*"/>
+							</sequence>
+						</bgf:expression>
+					</xsl:otherwise>
+				</xsl:choose>
 			</plus>
 		</bgf:expression>
 	</xsl:template>
 	<xsl:template match="rng:zeroOrMore">
 		<bgf:expression>
 			<star>
-				<xsl:apply-templates select="*"/>
+				<xsl:choose>
+					<xsl:when test="count(rng:*)=1">
+						<xsl:apply-templates select="*"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<bgf:expression>
+							<sequence>
+								<xsl:apply-templates select="*"/>
+							</sequence>
+						</bgf:expression>
+					</xsl:otherwise>
+				</xsl:choose>
 			</star>
 		</bgf:expression>
 	</xsl:template>
 	<xsl:template match="rng:optional">
 		<bgf:expression>
 			<optional>
-				<xsl:apply-templates select="*"/>
+				<xsl:choose>
+					<xsl:when test="count(rng:*)=1">
+						<xsl:apply-templates select="*"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<bgf:expression>
+							<sequence>
+								<xsl:apply-templates select="*"/>
+							</sequence>
+						</bgf:expression>
+					</xsl:otherwise>
+				</xsl:choose>
 			</optional>
 		</bgf:expression>
 	</xsl:template>
@@ -161,6 +206,11 @@
 			<xsl:choose>
 				<xsl:when test="rng:anyName">
 					<any/>
+				</xsl:when>
+				<xsl:when test="rng:choice">
+					<choice>
+						<xsl:apply-templates select="rng:choice/*"/>
+					</choice>
 				</xsl:when>
 				<xsl:when test="rng:text or rng:data/@type='string' or rng:data/@type='ID' or rng:data/@type='QName' or rng:data/@type='NCName'">
 					<selectable>
@@ -193,8 +243,19 @@
 						</bgf:expression>
 					</selectable>
 				</xsl:when>
-				<xsl:when test="rng:data/@type='IDREF'">
+				<xsl:when test="rng:data/@type='IDREF' or rng:data/@type='IDREFS'">
 					<!-- NB: uniqueness is not expressed in BGF -->
+					<selectable>
+						<selector>
+							<xsl:value-of select="@name"/>
+						</selector>
+						<bgf:expression>
+							<value>string</value>
+						</bgf:expression>
+					</selectable>
+				</xsl:when>
+				<xsl:when test="rng:data/@type='ENTITY' or rng:data/@type='NMTOKEN' or rng:data/@type='NMTOKENS'">
+					<!-- NB: could possibly be contemplated to be replaced with a list of entities -->
 					<selectable>
 						<selector>
 							<xsl:value-of select="@name"/>
