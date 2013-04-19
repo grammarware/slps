@@ -20,12 +20,18 @@
 		</xsl:message>
 	</xsl:template>
 	<xsl:template match="rng:define">
+		<xsl:if test="rng:element/rng:grammar">
+			<xsl:apply-templates select="rng:element/rng:grammar/rng:define"/>
+		</xsl:if>
 		<!-- NB: any @combine modifiers are ignored here -->
 		<bgf:production>
 			<nonterminal>
 				<xsl:value-of select="@name"/>
 			</nonterminal>
 			<xsl:choose>
+				<xsl:when test="rng:element/rng:grammar">
+					<xsl:apply-templates select="rng:element/rng:grammar/rng:start/*"/>
+				</xsl:when>
 				<xsl:when test="count(rng:*)=1">
 					<xsl:apply-templates select="rng:*"/>
 				</xsl:when>
@@ -86,6 +92,14 @@
 			</sequence>
 		</bgf:expression>
 	</xsl:template>
+	<xsl:template match="rng:list">
+		<!-- NB: this mapping is correct, but it is an abstraction -->
+		<bgf:expression>
+			<sequence>
+				<xsl:apply-templates select="rng:*"/>
+			</sequence>
+		</bgf:expression>
+	</xsl:template>
 	<xsl:template match="rng:group">
 		<!-- NB: groups only make sense inside interleaved constructs -->
 		<bgf:expression>
@@ -122,12 +136,48 @@
 			</terminal>
 		</bgf:expression>
 	</xsl:template>
-	<xsl:template match="rng:text|rng:data[@type='string' or @type='ID' or @type='IDREF' or @type='IDREFS' or @type='QName' or @type='NMTOKEN' or @type='NMTOKENS']">
+	<xsl:template match="rng:mixed">
+		<bgf:expression>
+			<xsl:choose>
+				<xsl:when test="rng:zeroOrMore">
+					<star>
+						<bgf:expression>
+							<choice>
+								<bgf:expression>
+									<value>string</value>
+								</bgf:expression>
+								<xsl:apply-templates select="rng:zeroOrMore/*"/>
+							</choice>
+						</bgf:expression>
+					</star>
+				</xsl:when>
+				<xsl:when test="rng:oneOrMore">
+					<plus>
+						<bgf:expression>
+							<choice>
+								<bgf:expression>
+									<value>string</value>
+								</bgf:expression>
+								<xsl:apply-templates select="rng:oneOrMore/*"/>
+							</choice>
+						</bgf:expression>
+					</plus>
+				</xsl:when>
+				<xsl:otherwise>
+					<bgf:expression>
+						<!-- NB: other variants not treated -->
+						<terminal>UNKNOWNmixed</terminal>
+					</bgf:expression>
+				</xsl:otherwise>
+			</xsl:choose>
+		</bgf:expression>
+	</xsl:template>
+	<xsl:template match="rng:text|rng:data[@type='string' or @type='ID' or @type='IDREF' or @type='IDREFS' or @type='QName' or @type='NCName' or @type='NMTOKEN' or @type='NMTOKENS' or @type='normalizedString']">
 		<bgf:expression>
 			<value>string</value>
 		</bgf:expression>
 	</xsl:template>
-	<xsl:template match="rng:data[@type='language' or @type='anyURI']">
+	<xsl:template match="rng:data[@type='language' or @type='anyURI' or @type='token']">
 		<!-- NB: BGF does not have these built-in, but they are [restricted] strings anyway -->
 		<!-- PS: this is not as horrible as it sounds: e.g., the RELAX NG grammar of XHTML models FPI, Content Types and Datetime as strings as well -->
 		<bgf:expression>
@@ -138,6 +188,12 @@
 		<!-- NB: details (total digits, fraction digits, etc) are abstracted -->
 		<bgf:expression>
 			<value>int</value>
+		</bgf:expression>
+	</xsl:template>
+	<xsl:template match="rng:data[@type='float']">
+		<!-- NB: floats could possibly be considered as some combinations of integers and dots -->
+		<bgf:expression>
+			<value>string</value>
 		</bgf:expression>
 	</xsl:template>
 	<xsl:template match="rng:oneOrMore">
@@ -215,7 +271,7 @@
 				<xsl:when test="rng:text or rng:data/@type='string' or rng:data/@type='ID' or rng:data/@type='QName' or rng:data/@type='NCName'">
 					<selectable>
 						<selector>
-							<xsl:value-of select="@name"/>
+							<xsl:value-of select="@name|rng:name"/>
 						</selector>
 						<bgf:expression>
 							<value>string</value>
@@ -225,7 +281,7 @@
 				<xsl:when test="rng:data/@type='decimal' or rng:data/@type='integer' or rng:data/@type='nonNegativeInteger' or rng:data/@type='positiveInteger'">
 					<selectable>
 						<selector>
-							<xsl:value-of select="@name"/>
+							<xsl:value-of select="@name|rng:name"/>
 						</selector>
 						<bgf:expression>
 							<value>int</value>
@@ -236,7 +292,7 @@
 					<!-- NB: relaxation of URI to a string, since BGF does not have a built-in URI type -->
 					<selectable>
 						<selector>
-							<xsl:value-of select="@name"/>
+							<xsl:value-of select="@name|rng:name"/>
 						</selector>
 						<bgf:expression>
 							<value>string</value>
@@ -247,7 +303,7 @@
 					<!-- NB: uniqueness is not expressed in BGF -->
 					<selectable>
 						<selector>
-							<xsl:value-of select="@name"/>
+							<xsl:value-of select="@name|rng:name"/>
 						</selector>
 						<bgf:expression>
 							<value>string</value>
@@ -258,7 +314,7 @@
 					<!-- NB: could possibly be contemplated to be replaced with a list of entities -->
 					<selectable>
 						<selector>
-							<xsl:value-of select="@name"/>
+							<xsl:value-of select="@name|rng:name"/>
 						</selector>
 						<bgf:expression>
 							<value>string</value>
@@ -269,7 +325,7 @@
 					<!-- NB: fake it [with terminals] till you make it [a part of BGF] -->
 					<selectable>
 						<selector>
-							<xsl:value-of select="@name"/>
+							<xsl:value-of select="@name|rng:name"/>
 						</selector>
 						<bgf:expression>
 							<choice>
@@ -286,7 +342,7 @@
 				<xsl:when test="rng:ref">
 					<selectable>
 						<selector>
-							<xsl:value-of select="@name"/>
+							<xsl:value-of select="@name|rng:name"/>
 						</selector>
 						<bgf:expression>
 							<nonterminal>
@@ -298,7 +354,7 @@
 				<xsl:when test="rng:choice">
 					<selectable>
 						<selector>
-							<xsl:value-of select="@name"/>
+							<xsl:value-of select="@name|rng:name"/>
 						</selector>
 						<bgf:expression>
 							<choice>
@@ -316,7 +372,7 @@
 				<xsl:when test="rng:value">
 					<selectable>
 						<selector>
-							<xsl:value-of select="@name"/>
+							<xsl:value-of select="@name|rng:name"/>
 						</selector>
 						<bgf:expression>
 							<terminal>
@@ -325,12 +381,12 @@
 						</bgf:expression>
 					</selectable>
 				</xsl:when>
-				<xsl:when test="count(*)=0 and @name">
+				<xsl:when test="count(*)=0 and (@name or name)">
 					<!-- NB: the logic is simple: if no type is given, the attribute is a string! -->
 					<!-- (does not work for elements) -->
 					<selectable>
 						<selector>
-							<xsl:value-of select="@name"/>
+							<xsl:value-of select="@name|rng:name"/>
 						</selector>
 						<bgf:expression>
 							<value>string</value>
