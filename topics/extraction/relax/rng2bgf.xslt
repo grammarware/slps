@@ -172,7 +172,7 @@
 			</xsl:choose>
 		</bgf:expression>
 	</xsl:template>
-	<xsl:template match="rng:text|rng:data[@type='string' or @type='ID' or @type='IDREF' or @type='IDREFS' or @type='QName' or @type='NCName' or @type='NMTOKEN' or @type='NMTOKENS' or @type='normalizedString']">
+	<xsl:template match="rng:text|rng:data[@type='string' or @type='ID' or @type='IDREF' or @type='IDREFS' or @type='QName' or @type='NCName' or @type='normalizedString']">
 		<bgf:expression>
 			<value>string</value>
 		</bgf:expression>
@@ -180,6 +180,12 @@
 	<xsl:template match="rng:data[@type='language' or @type='anyURI' or @type='token']">
 		<!-- NB: BGF does not have these built-in, but they are [restricted] strings anyway -->
 		<!-- PS: this is not as horrible as it sounds: e.g., the RELAX NG grammar of XHTML models FPI, Content Types and Datetime as strings as well -->
+		<bgf:expression>
+			<value>string</value>
+		</bgf:expression>
+	</xsl:template>
+	<xsl:template match="rng:data[@type='ENTITY' or @type='NMTOKEN' or @type='NMTOKENS']">
+		<!-- NB: could possibly be contemplated to be replaced with a list of entities -->
 		<bgf:expression>
 			<value>string</value>
 		</bgf:expression>
@@ -194,6 +200,19 @@
 		<!-- NB: floats could possibly be considered as some combinations of integers and dots -->
 		<bgf:expression>
 			<value>string</value>
+		</bgf:expression>
+	</xsl:template>
+	<xsl:template match="rng:data[@type='boolean']">
+		<!-- NB: fake it [with terminals] till you make it [a part of BGF] -->
+		<bgf:expression>
+			<choice>
+				<bgf:expression>
+					<terminal>true</terminal>
+				</bgf:expression>
+				<bgf:expression>
+					<terminal>false</terminal>
+				</bgf:expression>
+			</choice>
 		</bgf:expression>
 	</xsl:template>
 	<xsl:template match="rng:oneOrMore">
@@ -258,17 +277,17 @@
 		</bgf:expression>
 	</xsl:template>
 	<xsl:template match="rng:attribute">
-		<bgf:expression>
-			<xsl:choose>
-				<xsl:when test="rng:anyName">
+		<xsl:choose>
+			<xsl:when test="rng:anyName and count(*)=1">
+				<!-- NB: if the only known thing is that it can have any name, then it can be anything -->
+				<bgf:expression>
 					<any/>
-				</xsl:when>
-				<xsl:when test="rng:choice">
-					<choice>
-						<xsl:apply-templates select="rng:choice/*"/>
-					</choice>
-				</xsl:when>
-				<xsl:when test="rng:text or rng:data/@type='string' or rng:data/@type='ID' or rng:data/@type='QName' or rng:data/@type='NCName'">
+				</bgf:expression>
+			</xsl:when>
+			<xsl:when test="count(*)=0 and (@name or rng:name)">
+				<!-- NB: the logic is simple: if no type is given, the attribute is a string! -->
+				<!-- (does not work for elements) -->
+				<bgf:expression>
 					<selectable>
 						<selector>
 							<xsl:value-of select="@name|rng:name"/>
@@ -277,131 +296,27 @@
 							<value>string</value>
 						</bgf:expression>
 					</selectable>
-				</xsl:when>
-				<xsl:when test="rng:data/@type='decimal' or rng:data/@type='integer' or rng:data/@type='nonNegativeInteger' or rng:data/@type='positiveInteger'">
+				</bgf:expression>
+			</xsl:when>
+			<xsl:when test="@name|rng:name">
+				<bgf:expression>
 					<selectable>
 						<selector>
 							<xsl:value-of select="@name|rng:name"/>
 						</selector>
-						<bgf:expression>
-							<value>int</value>
-						</bgf:expression>
+						<xsl:apply-templates select="rng:*[local-name()!='name']"/>
 					</selectable>
-				</xsl:when>
-				<xsl:when test="rng:data/@type='anyURI'">
-					<!-- NB: relaxation of URI to a string, since BGF does not have a built-in URI type -->
-					<selectable>
-						<selector>
-							<xsl:value-of select="@name|rng:name"/>
-						</selector>
-						<bgf:expression>
-							<value>string</value>
-						</bgf:expression>
-					</selectable>
-				</xsl:when>
-				<xsl:when test="rng:data/@type='IDREF' or rng:data/@type='IDREFS'">
-					<!-- NB: uniqueness is not expressed in BGF -->
-					<selectable>
-						<selector>
-							<xsl:value-of select="@name|rng:name"/>
-						</selector>
-						<bgf:expression>
-							<value>string</value>
-						</bgf:expression>
-					</selectable>
-				</xsl:when>
-				<xsl:when test="rng:data/@type='ENTITY' or rng:data/@type='NMTOKEN' or rng:data/@type='NMTOKENS'">
-					<!-- NB: could possibly be contemplated to be replaced with a list of entities -->
-					<selectable>
-						<selector>
-							<xsl:value-of select="@name|rng:name"/>
-						</selector>
-						<bgf:expression>
-							<value>string</value>
-						</bgf:expression>
-					</selectable>
-				</xsl:when>
-				<xsl:when test="rng:data/@type='boolean'">
-					<!-- NB: fake it [with terminals] till you make it [a part of BGF] -->
-					<selectable>
-						<selector>
-							<xsl:value-of select="@name|rng:name"/>
-						</selector>
-						<bgf:expression>
-							<choice>
-								<bgf:expression>
-									<terminal>true</terminal>
-								</bgf:expression>
-								<bgf:expression>
-									<terminal>false</terminal>
-								</bgf:expression>
-							</choice>
-						</bgf:expression>
-					</selectable>
-				</xsl:when>
-				<xsl:when test="rng:ref">
-					<selectable>
-						<selector>
-							<xsl:value-of select="@name|rng:name"/>
-						</selector>
-						<bgf:expression>
-							<nonterminal>
-								<xsl:value-of select="rng:ref/@name"/>
-							</nonterminal>
-						</bgf:expression>
-					</selectable>
-				</xsl:when>
-				<xsl:when test="rng:choice">
-					<selectable>
-						<selector>
-							<xsl:value-of select="@name|rng:name"/>
-						</selector>
-						<bgf:expression>
-							<choice>
-								<xsl:for-each select="rng:choice/rng:value">
-									<bgf:expression>
-										<terminal>
-											<xsl:value-of select="."/>
-										</terminal>
-									</bgf:expression>
-								</xsl:for-each>
-							</choice>
-						</bgf:expression>
-					</selectable>
-				</xsl:when>
-				<xsl:when test="rng:value">
-					<selectable>
-						<selector>
-							<xsl:value-of select="@name|rng:name"/>
-						</selector>
-						<bgf:expression>
-							<terminal>
-								<xsl:value-of select="rng:value"/>
-							</terminal>
-						</bgf:expression>
-					</selectable>
-				</xsl:when>
-				<xsl:when test="count(*)=0 and (@name or name)">
-					<!-- NB: the logic is simple: if no type is given, the attribute is a string! -->
-					<!-- (does not work for elements) -->
-					<selectable>
-						<selector>
-							<xsl:value-of select="@name|rng:name"/>
-						</selector>
-						<bgf:expression>
-							<value>string</value>
-						</bgf:expression>
-					</selectable>
-				</xsl:when>
-				<xsl:otherwise>
-					<!-- NB: the following mapping is incorrect yet useful for debugging! -->
-					<terminal>
+				</bgf:expression>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:apply-templates select="*"/>
+				<!-- NB: the following mapping is incorrect yet useful for debugging! -->
+				<!-- <terminal>
 						<xsl:text>ATTRUNKNOWN </xsl:text>
 						<xsl:value-of select="local-name(*)"/>
-					</terminal>
-				</xsl:otherwise>
-			</xsl:choose>
-		</bgf:expression>
+					</terminal> -->
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	<xsl:template match="*">
 		<bgf:expression>
