@@ -3,7 +3,9 @@
 	<xsl:output method="xml" encoding="UTF-8"/>
 	<xsl:template match="/rng:grammar">
 		<bgf:grammar>
-			<xsl:apply-templates select="rng:*"/>
+			<!-- NB: in BGF, root nonterminals are always defined before all the production rules -->
+			<xsl:apply-templates select="rng:start"/>
+			<xsl:apply-templates select="rng:*[local-name()!='start']"/>
 		</bgf:grammar>
 	</xsl:template>
 	<xsl:template match="rng:start">
@@ -18,6 +20,7 @@
 			<xsl:text>Don’t forget to merge this with the grammar extracted from the imported module </xsl:text>
 			<xsl:value-of select="@href"/>
 		</xsl:message>
+		<xsl:apply-templates select="*"/>
 	</xsl:template>
 	<xsl:template match="rng:define">
 		<xsl:if test="rng:element/rng:grammar">
@@ -66,6 +69,31 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</selectable>
+				</bgf:expression>
+			</xsl:when>
+			<xsl:when test="rng:choice[rng:name]">
+				<bgf:expression>
+					<choice>
+						<xsl:for-each select="rng:choice/rng:name">
+							<bgf:expression>
+								<selectable>
+									<selector>
+										<xsl:value-of select="."/>
+									</selector>
+									<xsl:if test="count(../../*[not(local-name()='choice' and rng:name)])=1">
+										<xsl:apply-templates select="../../*[not(local-name()='choice' and rng:name)]"/>
+									</xsl:if>
+									<xsl:if test="count(../../*[not(local-name()='choice' and rng:name)]) &gt; 1">
+										<bgf:expression>
+											<sequence>
+												<xsl:apply-templates select="../../*[not(local-name()='choice' and rng:name)]"/>
+											</sequence>
+										</bgf:expression>
+									</xsl:if>
+								</selectable>
+							</bgf:expression>
+						</xsl:for-each>
+					</choice>
 				</bgf:expression>
 			</xsl:when>
 			<xsl:otherwise>
@@ -163,6 +191,25 @@
 						</bgf:expression>
 					</plus>
 				</xsl:when>
+				<xsl:when test="rng:ref">
+					<sequence>
+						<bgf:expression>
+							<optional>
+								<bgf:expression>
+									<value>string</value>
+								</bgf:expression>
+							</optional>
+						</bgf:expression>
+						<xsl:apply-templates select="rng:ref"/>
+						<bgf:expression>
+							<optional>
+								<bgf:expression>
+									<value>string</value>
+								</bgf:expression>
+							</optional>
+						</bgf:expression>
+					</sequence>
+				</xsl:when>
 				<xsl:otherwise>
 					<bgf:expression>
 						<!-- NB: other variants not treated -->
@@ -172,12 +219,14 @@
 			</xsl:choose>
 		</bgf:expression>
 	</xsl:template>
-	<xsl:template match="rng:text|rng:data[@type='string' or @type='ID' or @type='IDREF' or @type='IDREFS' or @type='QName' or @type='NCName' or @type='normalizedString']">
+	<xsl:template match="rng:text|rng:data[@type='string' or @type='ID' or @type='IDREF' or @type='IDREFS' or @type='QName' or @type='NCName'
+		or @type='normalizedString']">
 		<bgf:expression>
 			<value>string</value>
 		</bgf:expression>
 	</xsl:template>
-	<xsl:template match="rng:data[@type='language' or @type='anyURI' or @type='token']">
+	<xsl:template match="rng:data[@type='language' or @type='anyURI' or @type='token' or @type='date' or @type='dateTime' or @type='time'
+		or @type='base64Binary' or @type='duration']">
 		<!-- NB: BGF does not have these built-in, but they are [restricted] strings anyway -->
 		<!-- PS: this is not as horrible as it sounds: e.g., the RELAX NG grammar of XHTML models FPI, Content Types and Datetime as strings as well -->
 		<bgf:expression>
@@ -196,7 +245,7 @@
 			<value>int</value>
 		</bgf:expression>
 	</xsl:template>
-	<xsl:template match="rng:data[@type='float']">
+	<xsl:template match="rng:data[@type='float' or @type='double']">
 		<!-- NB: floats could possibly be considered as some combinations of integers and dots -->
 		<bgf:expression>
 			<value>string</value>
@@ -306,6 +355,31 @@
 						</selector>
 						<xsl:apply-templates select="rng:*[local-name()!='name']"/>
 					</selectable>
+				</bgf:expression>
+			</xsl:when>
+			<xsl:when test="rng:choice[rng:name]">
+				<bgf:expression>
+					<choice>
+						<xsl:for-each select="rng:choice/rng:name">
+							<bgf:expression>
+								<selectable>
+									<selector>
+										<xsl:value-of select="."/>
+									</selector>
+									<xsl:if test="count(../../*[not(local-name()='choice' and rng:name)])=1">
+										<xsl:apply-templates select="../../*[not(local-name()='choice' and rng:name)]"/>
+									</xsl:if>
+									<xsl:if test="count(../../*[not(local-name()='choice' and rng:name)]) &gt; 1">
+										<bgf:expression>
+											<sequence>
+												<xsl:apply-templates select="../../*[not(local-name()='choice' and rng:name)]"/>
+											</sequence>
+										</bgf:expression>
+									</xsl:if>
+								</selectable>
+							</bgf:expression>
+						</xsl:for-each>
+					</choice>
 				</bgf:expression>
 			</xsl:when>
 			<xsl:otherwise>
