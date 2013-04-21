@@ -7,13 +7,18 @@ cd ..
 LOCALROOT=${PWD}
 cd ${LOCAL1}
 
-if [ $# -ne 2 ]; then
+if [ $# -lt 2 ]; then
     echo "Usage: xsd2bgf <XSD-input> <BGF-output>"
     exit 1
 elif [ ! -r $1 ]; then
     echo "Oops: $1 not found or not readable."
     exit 1
+fi
+
+rm -f $2
+
+if [ -$3 == '---noimport' ]; then
+    swipl -q -f ${LOCALROOT}/prolog/cli/onexsd2bgf.pro -- $1 $2
 else
-    rm -f $2
     swipl -q -f ${LOCALROOT}/prolog/cli/xsd2bgf.pro -- $1 $2
 fi
