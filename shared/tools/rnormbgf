@@ -1,0 +1,21 @@
+#!/bin/sh
+# wiki: NormBGF
+LOCAL=${PWD}
+cd `dirname $0`
+cd ../..
+SLPS=${PWD}
+cd ${LOCAL}
+
+if [ $# -ne 2 ]; then
+    echo "This tool normalises a BGF grammar with Rascal."
+    echo "Usage: rnormbgf <input-bgf> <output-bgf>"
+    exit 1
+elif [ ! -r $1 ]; then
+    echo "Oops: $1 not found or not readable."
+    exit 1
+fi
+
+cp $1 ${SLPS}/shared/rascal/src/src.bgf
+cd ${SLPS}/shared/rascal/src && java -Xmx1G -Xss32m -jar ${SLPS}/download/rascal.jar extract::RascalADT2BGF src.bgf tgt.bgf
+mv ${SLPS}/shared/rascal/src/tgt.bgf ${LOCAL}/$2
+rm ${SLPS}/shared/rascal/src/src.bgf
