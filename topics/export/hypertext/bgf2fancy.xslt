@@ -6,15 +6,28 @@
 	<xsl:param name="zoo"/>
 	<xsl:param name="id"/>
 	<xsl:param name="report"/>
+	<xsl:variable name="mysrcs" select="document($zoo)//grammarset[from=substring-before($id,'/') and grammarname=substring-after($id,'/')]/source"/>
 	<xsl:variable name="mysrc" select="document($zoo)//grammar[handle=$id]/source"/>
-	<xsl:variable name="mysrcs" select="document($zoo)//grammarset/grammarname[.=$id]/../source"/>
+	<xsl:variable name="mysrcname">
+		<xsl:choose>
+			<xsl:when test="$mysrc/../../name">
+				<xsl:value-of select="$mysrc/../../name"/>
+			</xsl:when>
+			<xsl:when test="contains($id,'/')">
+				<xsl:value-of select="document($zoo)//grammarset[from=substring-before($id,'/') and grammarname=substring-after($id,'/')]/source/../../name"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="document($zoo)//grammarset/grammarname[.=$id]/../source/../../name"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
 	<xsl:variable name="xmlreport" select="document($report)/xml"/>
 	<xsl:template match="/bgf:grammar">
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 			<head>
 				<title>
 					<xsl:text>Browsable </xsl:text>
-					<xsl:value-of select="concat($mysrc/../../name,$mysrcs/../../name)"/>
+					<xsl:value-of select="$mysrcname"/>
 					<xsl:text> Grammar</xsl:text>
 				</title>
 				<link href="/slps.css" rel="stylesheet" type="text/css"/>
@@ -38,7 +51,7 @@
 			<body>
 				<h1 class="l">
 					<xsl:text>Browsable </xsl:text>
-					<xsl:value-of select="concat($mysrc/../../name,$mysrcs/../../name)"/>
+					<xsl:value-of select="$mysrcname"/>
 					<xsl:text> Grammar</xsl:text>
 				</h1>
 				<a href="http://creativecommons.org/licenses/by/3.0/">
@@ -52,10 +65,10 @@
 					<xsl:text>,	see </xsl:text>
 					<xsl:choose>
 						<xsl:when test="substring-after($zoo,'_dev/')='tank.xml'">
-							<a href="http://slps.github.com/tank/">Grammar Tank</a>
+							<a href="http://slps.github.io/tank/">Grammar Tank</a>
 						</xsl:when>
 						<xsl:otherwise>
-							<a href="http://slps.github.com/zoo/">Grammar Zoo</a>
+							<a href="http://slps.github.io/zoo/">Grammar Zoo</a>
 						</xsl:otherwise>
 					</xsl:choose>
 					<xsl:text> for details. </xsl:text>
@@ -107,7 +120,13 @@
 					<xsl:if test="$mysrcs">
 						<br/>
 						<xsl:text>Source used for this grammar: </xsl:text>
-						<xsl:copy-of select="$mysrcs/title/node()"/>
+						<xsl:for-each select="$mysrcs/author">
+							<xsl:value-of select="."/>
+							<xsl:text>, </xsl:text>
+						</xsl:for-each>
+						<em>
+							<xsl:value-of select="$mysrcs/title"/>
+						</em>
 						<xsl:text> (</xsl:text>
 						<xsl:value-of select="$mysrcs/date"/>
 						<xsl:text>) </xsl:text>
