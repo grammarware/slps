@@ -30,7 +30,7 @@ NPC getZoo(loc zoo, NPC npc)
 {
 	dict patterns = npc.patterns;
 	int n = npc.ns, pcx = npc.ps, cx = npc.cx, cns = npc.clasns;
-	set[str] weird = npc.weird, newweird = {};
+	set[str] weird = npc.weird, newweird = {}, nonclas = {};
 	map[str,int] counts = npc.counts;
 	map[str,set[str]] scores = npc.scores;
 	BGFGrammar g;
@@ -43,6 +43,7 @@ NPC getZoo(loc zoo, NPC npc)
 		g = readBGF(zoo+"/<lang>/<s>");
 		allNTs = allNs(g);
 		newweird = allNTs;
+		nonclas = allNTs;
 		int VAR = len(allNTs);
 		n += VAR;
 		pcx += len(g.prods);
@@ -63,10 +64,21 @@ NPC getZoo(loc zoo, NPC npc)
 			if ("<metric>" in Exclude)
 				newweird -= res;
 			else
+			{
 				allNTs -= res;
+				nonclas -= res;
+			}
 		}
 		cns += len(allNTs);
 		weird += {"<lang>::<s>::<nt>" | nt <- newweird};
+		
+		if (!isEmpty(nonclas))
+		{
+			// int sz;
+			println("  Not classified:");
+			for(str ncnt <- nonclas)
+				println("    <pp(prodsOfN(ncnt,g))>");
+		}
 		
 		g = abstractPattern(g);
 		for (BGFProduction p <- abstractPattern(g).prods)
@@ -82,7 +94,7 @@ BGFGrammar abstractPattern(BGFGrammar g)
 	= visit(g)
 	{
 		case nonterminal(_) => nonterminal("N")
-		case terminal(_) => terminal("T")
+		case terminal(_) => nonterminal("T")
 		case selectable(_, BGFExpression expr) => expr
 	};
 
@@ -219,7 +231,7 @@ public void main(list[str] as)
 	for (metric <- AllMetrics)
 	{
 		println("<100*npc.counts["<metric>"]/npc.ns>% classified as <metric>: <npc.counts["<metric>"]> (<len(npc.scores["<metric>"])> scores).");
-		if (len(npc.scores["<metric>"])>0 && len(npc.scores["<metric>"])<25)
+		if (len(npc.scores["<metric>"])>0 && len(npc.scores["<metric>"])<30)
 			println("  Scores: <joinStrings(npc.scores["<metric>"])>");
 	}
 	for (w <- npc.weird)
@@ -228,6 +240,9 @@ public void main(list[str] as)
 	//              Total: 42 grammars, 8927 production rules, 8277 nonterminals.
 	// Zoo + Tank:
 	//              Total: 99 grammars, 11570 production rules, 10943 nonterminals.
+	// After including the Atlantic, the Relax, etc:
+	// Zoo + Tank:
+	//              Total: 533 grammars, 55342 production rules, 41038 nonterminals (35021 thereof classified), 3403 patterns.
 	// TODO: only report unclassified ones
 	// for (BGFExpression e <- domain(npc.patterns))
 	// 	println("<pp(e)>: <npc.patterns[e]>");

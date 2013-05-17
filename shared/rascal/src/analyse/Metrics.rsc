@@ -55,3 +55,4 @@ public rel[str,str] calls(BGFProdList ps) = {<n1,n2> | production(_,n1,rhs) <- p
 public set[str] calls(str x, BGFProdList ps) = {n2 | production(_,x,rhs) <- ps, /nonterminal(n2) := rhs};
 
 public BGFProdList prodsOfN(str x, BGFProdList ps) = [p | p <- ps, production(_,x,_) := p];
+public BGFProdList prodsOfN(str x, BGFGrammar g) = prodsOfN(x, g.prods);
