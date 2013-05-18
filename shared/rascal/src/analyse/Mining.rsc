@@ -183,8 +183,8 @@ set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
 
 bool allnonterminals(BGFExprList xs) = ( true | it && nonterminal(_) := e | e <- xs );
 // TODO: too permissive?
-bool allterminals(BGFProdSet xs) = ( true | it && (terminal(_) := e || (sequence(L) := e && allterminals(L))) | e <- xs );
-bool allterminals(BGFExprList xs) = ( true | it && terminal(_) := e | e <- xs );
+bool allterminals(BGFProdSet ps)  = ( true | it && (terminal(_) := p.rhs || (sequence(L1) := p.rhs && allterminals(L1)) || (choice(L2) := p.rhs && allterminals(L2))) | p <- ps );
+bool allterminals(BGFExprList xs) = ( true | it && (terminal(_) := e || (sequence(L1) := e && allterminals(L1)) || (choice(L2) := e && allterminals(L2))) | e <- xs );
 
 // 
 //                ADD CLASSIFIERS HERE!
