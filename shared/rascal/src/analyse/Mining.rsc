@@ -182,9 +182,20 @@ set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empt
 set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
 
 bool allnonterminals(BGFExprList xs) = ( true | it && nonterminal(_) := e | e <- xs );
-// TODO: too permissive?
-bool allterminals(BGFProdSet ps)  = ( true | it && (terminal(_) := p.rhs || (sequence(L1) := p.rhs && allterminals(L1)) || (choice(L2) := p.rhs && allterminals(L2))) | p <- ps );
-bool allterminals(BGFExprList xs) = ( true | it && (terminal(_) := e || (sequence(L1) := e && allterminals(L1)) || (choice(L2) := e && allterminals(L2))) | e <- xs );
+
+bool allterminals(BGFProdSet ps)  = ( true | it && allterminals(p.rhs) | p <- ps );
+bool allterminals(BGFExprList xs) = ( true | it && allterminals(e) | e <- xs );
+
+bool allterminals(terminal(_)) = true;
+bool allterminals(sequence(L)) = allterminals(L);
+bool allterminals(choice(L)) = allterminals(L);
+bool allterminals(allof(L)) = allterminals(L); // hardly necessary
+bool allterminals(optional(e)) = allterminals(e);
+bool allterminals(plus(e)) = allterminals(e);
+bool allterminals(star(e)) = allterminals(e);
+bool allterminals(seplistplus(e,s)) = allterminals(e) && allterminals(s);
+bool allterminals(sepliststar(e,s)) = allterminals(e) && allterminals(s);
+default bool allterminals(BGFExpression e) = false;
 
 // 
 //                ADD CLASSIFIERS HERE!
