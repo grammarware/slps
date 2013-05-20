@@ -113,13 +113,21 @@ SGrammar splitGrammar(BGFGrammar g)
 	return <toSet(g.roots), ps>;
 }
 
+////////////////////////////
+// GROUP: GlobalPosition  //
+////////////////////////////
 set[str] tops(SGrammar g)    = definedNs(g) - usedNs(g); // = {t | str t <- domain(g.prods), /nonterminal(t) !:= range(g.prods)};
 set[str] bottoms(SGrammar g) = usedNs(g) - definedNs(g);
 set[str] ifroots(SGrammar g) = g.roots & domain(g.prods);
 // TODO: not _, but in fact [*nonterminal(_)]
 // TODO: also account for vertical roots
 set[str] multiroots(SGrammar g) = {n | str n<-g.roots, {production(_,n,choice(L))} := g.prods[n], allnonterminals(L)};
+// TODO: actually, much more complicated: may not refer to _defined_ nonterminals
+set[str] leafs(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), /nonterminal(_) !:= g.prods[n] };
 
+////////////////
+// UNGROUPED  //
+////////////////
 set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), allterminals(g.prods[n])};
 
 set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods), allconstructors(g.prods[n])};
@@ -202,12 +210,15 @@ default bool allterminals(BGFExpression e) = false;
 // 
 set[set[str](SGrammar)] AllMetrics =
 	{
+		// GlobalPosition
 		tops,			// defined but not used
 		bottoms,		// used but not defined
-		names1,			// identifier names [a-z]+
-		names2,			// identifier names [a-z][a-zA-Z_]*
+		leafs,			// not referring to any other nonterminal
 		ifroots,		// if it is a root
 		multiroots,		// a “fake” multiple root
+		// the rest
+		names1,			// identifier names [a-z]+
+		names2,			// identifier names [a-z][a-zA-Z_]*
 		preterminals,	// defined with terminals
 		constructors,	// defined with labelled epsilons
 		pureseqs,		// pure sequential composition
