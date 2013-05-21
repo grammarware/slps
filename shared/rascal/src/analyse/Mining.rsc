@@ -72,7 +72,7 @@ NPC getZoo(loc zoo, NPC npc)
 		cns += len(allNTs);
 		weird += {"<lang>::<s>::<nt>" | nt <- newweird};
 		
-		if (!isEmpty(nonclas))
+		if (false && !isEmpty(nonclas))
 		{
 			// int sz;
 			println("  Not classified:");
@@ -154,9 +154,9 @@ bool isCNF(sequence([nonterminal(_),nonterminal(_)])) = true;
 default bool isCNF(BGFExpression e) = false;
 
 // TODO: include other patterns?
-set[str] seplists(SGrammar g) = {n | str n <- domain(g.prods), {p} := g.prods[n], isseplist(RetireSs(p))};
-bool isseplist(production(_,_,sequence([BGFExpression a,star(sequence([BGFExpression b, a]))]) )) = true;
-default bool isseplist(BGFProduction p) = false;
+set[str] fakeseplists(SGrammar g) = {n | str n <- domain(g.prods), {p} := g.prods[n], isfakeseplist(RetireSs(p))};
+bool isfakeseplist(production(_,_,sequence([BGFExpression a,star(sequence([BGFExpression b, a]))]) )) = true;
+default bool isfakeseplist(BGFProduction p) = false;
 
 set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
 
@@ -166,6 +166,10 @@ set[str] failures(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,e
 set[str] justplusses(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(nonterminal(_)))} := g.prods[n]};
 set[str] juststars(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,star(nonterminal(_)))} := g.prods[n]};
 set[str] justopts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,optional(nonterminal(_)))} := g.prods[n]};
+
+// TODO: include other patterns?
+set[str] justseplistps(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,seplistplus(nonterminal(_),terminal(_)))} := g.prods[n]};
+set[str] justseplistss(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sepliststar(nonterminal(_),terminal(_)))} := g.prods[n]};
 
 // does not tolerate folding
 set[str] names1(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(choice(L)))} := g.prods[n], allterminals(L)};
@@ -216,20 +220,23 @@ set[set[str](SGrammar)] AllMetrics =
 		leafs,			// not referring to any other nonterminal
 		ifroots,		// if it is a root
 		multiroots,		// a “fake” multiple root
+		// Pattern
+		justseplistps,	// x defined as {y ","}+
+		justseplistss,	// x defined as {y ","}*
+		justplusses,	// x defined as y+
+		juststars,		// x defined as y*
+		justopts,		// x defined as y?
 		// the rest
 		names1,			// identifier names [a-z]+
 		names2,			// identifier names [a-z][a-zA-Z_]*
 		preterminals,	// defined with terminals
 		constructors,	// defined with labelled epsilons
 		pureseqs,		// pure sequential composition
-		seplists,		// “fake” separator list
+		fakeseplists,	// “fake” separator list
 		cnfs,			// production rules in Chomsky normal form
 		abstracts,		// abstract syntax (no terminal symbols)
 		empties,		// nonterminal defines an empty language (epsilon)
 		failures,		// nonterminal explicitly or implicitly undefined
-		justplusses,	// x defined as y+
-		juststars,		// x defined as y*
-		justopts,		// x defined as y?
 		allchains,		// nonterminal defined only with chain production rules (right hand sides are nonterminals)
 		somechains,		// one production rule is a chain production rule (right hand side == nonterminal)
 		onechains,		// nonterminal defined with a single chain production rule (right hand side == nonterminal)
