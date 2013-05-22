@@ -54,7 +54,7 @@ NPC getZoo(loc zoo, NPC npc)
 		
 		for (metric <- AllMetrics)
 		{
-			println("  Calculating <metric>...");
+			// println("  Calculating <metric>...");
 			res = metric(sg);
 			if ("<metric>" notin counts) counts["<metric>"] = 0;
 			if ("<metric>" notin scores) scores["<metric>"] = {};
@@ -125,6 +125,16 @@ set[str] multiroots(SGrammar g) = {n | str n<-g.roots, {production(_,n,choice(L)
 // TODO: actually, much more complicated: may not refer to _defined_ nonterminals
 set[str] leafs(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), /nonterminal(_) !:= g.prods[n] };
 
+//////////////////////
+// GROUP: ProdForm  //
+//////////////////////
+set[str] horizontals(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n] };
+set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1 };
+// TODO: covers too much?
+set[str] singletons(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,BGFExpression e)} := g.prods[n], choice(_) !:= e};
+// NB: the next is the same one as bottoms
+// set[str] undefineds(SGrammar g) = {n | str n <- domain(g.prods), isEmpty(g.prods[n])};
+
 ////////////////
 // UNGROUPED  //
 ////////////////
@@ -132,9 +142,6 @@ set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), allterminals(
 
 set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods), allconstructors(g.prods[n])};
 bool allconstructors(BGFProdSet ps) = ( true | it && selectable(_,epsilon()) := p | p <- ps );
-
-set[str] horizontals(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n] };
-set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1 };
 
 set[str] pureseqs(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,rhs)} := g.prods[n], pureseq(rhs)};
 bool pureseq(epsilon()) = true;
@@ -171,6 +178,9 @@ set[str] justopts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,o
 set[str] justseplistps(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,seplistplus(nonterminal(_),terminal(_)))} := g.prods[n]};
 set[str] justseplistss(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sepliststar(nonterminal(_),terminal(_)))} := g.prods[n]};
 
+set[str] bracketedseplistps(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([terminal(_),seplistplus(nonterminal(_),terminal(_)),terminal(_)]))} := g.prods[n]};
+set[str] bracketedseplistss(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([terminal(_),sepliststar(nonterminal(_),terminal(_)),terminal(_)]))} := g.prods[n]};
+
 // does not tolerate folding
 set[str] names1(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(choice(L)))} := g.prods[n], allterminals(L)};
 set[str] names2(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([choice(L1),star(choice(L2))]))} := g.prods[n], allterminals(L1), allterminals(L2)};
@@ -183,11 +193,6 @@ set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods), /production(_,n
 set[str] onechains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(_))} := g.prods[n]};
 set[str] reflchains(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,nonterminal(n)),*P2} := g.prods[n]};
 set[str] brackets(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,sequence([terminal(_),nonterminal(n),terminal(_)])),*P2} := g.prods[n]};
-
-// TODO: covers too much?
-set[str] singletons(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,BGFExpression e)} := g.prods[n], choice(_) !:= e};
-// NB: the next is the same one as bottoms
-// set[str] undefineds(SGrammar g) = {n | str n <- domain(g.prods), isEmpty(g.prods[n])};
 
 // lower level functions
 set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
@@ -215,36 +220,39 @@ default bool allterminals(BGFExpression e) = false;
 set[set[str](SGrammar)] AllMetrics =
 	{
 		// GlobalPosition
-		tops,			// defined but not used
-		bottoms,		// used but not defined
-		leafs,			// not referring to any other nonterminal
-		ifroots,		// if it is a root
-		multiroots,		// a “fake” multiple root
+		tops,				// defined but not used
+		bottoms,			// used but not defined
+		leafs,				// not referring to any other nonterminal
+		ifroots,			// if it is a root
+		multiroots,			// a “fake” multiple root
+		// ProdForm
+		singletons,			// nonterminal is defined with one non-horizontal production rule
+		horizontals,		// top level choice
+		verticals,			// multiple production rules per nonterminal
 		// Pattern
-		justseplistps,	// x defined as {y ","}+
-		justseplistss,	// x defined as {y ","}*
-		justplusses,	// x defined as y+
-		juststars,		// x defined as y*
-		justopts,		// x defined as y?
+		justseplistps,		// x defined as {y ","}+
+		justseplistss,		// x defined as {y ","}*
+		justplusses,		// x defined as y+
+		juststars,			// x defined as y*
+		justopts,			// x defined as y?
+		bracketedseplistps,	// x defined as ( "(" {y ","}+ ")" )
+		bracketedseplistss,	// x defined as ( "(" {y ","}* ")" )
+		brackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
 		// the rest
-		names1,			// identifier names [a-z]+
-		names2,			// identifier names [a-z][a-zA-Z_]*
-		preterminals,	// defined with terminals
-		constructors,	// defined with labelled epsilons
-		pureseqs,		// pure sequential composition
-		fakeseplists,	// “fake” separator list
-		cnfs,			// production rules in Chomsky normal form
-		abstracts,		// abstract syntax (no terminal symbols)
-		empties,		// nonterminal defines an empty language (epsilon)
-		failures,		// nonterminal explicitly or implicitly undefined
-		allchains,		// nonterminal defined only with chain production rules (right hand sides are nonterminals)
-		somechains,		// one production rule is a chain production rule (right hand side == nonterminal)
-		onechains,		// nonterminal defined with a single chain production rule (right hand side == nonterminal)
-		reflchains,		// one production rule is a reflexive chain (left hand side == right hand side)
-		brackets,		// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
-		singletons,		// nonterminal is defined with one non-horizontal production rule
-		horizontals,	// top level choice
-		verticals		// multiple production rules per nonterminal
+		names1,				// identifier names [a-z]+
+		names2,				// identifier names [a-z][a-zA-Z_]*
+		preterminals,		// defined with terminals
+		constructors,		// defined with labelled epsilons
+		pureseqs,			// pure sequential composition
+		fakeseplists,		// “fake” separator list
+		cnfs,				// production rules in Chomsky normal form
+		abstracts,			// abstract syntax (no terminal symbols)
+		empties,			// nonterminal defines an empty language (epsilon)
+		failures,			// nonterminal explicitly or implicitly undefined
+		allchains,			// nonterminal defined only with chain production rules (right hand sides are nonterminals)
+		somechains,			// one production rule is a chain production rule (right hand side == nonterminal)
+		onechains,			// nonterminal defined with a single chain production rule (right hand side == nonterminal)
+		reflchains			// one production rule is a reflexive chain (left hand side == right hand side)
 	};
 // too popular or exhaustive
 set[str] Exclude = {"<singletons>","<horizontals>","<verticals>","<bottoms>"};
