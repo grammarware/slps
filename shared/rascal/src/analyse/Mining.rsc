@@ -55,13 +55,13 @@ NPC getZoo(loc zoo, NPC npc)
 		for (metric <- AllMetrics)
 		{
 			// println("  Calculating <metric>...");
-			res = metric(sg);
+			res = AllMetrics[metric](sg);
 			if ("<metric>" notin counts) counts["<metric>"] = 0;
 			if ("<metric>" notin scores) scores["<metric>"] = {};
 			counts["<metric>"] += len(res);
 			if (len(res)==VAR)
 				scores["<metric>"] += {"<lang>::<s>"};
-			if ("<metric>" in Exclude)
+			if ("<AllMetrics[metric]>" in Exclude)
 				newweird -= res;
 			else
 			{
@@ -214,49 +214,52 @@ bool allterminals(seplistplus(e,s)) = allterminals(e) && allterminals(s);
 bool allterminals(sepliststar(e,s)) = allterminals(e) && allterminals(s);
 default bool allterminals(BGFExpression e) = false;
 
+set[str] notimplemented(SGrammar _) = {};
+
 // 
 //                ADD CLASSIFIERS HERE!
 // 
-set[set[str](SGrammar)] AllMetrics =
-	{
+map[str name,set[str](SGrammar) fun] AllMetrics =
+	(
 		// GlobalPosition
-		tops,				// defined but not used
-		bottoms,			// used but not defined
-		leafs,				// not referring to any other nonterminal
-		ifroots,			// if it is a root
-		multiroots,			// a “fake” multiple root
+		"Top":					tops,				// defined but not used
+		"Bottom":				bottoms,			// used but not defined
+		"Leaf":					leafs,				// not referring to any other nonterminal
+		"Root":					ifroots,			// if it is a root
+		"MultiRoot":			multiroots,			// a “fake” multiple root
 		// ProdForm
-		singletons,			// nonterminal is defined with one non-horizontal production rule
-		horizontals,		// top level choice
-		verticals,			// multiple production rules per nonterminal
+		"Singleton":			singletons,			// nonterminal is defined with one non-horizontal production rule
+		"Horizontal":			horizontals,		// top level choice
+		"Vertical":				verticals,			// multiple production rules per nonterminal
 		// Pattern
-		justseplistps,		// x defined as {y ","}+
-		justseplistss,		// x defined as {y ","}*
-		justplusses,		// x defined as y+
-		juststars,			// x defined as y*
-		justopts,			// x defined as y?
-		bracketedseplistps,	// x defined as ( "(" {y ","}+ ")" )
-		bracketedseplistss,	// x defined as ( "(" {y ","}* ")" )
-		brackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
+		"JustSepListPlus":		justseplistps,		// x defined as {y ","}+
+		"JustSepListStar":		justseplistss,		// x defined as {y ","}*
+		"JustPlus":				justplusses,		// x defined as y+
+		"JustStar":				juststars,			// x defined as y*
+		"JustOptional":			justopts,			// x defined as y?
+		"BracketedSepListPlus":	bracketedseplistps,	// x defined as ( "(" {y ","}+ ")" )
+		"BracketedSepListStar":	bracketedseplistss,	// x defined as ( "(" {y ","}* ")" )
+		"Bracket":				brackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
+		"Constructor":			constructors,		// defined with labelled epsilons
+		"FakeSepList":			fakeseplists,		// “fake” separator list
+		"AbstractSyntax":		abstracts,			// abstract syntax (no terminal symbols)
+		"Empty":				empties,			// nonterminal defines an empty language (epsilon)
+		"Failure":				failures,			// nonterminal explicitly or implicitly undefined
+		"JustPseudoChoice":		allchains,			// nonterminal defined only with chain production rules (right hand sides are nonterminals)
+		"AChain":				somechains,			// one production rule is a chain production rule (right hand side == nonterminal)
+		"JustChain":			onechains,			// nonterminal defined with a single chain production rule (right hand side == nonterminal)
+		"ReflexiveChain":		reflchains,			// one production rule is a reflexive chain (left hand side == right hand side)
 		// the rest
-		names1,				// identifier names [a-z]+
-		names2,				// identifier names [a-z][a-zA-Z_]*
-		preterminals,		// defined with terminals
-		constructors,		// defined with labelled epsilons
-		pureseqs,			// pure sequential composition
-		fakeseplists,		// “fake” separator list
-		cnfs,				// production rules in Chomsky normal form
-		abstracts,			// abstract syntax (no terminal symbols)
-		empties,			// nonterminal defines an empty language (epsilon)
-		failures,			// nonterminal explicitly or implicitly undefined
-		allchains,			// nonterminal defined only with chain production rules (right hand sides are nonterminals)
-		somechains,			// one production rule is a chain production rule (right hand side == nonterminal)
-		onechains,			// nonterminal defined with a single chain production rule (right hand side == nonterminal)
-		reflchains			// one production rule is a reflexive chain (left hand side == right hand side)
-	};
+		"Name1":				names1,				// identifier names [a-z]+
+		"Name2":				names2,				// identifier names [a-z][a-zA-Z_]*
+		"Preterminal":			preterminals,		// defined with terminals
+		"PureSequence":			pureseqs,			// pure sequential composition
+		"CNF":					cnfs,				// production rules in Chomsky normal form
+		// Not implemented
+		"No":					notimplemented
+	);
 // too popular or exhaustive
 set[str] Exclude = {"<singletons>","<horizontals>","<verticals>","<bottoms>"};
-
 
 // MAIN
 public void main(list[str] as)
