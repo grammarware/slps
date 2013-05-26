@@ -72,7 +72,7 @@ NPC getZoo(loc zoo, NPC npc)
 		cns += len(allNTs);
 		weird += {"<lang>::<s>::<nt>" | nt <- newweird};
 		
-		if (false && !isEmpty(nonclas))
+		if (!isEmpty(nonclas))
 		{
 			// int sz;
 			println("  Not classified:");
@@ -165,6 +165,10 @@ set[str] fakeseplists(SGrammar g) = {n | str n <- domain(g.prods), {p} := g.prod
 bool isfakeseplist(production(_,_,sequence([BGFExpression a,star(sequence([BGFExpression b, a]))]) )) = true;
 default bool isfakeseplist(BGFProduction p) = false;
 
+set[str] fakeopts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),epsilon()]))} := g.prods[n]};
+
+set[str] ntorts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),terminal(_)]))} := g.prods[n]};
+
 set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
 
 set[str] empties(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,epsilon())} := g.prods[n]};
@@ -180,6 +184,8 @@ set[str] justseplistss(SGrammar g) = {n | str n <- domain(g.prods), {production(
 
 set[str] bracketedseplistps(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([terminal(_),seplistplus(nonterminal(_),terminal(_)),terminal(_)]))} := g.prods[n]};
 set[str] bracketedseplistss(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([terminal(_),sepliststar(nonterminal(_),terminal(_)),terminal(_)]))} := g.prods[n]};
+
+set[str] bracketedfakeseplist(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([terminal(_),nonterminal(_),star(sequence([terminal(_),nonterminal(_)])),terminal(_)]))} := g.prods[n]};
 
 // does not tolerate folding
 set[str] names1(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(choice(L)))} := g.prods[n], allterminals(L)};
@@ -222,39 +228,42 @@ set[str] notimplemented(SGrammar _) = {};
 map[str name,set[str](SGrammar) fun] AllMetrics =
 	(
 		// GlobalPosition
-		"Top":					tops,				// defined but not used
-		"Bottom":				bottoms,			// used but not defined
-		"Leaf":					leafs,				// not referring to any other nonterminal
-		"Root":					ifroots,			// if it is a root
-		"MultiRoot":			multiroots,			// a “fake” multiple root
+		"Top":					tops,					// defined but not used
+		"Bottom":				bottoms,				// used but not defined
+		"Leaf":					leafs,					// not referring to any other nonterminal
+		"Root":					ifroots,				// if it is a root
+		"MultiRoot":			multiroots,				// a “fake” multiple root
 		// ProdForm
-		"Singleton":			singletons,			// nonterminal is defined with one non-horizontal production rule
-		"Horizontal":			horizontals,		// top level choice
-		"Vertical":				verticals,			// multiple production rules per nonterminal
+		"Singleton":			singletons,				// nonterminal is defined with one non-horizontal production rule
+		"Horizontal":			horizontals,			// top level choice
+		"Vertical":				verticals,				// multiple production rules per nonterminal
 		// Pattern
-		"JustSepListPlus":		justseplistps,		// x defined as {y ","}+
-		"JustSepListStar":		justseplistss,		// x defined as {y ","}*
-		"JustPlus":				justplusses,		// x defined as y+
-		"JustStar":				juststars,			// x defined as y*
-		"JustOptional":			justopts,			// x defined as y?
-		"BracketedSepListPlus":	bracketedseplistps,	// x defined as ( "(" {y ","}+ ")" )
-		"BracketedSepListStar":	bracketedseplistss,	// x defined as ( "(" {y ","}* ")" )
-		"Bracket":				brackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
-		"Constructor":			constructors,		// defined with labelled epsilons
-		"FakeSepList":			fakeseplists,		// “fake” separator list
-		"AbstractSyntax":		abstracts,			// abstract syntax (no terminal symbols)
-		"Empty":				empties,			// nonterminal defines an empty language (epsilon)
-		"Failure":				failures,			// nonterminal explicitly or implicitly undefined
-		"JustPseudoChoice":		allchains,			// nonterminal defined only with chain production rules (right hand sides are nonterminals)
-		"AChain":				somechains,			// one production rule is a chain production rule (right hand side == nonterminal)
-		"JustChain":			onechains,			// nonterminal defined with a single chain production rule (right hand side == nonterminal)
-		"ReflexiveChain":		reflchains,			// one production rule is a reflexive chain (left hand side == right hand side)
+		"JustSepListPlus":		justseplistps,			// x defined as {y ","}+
+		"JustSepListStar":		justseplistss,			// x defined as {y ","}*
+		"JustPlus":				justplusses,			// x defined as y+
+		"JustStar":				juststars,				// x defined as y*
+		"JustOptional":			justopts,				// x defined as y?
+		"JustPseudoChoice":		allchains,				// nonterminal defined only with chain production rules (right hand sides are nonterminals)
+		"JustChain":			onechains,				// nonterminal defined with a single chain production rule (right hand side == nonterminal)
+		"BracketedSepListPlus":	bracketedseplistps,		// x defined as ( "(" {y ","}+ ")" )
+		"BracketedSepListStar":	bracketedseplistss,		// x defined as ( "(" {y ","}* ")" )
+		"BracketedFakeSepList":	bracketedfakeseplist,	// x defined as ( "(" y ("," z)* ")" )
+		"Bracket":				brackets,				// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
+		"Constructor":			constructors,			// defined with labelled epsilons
+		"AbstractSyntax":		abstracts,				// abstract syntax (no terminal symbols)
+		"Empty":				empties,				// nonterminal defines an empty language (epsilon)
+		"Failure":				failures,				// nonterminal explicitly or implicitly undefined
+		"AChain":				somechains,				// one production rule is a chain production rule (right hand side == nonterminal)
+		"ReflexiveChain":		reflchains,				// one production rule is a reflexive chain (left hand side == right hand side)
+		"FakeSepList":			fakeseplists,			// “fake” separator list
+		"FakeOptional":			fakeopts,				// “fake” optional nonterminal
+		"NTorT":				ntorts,					// nonterminal or terminal
 		// the rest
-		"Name1":				names1,				// identifier names [a-z]+
-		"Name2":				names2,				// identifier names [a-z][a-zA-Z_]*
-		"Preterminal":			preterminals,		// defined with terminals
-		"PureSequence":			pureseqs,			// pure sequential composition
-		"CNF":					cnfs,				// production rules in Chomsky normal form
+		"Name1":				names1,					// identifier names [a-z]+
+		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*
+		"Preterminal":			preterminals,			// defined with terminals
+		"PureSequence":			pureseqs,				// pure sequential composition
+		"CNF":					cnfs,					// production rules in Chomsky normal form
 		// Not implemented
 		"No":					notimplemented
 	);
