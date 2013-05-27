@@ -138,7 +138,7 @@ set[str] singletons(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n
 ////////////////
 // UNGROUPED  //
 ////////////////
-set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), allterminals(g.prods[n])};
+set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), allofterminals(g.prods[n])};
 
 set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods), allconstructors(g.prods[n])};
 bool allconstructors(BGFProdSet ps) = ( true | it && selectable(_,epsilon()) := p | p <- ps );
@@ -168,6 +168,8 @@ default bool isfakeseplist(BGFProduction p) = false;
 set[str] fakeopts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),epsilon()]))} := g.prods[n]};
 
 set[str] ntorts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),terminal(_)]))} := g.prods[n]};
+set[str] ntsorts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([*L,terminal(_)]))} := g.prods[n], allnonterminals(L)};
+set[str] ntortss(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),*L]))} := g.prods[n], allterminals(L)};
 
 set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
 
@@ -205,20 +207,21 @@ set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empt
 set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
 
 bool allnonterminals(BGFExprList xs) = ( true | it && nonterminal(_) := e | e <- xs );
+bool allterminals(BGFExprList xs) = ( true | it && terminal(_) := e | e <- xs );
 
-bool allterminals(BGFProdSet ps)  = ( true | it && allterminals(p.rhs) | p <- ps );
-bool allterminals(BGFExprList xs) = ( true | it && allterminals(e) | e <- xs );
+bool allofterminals(BGFProdSet ps)  = ( true | it && allofterminals(p.rhs) | p <- ps );
+bool allofterminals(BGFExprList xs) = ( true | it && allofterminals(e) | e <- xs );
 
-bool allterminals(terminal(_)) = true;
-bool allterminals(sequence(L)) = allterminals(L);
-bool allterminals(choice(L)) = allterminals(L);
-bool allterminals(allof(L)) = allterminals(L); // hardly necessary
-bool allterminals(optional(e)) = allterminals(e);
-bool allterminals(plus(e)) = allterminals(e);
-bool allterminals(star(e)) = allterminals(e);
-bool allterminals(seplistplus(e,s)) = allterminals(e) && allterminals(s);
-bool allterminals(sepliststar(e,s)) = allterminals(e) && allterminals(s);
-default bool allterminals(BGFExpression e) = false;
+bool allofterminals(terminal(_)) = true;
+bool allofterminals(sequence(L)) = allofterminals(L);
+bool allofterminals(choice(L)) = allofterminals(L);
+bool allofterminals(allof(L)) = allofterminals(L); // hardly necessary
+bool allofterminals(optional(e)) = allofterminals(e);
+bool allofterminals(plus(e)) = allofterminals(e);
+bool allofterminals(star(e)) = allofterminals(e);
+bool allofterminals(seplistplus(e,s)) = allofterminals(e) && allofterminals(s);
+bool allofterminals(sepliststar(e,s)) = allofterminals(e) && allofterminals(s);
+default bool allofterminals(BGFExpression e) = false;
 
 set[str] notimplemented(SGrammar _) = {};
 
@@ -258,6 +261,8 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"FakeSepList":			fakeseplists,			// “fake” separator list
 		"FakeOptional":			fakeopts,				// “fake” optional nonterminal
 		"NTorT":				ntorts,					// nonterminal or terminal
+		"NTSorT":				ntsorts,				// nonterminals or terminal
+		"NTorTS":				ntortss,				// nonterminal or terminals
 		// the rest
 		"Name1":				names1,					// identifier names [a-z]+
 		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*
