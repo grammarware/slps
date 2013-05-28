@@ -223,6 +223,9 @@ bool allofterminals(seplistplus(e,s)) = allofterminals(e) && allofterminals(s);
 bool allofterminals(sepliststar(e,s)) = allofterminals(e) && allofterminals(s);
 default bool allofterminals(BGFExpression e) = false;
 
+set[str] distinguished(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n], allTNpairs(L)};
+bool allTNpairs(BGFExprList xs) = ( true | it && sequence([terminal(_),nonterminal(_)]) := e | e <- xs );
+
 set[str] notimplemented(SGrammar _) = {};
 
 // 
@@ -268,6 +271,7 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*
 		"Preterminal":			preterminals,			// defined with terminals
 		"PureSequence":			pureseqs,				// pure sequential composition
+		"DistinguishByTerm":	distinguished,			// T N | T N | …
 		"CNF":					cnfs,					// production rules in Chomsky normal form
 		// Not implemented
 		"No":					notimplemented
