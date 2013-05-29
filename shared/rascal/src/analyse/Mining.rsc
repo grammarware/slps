@@ -72,7 +72,7 @@ NPC getZoo(loc zoo, NPC npc)
 		cns += len(allNTs);
 		weird += {"<lang>::<s>::<nt>" | nt <- newweird};
 		
-		if (!isEmpty(nonclas))
+		if (false && !isEmpty(nonclas))
 		{
 			// int sz;
 			println("  Not classified:");
@@ -163,13 +163,21 @@ default bool isCNF(BGFExpression e) = false;
 // TODO: include other patterns?
 set[str] fakeseplists(SGrammar g) = {n | str n <- domain(g.prods), {p} := g.prods[n], isfakeseplist(RetireSs(p))};
 bool isfakeseplist(production(_,_,sequence([BGFExpression a,star(sequence([BGFExpression b, a]))]) )) = true;
+bool isfakeseplist(production(_,str n,choice([BGFExpression a,sequence([nonterminal(n),BGFExpression b,a])]) )) = true;
 default bool isfakeseplist(BGFProduction p) = false;
 
-set[str] fakeopts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),epsilon()]))} := g.prods[n]};
+set[str] fakeopts(SGrammar g) = {n | str n <- domain(g.prods), 
+	(
+	{production(_,n,choice([nonterminal(_),epsilon()]))} := g.prods[n]
+	||
+	(len(g.prods[n])>1 && production("",n,epsilon()) in g.prods[n])
+	)
+	};
 
 set[str] ntorts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),terminal(_)]))} := g.prods[n]};
 set[str] ntsorts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([*L,terminal(_)]))} := g.prods[n], allnonterminals(L)};
 set[str] ntortss(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),*L]))} := g.prods[n], allterminals(L)};
+set[str] tsornts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([*L,nonterminal(_)]))} := g.prods[n], allterminals(L)};
 
 set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
 
@@ -188,6 +196,12 @@ set[str] bracketedseplistps(SGrammar g) = {n | str n <- domain(g.prods), {produc
 set[str] bracketedseplistss(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([terminal(_),sepliststar(nonterminal(_),terminal(_)),terminal(_)]))} := g.prods[n]};
 
 set[str] bracketedfakeseplist(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([terminal(_),nonterminal(_),star(sequence([terminal(_),nonterminal(_)])),terminal(_)]))} := g.prods[n]};
+
+set[str] bracketedopts(SGrammar g)
+	= {n | str n <- domain(g.prods), {production(_,n,sequence([terminal("("),optional(_),terminal(")")]))} := g.prods[n]}
+	+ {n | str n <- domain(g.prods), {production(_,n,sequence([terminal("["),optional(_),terminal("]")]))} := g.prods[n]}
+	+ {n | str n <- domain(g.prods), {production(_,n,sequence([terminal("{"),optional(_),terminal("}")]))} := g.prods[n]}
+	;
 
 // does not tolerate folding
 set[str] names1(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(choice(L)))} := g.prods[n], allterminals(L)};
@@ -254,6 +268,7 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"BracketedSepListPlus":	bracketedseplistps,		// x defined as ( "(" {y ","}+ ")" )
 		"BracketedSepListStar":	bracketedseplistss,		// x defined as ( "(" {y ","}* ")" )
 		"BracketedFakeSepList":	bracketedfakeseplist,	// x defined as ( "(" y ("," z)* ")" )
+		"BracketedOptional":	bracketedopts,			// x defined as ( "[" y? "]" )
 		"Bracket":				brackets,				// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
 		"Constructor":			constructors,			// defined with labelled epsilons
 		"AbstractSyntax":		abstracts,				// abstract syntax (no terminal symbols)
@@ -266,6 +281,7 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"NTorT":				ntorts,					// nonterminal or terminal
 		"NTSorT":				ntsorts,				// nonterminals or terminal
 		"NTorTS":				ntortss,				// nonterminal or terminals
+		"TSorNT":				tsornts,				// terminals or nonterminal
 		// the rest
 		"Name1":				names1,					// identifier names [a-z]+
 		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*
