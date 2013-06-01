@@ -203,6 +203,10 @@ set[str] bracketedopts(SGrammar g)
 	+ {n | str n <- domain(g.prods), {production(_,n,sequence([terminal("{"),optional(_),terminal("}")]))} := g.prods[n]}
 	;
 
+//     relational-expression ::= (shift-expression | (relational-expression "<" shift-expression) | (relational-expression ">" shift-expression) | (relational-expression "<=" shift-expression) | (relational-expression ">=" shift-expression) | (relational-expression "is" type) | (relational-expression "as" type)) ;
+set[str] layers(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),*L]))} := g.prods[n], allNTNof(n,L)};
+bool allNTNof(str x,BGFExprList xs) = ( true | it && sequence([nonterminal(x),terminal(_),nonterminal(_)]) := e | e <- xs );
+
 // does not tolerate folding
 set[str] names1(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(choice(L)))} := g.prods[n], allterminals(L)};
 set[str] names2(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([choice(L1),star(choice(L2))]))} := g.prods[n], allterminals(L1), allterminals(L2)};
@@ -282,6 +286,7 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"NTSorT":				ntsorts,				// nonterminals or terminal
 		"NTorTS":				ntortss,				// nonterminal or terminals
 		"TSorNT":				tsornts,				// terminals or nonterminal
+		"ExprLayer":			layers,					// expression layers
 		// the rest
 		"Name1":				names1,					// identifier names [a-z]+
 		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*
