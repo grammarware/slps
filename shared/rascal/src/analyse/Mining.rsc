@@ -197,11 +197,46 @@ set[str] bracketedseplistss(SGrammar g) = {n | str n <- domain(g.prods), {produc
 
 set[str] bracketedfakeseplist(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([terminal(_),nonterminal(_),star(sequence([terminal(_),nonterminal(_)])),terminal(_)]))} := g.prods[n]};
 
-set[str] bracketedopts(SGrammar g)
-	= {n | str n <- domain(g.prods), {production(_,n,sequence([terminal("("),optional(_),terminal(")")]))} := g.prods[n]}
-	+ {n | str n <- domain(g.prods), {production(_,n,sequence([terminal("["),optional(_),terminal("]")]))} := g.prods[n]}
-	+ {n | str n <- domain(g.prods), {production(_,n,sequence([terminal("{"),optional(_),terminal("}")]))} := g.prods[n]}
-	;
+bool bracketpair("(",")") = true;
+bool bracketpair("[","]") = true;
+bool bracketpair("{","}") = true;
+bool bracketpair("\<!--","--\>") = true; // !!!
+default bool bracketpair(str x, str y) = false;
+
+// TODO?
+// listLiteral ::= "[" (expressionList ","?)? "]" ;
+
+set[str] bracketedopts(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,sequence([terminal(str x),optional(nonterminal(_)),terminal(str y)]))} := g.prods[n],
+	bracketpair(x,y)}
+;
+
+set[str] bracketedstars(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,sequence([terminal(str x),star(nonterminal(_)),terminal(str y)]))} := g.prods[n],
+	bracketpair(x,y)}
+;
+
+set[str] bracketedpluss(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,sequence([terminal(str x),plus(nonterminal(_)),terminal(str y)]))} := g.prods[n],
+	bracketpair(x,y)}
+;
+
+set[str] bracketedfakesepliststar(SGrammar g) = {n | str n <- domain(g.prods),
+	({production(_,n,sequence([terminal(str x),
+		optional(sequence([
+			nonterminal(str elem),
+			star(sequence([terminal(str sep), nonterminal(elem)])),
+			optional(terminal(sep))
+		])),terminal(str y)]))} := g.prods[n] ||
+	{production(_,n,sequence([terminal(str x),
+		optional(sequence([
+			nonterminal(str elem),
+			star(sequence([terminal(str sep), nonterminal(elem)]))
+		])),terminal(str y)]))} := g.prods[n]),
+	bracketpair(x,y)}
+;
+
+// Lookie here: ArrayInitializer ::= "{" (N ("," N)* ","?)? "}" ;
 
 //     relational-expression ::= (shift-expression | (relational-expression "<" shift-expression) | (relational-expression ">" shift-expression) | (relational-expression "<=" shift-expression) | (relational-expression ">=" shift-expression) | (relational-expression "is" type) | (relational-expression "as" type)) ;
 set[str] layers(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),*L]))} := g.prods[n], allNTNof(n,L)};
@@ -218,7 +253,14 @@ bool areallchains(BGFProdSet ps) = ( true | it && production(_,_,nonterminal(_))
 set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods), /production(_,n,nonterminal(_)) := g.prods[n]};
 set[str] onechains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(_))} := g.prods[n]};
 set[str] reflchains(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,nonterminal(n)),*P2} := g.prods[n]};
-set[str] brackets(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,sequence([terminal(_),nonterminal(n),terminal(_)])),*P2} := g.prods[n]};
+set[str] selfbrackets(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,sequence([terminal(str x),nonterminal(n),terminal(str y)])),*P2} := g.prods[n],
+	bracketpair(x,y)}
+;
+set[str] brackets(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,sequence([terminal(str x),nonterminal(_),terminal(str y)])),*P2} := g.prods[n],
+	bracketpair(x,y)}
+;
 
 // lower level functions
 set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
@@ -241,8 +283,13 @@ bool allofterminals(seplistplus(e,s)) = allofterminals(e) && allofterminals(s);
 bool allofterminals(sepliststar(e,s)) = allofterminals(e) && allofterminals(s);
 default bool allofterminals(BGFExpression e) = false;
 
+set[str] stardistinguished(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,star(choice(L)))} := g.prods[n], allTNpairs(L)};
 set[str] distinguished(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n], allTNpairs(L)};
-bool allTNpairs(BGFExprList xs) = ( true | it && sequence([terminal(_),nonterminal(_)]) := e | e <- xs );
+bool allTNpairs(BGFExprList xs) = ( true | it && (
+		terminal(_) := e ||
+		sequence([terminal(_),nonterminal(_)]) := e ||
+		sequence([terminal(_),optional(nonterminal(_))]) := e
+	) | e <- xs );
 
 set[str] notimplemented(SGrammar _) = {};
 
@@ -273,7 +320,11 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"BracketedSepListStar":	bracketedseplistss,		// x defined as ( "(" {y ","}* ")" )
 		"BracketedFakeSepList":	bracketedfakeseplist,	// x defined as ( "(" y ("," z)* ")" )
 		"BracketedOptional":	bracketedopts,			// x defined as ( "[" y? "]" )
-		"Bracket":				brackets,				// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
+		"BracketedStar":		bracketedstars,			// x defined as ( "[" y* "]" )
+		"BracketedPlus":		bracketedpluss,			// x defined as ( "[" y+ "]" )
+		"BracketedFakeSLStar":	bracketedfakesepliststar,//x defined as ( "[" (N (T N)* T?)? "]" ) or ( "[" (N (T N)*)? "]" )
+		"Bracket":				brackets,				// nonterminals that have a bracketing production, e.g. E ::= "(" x ")"
+		"BracketSelf":			selfbrackets,				// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
 		"Constructor":			constructors,			// defined with labelled epsilons
 		"AbstractSyntax":		abstracts,				// abstract syntax (no terminal symbols)
 		"Empty":				empties,				// nonterminal defines an empty language (epsilon)
@@ -292,7 +343,8 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*
 		"Preterminal":			preterminals,			// defined with terminals
 		"PureSequence":			pureseqs,				// pure sequential composition
-		"DistinguishByTerm":	distinguished,			// T N | T N | …
+		"DistinguishByTerm":	distinguished,			// T N | T N | … | T N? | T N? | … | T | T | …
+		"StarDistinguishByTerm":stardistinguished,		// (T N | T N | … | T N? | T N? | … | T | T | …)*
 		"CNF":					cnfs,					// production rules in Chomsky normal form
 		// Not implemented
 		"No":					notimplemented
