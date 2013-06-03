@@ -135,6 +135,47 @@ set[str] singletons(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n
 // NB: the next is the same one as bottoms
 // set[str] undefineds(SGrammar g) = {n | str n <- domain(g.prods), isEmpty(g.prods[n])};
 
+///////////////////////////
+// GROUP: YACCification  //
+///////////////////////////
+set[str] yaccPL(SGrammar g) = {x | str x <- domain(g.prods),
+	(
+	{production(_,x,sequence([nonterminal(x),nonterminal(_)])),production(_,x,nonterminal(_))} := g.prods[x]
+	||
+	{production(_,x,choice([sequence([nonterminal(x),nonterminal(_)]),nonterminal(_)]))} := g.prods[x]
+	||
+	{production(_,x,choice([nonterminal(_),sequence([nonterminal(x),nonterminal(_)])]))} := g.prods[x]
+	)
+};
+set[str] yaccPR(SGrammar g) = {x | str x <- domain(g.prods),
+	(
+	{production(_,x,sequence([nonterminal(_),nonterminal(x)])),production(_,x,nonterminal(_))} := g.prods[x]
+	||
+	{production(_,x,choice([sequence([nonterminal(_),nonterminal(x)]),nonterminal(_)]))} := g.prods[x]
+	||
+	{production(_,x,choice([nonterminal(_),sequence([nonterminal(_),nonterminal(x)])]))} := g.prods[x]
+	)
+};
+set[str] yaccSL(SGrammar g) = {x | str x <- domain(g.prods),
+	(
+	{production(_,x,sequence([nonterminal(x),nonterminal(_)])),production(_,x,epsilon())} := g.prods[x]
+	||
+	{production(_,x,choice([sequence([nonterminal(x),nonterminal(_)]),epsilon()]))} := g.prods[x]
+	||
+	{production(_,x,choice([epsilon(),sequence([nonterminal(x),nonterminal(_)])]))} := g.prods[x]
+	)
+};
+set[str] yaccSR(SGrammar g) = {x | str x <- domain(g.prods),
+	(
+	{production(_,x,sequence([nonterminal(_),nonterminal(x)])),production(_,x,epsilon())} := g.prods[x]
+	||
+	{production(_,x,choice([sequence([nonterminal(_),nonterminal(x)]),epsilon()]))} := g.prods[x]
+	||
+	{production(_,x,choice([epsilon(),sequence([nonterminal(_),nonterminal(x)])]))} := g.prods[x]
+	)
+};
+
+
 ////////////////
 // UNGROUPED  //
 ////////////////
@@ -261,6 +302,10 @@ set[str] brackets(SGrammar g) = {n | str n <- domain(g.prods),
 	{production(_,n,sequence([terminal(str x),nonterminal(_),terminal(str y)])),*P2} := g.prods[n],
 	bracketpair(x,y)}
 ;
+set[str] delimiteds(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,sequence([terminal(str x),nonterminal(_),terminal(str y)])),*P2} := g.prods[n],
+	!bracketpair(x,y)}
+;
 
 // lower level functions
 set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
@@ -283,8 +328,9 @@ bool allofterminals(seplistplus(e,s)) = allofterminals(e) && allofterminals(s);
 bool allofterminals(sepliststar(e,s)) = allofterminals(e) && allofterminals(s);
 default bool allofterminals(BGFExpression e) = false;
 
-set[str] stardistinguished(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,star(choice(L)))} := g.prods[n], allTNpairs(L)};
-set[str] distinguished(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n], allTNpairs(L)};
+set[str] distinguished(SGrammar g) = {n | str n <- domain(g.prods),
+	({production(_,n,choice(L))} := g.prods[n] || {production(_,n,star(choice(L)))} := g.prods[n]),
+	allTNpairs(L)};
 bool allTNpairs(BGFExprList xs) = ( true | it && (
 		terminal(_) := e ||
 		sequence([terminal(_),nonterminal(_)]) := e ||
@@ -324,7 +370,8 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"BracketedPlus":		bracketedpluss,			// x defined as ( "[" y+ "]" )
 		"BracketedFakeSLStar":	bracketedfakesepliststar,//x defined as ( "[" (N (T N)* T?)? "]" ) or ( "[" (N (T N)*)? "]" )
 		"Bracket":				brackets,				// nonterminals that have a bracketing production, e.g. E ::= "(" x ")"
-		"BracketSelf":			selfbrackets,				// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
+		"BracketSelf":			selfbrackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
+		"Delimited":			delimiteds,				// x defined as ( T1 E T2 ) where T1 and T2 are not a bracketing pair
 		"Constructor":			constructors,			// defined with labelled epsilons
 		"AbstractSyntax":		abstracts,				// abstract syntax (no terminal symbols)
 		"Empty":				empties,				// nonterminal defines an empty language (epsilon)
@@ -338,13 +385,17 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"NTorTS":				ntortss,				// nonterminal or terminals
 		"TSorNT":				tsornts,				// terminals or nonterminal
 		"ExprLayer":			layers,					// expression layers
+		// YACCification
+		"YaccifiedPlusLeft":	yaccPL,					// x defined as ( x y | z ) or ( z | x y ) ⇒ y+, with possibly z == y
+		"YaccifiedPlusRight":	yaccPR,					// x defined as ( y x | z ) or ( z | y x ) ⇒ y+, with possibly z == y
+		"YaccifiedStarLeft":	yaccSL,					// x defined as ( x y | ε ) or ( ε | x y ) ⇒ y*
+		"YaccifiedStarRight":	yaccSR,					// x defined as ( y x | ε ) or ( ε | y x ) ⇒ y*
 		// the rest
 		"Name1":				names1,					// identifier names [a-z]+
 		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*
 		"Preterminal":			preterminals,			// defined with terminals
 		"PureSequence":			pureseqs,				// pure sequential composition
-		"DistinguishByTerm":	distinguished,			// T N | T N | … | T N? | T N? | … | T | T | …
-		"StarDistinguishByTerm":stardistinguished,		// (T N | T N | … | T N? | T N? | … | T | T | …)*
+		"DistinguishByTerm":	distinguished,			// T N | T N | … | T N? | T N? | … | T | T | … or star thereof
 		"CNF":					cnfs,					// production rules in Chomsky normal form
 		// Not implemented
 		"No":					notimplemented
