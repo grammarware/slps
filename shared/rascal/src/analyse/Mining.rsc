@@ -175,6 +175,38 @@ set[str] yaccSR(SGrammar g) = {x | str x <- domain(g.prods),
 	)
 };
 
+////////////////////////
+// GROUP: Metasyntax  //
+////////////////////////
+set[str] usesstar(SGrammar g) = {n | str n <- domain(g.prods), /star(_) := g.prods[n]};
+set[str] usesplus(SGrammar g) = {n | str n <- domain(g.prods), /plus(_) := g.prods[n]};
+set[str] usesopt(SGrammar g) = {n | str n <- domain(g.prods), /optional(_) := g.prods[n]};
+set[str] usesepsilon(SGrammar g) = {n | str n <- domain(g.prods), /epsilon() := g.prods[n]};
+set[str] usesint(SGrammar g) = {n | str n <- domain(g.prods), /val(integer()) := g.prods[n]};
+set[str] usesstr(SGrammar g) = {n | str n <- domain(g.prods), /val(string()) := g.prods[n]};
+set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
+set[str] usessel(SGrammar g) = {n | str n <- domain(g.prods), /selectable(_,_) := g.prods[n]};
+set[str] usesneg(SGrammar g) = {n | str n <- domain(g.prods), /not(_) := g.prods[n]};
+set[str] usesconj(SGrammar g) = {n | str n <- domain(g.prods), /allof(L) := g.prods[n]};
+// the next one is more complicated since we want to count only inner choices
+set[str] usesdisj(SGrammar g) = {n | str n <- domain(g.prods), 
+	(
+		(
+		{production(_,n,choice(_))} !:= g.prods[n]
+		&&
+		/choice(_) := g.prods[n]
+		)
+	||
+		(
+		{production(_,n,choice(L))} := g.prods[n]
+		&&
+		/choice(_) := L
+		)
+	)
+	};
+// the next one should return zero results if run on real grammars and not on intermediate transformation results
+set[str] usesSLP(SGrammar g) = {n | str n <- domain(g.prods), /seplistplus(_,_) := g.prods[n]};
+set[str] usesSLS(SGrammar g) = {n | str n <- domain(g.prods), /sepliststar(_,_) := g.prods[n]};
 
 ////////////////
 // UNGROUPED  //
@@ -219,8 +251,6 @@ set[str] ntorts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,cho
 set[str] ntsorts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([*L,terminal(_)]))} := g.prods[n], allnonterminals(L)};
 set[str] ntortss(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),*L]))} := g.prods[n], allterminals(L)};
 set[str] tsornts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([*L,nonterminal(_)]))} := g.prods[n], allterminals(L)};
-
-set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
 
 set[str] empties(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,epsilon())} := g.prods[n]};
 set[str] failures(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,empty())} := g.prods[n]};
@@ -373,7 +403,6 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"BracketSelf":			selfbrackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
 		"Delimited":			delimiteds,				// x defined as ( T1 E T2 ) where T1 and T2 are not a bracketing pair
 		"Constructor":			constructors,			// defined with labelled epsilons
-		"AbstractSyntax":		abstracts,				// abstract syntax (no terminal symbols)
 		"Empty":				empties,				// nonterminal defines an empty language (epsilon)
 		"Failure":				failures,				// nonterminal explicitly or implicitly undefined
 		"AChain":				somechains,				// one production rule is a chain production rule (right hand side == nonterminal)
@@ -390,6 +419,20 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"YaccifiedPlusRight":	yaccPR,					// x defined as ( y x | z ) or ( z | y x ) ⇒ y+, with possibly z == y
 		"YaccifiedStarLeft":	yaccSL,					// x defined as ( x y | ε ) or ( ε | x y ) ⇒ y*
 		"YaccifiedStarRight":	yaccSR,					// x defined as ( y x | ε ) or ( ε | y x ) ⇒ y*
+		// Metasyntax
+		"AbstractSyntax":		abstracts,				// abstract syntax (no terminal symbols)
+		"ContainsStar":			usesstar,				// uses star within the definitions
+		"ContainsPlus":			usesplus,				// uses plus within the definitions
+		"ContainsOptional":		usesopt,				// uses optional within the definitions
+		"ContainsEpsilon":		usesepsilon,			// uses epsilon within the definitions
+		"ContainsInteger":		usesint,				// uses integer within the definitions
+		"ContainsString":		usesstr,				// uses string within the definitions
+		"ContainsSelectors":	usessel,				// uses selectors within the definitions
+		"ContainsNegation":		usesneg,				// uses negation within the definitions
+		"ContainsConjunction":	usesconj,				// uses conjunction within the definitions
+		"ContainsDisjunction":	usesdisj,				// uses disjunction within the definitions
+		"ContainsSepListPlus":	usesSLP,				// uses plus separator lists within the definitions
+		"ContainsSepListStar":	usesSLS,				// uses star separator lists within the definitions
 		// the rest
 		"Name1":				names1,					// identifier names [a-z]+
 		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*
