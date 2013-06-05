@@ -3,8 +3,9 @@
 module language::BGF
 
 alias BGFProdList = list[BGFProduction];
-alias BGFProdSet = set[BGFProduction];
+alias BGFProdSet  =  set[BGFProduction];
 alias BGFExprList = list[BGFExpression];
+alias BGFExprSet  =  set[BGFExpression];
 data BGFGrammar =
 	grammar (list[str] roots, BGFProdList prods)
 ;

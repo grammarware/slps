@@ -64,15 +64,14 @@ NPC getZoo(loc zoo, NPC npc)
 			if ("<AllMetrics[metric]>" in Exclude)
 				newweird -= res;
 			else
-			{
 				allNTs -= res;
+			if ("<AllMetrics[metric]>" notin (Exclude+Metasyntax))
 				nonclas -= res;
-			}
 		}
 		cns += len(allNTs);
 		weird += {"<lang>::<s>::<nt>" | nt <- newweird};
 		
-		if (false && !isEmpty(nonclas))
+		if (!isEmpty(nonclas))
 		{
 			// int sz;
 			println("  Not classified:");
@@ -184,7 +183,7 @@ set[str] usesopt(SGrammar g) = {n | str n <- domain(g.prods), /optional(_) := g.
 set[str] usesepsilon(SGrammar g) = {n | str n <- domain(g.prods), /epsilon() := g.prods[n]};
 set[str] usesint(SGrammar g) = {n | str n <- domain(g.prods), /val(integer()) := g.prods[n]};
 set[str] usesstr(SGrammar g) = {n | str n <- domain(g.prods), /val(string()) := g.prods[n]};
-set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), /terminal(_) !:= g.prods[n]};
+set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), /terminal(_) !:= g.prods[n]};
 set[str] usessel(SGrammar g) = {n | str n <- domain(g.prods), /selectable(_,_) := g.prods[n]};
 set[str] usesneg(SGrammar g) = {n | str n <- domain(g.prods), /not(_) := g.prods[n]};
 set[str] usesconj(SGrammar g) = {n | str n <- domain(g.prods), /allof(L) := g.prods[n]};
@@ -211,9 +210,9 @@ set[str] usesSLS(SGrammar g) = {n | str n <- domain(g.prods), /sepliststar(_,_) 
 ////////////////
 // UNGROUPED  //
 ////////////////
-set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), allofterminals(g.prods[n])};
+set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), allofterminals(g.prods[n])};
 
-set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods), allconstructors(g.prods[n])};
+set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), allconstructors(g.prods[n])};
 bool allconstructors(BGFProdSet ps) = ( true | it && selectable(_,epsilon()) := p | p <- ps );
 
 set[str] pureseqs(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,rhs)} := g.prods[n], pureseq(rhs)};
@@ -226,7 +225,7 @@ bool pureseq(nonterminal(_)) = true;
 bool pureseq(sequence(L)) = ( true | it && pureseq(e) | e <- L );
 default bool pureseq(BGFExpression rhs) = false;
 
-set[str] cnfs(SGrammar g) = {n | str n <- domain(g.prods), allCNFs(g.prods[n]) };
+set[str] cnfs(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), allCNFs(g.prods[n]) };
 bool allCNFs(BGFProdSet ps) = ( true | it && isCNF(p.rhs) | p <- ps );
 bool isCNF(epsilon()) = true;
 bool isCNF(terminal(_)) = true;
@@ -274,6 +273,11 @@ bool bracketpair("{","}") = true;
 bool bracketpair("\<!--","--\>") = true; // !!!
 default bool bracketpair(str x, str y) = false;
 
+set[str] accesslayers(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,sequence([nonterminal(_),terminal(str x),nonterminal(_),terminal(str y)]))} := g.prods[n],
+	bracketpair(x,y)}
+;
+
 // TODO?
 // listLiteral ::= "[" (expressionList ","?)? "]" ;
 
@@ -298,7 +302,8 @@ set[str] bracketedfakesepliststar(SGrammar g) = {n | str n <- domain(g.prods),
 			nonterminal(str elem),
 			star(sequence([terminal(str sep), nonterminal(elem)])),
 			optional(terminal(sep))
-		])),terminal(str y)]))} := g.prods[n] ||
+		])),terminal(str y)]))} := g.prods[n]
+	||
 	{production(_,n,sequence([terminal(str x),
 		optional(sequence([
 			nonterminal(str elem),
@@ -307,19 +312,52 @@ set[str] bracketedfakesepliststar(SGrammar g) = {n | str n <- domain(g.prods),
 	bracketpair(x,y)}
 ;
 
-// Lookie here: ArrayInitializer ::= "{" (N ("," N)* ","?)? "}" ;
+// TODO? ArrayInitializer ::= "{" (N ("," N)* ","?)? "}" ;
 
-//     relational-expression ::= (shift-expression | (relational-expression "<" shift-expression) | (relational-expression ">" shift-expression) | (relational-expression "<=" shift-expression) | (relational-expression ">=" shift-expression) | (relational-expression "is" type) | (relational-expression "as" type)) ;
-set[str] layers(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),*L]))} := g.prods[n], allNTNof(n,L)};
+set[str] layers(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),*L]))} := g.prods[n], !isEmpty(L), allNTNof(n,L)};
 bool allNTNof(str x,BGFExprList xs) = ( true | it && sequence([nonterminal(x),terminal(_),nonterminal(_)]) := e | e <- xs );
+set[str] lowlayers(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,choice(L1))} := g.prods[n],
+	!isEmpty(L1),
+	{sequence([terminal(str x),nonterminal(_),terminal(str y)]),*L2} := toSet(L1),
+	!isEmpty(L2),
+	bracketpair(x,y),
+	allnonterminals(L2)
+};
 
 // does not tolerate folding
-set[str] names1(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,plus(choice(L)))} := g.prods[n], allterminals(L)};
-set[str] names2(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,sequence([choice(L1),star(choice(L2))]))} := g.prods[n], allterminals(L1), allterminals(L2)};
+set[str] names1(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,plus(choice(L)))} := g.prods[n],
+	!isEmpty(L),
+	allterminals(L)}
+;
+set[str] names2(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,sequence([choice(L1),star(choice(L2))]))} := g.prods[n],
+	!isEmpty(L1),
+	!isEmpty(L2),
+	allterminals(L1),
+	allterminals(L2)}
+;
 
 // TODO: simple chain as an all chain where $m$ is used only once in the whole grammar
-set[str] allchains(SGrammar g) = {n | str n <- domain(g.prods), areallchains(g.prods[n])};
-bool areallchains(BGFProdSet ps) = ( true | it && production(_,_,nonterminal(_)) := p  | p <- ps );
+
+// 10% classified as JustPseudoChoice: 4354 (0 scores).
+set[str] allchains(SGrammar g) = {n | str n <- domain(g.prods), 
+	(
+		(
+			len(g.prods[n]) > 1
+		&&
+			areallchains(g.prods[n])
+		)
+	||
+		(
+			{production(_,n,choice(L))} := g.prods[n]
+		&&
+			allnonterminals(L)
+		)
+	)
+	};
+bool areallchains(BGFProdSet ps) = ( true | it && production(_,_,nonterminal(_)) := p  | p <- ps );	
 // set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,nonterminal(_)),*P2} := g.prods[n]};
 set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods), /production(_,n,nonterminal(_)) := g.prods[n]};
 set[str] onechains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(_))} := g.prods[n]};
@@ -338,10 +376,11 @@ set[str] delimiteds(SGrammar g) = {n | str n <- domain(g.prods),
 ;
 
 // lower level functions
-set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), {production(_,n,empty())} !:= g.prods[n], !isEmpty(g.prods[n]) };
+set[str] definedNs(SGrammar g) = {n | n <- domain(g.prods), !isEmpty(g.prods[n]), {production(_,n,empty())} !:= g.prods[n] };
 set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
 
 bool allnonterminals(BGFExprList xs) = ( true | it && nonterminal(_) := e | e <- xs );
+bool allnonterminals(BGFExprSet xs) = ( true | it && nonterminal(_) := e | e <- xs );
 bool allterminals(BGFExprList xs) = ( true | it && terminal(_) := e | e <- xs );
 
 bool allofterminals(BGFProdSet ps)  = ( true | it && allofterminals(p.rhs) | p <- ps );
@@ -390,8 +429,8 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"JustPlus":				justplusses,			// x defined as y+
 		"JustStar":				juststars,				// x defined as y*
 		"JustOptional":			justopts,				// x defined as y?
-		"JustPseudoChoice":		allchains,				// nonterminal defined only with chain production rules (right hand sides are nonterminals)
-		"JustChain":			onechains,				// nonterminal defined with a single chain production rule (right hand side == nonterminal)
+		"JustChains":			allchains,				// nonterminal defined only with chain production rules (right hand sides are nonterminals)
+		"JustOneChain":			onechains,				// nonterminal defined with a single chain production rule (right hand side == nonterminal)
 		"BracketedSepListPlus":	bracketedseplistps,		// x defined as ( "(" {y ","}+ ")" )
 		"BracketedSepListStar":	bracketedseplistss,		// x defined as ( "(" {y ","}* ")" )
 		"BracketedFakeSepList":	bracketedfakeseplist,	// x defined as ( "(" y ("," z)* ")" )
@@ -400,6 +439,7 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"BracketedPlus":		bracketedpluss,			// x defined as ( "[" y+ "]" )
 		"BracketedFakeSLStar":	bracketedfakesepliststar,//x defined as ( "[" (N (T N)* T?)? "]" ) or ( "[" (N (T N)*)? "]" )
 		"Bracket":				brackets,				// nonterminals that have a bracketing production, e.g. E ::= "(" x ")"
+		"ElementAccess":		accesslayers,			// x defined as ( y "(" z ")" )
 		"BracketSelf":			selfbrackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
 		"Delimited":			delimiteds,				// x defined as ( T1 E T2 ) where T1 and T2 are not a bracketing pair
 		"Constructor":			constructors,			// defined with labelled epsilons
@@ -413,7 +453,8 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"NTSorT":				ntsorts,				// nonterminals or terminal
 		"NTorTS":				ntortss,				// nonterminal or terminals
 		"TSorNT":				tsornts,				// terminals or nonterminal
-		"ExprLayer":			layers,					// expression layers
+		"ExprMidLayer":			layers,					// middle expression layers
+		"ExprLowLayer":			lowlayers,				// lower expression layers
 		// YACCification
 		"YaccifiedPlusLeft":	yaccPL,					// x defined as ( x y | z ) or ( z | x y ) ⇒ y+, with possibly z == y
 		"YaccifiedPlusRight":	yaccPR,					// x defined as ( y x | z ) or ( z | y x ) ⇒ y+, with possibly z == y
@@ -444,7 +485,10 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"No":					notimplemented
 	);
 // too popular or exhaustive
-set[str] Exclude = {"<singletons>","<horizontals>","<verticals>","<bottoms>"};
+set[str] Exclude = {"<singletons>", "<horizontals>", "<verticals>", "<bottoms>"};
+set[str] Metasyntax = {"<abstracts>", "<usesstar>", "<usesplus>", "<usesopt>", "<usesepsilon>", "<usesint>", "<usesstr>", "<usessel>", "<usesneg>", "<usesconj>", "<usesdisj>", "<usesSLP>", "<usesSLS>"};
+// set[str]
+
 
 // MAIN
 public void main(list[str] as)
