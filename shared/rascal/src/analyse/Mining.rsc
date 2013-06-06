@@ -71,7 +71,7 @@ NPC getZoo(loc zoo, NPC npc)
 		cns += len(allNTs);
 		weird += {"<lang>::<s>::<nt>" | nt <- newweird};
 		
-		if (!isEmpty(nonclas))
+		if (false && !isEmpty(nonclas))
 		{
 			// int sz;
 			println("  Not classified:");
@@ -212,8 +212,23 @@ set[str] usesSLS(SGrammar g) = {n | str n <- domain(g.prods), /sepliststar(_,_) 
 ////////////////
 set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), allofterminals(g.prods[n])};
 
-set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), allconstructors(g.prods[n])};
-bool allconstructors(BGFProdSet ps) = ( true | it && selectable(_,epsilon()) := p | p <- ps );
+set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods), 
+	(
+		(
+			{production(_,n,choice(L))} := g.prods[n]
+		&&
+			allconstructors(L)
+		)
+	||
+		(
+			!isEmpty(g.prods[n])
+		&&
+			allconstructors(g.prods[n])
+		)
+	)
+};
+bool allconstructors(BGFExprList es) = ( true | it && selectable(_,epsilon()) := e | e <- es );
+bool allconstructors(BGFProdSet ps) = ( true | it && production(_,_,epsilon()) := p | p <- ps ); // could also check if labels are not empty
 
 set[str] pureseqs(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,rhs)} := g.prods[n], pureseq(rhs)};
 bool pureseq(epsilon()) = true;
