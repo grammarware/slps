@@ -181,12 +181,15 @@ set[str] usesstar(SGrammar g) = {n | str n <- domain(g.prods), /star(_) := g.pro
 set[str] usesplus(SGrammar g) = {n | str n <- domain(g.prods), /plus(_) := g.prods[n]};
 set[str] usesopt(SGrammar g) = {n | str n <- domain(g.prods), /optional(_) := g.prods[n]};
 set[str] usesepsilon(SGrammar g) = {n | str n <- domain(g.prods), /epsilon() := g.prods[n]};
+set[str] usesempty(SGrammar g) = {n | str n <- domain(g.prods), /empty() := g.prods[n]};
+set[str] usesany(SGrammar g) = {n | str n <- domain(g.prods), /anything() := g.prods[n]};
 set[str] usesint(SGrammar g) = {n | str n <- domain(g.prods), /val(integer()) := g.prods[n]};
 set[str] usesstr(SGrammar g) = {n | str n <- domain(g.prods), /val(string()) := g.prods[n]};
 set[str] abstracts(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), /terminal(_) !:= g.prods[n]};
 set[str] usessel(SGrammar g) = {n | str n <- domain(g.prods), /selectable(_,_) := g.prods[n]};
 set[str] usesneg(SGrammar g) = {n | str n <- domain(g.prods), /not(_) := g.prods[n]};
-set[str] usesconj(SGrammar g) = {n | str n <- domain(g.prods), /allof(L) := g.prods[n]};
+set[str] usesconj(SGrammar g) = {n | str n <- domain(g.prods), /allof(_) := g.prods[n]};
+set[str] usesseq(SGrammar g) = {n | str n <- domain(g.prods), /sequence(_) := g.prods[n]};
 // the next one is more complicated since we want to count only inner choices
 set[str] usesdisj(SGrammar g) = {n | str n <- domain(g.prods), 
 	(
@@ -481,10 +484,13 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"ContainsPlus":			usesplus,				// uses plus within the definitions
 		"ContainsOptional":		usesopt,				// uses optional within the definitions
 		"ContainsEpsilon":		usesepsilon,			// uses epsilon within the definitions
+		"ContainsFailure":		usesempty,				// uses the empty metasymbol within the definitions
+		"ContainsUniversal":	usesany,				// uses the universal metasymbol within the definitions
 		"ContainsInteger":		usesint,				// uses integer within the definitions
 		"ContainsString":		usesstr,				// uses string within the definitions
 		"ContainsSelectors":	usessel,				// uses selectors within the definitions
 		"ContainsNegation":		usesneg,				// uses negation within the definitions
+		"ContainsSequence":		usesseq,				// uses sequential composition within the definitions
 		"ContainsConjunction":	usesconj,				// uses conjunction within the definitions
 		"ContainsDisjunction":	usesdisj,				// uses disjunction within the definitions
 		"ContainsSepListPlus":	usesSLP,				// uses plus separator lists within the definitions
@@ -510,6 +516,7 @@ public void main(list[str] as)
 {
 	loc zoo = |home:///projects/webslps/zoo|;
 	NPC npc = getZoo(|home:///projects/webslps/zoo|,Zero);
+	str buf = "";
 	npc = getZoo(|home:///projects/webslps/tank|,npc);
 	println("Total: <npc.cx> grammars, <npc.ps> production rules, <npc.ns> nonterminals (<npc.ns-npc.clasns> thereof classified), <len(npc.patterns)> patterns.");
 	for (metric <- AllMetrics)
@@ -517,7 +524,9 @@ public void main(list[str] as)
 		println("<100*npc.counts["<metric>"]/npc.ns>% classified as <metric>: <npc.counts["<metric>"]> (<len(npc.scores["<metric>"])> scores).");
 		if (len(npc.scores["<metric>"])>0 && len(npc.scores["<metric>"])<30)
 			println("  Scores: <joinStrings(npc.scores["<metric>"])>");
+		buf += "<npc.counts["<metric>"]>\t<metric>\n";
 	}
+	writeFile(|cwd:///result.csv|,buf);
 	for (w <- npc.weird)
 		println("Weird: <w>");
 	// Just the Zoo:
