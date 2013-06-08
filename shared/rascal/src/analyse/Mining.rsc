@@ -10,6 +10,7 @@ import Map;
 import IO;
 import lib::Rascalware;
 import export::BNF;
+import analyse::Naming;
 
 // TODO: just import mutate::type2::RetireSs ?
 // import normal::BGF;
@@ -24,7 +25,6 @@ BGFProduction RetireSs(BGFProduction p) = visit(p) {case selectable(_,BGFExpress
 alias dict = map[BGFExpression,int];
 alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts, set[str] weird, map[str,set[str]] scores];
 NPC Zero = <0,0,0,0,(),(),{},()>;
-alias SGrammar = tuple[set[str] roots, map[str,BGFProdSet] prods];
 
 NPC getZoo(loc zoo, NPC npc)
 {
@@ -207,6 +207,7 @@ set[str] usesdisj(SGrammar g) = {n | str n <- domain(g.prods),
 	)
 	};
 // the next one should return zero results if run on real grammars and not on intermediate transformation results
+set[str] usesmarked(SGrammar g) = {n | str n <- domain(g.prods), /marked(_) := g.prods[n]};
 set[str] usesSLP(SGrammar g) = {n | str n <- domain(g.prods), /seplistplus(_,_) := g.prods[n]};
 set[str] usesSLS(SGrammar g) = {n | str n <- domain(g.prods), /sepliststar(_,_) := g.prods[n]};
 
@@ -441,6 +442,7 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"Singleton":			singletons,				// nonterminal is defined with one non-horizontal production rule
 		"Horizontal":			horizontals,			// top level choice
 		"Vertical":				verticals,				// multiple production rules per nonterminal
+		// Naming
 		// Pattern
 		"JustSepListPlus":		justseplistps,			// x defined as {y ","}+
 		"JustSepListStar":		justseplistss,			// x defined as {y ","}*
@@ -495,6 +497,7 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"ContainsDisjunction":	usesdisj,				// uses disjunction within the definitions
 		"ContainsSepListPlus":	usesSLP,				// uses plus separator lists within the definitions
 		"ContainsSepListStar":	usesSLS,				// uses star separator lists within the definitions
+		"ContainsMarked":		usesmarked,				// should be empty
 		// the rest
 		"Name1":				names1,					// identifier names [a-z]+
 		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*

@@ -2,6 +2,8 @@
 @wiki{BGF}
 module language::BGF
 
+alias SGrammar = tuple[set[str] roots, map[str,BGFProdSet] prods];
+
 alias BGFProdList = list[BGFProduction];
 alias BGFProdSet  =  set[BGFProduction];
 alias BGFExprList = list[BGFExpression];
