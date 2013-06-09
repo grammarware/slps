@@ -430,7 +430,7 @@ set[str] notimplemented(SGrammar _) = {};
 // 
 //                ADD CLASSIFIERS HERE!
 // 
-map[str name,set[str](SGrammar) fun] AllMetrics =
+map[str name,set[str](SGrammar) fun] AllMetrics = NamingPatterns +
 	(
 		// GlobalPosition
 		"Top":					tops,					// defined but not used
@@ -442,7 +442,6 @@ map[str name,set[str](SGrammar) fun] AllMetrics =
 		"Singleton":			singletons,				// nonterminal is defined with one non-horizontal production rule
 		"Horizontal":			horizontals,			// top level choice
 		"Vertical":				verticals,				// multiple production rules per nonterminal
-		// Naming
 		// Pattern
 		"JustSepListPlus":		justseplistps,			// x defined as {y ","}+
 		"JustSepListStar":		justseplistss,			// x defined as {y ","}*
