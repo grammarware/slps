@@ -22,11 +22,12 @@ import analyse::Naming;
 // }
 BGFProduction RetireSs(BGFProduction p) = visit(p) {case selectable(_,BGFExpression e) => e};
 
+alias patternbag = map[str name,set[str](SGrammar) fun];
 alias dict = map[BGFExpression,int];
 alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts, set[str] weird, map[str,set[str]] scores];
 NPC Zero = <0,0,0,0,(),(),{},()>;
 
-NPC getZoo(loc zoo, NPC npc)
+NPC getZoo(loc zoo, NPC npc, patternbag Patterns)
 {
 	dict patterns = npc.patterns;
 	int n = npc.ns, pcx = npc.ps, cx = npc.cx, cns = npc.clasns;
@@ -52,20 +53,20 @@ NPC getZoo(loc zoo, NPC npc)
 		if (domain(sg.prods) != allNTs)
 			println("Nonterminal sets are not equal!\n<domain(sg.prods)>\n<allNTs>\n<domain(sg.prods)-allNTs>\n<allNTs-domain(sg.prods)>");
 		
-		for (metric <- AllMetrics)
+		for (metric <- Patterns)
 		{
 			// println("  Calculating <metric>...");
-			res = AllMetrics[metric](sg);
+			res = Patterns[metric](sg);
 			if ("<metric>" notin counts) counts["<metric>"] = 0;
 			if ("<metric>" notin scores) scores["<metric>"] = {};
 			counts["<metric>"] += len(res);
 			if (len(res)==VAR)
 				scores["<metric>"] += {"<lang>::<s>"};
-			if ("<AllMetrics[metric]>" in Exclude)
+			if ("<Patterns[metric]>" in Exclude)
 				newweird -= res;
 			else
 				allNTs -= res;
-			if ("<AllMetrics[metric]>" notin (Exclude+Metasyntax))
+			if ("<Patterns[metric]>" notin (Exclude+Metasyntax))
 				nonclas -= res;
 		}
 		cns += len(allNTs);
@@ -116,7 +117,10 @@ SGrammar splitGrammar(BGFGrammar g)
 // GROUP: GlobalPosition  //
 ////////////////////////////
 set[str] tops(SGrammar g)    = definedNs(g) - usedNs(g); // = {t | str t <- domain(g.prods), /nonterminal(t) !:= range(g.prods)};
-set[str] bottoms(SGrammar g) = usedNs(g) - definedNs(g);
+// The following is also a good definition, but too coarse for us:
+// set[str] bottoms(SGrammar g) = usedNs(g) - definedNs(g);
+// so we use this one:
+set[str] bottoms(SGrammar g) = {n | str n <- domain(g.prods), isEmpty(g.prods[n]) };
 set[str] ifroots(SGrammar g) = g.roots & domain(g.prods);
 // TODO: not _, but in fact [*nonterminal(_)]
 // TODO: also account for vertical roots
@@ -130,9 +134,12 @@ set[str] leafs(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n])
 set[str] horizontals(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n] };
 set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1 };
 // TODO: covers too much?
-set[str] singletons(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,BGFExpression e)} := g.prods[n], choice(_) !:= e};
-// NB: the next is the same one as bottoms
-// set[str] undefineds(SGrammar g) = {n | str n <- domain(g.prods), isEmpty(g.prods[n])};
+set[str] singletons(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,BGFExpression e)} := g.prods[n],
+	choice(_) !:= e,
+	empty() !:= e
+};
+set[str] undefineds(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,empty())} := g.prods[n] };
 
 ///////////////////////////
 // GROUP: YACCification  //
@@ -177,6 +184,9 @@ set[str] yaccSR(SGrammar g) = {x | str x <- domain(g.prods),
 ////////////////////////
 // GROUP: Metasyntax  //
 ////////////////////////
+bool anylabel(BGFProdSet ps) = ( false | it || (production(str lab,_,_) := p && lab!="") | p <- ps );
+set[str] useslab(SGrammar g) = {n | str n <- domain(g.prods), anylabel(g.prods[n])};
+
 set[str] usesstar(SGrammar g) = {n | str n <- domain(g.prods), /star(_) := g.prods[n]};
 set[str] usesplus(SGrammar g) = {n | str n <- domain(g.prods), /plus(_) := g.prods[n]};
 set[str] usesopt(SGrammar g) = {n | str n <- domain(g.prods), /optional(_) := g.prods[n]};
@@ -427,10 +437,35 @@ bool allTNpairs(BGFExprList xs) = ( true | it && (
 
 set[str] notimplemented(SGrammar _) = {};
 
-// 
-//                ADD CLASSIFIERS HERE!
-// 
-map[str name,set[str](SGrammar) fun] AllMetrics = NamingPatterns +
+patternbag MetaPatterns =
+	// Metasyntax
+	(
+		"AbstractSyntax":		abstracts,				// abstract syntax (no terminal symbols)
+		"ContainsStar":			usesstar,				// uses star within the definitions
+		"ContainsPlus":			usesplus,				// uses plus within the definitions
+		"ContainsOptional":		usesopt,				// uses optional within the definitions
+		//
+		"ContainsEpsilon":		usesepsilon,			// uses epsilon within the definitions
+		"ContainsFailure":		usesempty,				// uses the empty metasymbol within the definitions
+		"ContainsUniversal":	usesany,				// uses the universal metasymbol within the definitions
+		// 
+		"ContainsInteger":		usesint,				// uses integer within the definitions
+		"ContainsString":		usesstr,				// uses string within the definitions
+		// 
+		"ContainsSelectors":	usessel,				// uses selectors within the definitions
+		"ContainsLabels":		useslab,				// uses labels within (some of) the definitions
+		"ContainsSequence":		usesseq,				// uses sequential composition within the definitions
+		"ContainsDisjunction":	usesdisj,				// uses disjunction within the definitions
+		"ContainsConjunction":	usesconj,				// uses conjunction within the definitions
+		"ContainsNegation":		usesneg,				// uses negation within the definitions
+		// 
+		"ContainsSepListPlus":	usesSLP,				// uses plus separator lists within the definitions
+		"ContainsSepListStar":	usesSLS,				// uses star separator lists within the definitions
+		// 
+		"ContainsMarked":		usesmarked				// should be empty
+	);
+
+patternbag GlobalPatterns =
 	(
 		// GlobalPosition
 		"Top":					tops,					// defined but not used
@@ -439,9 +474,18 @@ map[str name,set[str](SGrammar) fun] AllMetrics = NamingPatterns +
 		"Root":					ifroots,				// if it is a root
 		"MultiRoot":			multiroots,				// a “fake” multiple root
 		// ProdForm
+		"Disallowed":			undefineds,				// explicitly defined with empty
 		"Singleton":			singletons,				// nonterminal is defined with one non-horizontal production rule
 		"Horizontal":			horizontals,			// top level choice
-		"Vertical":				verticals,				// multiple production rules per nonterminal
+		"Vertical":				verticals				// multiple production rules per nonterminal
+	);
+
+// 
+//                ADD OTHER CLASSIFIERS HERE!
+// 
+
+patternbag TemplatePatterns = 
+	(
 		// Pattern
 		"JustSepListPlus":		justseplistps,			// x defined as {y ","}+
 		"JustSepListStar":		justseplistss,			// x defined as {y ","}*
@@ -479,24 +523,6 @@ map[str name,set[str](SGrammar) fun] AllMetrics = NamingPatterns +
 		"YaccifiedPlusRight":	yaccPR,					// x defined as ( y x | z ) or ( z | y x ) ⇒ y+, with possibly z == y
 		"YaccifiedStarLeft":	yaccSL,					// x defined as ( x y | ε ) or ( ε | x y ) ⇒ y*
 		"YaccifiedStarRight":	yaccSR,					// x defined as ( y x | ε ) or ( ε | y x ) ⇒ y*
-		// Metasyntax
-		"AbstractSyntax":		abstracts,				// abstract syntax (no terminal symbols)
-		"ContainsStar":			usesstar,				// uses star within the definitions
-		"ContainsPlus":			usesplus,				// uses plus within the definitions
-		"ContainsOptional":		usesopt,				// uses optional within the definitions
-		"ContainsEpsilon":		usesepsilon,			// uses epsilon within the definitions
-		"ContainsFailure":		usesempty,				// uses the empty metasymbol within the definitions
-		"ContainsUniversal":	usesany,				// uses the universal metasymbol within the definitions
-		"ContainsInteger":		usesint,				// uses integer within the definitions
-		"ContainsString":		usesstr,				// uses string within the definitions
-		"ContainsSelectors":	usessel,				// uses selectors within the definitions
-		"ContainsNegation":		usesneg,				// uses negation within the definitions
-		"ContainsSequence":		usesseq,				// uses sequential composition within the definitions
-		"ContainsConjunction":	usesconj,				// uses conjunction within the definitions
-		"ContainsDisjunction":	usesdisj,				// uses disjunction within the definitions
-		"ContainsSepListPlus":	usesSLP,				// uses plus separator lists within the definitions
-		"ContainsSepListStar":	usesSLS,				// uses star separator lists within the definitions
-		"ContainsMarked":		usesmarked,				// should be empty
 		// the rest
 		"Name1":				names1,					// identifier names [a-z]+
 		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*
@@ -508,14 +534,42 @@ map[str name,set[str](SGrammar) fun] AllMetrics = NamingPatterns +
 		"No":					notimplemented
 	);
 // too popular or exhaustive
-set[str] Exclude = {"<singletons>", "<horizontals>", "<verticals>", "<bottoms>"};
+set[str] Exclude = {"<singletons>", "<horizontals>", "<verticals>", "<undefineds>"};
 set[str] Metasyntax = {"<abstracts>", "<usesstar>", "<usesplus>", "<usesopt>", "<usesepsilon>", "<usesint>", "<usesstr>", "<usessel>", "<usesneg>", "<usesconj>", "<usesdisj>", "<usesSLP>", "<usesSLS>"};
 // set[str]
 
-
-// MAIN
-public void main(list[str] as)
+void analyseBag(loc zoo, loc tank, patternbag mybag)
 {
+	NPC npc = getZoo(zoo,Zero,mybag);
+	str buf = "";
+	npc = getZoo(tank,npc,mybag);
+	println("Total: <npc.cx> grammars, <npc.ps> production rules, <npc.ns> nonterminals (<npc.ns-npc.clasns> thereof classified).");
+	for (metric <- mybag)
+	{
+		println("<100*npc.counts["<metric>"]/npc.ns>% classified as <metric>: <npc.counts["<metric>"]> (<len(npc.scores["<metric>"])> scores).");
+		if (len(npc.scores["<metric>"])>0 && len(npc.scores["<metric>"])<30)
+			println("  Scores: <joinStrings(npc.scores["<metric>"])>");
+		buf += "<npc.counts["<metric>"]>\t<metric>\n";
+	}
+	writeFile(|cwd:///result.csv|,buf);
+}
+
+// void analyseNaming(loc zoo, loc tank) = analyseBag(zoo,tank,NamingPatterns);
+// void analyseMeta(loc zoo, loc tank) = analyseBag(zoo,tank,MetaPatterns);
+// void analyseGlobal(loc zoo, loc tank) = analyseBag(zoo,tank,GlobalPatterns);
+// 
+// MAIN
+public void main(list[str] args)
+{
+	analyseBag(|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|,
+		// NamingPatterns
+		// MetaPatterns
+		// GlobalPatterns
+		TemplatePatterns
+		// TODO idea: template "contains keyword" or even "is a keyword"
+	);
+	return;
+	// dead code that treats "the other kind of patterns" and "weird nonterminals"
 	loc zoo = |home:///projects/webslps/zoo|;
 	NPC npc = getZoo(|home:///projects/webslps/zoo|,Zero);
 	str buf = "";
