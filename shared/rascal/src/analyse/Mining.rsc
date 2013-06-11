@@ -551,7 +551,6 @@ patternbag SugarPatterns =
 		"FakeOptional":			fakeopts,				// “fake” optional nonterminal
 		"ExprMidLayer":			layers,					// middle expression layers
 		"ExprLowLayer":			lowlayers,				// lower expression layers
-		"BracketSelf":			selfbrackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
 		// YACCification
 		"YaccifiedPlusLeft":	yaccPL,					// x defined as ( x y | z ) or ( z | x y ) ⇒ y+, with possibly z == y
 		"YaccifiedPlusRight":	yaccPR,					// x defined as ( y x | z ) or ( z | y x ) ⇒ y+, with possibly z == y
@@ -593,6 +592,7 @@ patternbag NormalPatterns =
 
 patternbag TemplatePatterns = 
 	(
+		"BracketSelf":			selfbrackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
 		// Pattern
 		"BracketedSepListPlus":	bracketedseplistps,		// x defined as ( "(" {y ","}+ ")" )
 		"BracketedSepListStar":	bracketedseplistss,		// x defined as ( "(" {y ","}* ")" )
@@ -627,7 +627,7 @@ void analyseBag(loc zoo, loc tank, patternbag mybag)
 		println("<100*npc.counts["<metric>"]/npc.ns>% classified as <metric>: <npc.counts["<metric>"]> (<len(npc.scores["<metric>"])> scores).");
 		if (len(npc.scores["<metric>"])>0 && len(npc.scores["<metric>"])<30)
 			println("  Scores: <joinStrings(npc.scores["<metric>"])>");
-		buf += "<npc.counts["<metric>"]>\t<metric>\n";
+		buf += "<metric>\t<npc.counts["<metric>"]>\n";
 	}
 	writeFile(|cwd:///result.csv|,buf);
 }
@@ -640,10 +640,10 @@ void analyseBag(loc zoo, loc tank, patternbag mybag)
 public void main(list[str] args)
 {
 	analyseBag(|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|,
-		// NamingPatterns
+		NamingPatterns
 		// MetaPatterns
 		// GlobalPatterns
-		ConcretePatterns
+		// ConcretePatterns
 		// SugarPatterns
 		// FoldingPatterns
 		// NormalPatterns
@@ -662,7 +662,7 @@ public void main(list[str] args)
 		println("<100*npc.counts["<metric>"]/npc.ns>% classified as <metric>: <npc.counts["<metric>"]> (<len(npc.scores["<metric>"])> scores).");
 		if (len(npc.scores["<metric>"])>0 && len(npc.scores["<metric>"])<30)
 			println("  Scores: <joinStrings(npc.scores["<metric>"])>");
-		buf += "<npc.counts["<metric>"]>\t<metric>\n";
+		buf += "<metric>\t<npc.counts["<metric>"]>\n";
 	}
 	writeFile(|cwd:///result.csv|,buf);
 	for (w <- npc.weird)
