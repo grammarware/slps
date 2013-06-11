@@ -241,25 +241,67 @@ set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods),
 		)
 	)
 };
+// We assume normalised grammars in the sense of non-empty selector labels
 bool allconstructors(BGFExprList es) = ( true | it && selectable(_,epsilon()) := e | e <- es );
-bool allconstructors(BGFProdSet ps) = ( true | it && production(_,_,epsilon()) := p | p <- ps ); // could also check if labels are not empty
+// Labels, on the other hand, can be empty, need to check explicitly
+bool allconstructors(BGFProdSet ps) = ( true | it && production(str lab,_,epsilon()) := p && !isEmpty(lab) | p <- ps );
 
-set[str] pureseqs(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,rhs)} := g.prods[n], pureseq(rhs)};
-bool pureseq(epsilon()) = true;
-bool pureseq(empty()) = true;
-bool pureseq(anything()) = true; // arguable
+// A non-trivial sequence of terminals, nonterminals and builtins.
+set[str] pureseqs(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,rhs:sequence(L))} := g.prods[n], pureseq(rhs)};
+bool pureseq(epsilon()) = true; // does not mean anything as a part of a sequence
+bool pureseq(empty()) = false;
+bool pureseq(anything()) = false; // arguable
 bool pureseq(val(_)) = true; // arguable
 bool pureseq(terminal(_)) = true;
 bool pureseq(nonterminal(_)) = true;
 bool pureseq(sequence(L)) = ( true | it && pureseq(e) | e <- L );
 default bool pureseq(BGFExpression rhs) = false;
 
+// Chomsky normal form
+// see http://dx.doi.org/10.1016/S0019-9958(59)90362-6
 set[str] cnfs(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), allCNFs(g.prods[n]) };
 bool allCNFs(BGFProdSet ps) = ( true | it && isCNF(p.rhs) | p <- ps );
 bool isCNF(epsilon()) = true;
 bool isCNF(terminal(_)) = true;
 bool isCNF(sequence([nonterminal(_),nonterminal(_)])) = true;
 default bool isCNF(BGFExpression e) = false;
+
+// Greibach normal form
+// see http://dx.doi.org/10.1145/321250.321254
+set[str] gnfs(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), allGNFs(g.prods[n]) };
+bool allGNFs(BGFProdSet ps) = ( true | it && isGNF(p.rhs) | p <- ps );	
+bool isGNF(epsilon()) = true;
+bool isGNF(selectable(_,epsilon())) = true;
+bool isGNF(sequence([terminal(),*L])) = isEmpty(L) || allnonterminals(L);
+default bool isGNF(BGFExpression e) = false;
+
+// Abstract normal form
+// see http://dx.doi.org/10.6084/m9.figshare.643391
+set[str] anfs(SGrammar g) = {n | str n <- domain(g.prods),
+	/terminal(_) !:= g.prods[n],
+	(
+	// N⊥
+		isEmpty(g.prods[n])
+	||
+		(// rhs could be empty(), but should not be a choice
+			{production(_,n,rhs)} := g.prods[n]
+		&&
+			choice(_) !:= rhs
+		)
+	||
+		(
+			{production(_,n,choice(L))} := g.prods[n]
+		&&
+			allnonterminals(L)
+		)
+	||
+		(
+			len(g.prods[n])>1
+		&&
+			areallchains(g.prods[n])
+		)
+	)};
+
 
 // TODO: include other patterns?
 set[str] fakeseplists(SGrammar g) = {n | str n <- domain(g.prods), {p} := g.prods[n], isfakeseplist(RetireSs(p))};
@@ -354,7 +396,12 @@ set[str] lowlayers(SGrammar g) = {n | str n <- domain(g.prods),
 	allnonterminals(L2)
 };
 
-// does not tolerate folding
+// the following micropatterns do not tolerate folding
+set[str] names0(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,star(choice(L)))} := g.prods[n],
+	!isEmpty(L),
+	allterminals(L)}
+;
 set[str] names1(SGrammar g) = {n | str n <- domain(g.prods),
 	{production(_,n,plus(choice(L)))} := g.prods[n],
 	!isEmpty(L),
@@ -366,6 +413,13 @@ set[str] names2(SGrammar g) = {n | str n <- domain(g.prods),
 	!isEmpty(L2),
 	allterminals(L1),
 	allterminals(L2)}
+;
+set[str] names3(SGrammar g) = {n | str n <- domain(g.prods),
+	{production(_,n,sequence([optional(choice(L1)),plus(choice(L2))]))} := g.prods[n],
+	!isEmpty(L1),
+	!isEmpty(L2),
+	allterminals(L1),
+	allofterminals(L2)}
 ;
 
 // TODO: simple chain as an all chain where $m$ is used only once in the whole grammar
@@ -479,6 +533,59 @@ patternbag GlobalPatterns =
 		"Horizontal":			horizontals,			// top level choice
 		"Vertical":				verticals				// multiple production rules per nonterminal
 	);
+// micropatterns about concrete syntax and terminal symbols
+patternbag ConcretePatterns = 
+	(
+		"LiteralNillable":		names0,					// identifier names [a-z]*
+		"LiteralSigned":		names3,					// identifier names ("+"|"-")? ("0"|...|"9")+
+		"LiteralSimple":		names1,					// identifier names [a-z]+
+		"LiteralFirstRest":		names2,					// identifier names [a-z][a-zA-Z_]*
+		"Preterminal":			preterminals			// defined with terminals
+	);
+
+// micropatterns about metasyntactic sugar
+// (known tricks or boilerplate grammar fragments due to lack of metasyntax expressivity)
+patternbag SugarPatterns = 
+	(
+		"FakeSepList":			fakeseplists,			// “fake” separator list
+		"FakeOptional":			fakeopts,				// “fake” optional nonterminal
+		"ExprMidLayer":			layers,					// middle expression layers
+		"ExprLowLayer":			lowlayers,				// lower expression layers
+		"BracketSelf":			selfbrackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
+		// YACCification
+		"YaccifiedPlusLeft":	yaccPL,					// x defined as ( x y | z ) or ( z | x y ) ⇒ y+, with possibly z == y
+		"YaccifiedPlusRight":	yaccPR,					// x defined as ( y x | z ) or ( z | y x ) ⇒ y+, with possibly z == y
+		"YaccifiedStarLeft":	yaccSL,					// x defined as ( x y | ε ) or ( ε | x y ) ⇒ y*
+		"YaccifiedStarRight":	yaccSR					// x defined as ( y x | ε ) or ( ε | y x ) ⇒ y*
+	);
+
+// micropatterns about folding (arguable for readability purposes)
+patternbag FoldingPatterns = 
+	(
+		"JustSepListPlus":		justseplistps,			// x defined as {y ","}+
+		"JustSepListStar":		justseplistss,			// x defined as {y ","}*
+		"JustPlus":				justplusses,			// x defined as y+
+		"JustStar":				juststars,				// x defined as y*
+		"JustOptional":			justopts,				// x defined as y?
+		"JustChains":			allchains,				// nonterminal defined only with chain production rules (right hand sides are nonterminals)
+		"JustOneChain":			onechains,				// nonterminal defined with a single chain production rule (right hand side == nonterminal)
+		"Empty":				empties,				// nonterminal defines an empty language (epsilon)
+		"Failure":				failures,				// nonterminal explicitly or implicitly undefined
+		"AChain":				somechains,				// one production rule is a chain production rule (right hand side == nonterminal)
+		"ReflexiveChain":		reflchains,				// one production rule is a reflexive chain (left hand side == right hand side)
+		"NTorT":				ntorts,					// nonterminal or terminal
+		"NTSorT":				ntsorts,				// nonterminals or terminal
+		"NTorTS":				ntortss,				// nonterminal or terminals
+		"TSorNT":				tsornts					// terminals or nonterminal
+	);
+
+// micropatterns about normal forms
+patternbag NormalPatterns = 
+	(
+		"CNF":					cnfs,					// production rules in Chomsky normal form
+		"GNF":					gnfs,					// production rules in Greibach normal form
+		"ANF":					anfs					// production rules in abstract normal form
+	);
 
 // 
 //                ADD OTHER CLASSIFIERS HERE!
@@ -487,13 +594,6 @@ patternbag GlobalPatterns =
 patternbag TemplatePatterns = 
 	(
 		// Pattern
-		"JustSepListPlus":		justseplistps,			// x defined as {y ","}+
-		"JustSepListStar":		justseplistss,			// x defined as {y ","}*
-		"JustPlus":				justplusses,			// x defined as y+
-		"JustStar":				juststars,				// x defined as y*
-		"JustOptional":			justopts,				// x defined as y?
-		"JustChains":			allchains,				// nonterminal defined only with chain production rules (right hand sides are nonterminals)
-		"JustOneChain":			onechains,				// nonterminal defined with a single chain production rule (right hand side == nonterminal)
 		"BracketedSepListPlus":	bracketedseplistps,		// x defined as ( "(" {y ","}+ ")" )
 		"BracketedSepListStar":	bracketedseplistss,		// x defined as ( "(" {y ","}* ")" )
 		"BracketedFakeSepList":	bracketedfakeseplist,	// x defined as ( "(" y ("," z)* ")" )
@@ -503,33 +603,11 @@ patternbag TemplatePatterns =
 		"BracketedFakeSLStar":	bracketedfakesepliststar,//x defined as ( "[" (N (T N)* T?)? "]" ) or ( "[" (N (T N)*)? "]" )
 		"Bracket":				brackets,				// nonterminals that have a bracketing production, e.g. E ::= "(" x ")"
 		"ElementAccess":		accesslayers,			// x defined as ( y "(" z ")" )
-		"BracketSelf":			selfbrackets,			// nonterminals that have a bracketing production, e.g. E ::= "(" E ")"
 		"Delimited":			delimiteds,				// x defined as ( T1 E T2 ) where T1 and T2 are not a bracketing pair
 		"Constructor":			constructors,			// defined with labelled epsilons
-		"Empty":				empties,				// nonterminal defines an empty language (epsilon)
-		"Failure":				failures,				// nonterminal explicitly or implicitly undefined
-		"AChain":				somechains,				// one production rule is a chain production rule (right hand side == nonterminal)
-		"ReflexiveChain":		reflchains,				// one production rule is a reflexive chain (left hand side == right hand side)
-		"FakeSepList":			fakeseplists,			// “fake” separator list
-		"FakeOptional":			fakeopts,				// “fake” optional nonterminal
-		"NTorT":				ntorts,					// nonterminal or terminal
-		"NTSorT":				ntsorts,				// nonterminals or terminal
-		"NTorTS":				ntortss,				// nonterminal or terminals
-		"TSorNT":				tsornts,				// terminals or nonterminal
-		"ExprMidLayer":			layers,					// middle expression layers
-		"ExprLowLayer":			lowlayers,				// lower expression layers
-		// YACCification
-		"YaccifiedPlusLeft":	yaccPL,					// x defined as ( x y | z ) or ( z | x y ) ⇒ y+, with possibly z == y
-		"YaccifiedPlusRight":	yaccPR,					// x defined as ( y x | z ) or ( z | y x ) ⇒ y+, with possibly z == y
-		"YaccifiedStarLeft":	yaccSL,					// x defined as ( x y | ε ) or ( ε | x y ) ⇒ y*
-		"YaccifiedStarRight":	yaccSR,					// x defined as ( y x | ε ) or ( ε | y x ) ⇒ y*
 		// the rest
-		"Name1":				names1,					// identifier names [a-z]+
-		"Name2":				names2,					// identifier names [a-z][a-zA-Z_]*
-		"Preterminal":			preterminals,			// defined with terminals
 		"PureSequence":			pureseqs,				// pure sequential composition
 		"DistinguishByTerm":	distinguished,			// T N | T N | … | T N? | T N? | … | T | T | … or star thereof
-		"CNF":					cnfs,					// production rules in Chomsky normal form
 		// Not implemented
 		"No":					notimplemented
 	);
@@ -565,7 +643,11 @@ public void main(list[str] args)
 		// NamingPatterns
 		// MetaPatterns
 		// GlobalPatterns
-		TemplatePatterns
+		ConcretePatterns
+		// SugarPatterns
+		// FoldingPatterns
+		// NormalPatterns
+		// TemplatePatterns
 		// TODO idea: template "contains keyword" or even "is a keyword"
 	);
 	return;
