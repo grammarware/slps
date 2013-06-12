@@ -11,6 +11,7 @@ import IO;
 import lib::Rascalware;
 import export::BNF;
 import analyse::Naming;
+import analyse::Terminals;
 
 // TODO: just import mutate::type2::RetireSs ?
 // import normal::BGF;
@@ -86,13 +87,13 @@ map[str,tuple[int,int,int,str,str,str,str]] mineTwo(set[loc] zoos, classifier m1
 		for (str t <- sg.prods)
 		{
 			if (t in m1r && t in m2r)
-				ret[who].a1 += "<t>\n";
+				ret[who].a1 += "<pp(sg.prods[t])>\n";
 			elseif (t in m1r && t notin m2r)
-				ret[who].a2 += "<t>\n";
+				ret[who].a2 += "<pp(sg.prods[t])>\n";
 			elseif (t notin m1r && t in m2r)
-				ret[who].a3 += "<t>\n";
+				ret[who].a3 += "<pp(sg.prods[t])>\n";
 			else
-				ret[who].a4 += "<t>\n";
+				ret[who].a4 += "<pp(sg.prods[t])>\n";
 		}
 	}
 	return ret;
@@ -204,6 +205,7 @@ set[str] leafs(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n])
 //////////////////////
 set[str] horizontals(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n] };
 set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1 };
+set[str] zigzags(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1, /production(_,n,choice(L)):=g.prods[n]};
 // TODO: covers too much?
 set[str] singletons(SGrammar g) = {n | str n <- domain(g.prods),
 	{production(_,n,BGFExpression e)} := g.prods[n],
@@ -295,8 +297,6 @@ set[str] usesSLS(SGrammar g) = {n | str n <- domain(g.prods), /sepliststar(_,_) 
 ////////////////
 // UNGROUPED  //
 ////////////////
-set[str] preterminals(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n]), allofterminals(g.prods[n])};
-
 set[str] constructors(SGrammar g) = {n | str n <- domain(g.prods), 
 	(
 		(
@@ -467,32 +467,6 @@ set[str] lowlayers(SGrammar g) = {n | str n <- domain(g.prods),
 	allnonterminals(L2)
 };
 
-// the following micropatterns do not tolerate folding
-set[str] names0(SGrammar g) = {n | str n <- domain(g.prods),
-	{production(_,n,star(choice(L)))} := g.prods[n],
-	!isEmpty(L),
-	allterminals(L)}
-;
-set[str] names1(SGrammar g) = {n | str n <- domain(g.prods),
-	{production(_,n,plus(choice(L)))} := g.prods[n],
-	!isEmpty(L),
-	allterminals(L)}
-;
-set[str] names2(SGrammar g) = {n | str n <- domain(g.prods),
-	{production(_,n,sequence([choice(L1),star(choice(L2))]))} := g.prods[n],
-	!isEmpty(L1),
-	!isEmpty(L2),
-	allterminals(L1),
-	allterminals(L2)}
-;
-set[str] names3(SGrammar g) = {n | str n <- domain(g.prods),
-	{production(_,n,sequence([optional(choice(L1)),plus(choice(L2))]))} := g.prods[n],
-	!isEmpty(L1),
-	!isEmpty(L2),
-	allterminals(L1),
-	allofterminals(L2)}
-;
-
 // TODO: simple chain as an all chain where $m$ is used only once in the whole grammar
 
 // 10% classified as JustPseudoChoice: 4354 (0 scores).
@@ -535,21 +509,6 @@ set[str] usedNs(SGrammar g) = {n | /nonterminal(n) := range(g.prods)};
 
 bool allnonterminals(BGFExprList xs) = ( true | it && nonterminal(_) := e | e <- xs );
 bool allnonterminals(BGFExprSet xs) = ( true | it && nonterminal(_) := e | e <- xs );
-bool allterminals(BGFExprList xs) = ( true | it && terminal(_) := e | e <- xs );
-
-bool allofterminals(BGFProdSet ps)  = ( true | it && allofterminals(p.rhs) | p <- ps );
-bool allofterminals(BGFExprList xs) = ( true | it && allofterminals(e) | e <- xs );
-
-bool allofterminals(terminal(_)) = true;
-bool allofterminals(sequence(L)) = allofterminals(L);
-bool allofterminals(choice(L)) = allofterminals(L);
-bool allofterminals(allof(L)) = allofterminals(L); // hardly necessary
-bool allofterminals(optional(e)) = allofterminals(e);
-bool allofterminals(plus(e)) = allofterminals(e);
-bool allofterminals(star(e)) = allofterminals(e);
-bool allofterminals(seplistplus(e,s)) = allofterminals(e) && allofterminals(s);
-bool allofterminals(sepliststar(e,s)) = allofterminals(e) && allofterminals(s);
-default bool allofterminals(BGFExpression e) = false;
 
 set[str] distinguished(SGrammar g) = {n | str n <- domain(g.prods),
 	({production(_,n,choice(L))} := g.prods[n] || {production(_,n,star(choice(L)))} := g.prods[n]),
@@ -602,16 +561,8 @@ patternbag GlobalPatterns =
 		"Disallowed":			undefineds,				// explicitly defined with empty
 		"Singleton":			singletons,				// nonterminal is defined with one non-horizontal production rule
 		"Horizontal":			horizontals,			// top level choice
-		"Vertical":				verticals				// multiple production rules per nonterminal
-	);
-// micropatterns about concrete syntax and terminal symbols
-patternbag ConcretePatterns = 
-	(
-		"LiteralNillable":		names0,					// identifier names [a-z]*
-		"LiteralSigned":		names3,					// identifier names ("+"|"-")? ("0"|...|"9")+
-		"LiteralSimple":		names1,					// identifier names [a-z]+
-		"LiteralFirstRest":		names2,					// identifier names [a-z][a-zA-Z_]*
-		"Preterminal":			preterminals			// defined with terminals
+		"Vertical":				verticals,				// multiple production rules per nonterminal
+		"ZigZag":				zigzags					// both vertical and horizontal
 	);
 
 // micropatterns about metasyntactic sugar
@@ -710,36 +661,37 @@ void analyseBag(loc zoo, loc tank, patternbag mybag)
 // MAIN
 public void main(list[str] args)
 {
-	list[str] buf = ["","","",""];
-	r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},uppercases1,uppercases2);
-	// r = mineEmAll({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},preterminals);
-	for (str k <- r)
-	{
-		int a = r[k]<0>;
-		int b = r[k]<1>;
-		int c = r[k]<2>;
-		if (a+b>2 && c>10)
-			// println("<k>\t<100*a/b>\t% is <a> out of <b>");
-			println("<k>\t<a>\t<b>\t<c>");
-		// println("<k>\t<100*r[k]<0>/r[k]<1>>\t% is <r[k]<0>> out of <r[k]<1>>");
-		// if (a!=0)
-		// 	buf += "----------<k>----------\n<r[k]<2>>\n";
-		if (r[k]<3>!="") buf[0] += "----------<k>----------\n<r[k]<3>>\n";
-		if (r[k]<4>!="") buf[1] += "----------<k>----------\n<r[k]<4>>\n";
-		if (r[k]<5>!="") buf[2] += "----------<k>----------\n<r[k]<5>>\n";
-		if (r[k]<6>!="") buf[3] += "----------<k>----------\n<r[k]<6>>\n";
-	}
-	writeFile(|cwd:///lists0.bnf|,buf[0]);
-	writeFile(|cwd:///lists1.bnf|,buf[1]);
-	writeFile(|cwd:///lists2.bnf|,buf[2]);
-	writeFile(|cwd:///lists3.bnf|,buf[3]);
-	// writeFile(|cwd:///examples.bnf|,buf);
-	return;
+	// list[str] buf = ["","","",""];
+	// r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},nowknownconcrete,preterminals);
+	// // r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},allnames,allknown);
+	// // r = mineEmAll({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},preterminals);
+	// for (str k <- r)
+	// {
+	// 	int a = r[k]<0>;
+	// 	int b = r[k]<1>;
+	// 	int c = r[k]<2>;
+	// 	if (a+b>2 && c>10)
+	// 		// println("<k>\t<100*a/b>\t% is <a> out of <b>");
+	// 		println("<k>\t<a>\t<b>\t<c>");
+	// 	// println("<k>\t<100*r[k]<0>/r[k]<1>>\t% is <r[k]<0>> out of <r[k]<1>>");
+	// 	// if (a!=0)
+	// 	// 	buf += "----------<k>----------\n<r[k]<2>>\n";
+	// 	if (r[k]<3>!="") buf[0] += "----------<k>----------\n<r[k]<3>>\n";
+	// 	if (r[k]<4>!="") buf[1] += "----------<k>----------\n<r[k]<4>>\n";
+	// 	if (r[k]<5>!="") buf[2] += "----------<k>----------\n<r[k]<5>>\n";
+	// 	if (r[k]<6>!="") buf[3] += "----------<k>----------\n<r[k]<6>>\n";
+	// }
+	// writeFile(|cwd:///lists0.bnf|,buf[0]);
+	// writeFile(|cwd:///lists1.bnf|,buf[1]);
+	// writeFile(|cwd:///lists2.bnf|,buf[2]);
+	// writeFile(|cwd:///lists3.bnf|,buf[3]);
+	// // writeFile(|cwd:///examples.bnf|,buf);
+	// return;
 	analyseBag(|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|,
-		NamingPatterns
+		// NamingPatterns
 		// MetaPatterns
 		// GlobalPatterns
-		// ConcretePatterns
+		ConcretePatterns
 		// SugarPatterns
 		// FoldingPatterns
 		// NormalPatterns

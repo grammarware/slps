@@ -2,15 +2,22 @@
 module analyse::Naming
 
 import language::BGF;
+import Map;
+import analyse::Metrics;
+
+public set[str] allnames(SGrammar g) = domain(g.prods)+{n | str m <- g.prods, /nonterminal(n) := g.prods[m]};
+public set[str] allknown(SGrammar g) = camelcases2(g)+camelcases1(g)+mixedcases2(g)+mixedcases1(g)
++lowercases2(g)+lowercases1(g)+uppercases2(g)+uppercases1(g)+multiwords1(g);
+
 
 public set[str] camelcases2(SGrammar g) = {n | str n <- g.prods,
-/^([A-Z][a-z\d\s\_\/\-\:\.]+)+$/ := n};
+/^[\_]*([A-Z][a-z\d]*[\s\_\/\-\:\.\%]*)+$/ := n};
 public set[str] mixedcases2(SGrammar g) = {n | str n <- g.prods,
-/^[a-z]+([A-Z\d\s\_\/\-\:\.][a-z\d\s\_\/\-\:\.]*)$/ := n};
+/^[\_]*[a-z]+[\s\_\/\-\:\.\%]*([A-Z\d][a-z\d]*[\s\_\/\-\:\.\%]*)+$/ := n};
 public set[str] lowercases2(SGrammar g) = {n | str n <- g.prods,
-/^[a-z\d\s\_\/\-\:\.]+$/ := n};
+/^[a-z\d\s\_\/\-\:\.\%]+$/ := n};
 public set[str] uppercases2(SGrammar g) = {n | str n <- g.prods,
-/^[A-Z\d\s\_\/\-\:\.]+$/ := n};
+/^[A-Z\d\s\_\/\-\:\.\%]+$/ := n};
 
 public set[str] camelcases1(SGrammar g) = {n | str n <- g.prods,
 /^([A-Z][a-z]*)+$/ := n};
@@ -26,11 +33,11 @@ public set[str] uppercases1(SGrammar g) = {n | str n <- g.prods,
 //  - camelcase, mixedcase or separated
 //  - separators can be spaces, dashes, slashes and underscores
 public set[str] multiwords2(SGrammar g) = {n | str n <- g.prods,
-/^\w[a-z0-9_]*([A-Z0-9_][a-z0-9_]*)+$/ := n ||
-/^\w+([\s_\/\-\:\.]\w+)+$/ := n};
+/^\w[a-z\d]*([A-Z\d][a-z\d]*)+$/ := n ||
+/^[\s\_\/\-\:\.\%]*\w+([\s\_\/\-\:\.\%]+\w+)+$/ := n};
 public set[str] multiwords1(SGrammar g) = {n | str n <- g.prods,
 /^[a-zA-Z][a-z]*([A-Z][a-z]*)+$/ := n ||
-/^[a-zA-Z]+([\s_\/\-\:\.][a-zA-Z]+)+$/ := n};
+/^[a-zA-Z]+([\s\_\/\-\:\.\%]+[a-zA-Z]+)+$/ := n};
 
 public map[str name,set[str](SGrammar) fun] NamingPatterns =
 	(
