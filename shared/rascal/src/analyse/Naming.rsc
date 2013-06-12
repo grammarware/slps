@@ -2,63 +2,35 @@
 module analyse::Naming
 
 import language::BGF;
-import ParseTree;
 
-lexical StrictCamelCase = StrictCapitalWord+ ;
-lexical StrictLowerCase = [a-z]+ !>> [a-zA-Z] ;
-lexical StrictUpperCase = [A-Z]+ !>> [a-zA-Z] ;
-lexical StrictMixedCase = StrictLowerWord StrictCapitalWord* ;
+public set[str] camelcases2(SGrammar g) = {n | str n <- g.prods,
+/^([A-Z][a-z\d\s\_\/\-\:\.]+)+$/ := n};
+public set[str] mixedcases2(SGrammar g) = {n | str n <- g.prods,
+/^[a-z]+([A-Z\d\s\_\/\-\:\.][a-z\d\s\_\/\-\:\.]*)$/ := n};
+public set[str] lowercases2(SGrammar g) = {n | str n <- g.prods,
+/^[a-z\d\s\_\/\-\:\.]+$/ := n};
+public set[str] uppercases2(SGrammar g) = {n | str n <- g.prods,
+/^[A-Z\d\s\_\/\-\:\.]+$/ := n};
 
-lexical CamelCase = CapitalWord+ ;
-lexical LowerCase = [a-z0-9_/\-\ ]+ !>> [a-zA-Z0-9_/\-\ ] ;
-lexical UpperCase = [A-Z0-9_/\-\ ]+ !>> [a-zA-Z0-9_/\-\ ] ;
-lexical MixedCase = LowerWord CapitalWord* ;
-
-lexical StrictMultipleWords
-	= StrictAnyWord StrictCapitalWord+
-	| StrictWord Sep {StrictWord Sep}+
-	;
-lexical MultipleWords
-	= AnyWord CapitalWord+
-	| Word Sep {Word Sep}+
-	;
-lexical Sep = [ _ / \ \- ];
-
-lexical StrictLowerWord = [a-z]+ !>> [a-z];
-lexical StrictCapitalWord = [A-Z] [a-z]* !>> [a-z];
-lexical StrictWord = [a-zA-Z]+ !>> [a-zA-Z];
-lexical StrictAnyWord = [a-zA-Z] [a-z]* !>> [a-z];
-
-lexical LowerWord = [a-z_] [a-z0-9_/\-\ ]* !>> [a-z0-9_/\-\ ];
-lexical CapitalWord = [A-Z] [a-z0-9_/\-\ ]* !>> [a-z0-9_/\-\ ];
-lexical Word = [a-zA-Z] [a-zA-Z0-9]* !>> [a-zA-Z0-9];
-lexical AnyWord = [a-zA-Z] [a-z0-9]* !>> [a-z0-9];
-
-bool recognise(&T nt, str s)
-{
-	try
-	{
-		parse(nt,s);
-		return true;
-	}
-	catch: return false;
-}
-
-public set[str] camelcases1(SGrammar g) = {n | str n <- g.prods, recognise(#CamelCase,n)};
-public set[str] mixedcases1(SGrammar g) = {n | str n <- g.prods, recognise(#MixedCase,n)};
-public set[str] lowercases1(SGrammar g) = {n | str n <- g.prods, recognise(#LowerCase,n)};
-public set[str] uppercases1(SGrammar g) = {n | str n <- g.prods, recognise(#UpperCase,n)};
-public set[str] camelcases2(SGrammar g) = {n | str n <- g.prods, recognise(#StrictCamelCase,n)};
-public set[str] mixedcases2(SGrammar g) = {n | str n <- g.prods, recognise(#StrictMixedCase,n)};
-public set[str] lowercases2(SGrammar g) = {n | str n <- g.prods, recognise(#StrictLowerCase,n)};
-public set[str] uppercases2(SGrammar g) = {n | str n <- g.prods, recognise(#StrictUpperCase,n)};
+public set[str] camelcases1(SGrammar g) = {n | str n <- g.prods,
+/^([A-Z][a-z]*)+$/ := n};
+public set[str] mixedcases1(SGrammar g) = {n | str n <- g.prods,
+/^[a-z]+([A-Z][a-z]*)+$/ := n};
+public set[str] lowercases1(SGrammar g) = {n | str n <- g.prods,
+/^[a-z]+$/ := n};
+public set[str] uppercases1(SGrammar g) = {n | str n <- g.prods,
+/^[A-Z]+$/ := n};
 
 // The next one is a bit more tricky. What we want, is:
 //  - more than one word
 //  - camelcase, mixedcase or separated
 //  - separators can be spaces, dashes, slashes and underscores
-public set[str] multiwords1(SGrammar g) = {n | str n <- g.prods, recognise(#MultipleWords,n)};
-public set[str] multiwords2(SGrammar g) = {n | str n <- g.prods, recognise(#StrictMultipleWords,n)};
+public set[str] multiwords2(SGrammar g) = {n | str n <- g.prods,
+/^\w[a-z0-9_]*([A-Z0-9_][a-z0-9_]*)+$/ := n ||
+/^\w+([\s_\/\-\:\.]\w+)+$/ := n};
+public set[str] multiwords1(SGrammar g) = {n | str n <- g.prods,
+/^[a-zA-Z][a-z]*([A-Z][a-z]*)+$/ := n ||
+/^[a-zA-Z]+([\s_\/\-\:\.][a-zA-Z]+)+$/ := n};
 
 public map[str name,set[str](SGrammar) fun] NamingPatterns =
 	(

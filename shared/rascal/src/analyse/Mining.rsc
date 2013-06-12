@@ -28,20 +28,72 @@ alias dict = map[BGFExpression,int];
 alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts, set[str] weird, map[str,set[str]] scores];
 NPC Zero = <0,0,0,0,(),(),{},()>;
 
-map[str,tuple[int,int]] mineEmAll(loc zoo, classifier metric)
+map[str,tuple[int,int,str]] mineEmAll(set[loc] zoos, classifier metric)
 {
 	int cx = 0;
-	map[str,tuple[int,int]] ret = ();
+	map[str,tuple[int,int,str]] ret = ();
 	BGFGrammar g;
 	SGrammar s;
-	for (str lang <- listEntries(zoo), !endsWith(lang,".html"), str s <- listEntries(zoo+"/<lang>"), endsWith(s,".bgf"))
+	str buf = "";
+	for
+	(
+		loc zoo <- zoos,
+		str lang <- listEntries(zoo),
+		!endsWith(lang,".html"),
+		str s <- listEntries(zoo+"/<lang>"),
+		endsWith(s,".bgf")
+	)
 	{
 		str who = "<lang>::<s>";
 		println(who);
 		cx += 1;
 		g = readBGF(zoo+"/<lang>/<s>");
 		sg = splitGrammar(g);
-		ret[who] = <len(metric(sg)),len(domain(sg.prods))>;
+		m = metric(sg);
+		for (str t <- m)
+			buf += "<pp(sg.prods[t])>\n";
+		ret[who] = <len(m),len(domain(sg.prods)),buf>;
+	}
+	return ret;
+}
+
+map[str,tuple[int,int,int,str,str,str,str]] mineTwo(set[loc] zoos, classifier m1, classifier m2)
+{
+	int cx = 0;
+	map[str,tuple[int i1,int i2,int i3,str a1,str a2,str a3,str a4]] ret = ();
+	BGFGrammar g;
+	SGrammar s;
+	str buf = "";
+	for
+	(
+		loc zoo <- zoos,
+		str lang <- listEntries(zoo),
+		!endsWith(lang,".html"),
+		str s <- listEntries(zoo+"/<lang>"),
+		endsWith(s,".bgf")
+	)
+	{
+		str who = "<lang>::<s>";
+		println(who);
+		cx += 1;
+		g = readBGF(zoo+"/<lang>/<s>");
+		sg = splitGrammar(g);
+		m1r = m1(sg);
+		m2r = m2(sg);
+		// for (str t <- m)
+		// 	buf += "<pp(sg.prods[t])>\n";
+		ret[who] = <len(m1r),len(m2r),len(domain(sg.prods)),"","","","">;
+		for (str t <- sg.prods)
+		{
+			if (t in m1r && t in m2r)
+				ret[who].a1 += "<t>\n";
+			elseif (t in m1r && t notin m2r)
+				ret[who].a2 += "<t>\n";
+			elseif (t notin m1r && t in m2r)
+				ret[who].a3 += "<t>\n";
+			else
+				ret[who].a4 += "<t>\n";
+		}
 	}
 	return ret;
 }
@@ -658,21 +710,36 @@ void analyseBag(loc zoo, loc tank, patternbag mybag)
 // MAIN
 public void main(list[str] args)
 {
-	r = mineEmAll(|home:///projects/webslps/tank|,preterminals);
+	list[str] buf = ["","","",""];
+	r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},uppercases1,uppercases2);
+	// r = mineEmAll({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},preterminals);
 	for (str k <- r)
 	{
 		int a = r[k]<0>;
 		int b = r[k]<1>;
-		if (a!=0)
-		println("<k>\t<100*a/b>\t% is <a> out of <b>");
+		int c = r[k]<2>;
+		if (a+b>2 && c>10)
+			// println("<k>\t<100*a/b>\t% is <a> out of <b>");
+			println("<k>\t<a>\t<b>\t<c>");
 		// println("<k>\t<100*r[k]<0>/r[k]<1>>\t% is <r[k]<0>> out of <r[k]<1>>");
+		// if (a!=0)
+		// 	buf += "----------<k>----------\n<r[k]<2>>\n";
+		if (r[k]<3>!="") buf[0] += "----------<k>----------\n<r[k]<3>>\n";
+		if (r[k]<4>!="") buf[1] += "----------<k>----------\n<r[k]<4>>\n";
+		if (r[k]<5>!="") buf[2] += "----------<k>----------\n<r[k]<5>>\n";
+		if (r[k]<6>!="") buf[3] += "----------<k>----------\n<r[k]<6>>\n";
 	}
+	writeFile(|cwd:///lists0.bnf|,buf[0]);
+	writeFile(|cwd:///lists1.bnf|,buf[1]);
+	writeFile(|cwd:///lists2.bnf|,buf[2]);
+	writeFile(|cwd:///lists3.bnf|,buf[3]);
+	// writeFile(|cwd:///examples.bnf|,buf);
 	return;
 	analyseBag(|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|,
-		// NamingPatterns
+		NamingPatterns
 		// MetaPatterns
 		// GlobalPatterns
-		ConcretePatterns
+		// ConcretePatterns
 		// SugarPatterns
 		// FoldingPatterns
 		// NormalPatterns
