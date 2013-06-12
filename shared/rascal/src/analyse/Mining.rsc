@@ -22,10 +22,29 @@ import analyse::Naming;
 // }
 BGFProduction RetireSs(BGFProduction p) = visit(p) {case selectable(_,BGFExpression e) => e};
 
-alias patternbag = map[str name,set[str](SGrammar) fun];
+alias classifier = set[str](SGrammar);
+alias patternbag = map[str name,classifier fun];
 alias dict = map[BGFExpression,int];
 alias NPC = tuple[int ns, int clasns, int ps, int cx, dict patterns, map[str,int] counts, set[str] weird, map[str,set[str]] scores];
 NPC Zero = <0,0,0,0,(),(),{},()>;
+
+map[str,tuple[int,int]] mineEmAll(loc zoo, classifier metric)
+{
+	int cx = 0;
+	map[str,tuple[int,int]] ret = ();
+	BGFGrammar g;
+	SGrammar s;
+	for (str lang <- listEntries(zoo), !endsWith(lang,".html"), str s <- listEntries(zoo+"/<lang>"), endsWith(s,".bgf"))
+	{
+		str who = "<lang>::<s>";
+		println(who);
+		cx += 1;
+		g = readBGF(zoo+"/<lang>/<s>");
+		sg = splitGrammar(g);
+		ret[who] = <len(metric(sg)),len(domain(sg.prods))>;
+	}
+	return ret;
+}
 
 NPC getZoo(loc zoo, NPC npc, patternbag Patterns)
 {
@@ -639,11 +658,21 @@ void analyseBag(loc zoo, loc tank, patternbag mybag)
 // MAIN
 public void main(list[str] args)
 {
+	r = mineEmAll(|home:///projects/webslps/tank|,preterminals);
+	for (str k <- r)
+	{
+		int a = r[k]<0>;
+		int b = r[k]<1>;
+		if (a!=0)
+		println("<k>\t<100*a/b>\t% is <a> out of <b>");
+		// println("<k>\t<100*r[k]<0>/r[k]<1>>\t% is <r[k]<0>> out of <r[k]<1>>");
+	}
+	return;
 	analyseBag(|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|,
-		NamingPatterns
+		// NamingPatterns
 		// MetaPatterns
 		// GlobalPatterns
-		// ConcretePatterns
+		ConcretePatterns
 		// SugarPatterns
 		// FoldingPatterns
 		// NormalPatterns
