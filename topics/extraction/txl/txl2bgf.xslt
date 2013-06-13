@@ -229,6 +229,15 @@
 					</terminal>
 				</bgf:expression>
 			</xsl:when>
+			<xsl:when test='unquotedLiteral/stringlit'>
+				<!-- if they are enclosed in double quotes, there is currently no way to remove them with XSLT1 -->
+				<bgf:expression>
+					<terminal>
+						<!-- <xsl:value-of select='substring-before(substring-after(unquotedLiteral/stringlit,"&quot;"),"&quot;")'/> -->
+						<xsl:value-of select='unquotedLiteral/stringlit'/>
+					</terminal>
+				</bgf:expression>
+			</xsl:when>
 			<xsl:otherwise>
 				<bgf:expression>
 					<terminal>
