@@ -204,8 +204,8 @@ set[str] leafs(SGrammar g) = {n | str n <- domain(g.prods), !isEmpty(g.prods[n])
 // GROUP: ProdForm  //
 //////////////////////
 set[str] horizontals(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice(L))} := g.prods[n] };
-set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1 };
-set[str] zigzags(SGrammar g) = {n | str n <- domain(g.prods), len(g.prods[n])>1, /production(_,n,choice(L)):=g.prods[n]};
+set[str] verticals(SGrammar g) = {n | str n <- domain(g.prods),len(g.prods[n])>1,/production(_,n,choice(L))!:=g.prods[n]};
+set[str] zigzags(SGrammar g) = {n | str n <- domain(g.prods),  len(g.prods[n])>1,/production(_,n,choice(L)) :=g.prods[n]};
 // TODO: covers too much?
 set[str] singletons(SGrammar g) = {n | str n <- domain(g.prods),
 	{production(_,n,BGFExpression e)} := g.prods[n],
@@ -412,6 +412,7 @@ set[str] bracketedfakeseplist(SGrammar g) = {n | str n <- domain(g.prods), {prod
 bool bracketpair("(",")") = true;
 bool bracketpair("[","]") = true;
 bool bracketpair("{","}") = true;
+bool bracketpair("\<","\>") = true;
 bool bracketpair("\<!--","--\>") = true; // !!!
 default bool bracketpair(str x, str y) = false;
 
@@ -524,7 +525,6 @@ set[str] notimplemented(SGrammar _) = {};
 patternbag MetaPatterns =
 	// Metasyntax
 	(
-		"AbstractSyntax":		abstracts,				// abstract syntax (no terminal symbols)
 		"ContainsStar":			usesstar,				// uses star within the definitions
 		"ContainsPlus":			usesplus,				// uses plus within the definitions
 		"ContainsOptional":		usesopt,				// uses optional within the definitions
@@ -540,13 +540,15 @@ patternbag MetaPatterns =
 		"ContainsLabels":		useslab,				// uses labels within (some of) the definitions
 		"ContainsSequence":		usesseq,				// uses sequential composition within the definitions
 		"ContainsDisjunction":	usesdisj,				// uses disjunction within the definitions
-		"ContainsConjunction":	usesconj,				// uses conjunction within the definitions
-		"ContainsNegation":		usesneg,				// uses negation within the definitions
+		// "ContainsConjunction":	usesconj,				// uses conjunction within the definitions
+		// "ContainsNegation":		usesneg,				// uses negation within the definitions
 		// 
 		"ContainsSepListPlus":	usesSLP,				// uses plus separator lists within the definitions
 		"ContainsSepListStar":	usesSLS,				// uses star separator lists within the definitions
 		// 
-		"ContainsMarked":		usesmarked				// should be empty
+		// "ContainsMarked":		usesmarked,				// should be empty
+		// 
+		"AbstractSyntax":		abstracts				// abstract syntax (no terminal symbols)
 	);
 
 patternbag GlobalPatterns =
@@ -662,7 +664,9 @@ void analyseBag(loc zoo, loc tank, patternbag mybag)
 public void main(list[str] args)
 {
 	// list[str] buf = ["","","",""];
-	// r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},nowknownconcrete,preterminals);
+	// r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},names3,notimplemented);
+	// // r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},modifiers,modifiers2);
+	// // r = mineTwo({|home:///projects/webslps/microzoo|,|home:///projects/webslps/microzoo|},names3,notimplemented);
 	// // r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},allnames,allknown);
 	// // r = mineEmAll({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},preterminals);
 	// for (str k <- r)
@@ -691,12 +695,12 @@ public void main(list[str] args)
 		// NamingPatterns
 		// MetaPatterns
 		// GlobalPatterns
-		ConcretePatterns
+		// ConcretePatterns
 		// SugarPatterns
 		// FoldingPatterns
 		// NormalPatterns
-		// TemplatePatterns
-		// TODO idea: template "contains keyword" or even "is a keyword"
+		TemplatePatterns
+		// TODO idea: template "contains keyword"
 	);
 	return;
 	// dead code that treats "the other kind of patterns" and "weird nonterminals"
