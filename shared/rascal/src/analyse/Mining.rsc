@@ -388,10 +388,22 @@ set[str] fakeopts(SGrammar g) = {n | str n <- domain(g.prods),
 	)
 	};
 
-set[str] ntorts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),terminal(_)]))} := g.prods[n]};
-set[str] ntsorts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([*L,terminal(_)]))} := g.prods[n], allnonterminals(L)};
-set[str] ntortss(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),*L]))} := g.prods[n], allterminals(L)};
-set[str] tsornts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([*L,nonterminal(_)]))} := g.prods[n], allterminals(L)};
+set[str] ntorts(SGrammar g) = {n | str n <- domain(g.prods),
+	({production(_,n,choice([nonterminal(_),terminal(_)]))} := g.prods[n] ||
+	 {production(_,n,choice([terminal(_),nonterminal(_)]))} := g.prods[n]) };
+
+set[str] nsandts(SGrammar g) = {n | str n <- domain(g.prods), arensandts(g.prods[n])};
+bool arensandts({production(_,_,choice(L1))}) = isanyt(L1) && isanyn(L1) && allsometerminals(toSet(L1));
+// TODO think of a faster way
+default bool arensandts(BGFProdSet ps) = isanyt([p.rhs | p <- ps]) && isanyn([p.rhs | p <- ps]) && allsometerminals({p.rhs | p <- ps});
+bool isanyt([]) = false;
+default bool isanyt(BGFExprList es) = terminal(_) := head(es) || isanyt(tail(es));
+bool isanyn([]) = false;
+default bool isanyn(BGFExprList es) = nonterminal(_) := head(es) || isanyn(tail(es));
+
+set[str] ntsorts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([*L,terminal(_)]))} := g.prods[n], allnonterminals(L), len(L)>1};
+set[str] ntortss(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([nonterminal(_),*L]))} := g.prods[n], allterminals(L), len(L)>1};
+set[str] tsornts(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,choice([*L,nonterminal(_)]))} := g.prods[n], allterminals(L), len(L)>1 };
 
 set[str] empties(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,epsilon())} := g.prods[n]};
 set[str] failures(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,empty())} := g.prods[n]};
@@ -465,8 +477,10 @@ set[str] lowlayers(SGrammar g) = {n | str n <- domain(g.prods),
 	{sequence([terminal(str x),nonterminal(_),terminal(str y)]),*L2} := toSet(L1),
 	!isEmpty(L2),
 	bracketpair(x,y),
-	allnonterminals(L2)
+	allsometerminals(L2)
 };
+
+bool allsometerminals(BGFExprSet xs) = ( true | it && (nonterminal(_) := e || terminal(_) := e) | e <- xs );
 
 // TODO: simple chain as an all chain where $m$ is used only once in the whole grammar
 
@@ -488,9 +502,31 @@ set[str] allchains(SGrammar g) = {n | str n <- domain(g.prods),
 	};
 bool areallchains(BGFProdSet ps) = ( true | it && production(_,_,nonterminal(_)) := p  | p <- ps );	
 // set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,nonterminal(_)),*P2} := g.prods[n]};
-set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods), /production(_,n,nonterminal(_)) := g.prods[n]};
+// TODO DEBUG why {production(_,n,nonterminal(_)),*Ps1} := g.prods[n] hangs on bibtex::bibtex-1.bgf
+set[str] somechains(SGrammar g) = {n | str n <- domain(g.prods),
+	(
+		/production(_,n,nonterminal(_)) := g.prods[n]
+	||
+		(/production(_,n,choice(L)) := g.prods[n] && isthereonenonterminal(L))
+	)
+};
+
+bool isthereonenonterminal([]) = false;
+default bool isthereonenonterminal(BGFExprList L) = nonterminal(_) := head(L) || isthereonenonterminal(tail(L));
+
 set[str] onechains(SGrammar g) = {n | str n <- domain(g.prods), {production(_,n,nonterminal(_))} := g.prods[n]};
-set[str] reflchains(SGrammar g) = {n | str n <- domain(g.prods), {*P1,production(_,n,nonterminal(n)),*P2} := g.prods[n]};
+set[str] reflchains(SGrammar g) = {n | str n <- domain(g.prods),
+	(
+		{production(_,n,nonterminal(n)),*P2} := g.prods[n]
+	||
+		(
+			{production(_,n,choice(L1))} := g.prods[n]
+		&&
+			nonterminal(n) in L1
+		)
+	)
+	};
+
 set[str] selfbrackets(SGrammar g) = {n | str n <- domain(g.prods),
 	{production(_,n,sequence([terminal(str x),nonterminal(n),terminal(str y)])),*P2} := g.prods[n],
 	bracketpair(x,y)}
@@ -596,10 +632,11 @@ patternbag FoldingPatterns =
 		"Failure":				failures,				// nonterminal explicitly or implicitly undefined
 		"AChain":				somechains,				// one production rule is a chain production rule (right hand side == nonterminal)
 		"ReflexiveChain":		reflchains,				// one production rule is a reflexive chain (left hand side == right hand side)
-		"NTorT":				ntorts,					// nonterminal or terminal
-		"NTSorT":				ntsorts,				// nonterminals or terminal
-		"NTorTS":				ntortss,				// nonterminal or terminals
-		"TSorNT":				tsornts					// terminals or nonterminal
+		"ChainOrTerminal":		ntorts,					// nonterminal or terminal
+		// "NTSorT":				ntsorts,				// nonterminals or terminal
+		// "NTorTS":				ntortss,				// nonterminal or terminals
+		// "TSorNT":				tsornts					// terminals or nonterminal
+		"ChainsAndTerminals":	nsandts					// mix of terminals and nonterminals
 	);
 
 // micropatterns about normal forms
@@ -663,43 +700,43 @@ void analyseBag(loc zoo, loc tank, patternbag mybag)
 // MAIN
 public void main(list[str] args)
 {
-	// list[str] buf = ["","","",""];
-	// r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},names3,notimplemented);
-	// // r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},modifiers,modifiers2);
-	// // r = mineTwo({|home:///projects/webslps/microzoo|,|home:///projects/webslps/microzoo|},names3,notimplemented);
-	// // r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},allnames,allknown);
-	// // r = mineEmAll({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},preterminals);
-	// for (str k <- r)
-	// {
-	// 	int a = r[k]<0>;
-	// 	int b = r[k]<1>;
-	// 	int c = r[k]<2>;
-	// 	if (a+b>2 && c>10)
-	// 		// println("<k>\t<100*a/b>\t% is <a> out of <b>");
-	// 		println("<k>\t<a>\t<b>\t<c>");
-	// 	// println("<k>\t<100*r[k]<0>/r[k]<1>>\t% is <r[k]<0>> out of <r[k]<1>>");
-	// 	// if (a!=0)
-	// 	// 	buf += "----------<k>----------\n<r[k]<2>>\n";
-	// 	if (r[k]<3>!="") buf[0] += "----------<k>----------\n<r[k]<3>>\n";
-	// 	if (r[k]<4>!="") buf[1] += "----------<k>----------\n<r[k]<4>>\n";
-	// 	if (r[k]<5>!="") buf[2] += "----------<k>----------\n<r[k]<5>>\n";
-	// 	if (r[k]<6>!="") buf[3] += "----------<k>----------\n<r[k]<6>>\n";
-	// }
-	// writeFile(|cwd:///lists0.bnf|,buf[0]);
-	// writeFile(|cwd:///lists1.bnf|,buf[1]);
-	// writeFile(|cwd:///lists2.bnf|,buf[2]);
-	// writeFile(|cwd:///lists3.bnf|,buf[3]);
-	// // writeFile(|cwd:///examples.bnf|,buf);
-	// return;
+	list[str] buf = ["","","",""];
+	r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},accesslayers,distinguished);
+	// r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},modifiers,modifiers2);
+	// r = mineTwo({|home:///projects/webslps/microzoo|,|home:///projects/webslps/microzoo|},names3,notimplemented);
+	// r = mineTwo({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},allnames,allknown);
+	// r = mineEmAll({|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|},preterminals);
+	for (str k <- r)
+	{
+		int a = r[k]<0>;
+		int b = r[k]<1>;
+		int c = r[k]<2>;
+		if (a+b>2 && c>10)
+			// println("<k>\t<100*a/b>\t% is <a> out of <b>");
+			println("<k>\t<a>\t<b>\t<c>");
+		// println("<k>\t<100*r[k]<0>/r[k]<1>>\t% is <r[k]<0>> out of <r[k]<1>>");
+		// if (a!=0)
+		// 	buf += "----------<k>----------\n<r[k]<2>>\n";
+		if (r[k]<3>!="") buf[0] += "----------<k>----------\n<r[k]<3>>\n";
+		if (r[k]<4>!="") buf[1] += "----------<k>----------\n<r[k]<4>>\n";
+		if (r[k]<5>!="") buf[2] += "----------<k>----------\n<r[k]<5>>\n";
+		if (r[k]<6>!="") buf[3] += "----------<k>----------\n<r[k]<6>>\n";
+	}
+	writeFile(|cwd:///lists0.bnf|,buf[0]);
+	writeFile(|cwd:///lists1.bnf|,buf[1]);
+	writeFile(|cwd:///lists2.bnf|,buf[2]);
+	writeFile(|cwd:///lists3.bnf|,buf[3]);
+	// writeFile(|cwd:///examples.bnf|,buf);
+	return;
 	analyseBag(|home:///projects/webslps/zoo|,|home:///projects/webslps/tank|,
 		// NamingPatterns
 		// MetaPatterns
 		// GlobalPatterns
 		// ConcretePatterns
 		// SugarPatterns
-		// FoldingPatterns
+		FoldingPatterns
 		// NormalPatterns
-		TemplatePatterns
+		// TemplatePatterns
 		// TODO idea: template "contains keyword"
 	);
 	return;
