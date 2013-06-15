@@ -3,14 +3,17 @@
 	<xsl:output method="xml" encoding="UTF-8"/>
 	<xsl:template match="/ecore:EPackage">
 		<bgf:grammar>
-			<xsl:apply-templates select="eClassifiers"/>
-			<xsl:apply-templates select="eSubpackages/eClassifiers"/>
+			<xsl:apply-templates select="*"/>
+			<!-- <xsl:apply-templates select="eClassifiers|eSubpackages"/> -->
 		</bgf:grammar>
 	</xsl:template>
 	<xsl:template match="/xmi:XMI">
 		<bgf:grammar>
-			<xsl:apply-templates select="ecore:EPackage/eClassifiers"/>
+			<xsl:apply-templates select="ecore:EPackage/*"/>
 		</bgf:grammar>
+	</xsl:template>
+	<xsl:template match="eSubpackages">
+		<xsl:apply-templates select="*"/>
 	</xsl:template>
 	<xsl:template match="eClassifiers">
 		<!-- <eClassifiers xsi:type="ecore:EClass" name="H1" eSuperTypes="/1/BODYElement"/> -->
