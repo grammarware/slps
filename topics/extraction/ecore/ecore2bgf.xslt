@@ -13,12 +13,55 @@
 		</bgf:grammar>
 	</xsl:template>
 	<xsl:template match="eSubpackages">
-		<xsl:apply-templates select="*"/>
+		<xsl:call-template name="ProcessSubpackages">
+			<xsl:with-param name="parent" select="@name"/>
+		</xsl:call-template>
+	</xsl:template>
+	<xsl:template name="ProcessSubpackages">
+		<xsl:param name="parent"/>
+		<!-- <xsl:apply-templates select="*"/> -->
+		<xsl:for-each select="*">
+			<xsl:choose>
+				<xsl:when test="local-name()='eSubpackages'">
+					<xsl:call-template name="ProcessSubpackages">
+						<xsl:with-param name="parent" select="concat($parent,'/',@name)"/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:when test="local-name()='eClassifiers'">
+					<xsl:call-template name="ProcessClassifiers">
+						<xsl:with-param name="parent" select="$parent"/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:apply-templates select="."/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
 	</xsl:template>
 	<xsl:template match="eClassifiers">
+		<xsl:call-template name="ProcessClassifiers">
+			<xsl:with-param name="parent" select="''"/>
+		</xsl:call-template>
+	</xsl:template>
+	<xsl:template name="ProcessClassifiers">
 		<!-- <eClassifiers xsi:type="ecore:EClass" name="H1" eSuperTypes="/1/BODYElement"/> -->
+		<xsl:param name="parent"/>
+		<xsl:message>
+			<xsl:text>Parents: </xsl:text>
+			<xsl:value-of select="$parent"/>
+		</xsl:message>
 		<xsl:variable name="ourEType" select="concat('#//',./@name)"/>
-		<xsl:variable name="ourName" select="./@name"/>
+		<xsl:variable name="ourName">
+			<!--  select="./@name" -->
+			<xsl:choose>
+				<xsl:when test="$parent=''">
+					<xsl:value-of select="@name"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat($parent,'/',@name)"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
 		<xsl:variable name="ourSuperType">
 			<xsl:choose>
 				<xsl:when test="substring-before(substring-after(substring-after(@eSuperTypes,'/'),'/'),' ')=''">
@@ -80,7 +123,10 @@
 						</nonterminal>
 						<bgf:expression>
 							<nonterminal>
-								<xsl:value-of select="@name"/>
+								<!-- <xsl:value-of select="@name"/> -->
+									<xsl:call-template name="getClassifierName">
+										<xsl:with-param name="pos" select="."/>
+									</xsl:call-template>
 							</nonterminal>
 						</bgf:expression>
 					</bgf:production>
@@ -94,7 +140,10 @@
 						</nonterminal>
 						<bgf:expression>
 							<nonterminal>
-								<xsl:value-of select="@name"/>
+								<!-- <xsl:value-of select="@name"/> -->
+								<xsl:call-template name="getClassifierName">
+									<xsl:with-param name="pos" select="."/>
+								</xsl:call-template>
 							</nonterminal>
 						</bgf:expression>
 					</bgf:production>
@@ -107,7 +156,10 @@
 						</nonterminal>
 						<bgf:expression>
 							<nonterminal>
-								<xsl:value-of select="@name"/>
+								<!-- <xsl:value-of select="@name"/> -->
+								<xsl:call-template name="getClassifierName">
+									<xsl:with-param name="pos" select="."/>
+								</xsl:call-template>
 							</nonterminal>
 						</bgf:expression>
 					</bgf:production>
@@ -115,7 +167,7 @@
 				<xsl:if test="not(@abstract='true')">
 					<bgf:production>
 						<nonterminal>
-							<xsl:value-of select="./@name"/>
+							<xsl:value-of select="$ourName"/>
 						</nonterminal>
 						<!-- <bgf:expression>
 											<sequence>
@@ -208,7 +260,7 @@
 				<xsl:message> option 3</xsl:message>
 				<bgf:production>
 					<nonterminal>
-						<xsl:value-of select="./@name"/>
+						<xsl:value-of select="$ourName"/>
 					</nonterminal>
 					<xsl:choose>
 						<xsl:when test="count(eLiterals)=0">
@@ -233,6 +285,7 @@
 			<xsl:otherwise>
 				<xsl:message> option 4</xsl:message>
 				<any/>
+				<!-- TODO: no (any) is possible outside production rules -->
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -464,5 +517,15 @@
 				<xsl:value-of select="$name"/>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+	<xsl:template name="getClassifierName">
+		<xsl:param name="pos"/>
+		<xsl:if test="local-name($pos/..)='eSubpackages'">
+			<xsl:call-template name="getClassifierName">
+				<xsl:with-param name="pos" select="$pos/.."/>
+			</xsl:call-template>
+			<xsl:text>/</xsl:text>
+		</xsl:if>
+		<xsl:value-of select="$pos/@name"/>
 	</xsl:template>
 </xsl:stylesheet>
