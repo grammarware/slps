@@ -75,17 +75,13 @@
 					<xsl:if test="$mysrc and count($mysrc)=1">
 						<br/>
 						<xsl:text>Source used for this grammar: </xsl:text>
-						<xsl:for-each select="$mysrc/author">
-							<xsl:value-of select="."/>
-							<xsl:text>, </xsl:text>
-						</xsl:for-each>
-						<xsl:for-each select="$mysrc/title|$mysrc/subtitle|$mysrc/file">
-							<xsl:if test="local-name()='title'">
+						<xsl:for-each select="$mysrc/author|$mysrc/title|$mysrc/standard|$mysrc/subtitle|$mysrc/file">
+							<xsl:if test="local-name()='title' or local-name()='standard'">
 								<em>
 									<xsl:value-of select="."/>
 								</em>
 							</xsl:if>
-							<xsl:if test="local-name()='subtitle'">
+							<xsl:if test="local-name()='subtitle' or local-name()='author'">
 								<xsl:value-of select="."/>
 							</xsl:if>
 							<xsl:if test="local-name()='file'">
