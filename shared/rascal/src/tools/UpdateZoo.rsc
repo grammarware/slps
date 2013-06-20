@@ -31,7 +31,16 @@ rel[BGFGrammar(loc),rel[loc,str]] zoo =
  	<|home:///projects/slps/topics/fl/rascal/src/Abstract.rsc|, "fl/adt/grammar.bgf">,
  	<|home:///projects/slps/shared/rascal/src/language/JSON.rsc|, "json/zaytsev-abstract/grammar.bgf">,
  	<|std:///lang/json/ast/JSON.rsc|, "json/rascal-abstract/grammar.bgf">,
- 	<|home:///projects/slps/shared/rascal/src/language/XOutcome.rsc|, "xbgf/xoutcome/grammar.bgf">
+ 	<|home:///projects/slps/shared/rascal/src/language/XOutcome.rsc|, "xbgf/xoutcome/grammar.bgf">,
+ 	<|std:///lang/csv/ast/CSV.rsc|, "csv/rascal-abstract/grammar.bgf">,
+ 	// trouble with trailing comment
+ 	//<|std:///lang/jvm/ast/Level0.rsc|, "java/jvm-level0/grammar.bgf">,
+ 	<|home:///projects/slps/topics/grammars/java/jvm-level0/Level0.rsc|, "java/jvm-level0/grammar.bgf">,
+ 	<|std:///lang/jvm/ast/Level1.rsc|, "java/jvm-level1/grammar.bgf">,
+ 	<|std:///lang/logic/ast/Booleans.rsc|, "metamodels/logic-abstract/ext.bool.bgf">,
+ 	<|std:///lang/logic/ast/Propositions.rsc|, "metamodels/logic-abstract/ext.prop.bgf">,
+ 	<|std:///lang/saf/AST.rsc|, "saf/abstract/grammar.bgf">,
+ 	<|std:///lang/xml/DOM.rsc|, "xml/rascal/grammar.bgf">
  }>,
  //
  <extract::RascalSyntax2BGF::extractBGF,
@@ -46,7 +55,32 @@ rel[BGFGrammar(loc),rel[loc,str]] zoo =
  	<|std:///lang/json/syntax/JSON.rsc|, "json/rascal-concrete/grammar.bgf">,
  	// TODO: why this does not work, is beyond me - but it works only without any functions
  	//<|home:///projects/slps/topics/grammars/metasyntax/rascal-adt-simple/RascalADT2BGF.rsc|, "metasyntax/rascal-adt-simple/grammar.bgf">,
- 	<|std:///lang/dot/syntax/Dot.rsc|, "dot/rascal-concrete/grammar.bgf">
+ 	<|std:///lang/dot/syntax/Dot.rsc|, "dot/rascal-concrete/grammar.bgf">,
+ 	<|std:///lang/aterm/syntax/ATerm.rsc|, "metasyntax/aterms-rascal/grammar.bgf">,
+ 	<|std:///lang/box/syntax/Box.rsc|, "metasyntax/box-rascal/grammar.bgf">,
+ 	// NoSuchKey("ParseTree")
+ 	//<|std:///lang/c90/syntax/C.rsc|, "c/lankamp/grammar.bgf">,
+ 	<|home:///projects/slps/topics/grammars/c/lankamp/C.rsc|, "c/lankamp/grammar.bgf">,
+ 	<|std:///lang/csv/syntax/CSV.rsc|, "csv/rascal-concrete/grammar.bgf">,
+ 	<|std:///lang/dimacs/syntax/Dimacs.rsc|, "markup/cnf/grammar.bgf">,
+ 	// some extends-related error
+ 	//<|std:///lang/hotdrink/Adam.rsc|, "adobe/hotdrink/ext.adam.bgf">,
+ 	//<|std:///lang/hotdrink/Eve.rsc|, "adobe/hotdrink/ext.eve.bgf">,
+ 	//<|std:///lang/hotdrink/Decls.rsc|, "adobe/hotdrink/ext.decls.bgf">,
+ 	//<|std:///lang/hotdrink/Expressions.rsc|, "adobe/hotdrink/ext.expr.bgf">
+ 	// some extends-related error
+ 	//<|std:///lang/logic/syntax/Booleans.rsc|, "metamodels/logic-concrete/ext.bool.bgf">,
+ 	//<|std:///lang/logic/syntax/Propositions.rsc|, "metamodels/logic-concrete/ext.prop.bgf">,
+ 	//<|std:///lang/logic/syntax/Truths.rsc|, "metamodels/logic-concrete/ext.truth.bgf">
+ 	// NoSuchKey("IO")
+ 	//<|std:///lang/pico/syntax/Main.rsc|, "pico/rascal/grammar.bgf">
+ 	<|home:///projects/slps/topics/grammars/pico/rascal/Main.rsc|, "pico/rascal/grammar.bgf">,
+ 	<|std:///lang/saf/SAF.rsc|, "saf/concrete/grammar.bgf">,
+ 	<|std:///lang/sdf2/syntax/Sdf2.rsc|, "metasyntax/sdf-rascal/grammar.bgf">,
+ 	<|std:///lang/sexp/syntax/SExp.rsc|, "metasyntax/s-expressions/grammar.bgf">,
+ 	// not in the released version of Rascal yet
+ 	//<|std:///lang/java/syntax/Java15.rsc|, "java-5/landman/grammar.bgf">,
+ 	<|home:///projects/slps/topics/grammars/java-5/landman/Java15.rsc|, "java-5/landman/grammar.bgf">
  }>
  //
  };

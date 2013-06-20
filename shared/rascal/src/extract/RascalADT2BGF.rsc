@@ -21,7 +21,11 @@ public void main(loc z) = println(pp(extractBGF(z)));
 BGFGrammar extractBGF(loc z)
 {
 	//= normalise(language::BGF::grammar([],module2aliases(parse(#Module,trim(readFile(z))))));
-	Module m = parse(#Module,trim(readFile(z)));
+	Module m;
+	try
+		m = parse(#Module,trim(readFile(z)));
+	catch:
+		m = parse(#Module,readFile(z));
 	BGFProdList ps = module2decls(m);
 	println("Extraction completed.");
 	return normalise(language::BGF::grammar([],ps));

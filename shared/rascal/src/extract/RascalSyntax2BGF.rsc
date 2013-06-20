@@ -17,7 +17,8 @@ import IO;
 BGFGrammar extractBGF(loc z)
 {
 	str gs = trim(readFile(z));
-	str name = split("\n",split("module ",gs)[1])[0];
+	str name = replaceAll(split("\n",split("module ",gs)[1])[0],"\\","");
+	println("Extracting <name>...");
 	BGFGrammar G = normalise(grammar2grammar(modules2grammar(name,{parse(#Module,gs)})));
 	println("Extraction completed.");
 	return G;

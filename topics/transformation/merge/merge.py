@@ -1,4 +1,4 @@
-#!/Library/Frameworks/Python.framework/Versions/3.1/bin/python3
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os, sys
 import xml.etree.ElementTree as ET
