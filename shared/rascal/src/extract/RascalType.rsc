@@ -4,6 +4,7 @@ module extract::RascalType
 
 import lang::rascal::\syntax::RascalRascal;
 import language::BGF;
+import String;
 import IO;
 
 // This maps all abstract syntax declarations to production rules of a grammar in a broad sense
@@ -32,9 +33,9 @@ BGFExpression variants2expr({Variant "|"}+ variants)
  = language::BGF::choice([variant2expr(v) | Variant v <- variants]);
 
 BGFExpression variant2expr((Variant)`<Name name> ()`)
-	= language::BGF::selectable("<name>",epsilon());
+	= language::BGF::selectable(name2string("<name>"),epsilon());
 default BGFExpression variant2expr((Variant)`<Name name> ( <{TypeArg ","}+ arguments> )`)
-	= language::BGF::selectable("<name>",typeargs2seq(arguments));
+	= language::BGF::selectable(name2string("<name>"),typeargs2seq(arguments));
 /*
 syntax Type
 	= bracket \bracket: "(" Type type ")" 
@@ -75,7 +76,7 @@ syntax DataTypeSelector
 */
 
 // NOT MAPPED (too tricky): type; list (w/o params), set, ...
-BGFExpression type2expr((Type)`<UserType ut>`) = language::BGF::nonterminal("<ut>");
+BGFExpression type2expr((Type)`<UserType ut>`) = language::BGF::nonterminal(name2string("<ut>"));
 BGFExpression type2expr((Type)`(<Type t>)`) = type2expr(t);
 BGFExpression type2expr((Type)`value`) = language::BGF::anything();
 BGFExpression type2expr((Type)`loc`) = language::BGF::val(language::BGF::string()); // abstraction
@@ -107,9 +108,17 @@ default BGFExpression type2expr(Type t)// = language::BGF::empty();
 }
 
 BGFExpression typearg2expr((TypeArg)`<Type t>`) = type2expr(t);
-BGFExpression typearg2expr((TypeArg)`<Type t><Name n>`) = language::BGF::selectable("<n>",type2expr(t));
+BGFExpression typearg2expr((TypeArg)`<Type t><Name n>`) = language::BGF::selectable(name2string("<n>"),type2expr(t));
 default BGFExpression typearg2expr(TypeArg _) = empty();
 
 //BGFExpression typeargs2seq(({TypeArg ","}*)``) = epsilon();
 BGFExpression typeargs2seq({TypeArg ","}+ args)
 	= language::BGF::sequence([typearg2expr(argt) | TypeArg argt <- args]);
+
+str name2string(str s)
+{
+	if (startsWith(s,"\\"))
+		return substring(s,1);
+	else
+		return s;
+} 

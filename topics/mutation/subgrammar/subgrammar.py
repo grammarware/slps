@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#! /usr/bin/env python
 import os,sys
 import elementtree.ElementTree as ET
 sys.path.append(os.getcwd().split('projects')[0]+'projects/slps/shared/python')
