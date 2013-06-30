@@ -109,6 +109,8 @@ class Expression:
 			self.wrapped = Nonterminal()
 		elif expr.tag == 'selectable':
 			self.wrapped = Selectable()
+		elif expr.tag == 'labelled':
+			self.wrapped = Labelled()
 		elif expr.tag == 'epsilon':
 			self.wrapped = Epsilon()
 		elif expr.tag == 'any':
@@ -121,8 +123,12 @@ class Expression:
 			self.wrapped = Sequence()
 		elif expr.tag == 'choice':
 			self.wrapped = Choice()
+		elif expr.tag == 'allof':
+			self.wrapped = AllOf()
 		elif expr.tag == 'marked':
 			self.wrapped = Marked()
+		elif expr.tag == 'not':
+			self.wrapped = Negative()
 		elif expr.tag == 'optional':
 			self.wrapped = Optional()
 		elif expr.tag == 'plus':
@@ -228,6 +234,42 @@ class Selectable:
 		if self.__class__.__name__ != other.__class__.__name__:
 			return False
 		return self.sel == other.sel and self.expr == other.expr
+
+# [label] (expression)
+class Labelled:
+	def __init__(self):
+		self.kab = None
+		self.expr = None
+	def parse(self,labelem):
+		self.lab = labelem.findtext('label')
+		self.expr = Expression(None)
+		self.expr.parse(labelem.findall(slpsns.bgf_('expression'))[0])
+	def setName(self,name):
+		self.lab = name
+	def setExpr(self,expr):
+		self.expr = expr
+	def getXml(self):
+		#print 'Getting the XML of selectable',self.sel,'...'
+		self.ex = ET.Element(slpsns.bgf_('expression'))
+		self.xml = ET.SubElement(self.ex,'labelled')
+		ET.SubElement(self.xml,'label').text = self.lab
+		self.xml.append(self.expr.getXml())
+		return self.ex
+	def who(self):
+		return self.__class__.__name__
+	def __str__(self):
+		name = self.expr.__class__.__name__
+		if name == 'Expression':
+			name = self.expr.wrapped.__class__.__name__
+		#print name
+		if name in ('Plus','Star','Optional'):
+			return '['+self.lab+']::('+str(self.expr)+')'
+		else:
+			return '['+self.lab+']::'+str(self.expr)
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.lab == other.lab and self.expr == other.expr
 
 # epsilon::EPSILON
 class Epsilon:
@@ -395,6 +437,52 @@ class Choice:
 				return False
 		return len(unmatched)==0
 
+# allof::(expression+)
+class AllOf:
+	def __init__(self):
+		self.data = []
+	def parse(self,chelem):
+		self.data = []
+		for e in chelem.findall('*'):
+			self.data.append(Expression(None))
+			self.data[-1].parse(e)
+	def add(self,expr):
+		self.data.append(expr)
+	def getXml(self):
+		#print 'Getting the XML of choice...'
+		if len(self.data) == 0:
+			return Empty().getXml()
+		elif len(self.data) == 1:
+			return self.data[0].getXml()	
+		else:
+			self.ex = ET.Element(slpsns.bgf_('expression'))
+			self.xml = ET.SubElement(self.ex,'choice')
+			for el in self.data:
+				self.xml.append(el.getXml())
+			return self.ex
+	def who(self):
+		return self.__class__.__name__
+	def __str__(self):
+		return '('+' & '.join(self.asArray())+')'
+	def asArray(self):
+		a = []
+		for el in self.data:
+			a.append(str(el))
+		return a
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		if len(self.data) != len(other.data):
+			return False
+		unmatched = other.data[:]
+		for e in self.data:
+			for u in unmatched:
+				if e == u:
+					unmatched.remove(e)
+					break
+				return False
+		return len(unmatched)==0
+
 # marked::expression
 class Marked:
 	def __init__(self):
@@ -436,6 +524,29 @@ class Optional:
 		return self.__class__.__name__
 	def __str__(self):
 		return str(self.data)+'?'
+	def __eq__(self,other):
+		if self.__class__.__name__ != other.__class__.__name__:
+			return False
+		return self.data == other.data
+
+# not::expression
+class Negative:
+	def __init__(self):
+		self.data = None
+	def parse(self,optelem):
+		self.data = Expression(None)
+		self.data.parse(optelem.findall('*')[0])
+	def setExpr(self,expr):
+		self.data = expr
+	def getXml(self):
+		#print 'Getting the XML of ?...'
+		self.ex = ET.Element(slpsns.bgf_('expression'))
+		ET.SubElement(self.ex,'optional').append(self.data.getXml())
+		return self.ex
+	def who(self):
+		return self.__class__.__name__
+	def __str__(self):
+		return '!'+str(self.data)
 	def __eq__(self,other):
 		if self.__class__.__name__ != other.__class__.__name__:
 			return False
