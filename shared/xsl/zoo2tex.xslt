@@ -8,14 +8,24 @@
 			\hline
 		</xsl:text>
 		<xsl:for-each select="language">
+			<xsl:variable name="name">
+				<xsl:choose>
+					<xsl:when test="short">
+						<xsl:value-of select="short"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="name"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
 			<xsl:for-each select="version">
-				<xsl:variable name="name" select="name"/>
+				<!-- <xsl:variable name="name" select="name"/> -->
 				<xsl:for-each select="expand-grammar">
-				<xsl:call-template name="tablerow">
-					<xsl:with-param name="name" select="$name"/>
-					<xsl:with-param name="meta" select="document(concat('/Users/zaytsev/projects/slps/topics/grammars/',.,'/zoo.xml'))/grammar"/>
-				</xsl:call-template>
-			</xsl:for-each>
+					<xsl:call-template name="tablerow">
+						<xsl:with-param name="name" select="$name"/>
+						<xsl:with-param name="meta" select="document(concat('/Users/zaytsev/projects/slps/topics/grammars/',.,'/zoo.xml'))/grammar"/>
+					</xsl:call-template>
+				</xsl:for-each>
 			</xsl:for-each>
 			<xsl:text>\hline
 </xsl:text>
