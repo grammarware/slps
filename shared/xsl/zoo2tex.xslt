@@ -3,8 +3,8 @@
 	<xsl:output method="text" encoding="UTF-8" omit-xml-declaration="yes"/>
 	<xsl:template match="/zoo">
 		<xsl:text>{\footnotesize
-			\begin{longtable}{|l|l|l|l|l|}\hline
-			\textbf{Language}	&amp;	\textbf{Source}	&amp;	\textbf{To L0}	&amp;	\textbf{To L1}	&amp;	\textbf{To L2}\\
+			\begin{longtable}{|l|c|l|l|l|l|}\hline
+			\textbf{Language}	&amp;	\textbf{Number}	&amp;	\textbf{Source}	&amp;	\textbf{To L0}	&amp;	\textbf{To L1}	&amp;	\textbf{To L2}\\
 			\hline
 		</xsl:text>
 		<xsl:for-each select="language">
