@@ -38,12 +38,16 @@
 		<xsl:value-of select="translate($name,'#','s')"/>
 		<xsl:text>	&amp;	</xsl:text>
 		<xsl:choose>
+			<xsl:when test="$meta/meta/src='ANTLR'">ANTLR Grammar List</xsl:when>
+			<xsl:when test="$meta/meta/src='TXL'">TXL Grammar Collection</xsl:when>
+			<xsl:when test="$meta/meta/src='VU'">VU Browsable Grammars</xsl:when>
 			<xsl:when test="$meta/meta/src"><xsl:value-of select="$meta/meta/src"/></xsl:when>
 			<xsl:otherwise>???</xsl:otherwise>
 		</xsl:choose>
 		<xsl:text>	&amp;	</xsl:text>
 		<xsl:choose>
 			<xsl:when test="$meta/meta/tol0=''">done</xsl:when>
+			<xsl:when test="$meta/meta/tol0='c-p'">copy-paste</xsl:when>
 			<xsl:when test="$meta/meta/tol0"><xsl:value-of select="$meta/meta/tol0"/></xsl:when>
 			<xsl:otherwise>---</xsl:otherwise>
 		</xsl:choose>
