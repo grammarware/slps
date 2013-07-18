@@ -20,12 +20,32 @@
 			</xsl:variable>
 			<xsl:for-each select="version">
 				<!-- <xsl:variable name="name" select="name"/> -->
-				<xsl:for-each select="expand-grammar">
-					<xsl:call-template name="tablerow">
-						<xsl:with-param name="name" select="$name"/>
-						<xsl:with-param name="file" select="."/>
-						<xsl:with-param name="meta" select="document(concat('/Users/zaytsev/projects/slps/topics/grammars/',.,'/zoo.xml'))/grammar"/>
-					</xsl:call-template>
+				<xsl:for-each select="expand-grammar|grammar|grammarset">
+					<xsl:choose>
+						<xsl:when test="local-name()='grammar'">
+							<xsl:call-template name="tablerow">
+								<xsl:with-param name="name" select="$name"/>
+								<xsl:with-param name="file" select="./handle"/>
+								<xsl:with-param name="meta" select="."/>
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:when test="local-name()='grammarset'">
+							<xsl:for-each select="./grammarname">
+								<xsl:call-template name="tablerow">
+									<xsl:with-param name="name" select="$name"/>
+									<xsl:with-param name="file" select="."/>
+									<xsl:with-param name="meta" select=".."/>
+								</xsl:call-template>
+							</xsl:for-each>
+						</xsl:when>
+						<xsl:when test="local-name()='expand-grammar'">
+							<xsl:call-template name="tablerow">
+								<xsl:with-param name="name" select="$name"/>
+								<xsl:with-param name="file" select="."/>
+								<xsl:with-param name="meta" select="document(concat('/Users/zaytsev/projects/slps/topics/grammars/',.,'/zoo.xml'))/grammar"/>
+							</xsl:call-template>
+						</xsl:when>
+					</xsl:choose>
 				</xsl:for-each>
 			</xsl:for-each>
 			<xsl:text>\hline
@@ -51,7 +71,7 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:text>?</xsl:text>
-				<xsl:value-of select="$file"/>
+				<xsl:value-of select="translate($file,'_','')"/>
 				<xsl:text>?</xsl:text>
 			</xsl:otherwise>
 		</xsl:choose>

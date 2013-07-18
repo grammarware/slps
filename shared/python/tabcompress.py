@@ -1,7 +1,13 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import sys
 
+if len(sys.argv)!=2:
+	print 'Gimme one file name, or else.'
+	sys.exit(-1)
+zoo = sys.argv[1]
 # READ
-f = open('zoo.tex','r')
+f = open(zoo,'r')
 b = map(lambda x:x.strip(), f.readlines())
 f.close()
 # COMPRESS
@@ -31,8 +37,8 @@ while i < len(b):
 	i += 1
 b = newb
 # WRITE
-f = open('zoo.tex','w')
+f = open(zoo,'w')
 for line in b:
-	f.write(line.replace('#','\#')+'\n')
+	f.write(line.replace('#','\#').replace('µ','$\\mu$')+'\n')
 f.close()
 # END
