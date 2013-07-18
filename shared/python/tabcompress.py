@@ -33,7 +33,6 @@ b = newb
 # WRITE
 f = open('zoo.tex','w')
 for line in b:
-	# f.write('----%i go!' % i)
-	f.write(line+'\n')
+	f.write(line.replace('#','\#')+'\n')
 f.close()
 # END

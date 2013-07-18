@@ -37,7 +37,7 @@
 		<xsl:param name="name"/>
 		<xsl:param name="file"/>
 		<xsl:param name="meta"/>
-		<xsl:value-of select="translate($name,'#','s')"/>
+		<xsl:value-of select="$name"/>
 		<xsl:text>	&amp;	</xsl:text>
 		<xsl:choose>
 			<xsl:when test="$meta/meta/src='ANTLR'">ANTLR Grammar List</xsl:when>
