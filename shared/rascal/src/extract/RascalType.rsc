@@ -99,21 +99,29 @@ BGFExpression type2expr((Type)`set[<Type t>]`) = language::BGF::star(type2expr(t
 BGFExpression type2expr((Type)`map[<{TypeArg ","}+ arguments>]`)
 	= language::BGF::star(typeargs2seq(arguments));
 BGFExpression type2expr((Type)`list[<Type t>]`) = language::BGF::star(type2expr(t));
+BGFExpression type2expr((Type)`set[<TypeArg ta>]`) = language::BGF::star(typearg2expr(ta));
+BGFExpression type2expr((Type)`list[<TypeArg ta>]`) = language::BGF::star(typearg2expr(ta));
 
 // TODO: FunctionType (arguable!)
 default BGFExpression type2expr(Type t)// = language::BGF::empty();
 {
-	iprintln(t);
+	println("Failure or ambiguity in type2expr(<t>).");
+	// iprintln(t);
 	return language::BGF::empty();
 }
 
 BGFExpression typearg2expr((TypeArg)`<Type t>`) = type2expr(t);
 BGFExpression typearg2expr((TypeArg)`<Type t><Name n>`) = language::BGF::selectable(name2string("<n>"),type2expr(t));
-default BGFExpression typearg2expr(TypeArg _) = empty();
+default BGFExpression typearg2expr(TypeArg ta) //= empty();
+{
+	println("Failure or ambiguity in typearg2expr(<ta>).");
+	// iprintln(ta);
+	return language::BGF::nonterminal(name2string("<ta>"));
+}
 
 //BGFExpression typeargs2seq(({TypeArg ","}*)``) = epsilon();
-BGFExpression typeargs2seq({TypeArg ","}+ args)
-	= language::BGF::sequence([typearg2expr(argt) | TypeArg argt <- args]);
+BGFExpression typeargs2seq({TypeArg ","}+ args) = language::BGF::sequence([typearg2expr(argt) | TypeArg argt <- args]);
+// TODO: fails at ambiguities
 
 str name2string(str s)
 {

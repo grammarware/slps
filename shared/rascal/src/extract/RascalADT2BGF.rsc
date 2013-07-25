@@ -28,7 +28,7 @@ BGFGrammar extractBGF(loc z)
 		m = parse(#Module,readFile(z));
 	BGFProdList ps = module2decls(m);
 	println("Extraction completed.");
-	return normalise(language::BGF::grammar([],ps));
+	return language::BGF::grammar([],ps);
 }
 
 public BGFProdList module2aliases(Module m) = [p | /Declaration d := m, p<-mapAlias(d)];
