@@ -140,6 +140,8 @@
 	<xsl:template match="rnga:*"/>
 	<!-- NB: "any name" means "any selector", which is the default option in BGF anyway -->
 	<xsl:template match="rng:anyName"/>
+	<!-- NB: no advanced namespace support in BGF -->
+	<xsl:template match="rng:nsName"/>
 	<xsl:template match="rng:empty">
 		<bgf:expression>
 			<epsilon/>
