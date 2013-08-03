@@ -9,8 +9,3 @@ manner, that is, we capture direct style of denotational semantics in
 a manner that specific semantics (such as the standard semantics and
 the program analysis for sign detection) can be assembled by just
 passing specific algebras to a more parametric function.
-
-There are videos available online to explain this development.
-
-http://www.uni-koblenz.de/~laemmel/paradigms0910/resources/analysis2.html
-http://www.uni-koblenz.de/~laemmel/paradigms0910/resources/analysis3.html

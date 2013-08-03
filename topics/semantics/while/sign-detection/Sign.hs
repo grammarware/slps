@@ -1,6 +1,6 @@
 -- The complete lattice of abstract numbers for signs
 
-module Solution9.Sign (
+module Sign (
     Sign(BottomSign, Zero, Pos, Neg, TopSign, ZeroPos, ZeroNeg, One)
   , signNumbers
 ) where

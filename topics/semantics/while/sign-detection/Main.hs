@@ -1,11 +1,11 @@
-module Solution9.Main (
+module Main (
     module SemanticsLib.Boolean
   , module SemanticsLib.Number
   , module SemanticsLib.State
   , module SemanticsLib.Domain
   , module SemanticsLib.TT
   , module SemanticsLib.Map
-  , module Solution9.Sign
+  , module Sign
 ) where
 
 import qualified Prelude
@@ -20,7 +20,7 @@ import SemanticsLib.State
 import SemanticsLib.Domain
 import SemanticsLib.TT
 import SemanticsLib.Map hiding (lookup, update)
-import Solution9.Sign
+import Sign
 import Data.Maybe
 
 -- Semantic domains for analysis
