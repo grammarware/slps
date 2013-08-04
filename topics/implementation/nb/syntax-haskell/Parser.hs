@@ -1,7 +1,7 @@
 module Parser where
 
 import AbstractSyntax
-import ParserLib
+import Parsing
 
 nb = true +++ false +++ cond +++ zero +++ succnb +++ prednb +++ iszero
 

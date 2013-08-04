@@ -1,4 +1,4 @@
 test:
-	runhaskell -ihutton:../hutton parseB.hs
+	runhaskell -ihutton:../../Hutton parseB.hs
 
 

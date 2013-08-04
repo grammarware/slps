@@ -1,5 +1,5 @@
 test:
-	runhaskell -ihutton:../hutton Test.hs
+	runhaskell -ihutton:../../Hutton Test.hs
 
 clean:
 	rm -f *~ *.hi *.o

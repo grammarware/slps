@@ -1,6 +1,6 @@
 module Main where
 
-import ParserLib
+import Parsing
 import Parser
 import AbstractSyntax
 
