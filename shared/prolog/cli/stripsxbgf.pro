@@ -12,7 +12,9 @@ strips(_,[]).
 strips_rule(X,{X}) :- X = s(_,_).
 
 main :- 
-   current_prolog_flag(argv,Argv),
+   % Compatibility hack for >6.4.1 and the use of '--'
+   ( RawArgv = argv ; RawArgv = os_argv ),
+   current_prolog_flag(RawArgv,Argv),
    append(_,['--',BgfFile,XbgfFile],Argv),
    loadXml(BgfFile,BgfXml),
    xmlToG(BgfXml,g(_,Ps)),

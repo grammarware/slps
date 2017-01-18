@@ -37,7 +37,9 @@ diffT(RC,((U1,r(G1,T1)),(U2,r(G2,T2))))
 
 
 main :- 
-   current_prolog_flag(argv,Argv),
+   % Compatibility hack for >6.4.1 and the use of '--'
+   ( RawArgv = argv ; RawArgv = os_argv ),
+   current_prolog_flag(RawArgv,Argv),
    append(_,['--'|L1],Argv),
    maplist(loadXml,L1,Xmls),
    maplist(xmlToRoot,Xmls,Ts),
