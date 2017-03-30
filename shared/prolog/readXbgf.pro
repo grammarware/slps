@@ -252,12 +252,10 @@ xml2xbgf(T,F3)
     self(name(xbgf:rename),T),
     (
       child(name(label),T,X),
-      F = renameL,
-      C = label
+      F = renameL
     ;
       child(name(nonterminal),T,X),
-      F = renameN,
-      C = nonterminal
+      F = renameN
     ;
       child(name(selector),T,X),
       (
@@ -268,12 +266,10 @@ xml2xbgf(T,F3)
             )
           ;
             F = renameS([])
-      ),
-      C = selector
+      )
     ;
       child(name(terminal),T,X),
-      F = renameT,
-      C = terminal
+      F = renameT
     ),
     child(name(from),X,From),
     child(name(to),X,To),
