@@ -8,7 +8,9 @@ int2literal(I1,literal(I3))
 
 main
  :-
-    current_prolog_flag(argv,Argv),
+    % Compatibility hack for >6.4.1 and the use of '--'
+    ( RawArgv = argv ; RawArgv = os_argv ),
+    current_prolog_flag(RawArgv,Argv),
     append(_,['--',Result1,BtfIn,FName|Ints],Argv),
     atom_chars(Result1,Result2),
     number_chars(Result3,Result2),
